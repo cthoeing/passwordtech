@@ -1,0 +1,192 @@
+﻿                            Password Tech
+                            =============
+                Copyright (c) 2002-2022 by Christian Thöing
+
+
+Version 3.4.2
+
+NEW FEATURES:
+
+- Tray menu: In case that some windows of the applications are not properly
+  restored by the operating system when switching between multiple monitors,
+  all windows can be restored to the current primary monitor through the
+  "Reset All Window Positions" functionality (available in the tray menu)
+- Password manager: File/database properties dialog accessible via "File |
+  Properties..."
+- Autotype sequence: Command "{wait:N}" (time N in milliseconds between 10 and
+  10000) allows inserting custom delays into a sequence
+- Added random pool cipher "ChaCha8" as a reduced-round variant of the default
+  ChaCha20 stream cipher for performance-critical applications
+- Benchmark test for random pool ciphers
+
+CHANGES & IMPROVEMENTS:
+
+- Changed DPI awareness to "Per Monitor v2"
+  
+----------
+
+Version 3.4.1 (2021-10-30)
+
+NEW FEATURES:
+
+- Command line switch "opendb": Opens password database on startup
+- Command line switch "silent": Launches application in the background (i.e.,
+  without showing main window)
+- Configuration: Option "Launch application on system startup"
+- Password manager: Added "New Entry" button to toolbar
+- Password manager: Autocomplete functionality for "User name" field (suggests
+  user names that already exist in the database)
+
+CHANGES & IMPROVEMENTS:
+
+- Use hardware acceleration for AES if supported by processor
+- Display percentage of maximum entropy (256 bits) in status bar (e.g.,
+  "128 (50%)")
+- Password manager: Improved handling of write-protected files
+- Password manager: Additional icon in toolbar for adding new entry
+
+FIXES:
+
+- Autotype: Added delay of 250ms before sending first character to avoid
+  incomplete typing
+- Password manager: Fixed issues concerning "Expires" field
+- Password manager: Prevent other processes from writing to database file
+  while it is opened in PassCube
+
+----------
+
+Version 3.4.0 (2021-07-04)
+
+NEW FEATURES:
+
+- Password manager: New field "Expires" (including checkbox and calendar for
+  date selection) allows setting an expiry date for the password of a database
+  entry; expired entries are marked with a symbol on the left side of the first
+  column of the list view
+- Password manager: Option "By default, new entries expire after the following
+  number of days" allows setting a default password expiry date for new entries
+- Configuration: Option "Warn if database contains expired entries" displays
+  a message box that allows filtering expired entries in the list view
+
+CHANGES & IMPROVEMENTS:
+
+- Lua scripting language: Update to version 5.4.3
+- Password database format: Version 1.2
+
+FIXES:
+
+- Console output did not support Unicode
+
+----------
+
+Version 3.3.0 (2020-12-30)
+
+NEW FEATURES:
+
+- Password manager: Added global database settings "Generate passwords for new
+  entries using format sequence", "Encryption algorithm" (AES or ChaCha20), and
+  "Number of key derivation rounds"
+- Password manager: Key-value list can be edited in a dedicated window, field
+  in edit panel is read-only
+- Password manager: Added configuration parameter "Save automatically" (with
+  options "After adding/modifying an entry" and "After every change")
+
+CHANGES & IMPROVEMENTS:
+
+- Password manager: Changed scoring system for "fuzzy" search
+- Password manager: Automatically select first search entry
+- Password manager: Search for keyword via hot key: Search is not limited to a
+  single entry anymore (in case there are multiple entries having the same
+  keyword assigned)
+- Password manager: Changed backup feature to support timestamps and consecutive
+  numbering
+- Password entry window: "Remember password" feature only available for text
+  encryption and deterministic random generator (i.e., via Tools | Deterministic
+  Random Generator | Set up)
+- Reduced frequency of "Please donate" messages in "Community" edition
+- Lua scripting language: Update to version 5.4.2
+
+FIXES:
+
+- Password manager: Copy/paste via Ctrl+C and Ctrl+V within database fields
+  did not work
+- Password manager: "Run" command did not work with certain commands, including
+  more complex commands with arguments
+- Text encryption: Decrypted text encoded as UTF-8 instead of UTF-16
+
+----------
+
+Version 3.2.0 (2020-08-05)
+
+NEW FEATURES:
+
+- Native 64-bit version available
+- Password manager: New "Tags" field in password databases allows assigning
+  multiple tags to entries, which can be filtered via the tag list control on
+  top of the list of database entries
+- Option "Ask before exiting application" asks for confirmation via a message
+  box before exiting
+- Option "Clear password box automatically" automatically clears the password
+  box in the main window after a certain time
+  
+CHANGES & IMPROVEMENTS:
+
+- Create random data files: Allow file sizes up to 10 terabytes
+  
+FIXES:
+
+- Several placeholders for character sets ("Include characters" option) not
+  functional
+- File extension filters in open/save dialogs not available in English version
+- Password manager: Dropping dragged entry on "<New Entry>" item caused fatal
+  error
+- Missing translations in German.lng
+
+----------
+
+Version 3.1.0 (2020-06-14)
+
+NEW FEATURES:
+
+- Multilingual support (note: Translation Utility has also been relaunched)
+- Allow comments preceding the file name in file name lists ("Include words"
+  and "Run script"), e.g. "[My word list]C:\Users\user\Documents\mylist.txt"
+- Password manager: "Fuzzy" (approximate) search ("zZ" button in toolbar)
+- Password manager: Rearrange entries ("Edit" menu and context menu of list)
+- Password manager: Allow changing password font ("View" menu)
+
+CHANGES & IMPROVEMENTS:
+
+- "Specify length" option for passphrases: Length specification now refers
+  to the net length of the passphrase (i.e., only counting characters from
+  words and not from the previous "Include characters" option); an asterisk (*)
+  can be specified somewhere in the sequence to count all characters (e.g.,
+  "10-20*", "*>15")
+- Password manager: When creating or opening a database, wait until file name
+  has been selected and/or password has been entered before closing the
+  currently opened database
+- Password manager: Allow access to "File" menu when editing an entry
+- Password manager: "View | Sort Order" options moved to "View | Sort By" menu
+  
+FIXES:
+
+- Wait for running threads to finish upon exit
+- Fixed issues related to "Always on Top" feature
+- Password manager: Sort options not loaded from configuration on startup
+- Password manager: Key-value string not copied when duplicating entry
+
+----------
+
+Version 3.0.0 (2020-05-05)
+
+- Relaunched "PWGen for Windows" as "Password Tech" (PwTech) with lots of
+  new features, including password safe/manager and password generation with
+  Lua scripts
+
+NOTE: Multilingual support is currently not available. It will be added in a
+future release.
+
+----------
+
+Please refer to older versions of the predecessor "PWGen for Windows" for the
+changes in PWGen 1.x and 2.x!
