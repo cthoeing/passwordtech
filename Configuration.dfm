@@ -26,7 +26,7 @@ object ConfigurationDlg: TConfigurationDlg
     Top = 8
     Width = 410
     Height = 369
-    ActivePage = UpdatesSheet
+    ActivePage = DatabaseSheet
     Anchors = [akLeft, akTop, akRight, akBottom]
     HotTrack = True
     TabOrder = 0
@@ -90,7 +90,7 @@ object ConfigurationDlg: TConfigurationDlg
         TabOrder = 4
         Text = '0'
       end
-      object AutotypeDelayUpDown: TUpDown
+      object AutotypeDelaySpinBtn: TUpDown
         Left = 314
         Top = 151
         Width = 16
@@ -433,72 +433,79 @@ object ConfigurationDlg: TConfigurationDlg
         341)
       object DefaultAutotypeSeqLbl: TLabel
         Left = 8
-        Top = 296
+        Top = 309
         Width = 135
         Height = 13
         Caption = 'Default autotype sequence:'
       end
+      object WarnExpireNumDaysLbl: TLabel
+        Left = 58
+        Top = 259
+        Width = 80
+        Height = 13
+        Caption = 'Number of days:'
+      end
       object LockMinimizeCheck: TCheckBox
         Left = 8
-        Top = 63
+        Top = 39
         Width = 377
         Height = 17
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Lock database when minimizing application or database window'
-        TabOrder = 2
+        TabOrder = 1
       end
       object LockIdleCheck: TCheckBox
         Left = 8
-        Top = 86
+        Top = 62
         Width = 377
         Height = 17
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Lock database after the following idle time (seconds):'
-        TabOrder = 3
+        TabOrder = 2
         OnClick = LockIdleCheckClick
       end
       object LockIdleTimeBox: TEdit
-        Left = 54
-        Top = 109
+        Left = 58
+        Top = 85
         Width = 51
         Height = 21
-        TabOrder = 4
+        TabOrder = 3
         Text = '60'
       end
-      object LockIdleTimeUpDown: TUpDown
-        Left = 105
-        Top = 109
+      object LockIdleTimeSpinBtn: TUpDown
+        Left = 108
+        Top = 85
         Width = 16
         Height = 21
         Associate = LockIdleTimeBox
         Min = 10
         Max = 32767
         Position = 60
-        TabOrder = 5
+        TabOrder = 4
       end
       object CreateBackupCheck: TCheckBox
         Left = 8
-        Top = 136
+        Top = 112
         Width = 377
         Height = 17
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Create backup of database before saving'
-        TabOrder = 7
+        TabOrder = 6
         OnClick = CreateBackupCheckClick
       end
       object MaxNumBackupsBox: TEdit
-        Left = 282
-        Top = 159
-        Width = 51
+        Left = 285
+        Top = 135
+        Width = 45
         Height = 21
         Anchors = [akTop, akRight]
         NumbersOnly = True
-        TabOrder = 9
+        TabOrder = 8
         Text = '1'
       end
-      object MaxNumBackupsUpDown: TUpDown
-        Left = 333
-        Top = 159
+      object MaxNumBackupsSpinBtn: TUpDown
+        Left = 330
+        Top = 136
         Width = 16
         Height = 21
         Anchors = [akTop, akRight]
@@ -506,84 +513,76 @@ object ConfigurationDlg: TConfigurationDlg
         Min = 1
         Max = 999
         Position = 1
-        TabOrder = 10
+        TabOrder = 9
       end
       object OpenDbOnStartupCheck: TCheckBox
         Left = 8
-        Top = 210
+        Top = 186
         Width = 377
         Height = 17
         Caption = 'Open last used database on startup'
-        TabOrder = 12
+        TabOrder = 11
       end
-      object ClearClipMinimizeCheck: TCheckBox
+      object ClearClipCloseLockCheck: TCheckBox
         Left = 8
         Top = 16
         Width = 380
         Height = 17
-        Caption = 'Clear clipboard on minimize'
+        Caption = 'Clear clipboard when closing/locking database'
         TabOrder = 0
-      end
-      object ClearClipExitCheck: TCheckBox
-        Left = 8
-        Top = 39
-        Width = 380
-        Height = 17
-        Caption = 'Clear clipboard on exit'
-        TabOrder = 1
       end
       object OpenWindowOnStartupCheck: TCheckBox
         Left = 8
-        Top = 187
+        Top = 163
         Width = 377
         Height = 17
         Caption = 'Open window on startup'
-        TabOrder = 11
+        TabOrder = 10
       end
       object LockAutoSaveCheck: TCheckBox
-        Left = 136
-        Top = 113
+        Left = 139
+        Top = 89
         Width = 249
         Height = 17
         Caption = 'Save automatically'
-        TabOrder = 6
+        TabOrder = 5
       end
       object DefaultAutotypeSeqBox: TEdit
         Left = 176
-        Top = 293
+        Top = 309
         Width = 212
         Height = 21
         Anchors = [akLeft, akTop, akRight]
-        TabOrder = 16
+        TabOrder = 15
       end
       object NumberBackupsCheck: TCheckBox
-        Left = 54
-        Top = 159
+        Left = 57
+        Top = 135
         Width = 222
         Height = 17
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Number backups consecutively - up to:'
-        TabOrder = 8
+        TabOrder = 7
         OnClick = NumberBackupsCheckClick
       end
       object AutoSaveCheck: TCheckBox
         Left = 8
-        Top = 257
+        Top = 282
         Width = 162
         Height = 21
         Caption = 'Save automatically:'
-        TabOrder = 14
+        TabOrder = 13
         OnClick = AutoSaveCheckClick
       end
       object AutoSaveList: TComboBox
         Left = 176
-        Top = 257
+        Top = 282
         Width = 209
         Height = 21
         Style = csDropDownList
         Anchors = [akLeft, akTop, akRight]
         ItemIndex = 0
-        TabOrder = 15
+        TabOrder = 14
         Text = 'After adding/modifying an entry'
         Items.Strings = (
           'After adding/modifying an entry'
@@ -591,11 +590,37 @@ object ConfigurationDlg: TConfigurationDlg
       end
       object WarnExpiredEntriesCheck: TCheckBox
         Left = 8
-        Top = 234
+        Top = 210
         Width = 377
         Height = 17
         Caption = 'Warn if database contains expired entries'
-        TabOrder = 13
+        TabOrder = 12
+      end
+      object WarnEntriesExpireSoonCheck: TCheckBox
+        Left = 8
+        Top = 233
+        Width = 377
+        Height = 17
+        Caption = 'Warn if database contains entries that will expire soon'
+        TabOrder = 16
+      end
+      object WarnExpireNumDaysBox: TEdit
+        Left = 176
+        Top = 255
+        Width = 49
+        Height = 21
+        TabOrder = 17
+        Text = '1'
+      end
+      object WarnExpireNumDaysSpinBtn: TUpDown
+        Left = 223
+        Top = 256
+        Width = 16
+        Height = 21
+        Associate = WarnExpireNumDaysBox
+        Min = 1
+        Position = 1
+        TabOrder = 18
       end
     end
   end
@@ -627,7 +652,7 @@ object ConfigurationDlg: TConfigurationDlg
     Font.Height = -11
     Font.Name = 'MS Sans Serif'
     Font.Style = []
-    Left = 8
-    Top = 344
+    Left = 16
+    Top = 384
   end
 end

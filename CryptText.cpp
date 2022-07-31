@@ -95,7 +95,7 @@ int EncryptText(const SecureWString* psText,
     else if (!GetClipboardTextBuf(&sText, NULL))
       return CRYPTTEXT_ERROR_CLIPBOARD;
 
-    if (sText.Size() <= 1)
+    if (sText.IsStrEmpty())
       return CRYPTTEXT_ERROR_NOTEXT;
 
     // get UTF-8 text length
@@ -223,7 +223,7 @@ int DecryptText(const SecureWString* psText,
     word32 lTextLen;
 
     if (psText != NULL) {
-      if (psText->Size() <= 1)
+      if (psText->IsStrEmpty())
         return CRYPTTEXT_ERROR_NOTEXT;
       const wchar_t* pwszBuf = psText->c_str();
       lTextLen = wcslen(pwszBuf) + 1;

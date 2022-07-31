@@ -132,7 +132,7 @@ public:
 
   // get key-value list as single string, with key-value pairs separated
   // by "sep" character
-  void GetKeyValueListAsString(SecureWString& sDest, wchar_t sep = '\n') const;
+  SecureWString GetKeyValueListAsString(wchar_t sep = '\n') const;
 
   // clear (empty) key-value list
   void ClearKeyValueList(void)
@@ -144,7 +144,7 @@ public:
   // update internal key-value list string, key-value pairs separated by ','
   void UpdateKeyValueString(void)
   {
-    GetKeyValueListAsString(Strings[KEYVALUELIST], ',');
+    Strings[KEYVALUELIST] = GetKeyValueListAsString(',');
   }
 
   // get/set list of tags
@@ -167,12 +167,12 @@ public:
   bool AddTag(const SecureWString& sTag);
 
   // get list of tags as single string, with tags separated by "sep" character
-  void GetTagsAsString(SecureWString& sDest, wchar_t sep = '\n') const;
+  SecureWString GetTagsAsString(wchar_t sep = '\n') const;
 
   // update internal list of tags, tags separated by ','
   void UpdateTagsString(void)
   {
-    GetTagsAsString(Strings[TAGS], ',');
+    Strings[TAGS] = GetTagsAsString(',');
   }
 
   // clear (empty) list of tags
@@ -354,9 +354,9 @@ private:
 
   word32 ReadFieldSize(void);
 
-  void ReadString(SecureAnsiString& sDest);
+  SecureAnsiString ReadAnsiString(void);
 
-  void ReadString(SecureWString& sDest);
+  SecureWString ReadString(void);
 
   //void ReadTimeStamp(FILETIME& ft);
 
@@ -403,6 +403,13 @@ private:
     m_lKdfIterations = lIter;
   }
 
+  void ReassignIndices(void)
+  {
+    word32 lIndex = 0;
+    for (auto pEntry : m_db)
+      pEntry->m_lIndex = lIndex++;
+  }
+
 public:
 
   enum {
@@ -447,15 +454,14 @@ public:
   PasswDbEntry* AddDbEntry(bool blSetTimeStamp = true,
     bool blSetDefUserName = true);
 
-  void DeleteDbEntry(PasswDbEntry* pEntry);
+  void DeleteDbEntry(PasswDbEntry& pEntry);
 
   void MoveDbEntry(word32 lCurrPos, word32 lNewPos);
 
-  void SetDbEntryPassw(PasswDbEntry* pEntry,
+  void SetDbEntryPassw(PasswDbEntry& pEntry,
     const SecureWString& sPassw);
 
-  void GetDbEntryPassw(const PasswDbEntry* pEntry,
-    SecureWString& sPassw);
+  SecureWString GetDbEntryPassw(const PasswDbEntry& pEntry);
 
   void SetPlaintextPassw(bool blPlaintextPassw);
 

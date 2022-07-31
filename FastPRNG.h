@@ -40,15 +40,15 @@ public:
     Reset();
   }
 
-  void Seed(const void*, word32) {}
+  void Seed(const void*, word32) override {}
 
-  void Reset(void);
+  void Reset(void) override;
 
-  void Randomize(void);
+  void Randomize(void) override;
 
-  word32 GetWord32(void);
+  word32 GetWord32(void) override;
 
-  void GetData(void* pMem, word32 lSize);
+  void GetData(void* pMem, word32 lSize) override;
 
 private:
   word32 m_m[256], m_r;
@@ -83,11 +83,11 @@ public:
 
   ~SplitMix64() { m_qState = 0; }
 
-  void Seed(const void* pData, word32 lNumBytes);
+  void Seed(const void* pData, word32 lNumBytes) override;
 
-  void GetData(void* pDest, word32 lNumBytes);
+  void GetData(void* pDest, word32 lNumBytes) override;
 
-  word64 GetWord64(void);
+  word64 GetWord64(void) override;
 
 private:
   word64 m_qState;
@@ -104,11 +104,11 @@ public:
 
   ~Xoshiro256StarStar();
 
-  void Seed(const void* pData, word32 lNumBytes);
+  void Seed(const void* pData, word32 lNumBytes) override;
 
-  void GetData(void* pDest, word32 lNumBytes);
+  void GetData(void* pDest, word32 lNumBytes) override;
 
-  word64 GetWord64(void);
+  word64 GetWord64(void) override;
 
 private:
   word64 m_qState[4];

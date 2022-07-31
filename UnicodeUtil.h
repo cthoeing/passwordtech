@@ -126,8 +126,7 @@ w32string AsciiCharToW32String(const char* pszStr);
 AnsiString WStringToUtf8(const WString& sSrc);
 
 // version for storing result in SecureString
-void WStringToUtf8(const wchar_t* pwszSrc,
-  SecureAnsiString& asDest);
+SecureAnsiString WStringToUtf8(const wchar_t* pwszSrc);
 
 // convert UTF-8 encoded string to wide string (16-bit)
 // -> source UTF-8-encoded string
@@ -135,8 +134,7 @@ void WStringToUtf8(const wchar_t* pwszSrc,
 WString Utf8ToWString(const AnsiString& asSrc);
 
 // version for storing result in SecureString
-void Utf8ToWString(const char* pszSrc,
-  SecureWString& sDest);
+SecureWString Utf8ToWString(const char* pszSrc);
 
 
 #endif

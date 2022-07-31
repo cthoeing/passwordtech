@@ -93,8 +93,8 @@ void __fastcall TPasswDbSettingsDlg::SaveConfig(void)
 //---------------------------------------------------------------------------
 void __fastcall TPasswDbSettingsDlg::GetSettings(PasswDbSettings& s)
 {
-  GetEditBoxTextBuf(DefUserNameBox, s.DefaultUserName);
-  GetEditBoxTextBuf(PasswFormatSeqBox, s.PasswFormatSeq);
+  s.DefaultUserName = GetEditBoxTextBuf(DefUserNameBox);
+  s.PasswFormatSeq = GetEditBoxTextBuf(PasswFormatSeqBox);
   s.DefaultExpiryDays = DefaultExpiryUpDown->Position;
   s.CipherType = EncryptionAlgoList->ItemIndex;
   s.NumKdfRounds = StrToUInt(NumKdfRoundsBox->Text);
@@ -174,8 +174,7 @@ void __fastcall TPasswDbSettingsDlg::PasswGenTestBtnClick(TObject *Sender)
   if (PasswFormatSeqBox->GetTextLen() != 0) {
     static PasswordGenerator passwGen(&g_fastRandGen);
 
-    SecureWString sFormat;
-    GetEditBoxTextBuf(PasswFormatSeqBox, sFormat);
+    SecureWString sFormat = GetEditBoxTextBuf(PasswFormatSeqBox);
 
     w32string sFormat32 = WCharToW32String(sFormat.c_str());
 

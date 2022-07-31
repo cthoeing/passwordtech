@@ -22,6 +22,7 @@
 #include <algorithm>
 #include <set>
 #include <unordered_map>
+#include <functional>
 #include <Math.hpp>
 #pragma hdrstop
 
@@ -156,9 +157,7 @@ static w32string s_charSetCodes[PASSWGEN_NUMCHARSETCODES_EXT];
 PasswordGenerator::PasswordGenerator(RandomGenerator* pRandGen)
   : m_pRandGen(pRandGen)
 {
-  bool blCreateCodes = s_charSetCodes[0].empty();
-
-  if (blCreateCodes) {
+  if (s_charSetCodes[0].empty()) {
     for (int nI = 0; nI < PASSWGEN_NUMCHARSETCODES_EXT; nI++)
       s_charSetCodes[nI] = AsciiCharToW32String(CHARSET_CODES[nI]);
   }
@@ -178,45 +177,9 @@ PasswordGenerator::~PasswordGenerator()
 //---------------------------------------------------------------------------
 w32string PasswordGenerator::MakeCharSetUnique(const w32string& sSrc,
   w32string* psAmbigChars,
-  std::vector<w32string>* pAmbigGroups,
-  bool blMakeAmbChSet)
+  std::vector<w32string>* pAmbigGroups)
 {
   std::set<word32> chset;
-
-  if (blMakeAmbChSet) {
-    std::vector<w32string> groups;
-    int nSepPos;
-
-    if ((nSepPos = psAmbigChars->find(' ', 0)) >= 2 &&
-      nSepPos <= static_cast<int>(psAmbigChars->length()) - 3)
-    {
-      w32string sGroup;
-      const word32* p = psAmbigChars->c_str();
-      do {
-        if (*p == ' ' || *p == '\0') {
-          if (sGroup.length() >= 2)
-            groups.push_back(sGroup);
-          sGroup.clear();
-        }
-        else {
-          std::pair<std::set<word32>::iterator,bool> ret = chset.insert(*p);
-          if (ret.second)
-            sGroup.push_back(*p);
-        }
-      }
-      while (*p++ != '\0');
-    }
-    else
-      chset.insert(psAmbigChars->begin(), psAmbigChars->end());
-
-    psAmbigChars->assign(chset.begin(), chset.end());
-    if (groups.size() >= 2)
-      *pAmbigGroups = groups;
-    else
-      pAmbigGroups->clear();
-
-    return w32string();
-  }
 
   // make a first set by inserting all chars in sSrc
   chset.insert(sSrc.begin(), sSrc.end());
@@ -247,6 +210,45 @@ w32string PasswordGenerator::MakeCharSetUnique(const w32string& sSrc,
 
 //  w32string y(chset.begin(),chset.end());
 //  WString x=W32StringToWString(y);
+
+  return w32string(chset.begin(), chset.end());
+}
+//---------------------------------------------------------------------------
+w32string PasswordGenerator::CreateSetOfAmbiguousChars(
+  const w32string& sAmbigChars,
+  std::vector<w32string>& ambigGroups)
+{
+  std::set<word32> chset;
+  std::vector<w32string> groups;
+  int nSepPos;
+
+  if ((nSepPos = sAmbigChars.find(' ', 0)) >= 2 &&
+    nSepPos <= static_cast<int>(sAmbigChars.length()) - 3)
+  {
+    w32string sGroup;
+    const word32* p = sAmbigChars.c_str();
+    do {
+      if (*p == ' ' || *p == '\0') {
+        if (sGroup.length() >= 2)
+          groups.push_back(sGroup);
+        sGroup.clear();
+      }
+      else {
+        std::pair<std::set<word32>::iterator,bool> ret = chset.insert(*p);
+        if (ret.second)
+          sGroup.push_back(*p);
+      }
+    }
+    while (*p++ != '\0');
+  }
+  else
+    chset.insert(sAmbigChars.begin(), sAmbigChars.end());
+
+  //psAmbigChars->assign(chset.begin(), chset.end());
+  if (groups.size() >= 2)
+    ambigGroups = groups;
+  //else
+  //  pAmbigGroups->clear();
 
   return w32string(chset.begin(), chset.end());
 }
@@ -342,11 +344,9 @@ void PasswordGenerator::SetupCharSets(WString& sCustomChars,
   w32string sAmbigCharSet, sSpecialSymCharSet;
   std::vector<w32string> ambigGroups;
 
-  if (!sAmbigChars.IsEmpty()) {
-    sAmbigCharSet = WStringToW32String(sAmbigChars);
-    w32string sDummy;
-    MakeCharSetUnique(sDummy, &sAmbigCharSet, &ambigGroups, true);
-  }
+  if (!sAmbigChars.IsEmpty())
+    sAmbigCharSet = CreateSetOfAmbiguousChars(WStringToW32String(sAmbigChars),
+      ambigGroups);
   else
     sAmbigCharSet = AsciiCharToW32String(CHARSET_AMBIGUOUS);
 
@@ -445,8 +445,9 @@ void PasswordGenerator::SetupCharSets(WString& sCustomChars,
   m_formatCharSets[CHARSET_FORMAT_y] = m_charSetDecodes[CHARSET_CODES_HIGHANSI];
 
   if (blExcludeAmbigChars) {
-    for (nI = 0; nI < sizeof(CHARSET_FORMAT_CONST)/sizeof(int); nI++) {
-      int nSetIdx = CHARSET_FORMAT_CONST[nI];
+    //for (nI = 0; nI < sizeof(CHARSET_FORMAT_CONST)/sizeof(int); nI++) {
+    for (int nSetIdx : CHARSET_FORMAT_CONST) {
+      //int nSetIdx = chset[nI];
       w32string sNew = MakeCharSetUnique(m_formatCharSets[nSetIdx], &sAmbigCharSet);
       if (sNew.length() >= 2)
         m_formatCharSets[nSetIdx] = sNew;
@@ -459,7 +460,7 @@ void PasswordGenerator::SetupCharSets(WString& sCustomChars,
       w32string sSubset;
 	  size_t pos = 0;
 	  while ((pos = m_sCustomCharSet.find_first_of(m_includeCharSets[nI], pos))
-		!= w32string::npos)
+             != w32string::npos)
 		sSubset.push_back(m_sCustomCharSet[pos++]);
 	  m_customSubsets[nI] = sSubset;
     }
@@ -546,7 +547,7 @@ int PasswordGenerator::GetPassword(word32* pDest,
 {
   int nI;
   word32 lChar;
-  std::unique_ptr< std::set<word32> > pPasswCharSet;
+  std::unique_ptr<std::set<word32>> pPasswCharSet;
 
   if ((nFlags & PASSW_FLAG_EACHCHARONLYONCE) &&
     (nFlags & PASSW_FLAG_CHECKDUPLICATESBYSET))
@@ -575,7 +576,7 @@ int PasswordGenerator::GetPassword(word32* pDest,
 
   pDest[nLength] = '\0';
 
-  if (nFlags >= PASSW_FLAG_INCLUDEUCL) {
+  if (nFlags >= PASSW_FLAG_INCLUDEUPPERCASE) {
     SecureMem<int> randPerm(PASSWGEN_NUMINCLUDECHARSETS);
     const w32string* psCharSets;
     int nJ, nRand;
@@ -586,7 +587,7 @@ int PasswordGenerator::GetPassword(word32* pDest,
       psCharSets = m_includeCharSets;
 
     for (nI = nJ = 0; nI < PASSWGEN_NUMINCLUDECHARSETS && nJ < nLength; nI++) {
-      int nFlagVal = PASSW_FLAG_INCLUDEUCL << nI;
+      int nFlagVal = PASSW_FLAG_INCLUDEUPPERCASE << nI;
 
       if (!(nFlags & nFlagVal) || psCharSets[nI].empty())
         continue;
@@ -594,8 +595,8 @@ int PasswordGenerator::GetPassword(word32* pDest,
 //        if (psCharSets[nI].find_first_of(pDest) != w32string::npos)
 //          continue;
 
-      do {
-        if (nFlagVal == PASSW_FLAG_INCLUDELCL && nFlags & PASSW_FLAG_FIRSTCHARNOTLC) {
+      while (true) {
+        if (nFlagVal == PASSW_FLAG_INCLUDELOWERCASE && nFlags & PASSW_FLAG_FIRSTCHARNOTLC) {
           if (nLength-nJ >= 2)
             nRand = 1 + m_pRandGen->GetNumRange(nLength-1);
           else {
@@ -605,14 +606,15 @@ int PasswordGenerator::GetPassword(word32* pDest,
         }
         else
           nRand = m_pRandGen->GetNumRange(nLength);
-        for (int nK = 0; nK < nJ; nK++) {
+        if (randPerm.Find(nRand, 0, nJ) == -1)
+          break;
+        /*for (int nK = 0; nK < nJ; nK++) {
           if (nRand == randPerm[nK]) {
             nRand = -1;
             break;
           }
-        }
+        }*/
       }
-      while (nRand < 0);
 
       if (nRand < 0)
         continue;
@@ -630,7 +632,7 @@ int PasswordGenerator::GetPassword(word32* pDest,
       while (1) {
         lChar = psCharSets[nI][m_pRandGen->GetNumRange(nSetSize)];
         if (nFlags & PASSW_FLAG_EACHCHARONLYONCE) {
-          if (pPasswCharSet.get() != NULL) {
+          if (pPasswCharSet) {
             std::pair<std::set<word32>::iterator, bool> ret =
               pPasswCharSet->insert(lChar);
             if (!ret.second)
@@ -715,6 +717,9 @@ int PasswordGenerator::GetPassphrase(word32* pDest,
       nWordLen = AsciiCharToW32Char(getDiceWd(nRand), sWord);
     else
       nWordLen = WCharToW32Char(m_wordList[nRand].c_str(), sWord);
+
+    if (nFlags & PASSPHR_FLAG_CAPITALIZEWORDS)
+      sWord[0] = toupper(sWord[0]);
 
     int nInsertWordIdx = nLength;
 
@@ -1229,7 +1234,7 @@ int PasswordGenerator::GetPhoneticPassw(word32* pDest,
   int nFlags) const
 {
 //  word32* pTris = (m_pPhoneticTris == NULL) ? (word32*) PHONETIC_TRIS : m_pPhoneticTris;
-#define getLetter(x)  x + (blMixedCase ? ((m_pRandGen->GetByte() & 1) ? 'a' : 'A') : base)
+//#define getLetter(x)  x + (blMixedCase ? ((m_pRandGen->GetByte() & 1) ? 'a' : 'A') : base)
   bool blDefaultTris = m_phoneticTris.empty();
   bool blMixedCase = nFlags & PASSW_FLAG_PHONETICMIXEDCASE;
   word32 lSumFreq = m_lPhoneticSigma;
@@ -1238,6 +1243,12 @@ int PasswordGenerator::GetPhoneticPassw(word32* pDest,
   int nChars = 0, nI;
   char base = (nFlags & PASSW_FLAG_PHONETICUPPERCASE) ? 'A' : 'a';
   char ch1, ch2, ch3;
+
+  std::function<char(char)> getLetter;
+  if (blMixedCase)
+    getLetter = [this](char c) { return c + ((m_pRandGen->GetByte() & 1) ? 'a' : 'A'); };
+  else
+    getLetter = [base](char c) { return c + base; };
 
   for (nI = 0; nI < PHONETIC_TRIS_NUM; nI++) {
     if (blDefaultTris)
@@ -1265,26 +1276,28 @@ int PasswordGenerator::GetPhoneticPassw(word32* pDest,
 
     lSumFreq = 0;
     for (ch3 = 0; ch3 < 26; ch3++) {
+      int nIndex = 676*ch1+26*ch2+ch3;
       if (blDefaultTris)
-        lSumFreq += PHONETIC_TRIS[676*ch1+26*ch2+ch3];
+        lSumFreq += PHONETIC_TRIS[nIndex];
       else
-        lSumFreq += m_phoneticTris[676*ch1+26*ch2+ch3];
+        lSumFreq += m_phoneticTris[nIndex];
     }
 
     if (lSumFreq == 0) {
       // if we can't find anything, just insert a vowel...
       static const char VOWELS[5] = { 0, 4, 8, 14, 20 };
-      ch3 = VOWELS[m_pRandGen->GetNumRange(sizeof(VOWELS))];
+      ch3 = VOWELS[m_pRandGen->GetNumRange(5)];
     }
     else {
       lRand = m_pRandGen->GetNumRange(lSumFreq);
       lSum = 0;
 
       for (ch3 = 0; ch3 < 26; ch3++) {
+        int nIndex = 676*ch1+26*ch2+ch3;
         if (blDefaultTris)
-          lSum += PHONETIC_TRIS[676*ch1+26*ch2+ch3];
+          lSum += PHONETIC_TRIS[nIndex];
         else
-          lSum += m_phoneticTris[676*ch1+26*ch2+ch3];
+          lSum += m_phoneticTris[nIndex];
         if (lSum > lRand)
           break;
       }
@@ -1296,17 +1309,32 @@ int PasswordGenerator::GetPhoneticPassw(word32* pDest,
   pDest[nChars] = '\0';
   lRand = 0;
 
-  if (nFlags >= PASSW_FLAG_INCLUDEUCL) {
+  if (nFlags >= PASSW_FLAG_INCLUDEUPPERCASE) {
     SecureMem<int> randPerm(PASSWGEN_NUMINCLUDECHARSETS);
     int nJ, nRand;
 
     for (nI = nJ = 0; nI < PASSWGEN_NUMINCLUDECHARSETS && nJ < nLength; nI++) {
-      int nFlagVal = PASSW_FLAG_INCLUDEUCL << nI;
+      int nFlagVal = PASSW_FLAG_INCLUDEUPPERCASE << nI;
 
-      if (!(nFlags & nFlagVal) || (nFlagVal == PASSW_FLAG_INCLUDELCL && !blMixedCase))
+      if (!(nFlags & nFlagVal))
         continue;
+
+      // include lower case:
+      // if neither "upper case" nor "mixed case" flag is active,
+      // there's no need to explicitly convert a letter
+      if (nFlagVal == PASSW_FLAG_INCLUDELOWERCASE &&
+          !(nFlags & (PASSW_FLAG_PHONETICUPPERCASE | PASSW_FLAG_PHONETICMIXEDCASE)))
+        continue;
+
+      // include upper case:
+      // if "upper case" flag is active but "mixed case" flag is not,
+      // again there's no need for explicit conversion
+      if (nFlagVal == PASSW_FLAG_INCLUDEUPPERCASE &&
+          (nFlags & PASSW_FLAG_PHONETICUPPERCASE) && !blMixedCase)
+        continue;
+
       /*
-      if (nFlagVal == PASSW_FLAG_INCLUDEUCL) {
+      if (nFlagVal == PASSW_FLAG_INCLUDEUPPERCASE) {
         w32string sCharSetLC = m_includeCharSets[nI];
         for (w32string::iterator it = sCharSetLC.begin();
              it != sCharSetLC.end(); it++)
@@ -1319,39 +1347,35 @@ int PasswordGenerator::GetPhoneticPassw(word32* pDest,
       }
       */
 
-      do {
+      while (true) {
         nRand = m_pRandGen->GetNumRange(nLength);
-        for (int nK = 0; nK < nJ; nK++) {
+        if (randPerm.Find(nRand, 0, nJ) == -1)
+          break;
+        /*for (int nK = 0; nK < nJ; nK++) {
           if (nRand == randPerm[nK]) {
             nRand = -1;
             break;
           }
         }
-
-        // if nI == 0 (nFlagVal == _INCLUDEUCL), nRand is ALWAYS >= 0!!
-        /*
-        if (nFlagVal == PASSW_FLAG_INCLUDEUCL &&
-            m_includeCharSets[nI].find(toupper(pDest[nRand])) == w32string::npos)
-          nRand = -1;
-        */
+        if (nRand>=0) break;*/
       }
-      while (nRand < 0);
 
       randPerm[nJ++] = nRand;
 
-      if (nFlagVal == PASSW_FLAG_INCLUDEUCL)
+      if (nFlagVal == PASSW_FLAG_INCLUDEUPPERCASE)
         pDest[nRand] = toupper(pDest[nRand]);
-      else {
-        int nSetSize = m_includeCharSets[nI].length();
-        pDest[nRand] = m_includeCharSets[nI][m_pRandGen->GetNumRange(nSetSize)];
-      }
+      else if (nFlagVal == PASSW_FLAG_INCLUDELOWERCASE)
+        pDest[nRand] = tolower(pDest[nRand]);
+      else
+        pDest[nRand] = m_includeCharSets[nI][m_pRandGen->GetNumRange(
+          m_includeCharSets[nI].length())];
     }
 
     nRand = 0;
   }
 
   return nChars;
-#undef getLetter
+//#undef getLetter
 }
 //---------------------------------------------------------------------------
 static double logFactorial(int nNum)

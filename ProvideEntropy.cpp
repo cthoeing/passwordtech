@@ -77,11 +77,9 @@ void __fastcall TProvideEntropyDlg::OKBtnClick(TObject *Sender)
   //if (GetEditBoxTextLen(TextBox) == 0)
   //  return;
 
-  SecureWString sText;
-  GetEditBoxTextBuf(TextBox, sText);
+  SecureWString sText = GetEditBoxTextBuf(TextBox);
 
-  SecureAnsiString sTextUtf8;
-  WStringToUtf8(sText.c_str(), sTextUtf8);
+  SecureAnsiString sTextUtf8 = WStringToUtf8(sText.c_str());
 
   if (!sTextUtf8.IsEmpty()) {
     sText.Empty();

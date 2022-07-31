@@ -27,7 +27,7 @@
 #pragma package(smart_init)
 
 
-void memzero(void* pMem, size_t size)
+[[clang::optnone]] void memzero(void* pMem, size_t size)
 {
   memset(pMem, 0, size);
 }

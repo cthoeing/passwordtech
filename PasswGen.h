@@ -41,8 +41,8 @@ PASSW_FLAG_FIRSTCHARNOTLC       = 0x0001,  // first char must not be lower-case 
 PASSW_FLAG_EXCLUDEREPCHARS      = 0x0002,  // exclusion of repeating consecutive chars
 PASSW_FLAG_INCLUDESUBSET        = 0x0004,  // include only additional characters
                                            // if custom set contains appropriate subset
-PASSW_FLAG_INCLUDEUCL           = 0x0008,  // include one char from additional charset
-PASSW_FLAG_INCLUDELCL           = 0x0010,
+PASSW_FLAG_INCLUDEUPPERCASE     = 0x0008,  // include one char from additional charset
+PASSW_FLAG_INCLUDELOWERCASE     = 0x0010,
 PASSW_FLAG_INCLUDEDIGIT         = 0x0020,
 PASSW_FLAG_INCLUDESPECIAL       = 0x0040,
 PASSW_FLAG_PHONETICUPPERCASE    = 0x0080,
@@ -51,10 +51,11 @@ PASSW_FLAG_EACHCHARONLYONCE     = 0x0200, // each character must occur only once
 PASSW_FLAG_CHECKDUPLICATESBYSET = 0x0400,
 
 PASSPHR_FLAG_COMBINEWCH         = 0x0001,  // combine words & chars
-PASSPHR_FLAG_DONTSEPWORDS       = 0x0002,  // don't separate words by a space
-PASSPHR_FLAG_DONTSEPWCH         = 0x0004,  // don't separate words & chars by '-'
-PASSPHR_FLAG_REVERSEWCHORDER    = 0x0008,
-PASSPHR_FLAG_EACHWORDONLYONCE   = 0x0010,
+PASSPHR_FLAG_CAPITALIZEWORDS    = 0x0002,  // capitalize first letter of word
+PASSPHR_FLAG_DONTSEPWORDS       = 0x0004,  // don't separate words by a space
+PASSPHR_FLAG_DONTSEPWCH         = 0x0008,  // don't separate words & chars by '-'
+PASSPHR_FLAG_REVERSEWCHORDER    = 0x0010,
+PASSPHR_FLAG_EACHWORDONLYONCE   = 0x0020,
 
 PASSFORMAT_FLAG_EXCLUDEREPCHARS = 1,
 
@@ -94,13 +95,9 @@ private:
 
   // convert ("parse") the input string into a "unique" character set
   // -> input string
-  // -> 'true' if password is intended to be pronounceable (phonetic rules)
-  // -> pointer to a 'bool' variable that gets noticed if the character set
-  //    contains any non-lowercase letters (may be NULL)
-  // <- character set; NULL if the input string contains less than 2 unique
-  //    characters
-  w32string ParseCharSet(w32string sInput,
-    CharSetType& charSetType);
+  // -> receives identified type of character set
+  // <- string containing character set; empty if input is invalid
+  w32string ParseCharSet(w32string sInput, CharSetType& charSetType);
 
   WString GetCustomCharSetAsWString(void) const
   {
@@ -122,8 +119,10 @@ public:
   // <- unique character set
   static w32string MakeCharSetUnique(const w32string& sSrc,
     w32string* psAmbigCharSet = NULL,
-    std::vector<w32string>* pAmbigGroups = NULL,
-    bool blMakeAmbChSet = false);
+    std::vector<w32string>* pAmbigGroups = NULL);
+
+  static w32string CreateSetOfAmbiguousChars(const w32string& aAmbigChars,
+    std::vector<w32string>& ambigGroups);
 
   // generates a pass"word" containing characters only
   // -> where to store the password (buffer must be large enough!)

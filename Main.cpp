@@ -1449,7 +1449,7 @@ void __fastcall TMainForm::CryptText(bool blEncrypt,
 
   SecureWString sPassw;
   if (blSuccess)
-    PasswEnterDlg->GetPassw(sPassw);
+    sPassw = PasswEnterDlg->GetPassw();
 
   PasswEnterDlg->Clear();
   m_pRandPool->Flush();
@@ -2199,8 +2199,8 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
         if (nCharSetSize >= 128 && nCharsLen >= 128)
           nPasswFlags |= PASSW_FLAG_CHECKDUPLICATESBYSET;
         for (int nI = 0; nI < PASSWGEN_NUMINCLUDECHARSETS; nI++) {
-          if (nFlags & (PASSWOPTION_INCLUDEUCL << nI))
-            nPasswFlags |= PASSW_FLAG_INCLUDEUCL << nI;
+          if (nFlags & (PASSWOPTION_INCLUDEUPPERCASE << nI))
+            nPasswFlags |= PASSW_FLAG_INCLUDEUPPERCASE << nI;
         }
         if (m_passwGen.CustomCharSetType == cstPhoneticUpperCase)
           nPasswFlags |= PASSW_FLAG_PHONETICUPPERCASE;
@@ -2214,6 +2214,8 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
       if (nNumOfWords != 0) {
         if (CombineWordsCharsCheck->Checked)
           nPassphrFlags |= PASSPHR_FLAG_COMBINEWCH;
+        if (nFlags & PASSWOPTION_CAPITALIZEWORDS)
+          nPassphrFlags |= PASSPHR_FLAG_CAPITALIZEWORDS;
         if (nFlags & PASSWOPTION_DONTSEPWORDS)
           nPassphrFlags |= PASSPHR_FLAG_DONTSEPWORDS;
         if (nFlags & PASSWOPTION_DONTSEPWORDSCHARS)
@@ -2417,7 +2419,7 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
                   throw Exception(pScriptThread->ErrorMessage);
 
                 const SecureWString& sScriptPassw = pScriptThread->GetResultPassw();
-                if (sScriptPassw.Size() >= 2) {
+                if (!sScriptPassw.IsStrEmpty()) {
                   sFromScript.Assign(sScriptPassw, std::min<word32>(
                       PASSWSCRIPT_MAX_CHARS + 1, sScriptPassw.Size()));
                   sFromScript[sFromScript.Size() - 1] = '\0';
@@ -2619,8 +2621,7 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
 
             //wprintf(L"%s\n", pwszPassw);
             {
-              SecureAnsiString asPasswUtf8;
-              WStringToUtf8(pwszPassw, asPasswUtf8);
+              SecureAnsiString asPasswUtf8 = WStringToUtf8(pwszPassw);
               std::wcout << asPasswUtf8.c_str() << std::endl;
             }
             break;
@@ -3065,15 +3066,17 @@ void __fastcall TMainForm::SetAdvancedBtnCaption(void)
 {
   static WString sAdvanced = TRL("Advanced");
 
-  int nI;
-  for (nI = 0; nI < PASSWOPTIONS_NUM; nI++) {
-    if (PASSWOPTIONS_STARRED[nI] && m_passwOptions.Flags & (1 << nI))
+  bool blRisk = false;
+  for (int nI = 0; nI < PASSWOPTIONS_NUM; nI++) {
+    if (PASSWOPTIONS_STARRED[nI] && m_passwOptions.Flags & (1 << nI)) {
+      blRisk = true;
       break;
+    }
   }
 
   WString sCaption = sAdvanced;
 
-  if (nI < PASSWOPTIONS_NUM)
+  if (blRisk)
     sCaption += WString("(!)");
 
   AdvancedBtn->Caption = sCaption;
@@ -3363,8 +3366,7 @@ void __fastcall TMainForm::PasswBoxChange(TObject *Sender)
     bool blCommonPasswMatch = false;
 
     if (nPasswLen != 0) {
-      SecureWString sPassw;
-      GetEditBoxTextBuf(PasswBox, sPassw);
+      SecureWString sPassw = GetEditBoxTextBuf(PasswBox);
       if (g_config.TestCommonPassw && !m_commonPassw.empty()) {
         std::wstring testStr(sPassw.c_str());
         if (m_commonPassw.count(testStr)) {
@@ -3614,8 +3616,7 @@ void __fastcall TMainForm::MainMenu_File_ExitClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::PasswBoxMenu_EncryptCopyClick(TObject *Sender)
 {
-  SecureWString sText;
-  GetEditBoxSelTextBuf(PasswBox, sText);
+  SecureWString sText = GetEditBoxSelTextBuf(PasswBox);
   CryptText(true, &sText);
 }
 //---------------------------------------------------------------------------
@@ -3715,8 +3716,7 @@ void __fastcall TMainForm::SpecifyLengthCheckClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::PasswBoxMenu_AddToDbClick(TObject *Sender)
 {
-  SecureWString sPassw;
-  GetEditBoxSelTextBuf(PasswBox, sPassw);
+  SecureWString sPassw = GetEditBoxSelTextBuf(PasswBox);
   PasswMngForm->AddPassw(sPassw, false);
 }
 //---------------------------------------------------------------------------
@@ -3752,8 +3752,7 @@ void __fastcall TMainForm::PasswBoxMenu_SaveAsFileClick(TObject *Sender)
   WString sMsg;
 
   try {
-    SecureWString sPassw;
-    GetEditBoxTextBuf(PasswBox, sPassw);
+    SecureWString sPassw = GetEditBoxTextBuf(PasswBox);
 
     std::unique_ptr<TStringFileStreamW> pFile(new TStringFileStreamW(sFileName, fmCreate,
         g_config.FileEncoding, true, PASSW_MAX_BYTES));
@@ -3861,7 +3860,7 @@ void __fastcall TMainForm::MainMenu_Tools_DetermRandGen_SetupClick(TObject *Send
       TRL("Master password"), this) == mrOk;
 
   if (blSuccess)
-    PasswEnterDlg->GetPassw(sPassw);
+    sPassw = PasswEnterDlg->GetPassw();
 
   PasswEnterDlg->Clear();
   m_pRandPool->Flush();
@@ -3927,8 +3926,7 @@ void __fastcall TMainForm::AddProfileBtnClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::PasswBoxMenu_PerformAutotypeClick(TObject *Sender)
 {
-  SecureWString sPassw;
-  GetEditBoxTextBuf(PasswBox, sPassw);
+  SecureWString sPassw = GetEditBoxTextBuf(PasswBox);
   if (g_config.MinimizeAutotype) {
     g_nAppState |= APPSTATE_AUTOTYPE;
     Application->Minimize();

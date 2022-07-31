@@ -42,14 +42,14 @@ public:
 
   // constructor
   SecureMem()
-    : m_pData(NULL), m_lSize(0)
+    : m_pData(nullptr), m_lSize(0)
   {
   }
 
   // constructor
   // -> size of the data array
   SecureMem(word32 lSize)
-    : m_pData(NULL), m_lSize(lSize)
+    : m_pData(nullptr), m_lSize(lSize)
   {
     if (m_lSize != 0) {
       m_pData = new T[m_lSize];
@@ -61,7 +61,7 @@ public:
   // -> size of this data
   SecureMem(const T* pData,
     word32 lSize)
-    : m_pData(NULL), m_lSize(lSize)
+    : m_pData(nullptr), m_lSize(lSize)
   {
     if (m_lSize != 0) {
       m_pData = new T[m_lSize];
@@ -69,15 +69,33 @@ public:
     }
   }
 
+  SecureMem(const T* pStr)
+    : m_pData(nullptr), m_lSize(1)
+  {
+    const T* ptr = pStr;
+    while (*ptr++ != '\0')
+      m_lSize++;
+    m_pData = new T[m_lSize];
+    memcpy(m_pData, pStr, SizeBytes());
+  }
+
   // copy constructor
   // -> object instance
   SecureMem(const SecureMem& src)
-    : m_pData(NULL), m_lSize(src.m_lSize)
+    : m_pData(nullptr), m_lSize(src.m_lSize)
   {
     if (m_lSize != 0) {
       m_pData = new T[m_lSize];
       memcpy(m_pData, src.m_pData, SizeBytes());
     }
+  }
+
+  // move constructor
+  SecureMem(SecureMem&& src)
+    : m_pData(src.m_pData), m_lSize(src.m_lSize)
+  {
+    src.m_pData = nullptr;
+    src.m_lSize = 0;
   }
 
   // destructor
@@ -93,7 +111,7 @@ public:
     {
       Clear();
       delete [] m_pData;
-      m_pData = NULL;
+      m_pData = nullptr;
       m_lSize = 0;
     }
   }
@@ -111,16 +129,17 @@ public:
     word32 lSize)
   {
     New(lSize);
-    memcpy(m_pData, pSrc, lSize * sizeof(T));
+    if (lSize != 0)
+      memcpy(m_pData, pSrc, lSize * sizeof(T));
   }
 
   // copies the data of the source object
   // -> object reference
-  void Assign(const SecureMem& src)
-  {
-    New(src.m_lSize);
-    memcpy(m_pData, src.m_pData, src.m_lSize * sizeof(T));
-  }
+  //void Assign(const SecureMem& src)
+  //{
+  //  New(src.m_lSize);
+  //  memcpy(m_pData, src.m_pData, src.SizeBytes());
+  //}
 
   // resizes the data array (see below for the implementation)
   // -> new size
@@ -136,16 +155,6 @@ public:
   {
     Resize(lNewSize, false);
   }
-
-  // creates a new array and copies the data from pData
-  // -> pointer to the existing array
-  // -> size of the array to be copied
-  /*void New(const T* pData,
-    word32 lSize)
-  {
-    Resize(lSize, false);
-    memcpy(m_pData, pData, lSize * sizeof(T));
-  }*/
 
   // expands the data array (contents will be preserved)
   // -> new size
@@ -193,7 +202,7 @@ public:
 
   const word8* Bytes(void) const
   {
-    return reinterpret_cast<word8*>(m_pData);
+    return reinterpret_cast<const word8*>(m_pData);
   }
 
   word8* Bytes(void)
@@ -234,11 +243,11 @@ public:
     }
 
     if (lStrLen >= m_lSize)
-#ifdef _DEBUG
+//#ifdef _DEBUG
       throw std::runtime_error("SecureMem: StrLen() overflow");
-#else
-      lStrLen = m_lSize - 1;
-#endif
+//#else
+//      lStrLen = m_lSize - 1;
+//#endif
 
     return lStrLen;
   }
@@ -250,12 +259,20 @@ public:
     return StrLen() * sizeof(T);
   }
 
-  // anything in the data array?
+  // checks whether the data array is empty
   bool IsEmpty(void) const
   {
     return m_lSize == 0;
   }
 
+  // checks whether the string is empty
+  bool IsStrEmpty(void) const
+  {
+    return m_lSize < 2 || m_pData[0] == '\0';
+  }
+
+  // return C-style string
+  // ensure that a valid pointer is returned even if the container is empty
   const T* c_str(void) const
   {
     if (IsEmpty()) {
@@ -264,6 +281,15 @@ public:
     }
     return m_pData;
   }
+
+  // search container for the first occurrence of an element
+  // -> element to search for
+  // -> index at which search is started
+  // -> number of elements to search (-1 = search until end)
+  // <- index of first element (-1 = element not found)
+  word32 Find(const T& element,
+    word32 lStart = 0,
+    word32 lLen = -1) const;
 
 
   // operators
@@ -287,16 +313,6 @@ public:
   {
     return m_pData;
   }
-
-  /*operator const word8* (void) const
-  {
-  return reinterpret_cast<word8*>(m_pData);
-  }
-
-  operator word8* (void)
-  {
-  return reinterpret_cast<word8*>(m_pData);
-  }*/
 
   const T* operator+ (word32 lOffset) const
   {
@@ -330,8 +346,18 @@ public:
 
   SecureMem& operator= (const SecureMem& src)
   {
-    if (this != &src)
-      Assign(src);
+    if (this != &src) {
+      Assign(src.m_pData, src.m_lSize);
+	}
+    return *this;
+  }
+
+  SecureMem& operator= (SecureMem&& src)
+  {
+    if (this != &src) {
+      std::swap(m_pData, src.m_pData);
+      std::swap(m_lSize, src.m_lSize);
+    }
     return *this;
   }
 
@@ -369,6 +395,24 @@ void SecureMem<T>::Resize(word32 lNewSize,
     m_pData = pNewData;
     m_lSize = lNewSize;
   }
+}
+
+template<class T>
+word32 SecureMem<T>::Find(const T& element,
+  word32 lStart,
+  word32 lLen) const
+{
+  if (IsEmpty() || lLen == 0 || lStart >= m_lSize)
+    return -1;
+  if (lLen == -1)
+    lLen = m_lSize;
+  lLen = std::min(m_lSize - lStart, lLen);
+  while (lLen--) {
+    if (m_pData[lStart] == element)
+      return lStart;
+    lStart++;
+  }
+  return -1;
 }
 
 template<class T> inline bool operator== (const SecureMem<T>& a,

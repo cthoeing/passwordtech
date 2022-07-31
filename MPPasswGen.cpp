@@ -280,7 +280,7 @@ void __fastcall TMPPasswGenForm::EnterPasswBtnClick(TObject *Sender)
     nFlags |= PASSWENTER_FLAG_CONFIRMPASSW;
   bool blSuccess = PasswEnterDlg->Execute(nFlags, TRL("Master password"), this) == mrOk;
   if (blSuccess)
-    PasswEnterDlg->GetPassw(sPassw);
+    sPassw = PasswEnterDlg->GetPassw();
 
   PasswEnterDlg->Clear();
   RandomPool::GetInstance()->Flush();
@@ -306,7 +306,7 @@ void __fastcall TMPPasswGenForm::EnterPasswBtnClick(TObject *Sender)
     sizeof(MPPG_KEYGEN_SALTSTR) - 1, tempKey.Data(), 0);
 
   if (!blHashapass)
-    m_key.Assign(tempKey);
+    m_key = tempKey;
 
   // encrypt the key before storing it in memory
   g_fastRandGen.GetData(memcryptKey, sizeof(memcryptKey));
@@ -583,8 +583,7 @@ void __fastcall TMPPasswGenForm::PasswBoxMenu_CopyClick(TObject *Sender)
 void __fastcall TMPPasswGenForm::PasswBoxMenu_EncryptCopyClick(
   TObject *Sender)
 {
-  SecureWString sText;
-  GetEditBoxSelTextBuf(PasswBox, sText);
+  SecureWString sText = GetEditBoxSelTextBuf(PasswBox);
   MainForm->CryptText(true, &sText);
 }
 //---------------------------------------------------------------------------
@@ -626,8 +625,7 @@ void __fastcall TMPPasswGenForm::ParameterLblMouseMove(TObject *Sender,
 void __fastcall TMPPasswGenForm::PasswBoxMenu_AddToDatabaseClick(TObject *Sender)
 {
   WString sParam = ParameterBox->Text;
-  SecureWString sPassw;
-  GetEditBoxTextBuf(PasswBox, sPassw);
+  SecureWString sPassw = GetEditBoxTextBuf(PasswBox);
   PasswMngForm->AddPassw(sPassw, false, sParam.c_str());
 }
 //---------------------------------------------------------------------------
@@ -639,9 +637,8 @@ void __fastcall TMPPasswGenForm::ShowPasswHashCheckClick(TObject *Sender)
 void __fastcall TMPPasswGenForm::PasswBoxMenu_PerformAutotypeClick(TObject *Sender)
 
 {
-  SecureWString sPassw, sParam;
-  GetEditBoxTextBuf(ParameterBox, sParam);
-  GetEditBoxTextBuf(PasswBox, sPassw);
+  SecureWString sPassw = GetEditBoxTextBuf(PasswBox),
+    sParam = GetEditBoxTextBuf(ParameterBox);
   if (g_config.MinimizeAutotype) {
     g_nAppState |= APPSTATE_AUTOTYPE;
     Application->Minimize();

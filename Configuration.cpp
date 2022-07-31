@@ -118,8 +118,8 @@ __fastcall TConfigurationDlg::TConfigurationDlg(TComponent* Owner)
     TRLCaption(SelectLanguageLbl);
 
     TRLCaption(DatabaseSheet);
-    TRLCaption(ClearClipMinimizeCheck);
-    TRLCaption(ClearClipExitCheck);
+    //TRLCaption(ClearClipMinimizeCheck);
+    TRLCaption(ClearClipCloseLockCheck);
     TRLCaption(LockMinimizeCheck);
     TRLCaption(LockIdleCheck);
     TRLCaption(LockAutoSaveCheck);
@@ -127,10 +127,11 @@ __fastcall TConfigurationDlg::TConfigurationDlg(TComponent* Owner)
     TRLCaption(NumberBackupsCheck);
     TRLCaption(OpenWindowOnStartupCheck);
     TRLCaption(OpenDbOnStartupCheck);
-    TRLCaption(ClearClipMinimizeCheck);
     TRLCaption(DefaultAutotypeSeqLbl);
     TRLCaption(AutoSaveCheck);
     TRLCaption(WarnExpiredEntriesCheck);
+    TRLCaption(WarnEntriesExpireSoonCheck);
+    TRLCaption(WarnExpireNumDaysLbl);
 
     for (nI = 0; nI < AutoSaveList->Items->Count; nI++)
       AutoSaveList->Items->Strings[nI] =
@@ -163,7 +164,7 @@ void __fastcall TConfigurationDlg::GetOptions(Configuration& config)
   config.AutoClearPassw = AutoClearPasswCheck->Checked;
   config.AutoClearPasswTime = AutoClearPasswTimeSpinBtn->Position;
   config.MinimizeAutotype = MinimizeAutotypeCheck->Checked;
-  config.AutotypeDelay = AutotypeDelayUpDown->Position;
+  config.AutotypeDelay = AutotypeDelaySpinBtn->Position;
   config.ConfirmExit = AskBeforeExitCheck->Checked;
   config.LaunchSystemStartup = LaunchSystemStartupCheck->Checked;
   config.RandomPoolCipher = RandomPoolCipherList->ItemIndex;
@@ -175,18 +176,20 @@ void __fastcall TConfigurationDlg::GetOptions(Configuration& config)
   config.FileNewlineChar = NewlineChar(NewlineCharList->ItemIndex);
   config.HotKeys = m_hotKeys;
   config.LanguageIndex = LanguageList->ItemIndex;
-  config.Database.ClearClipMinimize = ClearClipMinimizeCheck->Checked;
-  config.Database.ClearClipExit = ClearClipExitCheck->Checked;
+  //config.Database.ClearClipMinimize = ClearClipMinimizeCheck->Checked;
+  config.Database.ClearClipCloseLock = ClearClipCloseLockCheck->Checked;
   config.Database.LockMinimize = LockMinimizeCheck->Checked;
   config.Database.LockIdle = LockIdleCheck->Checked;
-  config.Database.LockIdleTime = LockIdleTimeUpDown->Position;
+  config.Database.LockIdleTime = LockIdleTimeSpinBtn->Position;
   config.Database.LockAutoSave = LockAutoSaveCheck->Checked;
   config.Database.CreateBackup = CreateBackupCheck->Checked;
   config.Database.NumberBackups = NumberBackupsCheck->Checked;
-  config.Database.MaxNumBackups = MaxNumBackupsUpDown->Position;
+  config.Database.MaxNumBackups = MaxNumBackupsSpinBtn->Position;
   config.Database.OpenWindowOnStartup = OpenWindowOnStartupCheck->Checked;
   config.Database.OpenLastDbOnStartup = OpenDbOnStartupCheck->Checked;
   config.Database.WarnExpiredEntries = WarnExpiredEntriesCheck->Checked;
+  config.Database.WarnEntriesExpireSoon = WarnEntriesExpireSoonCheck->Checked;
+  config.Database.WarnExpireNumDays = WarnExpireNumDaysSpinBtn->Position;
   config.Database.AutoSave = AutoSaveCheck->Checked;
   config.Database.AutoSaveOption = static_cast<AutoSaveDatabase>(
     AutoSaveList->ItemIndex);
@@ -206,7 +209,7 @@ void __fastcall TConfigurationDlg::SetOptions(const Configuration& config)
   AutoClearPasswTimeSpinBtn->Position = config.AutoClearPasswTime;
   AutoClearPasswCheckClick(this);
   MinimizeAutotypeCheck->Checked = config.MinimizeAutotype;
-  AutotypeDelayUpDown->Position = config.AutotypeDelay;
+  AutotypeDelaySpinBtn->Position = config.AutotypeDelay;
   ShowSysTrayIconConstCheck->Checked = config.ShowSysTrayIconConst;
   MinimizeToSysTrayCheck->Checked = config.MinimizeToSysTray;
   AskBeforeExitCheck->Checked = config.ConfirmExit;
@@ -217,21 +220,23 @@ void __fastcall TConfigurationDlg::SetOptions(const Configuration& config)
   LanguageList->ItemIndex = config.LanguageIndex;
   m_hotKeys = config.HotKeys;
   UpdateHotKeyList();
-  ClearClipMinimizeCheck->Checked = config.Database.ClearClipMinimize;
-  ClearClipExitCheck->Checked = config.Database.ClearClipExit;
+  //ClearClipMinimizeCheck->Checked = config.Database.ClearClipMinimize;
+  ClearClipCloseLockCheck->Checked = config.Database.ClearClipCloseLock;
   LockMinimizeCheck->Checked = config.Database.LockMinimize;
   LockIdleCheck->Checked = config.Database.LockIdle;
   LockIdleCheckClick(this);
-  LockIdleTimeUpDown->Position = config.Database.LockIdleTime;
+  LockIdleTimeSpinBtn->Position = config.Database.LockIdleTime;
   LockAutoSaveCheck->Checked = config.Database.LockAutoSave;
   CreateBackupCheck->Checked = config.Database.CreateBackup;
   NumberBackupsCheck->Checked = config.Database.NumberBackups;
   CreateBackupCheckClick(this);
   //NumberBackupsCheckClick(this);
-  MaxNumBackupsUpDown->Position = config.Database.MaxNumBackups;
+  MaxNumBackupsSpinBtn->Position = config.Database.MaxNumBackups;
   OpenWindowOnStartupCheck->Checked = config.Database.OpenWindowOnStartup;
   OpenDbOnStartupCheck->Checked = config.Database.OpenLastDbOnStartup;
   WarnExpiredEntriesCheck->Checked = config.Database.WarnExpiredEntries;
+  WarnEntriesExpireSoonCheck->Checked = config.Database.WarnEntriesExpireSoon;
+  WarnExpireNumDaysSpinBtn->Position = config.Database.WarnExpireNumDays;
   AutoSaveCheck->Checked = config.Database.AutoSave;
   AutoSaveList->ItemIndex = static_cast<int>(config.Database.AutoSaveOption);
   AutoSaveCheckClick(this);
@@ -367,7 +372,7 @@ void __fastcall TConfigurationDlg::LockIdleCheckClick(TObject *Sender)
 {
   bool blEnabled = LockIdleCheck->Checked;
   LockIdleTimeBox->Enabled = blEnabled;
-  LockIdleTimeUpDown->Enabled = blEnabled;
+  LockIdleTimeSpinBtn->Enabled = blEnabled;
   LockAutoSaveCheck->Enabled = blEnabled;
 }
 //---------------------------------------------------------------------------
@@ -389,7 +394,7 @@ void __fastcall TConfigurationDlg::NumberBackupsCheckClick(TObject *Sender)
 {
   bool blEnabled = CreateBackupCheck->Checked && NumberBackupsCheck->Checked;
   MaxNumBackupsBox->Enabled = blEnabled;
-  MaxNumBackupsUpDown->Enabled = blEnabled;
+  MaxNumBackupsSpinBtn->Enabled = blEnabled;
 }
 //---------------------------------------------------------------------------
 void __fastcall TConfigurationDlg::AutoSaveCheckClick(TObject *Sender)

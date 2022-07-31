@@ -3,7 +3,34 @@
                 Copyright (c) 2002-2022 by Christian Thöing
 
 
-Version 3.4.2
+Version 3.4.3
+
+NEW FEATURES:
+
+- Password manager: Filter entries that will expire soon ("soon" can be
+  specified in the configuration); these entries are marked by a warning
+  triangle symbol in the list view
+- Password manager: Open database as read-only via File | Open As Read-only
+- Configuration | Database: New parameters "Warn if database contains entries
+  that will expire soon" and "Number of days" to specify the term "soon"
+- Password option "Capitalize first letter of each word"
+
+CHANGES & IMPROVEMENTS:
+
+- Configuration | Database: Parameters "Clear clipboard on minimize" and "Clear
+  clipboard on exit" replaced with single parameter "Clear clipboard when
+  closing/locking database" ("Database" sheet)
+- List of advanced password options (checkboxes) rearranged
+  
+FIXES:
+
+- "Include at least one..." options not effective for phonetic passwords in some
+  cases
+- Lua stack overflow when generating large amounts of scripted passwords
+
+----------
+
+Version 3.4.2 (2022-02-27)
 
 NEW FEATURES:
 
