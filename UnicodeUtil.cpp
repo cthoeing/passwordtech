@@ -247,19 +247,19 @@ AnsiString WStringToUtf8(const WString& sSrc)
   return asDest;
 }
 //---------------------------------------------------------------------------
-void WStringToUtf8(const wchar_t* pwszSrc,
-  SecureAnsiString& asDest)
+SecureAnsiString WStringToUtf8(const wchar_t* pwszSrc)
 {
   if (pwszSrc == NULL || *pwszSrc == '\0')
-    return;
+    return SecureAnsiString();
 
   int nLen = WideCharToMultiByte(CP_UTF8, 0, pwszSrc, -1, NULL, 0, NULL, NULL);
   if (nLen == 0)
     utf8EncodeError();
 
-  asDest.New(nLen);
+  SecureAnsiString asDest(nLen);
 
   WideCharToMultiByte(CP_UTF8, 0, pwszSrc, -1, asDest, nLen, NULL, NULL);
+  return asDest;
 }
 //---------------------------------------------------------------------------
 WString Utf8ToWString(const AnsiString& asSrc)
@@ -279,19 +279,19 @@ WString Utf8ToWString(const AnsiString& asSrc)
   return sDest;
 }
 //---------------------------------------------------------------------------
-void Utf8ToWString(const char* pszSrc,
-  SecureWString& sDest)
+SecureWString Utf8ToWString(const char* pszSrc)
 {
   if (pszSrc == NULL || *pszSrc == '\0')
-    return;
+    return SecureWString();
 
   int nLen = MultiByteToWideChar(CP_UTF8, 0, pszSrc, -1, NULL, 0);
   if (nLen == 0)
     utf8DecodeError();
 
-  sDest.New(nLen);
+  SecureWString sDest(nLen);
 
   MultiByteToWideChar(CP_UTF8, 0, pszSrc, -1, sDest, nLen);
+  return sDest;
 }
 //---------------------------------------------------------------------------
 int w32strlen(const word32* pStr)

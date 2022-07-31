@@ -24,8 +24,8 @@
 
 const wchar_t
 PROGRAM_NAME[]         = L"Password Tech",
-PROGRAM_VERSION[]      = L"3.4.2",
-PROGRAM_LANGVER_MIN[]  = L"3.4.2",
+PROGRAM_VERSION[]      = L"3.4.3",
+PROGRAM_LANGVER_MIN[]  = L"3.4.3",
 PROGRAM_AUTHOR[]       = L"Christian Th\xF6ing",
 PROGRAM_AUTHOR_EMAIL[] = L"c.thoeing@web.de",
 PROGRAM_COPYRIGHT[]    = L"Copyright \xa9 2002-2022",
@@ -39,7 +39,7 @@ PROGRAM_INIFILE[]      = L"PwTech.ini",
 PROGRAM_RANDSEEDFILE[] = L"randseed.dat";
 
 const int
-PROGRAM_MAINVER_UPDATE_NUM = 6;
+PROGRAM_MAINVER_UPDATE_NUM = 7;
 
 const wchar_t
 LANGUAGE_NAME[]        = L"[LANGUAGENAME]",

@@ -78,8 +78,8 @@ public:
   int __fastcall Execute(int nFlags,
     const WString& sTitle = "",
     TForm* pParentForm = NULL);
-  void __fastcall GetPassw(SecureWString& sDest, int nPassw = 0);
-  void __fastcall GetPassw(SecureMem<word8>& sDest);
+  SecureWString __fastcall GetPassw(int nPassw = 0);
+  SecureMem<word8> __fastcall GetPasswBinary(void);
   void __fastcall LoadConfig(void);
   void __fastcall SaveConfig(void);
   void __fastcall Clear(void);

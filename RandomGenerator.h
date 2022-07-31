@@ -98,6 +98,12 @@ public:
   }
 
   word32 GetNumRange(word32 lNum) {
+    if (lNum == 0)
+      throw Exception("Invalid range");
+
+    if (lNum == 1)
+      return 0;
+
     // NOTE: actually, in a 100% correct implementation, in the last case
     // it should be
     //   lRandMax = lNum * (0x100000000 / lNum),
@@ -129,13 +135,21 @@ public:
     return lRand % lNum;
   }
 
+  word32 GetNumRange(word32 lBegin, word32 lEnd)
+  {
+    if (lEnd <= lBegin)
+      throw Exception("Invalid range");
+
+    return lBegin + GetNumRange(lEnd - lBegin);
+  }
+
   template<class T> void Permute(T* pArray,
     word32 lSize)
   {
-    for (word32 lI = lSize - 1; lI > 0; lI--) {
-      word32 lRand = GetNumRange(lI + 1);
-      if (lRand != lI)
-        std::swap(pArray[lI], pArray[lRand]);
+    for (word32 i = lSize - 1; i > 0; i--) {
+      word32 lRand = GetNumRange(i + 1);
+      if (lRand != i)
+        std::swap(pArray[i], pArray[lRand]);
     }
   }
 };

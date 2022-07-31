@@ -77,10 +77,10 @@ static int script_random(lua_State* L)
   return 1;
 }
 
-static void w32ToUtf8(word32* pSrc, SecureAnsiString& asDest)
+static SecureAnsiString w32ToUtf8(word32* pSrc)
 {
   W32CharToWCharInternal(pSrc);
-  WStringToUtf8(reinterpret_cast<wchar_t*>(pSrc), asDest);
+  return WStringToUtf8(reinterpret_cast<wchar_t*>(pSrc));
 }
 
 static int script_password(lua_State* L)
@@ -98,8 +98,7 @@ static int script_password(lua_State* L)
   SecureW32String sPassw(std::min<int>(MAX_PASSW_CHARS, nLength) + 1);
   s_pPasswGen->GetPassword(sPassw, nLength, nFlags);
 
-  SecureAnsiString asUtf8;
-  w32ToUtf8(sPassw, asUtf8);
+  SecureAnsiString asUtf8 = w32ToUtf8(sPassw);
 
   lua_pushstring(L, asUtf8);
   lua_pushnumber(L, s_pPasswGen->CustomCharSetEntropy * nLength);
@@ -118,8 +117,7 @@ static int script_passphrase(lua_State* L)
   const char* pszChars = lua_tostring(L, 2);
   SecureW32String sInputPassw;
   if (pszChars != NULL && *pszChars != '\0') {
-    SecureWString sUtf16;
-    Utf8ToWString(pszChars, sUtf16);
+    SecureWString sUtf16 = Utf8ToWString(pszChars);
     sInputPassw.New(GetNumOfUnicodeChars(sUtf16));
     WCharToW32Char(sUtf16, sInputPassw);
   }
@@ -129,8 +127,7 @@ static int script_passphrase(lua_State* L)
   SecureW32String sPassphrase(nWords * WORDLIST_MAX_WORDLEN + 1);
   s_pPasswGen->GetPassphrase(sPassphrase, nWords, sInputPassw, nFlags);
 
-  SecureAnsiString asUtf8;
-  w32ToUtf8(sPassphrase, asUtf8);
+  SecureAnsiString asUtf8 = w32ToUtf8(sPassphrase);
 
   lua_pushstring(L, asUtf8);
   lua_pushnumber(L, s_pPasswGen->WordListEntropy * nWords);
@@ -151,8 +148,7 @@ static int script_phonetic(lua_State* L)
   SecureW32String sPassw(nLength + 1);
   s_pPasswGen->GetPhoneticPassw(sPassw, nLength, nFlags);
 
-  SecureAnsiString asUtf8;
-  w32ToUtf8(sPassw, asUtf8);
+  SecureAnsiString asUtf8 = w32ToUtf8(sPassw);
   lua_pushstring(L, asUtf8);
 
   double dPasswSec = s_pPasswGen->PhoneticEntropy;
@@ -205,7 +201,7 @@ static int script_format(lua_State* L)
 
   int nFlags = lua_tointeger(L, 2);
 
-  WString sUtf16 = Utf8ToWString(pszUtf8);
+  WString sUtf16 = Utf8ToWString(WString(pszUtf8));
   w32string sFormat = WStringToW32String(sUtf16);
 
   SecureW32String sPassw(MAX_PASSW_CHARS + 1);
@@ -218,52 +214,55 @@ static int script_format(lua_State* L)
   if (nPasswLen == 0)
     return 0;
 
-  SecureAnsiString asUtf8;
-  w32ToUtf8(sPassw, asUtf8);
+  SecureAnsiString asUtf8 = w32ToUtf8(sPassw);
 
   lua_pushstring(L, asUtf8);
   lua_pushnumber(L, dPasswSec);
   return 2;
 }
 
-static WString s_sLastTraceback;
+/*static WString s_sLastTraceback;
 
-static int script_traceback(lua_State *L) {
+static int script_traceback(lua_State* L)
+{
   lua_getglobal(L, "debug");
   lua_getfield(L, -1, "traceback");
   lua_pushvalue(L, 1);
   lua_pushinteger(L, 2);
   lua_call(L, 2, 1);
   s_sLastTraceback = lua_tostring(L, -1);
+  lua_pop(L, 1);
   return 1;
 }
 
-static void throwLuaError(int nError)
-{
-  WString sMsg;
-  switch (nError)
-  {
-  case LUA_ERRSYNTAX:
-    sMsg = "Syntax error during precompilation";
-    break;
-  case LUA_ERRMEM:
-    OutOfMemoryError();
-  //case LUA_ERRGCMM:
-  //  sMsg = "Error while running __gc metamethod";
-  //  break;
-  case LUA_ERRRUN:
-    sMsg = "Runtime error";
-    break;
-  case LUA_ERRERR:
-    sMsg = "Error while running message handler";
-    break;
-  default:
-    sMsg = FormatW("Unknown error (%d)", nError);
+static void stackDump (lua_State *L) {
+  int top = lua_gettop(L);
+  WString s;
+  for (int i = 1; i <= top; i++) {
+    int t = lua_type(L, i);
+    switch (t) {
+
+      case LUA_TSTRING:
+        s += lua_tostring(L, i);
+        break;
+
+      case LUA_TBOOLEAN:
+        s += lua_toboolean(L, i) ? "true" : "false";
+        break;
+
+      case LUA_TNUMBER:
+        s += IntToStr(static_cast<int>(lua_tonumber(L, i)));
+        break;
+
+      default:
+        s += lua_typename(L, t);
+        break;
+
+    }
+    s += "\n";
   }
-  if (!s_sLastTraceback.IsEmpty())
-    sMsg += "\n" + s_sLastTraceback;
-  throw ELuaError(E_LUA_ERROR + sMsg);
-}
+  s += ";";
+}*/
 
 //---------------------------------------------------------------------------
 LuaScript::LuaScript(PasswordGenerator* pPasswGen)
@@ -294,26 +293,56 @@ LuaScript::~LuaScript()
   lua_close(m_L);
 }
 //---------------------------------------------------------------------------
+void LuaScript::ThrowLuaError(int nError)
+{
+  WString sMsg;
+  switch (nError)
+  {
+  case LUA_ERRSYNTAX:
+    sMsg = "Syntax error during precompilation";
+    break;
+  case LUA_ERRMEM:
+    OutOfMemoryError();
+  case LUA_ERRRUN:
+    sMsg = "Runtime error";
+    break;
+  case LUA_ERRERR:
+    sMsg = "Error while running message handler";
+    break;
+  default:
+    sMsg = FormatW("Unknown error (%d)", nError);
+  }
+  if (lua_gettop(m_L) >= 1) {
+    WString sErr = lua_tostring(m_L, -1);
+    lua_pop(m_L, 1);
+    if (!sErr.IsEmpty())
+      sMsg += "\n" + sErr;
+  }
+  //if (!s_sLastTraceback.IsEmpty())
+  //  sMsg += "\n" + s_sLastTraceback;
+  throw ELuaError(E_LUA_ERROR + sMsg);
+}
+//---------------------------------------------------------------------------
 void LuaScript::LoadFile(const WString& sFileName)
 {
-  s_sLastTraceback = "";
   std::unique_ptr<TStringFileStreamW> pFile(new TStringFileStreamW(sFileName,
       fmOpenRead, ceAnsi, true, 0));
   int nChunkLen = pFile->Size - pFile->BOMLength;
   std::vector<char> chunk(nChunkLen);
   pFile->Read(&chunk[0], nChunkLen);
+  pFile.reset();
   int nResult = luaL_loadbuffer(m_L, &chunk[0], chunk.size(),
       AnsiString(ExtractFileName(sFileName)).c_str());
   if (nResult != 0)
-    throwLuaError(nResult);
-  //lua_pushcfunction(m_L, script_traceback);
+    ThrowLuaError(nResult);
   nResult = lua_pcall(m_L, 0, 0, 0);
   if (nResult != 0)
-	throwLuaError(nResult);
+	ThrowLuaError(nResult);
   if (lua_getglobal(m_L, "script_flags") == LUA_TNUMBER)
 	m_nScriptFlags = lua_tointeger(m_L, -1);
   else
 	m_nScriptFlags = 0;
+  lua_pop(m_L, 1);
   m_sFileName = sFileName;
 }
 //---------------------------------------------------------------------------
@@ -325,10 +354,10 @@ bool LuaScript::InitGenerate(int nNumPassw,
   int nNumWords,
   const wchar_t* pwszPasswFormat)
 {
-  s_sLastTraceback = "";
-  lua_pushcfunction(m_L, script_traceback);
-  if (lua_getglobal(m_L, "init") != LUA_TFUNCTION)
+  if (lua_getglobal(m_L, "init") != LUA_TFUNCTION) {
+    lua_pop(m_L, 1);
     return false;
+  }
 
   lua_pushinteger(m_L, nNumPassw);
   lua_pushinteger(m_L, nDestType);
@@ -339,9 +368,10 @@ bool LuaScript::InitGenerate(int nNumPassw,
 
   lua_pushstring(m_L, WStringToUtf8(pwszPasswFormat).c_str());
 
-  int nResult = lua_pcall(m_L, 7, 0, 1);
+  int nResult = lua_pcall(m_L, 7, 0, 0);
   if (nResult != 0)
-    throwLuaError(nResult);
+    ThrowLuaError(nResult);
+
   return true;
 }
 //---------------------------------------------------------------------------
@@ -351,10 +381,10 @@ void LuaScript::CallGenerate(int nPasswNum,
   SecureWString& sDestPassw,
   double& dDestPasswSec)
 {
-  s_sLastTraceback = "";
-  lua_pushcfunction(m_L, script_traceback);
-  if (lua_getglobal(m_L, "generate") != LUA_TFUNCTION)
+  if (lua_getglobal(m_L, "generate") != LUA_TFUNCTION) {
+    lua_pop(m_L, 1);
     throw ELuaError(E_LUA_ERROR + TRLFormat(E_UNKNOWN_FUNC, "generate"));
+  }
 
   int nInputArgs = 0;
 
@@ -362,8 +392,7 @@ void LuaScript::CallGenerate(int nPasswNum,
   nInputArgs++;
 
   if (pwszSrcPassw != NULL && *pwszSrcPassw != '\0') {
-    SecureAnsiString srcPasswUtf8;
-    WStringToUtf8(pwszSrcPassw, srcPasswUtf8);
+    SecureAnsiString srcPasswUtf8 = WStringToUtf8(pwszSrcPassw);
     lua_pushstring(m_L, srcPasswUtf8.c_str());
     nInputArgs++;
 
@@ -371,12 +400,14 @@ void LuaScript::CallGenerate(int nPasswNum,
     nInputArgs++;
   }
 
-  int nResult = lua_pcall(m_L, nInputArgs, 2, 1);
+  int nResult = lua_pcall(m_L, nInputArgs, 2, 0);
   if (nResult != 0)
-    throwLuaError(nResult);
+    ThrowLuaError(nResult);
+
+  //stackDump(m_L);
 
   const char* luaStr = lua_tostring(m_L, -2);
-  Utf8ToWString(luaStr, sDestPassw);
+  sDestPassw = Utf8ToWString(luaStr);
 
   if (sDestPassw.Size() > MAX_PASSW_CHARS + 1 &&
       GetNumOfUnicodeChars(sDestPassw) > MAX_PASSW_CHARS)
@@ -391,6 +422,10 @@ void LuaScript::CallGenerate(int nPasswNum,
   }
 
   dDestPasswSec = lua_tonumber(m_L, -1);
+
+  lua_settop(m_L, 0);
+
+  //stackDump(m_L);
 }
 //---------------------------------------------------------------------------
 void __fastcall TScriptingThread::Execute(void)

@@ -116,8 +116,8 @@ struct Configuration {
   HotKeyList HotKeys;
   int LanguageIndex = 0;
   struct {
-    bool ClearClipMinimize = true;
-    bool ClearClipExit = true;
+    //bool ClearClipMinimize = true;
+    bool ClearClipCloseLock = true;
     bool LockMinimize = true;
     bool LockIdle = true;
     int LockIdleTime = 300;
@@ -127,6 +127,8 @@ struct Configuration {
     bool OpenWindowOnStartup = false;
     bool OpenLastDbOnStartup = true;
     bool WarnExpiredEntries = false;
+    bool WarnEntriesExpireSoon = false;
+    int WarnExpireNumDays = 7;
     int MaxNumBackups = 5;
     bool AutoSave = false;
     AutoSaveDatabase AutoSaveOption = asdEntryModification;
@@ -170,13 +172,12 @@ __published:	// IDE-managed Components
   TCheckBox *LockMinimizeCheck;
   TCheckBox *LockIdleCheck;
   TEdit *LockIdleTimeBox;
-  TUpDown *LockIdleTimeUpDown;
+    TUpDown *LockIdleTimeSpinBtn;
   TCheckBox *CreateBackupCheck;
   TEdit *MaxNumBackupsBox;
-  TUpDown *MaxNumBackupsUpDown;
+    TUpDown *MaxNumBackupsSpinBtn;
   TCheckBox *OpenDbOnStartupCheck;
-  TCheckBox *ClearClipMinimizeCheck;
-  TCheckBox *ClearClipExitCheck;
+    TCheckBox *ClearClipCloseLockCheck;
   TCheckBox *OpenWindowOnStartupCheck;
   TCheckBox *LockAutoSaveCheck;
     TTabSheet *SecuritySheet;
@@ -188,7 +189,7 @@ __published:	// IDE-managed Components
     TComboBox *RandomPoolCipherList;
     TLabel *AutotypeDelayLbl;
     TEdit *AutotypeDelayBox;
-    TUpDown *AutotypeDelayUpDown;
+    TUpDown *AutotypeDelaySpinBtn;
   TLabel *DefaultAutotypeSeqLbl;
     TEdit *DefaultAutotypeSeqBox;
     TCheckBox *MinimizeAutotypeCheck;
@@ -204,6 +205,10 @@ __published:	// IDE-managed Components
   TCheckBox *WarnExpiredEntriesCheck;
     TCheckBox *LaunchSystemStartupCheck;
     TButton *BenchmarkBtn;
+    TCheckBox *WarnEntriesExpireSoonCheck;
+    TLabel *WarnExpireNumDaysLbl;
+    TEdit *WarnExpireNumDaysBox;
+    TUpDown *WarnExpireNumDaysSpinBtn;
   void __fastcall SelectFontBtnClick(TObject *Sender);
   void __fastcall AutoClearClipCheckClick(TObject *Sender);
   void __fastcall FormShow(TObject *Sender);

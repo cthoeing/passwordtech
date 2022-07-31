@@ -5,11 +5,16 @@ Public domain.
 Modified for Password Tech by C.T.
 */
 #include <stddef.h>
+#include <string.h>
 #include "chacha.h"
-#define ROTL32(v, n) \
-  (U32V((v) << (n)) | ((v) >> (32 - (n))))
 
-#define ROTR32(v, n) ROTL32(v, 32 - (n))
+#if 1
+#define ROTL32(v, n) _lrotl(v, n)
+#define ROTR32(v, n) _lrotr(v, n)
+#else
+#define ROTL32(v, n) (U32V((v) << (n)) | ((v) >> (32 - (n))))
+#define ROTR32(v, n) (U32V((v) >> (n)) | ((v) << (32 - (n))))
+#endif
 
 #define U32V(v) ((u32)(v) & 0xFFFFFFFF)
 

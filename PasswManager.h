@@ -186,6 +186,8 @@ __published:	// IDE-managed Components
     TToolButton *AddEntryBtn;
     TMenuItem *MainMenu_File_Properties;
     TMenuItem *MainMenu_File_N5;
+    TMenuItem *MainMenu_View_EntriesExpireSoon;
+    TMenuItem *MainMenu_File_OpenReadOnly;
   void __fastcall MainMenu_File_NewClick(TObject *Sender);
   void __fastcall DbViewSelectItem(TObject *Sender,
     TListItem *Item, bool Selected);
@@ -273,6 +275,7 @@ __published:	// IDE-managed Components
   void __fastcall MainMenu_View_ExpiredEntriesClick(TObject *Sender);
   void __fastcall DbViewKeyDown(TObject *Sender, WORD &Key, TShiftState Shift);
     void __fastcall MainMenu_File_PropertiesClick(TObject *Sender);
+    void __fastcall MainMenu_File_OpenReadOnlyClick(TObject *Sender);
 
 
 private:	// User declarations
@@ -305,8 +308,7 @@ private:	// User declarations
   IDropTarget* m_pPasswBoxDropTarget;
 
   void __fastcall LoadConfig(void);
-  bool __fastcall OpenDatabase(bool blOpenExisting, bool blUnlock = false,
-    WString sFileName = "");
+  bool __fastcall OpenDatabase(int nOpenFlags = 0, WString sFileName = WString());
   int __fastcall AskSaveChanges(int nLock = 0);
   bool __fastcall CloseDatabase(bool blForce = false, int nLock = 0);
   void __fastcall LockOrUnlockDatabase(bool blAuto);

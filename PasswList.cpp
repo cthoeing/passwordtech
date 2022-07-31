@@ -117,8 +117,7 @@ void __fastcall TPasswListForm::PasswListMenu_SaveAsFileClick(TObject *Sender)
   WString sMsg;
 
   try {
-    SecureWString sPasswList;
-    GetEditBoxTextBuf(PasswList, sPasswList);
+    SecureWString sPasswList = GetEditBoxTextBuf(PasswList);
 
     if (g_sNewline == "\n") {
       SecureWString sNewList(sPasswList.Size());
@@ -193,8 +192,7 @@ void __fastcall TPasswListForm::FormKeyPress(TObject *Sender, char &Key)
 void __fastcall TPasswListForm::PasswListMenu_EncryptCopyClick(
   TObject *Sender)
 {
-  SecureWString sText;
-  GetRichEditSelTextBuf(PasswList, sText);
+  SecureWString sText = GetRichEditSelTextBuf(PasswList);
   MainForm->CryptText(true, &sText, this);
 }
 //---------------------------------------------------------------------------
@@ -211,8 +209,7 @@ void __fastcall TPasswListForm::PasswListStartDrag(TObject *Sender,
 //---------------------------------------------------------------------------
 void __fastcall TPasswListForm::PasswListMenu_AddToDbClick(TObject *Sender)
 {
-  SecureWString sPasswList;
-  GetRichEditSelTextBuf(PasswList, sPasswList);
+  SecureWString sPasswList = GetRichEditSelTextBuf(PasswList);
   PasswMngForm->AddPassw(sPasswList, true);
 }
 //---------------------------------------------------------------------------

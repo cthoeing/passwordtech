@@ -38,7 +38,7 @@ void pbkdf2_256bit(const word8* pPassw,
   word8* pDerivedKey,
   int nIterations = 8192);
 
-inline template<int Nbits> void incrementCounter(word8* pCounter)
+template<int Nbits> void incrementCounter(word8* pCounter)
 {
   for (int i = Nbits/8-1; i >= 0 && ++pCounter[i] == 0; i--);
 }

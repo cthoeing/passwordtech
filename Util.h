@@ -44,14 +44,11 @@ int GetEditBoxTextLen(TCustomEdit* pEdit);
 // -> pointer to edit control
 // -> SecureMem object to store the text contents,
 //    buffer is resized automatically
-void GetEditBoxTextBuf(TCustomEdit* pEdit,
-  SecureWString& sDest);
+SecureWString GetEditBoxTextBuf(TCustomEdit* pEdit);
 
-void GetEditBoxSelTextBuf(TCustomEdit* pEdit,
-  SecureWString& sDest);
+SecureWString GetEditBoxSelTextBuf(TCustomEdit* pEdit);
 
-void GetRichEditSelTextBuf(TCustomRichEdit* pEdit,
-  SecureWString& sDest);
+SecureWString GetRichEditSelTextBuf(TCustomRichEdit* pEdit);
 
 // sets text contents of edit box
 // -> pointer to edit control

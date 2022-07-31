@@ -42,6 +42,8 @@ private:
   WString m_sFileName;
   int m_nScriptFlags;
 
+  void ThrowLuaError(int);
+
 public:
   enum {
     FLAG_STANDALONE_PASSW_GEN = 1

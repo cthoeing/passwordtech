@@ -47,29 +47,29 @@ WString g_msgBoxCaptionList[4] =
 { L"Info", L"Warning", L"Question", L"Error" };
 
 //---------------------------------------------------------------------------
-static void strCr2Crlf(SecureWString& sSrc)
+static SecureWString strCr2Crlf(const SecureWString& sSrc)
 {
   const wchar_t* pwszBuf = sSrc.c_str();
 
   int nNumCR = 0;
   while ((pwszBuf = wcschr(pwszBuf, '\r')) != NULL) {
     if (*++pwszBuf == '\n')
-      return;
+      return sSrc;
     nNumCR++;
   }
 
   if (nNumCR == 0)
-    return;
+    return sSrc;
 
   int nSize = sSrc.Size();
-  SecureWString sTemp(nSize + nNumCR);
+  SecureWString sDest(nSize + nNumCR);
   for (int nI = 0, nJ = 0; nI < nSize; nI++) {
-    sTemp[nJ++] = sSrc[nI];
+    sDest[nJ++] = sSrc[nI];
     if (sSrc[nI] == '\r')
-      sTemp[nJ++] = '\n';
+      sDest[nJ++] = '\n';
   }
 
-  sSrc = sTemp;
+  return sDest;
 }
 //---------------------------------------------------------------------------
 int MsgBox(const WString& sText,
@@ -119,64 +119,46 @@ int GetEditBoxTextLen(TCustomEdit* pEdit)
   return pEdit->GetTextLen(); //GetWindowTextLengthW(pEdit->Handle);
 }
 //---------------------------------------------------------------------------
-void GetEditBoxTextBuf(TCustomEdit* pEdit,
-  SecureWString& sDest)
+SecureWString GetEditBoxTextBuf(TCustomEdit* pEdit)
 {
   int nLen = pEdit->GetTextLen();
-  if (nLen > 0) {
-    nLen++; // including terminating '\0'
-    sDest.New(nLen);
-    pEdit->GetTextBuf(sDest, nLen);
-  }
+  if (nLen == 0)
+    return SecureWString();
+
+  SecureWString sDest(++nLen);
+  pEdit->GetTextBuf(sDest, nLen);
+  return sDest;
 }
 //---------------------------------------------------------------------------
-void GetEditBoxSelTextBuf(TCustomEdit* pEdit,
-  SecureWString& sDest)
+SecureWString GetEditBoxSelTextBuf(TCustomEdit* pEdit)
 {
   int nLen = pEdit->SelLength;
-  if (nLen > 0) {
-    nLen++;
-    sDest.New(nLen);
-    pEdit->GetSelTextBuf(sDest, nLen);
-    /*SecureWString sTemp;
-    GetEditBoxTextBuf(pEdit, sTemp);
+  if (nLen == 0)
+    return SecureWString();
 
-    sDest.New(nLen + 1);
-    wcsncpy(sDest, sTemp + pEdit->SelStart, nLen);
-    sDest[nLen] = '\0';*/
-  }
+  SecureWString sDest(++nLen);
+  pEdit->GetSelTextBuf(sDest, nLen);
+  return sDest;
 }
 //---------------------------------------------------------------------------
-void GetRichEditSelTextBuf(TCustomRichEdit* pEdit,
-  SecureWString& sDest)
+SecureWString GetRichEditSelTextBuf(TCustomRichEdit* pEdit)
 {
   int nLen = pEdit->SelLength;
-  if (nLen > 0) {
-    nLen++;
-    sDest.New(nLen);
-    pEdit->GetSelTextBuf(sDest, nLen);
-    strCr2Crlf(sDest);
-  }
-  /*CHARRANGE range;
-  SendMessage(pEdit->Handle, EM_EXGETSEL, 0, reinterpret_cast<word32>(&range));
+  if (nLen == 0)
+    return SecureWString();
 
-  int nLen = range.cpMax - range.cpMin;
-  if (nLen > 0) {
-  sDest.New(nLen + 1);
-  SendMessage(pEdit->Handle, EM_GETSELTEXT, 0, reinterpret_cast<word32>(sDest.c_str()));
-
-  strCr2Crlf(sDest);
-  }*/
+  SecureWString sDest(++nLen);
+  pEdit->GetSelTextBuf(sDest, nLen);
+  return strCr2Crlf(sDest);
 }
 //---------------------------------------------------------------------------
 void SetEditBoxTextBuf(TCustomEdit* pEdit,
   const wchar_t* pwszSrc)
 {
-  //pEdit->SetTextBuf((pwszSrc != NULL) ? (wchar_t*) pwszSrc : L"");
   const wchar_t* pwszBuf = (pwszSrc != NULL) ? pwszSrc : L"";
 
   SetWindowText(pEdit->Handle, pwszBuf);
-  pEdit->Perform(CM_TEXTCHANGED, 0, static_cast<NativeInt>(0));
+  pEdit->Perform(CM_TEXTCHANGED, 0, static_cast<int>(0));
 }
 //---------------------------------------------------------------------------
 void ClearEditBoxTextBuf(TCustomEdit* pEdit,
@@ -235,7 +217,7 @@ bool GetClipboardTextBuf(SecureWString* psDestW,
       HGLOBAL hText = (HGLOBAL) pClipboard->GetAsHandle(CF_UNICODETEXT);
       if (hText != NULL)
       {
-        wchar_t* pwszText = (wchar_t*) GlobalLock(hText);
+        wchar_t* pwszText = reinterpret_cast<wchar_t*>(GlobalLock(hText));
         if (pwszText != NULL)
         {
           word32 lTextLen = wcslen(pwszText);
@@ -250,7 +232,7 @@ bool GetClipboardTextBuf(SecureWString* psDestW,
       HGLOBAL hText = (HGLOBAL) pClipboard->GetAsHandle(CF_TEXT);
       if (hText != NULL)
       {
-        char* pszText = (char*) GlobalLock(hText);
+        char* pszText = reinterpret_cast<char*>(GlobalLock(hText));
         if (pszText != NULL)
         {
           if (psDestW != NULL) {
@@ -287,7 +269,7 @@ void SetClipboardTextBuf(const wchar_t* pwszSrcW,
     pClipboard->Open();
 
     if (pwszSrcW != NULL)
-      pClipboard->SetTextBuf((wchar_t*) pwszSrcW);
+      pClipboard->SetTextBuf(const_cast<wchar_t*>(pwszSrcW));
     else {
       word32 lLen = MultiByteToWideChar(CP_ACP, 0, pszSrcA, -1, NULL, 0);
       if (lLen > 0) {
@@ -307,16 +289,16 @@ bool StartEditBoxDragDrop(TCustomEdit* pEdit)
   SecureWString sText;
 
   if (pEdit->SelLength == 0)
-    GetEditBoxTextBuf(pEdit, sText);
+    sText = GetEditBoxTextBuf(pEdit);
   else
-    GetEditBoxSelTextBuf(pEdit, sText);
+    sText = GetEditBoxSelTextBuf(pEdit);
 
-  if (sText.Size() < 2)
+  if (sText.IsStrEmpty())
     return false;
 
   // allocate system memory for storing the text
   HGLOBAL hMem = GlobalAlloc(GHND, sText.SizeBytes());
-  wchar_t* pwszMem = (wchar_t*) GlobalLock(hMem);
+  wchar_t* pwszMem = reinterpret_cast<wchar_t*>(GlobalLock(hMem));
 
   wcscpy(pwszMem, sText.c_str());
 

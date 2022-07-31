@@ -106,10 +106,7 @@ void __fastcall TPasswEnterDlg::DisplayPasswCheckClick(TObject *Sender)
 void __fastcall TPasswEnterDlg::OKBtnClick(TObject *Sender)
 {
   if (m_nFlags & PASSWENTER_FLAG_CONFIRMPASSW) {
-    SecureWString sPassw1, sPassw2;
-    GetPassw(sPassw1, 0);
-    GetPassw(sPassw2, 1);
-    if (sPassw1 != sPassw2) {
+    if (GetPassw(0) != GetPassw(1)) {
       MsgBox(TRL("Passwords are not identical."), MB_ICONWARNING);
       PasswBox->SetFocus();
       return;
@@ -118,7 +115,7 @@ void __fastcall TPasswEnterDlg::OKBtnClick(TObject *Sender)
 
   if ((m_nFlags & PASSWENTER_FLAG_ENABLEPASSWCACHE) && RememberPasswCheck->Checked)
   {
-    GetPassw(m_sEncryptedPassw);
+    m_sEncryptedPassw = GetPassw();
 
     RandomPool::GetInstance()->GetData(memcryptKey, sizeof(memcryptKey));
     memcrypt_128bit(m_sEncryptedPassw.Bytes(), m_sEncryptedPassw.Bytes(),
@@ -179,27 +176,27 @@ int __fastcall TPasswEnterDlg::Execute(int nFlags,
   return ShowModal();
 }
 //---------------------------------------------------------------------------
-void __fastcall TPasswEnterDlg::GetPassw(SecureWString& sDest,
-  int nPassw)
+SecureWString __fastcall TPasswEnterDlg::GetPassw(int nPassw)
 {
+  SecureWString sDest;
   if ((m_nFlags & PASSWENTER_FLAG_ENABLEPASSWCACHE) && !m_sEncryptedPassw.IsEmpty())
   {
-    sDest.Resize(m_sEncryptedPassw.Size());
+    sDest.New(m_sEncryptedPassw.Size());
     memcrypt_128bit(m_sEncryptedPassw.Bytes(), sDest.Bytes(),
       m_sEncryptedPassw.SizeBytes(), memcryptKey, false);
   }
   else if (nPassw == 0)
-    GetEditBoxTextBuf(PasswBox, sDest);
+    sDest = GetEditBoxTextBuf(PasswBox);
   else
-    GetEditBoxTextBuf(ConfirmPasswBox, sDest);
+    sDest = GetEditBoxTextBuf(ConfirmPasswBox);
+  return sDest;
 }
 //---------------------------------------------------------------------------
-void __fastcall TPasswEnterDlg::GetPassw(SecureMem<word8>& sDest)
+SecureMem<word8> __fastcall TPasswEnterDlg::GetPasswBinary(void)
 {
-  SecureWString sStr;
-  GetPassw(sStr);
-  if (!sStr.IsEmpty())
-    sDest.Assign(sStr.Bytes(), sStr.StrLenBytes()); // *without* terminating zero!
+  SecureWString sPassw = GetPassw();
+  return sPassw.IsStrEmpty() ? SecureMem<word8>() :
+    SecureMem<word8>(sPassw.Bytes(), sPassw.StrLenBytes()); // *without* terminating zero!
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswEnterDlg::Clear(void)

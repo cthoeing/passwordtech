@@ -29,7 +29,7 @@
 // existence by some C++ compilers...)
 // -> pointer to the memory block
 // -> size in bytes
-void memzero(void* pMem, size_t size);
+[[clang::optnone]] void memzero(void* pMem, size_t size);
 
 // encrypts or decrypts a memory buffer
 // -> source buffer

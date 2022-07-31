@@ -32,12 +32,22 @@
 TPasswOptionsDlg *PasswOptionsDlg;
 
 static const WString
-CONFIG_ID = "PasswOptions";
+  CONFIG_ID = "PasswOptions";
+
+static const int
+  OPTION_INDEX_TO_BIT[PASSWOPTIONS_NUM] =
+    { 0, 1, 13, 10, 2, 3, 4, 15, 12, 14, 5, 6, 7, 8, 9, 11 };
+
+static int BIT_TO_OPTION_INDEX[PASSWOPTIONS_NUM];
 
 //---------------------------------------------------------------------------
 __fastcall TPasswOptionsDlg::TPasswOptionsDlg(TComponent* Owner)
   : TForm(Owner)
 {
+  int i;
+  for (i = 0; i < PASSWOPTIONS_NUM; i++)
+    BIT_TO_OPTION_INDEX[OPTION_INDEX_TO_BIT[i]] = i;
+
   Constraints->MinHeight = Height;
   Constraints->MinWidth = Width;
 
@@ -45,9 +55,8 @@ __fastcall TPasswOptionsDlg::TPasswOptionsDlg(TComponent* Owner)
 
   if (g_pLangSupp != NULL) {
     TRLCaption(this);
-    int nI;
-    for (nI = 0; nI < pStrList->Count; nI++)
-      pStrList->Strings[nI] = TRL(pStrList->Strings[nI]);
+    for (i = 0; i < pStrList->Count; i++)
+      pStrList->Strings[i] = TRL(pStrList->Strings[i]);
     TRLCaption(AmbigCharsLbl);
     TRLCaption(SpecialSymLbl);
     TRLCaption(MaxWordLenLbl);
@@ -58,21 +67,38 @@ __fastcall TPasswOptionsDlg::TPasswOptionsDlg(TComponent* Owner)
     TRLMenu(ListMenu);
   }
 
-  pStrList->Strings[0] = pStrList->Strings[0] + WString(" (B8G6I1l|0OQDS5Z2) [1-3] *");
-  pStrList->Strings[1] = pStrList->Strings[1] + WString(" [1,2,4] *");
-  pStrList->Strings[2] = pStrList->Strings[2] + WString(" [2]");
-  pStrList->Strings[3] = pStrList->Strings[3] + WString(" [2]");
-  pStrList->Strings[4] = pStrList->Strings[4] + WString(" [1,2]");
-  pStrList->Strings[5] = pStrList->Strings[5] + WString(" [1,4] *");
-  pStrList->Strings[6] = pStrList->Strings[6] + WString(" [1,4] *");
-  pStrList->Strings[7] = pStrList->Strings[7] + WString(" [1,4] *");
-  pStrList->Strings[8] = pStrList->Strings[8] + WString(" [1,4] *");
-  pStrList->Strings[9] = pStrList->Strings[9] + WString(" [1]");
-  pStrList->Strings[10] = pStrList->Strings[10] + WString(" [1,3] *");
-  pStrList->Strings[11] = pStrList->Strings[11] + WString(" [1-4] *");
-  pStrList->Strings[12] = pStrList->Strings[12] + WString(" [2,3] *");
-  pStrList->Strings[13] = pStrList->Strings[13] + WString(" [1] *");
-  pStrList->Strings[14] = pStrList->Strings[14] + WString(" [2] *");
+  i = BIT_TO_OPTION_INDEX[0];
+  pStrList->Strings[i] = pStrList->Strings[i] + WString(" (B8G6I1l|0OQDS5Z2) [1-3] *");
+  i = BIT_TO_OPTION_INDEX[1];
+  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [1,2,4] *");
+  i = BIT_TO_OPTION_INDEX[2];
+  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [2]");
+  i = BIT_TO_OPTION_INDEX[3];
+  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [2]");
+  i = BIT_TO_OPTION_INDEX[4];
+  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [1,2]");
+  i = BIT_TO_OPTION_INDEX[5];
+  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [1,4] *");
+  i = BIT_TO_OPTION_INDEX[6];
+  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [1,4] *");
+  i = BIT_TO_OPTION_INDEX[7];
+  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [1,4] *");
+  i = BIT_TO_OPTION_INDEX[8];
+  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [1,4] *");
+  i = BIT_TO_OPTION_INDEX[9];
+  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [1]");
+  i = BIT_TO_OPTION_INDEX[10];
+  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [1,3] *");
+  i = BIT_TO_OPTION_INDEX[11];
+  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [1-4] *");
+  i = BIT_TO_OPTION_INDEX[12];
+  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [2,3] *");
+  i = BIT_TO_OPTION_INDEX[13];
+  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [1] *");
+  i = BIT_TO_OPTION_INDEX[14];
+  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [2] *");
+  i = BIT_TO_OPTION_INDEX[15];
+  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [2]");
 
   InfoLbl->Caption = FormatW("[1] %s [2] %s [3] %s [4] %s\n* %s",
       TRL("Applies to pass_words_.").c_str(),
@@ -101,8 +127,9 @@ void __fastcall TPasswOptionsDlg::SaveConfig(void)
 void __fastcall TPasswOptionsDlg::GetOptions(PasswOptions& passwOptions)
 {
   passwOptions.Flags = 0;
-  for (int nI = 0; nI < PasswOptionsList->Items->Count; nI++)
-    passwOptions.Flags |= (PasswOptionsList->Checked[nI]) ? (1 << nI) : 0;
+  for (int nI = 0; nI < PASSWOPTIONS_NUM; nI++)
+    passwOptions.Flags |= PasswOptionsList->Checked[nI] ?
+      (1 << OPTION_INDEX_TO_BIT[nI]) : 0;
   passwOptions.AmbigChars = AmbigCharsBox->Text;
   passwOptions.SpecialSymbols = SpecialSymBox->Text;
   passwOptions.MaxWordLen = MaxWordLenSpinBtn->Position;
@@ -111,8 +138,8 @@ void __fastcall TPasswOptionsDlg::GetOptions(PasswOptions& passwOptions)
 //---------------------------------------------------------------------------
 void __fastcall TPasswOptionsDlg::SetOptions(const PasswOptions& passwOptions)
 {
-  for (int nI = 0; nI < PasswOptionsList->Items->Count; nI++)
-    PasswOptionsList->Checked[nI] = passwOptions.Flags & (1 << nI);
+  for (int nI = 0; nI < PASSWOPTIONS_NUM; nI++)
+    PasswOptionsList->Checked[BIT_TO_OPTION_INDEX[nI]] = passwOptions.Flags & (1 << nI);
   AmbigCharsBox->Text = passwOptions.AmbigChars;
   SpecialSymBox->Text = passwOptions.SpecialSymbols;
   MaxWordLenSpinBtn->Position = short(passwOptions.MaxWordLen);
@@ -156,21 +183,21 @@ void __fastcall TPasswOptionsDlg::BrowseBtnClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TPasswOptionsDlg::ListMenu_SelectAllClick(TObject *Sender)
 {
-  for (int nI = 0; nI < PasswOptionsList->Items->Count; nI++)
+  for (int nI = 0; nI < PASSWOPTIONS_NUM; nI++)
     PasswOptionsList->Checked[nI] = true;
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswOptionsDlg::ListMenu_DeselectAllClick(
   TObject *Sender)
 {
-  for (int nI = 0; nI < PasswOptionsList->Items->Count; nI++)
+  for (int nI = 0; nI < PASSWOPTIONS_NUM; nI++)
     PasswOptionsList->Checked[nI] = false;
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswOptionsDlg::ListMenu_InvertSelectionClick(
   TObject *Sender)
 {
-  for (int nI = 0; nI < PasswOptionsList->Items->Count; nI++)
+  for (int nI = 0; nI < PASSWOPTIONS_NUM; nI++)
     PasswOptionsList->Checked[nI] = !PasswOptionsList->Checked[nI];
 }
 //---------------------------------------------------------------------------

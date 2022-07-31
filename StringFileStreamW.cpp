@@ -30,8 +30,8 @@
 
 inline void swapUtf16ByteOrder(wchar_t* pwszBuf, int nLen)
 {
-  while (nLen--)
-    *pwszBuf++ = (*pwszBuf << 8) | (*pwszBuf >> 8);
+  for (int i = 0; i < nLen; i++)
+    pwszBuf[i] = (pwszBuf[i] << 8) | (pwszBuf[i] >> 8);
 }
 
 

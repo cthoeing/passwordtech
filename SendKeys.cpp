@@ -18,7 +18,7 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 // 02111-1307, USA.
 //---------------------------------------------------------------------------
-#include <map>
+#include <unordered_map>
 #include <vcl.h>
 #pragma hdrstop
 
@@ -28,7 +28,7 @@
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 
-static std::map<std::string, int> keyPlaceholders;
+static std::unordered_map<std::string, int> keyPlaceholders;
 
 static const int
   VIRTUAL_KEY_DELAY = 200,
@@ -234,7 +234,7 @@ void SendKeys::SendComplexString(const WString& sStr,
           {}
         }
         else {
-          std::map<std::string, int>::iterator it = keyPlaceholders.find(sPlaceholder);
+          auto it = keyPlaceholders.find(sPlaceholder);
           if (it != keyPlaceholders.end()) {
             blFound = true;
             pwszStr += it->first.length() + 2; // including brackets
@@ -247,12 +247,12 @@ void SendKeys::SendComplexString(const WString& sStr,
                 const SecureWString* psSrc;
                 SecureWString sPassw;
                 if (nIdx == PasswDbEntry::PASSWORD && !pPasswDbEntry->HasPlaintextPassw()) {
-                  pPasswDb->GetDbEntryPassw(pPasswDbEntry, sPassw);
+                  sPassw = pPasswDb->GetDbEntryPassw(*pPasswDbEntry);
                   psSrc = &sPassw;
                 }
                 else
                   psSrc = &pPasswDbEntry->Strings[nIdx];
-                if (psSrc->Size() > 1) {
+                if (!psSrc->IsStrEmpty()) {
                   if (pDest != NULL)
                     AddString(psSrc->c_str(), *pDest);
                   else

@@ -20,6 +20,7 @@
 //---------------------------------------------------------------------------
 #include <vcl.h>
 #include <vector>
+#include <array>
 #include <StrUtils.hpp>
 #pragma hdrstop
 
@@ -182,10 +183,10 @@ void PasswDbEntry::SetKeyValue(const wchar_t* pwszKey, const wchar_t* pwszValue)
     wcslen(pwszKey) + 1), SecureWString(pwszValue, wcslen(pwszValue) + 1)));
 }
 //---------------------------------------------------------------------------
-void PasswDbEntry::GetKeyValueListAsString(SecureWString& sDest, wchar_t sep) const
+SecureWString PasswDbEntry::GetKeyValueListAsString(wchar_t sep) const
 {
   if (m_keyValueList.empty())
-    return;
+    return SecureWString();
 
   word32 lSize = 0;
   for (auto it = m_keyValueList.begin(); it != m_keyValueList.end(); it++)
@@ -193,7 +194,7 @@ void PasswDbEntry::GetKeyValueListAsString(SecureWString& sDest, wchar_t sep) co
     lSize += it->first.StrLen() + it->second.StrLen() + 2;
   }
 
-  sDest.New(lSize);
+  SecureWString sDest(lSize);
 
   word32 lPos = 0;
   for (auto it = m_keyValueList.begin(); it != m_keyValueList.end(); it++)
@@ -207,6 +208,7 @@ void PasswDbEntry::GetKeyValueListAsString(SecureWString& sDest, wchar_t sep) co
   }
 
   sDest[lPos - 1] = '\0';
+  return sDest;
 }
 //---------------------------------------------------------------------------
 void PasswDbEntry::ParseKeyValueList(const SecureWString& sList)
@@ -253,16 +255,16 @@ bool PasswDbEntry::AddTag(const SecureWString& sTag)
   return ret.second;
 }
 //---------------------------------------------------------------------------
-void PasswDbEntry::GetTagsAsString(SecureWString& sDest, wchar_t sep) const
+SecureWString PasswDbEntry::GetTagsAsString(wchar_t sep) const
 {
   if (m_tags.empty())
-    return;
+    return SecureWString();
 
   word32 lSize = 0;
   for (const auto& s : m_tags)
     lSize += s.StrLen() + 1;
 
-  sDest.New(lSize);
+  SecureWString sDest(lSize);
   word32 lPos = 0;
   for (const auto& s : m_tags) {
     wcscpy(&sDest[lPos], s.c_str());
@@ -271,6 +273,7 @@ void PasswDbEntry::GetTagsAsString(SecureWString& sDest, wchar_t sep) const
   }
 
   sDest[lPos - 1] = '\0';
+  return sDest;
 }
 //---------------------------------------------------------------------------
 void PasswDbEntry::ParseTagList(const SecureWString& sList)
@@ -530,11 +533,11 @@ void PasswDatabase::Open(const SecureMem<word8>& key,
       word32 lFlag = ReadType<word32>();
       if ((header.Flags & FLAG_DEFAULT_USER_NAME) &&
           lFlag == FLAG_DEFAULT_USER_NAME) {
-        ReadString(m_sDefaultUserName);
+        m_sDefaultUserName = ReadString();
       }
       else if ((header.Flags & FLAG_PASSW_FORMAT_SEQ) &&
                lFlag == FLAG_PASSW_FORMAT_SEQ) {
-        ReadString(m_sPasswFormatSeq);
+        m_sPasswFormatSeq = ReadString();
       }
       else if ((header.Flags & FLAG_PASSW_EXPIRY_DAYS) &&
                lFlag == FLAG_PASSW_EXPIRY_DAYS) {
@@ -546,15 +549,14 @@ void PasswDatabase::Open(const SecureMem<word8>& key,
   }
   else {
     for (int i = 0; i < header.NumOfVariableParam; i++) {
-      SecureAnsiString sParamName;
-      ReadString(sParamName);
+      SecureAnsiString sParamName = ReadAnsiString();
       if ((header.Flags & FLAG_DEFAULT_USER_NAME) &&
           stricmp(sParamName, DEFAULT_USER_NAME) == 0) {
-        ReadString(m_sDefaultUserName);
+        m_sDefaultUserName = ReadString();
       }
       else if ((header.Flags & FLAG_PASSW_FORMAT_SEQ) &&
                stricmp(sParamName, PASSW_FORMAT_SEQ) == 0) {
-        ReadString(m_sPasswFormatSeq);
+        m_sPasswFormatSeq = ReadString();
       }
       else
         SkipField();
@@ -563,13 +565,13 @@ void PasswDatabase::Open(const SecureMem<word8>& key,
 
   // read column titles (AnsiStrings)
   std::vector<int> idxConv(header.NumOfFields);
-  bool fieldsUsed[PasswDbEntry::NUM_FIELDS];
-  memzero(fieldsUsed, sizeof(fieldsUsed));
+  std::array<bool, PasswDbEntry::NUM_FIELDS> fieldsUsed;
+  std::fill(fieldsUsed.begin(), fieldsUsed.end(), false);
+  //memzero(fieldsUsed, sizeof(fieldsUsed));
 
   for (int nI = 0; nI < header.NumOfFields; nI++) {
     idxConv[nI] = -1;
-    SecureAnsiString sStr;
-    ReadString(sStr);
+    SecureAnsiString sStr = ReadAnsiString();
     if (sStr.IsEmpty())
       throw EPasswDbInvalidFormat(E_INVALID_FORMAT, m_nLastVersion);
     for (int nJ = 0; nJ < PasswDbEntry::NUM_FIELDS; nJ++) {
@@ -602,12 +604,12 @@ void PasswDatabase::Open(const SecureMem<word8>& key,
         int nIdx = idxConv[nFieldIndex];
         switch (nIdx) {
         case PasswDbEntry::KEYVALUELIST:
-          ReadString(sField);
+          sField = ReadString();
           pEntry->ParseKeyValueList(sField);
           pEntry->UpdateKeyValueString();
           break;
         case PasswDbEntry::TAGS:
-          ReadString(sField);
+          sField = ReadString();
           pEntry->ParseTagList(sField);
           pEntry->UpdateTagsString();
           break;
@@ -625,9 +627,9 @@ void PasswDatabase::Open(const SecureMem<word8>& key,
             pEntry->PasswExpiryDate = 0;
           break;
         default:
-          ReadString(sField);
+          sField = ReadString();
           if (nIdx == PasswDbEntry::PASSWORD)
-            SetDbEntryPassw(pEntry, sField);
+            SetDbEntryPassw(*pEntry, sField);
           else
             pEntry->Strings[nIdx] = sField;
         }
@@ -711,9 +713,8 @@ void PasswDatabase::WriteString(const char* pszStr, int nIndex)
 //---------------------------------------------------------------------------
 void PasswDatabase::WriteString(const SecureWString& sStr, int nIndex)
 {
-  if (sStr.Size() > 1) {
-    SecureAnsiString asUtf8;
-    WStringToUtf8(sStr.c_str(), asUtf8);
+  if (!sStr.IsStrEmpty()) {
+    SecureAnsiString asUtf8 = WStringToUtf8(sStr.c_str());
     WriteString(asUtf8.c_str(), nIndex);
   }
   else if (nIndex < 0)
@@ -779,12 +780,12 @@ void PasswDatabase::SaveToFile(const WString& sFileName)
   header.NumOfFields = PasswDbEntry::NUM_FIELDS;
   header.NumOfEntries = m_db.size();
 
-  if (m_sDefaultUserName.Size() > 1) {
+  if (!m_sDefaultUserName.IsStrEmpty()) {
     header.Flags |= FLAG_DEFAULT_USER_NAME;
     header.NumOfVariableParam++;
   }
 
-  if (m_sPasswFormatSeq.Size() > 1) {
+  if (!m_sPasswFormatSeq.IsStrEmpty()) {
     header.Flags |= FLAG_PASSW_FORMAT_SEQ;
     header.NumOfVariableParam++;
   }
@@ -831,15 +832,15 @@ void PasswDatabase::SaveToFile(const WString& sFileName)
       SecureWString sField;
       switch (nI) {
       case PasswDbEntry::PASSWORD:
-        GetDbEntryPassw(pEntry, sField);
+        sField = GetDbEntryPassw(*pEntry);
         WriteString(sField, nI);
         break;
       case PasswDbEntry::KEYVALUELIST:
-        pEntry->GetKeyValueListAsString(sField);
+        sField = pEntry->GetKeyValueListAsString();
         WriteString(sField, nI);
         break;
       case PasswDbEntry::TAGS:
-        pEntry->GetTagsAsString(sField);
+        sField = pEntry->GetTagsAsString();
         WriteString(sField, nI);
         break;
       default:
@@ -893,24 +894,25 @@ int PasswDatabase::ReadFieldIndex(void)
   return bIndex;
 }
 //---------------------------------------------------------------------------
-void PasswDatabase::ReadString(SecureAnsiString& sDest)
+SecureAnsiString PasswDatabase::ReadAnsiString(void)
 {
+  SecureAnsiString asDest;
   word32 lSize = ReadFieldSize();
   if (lSize != 0) {
     if (m_lCryptBufPos + lSize > m_cryptBuf.Size())
       throw EPasswDbInvalidFormat(E_INVALID_FORMAT, m_nLastVersion);
-    sDest.New(lSize + 1);
-    memcpy(sDest, &m_cryptBuf[m_lCryptBufPos], lSize);
-    sDest[lSize] = '\0';
+    asDest.New(lSize + 1);
+    memcpy(asDest, &m_cryptBuf[m_lCryptBufPos], lSize);
+    asDest[lSize] = '\0';
     m_lCryptBufPos += lSize;
   }
+  return asDest;
 }
 //---------------------------------------------------------------------------
-void PasswDatabase::ReadString(SecureWString& sDest)
+SecureWString PasswDatabase::ReadString(void)
 {
-  SecureAnsiString asUtf8;
-  ReadString(asUtf8);
-  Utf8ToWString(asUtf8, sDest);
+  SecureAnsiString asUtf8 = ReadAnsiString();
+  return Utf8ToWString(asUtf8);
 }
 //---------------------------------------------------------------------------
 void PasswDatabase::SkipField(void)
@@ -933,16 +935,14 @@ PasswDbEntry* PasswDatabase::AddDbEntry(bool blSetTimeStamp,
   return pEntry;
 }
 //---------------------------------------------------------------------------
-void PasswDatabase::DeleteDbEntry(PasswDbEntry* pEntry)
+void PasswDatabase::DeleteDbEntry(PasswDbEntry& entry)
 {
-  if (pEntry->m_lIndex < m_db.size()) {
-	PasswDbList::iterator it = m_db.begin() + pEntry->m_lIndex;
-    delete pEntry;
+  if (entry.m_lIndex < m_db.size()) {
+	PasswDbList::iterator it = m_db.begin() + entry.m_lIndex;
+    delete &entry;
     m_db.erase(it);
 
-	word32 lIndex = 0;
-	for (auto pEntry : m_db)
-	  pEntry->m_lIndex = lIndex++;
+	ReassignIndices();
   }
 }
 //---------------------------------------------------------------------------
@@ -950,6 +950,20 @@ void PasswDatabase::MoveDbEntry(word32 lCurrPos, word32 lNewPos)
 {
   word32 lSize = m_db.size();
   if (lCurrPos != lNewPos && lCurrPos < lSize && lNewPos < lSize) {
+    PasswDbList::iterator first, dest, last;
+    if (lCurrPos < lNewPos) {
+      first = m_db.begin() + lCurrPos;
+      dest = first + 1;
+      last = m_db.begin() + lNewPos + 1;
+    }
+    else {
+      first = m_db.begin() + lNewPos;
+      dest = m_db.begin() + lCurrPos;
+      last = dest + 1;
+    }
+    std::rotate(first, dest, last);
+    ReassignIndices();
+    /*
     PasswDbList moved(lSize);
     moved[lNewPos] = m_db[lCurrPos];
     moved[lNewPos]->m_lIndex = lNewPos;
@@ -970,68 +984,68 @@ void PasswDatabase::MoveDbEntry(word32 lCurrPos, word32 lNewPos)
       }
     }
     m_db = moved;
+    */
   }
 }
 //---------------------------------------------------------------------------
-void PasswDatabase::SetDbEntryPassw(PasswDbEntry* pEntry,
+void PasswDatabase::SetDbEntryPassw(PasswDbEntry& entry,
   const SecureWString& sPassw)
 {
-  if (sPassw.Size() <= 1) {
-    pEntry->m_encPassw.Empty();
-    pEntry->Strings[PasswDbEntry::PASSWORD].Empty();
+  if (sPassw.IsStrEmpty()) {
+    entry.m_encPassw.Empty();
+    entry.Strings[PasswDbEntry::PASSWORD].Empty();
     return;
   }
 
   sha1_hmac(m_pMemSalt, SECMEM_SALT_LENGTH, sPassw.Bytes(), sPassw.SizeBytes(),
-    pEntry->m_passwHash);
+    entry.m_passwHash);
 
   SecureMem<word8> iv(SECMEM_IV_LENGTH);
   iv.Clear();
-  *(reinterpret_cast<word32*>(iv.Data())) = pEntry->m_lId;
+  *(reinterpret_cast<word32*>(iv.Data())) = entry.m_lId;
 
-  pEntry->m_encPassw.New(sPassw.Size());
+  entry.m_encPassw.New(sPassw.Size());
 
   chacha_ivsetup(m_pMemCipherCtx, iv, NULL);
-  chacha_encrypt_bytes(m_pMemCipherCtx, sPassw.Bytes(), pEntry->m_encPassw.Bytes(),
+  chacha_encrypt_bytes(m_pMemCipherCtx, sPassw.Bytes(), entry.m_encPassw.Bytes(),
     sPassw.SizeBytes());
   //size_t iv_off = 0;
   //aes_crypt_cfb128(m_pMemCipherCtx, AES_ENCRYPT, sPassw.SizeBytes(), &iv_off, iv,
   //  sPassw.Bytes(), pEntry->m_encPassw.Bytes());
 
   if (m_blPlaintextPassw)
-    pEntry->Strings[PasswDbEntry::PASSWORD] = sPassw;
+    entry.Strings[PasswDbEntry::PASSWORD] = sPassw;
 }
 //---------------------------------------------------------------------------
-void PasswDatabase::GetDbEntryPassw(const PasswDbEntry* pEntry,
-  SecureWString& sPassw)
+SecureWString PasswDatabase::GetDbEntryPassw(const PasswDbEntry& entry)
 {
-  if (pEntry->m_encPassw.IsEmpty())
-    return;
+  if (entry.m_encPassw.IsEmpty())
+    return SecureWString();
 
-  if (pEntry->HasPlaintextPassw()) {
-    sPassw = pEntry->Strings[PasswDbEntry::PASSWORD];
-    return;
-  }
+  if (entry.HasPlaintextPassw())
+    return entry.Strings[PasswDbEntry::PASSWORD];
 
-  sPassw.New(pEntry->m_encPassw.Size());
+  SecureWString sPassw(entry.m_encPassw.Size());
 
   SecureMem<word8> iv(SECMEM_IV_LENGTH);
   iv.Clear();
-  *(reinterpret_cast<word32*>(iv.Data())) = pEntry->m_lId;
+  *(reinterpret_cast<word32*>(iv.Data())) = entry.m_lId;
 
   //size_t iv_off = 0;
   //aes_crypt_cfb128(m_pMemCipherCtx, AES_DECRYPT, pEntry->m_encPassw.SizeBytes(),
   //  &iv_off, iv, pEntry->m_encPassw.Bytes(), sPassw.Bytes());
   chacha_ivsetup(m_pMemCipherCtx, iv, NULL);
-  chacha_encrypt_bytes(m_pMemCipherCtx, pEntry->m_encPassw.Bytes(), sPassw.Bytes(),
-    pEntry->m_encPassw.SizeBytes());
+  chacha_encrypt_bytes(m_pMemCipherCtx, entry.m_encPassw.Bytes(), sPassw.Bytes(),
+    entry.m_encPassw.SizeBytes());
 
-  SecureMem<word8> checkHash(pEntry->m_passwHash.Size());
+  SecureMem<word8> checkHash(entry.m_passwHash.Size());
   sha1_hmac(m_pMemSalt, SECMEM_SALT_LENGTH, sPassw.Bytes(), sPassw.SizeBytes(),
     checkHash);
 
-  if (memcmp(pEntry->m_passwHash, checkHash, checkHash.Size()) != 0)
+  if (memcmp(entry.m_passwHash, checkHash, checkHash.Size()) != 0)
     throw EPasswDbError("Internal error: Password decryption failed");
+
+  return sPassw;
 }
 //---------------------------------------------------------------------------
 void PasswDatabase::SetPlaintextPassw(bool blPlaintextPassw)
@@ -1043,7 +1057,7 @@ void PasswDatabase::SetPlaintextPassw(bool blPlaintextPassw)
   for (auto pEntry : m_db)
   {
     if (blPlaintextPassw)
-      GetDbEntryPassw(pEntry, pEntry->Strings[PasswDbEntry::PASSWORD]);
+      pEntry->Strings[PasswDbEntry::PASSWORD] = GetDbEntryPassw(*pEntry);
     else
       pEntry->Strings[PasswDbEntry::PASSWORD].Empty();
   }
@@ -1091,8 +1105,7 @@ void PasswDatabase::ExportToCsv(const WString& sFileName, int nColMask,
       if (nColMask & (1 << nI)) {
         WString sField;
         if (nI == PasswDbEntry::PASSWORD && !pEntry->HasPlaintextPassw()) {
-          SecureWString sPassw;
-          GetDbEntryPassw(pEntry, sPassw);
+          SecureWString sPassw = GetDbEntryPassw(*pEntry);
           sField = sPassw.c_str();
           //pFile->WriteString(pwszPassw, wcslen(pwszPassw), nWritten);
         }
