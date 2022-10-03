@@ -7,25 +7,25 @@
 //---------------------------------------------------------------------------
 #include <Vcl.Styles.hpp>
 #include <Vcl.Themes.hpp>
-USEFORM("PasswEnter.cpp", PasswEnterDlg);
-USEFORM("MPPasswGen.cpp", MPPasswGenForm);
-USEFORM("PasswList.cpp", PasswListForm);
-USEFORM("PasswMngKeyValEdit.cpp", PasswMngKeyValDlg);
-USEFORM("PasswMngDbSettings.cpp", PasswDbSettingsDlg);
-USEFORM("PasswMngDbProp.cpp", PasswMngDbPropDlg);
-USEFORM("PasswMngColSelect.cpp", PasswMngColDlg);
-USEFORM("PasswManager.cpp", PasswMngForm);
-USEFORM("Main.cpp", MainForm);
-USEFORM("QuickHelp.cpp", QuickHelpForm);
-USEFORM("PasswOptions.cpp", PasswOptionsDlg);
-USEFORM("ProvideEntropy.cpp", ProvideEntropyDlg);
-USEFORM("Progress.cpp", ProgressForm);
-USEFORM("ProfileEditor.cpp", ProfileEditDlg);
-USEFORM("InfoBox.cpp", InfoBoxForm);
-USEFORM("Configuration.cpp", ConfigurationDlg);
-USEFORM("About.cpp", AboutForm);
-USEFORM("CreateRandDataFile.cpp", CreateRandDataFileDlg);
-USEFORM("CreateTrigramFile.cpp", CreateTrigramFileDlg);
+USEFORM("src\main\PasswList.cpp", PasswListForm);
+USEFORM("src\main\PasswEnter.cpp", PasswEnterDlg);
+USEFORM("src\main\MPPasswGen.cpp", MPPasswGenForm);
+USEFORM("src\main\Main.cpp", MainForm);
+USEFORM("src\main\PasswManager.cpp", PasswMngForm);
+USEFORM("src\main\PasswOptions.cpp", PasswOptionsDlg);
+USEFORM("src\main\PasswMngKeyValEdit.cpp", PasswMngKeyValDlg);
+USEFORM("src\main\PasswMngDbSettings.cpp", PasswDbSettingsDlg);
+USEFORM("src\main\PasswMngDbProp.cpp", PasswMngDbPropDlg);
+USEFORM("src\main\PasswMngColSelect.cpp", PasswMngColDlg);
+USEFORM("src\main\About.cpp", AboutForm);
+USEFORM("src\main\InfoBox.cpp", InfoBoxForm);
+USEFORM("src\main\CreateTrigramFile.cpp", CreateTrigramFileDlg);
+USEFORM("src\main\CreateRandDataFile.cpp", CreateRandDataFileDlg);
+USEFORM("src\main\Configuration.cpp", ConfigurationDlg);
+USEFORM("src\main\QuickHelp.cpp", QuickHelpForm);
+USEFORM("src\main\ProvideEntropy.cpp", ProvideEntropyDlg);
+USEFORM("src\main\Progress.cpp", ProgressForm);
+USEFORM("src\main\ProfileEditor.cpp", ProfileEditDlg);
 //---------------------------------------------------------------------------
 HANDLE g_hAppMutex;
 
@@ -49,7 +49,8 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
     // Is the program running as console or GUI application
     g_blConsole = AttachConsole(ATTACH_PARENT_PROCESS);
 
-    for (int nI = 1; nI <= ParamCount(); nI++) {
+    int nParamCount = ParamCount();
+    for (int nI = 1; nI <= nParamCount; nI++) {
       WString sParam = ParamStr(nI);
       int nParamLen = sParam.Length();
       int nPrefixLen = 1;
@@ -68,7 +69,7 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
       sParam.Delete(1, nPrefixLen);
 
       if (SameText(sParam, CMDLINE_INI)) {
-        if (nI < ParamCount()) {
+        if (nI < nParamCount) {
           WString sIniFileName = ParamStr(++nI);
           if (ExtractFilePath(sIniFileName).IsEmpty())
             sIniFileName = ExtractFilePath(Application->ExeName) + sIniFileName;
@@ -79,13 +80,13 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
         g_cmdLineOptions.ConfigReadOnly = true;
       }
       else if (SameText(sParam, CMDLINE_PROFILE)) {
-        if (nI < ParamCount()) {
+        if (nI < nParamCount) {
           g_cmdLineOptions.ProfileName = ParamStr(++nI);
         }
       }
       else if (SameText(sParam, CMDLINE_GENERATE)) {
         int nNum = 1;
-        if (nI < ParamCount() && (nNum = StrToIntDef(ParamStr(nI+1), -1)) >= 0)
+        if (nI < nParamCount && (nNum = StrToIntDef(ParamStr(nI+1), -1)) >= 0)
           nI++;
         g_cmdLineOptions.GenNumPassw = std::max(1, nNum);
         if (g_blConsole)
@@ -95,7 +96,7 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
         Application->ShowMainForm = false;
       }
       else if (SameText(sParam, CMDLINE_OPENDB)) {
-        if (nI < ParamCount())
+        if (nI < nParamCount)
           g_cmdLineOptions.PasswDbFileName = ParamStr(++nI);
       }
       else
@@ -104,26 +105,26 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 
     Application->CreateForm(__classid(TMainForm), &MainForm);
          Application->CreateForm(__classid(TAboutForm), &AboutForm);
-         Application->CreateForm(__classid(TProgressForm), &ProgressForm);
          Application->CreateForm(__classid(TConfigurationDlg), &ConfigurationDlg);
          Application->CreateForm(__classid(TCreateRandDataFileDlg), &CreateRandDataFileDlg);
          Application->CreateForm(__classid(TCreateTrigramFileDlg), &CreateTrigramFileDlg);
+         Application->CreateForm(__classid(TInfoBoxForm), &InfoBoxForm);
          Application->CreateForm(__classid(TMPPasswGenForm), &MPPasswGenForm);
          Application->CreateForm(__classid(TPasswEnterDlg), &PasswEnterDlg);
          Application->CreateForm(__classid(TPasswListForm), &PasswListForm);
          Application->CreateForm(__classid(TPasswMngForm), &PasswMngForm);
-         Application->CreateForm(__classid(TPasswOptionsDlg), &PasswOptionsDlg);
-         Application->CreateForm(__classid(TProfileEditDlg), &ProfileEditDlg);
-         Application->CreateForm(__classid(TProvideEntropyDlg), &ProvideEntropyDlg);
-         Application->CreateForm(__classid(TQuickHelpForm), &QuickHelpForm);
-         Application->CreateForm(__classid(TInfoBoxForm), &InfoBoxForm);
          Application->CreateForm(__classid(TPasswMngColDlg), &PasswMngColDlg);
+         Application->CreateForm(__classid(TPasswMngDbPropDlg), &PasswMngDbPropDlg);
          Application->CreateForm(__classid(TPasswDbSettingsDlg), &PasswDbSettingsDlg);
          Application->CreateForm(__classid(TPasswMngKeyValDlg), &PasswMngKeyValDlg);
-         Application->CreateForm(__classid(TPasswMngDbPropDlg), &PasswMngDbPropDlg);
+         Application->CreateForm(__classid(TPasswOptionsDlg), &PasswOptionsDlg);
+         Application->CreateForm(__classid(TProfileEditDlg), &ProfileEditDlg);
+         Application->CreateForm(__classid(TProgressForm), &ProgressForm);
+         Application->CreateForm(__classid(TProvideEntropyDlg), &ProvideEntropyDlg);
+         Application->CreateForm(__classid(TQuickHelpForm), &QuickHelpForm);
          MainForm->StartupAction();
 
-    Application->Run();
+         Application->Run();
   }
   catch (Exception &exception)
   {
