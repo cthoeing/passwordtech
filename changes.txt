@@ -3,7 +3,38 @@
                 Copyright (c) 2002-2022 by Christian Thöing
 
 
-Version 3.4.3
+Version 3.4.4
+
+NEW FEATURES:
+
+- PassCube password manager: Databases can be protected by key files in addition
+  to or in place of a regular password; password entry dialog allows selection
+  of key files and creation of new 256-bit key files
+- PassCube: Recovery password (and/or key file) can be configured to enable
+  recovery of the database in case the regular master password has been lost;
+  databases can then be opened using either password; alternatively, the
+  recovery password may function as an "administrator key" to allow individuals
+  with elevated rights to access all databases in an organization (provided that
+  all databases have been set up with the same recovery password)  
+- PassCube: Remember last selected entry and tag(s) when locking database
+
+CHANGES & IMPROVEMENTS:
+
+- PassCube: Changed HMAC algorithm (to protect data integrity and authenticity)
+  from SHA-256 to SHA-512 in new version of database format (1.3)
+- PassCube: Search options "Fuzzy" and "Case sensitive" moved to context menu,
+  which can be accessed by right-clicking on the search button in the toolbar
+- PassCube: "Notes" column in list view: Ignore line breaks, length limited to
+  200 characters
+- Added digital signatures to all executable files
+  
+FIXES:
+
+- Various minor bug fixes
+
+----------
+
+Version 3.4.3 (2022-06-19)
 
 NEW FEATURES:
 

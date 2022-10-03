@@ -1,0 +1,1 @@
+bcc64 -DWIN32 -fno-debug-info-for-profiling -fno-standalone-debug -fno-debug-macro -tC -o PwTech_x64.com winconsole.cpp

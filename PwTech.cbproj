@@ -71,8 +71,8 @@
         <Icon_MainIcon>$(BDS)\bin\cbuilder_PROJECTICON.ico</Icon_MainIcon>
         <UWP_CppLogo44>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_44.png</UWP_CppLogo44>
         <UWP_CppLogo150>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_150.png</UWP_CppLogo150>
-        <IncludePath>crypto\;lua\;minilzo\;DragDrop\;polarssl\;C:\Projekte\PWGen3\;$(IncludePath)</IncludePath>
-        <ILINK_LibraryPath>crypto\;lua\;minilzo\;DragDrop\;polarssl\;C:\Projekte\PWGen3\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+        <IncludePath>src\util\;src\random\;src\passw\;src\minilzo\;src\lua\;src\dragdrop\;src\crypto\;src\crypto\polarssl\;src\main\;crypto\;lua\;minilzo\;DragDrop\;polarssl\;C:\Projekte\PWGen3\;$(IncludePath)</IncludePath>
+        <ILINK_LibraryPath>src\util\;src\random\;src\passw\;src\minilzo\;src\lua\;src\dragdrop\;src\crypto\;src\crypto\polarssl\;src\main\;crypto\;lua\;minilzo\;DragDrop\;polarssl\;C:\Projekte\PWGen3\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
         <SanitizedProjectName>PwTech</SanitizedProjectName>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
@@ -134,6 +134,7 @@
         <Icon_MainIcon>pwtech.ico</Icon_MainIcon>
         <VerInfo_MajorVer>3</VerInfo_MajorVer>
         <VerInfo_MinorVer>2</VerInfo_MinorVer>
+        <ILINK_LibraryPath>src\console;src\crypto;src\dragdrop;src\lua;src\main;src\minilzo;src\passw;src\random;src\util;$(ILINK_LibraryPath)</ILINK_LibraryPath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <Defines>NDEBUG;$(Defines)</Defines>
@@ -148,393 +149,394 @@
         <Icon_MainIcon>graphics\pwtech.ico</Icon_MainIcon>
         <Defines>LUA_INT_TYPE=1;$(Defines)</Defines>
         <VerInfo_MajorVer>3</VerInfo_MajorVer>
-        <VerInfo_Keys>CompanyName=;FileDescription=Password Tech executable;FileVersion=3.2.0.0;InternalName=;LegalCopyright=Copyright 2002-2020 by Christian Thöing;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=Password Tech;ProductVersion=3.2.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileDescription=Password Tech executable;FileVersion=3.4.4.0;InternalName=;LegalCopyright=Copyright 2002-2022 by Christian Thöing;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=Password Tech;ProductVersion=3.4.4;Comments=</VerInfo_Keys>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <BCC_UseClassicCompiler>false</BCC_UseClassicCompiler>
-        <VerInfo_MinorVer>2</VerInfo_MinorVer>
+        <VerInfo_MinorVer>4</VerInfo_MinorVer>
         <BT_BuildType>Debug</BT_BuildType>
+        <VerInfo_Release>4</VerInfo_Release>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win64)'!=''">
         <VerInfo_Locale>1031</VerInfo_Locale>
-        <VerInfo_Keys>CompanyName=;FileDescription=Password Tech executable;FileVersion=3.2.0.0;InternalName=;LegalCopyright=Copyright (c) 2002-2020 Christian Thöing;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=3.2.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileDescription=Password Tech executable;FileVersion=3.4.4.0;InternalName=;LegalCopyright=Copyright (c) 2002-2022 Christian Thöing;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=3.4.4;Comments=</VerInfo_Keys>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <Icon_MainIcon>pwtech.ico</Icon_MainIcon>
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <VerInfo_MajorVer>3</VerInfo_MajorVer>
-        <VerInfo_MinorVer>2</VerInfo_MinorVer>
+        <VerInfo_MinorVer>4</VerInfo_MinorVer>
         <UsePackages>false</UsePackages>
         <LinkPackageStatics>rtl.lib;vcl.lib;bcbsmp.lib;vclx.lib;vclimg.lib</LinkPackageStatics>
         <BT_BuildType>Debug</BT_BuildType>
         <BCC_OptimizeMaximum>true</BCC_OptimizeMaximum>
         <BCC_OptimizeForSpeed>false</BCC_OptimizeForSpeed>
+        <VerInfo_Release>4</VerInfo_Release>
     </PropertyGroup>
     <ItemGroup>
-        <CppCompile Include="About.cpp">
-            <Form>AboutForm</Form>
-            <FormType>dfm</FormType>
-            <DependentOn>About.h</DependentOn>
-            <BuildOrder>3</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="AESCtrPRNG.cpp">
-            <DependentOn>AESCtrPRNG.h</DependentOn>
-            <BuildOrder>16</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="Autocomplete.cpp">
-            <DependentOn>Autocomplete.h</DependentOn>
-            <BuildOrder>87</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="chacha.c">
-            <BuildOrder>82</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="Configuration.cpp">
-            <Form>ConfigurationDlg</Form>
-            <FormType>dfm</FormType>
-            <DependentOn>Configuration.h</DependentOn>
-            <BuildOrder>5</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="CreateRandDataFile.cpp">
-            <Form>CreateRandDataFileDlg</Form>
-            <FormType>dfm</FormType>
-            <DependentOn>CreateRandDataFile.h</DependentOn>
-            <BuildOrder>6</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="CreateTrigramFile.cpp">
-            <Form>CreateTrigramFileDlg</Form>
-            <FormType>dfm</FormType>
-            <DependentOn>CreateTrigramFile.h</DependentOn>
-            <BuildOrder>7</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="CryptText.cpp">
-            <DependentOn>CryptText.h</DependentOn>
-            <BuildOrder>17</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="CryptUtil.cpp">
-            <DependentOn>CryptUtil.h</DependentOn>
-            <BuildOrder>18</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="diceware8k.c">
-            <BuildOrder>44</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="DragDrop\dataobject.cpp">
-            <BuildOrder>39</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="DragDrop\dropsource.cpp">
-            <BuildOrder>40</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="DragDrop\droptarget.cpp">
-            <BuildOrder>41</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="DragDrop\enumformat.cpp">
-            <BuildOrder>42</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="EntropyManager.cpp">
-            <DependentOn>EntropyManager.h</DependentOn>
-            <BuildOrder>19</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="FastPRNG.cpp">
-            <DependentOn>FastPRNG.h</DependentOn>
-            <BuildOrder>20</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="hrtimer.cpp">
-            <DependentOn>hrtimer.h</DependentOn>
-            <BuildOrder>21</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="InfoBox.cpp">
-            <Form>InfoBoxForm</Form>
-            <FormType>dfm</FormType>
-            <DependentOn>InfoBox.h</DependentOn>
-            <BuildOrder>45</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="Language.cpp">
-            <DependentOn>Language.h</DependentOn>
-            <BuildOrder>22</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\lapi.c">
-            <BuildOrder>47</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\lauxlib.c">
-            <BuildOrder>48</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\lbaselib.c">
-            <BuildOrder>49</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\lbitlib.c">
-            <BuildOrder>50</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\lcode.c">
-            <BuildOrder>51</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\lcorolib.c">
-            <BuildOrder>52</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\lctype.c">
-            <BuildOrder>53</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\ldblib.c">
-            <BuildOrder>54</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\ldebug.c">
-            <BuildOrder>55</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\ldo.c">
-            <BuildOrder>56</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\ldump.c">
-            <BuildOrder>57</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\lfunc.c">
-            <BuildOrder>58</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\lgc.c">
-            <BuildOrder>59</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\linit.c">
-            <BuildOrder>60</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\liolib.c">
-            <BuildOrder>61</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\llex.c">
-            <BuildOrder>62</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\lmathlib.c">
-            <BuildOrder>63</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\lmem.c">
-            <BuildOrder>64</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\loadlib.c">
-            <BuildOrder>65</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\lobject.c">
-            <BuildOrder>66</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\lopcodes.c">
-            <BuildOrder>67</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\loslib.c">
-            <BuildOrder>68</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\lparser.c">
-            <BuildOrder>69</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\lstate.c">
-            <BuildOrder>70</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\lstring.c">
-            <BuildOrder>71</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\lstrlib.c">
-            <BuildOrder>72</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\ltable.c">
-            <BuildOrder>73</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\ltablib.c">
-            <BuildOrder>74</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\ltm.c">
-            <BuildOrder>75</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\lua.c">
-            <BuildOrder>76</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\luac.c">
-            <BuildOrder>77</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\lundump.c">
-            <BuildOrder>78</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\lutf8lib.c">
-            <BuildOrder>79</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\lvm.c">
-            <BuildOrder>80</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="lua\lzio.c">
-            <BuildOrder>81</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="Main.cpp">
-            <Form>MainForm</Form>
-            <FormType>dfm</FormType>
-            <DependentOn>Main.h</DependentOn>
-            <BuildOrder>3</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="MemUtil.cpp">
-            <DependentOn>MemUtil.h</DependentOn>
-            <BuildOrder>24</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="minilzo\minilzo.c">
-            <BuildOrder>43</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="MPPasswGen.cpp">
-            <Form>MPPasswGenForm</Form>
-            <FormType>dfm</FormType>
-            <DependentOn>MPPasswGen.h</DependentOn>
-            <BuildOrder>8</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="PasswDatabase.cpp">
-            <DependentOn>PasswDatabase.h</DependentOn>
-            <BuildOrder>25</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="PasswEnter.cpp">
-            <Form>PasswEnterDlg</Form>
-            <FormType>dfm</FormType>
-            <DependentOn>PasswEnter.h</DependentOn>
-            <BuildOrder>9</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="PasswGen.cpp">
-            <DependentOn>PasswGen.h</DependentOn>
-            <BuildOrder>26</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="PasswList.cpp">
-            <Form>PasswListForm</Form>
-            <FormType>dfm</FormType>
-            <DependentOn>PasswList.h</DependentOn>
-            <BuildOrder>10</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="PasswManager.cpp">
-            <Form>PasswMngForm</Form>
-            <FormType>dfm</FormType>
-            <DependentOn>PasswManager.h</DependentOn>
-            <BuildOrder>11</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="PasswMngColSelect.cpp">
-            <Form>PasswMngColDlg</Form>
-            <FormType>dfm</FormType>
-            <DependentOn>PasswMngColSelect.h</DependentOn>
-            <BuildOrder>45</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="PasswMngDbProp.cpp">
-            <Form>PasswMngDbPropDlg</Form>
-            <FormType>dfm</FormType>
-            <DependentOn>PasswMngDbProp.h</DependentOn>
-            <BuildOrder>88</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="PasswMngDbSettings.cpp">
-            <Form>PasswDbSettingsDlg</Form>
-            <FormType>dfm</FormType>
-            <DependentOn>PasswMngDbSettings.h</DependentOn>
-            <BuildOrder>84</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="PasswMngKeyValEdit.cpp">
-            <Form>PasswMngKeyValDlg</Form>
-            <FormType>dfm</FormType>
-            <DependentOn>PasswMngKeyValEdit.h</DependentOn>
-            <BuildOrder>85</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="PasswOptions.cpp">
-            <Form>PasswOptionsDlg</Form>
-            <FormType>dfm</FormType>
-            <DependentOn>PasswOptions.h</DependentOn>
-            <BuildOrder>12</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="polarssl\aes.c">
-            <BuildOrder>34</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="polarssl\aesni.c">
-            <BuildOrder>86</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="polarssl\base64.c">
-            <BuildOrder>35</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="polarssl\padlock.c">
-            <BuildOrder>36</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="polarssl\sha1.c">
-            <BuildOrder>37</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="polarssl\sha256.c">
-            <BuildOrder>38</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="ProfileEditor.cpp">
-            <Form>ProfileEditDlg</Form>
-            <FormType>dfm</FormType>
-            <DependentOn>ProfileEditor.h</DependentOn>
-            <BuildOrder>13</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="Progress.cpp">
-            <Form>ProgressForm</Form>
-            <FormType>dfm</FormType>
-            <DependentOn>Progress.h</DependentOn>
-            <BuildOrder>4</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="ProvideEntropy.cpp">
-            <Form>ProvideEntropyDlg</Form>
-            <FormType>dfm</FormType>
-            <DependentOn>ProvideEntropy.h</DependentOn>
-            <BuildOrder>14</BuildOrder>
-        </CppCompile>
         <CppCompile Include="PwTech.cpp">
             <BuildOrder>0</BuildOrder>
         </CppCompile>
-        <PCHCompile Include="PwTechPCH1.h">
-            <BuildOrder>1</BuildOrder>
-            <PCH>true</PCH>
-        </PCHCompile>
-        <CppCompile Include="QuickHelp.cpp">
-            <Form>QuickHelpForm</Form>
-            <FormType>dfm</FormType>
-            <DependentOn>QuickHelp.h</DependentOn>
-            <BuildOrder>15</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="RandomGenerator.cpp">
-            <DependentOn>RandomGenerator.h</DependentOn>
-            <BuildOrder>27</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="RandomPool.cpp">
-            <DependentOn>RandomPool.h</DependentOn>
+        <CppCompile Include="src\crypto\chacha.c">
             <BuildOrder>28</BuildOrder>
         </CppCompile>
-        <CppCompile Include="Scripting.cpp">
-            <DependentOn>Scripting.h</DependentOn>
-            <BuildOrder>46</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="SendKeys.cpp">
-            <DependentOn>SendKeys.h</DependentOn>
-            <BuildOrder>83</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="StringFileStreamW.cpp">
-            <DependentOn>StringFileStreamW.h</DependentOn>
+        <CppCompile Include="src\crypto\CryptText.cpp">
+            <DependentOn>src\crypto\CryptText.h</DependentOn>
             <BuildOrder>29</BuildOrder>
         </CppCompile>
-        <CppCompile Include="TopMostManager.cpp">
-            <DependentOn>TopMostManager.h</DependentOn>
+        <CppCompile Include="src\crypto\CryptUtil.cpp">
+            <DependentOn>src\crypto\CryptUtil.h</DependentOn>
             <BuildOrder>30</BuildOrder>
         </CppCompile>
-        <CppCompile Include="UnicodeUtil.cpp">
-            <DependentOn>UnicodeUtil.h</DependentOn>
+        <CppCompile Include="src\crypto\polarssl\aes.c">
+            <BuildOrder>22</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\crypto\polarssl\aesni.c">
+            <BuildOrder>23</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\crypto\polarssl\base64.c">
+            <BuildOrder>24</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\crypto\polarssl\padlock.c">
+            <BuildOrder>25</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\crypto\polarssl\sha1.c">
+            <BuildOrder>26</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\crypto\polarssl\sha256.c">
+            <BuildOrder>27</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\crypto\polarssl\sha512.c">
+            <BuildOrder>88</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\dragdrop\dataobject.cpp">
             <BuildOrder>31</BuildOrder>
         </CppCompile>
-        <CppCompile Include="UpdateCheck.cpp">
-            <DependentOn>UpdateCheck.h</DependentOn>
+        <CppCompile Include="src\dragdrop\dropsource.cpp">
             <BuildOrder>32</BuildOrder>
         </CppCompile>
-        <CppCompile Include="Util.cpp">
-            <DependentOn>Util.h</DependentOn>
+        <CppCompile Include="src\dragdrop\droptarget.cpp">
             <BuildOrder>33</BuildOrder>
         </CppCompile>
-        <FormResources Include="PasswEnter.dfm"/>
-        <FormResources Include="MPPasswGen.dfm"/>
-        <FormResources Include="PasswList.dfm"/>
-        <FormResources Include="PasswMngKeyValEdit.dfm"/>
-        <FormResources Include="PasswMngDbSettings.dfm"/>
-        <FormResources Include="PasswMngDbProp.dfm"/>
-        <FormResources Include="PasswMngColSelect.dfm"/>
-        <FormResources Include="PasswManager.dfm"/>
-        <FormResources Include="Main.dfm"/>
-        <FormResources Include="QuickHelp.dfm"/>
-        <FormResources Include="PasswOptions.dfm"/>
-        <FormResources Include="ProvideEntropy.dfm"/>
-        <FormResources Include="Progress.dfm"/>
-        <FormResources Include="ProfileEditor.dfm"/>
-        <FormResources Include="InfoBox.dfm"/>
-        <FormResources Include="Configuration.dfm"/>
-        <FormResources Include="About.dfm"/>
-        <FormResources Include="CreateRandDataFile.dfm"/>
-        <FormResources Include="CreateTrigramFile.dfm"/>
+        <CppCompile Include="src\dragdrop\enumformat.cpp">
+            <BuildOrder>34</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\lapi.c">
+            <BuildOrder>35</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\lauxlib.c">
+            <BuildOrder>36</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\lbaselib.c">
+            <BuildOrder>37</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\lbitlib.c">
+            <BuildOrder>38</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\lcode.c">
+            <BuildOrder>39</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\lcorolib.c">
+            <BuildOrder>40</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\lctype.c">
+            <BuildOrder>41</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\ldblib.c">
+            <BuildOrder>42</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\ldebug.c">
+            <BuildOrder>43</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\ldo.c">
+            <BuildOrder>44</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\ldump.c">
+            <BuildOrder>45</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\lfunc.c">
+            <BuildOrder>46</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\lgc.c">
+            <BuildOrder>47</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\linit.c">
+            <BuildOrder>48</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\liolib.c">
+            <BuildOrder>49</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\llex.c">
+            <BuildOrder>50</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\lmathlib.c">
+            <BuildOrder>51</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\lmem.c">
+            <BuildOrder>52</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\loadlib.c">
+            <BuildOrder>53</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\lobject.c">
+            <BuildOrder>54</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\lopcodes.c">
+            <BuildOrder>55</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\loslib.c">
+            <BuildOrder>56</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\lparser.c">
+            <BuildOrder>57</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\lstate.c">
+            <BuildOrder>58</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\lstring.c">
+            <BuildOrder>59</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\lstrlib.c">
+            <BuildOrder>60</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\ltable.c">
+            <BuildOrder>61</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\ltablib.c">
+            <BuildOrder>62</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\ltm.c">
+            <BuildOrder>63</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\lua.c">
+            <BuildOrder>64</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\luac.c">
+            <BuildOrder>65</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\lundump.c">
+            <BuildOrder>66</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\lutf8lib.c">
+            <BuildOrder>67</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\lvm.c">
+            <BuildOrder>68</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\lua\lzio.c">
+            <BuildOrder>69</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\main\About.cpp">
+            <Form>AboutForm</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>src\main\About.h</DependentOn>
+            <BuildOrder>1</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\main\Autocomplete.cpp">
+            <DependentOn>src\main\Autocomplete.h</DependentOn>
+            <BuildOrder>2</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\main\Configuration.cpp">
+            <Form>ConfigurationDlg</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>src\main\Configuration.h</DependentOn>
+            <BuildOrder>3</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\main\CreateRandDataFile.cpp">
+            <Form>CreateRandDataFileDlg</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>src\main\CreateRandDataFile.h</DependentOn>
+            <BuildOrder>4</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\main\CreateTrigramFile.cpp">
+            <Form>CreateTrigramFileDlg</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>src\main\CreateTrigramFile.h</DependentOn>
+            <BuildOrder>5</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\main\InfoBox.cpp">
+            <Form>InfoBoxForm</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>src\main\InfoBox.h</DependentOn>
+            <BuildOrder>6</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\main\Language.cpp">
+            <DependentOn>src\main\Language.h</DependentOn>
+            <BuildOrder>7</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\main\Main.cpp">
+            <Form>MainForm</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>src\main\Main.h</DependentOn>
+            <BuildOrder>8</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\main\MPPasswGen.cpp">
+            <Form>MPPasswGenForm</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>src\main\MPPasswGen.h</DependentOn>
+            <BuildOrder>9</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\main\PasswEnter.cpp">
+            <Form>PasswEnterDlg</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>src\main\PasswEnter.h</DependentOn>
+            <BuildOrder>10</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\main\PasswList.cpp">
+            <Form>PasswListForm</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>src\main\PasswList.h</DependentOn>
+            <BuildOrder>11</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\main\PasswManager.cpp">
+            <Form>PasswMngForm</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>src\main\PasswManager.h</DependentOn>
+            <BuildOrder>12</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\main\PasswMngColSelect.cpp">
+            <Form>PasswMngColDlg</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>src\main\PasswMngColSelect.h</DependentOn>
+            <BuildOrder>13</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\main\PasswMngDbProp.cpp">
+            <Form>PasswMngDbPropDlg</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>src\main\PasswMngDbProp.h</DependentOn>
+            <BuildOrder>14</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\main\PasswMngDbSettings.cpp">
+            <Form>PasswDbSettingsDlg</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>src\main\PasswMngDbSettings.h</DependentOn>
+            <BuildOrder>15</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\main\PasswMngKeyValEdit.cpp">
+            <Form>PasswMngKeyValDlg</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>src\main\PasswMngKeyValEdit.h</DependentOn>
+            <BuildOrder>16</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\main\PasswOptions.cpp">
+            <Form>PasswOptionsDlg</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>src\main\PasswOptions.h</DependentOn>
+            <BuildOrder>17</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\main\ProfileEditor.cpp">
+            <Form>ProfileEditDlg</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>src\main\ProfileEditor.h</DependentOn>
+            <BuildOrder>18</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\main\Progress.cpp">
+            <Form>ProgressForm</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>src\main\Progress.h</DependentOn>
+            <BuildOrder>19</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\main\ProvideEntropy.cpp">
+            <Form>ProvideEntropyDlg</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>src\main\ProvideEntropy.h</DependentOn>
+            <BuildOrder>20</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\main\QuickHelp.cpp">
+            <Form>QuickHelpForm</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>src\main\QuickHelp.h</DependentOn>
+            <BuildOrder>21</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\minilzo\minilzo.c">
+            <BuildOrder>70</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\passw\diceware8k.c">
+            <BuildOrder>71</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\passw\PasswDatabase.cpp">
+            <DependentOn>src\passw\PasswDatabase.h</DependentOn>
+            <BuildOrder>72</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\passw\PasswGen.cpp">
+            <DependentOn>src\passw\PasswGen.h</DependentOn>
+            <BuildOrder>73</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\random\AESCtrPRNG.cpp">
+            <DependentOn>src\random\AESCtrPRNG.h</DependentOn>
+            <BuildOrder>74</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\random\EntropyManager.cpp">
+            <DependentOn>src\random\EntropyManager.h</DependentOn>
+            <BuildOrder>75</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\random\FastPRNG.cpp">
+            <DependentOn>src\random\FastPRNG.h</DependentOn>
+            <BuildOrder>76</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\random\RandomGenerator.cpp">
+            <DependentOn>src\random\RandomGenerator.h</DependentOn>
+            <BuildOrder>77</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\random\RandomPool.cpp">
+            <DependentOn>src\random\RandomPool.h</DependentOn>
+            <BuildOrder>78</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\util\hrtimer.cpp">
+            <DependentOn>src\util\hrtimer.h</DependentOn>
+            <BuildOrder>79</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\util\MemUtil.cpp">
+            <DependentOn>src\util\MemUtil.h</DependentOn>
+            <BuildOrder>80</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\util\Scripting.cpp">
+            <DependentOn>src\util\Scripting.h</DependentOn>
+            <BuildOrder>81</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\util\SendKeys.cpp">
+            <DependentOn>src\util\SendKeys.h</DependentOn>
+            <BuildOrder>82</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\util\StringFileStreamW.cpp">
+            <DependentOn>src\util\StringFileStreamW.h</DependentOn>
+            <BuildOrder>83</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\util\TopMostManager.cpp">
+            <DependentOn>src\util\TopMostManager.h</DependentOn>
+            <BuildOrder>84</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\util\UnicodeUtil.cpp">
+            <DependentOn>src\util\UnicodeUtil.h</DependentOn>
+            <BuildOrder>85</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\util\UpdateCheck.cpp">
+            <DependentOn>src\util\UpdateCheck.h</DependentOn>
+            <BuildOrder>86</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="src\util\Util.cpp">
+            <DependentOn>src\util\Util.h</DependentOn>
+            <BuildOrder>87</BuildOrder>
+        </CppCompile>
+        <FormResources Include="src\main\PasswList.dfm"/>
+        <FormResources Include="src\main\PasswEnter.dfm"/>
+        <FormResources Include="src\main\MPPasswGen.dfm"/>
+        <FormResources Include="src\main\Main.dfm"/>
+        <FormResources Include="src\main\PasswManager.dfm"/>
+        <FormResources Include="src\main\PasswOptions.dfm"/>
+        <FormResources Include="src\main\PasswMngKeyValEdit.dfm"/>
+        <FormResources Include="src\main\PasswMngDbSettings.dfm"/>
+        <FormResources Include="src\main\PasswMngDbProp.dfm"/>
+        <FormResources Include="src\main\PasswMngColSelect.dfm"/>
+        <FormResources Include="src\main\About.dfm"/>
+        <FormResources Include="src\main\InfoBox.dfm"/>
+        <FormResources Include="src\main\CreateTrigramFile.dfm"/>
+        <FormResources Include="src\main\CreateRandDataFile.dfm"/>
+        <FormResources Include="src\main\Configuration.dfm"/>
+        <FormResources Include="src\main\QuickHelp.dfm"/>
+        <FormResources Include="src\main\ProvideEntropy.dfm"/>
+        <FormResources Include="src\main\Progress.dfm"/>
+        <FormResources Include="src\main\ProfileEditor.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -581,6 +583,18 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lua\lapi.c" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="Win64">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="diceware8k.c" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="Win64">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'!='true'" LocalName="$(BDS)\bin\cc32260.dll" Class="DependencyModule">
                     <Platform Name="Win32">
                         <Overwrite>true</Overwrite>
@@ -598,18 +612,6 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="lua\lcode.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\lutf8lib.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName=".\Win64\Release\PwTech.exe" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Win64">
                         <RemoteName>PwTech.exe</RemoteName>
@@ -622,13 +624,42 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="lua\lgc.c" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="Win64">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lua\lbitlib.c" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="Win64">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lua\loslib.c" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="Win64">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lua\lua.c" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="Win64">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'!='true'" LocalName="$(BDS)\bin64\cc64270.dll" Class="DependencyModule">
+                    <Platform Name="Win64">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="lua\lvm.c" Configuration="Release" Class="ProjectFile">
                     <Platform Name="Win64">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="lua\lctype.c" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="lua\ltablib.c" Configuration="Release" Class="ProjectFile">
                     <Platform Name="Win64">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
@@ -639,14 +670,31 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'!='true'" LocalName="$(BDS)\bin\cc32270.dll" Class="DependencyModule">
+                <DeployFile LocalName="lua\lopcodes.c" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="Win64">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lua\loadlib.c" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="Win64">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'!='true'" LocalName="$(BDS)\bin\cc32c270.dll" Class="DependencyModule">
                     <Platform Name="Win32">
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="lua\lua.c" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="lua\liolib.c" Configuration="Release" Class="ProjectFile">
                     <Platform Name="Win64">
                         <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'!='true'" LocalName="$(BDS)\bin\cc32270.dll" Class="DependencyModule">
+                    <Platform Name="Win32">
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -657,6 +705,18 @@
                 </DeployFile>
                 <DeployFile Condition="'$(DynamicRTL)'=='true'" LocalName="$(BDS)\Redist\osx32\libcgstl.dylib" Class="DependencyModule">
                     <Platform Name="OSX32">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lua\ldebug.c" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="Win64">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lua\ltable.c" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="Win64">
+                        <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -672,13 +732,19 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="lua\lfunc.c" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="lua\lstrlib.c" Configuration="Release" Class="ProjectFile">
                     <Platform Name="Win64">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="lua\lctype.c" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="Win64">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lua\lutf8lib.c" Configuration="Release" Class="ProjectFile">
                     <Platform Name="Win64">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
@@ -719,19 +785,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="diceware8k.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="polarssl\sha1.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\lstrlib.c" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="polarssl\padlock.c" Configuration="Release" Class="ProjectFile">
                     <Platform Name="Win64">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
@@ -742,313 +796,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="lua\ldo.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\lauxlib.c" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\lmathlib.c" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\ldump.c" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'=='true'" LocalName="$(BDS)\bin\cc32260mt.dll" Class="DependencyModule">
-                    <Platform Name="Win32">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\lapi.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\lparser.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="minilzo\minilzo.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\lobject.c" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\lstate.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\lcode.c" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="polarssl\padlock.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\llex.c" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\ltm.c" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\ltablib.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'!='true'" LocalName="$(BDS)\bin64\cc64260.dll" Class="DependencyModule">
-                    <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'=='true'" LocalName="$(BDS)\bin\cc32c260mt.dll" Class="DependencyModule">
-                    <Platform Name="Win32">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\lbitlib.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\linit.c" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="polarssl\aes.c" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\ldebug.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'=='true'" LocalName="$(BDS)\bin\cc32c270mt.dll" Class="DependencyModule">
-                    <Platform Name="Win32">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\linit.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\lapi.c" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="diceware8k.c" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\lgc.c" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\lbitlib.c" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\loslib.c" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\lua.c" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'!='true'" LocalName="$(BDS)\bin64\cc64270.dll" Class="DependencyModule">
-                    <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\ltablib.c" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\lopcodes.c" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\loadlib.c" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\liolib.c" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\lbaselib.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\lmem.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'!='true'" LocalName="$(BDS)\bin\cc32c270.dll" Class="DependencyModule">
-                    <Platform Name="Win32">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\loadlib.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\ldebug.c" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\ltable.c" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="polarssl\aes.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\lopcodes.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\lstrlib.c" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\ldblib.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\lutf8lib.c" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\lgc.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="polarssl\base64.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\ltm.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\liolib.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="polarssl\padlock.c" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="lua\lzio.c" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\lvm.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\lmathlib.c" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win64">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
@@ -1066,49 +814,13 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="lua\luac.c" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="lua\lauxlib.c" Configuration="Release" Class="ProjectFile">
                     <Platform Name="Win64">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="polarssl\sha256.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\ldump.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\llex.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\lobject.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="polarssl\aesni.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\lstring.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\loslib.c" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="lua\lmathlib.c" Configuration="Release" Class="ProjectFile">
                     <Platform Name="Win64">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
@@ -1120,25 +832,13 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="lua\ltable.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\lcorolib.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="lua\lauxlib.c" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="polarssl\base64.c" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="Win64">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lua\ldump.c" Configuration="Release" Class="ProjectFile">
                     <Platform Name="Win64">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
@@ -1146,6 +846,11 @@
                 </DeployFile>
                 <DeployFile Condition="'$(DynamicRTL)'=='true'" LocalName="$(BDS)\Redist\osx32\libcgcrtl.dylib" Class="DependencyModule">
                     <Platform Name="OSX32">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'=='true'" LocalName="$(BDS)\bin\cc32260mt.dll" Class="DependencyModule">
+                    <Platform Name="Win32">
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1165,13 +870,19 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="lua\lzio.c" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="lua\lobject.c" Configuration="Release" Class="ProjectFile">
                     <Platform Name="Win64">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="chacha.c" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="lua\lcode.c" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="Win64">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lua\llex.c" Configuration="Release" Class="ProjectFile">
                     <Platform Name="Win64">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
@@ -1183,7 +894,23 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="lua\lundump.c" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="lua\ltm.c" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="Win64">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'!='true'" LocalName="$(BDS)\bin64\cc64260.dll" Class="DependencyModule">
+                    <Platform Name="Win64">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'=='true'" LocalName="$(BDS)\bin\cc32c260mt.dll" Class="DependencyModule">
+                    <Platform Name="Win32">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="lua\linit.c" Configuration="Release" Class="ProjectFile">
                     <Platform Name="Win64">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
@@ -1192,6 +919,17 @@
                 <DeployFile LocalName="lua\lmem.c" Configuration="Release" Class="ProjectFile">
                     <Platform Name="Win64">
                         <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="polarssl\aes.c" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="Win64">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'=='true'" LocalName="$(BDS)\bin\cc32c270mt.dll" Class="DependencyModule">
+                    <Platform Name="Win32">
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
