@@ -21,6 +21,10 @@ Password Tech runs on Windows 7 and later.
 
 The history of releases of main version 3 is contained in the file *changes.txt*.
 
+## Translations
+
+Available translations / language (.lng) files can be found in the *languages/* directory.
+
 ## License
 
 Password Tech is distributed under the terms and conditions of the GNU General Public License v2. For more details, see the file *license.txt* that comes with every release.
