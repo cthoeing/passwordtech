@@ -1,0 +1,1686 @@
+﻿[LANGUAGENAME]
+正體中文
+
+[LANGUAGEVERSION]
+3.4.3
+
+[LANGUAGEAUTHOR]
+Thomas Du
+
+[LANGUAGEHELPFILE]
+manual.pdf
+
+Info
+信息
+
+Warning
+警告
+
+Question
+問題
+
+Error
+錯誤
+
+Profile:
+配置
+
+Settings
+設定
+
+Include Characters (Pass*words*)
+包含字符 (產生字符密碼)
+
+Length:
+長度:
+
+Character Set:
+字集:
+
+Show details
+詳細資訊
+
+Include Words (Pass*phrases*)
+包含單詞 (產生密碼短語)
+
+Number:
+單詞數量(多少個單字):
+
+Word List File:
+單詞列表文件:
+
+Browse
+瀏覽
+
+Specify length*:
+指定長度*:
+
+Combine Words with Characters
+結合單詞和字符
+
+Format password:
+格式化密碼:
+
+Run script:
+執行腳本:
+
+Reload script
+重新載入腳本
+
+Multiple passwords:
+產生N組密碼組數量 :
+
+Generate
+產生
+
+Generate password list to file
+產生密碼列表到檔案
+
+Advanced
+進階
+
+Generated Password
+產生的密碼
+
+Click on "Generate"
+點擊 "產生"
+
+Hide/show password
+隱藏/顯示 密碼
+
+Hold left mouse button to drag & drop password
+按住滑鼠左鍵拖放密碼
+
+File
+檔案
+
+Profile
+配置
+
+Profile Editor...
+配置檔編輯器...
+
+Exit
+離開
+
+Tools
+工具
+
+Clear Clipboard
+清除剪貼簿
+
+Encrypt Clipboard...
+加密剪貼簿...
+
+Decrypt Clipboard...
+解密剪貼簿...
+
+Create Random Data File...
+建立隨機資料檔...
+
+Create Trigram File...
+建立三字銘檔...
+
+MP Password Generator...
+主要密碼產生器...
+
+Deterministic Random Generator
+定性隨機產生器
+
+Reset
+重置
+
+Deactivate
+停用
+
+Provide Additional Entropy
+提供額外的熵
+
+As Text...
+成文字...
+
+From File...
+來自檔案...
+
+Options
+選項
+
+Configuration...
+組態...
+
+Language
+語言
+
+Always on Top
+最上層顯示
+
+Hide Entropy Progress
+隱藏熵進度
+
+Save Settings on Exit
+儲存離開
+
+Save Settings Now
+套用
+
+Help
+協助
+
+Open Manual
+開啟線上說明
+
+Visit Website
+造訪官網
+
+Get Translations...
+獲取翻譯...
+
+Donate...
+贊助...
+
+Check for Updates
+檢查更新
+
+Timer Info...
+計時器資訊...
+
+About %s...
+關於 %s...
+
+Restore %s
+%s 恢復
+
+Generate Password
+產生密碼
+
+Generate and Show Password...
+產生並顯示密碼...
+
+Generate and Autotype Password
+產生並自動輸入密碼
+
+Open user manual
+開啟用戶指南
+
+Clear clipboard (text contents only)
+清除剪貼簿（僅文字內容）
+
+Clipboard text encryption (left-click) or decryption (right-click)
+剪貼簿文字加密（單擊滑鼠左鍵）或解密（單擊滑鼠右鍵）
+
+Load, create or delete profiles
+載入,建立或刪除配置檔
+
+Generate passwords based on a master password
+根據主密碼產生密碼
+
+Main configuration of the program
+程式的組態設定
+
+Reset Counters
+重置計數器
+
+All files
+所有的檔案
+
+Text files
+文字檔
+
+Trigram files
+三字銘檔
+
+Lua scripts
+Lua 腳本
+
+Undo
+回上一步
+
+Cut
+剪下
+
+Copy
+複製
+
+Encrypt && Copy
+加密並複製
+
+Paste
+貼上
+
+Perform Autotype
+執行自動輸入
+
+Add to Database
+新增到資料庫
+
+Delete
+刪除
+
+Select All
+全選
+
+Clear List
+清除列表
+
+Remove Entry
+刪除項目
+
+Editable
+編輯
+
+Enable Password Testing
+啟用密碼測試
+
+Change Font...
+變更字型...
+
+Select high-entropy file
+選擇高熵文件
+
+Manage passwords in encrypted databases
+管理加密資料庫中的密碼
+
+Reload profile
+重新載入配置資料
+
+Add profile
+新增配置檔
+
+Set up...
+建立...
+
+Password Manager...
+密碼管理員...
+
+Enter Donor Key...
+輸入贊助者密鑰...
+
+Reset All Window Positions
+重置所有窗口位置
+
+Could not read random seed file\n\"%s\".
+無法讀取隨機種子文件\n\“％s\”.
+
+Could not write to random seed file\n\"%s\".
+無法寫入隨機種子文件\n\“％s\”.
+
+Unknown command line switch(es):\n%s
+未知的命令行開關：\n％s
+
+Error while loading word list file\n\"%s\".
+加載單詞列表文件時出錯\n\“％s\”.
+
+Error while loading list of common passwords:\n%s.
+載入常用密碼列表時出錯：\n％s.
+
+%s encountered %d error(s) during startup:
+啟動期間％s遇到％d個錯誤:
+
+If you like %s, please consider\nmaking a donation. Thank you!
+如果您喜歡 %s，請考慮贊助。謝謝！
+
+Character set \"%s\" is invalid.
+字符集\“％s\”無效。
+
+Error while writing to configuration file:\n%s.
+寫入組態檔時出錯：\n％s.
+
+%d characters / %.1f bits per character
+%d 字符 / 每一字元 %.1f 位元
+
+%d words / %.1f bits per word
+%d 字詞 / 每一字組 %.1f 位元
+
+Could not open trigram file.
+無法打開三字銘檔.
+
+Invalid trigram file.
+無效的三字銘檔.
+
+Matches common password!
+普通密碼吻合！
+
+Text successfully encrypted.
+文本已成功加密.
+
+Text successfully decrypted.
+文本已成功解密.
+
+Could not open clipboard.
+無法打開剪貼簿。.
+
+The text to be encrypted is too long.
+要加密的文本太長。
+
+No text available to process.
+沒有可用的文字.
+
+Not enough memory available to perform\nthe operation. Try to use a shorter text.
+沒有足夠的記憶體來執行\n操作。請嘗試使用較短的文本。
+
+Decryption failed. This may be attributed\nto the following reasons:
+解密失敗。 \n可能歸因於以下原因：
+
+- You entered a wrong password.
+- 您輸入了錯誤的密碼。
+
+- The text is corrupted.\n- The text is not encrypted.
+- 文本已損壞。\n-文本未加密。
+
+This should not have happened:\nDecryption successful, but decompression\nfailed.
+這不該會發生：\n解密成功，但是解壓縮\n失敗。
+
+Could not register the following hot keys:
+無法註冊以下熱鍵：
+
+The selected file already exists. Do you\nwant to append passwords to this file\n(existing passwords will be preserved),\nor do you want to completely overwrite it?\n\nYes\t-> append passwords,\nNo\t-> overwrite file,\nCancel\t-> cancel process.
+所選文件已存在。您是否想要將密碼附加到此文件?\n將保留現有密碼），也不想完全覆蓋它嗎？\n\n是\t->附加密碼\n否\t->覆蓋文件\n取消\t->取消過程
+
+Passphrase: Invalid length range.
+密碼：長度範圍無效.
+
+If the option \"Each character must occur\nonly once\" is activated, the password length\nis limited to the size of the character set (%d).
+如果啟用了選項“每個字符必須\僅一次出現\”，則密碼長度只能限制為字符集（％d）的大小。
+
+If the option \"Each word must occur only\nonce\" is activated, the number of words\nis limited to the size of the word list (%d).
+如果啟用了選項“每個單詞只能出現\n一次\”，則單詞的數量限制為單詞列表的大小（％d）。
+
+Error while loading script:\n%s.
+載入腳本時出錯：\n％s。
+
+Generating password list ...
+產生密碼列表 ...
+
+%d of %d passwords generated.
+已產生 %d 個密碼，共計 %d 個
+
+Generating passphrase ...
+產生密碼短語 ...
+
+%d of %d passphrases generated.
+已產生 %d 個密碼短語，共計 %d 個
+
+\"P\" is not specified.
+未指定\“P\”。
+
+Password not available.
+密碼不可用.
+
+Password too long.
+密碼太長.
+
+Invalid format specifier \"%s\".
+無效的格式說明符\“％s \.
+
+Executing script
+執行腳本
+
+Waiting for script ...
+等待腳本 ...
+
+Script thread was terminated forcibly.\nPlease check script for infinite loops.
+腳本線程被強制終止。\n請檢查腳本中是否存在無限循環.
+
+The estimated list size will probably exceed\nthe internal memory limit.\nPlease reduce the number of passwords
+估計的列表大小可能會超過\n記憶體存儲限制。\n請減少密碼數量
+
+The memory limit of the password list has\nbeen reached.\n\nThe number of passwords has been\nreduced to %d.
+已達到密碼列表的存儲限制。密碼數量已\n減少為％d。
+
+%d passwords generated.
+產生了 %d 個密碼.
+
+%d passwords generated.\r\nSecurity of each password: %d bits.\r\nMaximum security of the entire list: %d bits.
+已生成%d個密碼。\r\n每個密碼的安全性：%d個位元。\r\n整個列表的最大安全性：%d個位元。
+
+Password copied to clipboard.
+密碼已復製到剪貼簿.
+
+Copying password list ...
+複製密碼清單 ...
+
+File \"%s\" successfully created.\n\n%d passwords written.
+已成功創建文件“％s”。\n\n％d個密碼已寫入。
+
+An error has occurred during password generation:\n%s.
+產生密碼過程中發生錯誤：\n％s。
+
+%d passwords written to file \"%s\".
+已將％d個密碼寫入文件“％s”。
+
+%d bits / %d characters
+%d 位元 / %d 個字符集
+
+Passwords: %d
+密碼：％d
+
+Invalid character set.
+無效的字符集。
+
+default (English) trigrams
+預設（英文）三字銘
+
+File \"%s\"
+檔案 \"%s\"
+
+(phonetic, based on trigram frequencies\nfrom the following source:\n<%s>)
+（語音，基於來自以下來源的三字銘頻率\n：\n <％s>）
+
+The character set you entered is invalid.\nIt must contain at least 2 different characters.
+您輸入的字符集無效。\n它必須至少包含2個不同的字符。
+
+Currently loaded character set:
+當前加載的字符集：
+
+Could not open file.
+無法開啟檔案
+
+Not enough valid words.
+有效詞不足
+
+Select word list file
+選擇單詞列表檔
+
+Error while loading the file\n\"%s\":\n%s
+當載入\"%s\":\n%s \n檔時發生錯誤
+
+default (English) word list
+預設（英語）單詞列表
+
+Currently loaded word list:
+當前加載的單詞列表：
+
+First word:
+第一個單詞：
+
+Random word:
+隨機單詞:
+
+Last word:
+最後一個單詞:
+
+The version of this language (%s) is not\ncompatible with this program version.\nThis version of %s requires a language\nversion of at least %s.\n\nDo you want to use it anyway?
+此語言（％s）的版本與此程序版本不相容。\n此版本的％s需要至少\％s的語言\n。\n\n您是否仍要使用它?
+
+The version of this language (%s) is higher\nthan the version of this program (%s).\nTherefore, version incompatibilities may occur.\n\nDo you want to use it anyway?
+此語言的版本（％s）高於此程序的版本（％s）。\n因此，可能會出現版本不兼容的情況。\n\n是否仍要使用它?
+
+The language file will be loaded when you\nrestart the program.\n\nDo you want to restart now?
+重新啟動程序時，將載入語言文件。是否要立即重新啟動?
+
+Password is too long to show it in a\nmessage box like this.\n\nIt has been copied to the clipboard.
+產生成的密碼為：\n\n％s\n\n估計的安全性為％d位。\n\n是\t->將密碼複製到剪貼板，\n否\t->生成新密碼，\n取消\t- >取消過程。
+
+The generated password is:\n\n%s\n\nThe estimated security is %d bits.\n\nYes\t-> copy password to clipboard,\nNo\t-> generate new password,\nCancel\t-> cancel process.
+產生成的密碼為：\n\n％s\n\n估計的安全性為％d位。\n\n是\t->將密碼複製到剪貼板，\n否\t->生成新密碼，\n取消\t- >取消過程。
+
+All entries will be removed from the list.\nAre you sure?
+所有項目將從列表中刪除。\n 你確定嗎?
+
+Total Entropy Bits: %d
+總熵位：%d
+
+High-resolution timer used:\n%s.\n\nCurrent value: %s.
+使用的高分辨率計時器：\n%s \n\n當前值：%s
+
+Could not download version file
+無法下載版本檔
+
+URL not found, or unknown format of version file
+找不到連結，或版本文件的格式未知
+
+A new version (%s) of %s is available!\nDo you want to visit the download page now?
+已提供 %s 的新版本（%s）!\n要立即連結下載頁面嗎?
+
+(NOTE: %s)
+注意：%s
+
+Your version of %s is up-to-date.
+您的%s版本是最新的
+
+Error while checking for updates:\n%s.
+檢查更新時出錯：\n%s。
+
+WARNING: Random generator is deterministic (press F7 to deactivate)!
+警告：隨機產生器是確定性的（按F7鍵可禁用）！!
+
+Clipboard cleared.
+剪貼簿已清除。.
+
+Profile \"%s\" activated.
+配置檔“%s”已啟用。
+
+Deterministic random generator has been ACTIVATED.
+定性隨機產生器已被啟用.
+
+Deterministic random generator has been RESET.
+定性隨機產生器已被重置。.
+
+Deterministic random generator has been DEACTIVATED.
+定性隨機產生器已被停用.
+
+ERROR: Profile \"%s\" not found.
+錯誤：找不到配置檔\"%s\".
+
+Selected profile \"%s\".
+已選擇配置檔\"%s\".
+
+Generating %d password(s) ...
+產生％d個密碼 ...
+
+Command line function \"gen\" is only effective\nwhen %s is run from the console.
+僅當從控制台執行%s時，\n命令行功能“ gen”才有效。
+
+Your donor key has expired: The maximum\nnumber of updates has been reached.
+您的贊助者密鑰的版本已過期：\n已達到可更新極限.
+
+Donor key is invalid.
+贊助者密鑰無效.
+
+Donor Key
+贊助者密鑰
+
+Enter donor key:
+輸入贊助者密鑰:
+
+Your Donor ID is: %s\nSupported number of updates: %s
+您的贊助者識別碼為：%s \n支持的更新次數：%s
+
+Unlimited
+無限制
+
+Thank you for your support!
+感謝您的支持！
+
+Copy this information to the clipboard?
+將此信息複製到剪貼板？
+
+Donor key has expired.
+贊助者密鑰已經過期.
+
+Settings saved.
+設置已儲存.
+
+Save password
+儲存密碼
+
+Clear Password Cache
+清除密碼快取
+
+Password cache cleared.
+密碼快取已清除
+
+Select Lua script file
+選擇獲取LUA腳本文件
+
+Waiting for active threads to finish ...
+等待現行運作完成 ...
+
+Donate at least one of the following amounts\nto receive a Donor Key:\n\n%d EUR / %d USD:\tValid for current version and %d updates.\n%d EUR / %d USD:\tValid for the entire lifetime of version 3.\n\nDo you want to donate now?
+贊助達到下面金額之一，即可獲得贊助密鑰 ： \n\n    %d 歐元 / %d 美元  :\t當前版本和未來%d次小版更新\n  %d 歐元 / %d 美元  :\t整個版本3版次的大版更新\n\n您現在要贊助嗎?
+
+Could not access registry key\n%s.
+無法存取註冊表項\ n％s。
+
+Configuration
+組態
+
+General
+一般
+
+Security
+安全性
+
+Hot Keys
+熱鍵
+
+Files
+檔案
+
+Updates
+更新
+
+Database
+資料庫
+
+Change font for the GUI controls:
+變更GUI元件的字體:
+
+Select font
+選擇字體
+
+Show system tray icon constantly
+總是在系統任務欄中顯示圖示
+
+Minimize program to system tray
+最小化系統存儲中的程式
+
+Minimize before performing autotype
+在執行自動書入之前最小化
+
+Autotype delay between characters (ms):
+字符之間的自動鍵入延遲（毫秒）:
+
+Ask before exiting application
+退出應用程式前先詢問
+
+Launch application on system startup (for current user)
+在系統啟動時啟動應用程序（適用於當前用戶）
+
+Encryption algorithm for generating random data via random pool:
+產生隨機數據的加密演算法:
+
+Benchmark...
+基準...
+
+Test passwords against list of common passwords
+根據常用密碼列表測試密碼
+
+Clear clipboard automatically after the following time (seconds):
+在以下時間（秒）後自動清除剪貼簿
+
+Clear password box automatically after the following time (seconds):
+在以下時間（秒）後自動刪除密碼方塊:
+
+Automatic check for updates:
+自動檢查更新:
+
+Daily
+每天
+
+Weekly
+每周
+
+Monthly
+每月
+
+Disabled
+取消
+
+Actions
+開始
+
+Show/restore main window
+顯示/還原主對話框
+
+No further action
+沒有進一步的動作
+
+Generate single password in main window
+在主對話框中產生單組密碼
+
+Generate multiple passwords
+產生多組密碼
+
+Generate password and copy it to the clipboard
+產生密碼並複製到剪貼簿
+
+Generate password and show it in a message box
+產生密碼並將其顯示在訊息方塊中
+
+Generate password and perform autotype
+產生密碼並執行自動輸入
+
+Open MP password generator
+開啟主要密碼產生器
+
+Show password manager
+顯示密碼管理器
+
+Show MP password generator
+顯示主密碼產生器
+
+Search database for keyword in window title
+在資料庫中搜尋具關鍵字的視窗標題
+
+Search database for keyword and perform autotype
+在資料庫中搜索關鍵字並執行自動輸入
+
+Shortcut to assign:
+分配捷徑:
+
+Add
+新增
+
+Remove
+移除
+
+Shortcut
+建立捷徑
+
+Action
+動作
+
+Please select a hot key action.
+請選擇一個熱鍵操作
+
+Character encoding of text files:
+文字檔的字符編碼
+
+Newline character sequence:
+換行符號的字符序列（“換行符號”）:
+
+Select language:
+選擇一種語言：
+
+Clear clipboard when closing/locking database
+關閉/鎖定資料庫時清除剪貼簿
+
+Lock database when minimizing application or database window
+最小化應用程式或資料庫對話框時鎖定資料庫
+
+Lock database after the following idle time (seconds):
+在以下空閒時間（秒）後鎖定資料庫：
+
+Save automatically
+自動存檔
+
+Create backup of database before saving
+儲存之前建立資料庫備份
+
+Number backups consecutively - up to:
+連續編號備份-最多：
+
+Open window on startup
+最高備份數量：
+
+Open last used database on startup
+啟動時打開上次使用的資料庫
+
+Warn if database contains expired entries
+警告!資料庫是否包含已過期項目
+
+Warn if database contains entries that will expire soon
+如果資料庫包含即將過期的項目，則發出警告
+
+Number of days:
+天數:
+
+Save automatically:
+自動保存：
+
+After adding/modifying an entry
+添加/修改項目後
+
+After every change
+每次更改後
+
+Default autotype sequence:
+預設自動鍵入順序：
+
+Maximum number of hot keys (%d) reached.
+達到最大熱鍵數（%d）
+
+This hot key has already been assigned.
+此熱鍵已被指定
+
+%s (%d-bit key, operates on %d-bit blocks)
+%s（%d位元密鑰，在%d位元區塊上運行）
+
+Benchmark results (data size: %d MB):
+基準測試結果（數據大小：%d MB）：
+
+Enter password:
+輸入密碼:
+
+Confirm password:
+確認密碼:
+
+Display password
+顯示密碼
+
+OK
+確定
+
+Cancel
+取消
+
+Passwords are not identical.
+密碼不一致
+
+Encrypt
+加密
+
+Decrypt
+解密
+
+Remember password (seconds):
+暫存密碼（秒）:
+
+Password List
+密碼清單
+
+Save As File...
+另存新檔...
+
+Save password list
+儲存密碼清單
+
+Error while creating file\n\"%s\":\n%s.
+建立檔案時發生錯誤\n\"%s\":\n%s。
+
+File \"%s\" successfully created.
+檔案 \"%s\" 成功建立.
+
+Advanced Password Options
+密碼進階選項
+
+Exclude ambiguous characters
+排除歧義字符
+
+First character must not be a lower-case letter
+字首不能為小寫字母
+
+Don't separate words by a space
+不要用空格分隔單詞
+
+Don't separate words and characters by a '-' character
+不要用“-”字符分隔單詞和字符
+
+Reverse default order of character/word combinations
+反轉字符/單詞組合的預設順序
+
+Include at least one upper-case letter (A-Z)
+至少包含一個大寫字母（A-Z）
+
+Include at least one lower-case letter (a-z)
+至少包含一個小寫字母（a-z）
+
+Include at least one digit (0-9)
+至少包含一個數字（0-9）
+
+Include at least one special symbol (!"#$%...)
+至少包含一個特殊符號（！“＃$％...）
+
+Only include characters from custom character set
+僅包含自定義字符集中的字符
+
+Exclude repeating consecutive characters (e.g. aa, 11)
+排除重複的連續字符（例如aa，11）
+
+Exclude duplicate entries in password lists
+排除密碼列表中的重複項目
+
+Capitalize first letter of each word
+將每個單詞的首字母大寫
+
+Convert all words in word lists to lower-case
+將單詞列表中的所有單詞轉換為小寫
+
+Each character must occur only once
+每個字符只能出現一次
+
+Each word must occur only once
+每個字只能出現一次
+
+Redefine ambiguous characters:
+重新定義歧義字符:
+
+Redefine special symbols:
+重新定義特殊符號:
+
+Maximum length of words in word lists (except default word list):
+單詞列表中單詞的最大長度（預設單詞列表除外）:
+
+Trigram file for generating phonetic (pronounceable) passwords:
+三字銘檔，用於產生語音（發音）密碼:
+
+Applies to pass_words_.
+適用於密碼詞組.
+
+Applies to pass_phrases_.
+適用於密碼短語
+
+Applies to formatted passwords.
+適用於格式化的密碼.
+
+Applies to phonetic passwords.
+適用於語音密碼
+
+Selecting one of these options might reduce the security of generated passwords.
+選擇以下選項之一可能會降低生成的密碼的安全性.
+
+These options also apply to formatted passwords.
+這些選項也適用於格式化的密碼.
+
+Deselect All
+取消全選
+
+Invert Selection
+反向選擇
+
+Create Random Data File
+建立隨機資料檔
+
+File name:
+檔案名稱:
+
+File size:
+檔案大小:
+
+Bytes
+Bytes
+
+Kilobytes
+KB
+
+Megabytes
+MB
+
+Close
+關閉
+
+Create file
+建立檔案
+
+Invalid file size.
+無效的檔案大小.
+
+Not enough free disk space available\nto create the file.
+沒有足夠的可用空間來建立檔案.
+
+Creating random data file ...
+建立隨機資料檔 ...
+
+%d of %d KB written.
+已寫入%d KB的%d.
+
+File \"%s\" successfully created.\n\n%d bytes written.
+已成功建立檔案 \"%s\"。\n\n％d 個字節已寫入.
+
+Error while creating file\n\"%s\":\n%s.\n\n%d bytes written.
+建立檔案時發生錯誤\n\"%s\"：\n％s\n\n％d個字節已寫入.
+
+Profile Editor
+配置檔案編輯器
+
+Load
+載入
+
+Confirm
+確認
+
+Profile name:
+配置案名稱:
+
+Move up
+上移
+
+Move down
+下移
+
+Save "advanced password options" for this profile
+儲存此配置檔案的“高級密碼選項”
+
+Delete profile \"%s\"?
+刪除 "%s" 配置檔?
+
+Delete %d profiles?
+刪除 %d 的配置檔?
+
+Maximum number of profiles (%d) reached.\nPlease delete or overwrite profiles.
+已達到配置檔的最大數量(%d)\n請刪除或覆蓋配置檔。.
+
+A profile with the name \"%s\" already exists.\nDo you want to overwrite it?
+名稱為 \"%s\" 的配置檔已存在\n是否要覆蓋它？?
+
+Create Trigram File
+建立三字銘檔
+
+Source file (e.g., dictionary, word list):
+來源文件（例如字典，單詞列表）:
+
+Destination file (trigram file):
+檔案名稱(三字銘檔):
+
+Trigram file \"%s\" successfully created.\n\n%d trigrams evaluated.\n%1.2f bits of entropy per letter.
+成功建立了三字銘組合 \"%s\"。\n\n對％d個三字銘組合進行了評估\n％1.2f個字母的熵.
+
+Process was cancelled by the user
+處理過程已被用戶取消
+
+About %s
+關於 %s
+
+Current language: %s\nTranslator: %s
+當前語言: %s\n 翻譯者: %s
+
+This program is distributed under the terms and conditions of the GNU General Public License (GPL).
+此程式是根據GNU通用公共許可（GPL）的條款和條件發佈的
+
+View license
+檢視版權
+
+Donor ID:
+贊助者識別碼:
+
+Quick help
+溫馨提示
+
+Position Automatically
+自動定位
+
+You can use the following placeholders:
+您可以使用以下佔位符:
+
+without ambiguous characters
+沒有模糊的字符
+
+special symbols
+特殊符號
+
+brackets
+括號
+
+punctuation marks
+標點符號
+
+higher ANSI characters
+高階ANSI字符
+
+generate phonetic password (lower-case letters)
+生成語音密碼（小寫字母）
+
+generate phonetic password (upper-case letters)
+產生語音密碼（大寫字母）
+
+generate phonetic password (mixed-case letters)
+產生語音密碼（大小寫混合）
+
+Comments may be provided in square brackets \"[...]\"\nat the beginning of the sequence.
+可以在序列開頭的方括號\“ [...] \” \\中提供註釋。
+
+Format specifiers have the form \"[*][N]x\" or \"[*][M-N]x\", where the\noptional argument \"N\" specifies the number of repetitions (between 1 and\n99999), \"M-N\" specifies a random number of repetitions in the range\nfrom M to N, and \"x\" is the actual format specifier/placeholder. The\noptional asterisk (*) means that each character must occur only once in\nthe sequence. Example: \"16u\" means \"Insert 16 random upper-case letters\ninto the password\".
+格式說明符的格式為\“ [*] [N] x \”或\“ [*] [MN] x \”，其中\ n可選參數\“ N \”指定重複的次數（1到\ n99999之間），\“ MN \”指定從M到N範圍內的隨機重複次數，\“ x \”是實際的格式說明符/佔位符。 \ n可選星號（*）表示每個字符只能按順序出現一次。示例：\“ 16u \”表示\“在密碼中插入16個隨機的大寫字母\ n \”。
+
+List of placeholders with optional argument \"N\":
+帶有可選參數\“ N \”的佔位符列表：:
+
+custom character set
+自定義字符集
+
+vowels, lower-case
+元音，小寫字母
+
+vowels, mixed-case
+元音，混合情況
+
+vowels, upper-case
+元音，大寫字母
+
+consonants, lower-case
+元音，大寫字母
+
+consonants, mixed-case
+輔音，混合情況
+
+consonants, upper-case
+輔音，大寫字母
+
+List of special format specifiers\n(possible usage of argument \"N\" is indicated by \"{N}\"):
+特殊格式說明符列表\ n（參數\“ N \”的可能用法由\“ {N} \”指示）：
+
+insert password generated via \"Include characters/words\"
+插入通過\“包含字符/單詞\”生成的密碼
+
+words from word list, multiple words are separated by spaces
+單詞列表中的單詞，多個單詞用空格分隔
+
+words, multiple words are not separated at all
+單詞，多個單詞不分開
+
+repeat input sequence in brackets N times
+重複輸入括號中的輸入序列N次
+
+randomly permute formatted sequence in brackets, keep N characters
+隨機排列帶括號的格式化序列，保留N個字符
+
+treat sequence as character set and insert N characters
+將序列視為字符集並插入N個字符
+
+Additional notes:
+附加信息：
+
+Text enclosed with quotation marks \"...\" is copied verbatim\nto the password.
+用引號\“ ... \”括起來的文本將原樣複製到密碼中.
+
+MP Password Generator
+主密碼產生器
+
+Master password
+主密碼
+
+Enter password...
+輸入密碼...
+
+Clear
+清除
+
+Status:
+狀態:
+
+Expiry countdown:
+到期倒數計時:
+
+Ask for password confirmation
+要求確認密碼
+
+Show checksum of password:
+顯示密碼的校驗和:
+
+Key expires after the following time (seconds):
+密鑰在以下時間（秒）後過期:
+
+Provide compatibility with "Hashapass"
+提供與“ Hashapass”的相容性
+
+Add password length to parameter
+將密碼長度增加到參數
+
+Autotype sequence:
+自動輸入順序:
+
+Password generator
+密碼產生器
+
+Parameter:
+參數:
+
+%d ch. / %.1f bits per ch.
+%d 字元 / %.1f 位元組 每一字元
+
+Resulting password:
+產生的密碼:
+
+Use as default random generator
+使用預設隨機數生成器
+
+Alphanumeric
+字母數字
+
+Hexadecimal
+十六進位制
+
+Key has expired.
+密鑰已過期
+
+Key has been cleared.
+密鑰已清除
+
+New key generated.
+產生新密鑰
+
+Enter or paste some text into the box below, press mouse buttons, or move your mouse within the window.
+在下面的框中輸入或貼上一些文本，按滑鼠按鈕，或在窗口中移動滑鼠
+
+%d bits of entropy have been added to the random pool.
+%d 熵位已添加到隨機池中
+
+Database not encrypted, or invalid key
+資料庫未加密或密鑰無效
+
+File contents modified, or invalid key
+文件內容已修改，或密鑰無效
+
+Unknown file format
+不明的文件格式
+
+Invalid file format
+無效的檔案格式
+
+Title
+標題
+
+Title:
+標題
+
+User name
+使用者名稱
+
+User name:
+使用者名稱:
+
+Password
+密碼
+
+Password:
+密碼:
+
+URL
+網址
+
+URL:
+網址:
+
+Keyword
+關鍵詞
+
+Keyword:
+關鍵詞:
+
+Notes
+說明
+
+Notes:
+說明:
+
+Key-value list
+鍵值清單
+
+Key-value list:
+鍵值清單:
+
+Creation time
+建立時間
+
+Creation time:
+建立時間:
+
+Last modification
+最後修改
+
+Last modification:
+最後修改:
+
+Tags
+標籤
+
+Tags:
+標籤:
+
+Select and add existing tag
+選擇現有標籤
+
+All ((tags))
+所有標籤
+
+All search results
+搜尋結果
+
+Untagged
+未加標籤
+
+Key
+鍵
+
+Value
+值
+
+Edit
+編輯
+
+View
+檢視
+
+New...
+新增...
+
+Open...
+開啟...
+
+Open as Read-only...
+以唯讀方式打開...
+
+Save
+儲存
+
+Save As...
+另存為...
+
+Lock
+鎖定
+
+Unlock
+解除鎖定
+
+Export to
+輸出到
+
+CSV File...
+CSV 檔案...
+
+Database Settings...
+資料庫設定...
+
+Properties...
+特性...
+
+Change Master Password...
+變更主密碼...
+
+Copy User Name
+複製使用者名稱
+
+Copy Password
+複製密碼
+
+Open URL
+開啟網址
+
+Run
+執行
+
+Add Entry
+新增項目
+
+Duplicate Entry
+重複輸入
+
+Delete Entry
+刪除項目
+
+Show Columns
+顯示列
+
+Show Passwords in List
+在列表中顯示密碼
+
+Sort Entries By
+排序方式
+
+Unsorted
+未排序
+
+Sort Order
+排序
+
+Ascending
+升冪
+
+Descending
+降冪
+
+Sort Tags By
+依標籤排序
+
+Name
+名稱
+
+Frequency
+頻率
+
+Change List Font...
+變更列表字體...
+
+Change Password Font...
+變更密碼字體...
+
+Previous entry
+上一個項目
+
+Next entry
+下一個項目
+
+Accept changes
+接受變更
+
+Undo changes
+取消變更
+
+Search...
+搜尋...
+
+Clear search
+清除搜尋
+
+Left-click: Perform search, right-click: Search options
+左鍵單擊：執行搜索，右鍵單擊：搜索選項
+
+Case-sensitive search
+區分大小寫的搜索
+
+Fuzzy search (approximate matching)
+模糊搜索（近似匹配）
+
+Lock/unlock database
+鎖定/解鎖資料庫
+
+Left-click: Hide/show password, right-click: Generate password
+左鍵單擊：隱藏/顯示密碼，右鍵單擊：生成密碼
+
+Unlock %s
+%s 解鎖
+
+Open %s
+打開 %s
+
+Create new database
+建立新資料庫
+
+Could not find database file:\n\"%s\".
+找不到資料庫檔案:\n"%s"
+
+Error while opening database file:\n%s.
+打開資料庫文件時出錯:\n%s.
+
+The currently selected entry has been changed.\nDo you want to save the changes?
+當前選擇的項目已修改。\n是否要保存修改?
+
+The database has been changed.\nDo you want to save the changes?
+資料庫已修改。是否要儲存?
+
+An untitled database cannot be locked.
+未命名的資料庫無法鎖定.
+
+Could not save backup file\n\"%s\".
+無法保存備份文件:\n"%s".
+
+Error while saving database file:\n%s.
+存檔資料庫檔案失敗:\n%s.
+
+Please finish editing the current entry\nbefore adding new entries.
+請完成編輯當前項目，然後再添加新項目.
+
+%d entries with passwords have been added.
+%d 添加密碼的項目.
+
+1 entry found.
+找到1個項目.
+
+%d entries found.
+%d 找到項目.
+
+Search via hot key.
+通過熱鍵搜索.
+
+No matching keyword found for window text\n\"%s\".
+找不到與窗口文字匹配的關鍵字\n"%s".
+
+New Entry
+建立新的項目
+
+Please specify at least a title or password.
+請至少指定標題或密碼.
+
+Delete 1 entry?
+刪除一個項目?
+
+Delete %d entries?
+要刪除 %d 項目嗎?
+
+Enter OLD master password
+輸入舊的主密碼
+
+Enter NEW master password
+輸入新的主密碼
+
+Master password successfully changed.
+主密碼變更成功.
+
+Old master password is invalid.
+舊的主密碼無效.
+
+Untitled
+未命名
+
+Copy ((noun))
+複製
+
+Database successfully exported to CSV file.
+資料庫成功輸出到CSV文件.
+
+Error while creating CSV file:\n%s.
+建立CSV文件時出錯:\n%s.
+
+Password databases
+密碼資料庫
+
+CSV files
+CSV檔案
+
+Autotype
+自動輸入
+
+Format password
+格式化密碼
+
+Rearrange Entry
+重新排列項目
+
+Move to Top
+移至頂端
+
+Move up by one
+上移一個
+
+Move down by one
+下移一個
+
+Move to Bottom
+移至底部
+
+The maximum tag length is %d characters.\nLonger tags have been shortened.
+標籤的最大長度為%d個字符\n 較長的標籤已縮短
+
+Enter master password again
+再次輸入主密碼
+
+Master password is invalid.
+主密碼無效。
+
+Edit key-value list
+編輯鍵值列表
+
+Profile "%s" not found.
+找不到配置文件“％s”。
+
+Password expiry
+密碼過期
+
+Expires:
+到期 :
+
+Change expiry date
+更改過期日期
+
+Filter expired entries
+過濾過期的項目
+
+Filter entries that will expire soon
+過濾即將過期的項目
+
+%d days
+%d 天
+
+The database contains expired entries.\nDo you want to filter these entries now?
+數據庫包含已過期條目。\ n您要立即過濾這些條目嗎？
+
+The database contains entries that will expire soon.\nDo you want to filter these entries now?
+資料庫包含即將過期的項目。\n您現在要過濾這些項目嗎？
+
+Locked
+鎖定
+
+Select columns
+選擇列
+
+Select at least one column.
+選擇至少一列.
+
+Error while formatting string
+格式化字符串時出錯
+
+Invalid UTF-16 character encoding
+無效的UTF-16字符編碼
+
+Error while converting string to UTF-8
+將字符串轉換為UTF-8時出錯
+
+Error while decoding UTF-8 string
+解碼UTF-8字符串時出錯
+
+Unicode string too long
+Unicode字符串太長
+
+Invalid ANSI or UTF-8 character encoding, or Unicode string too long
+無效的ANSI或UTF-8字符編碼，或Unicode字符串太長
+
+Error while encoding Unicode string
+編碼Unicode字符串時出錯
+
+Out of disk space
+儲存空間不足
+
+Could not open file/execute operation\n\"%s\".
+無法打開檔案/執行操作\n\"%s\".
+
+Source file does not contain enough trigrams
+來源檔案沒有足夠的三字母組合
+
+Database settings
+資料庫設定
+
+Default user name for new entries:
+新項目的預設用戶名:
+
+Generate passwords for new entries using format sequence:
+使用格式序列為新項目生成密碼:
+
+Generate test password using format sequence
+使用格式序列生成測試密碼
+
+Encryption algorithm:
+加密演算法：
+
+%s with %d-bit key
+具有％d位密鑰的％s
+
+Number of key derivation rounds:
+密鑰派生輪數：
+
+Calculate number of rounds for a 1 second delay
+計算1秒延遲的回合數
+
+Invalid number of key derivation rounds.
+無效的密鑰派生輪數。
+
+By default, new entries expire after the following number of days:
+預設情況下，新項目在下面的天數後到期：
+
+Key-value list editor
+鍵值列表編輯器
+
+Properties
+特性
+
+Property
+所有權
+
+Location
+位置
+
+Size
+(檔案)大小
+
+Format version
+格式版本
+
+Number of entries
+條目數
+
+Number of expired entries
+過期條目數
+
+Number of tags
+標籤數量
+

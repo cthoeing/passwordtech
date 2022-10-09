@@ -1,0 +1,1745 @@
+﻿[LANGUAGENAME]
+Ελληνικά
+
+[LANGUAGEVERSION]
+3.4.4
+
+[LANGUAGEAUTHOR]
+Γιώργος Κωστόπουλος
+
+[LANGUAGEHELPFILE]
+manual.pdf
+
+Info
+Σχετικά
+
+Warning
+Προσοχή
+
+Question
+Ερώτηση
+
+Error
+Σφάλμα
+
+Profile:
+Προφίλ:
+
+Settings
+Ρυθμίσεις
+
+Include Characters (Pass*words*)
+Συμπερίληψη Χαρακτήρων (Pass*words*)
+
+Length:
+Μήκος:
+
+Character Set:
+Σύνολο Χαρακτήρων:
+
+Show details
+Εμφάνιση λεπτομερειών.
+
+Include Words (Pass*phrases*)
+Συμπερίληψη Λέξεων (Pass*phrases*)
+
+Number:
+Αριθμός:
+
+Word List File:
+Αρχείο Καταλόγου Λέξεων:
+
+Browse
+Φυλλομέτρηση
+
+Specify length*:
+Προσδιορίστε μήκος*:
+
+Combine Words with Characters
+Συνδυασμός Λέξεων με Χαρακτήρες
+
+Format password:
+Διαμόρφωση κωδικού:
+
+Run script:
+Εκτέλεση περιγραφής:
+
+Reload script
+Επαναφόρτωση περιγραφής
+
+Multiple passwords:
+Πολλαπλοί κωδικοί:
+
+Generate
+Δημιουργία
+
+Generate password list to file
+Δημιουργία καταλόγου κωδικών σε αρχείο
+
+Advanced
+Αναλυτικά
+
+Generated Password
+Δημιουργηθέντες Κωδικοί
+
+Click on "Generate"
+Κλικάρετε στο "Δημιουργία"
+
+Hide/show password
+Εμφάνιση/Απόκρυψη κωδικού.
+
+Hold left mouse button to drag & drop password
+Κρατήστε πατημένο το αριστερό κουμπί για σύρσιμο και απόθεση κωδικού.
+
+File
+Αρχείο
+
+Profile
+Προφίλ
+
+Profile Editor...
+Επεξεργαστής προφίλ...
+
+Exit
+Έξοδος
+
+Tools
+Εργαλεία
+
+Clear Clipboard
+Καθαρισμός Προχείρου
+
+Encrypt Clipboard...
+Κρυπτογράφηση Προχείρου...
+
+Decrypt Clipboard...
+Αποκρυπτογράφηση Προχείρου...
+
+Create Random Data File...
+Δημιουργία Τυχαίου Αρχείου Δεδομένων...
+
+Create Trigram File...
+Δημιουργία αρχείου τριγραμμάτων...
+
+MP Password Generator...
+Γεννήτρια κωδικών MP...
+
+Deterministic Random Generator
+Υπολογιστικός τυχαιοποιητής.
+
+Reset
+Επαναφορά.
+
+Deactivate
+Απενεργοποίηση.
+
+Provide Additional Entropy
+Παράσχετε Πρόσθετη Εντροπεία.
+
+As Text...
+Ως κείμενο
+
+From File...
+Από αρχείο
+
+Options
+Επιλογές
+
+Configuration...
+Διαμόρφωση...
+
+Language
+Γλώσσα.
+
+Always on Top
+Πάντα στη κορυφή
+
+Hide Entropy Progress
+Απόκρυψη προόδου εντροπίας
+
+Save Settings on Exit
+Αποθήκευση Ρυθμίσεων κατά την Έξοδο
+
+Save Settings Now
+Αποθήκευση Ρυθμίσεων Τώρα
+
+Help
+Βοήθεια
+
+Open Manual
+Άνοιγμα Εγχειριδίου
+
+Visit Website
+Επίσκεψη ιστοσελίδας
+
+Get Translations...
+Λήψη Μεταφράσεων...
+
+Donate...
+Δωρεά...
+
+Check for Updates
+Έλεγχος για ενημερώσεις.
+
+Timer Info...
+Πληροφορίες χρονόμετρου...
+
+About %s...
+Σχετικά %s...
+
+Restore %s
+Επαναφορά %s
+
+Generate Password
+Δημιουργία κωδικού.
+
+Generate and Show Password...
+Δημιουργία και Εμφάνιση Κωδικού...
+
+Generate and Autotype Password
+Δημιουργία και Αυτόματη πληκτρολόγηση Κωδικού
+
+Open user manual
+Άνοιγμα εγχειριδίου χρήσης
+
+Clear clipboard (text contents only)
+Καθαρισμός προχείρου (μόνο κειμένου)
+
+Clipboard text encryption (left-click) or decryption (right-click)
+Κρυπτογράφηση κειμένου προχείρου ((αριστερό-κλικ) ή αποκρυπτογράφηση (δεξί-κλικ)
+
+Load, create or delete profiles
+Φόρτωση, δημιουργία ή διαγραφή προφίλ
+
+Generate passwords based on a master password
+Δημιουργία κωδικών, βασισμένων σε κύριο.
+
+Main configuration of the program
+Βασική διαμόρφωση προγράμματος
+
+Reset Counters
+Επαναφορά Μετρητών
+
+All files
+Όλα τ' αρχεία
+
+Text files
+Αρχεία κειμένου
+
+Trigram files
+Αρχεία Trigram
+
+Lua scripts
+Περιγραφές Lua
+
+Undo
+Αναίρεση
+
+Cut
+Αποκοπή
+
+Copy
+Αντιγραφή
+
+Encrypt && Copy
+Κρυπτογράφηση κι Αντιγραφή
+
+Paste
+Επικόλληση
+
+Perform Autotype
+Διενέργεια αυτόματης πληκτρολόγησης
+
+Add to Database
+Πρόσθεση στη βάση δεδομένων
+
+Delete
+Διαγραφή
+
+Select All
+Επιλογή Όλων
+
+Clear List
+Καθαρισμός Καταλόγου
+
+Remove Entry
+Διαγραφή εγγραφής
+
+Editable
+Επεξεργάσιμο.
+
+Enable Password Testing
+Ενεργοποίηση δοκιμής κωδικών
+
+Change Font...
+Αλλαγή γραμματοσειράς...
+
+Select high-entropy file
+Επιλέξτε αρχείο υψηλής-εντροπείας
+
+Manage passwords in encrypted databases
+Διαχείριση κωδικών σε κρυπτογραφημένες βάσειε δεδομένων
+
+Reload profile
+Επαναφόρτωση προφίλ
+
+Add profile
+Προσθήκη προφίλ
+
+Set up...
+Στήσιμο...
+
+Password Manager...
+Διαχειριστής Κωδικών...
+
+Enter Donor Key...
+Εισαγωγή Κλειδιού Δωρεοδότη...
+
+Reset All Window Positions
+Επαναφορά όλων των Θέσεων Παραθύρων
+
+Could not read random seed file\n\"%s\".
+Αδυναμία ανάγνωσης τυχαίου αρχείου τροφοδότησης\n\"%s\".
+
+Could not write to random seed file\n\"%s\".
+Αδυναμία εγγραφής τυχαίου αρχείου τροφοδότησης\n\"%s\".
+
+Unknown command line switch(es):\n%s
+Άγνωστο(α) όρισμα(τα) γραμμής εντολών:\n%s
+
+Error while loading word list file\n\"%s\".
+Σφάλμα κατά τη φόρτωση του αρχείου καταλόγου λέξεων \n"%s\".
+
+Error while loading list of common passwords:\n%s.
+Σφάλμα κατά τη φόρτωση καταλόγου κοινών κωδικών:\n%s.
+
+%s encountered %d error(s) during startup:
+%s  %d σφάλμα(τα) κατά την εκκίνηση:
+
+If you like %s, please consider\nmaking a donation. Thank you!
+Αν σας αρέσει %s, παρακαλώ\nδωρίστε. Ευχαριστώ!
+
+Character set \"%s\" is invalid.
+Το σύνολο χαρακτήρων \"%s\" είναι αντικανονικό.
+
+Error while writing to configuration file:\n%s.
+Λάθος κατά την εγγραφή του αρχείου διαμόρφωσης:\n%s.
+
+%d characters / %.1f bits per character
+%d χαρακτήρες / %.1f Bits ανά χαρακτήρα
+
+%d words / %.1f bits per word
+%d λέξεις / %.1f Bits ανά λέξη
+
+Could not open trigram file.
+Αδυναμία ανοίγματος αρχείου τριγραμμάτων.
+
+Invalid trigram file.
+Αντικανονικό αρχείο τριγραμμάτων.
+
+Matches common password!
+Ταίριασμα κοινών κωδικών
+
+Text successfully encrypted.
+Επιτυχής κρυπτογράφηση κειμένου.
+
+Text successfully decrypted.
+Επιτυχής αποκρυπτογράφηση κειμένου.
+
+Could not open clipboard.
+Αδυναμία ανοίγματος προχείρου.
+
+The text to be encrypted is too long.
+Το προς κρυπτογράφηση κείμενο, είναι πολύ μεγάλο.
+
+No text available to process.
+Ανύπαρκτο κείμενο προς επεξεργασία.
+
+Not enough memory available to perform\nthe operation. Try to use a shorter text.
+Ανεπαρκής διαθέσιμη μνήμη, για την εκτέλεση\nτης λειτουργίας. Δοκιμάστε ένα συντομότερο κείμενο.
+
+Decryption failed. This may be attributed\nto the following reasons:
+Η αποκρυπτογράφηση απέτυχε. Αυτό μπορεί να οφίλεται\nστους ακόλουθους λόγους:
+
+- You entered a wrong password.
+- Εισαγωγή λάθος κωδικού.
+
+- The text is corrupted.\n- The text is not encrypted.
+- Το κείμενο είναι κατεστραμμένο.\n- Το κείμενο δεν είναι κρυπτογραφημένο.
+
+This should not have happened:\nDecryption successful, but decompression\nfailed.
+Αυτό δε θα 'πρεπε να συμβαίνει:\nΕπιτυχής αποκρυπτογράφηση, αλλ' αποτυχία\nαποσυμπίεσης.
+
+Could not register the following hot keys:
+Αδυναμία καταχώρησης των ακόλουθων ενεργών πλήκτρων:
+
+The selected file already exists. Do you\nwant to append passwords to this file\n(existing passwords will be preserved),\nor do you want to completely overwrite it?\n\nYes\t-> append passwords,\nNo\t-> overwrite file,\nCancel\t-> cancel process.
+Το επιλεγμένο αρχείο, υπάρχει ήδη. Θέλετε\n να προσαρτήσετε κωδικούςσ' αυτό\n(οι υπάρχοντες θα διατηρηθούν),\nή να το αντικαταστήσετε;\n\nΝαι\t-> προσάρτηση κωδικών,\nΌχι\t->αντικατάσταση αρχείου,\nΆκυρο\t->ακύρωση διαδικασίας.
+
+Passphrase: Invalid length range.
+Φράση κωδικού: Αντικανονικό εύρος μήκους.
+
+If the option \"Each character must occur\nonly once\" is activated, the password length\nis limited to the size of the character set (%d).
+Αν η επιλογή \"κάθε χαρακτήρας πρέπει να υπάρχει\n μόνο μία φορά\" είν' ενεργοποιημένη, το μήκος κωδικού\n περιορίζεται στο μέγεθος του συνόλου χαρακτήρων (%d).
+
+If the option \"Each word must occur only\nonce\" is activated, the number of words\nis limited to the size of the word list (%d).
+Αν η επιλογή \"κάθε λέξη πρέπει να υπάρχει\n μόνο μία φορά\" είν' ενεργοποιημένη, το μήκος κωδικού\n περιορίζεται στο μέγεθος του καταλόγου λέξεων (%d).
+
+Error while loading script:\n%s.
+Σφάλμα κατά τη φόρτωση περιγραφής:\n%s.
+
+Generating password list ...
+Δημιουργία καταλόγου κωδικών ...
+
+%d of %d passwords generated.
+%d από %d κωδικοί δημιουργήθηκαν.
+
+Generating passphrase ...
+Δημιουργία φράσης-κωδικού ...
+
+%d of %d passphrases generated.
+%d από %d φράσεις κωδικών δημιουργήθηκαν.
+
+\"P\" is not specified.
+\"P\" δεν ορίστηκε.
+
+Password not available.
+Μη διαθέσιμος κωδικός.
+
+Password too long.
+Πολύ μεγάλος κωδικός.
+
+Invalid format specifier \"%s\".
+Άκυρη μορφή οριστή \"%s\".
+
+Executing script
+Εκτέλεση περιγραφής
+
+Waiting for script ...
+Αναμονή για περιγραφή...
+
+Script thread was terminated forcibly.\nPlease check script for infinite loops.
+Το νήμα περιγραφής τερματίστηκε βιαίως.\nΠαρακαλώ ελέγξτε τη περιγραφή για ατέρμονους βρόγχους.
+
+The estimated list size will probably exceed\nthe internal memory limit.\nPlease reduce the number of passwords
+Το εκτιμώμενο μέγεθος καταλόγου, πιθανότατα υπερβαίνει\nτο όριο εσωτερικής μνήμης.\nΠαρακαλώ περιορίστε τον αριθμό κωδικών
+
+The memory limit of the password list has\nbeen reached.\n\nThe number of passwords has been\nreduced to %d.
+Το όριο μνήμης καταλόγου κωδικών\nέχει επιτευχθεί.\n\nΟ αριθμός κωδικών, περιορίστηκε σε %d.
+
+%d passwords generated.
+%d κωδικοί δημιουργήθηκαν
+
+%d passwords generated.\r\nSecurity of each password: %d bits.\r\nMaximum security of the entire list: %d bits.
+%d κωδικοί δημιουργήθηκαν.\r\nΑσφάλεια κάθε κωδικού: %d bits.\r\nΜέγιστη ασφάλεια παρόντος καταλόγου: %d bits.
+
+Password copied to clipboard.
+Ο κωδικός αντεγράφη στο πρόχειρο.
+
+Copying password list ...
+Αντιγραφή καταλόγου κωδικών ...
+
+File \"%s\" successfully created.\n\n%d passwords written.
+Το αρχείο \"%s\" δημιουργήθηκε επιτυχώς.\n\n%d κωδικοί ενεγράφησαν.
+
+An error has occurred during password generation:\n%s.
+Συνέβη ένα λάθος, κατά τη δημιουργία κωδικού:\n%s.
+
+%d passwords written to file \"%s\".
+Εγγραφή %d κωδικών, στο αρχείο \"%s\".
+
+%d bits / %d characters
+%d Bits / %d χαρακτήρες
+
+Passwords: %d
+Κωδικοί: %d
+
+Invalid character set.
+Αντικανονικό σύνολο χαρακτήρων.
+
+default (English) trigrams
+Προκαθορισμένα (Αγγλικά) τριγράμματα.
+
+File \"%s\"
+Αρχείο \"%s\"
+
+(phonetic, based on trigram frequencies\nfrom the following source:\n<%s>)
+(φωνητικό, βασισμένο σε συχνότητες τραγραμμάτων\nαπ' την ακόλουθη πηγή:\n<%s>)
+
+The character set you entered is invalid.\nIt must contain at least 2 different characters.
+Αντικανονικό εισαχθέν σύνολο χαρακτήρων..\nΠρέπει να περιέχονται, τουλάχιστον 2 χαρακτήρες.
+
+Currently loaded character set:
+Παρόν φορτωμένο σύνολο χαρακτήρων:
+
+Could not open file.
+Αδυναμία ανοίγματος αρχείου.
+
+Not enough valid words.
+Ανεπάρκεια έγκυρων λέξεων.
+
+Select word list file
+Επιλέξτε αρχείο καταλόγου λέξεων
+
+Error while loading the file\n\"%s\":\n%s
+Σφάλμα κατά τη λήψη, του αρχείου\n\"%s\":\n%s
+
+default (English) word list
+Προκαθοσιμένος (Αγγλικός) κατάλογος λέξεων.
+
+Currently loaded word list:
+Παρών φορτωμένος κατάλογος λέξεων:
+
+First word:
+Πρώτη λέξη:
+
+Random word:
+Τυχαία λέξη:
+
+Last word:
+Τελευταία λέξη:
+
+The version of this language (%s) is not\ncompatible with this program version.\nThis version of %s requires a language\nversion of at least %s.\n\nDo you want to use it anyway?
+Η έκδοση της γλώσσας (%s) δεν είναι\nσυμβατή μ' αυτή την έκδοση προγράμματος\nΗ έκδοση του %s απαιτεί μια έκδοση γλώσσας\n τουλάχιστον %s.\n\nΘέλετε να συνεχίσετε οπωσδήποτε;
+
+The version of this language (%s) is higher\nthan the version of this program (%s).\nTherefore, version incompatibilities may occur.\n\nDo you want to use it anyway?
+Η έκδοση της γλώσσας (%s) είναι μεγαλύτερη\nαπ' την έκδοση του προγράμματος (%s).\nΕπομένως μπορεί να προκληθούν, ασυμβατότητες έκδοσης.\n\nΘέλετε να τη χρησιμοποιήσετε οπωσδήποτε;
+
+The language file will be loaded when you\nrestart the program.\n\nDo you want to restart now?
+Το αρχείο γλώσσας θα φορτωθεί όταν \nεπανεκκινήσετε το πρόγραμμα.\n\nΘέλετε να επανεκκινήσετε τώρα;
+
+Password is too long to show it in a\nmessage box like this.\n\nIt has been copied to the clipboard.
+Κωδικός πολύ μεγάλος προς εμφάνιση σε\nκουτί μηνύματος σαν κι αυτό.\n\nlt έχει αντιγραφεί στο πρόχειρο.
+
+The generated password is:\n\n%s\n\nThe estimated security is %d bits.\n\nYes\t-> copy password to clipboard,\nNo\t-> generate new password,\nCancel\t-> cancel process.
+Ο παταχθείς κωδικός είναι:\n\n%s\n\nΗ εκτιμώμενη ασφάλεια είναι %d bits.\n\nΝαι\t-> αντιγραφή κωδικού στο πρόχειρο,\nΌχι\t-> παραγωγή καινούριου κωδικού,\nΆκυρο.\t-> Ακύρωση διαδικασίας.
+
+All entries will be removed from the list.\nAre you sure?
+Όλες οι εγγραφές θα διαγραφούν απ' το κατάλογο.\nΕίστε σίγουρος;
+
+Total Entropy Bits: %d
+Συνολικά bits εντροπείας: %d
+
+High-resolution timer used:\n%s.\n\nCurrent value: %s.
+Υψηλής ακρίβειας χρονιστής σε χρήση:\n%s.\n\nΠαρούσα τιμή: %s.
+
+Could not download version file
+Αδυναμία λήψης αρχείου έκδοσης.
+
+URL not found, or unknown format of version file
+Το URL δε βρέθηκε, ή άγνωστο σχήμα αρχείου έκδοσης
+
+A new version (%s) of %s is available!\nDo you want to visit the download page now?
+Μια νέα έκδοση (%s) του %s είναι διαθέσιμη!\nΘέλετε να επισκεφθείτε τώρα, τη σελίδα κατεβάσματος;
+
+(NOTE: %s)
+(ΣΗΜΕΙΩΣΗ: %s)
+
+Your version of %s is up-to-date.
+Η έκδοσή σας %s ειν' ενημερωμένη.
+
+Error while checking for updates:\n%s.
+Σφάλμα κατά τον έλεγχο ενημερώσεων\n%s.
+
+WARNING: Random generator is deterministic (press F7 to deactivate)!
+ΠΡΟΣΟΧΗ: Ο τυχαιοποιητής, είναι υπολογιστικός (Πιέστε F7 γι απενεργοποίηση)
+
+Clipboard cleared.
+Το πρόχειρο καθαρίστηκε.
+
+Profile \"%s\" activated.
+Το προφίλ \"%s\" ενεργοποιήθηκε.
+
+Deterministic random generator has been ACTIVATED.
+Ο υπολογιστικός τυχαιοποιητής ΕΝΕΡΓΟΠΟΙΗΘΗΚΕ.
+
+Deterministic random generator has been RESET.
+Ο υπολογιστικός τυχαιοποιητής ΕΠΑΝΗΛΘΕ.
+
+Deterministic random generator has been DEACTIVATED.
+Ο υπολογιστικός τυχαιοποιητής ΑΠΕΝΕΡΓΟΠΟΙΗΘΗΚΕ.
+
+ERROR: Profile \"%s\" not found.
+ΛΑΘΟΣ: τΟ ΠΡΟΦΊΛ \"%s\" δε βρέθηκε.
+
+Selected profile \"%s\".
+Επιλεχθέν προφίλ \"%s\".
+
+Generating %d password(s) ...
+Δημιουργία %d κωδικού(ών) ...
+
+Command line function \"gen\" is only effective\nwhen %s is run from the console.
+Η λειτουργία γραμμής εντολών \"gen\" είναι αποτελεσματική μόνον\nόταν %s τρέχει από κονσόλα.
+
+Your donor key has expired: The maximum\nnumber of updates has been reached.
+Το κλειδί σας δωρεοδότη εξέπνευσε. Ο μέγιστος\αριθμός ενημερώσεων συμπληρώθηκε.
+
+Donor key is invalid.
+Το κλειδί δωρεοδότη είναι άκυρο.
+
+Donor Key
+Κλειδί δωρεοδότη
+
+Enter donor key:
+Εισαγωγή κλειδιού δωρεοδότη
+
+Your Donor ID is: %s\nSupported number of updates: %s
+Το ID σας δωρεοδότη είναι: %s\nΥποστηριζόμενος αριθμός ενημερώσεων: %s
+
+Unlimited
+Απεριόριστος
+
+Thank you for your support!
+Ευχαριστώ για την υποστήριξη!
+
+Copy this information to the clipboard?
+Αντιγραφή πληροφορίας στο Πρόχειρο;
+
+Donor key has expired.
+Το Κλειδί σας δωρεοδότη, έληξε.
+
+Settings saved.
+Οι ρυθμίσεις αποθηκεύτηκαν.
+
+Save password
+Αποθήκευση κωδικού
+
+Clear Password Cache
+Καθαρισμός Μνήμης Κωδικών
+
+Password cache cleared.
+Η προσωρινή μνήμη κωδικού καθάρισε.
+
+Select Lua script file
+Επιλογή περιγραφικού αρχείου Lua
+
+Waiting for active threads to finish ...
+Αναμονή για τερματισμό ενεργού κλειδιού...
+
+Donate at least one of the following amounts\nto receive a Donor Key:\n\n%d EUR / %d USD:\tValid for current version and %d updates.\n%d EUR / %d USD:\tValid for the entire lifetime of version 3.\n\nDo you want to donate now?
+Δωρίστε τουλάχιστον έν' απ' τ' ακόλουθα ποσά\nγια παραλαβή Κλειδιού Δωρεοδότη:\n\n%d EUR / %d USD:\tέγκυρο για τη παρούσα έκδοση και %d ενημερώσεις.\n%d EUR / %d USD:\tΈγκυρο για ολόκληρη τη διάρκεια ζωής της έκδοσης 3.\n\nΘέλετε να δωρλισετε τώρα;
+
+Could not access registry key\n%s.
+Αδυναμία πρόσβασης κλειδιών καταχώρησης\n%s.
+
+Configuration
+Διαμόρφωση
+
+General
+Γενικά
+
+Security
+Ασφάλεια
+
+Hot Keys
+Ενεργά κλειδιά
+
+Files
+Αρχεία
+
+Updates
+Ενημερώσεις
+
+Database
+Βάση δεδομένων
+
+Change font for the GUI controls:
+Αλλαγή γραμματοσειράς για ελέγχους γραφικού περιβάλλοντος
+
+Select font
+Επιλογή γραμματοσειράς
+
+Show system tray icon constantly
+Συνεχής εμφάνιση, εικονιδίου γραμμής εργασιών
+
+Minimize program to system tray
+Ελαχιστοποίηση στη Περιοχή Ειδοποιήσεων
+
+Minimize before performing autotype
+Ελαχιστοποίηση προ εφαρμογής αυτοτύπου
+
+Autotype delay between characters (ms):
+Καθυστλερηση αυτότυπου μεταξύ χαρακτήρων (ms):
+
+Ask before exiting application
+Ερώτηση προ εξόδου εφαρμογής
+
+Launch application on system startup (for current user)
+Φόρτωση εφαρμογής κατά την εκκίνηση (για το τρέχοντα χρήστη)
+
+Encryption algorithm for generating random data via random pool:
+Κρυπτογράφηση αλγορίθμου γεννήτριας τυχαίων δεδομένων μέσω τυχαίας πηγής:
+
+Benchmark...
+Μέτρηση απόδοσης...
+
+Test passwords against list of common passwords
+Δοκιμή κωδικών, με λίστα γνωστών κωδικών
+
+Clear clipboard automatically after the following time (seconds):
+Αυτόματος καθαρισμός προχείρου, μετά απ' τον ακόλουθο χρόνο (δευτερόλεπτα).
+
+Clear password box automatically after the following time (seconds):
+Αυτόματος ακαθρισμός κουτιού κωδικού μετά τον ακόλουθο χρόνο (δευτερόλεπτα):
+
+Automatic check for updates:
+Αυτόματος έλεγχος ενημερώσεων.
+
+Daily
+Καθημερινά
+
+Weekly
+Εβδομαδιαία
+
+Monthly
+Μηνιαία
+
+Disabled
+Απενεργοποιήθηκε
+
+Actions
+Ενέργειες
+
+Show/restore main window
+Εμφάνιση/αποκατάσταση κυρίως παραθύρου
+
+No further action
+Καμία περαιτέρω ενέργεια
+
+Generate single password in main window
+Δημιουργία απλού κωδικού σε κυρίως παράθυρο
+
+Generate multiple passwords
+Δημιουργία πολλαπλών κωδικών
+
+Generate password and copy it to the clipboard
+Δημιουργία κωδικού κι αντιγραφή του στο Πρόχειρο
+
+Generate password and show it in a message box
+Δημιουργία κωδικού κι εμφάνισή του σε κουτί μηνύματος
+
+Generate password and perform autotype
+Δημιουργία κωδικού κι εφαρμογή αυτότυπου
+
+Open MP password generator
+Άνοιγμα γεννήτριας κωδικών MP.
+
+Show password manager
+Εμφάνιση διαχειριστή κωδικού
+
+Show MP password generator
+Εμφάνιση MP γεννήτριας κωδικών
+
+Search database for keyword in window title
+Εύρεση σε βάση δεδομένων λέξης κλειδί σε τίτλο παραθύρου
+
+Search database for keyword and perform autotype
+Εύρεση σε βάση δεδομένων λέξης κλειδί κι εφαρμογή αυτότυπου
+
+Shortcut to assign:
+Συντόμαυση προς ανάθεση:
+
+Add
+Πρόσθεση
+
+Remove
+Διαγραφή
+
+Shortcut
+Συντόμευση
+
+Action
+Ενέργεια
+
+Please select a hot key action.
+Παρακαλώ επιλέξτε μια ενέργεια συνδυασμού πλήκτρων.
+
+Character encoding of text files:
+Κωδικοποίηση χαρακτήρα αρχείων κειμένου:
+
+Newline character sequence:
+Ακολουθία νέας γραμμής χαρακτήρα:
+
+Select language:
+Επιλογή γλώσσας:
+
+Clear clipboard when closing/locking database
+Καθαρισμός προχείρου, κατόπιν κλεισίματος-κλειδώματος βάσης δεδομένων
+
+Lock database when minimizing application or database window
+Κλείδωμα βάσης δεδομένων κατά την ελαχιστοποίηση της εφαρμογής ή του παραθύρου βάσης δεδομένων
+
+Lock database after the following idle time (seconds):
+Κλείδωμα βάσης δεδομένων μετά από αδράνεια χρόνου (δευτερόλεπτα):
+
+Save automatically
+Αυτόματη αποθήκευση
+
+Create backup of database before saving
+Δημιουργία αντιγράφου βάσης δεδομένων προ της αποθήκευσης
+
+Number backups consecutively - up to:
+Αριθμός diadoxik;vn αντιγράφων - μέχρις:
+
+Open window on startup
+Άνοιγμα παραθύρου στην εκκίνηση
+
+Open last used database on startup
+Άνοιγμα τελευταίας χησιμοποιηθήσας βάσης δεδομένων στην εκκίνηση
+
+Warn if database contains expired entries
+Προειδοποίηση αν η βάση δεδομένων περιέχει ληγμένες εγγραφές
+
+Warn if database contains entries that will expire soon
+Προειδοποίηση αν η βάση δεδομένων περιέχει εγγραφές που λήγουν σύντομα.
+
+Number of days:
+Αριθμός ημερών:
+
+Save automatically:
+Αυτόματη αποθήκευση:
+
+After adding/modifying an entry
+ΚΑτόπιν πρόσθεσης/τροποποίησης εγγραφής
+
+After every change
+Κατόπιν κάθε αλλαγής
+
+Default autotype sequence:
+Προεπιλογή αυτότυπης ακολουθίας:
+
+Maximum number of hot keys (%d) reached.
+Μέγιστος αριθμός ενεργών κλειδιών (%d) συμπληρώθηκε.
+
+This hot key has already been assigned.
+Το ενεργό κλειδί, έχει ήδη ανατεθεί
+
+%s (%d-bit key, operates on %d-bit blocks)
+%s (%d-bit κλειδί, λειτουργεί σε %d-bit μπλοκ)
+
+Benchmark results (data size: %d MB):
+Αποτελέσματα μέτρησης απόδοσης (μέγεθος δεδομένων: %d MB):
+
+Enter password:
+Εισαγωγή κωδικού:
+
+Confirm password:
+Επιβεβαίωση κωδικού:
+
+OK
+Εντάξει
+
+Cancel
+Άκυρο
+
+Passwords are not identical.
+Οι κωδικοί δεν είναι ίδιοι.
+
+Encrypt
+Κρυπτογράφηση
+
+Decrypt
+Αποκρυπτογράφηση
+
+Remember password (seconds):
+Απομνημόνευση κωδικού (δευτερόλεπτα):
+
+Key file for password database:
+Αρχείο κλειδί για βάση δεδομένων κωδικών
+
+(None)
+(Κανένα)
+
+Enter a password and/or select a key file.
+Εισαγωγή κωδικού και/ή επιλογή αρχείου κλειδιού.
+
+The selected key file does not exist.
+Το επιλεγμένο αρχείου κλειδού δεν υπάρχει.
+
+Password is empty.
+Κενός κωδικός.
+
+Key file successfully created.
+Επιτυχής δημιουργία αρχείου κλειδιού.
+
+Error while creating key file:\n%s.
+Σφάλμα δημιουργίας κλειδιου αρχείου:\n%s.
+
+Key files
+Αρχεία κλειδιών
+
+Create key file
+Δημιουργία αρχείου κλειδιού
+
+Password List
+Κατάλογος κωδικών
+
+Save As File...
+Αποθήκευση ως αρχείο...
+
+Save password list
+Αποθήκευση καταλόγου κωδικών
+
+Error while creating file\n\"%s\":\n%s.
+Σφάλμα κατά τη δημιουργία αρχείου\n\"%s\":n%s.
+
+File \"%s\" successfully created.
+Το αρχείο \"%s\" δημιουργήθηκε επιτυχώς.
+
+Advanced Password Options
+Αναλυτικές επιλογές κωδικών
+
+Exclude ambiguous characters
+Εξαίρεση ασαφών χαρακτήρων.
+
+First character must not be a lower-case letter
+Ο πρώτος χαρακτήρας δε μπορεί να είναι πεζό γράμμα
+
+Don't separate words by a space
+Μη διαχωρίζετε λέξεις με κενό
+
+Don't separate words and characters by a '-' character
+Μη διαχωρισμός λέξεων και χαρακτήρων, από "-".
+
+Reverse default order of character/word combinations
+Αντιστροφή διάταξης συνδυασμών λέξεων/χαρακτήρων
+
+Include at least one upper-case letter (A-Z)
+Συμπερίληψη ενός τουλάχιστον κεφαλαίου γράμματος (A-Z)
+
+Include at least one lower-case letter (a-z)
+Συμπερίληψη ενός τουλάχιστον πεζού γράμματος (a-z)
+
+Include at least one digit (0-9)
+Συμπερίληψη ενός τουλάχιστον αριθμού (0-9)
+
+Include at least one special symbol (!"#$%...)
+Συμπερίληψη ενός τουλάχιστον ειδικού συμβόλου (!"#$%...)
+
+Only include characters from custom character set
+Περιλαμβάνει χαρακτήρες, μόνον από παραμετροποιημένο σύνολο χαρακτήρων
+
+Exclude repeating consecutive characters (e.g. aa, 11)
+Αποκλεισμός επαναλαμβανόμενων όμοιων χαρακτήρων (πχ. aa, 11)
+
+Exclude duplicate entries in password lists
+Αποκλεισμός διπλοεγγραφών στους καταλόγους κωδικών
+
+Capitalize first letter of each word
+Κεφαλαιοποίηση αρχικού γράμματος κάθε λέξης
+
+Convert all words in word lists to lower-case
+Μετατροπή όλων των λέξεων καταλόγου σε πεζά
+
+Each character must occur only once
+Κάθε χαρακτήρας πρέπει να υπάρχει μόνον μια φορά
+
+Each word must occur only once
+Κάθε λέξη πρέπει να υπάρχει μόνο μια φορά.
+
+Redefine ambiguous characters:
+Επαναπροσδιορισμός ασαφών χαρακτήρων:
+
+Redefine special symbols:
+Επαναπροσδιορισμός ειδικών συμβόλων:
+
+Maximum length of words in word lists (except default word list):
+Μέγιστο μήκος λέξεων, σε καταλόγους λέξεων (εκτός του προκαθορισμένου):
+
+Trigram file for generating phonetic (pronounceable) passwords:
+Αρχείο τριγραμμάτων, για δημιουργία φωνητικών (προφερόμενων) κωδικών:
+
+Applies to pass_words_.
+Εφαρμόζεται σε κωδικούς_.
+
+Applies to pass_phrases_.
+Εφαρμόζεται σε φράσεις κωδικών_.
+
+Applies to formatted passwords.
+Εφαρμόζεται σε σχηματοποιημένους κωδικούς.
+
+Applies to phonetic passwords.
+Εφαρμόζεται σε φωνητικούς κωδικούς.
+
+Selecting one of these options might reduce the security of generated passwords.
+Η ενεργοποίηση μίας των συγκεκριμένων επιλογών, θα μειώσει την ασφάλεια των δημιουργηθέντων κωδικών.
+
+These options also apply to formatted passwords.
+Αυτές οι επιλογές, εφαρμόζονται επίσης σε σχηματοποιημένους κωδικούς.
+
+Deselect All
+Αποεπιλογή όλων.
+
+Invert Selection
+Αντιστροφή επιλογής.
+
+Create Random Data File
+Δημιουργία αρχείου τυχαίων δεδομένων
+
+File name:
+Όνομα αρχείου:
+
+File size:
+Μέγεθος αρχείου:
+
+Bytes
+Bytes
+
+Kilobytes
+Kilobytes
+
+Megabytes
+Megabytes
+
+Close
+Κλείσιμο
+
+Create file
+Δημιουργία αρχείου
+
+Invalid file size.
+Αντικανονικό μέγεθος αρχείου.
+
+Not enough free disk space available\nto create the file.
+Δεν υπάρχει αρκετός ελεύθερος χώρος\nγια τη δημιουργία αρχείου.
+
+Creating random data file ...
+Δημιουργία αρχείου τυχαίων δεδομένων ...
+
+%d of %d KB written.
+%d από %d KB έχουν εγγραφεί.
+
+File \"%s\" successfully created.\n\n%d bytes written.
+Το αρχείο \"%s\" δημιουργήθηκε επιτυχώς.\n\n%d bytes εγγράφησαν.
+
+Error while creating file\n\"%s\":\n%s.\n\n%d bytes written.
+Σφάλμα κατά τη δημιουργία αρχείου\n\"%s\":n%s.\n\n%d bytes εγγράφηκαν.
+
+Profile Editor
+Επεξεργαστής προφίλ
+
+Load
+Φόρτωση
+
+Confirm
+Επιβαιβέωση
+
+Profile name:
+Όνομα προφίλ:
+
+Move up
+Κίνηση επάνω
+
+Move down
+Κίνηση κάτω
+
+Save "advanced password options" for this profile
+Αποθήκευση "προσωρημένων επιλογών κωδικών" γι αυτό το προφίλ
+
+Delete profile \"%s\"?
+Διαγραφή προφίλ \"%s\";
+
+Delete %d profiles?
+Διαγραφή %d προφίλ;
+
+Maximum number of profiles (%d) reached.\nPlease delete or overwrite profiles.
+Ο μέγιστος αριθμός προφίλ (%d) επετεύχθη.\nΠαρακαλώ διαγράψτε ή αντικαταστήστε προφίλ.
+
+A profile with the name \"%s\" already exists.\nDo you want to overwrite it?
+Προφίλε με το όνομα \"%s\" ήδη υπάρχει.\nΘέλετε να το αντικαταστήσετε;
+
+Create Trigram File
+Δημιουργία αρχείου τριγραμμάτων
+
+Source file (e.g., dictionary, word list):
+Πηγαίο αρχείο (πχ. λεξικό, κατάλογος λέξεων):
+
+Destination file (trigram file):
+Αρχείο προορισμού (τριγραμμάτων):
+
+Trigram file \"%s\" successfully created.\n\n%d trigrams evaluated.\n%1.2f bits of entropy per letter.
+Το αρχείο τριγραμμάτων \"%s\" δημιουργήθηκ' επιτυχώς.\n\n%d τριγράμματα αξιολογήθηκαν.\n%1.2f bits εντροπίας ανά γράμμα.
+
+Process was cancelled by the user
+Η διαδικασία ακυρώθηκε απ' τον χρήστη
+
+About %s
+Σχετικά με το %s
+
+Current language: %s\nTranslator: %s
+Χρησιμοποιούμενη γλώσσα: %s\nΜεταφραστής: %s
+
+This program is distributed under the terms and conditions of the GNU General Public License (GPL).
+Διανέμεται υπό τους όρους και τις προϋποθέσεις της Γενικής Άδειας Χρήσης GNU GPL (General Public License).
+
+View license
+Εμφάνιση αδείας
+
+Donor ID:
+ID δωρεοδότη:
+
+Quick help
+Γρήγορη βοήθεια
+
+Position Automatically
+Αυτόματη Τοποθέτηση
+
+You can use the following placeholders:
+Μπορούν να ζρησιμοποιηθούν οι εξής κρατήσεις θέσεων:
+
+without ambiguous characters
+Χωρίς ασαφείς χαρακτήρες
+
+special symbols
+Ειδικά σύμβολα
+
+brackets
+Αγκύλες
+
+punctuation marks
+Σημεία στίξης
+
+higher ANSI characters
+Υψηλότεροι χαρακτήρες ANSI
+
+generate phonetic password (lower-case letters)
+δημιουργία φωνητικού κωδικού (πεζοί χαρακτήρες)
+
+generate phonetic password (upper-case letters)
+δημιουργία φωνητικού κωδικού (κεφαλαίοι χαρακτήρες)
+
+generate phonetic password (mixed-case letters)
+δημιουργεί φωνητικούς κωδικούς (πεζοκεφαλαία γράμματα)
+
+Comments may be provided in square brackets \"[...]\"\nat the beginning of the sequence.
+Καταχώρηση σχολίων σε τετράγωνες αγκύλες \"[...]\" στην αρχή\nτης ακολουθίας.
+
+Format specifiers have the form \"[*][N]x\" or \"[*][M-N]x\", where the\noptional argument \"N\" specifies the number of repetitions (between 1 and\n99999), \"M-N\" specifies a random number of repetitions in the range\nfrom M to N, and \"x\" is the actual format specifier/placeholder. The\noptional asterisk (*) means that each character must occur only once in\nthe sequence. Example: \"16u\" means \"Insert 16 random upper-case letters\ninto the password\".
+Οριστές μορφής έχουν τη μορφή \"[*][N]x\" ή \"[*][M-N]x\", όπου το\nπροαιρετικό όρισμα \"N\" καθορίζει τον αριθμό των επαναλήψεων (μεταξύ 1 και\n99999), \"M-N\" καθορίζει ένα τυχαίο αριθμό επαναλήψεων στην ακτίνα\nαπό M έως N, και \"x\" είναι ο πραγματικός οριστής μορφής/σύμβολο. Ο\nπροαιρετικός αστερίσκος (*) σημαίνει πως κάθε χαρακτήρας πρέπει να υπάρχει άπαξ\nστην ακολουθία. Πχ: \"16u\" σημαίνει \"Εισαγωγή 16 τυχαίων κεφαλαίων χαρακτήρων\nστον κωδικό\".
+
+List of placeholders with optional argument \"N\":
+Κατάλογος κρατήσεων θέσης με προαιρετικά ορίσματα \"N\":
+
+custom character set
+Τροποποιημένο σύνολο χαρακτήρων
+
+vowels, lower-case
+Φωνήεντα, πεζά
+
+vowels, mixed-case
+Φωνήεντα, πεζοκεφαλαία
+
+vowels, upper-case
+Φωνήεντα, κεφαλαία
+
+consonants, lower-case
+Σύμφωνα, πεζά
+
+consonants, mixed-case
+Σύμφωνα, πεζοκεφαλαία
+
+consonants, upper-case
+Σύμφωνα, κεφαλαία
+
+List of special format specifiers\n(possible usage of argument \"N\" is indicated by \"{N}\"):
+Κατάλογος ειδικών προσδιοριστών σχήματος\n(πιθανή χρήση ορίσματος \"N\" σημειώνεται με \"{N}\"):
+
+insert password generated via \"Include characters/words\"
+Εισαγωγή κωδικού δημιουργημένου με \"Συμπερίληψη χαρακτήρων/λέξεων\"
+
+words from word list, multiple words are separated by spaces
+Λέξεις από κατάλογο, πολλαπλές λέξεις διαχωρίζονται με κενά
+
+words, multiple words are not separated at all
+Λέξεις, πολλαπλές λέξεις δε διαχωρίζονται καθόλου
+
+repeat input sequence in brackets N times
+Επανάληψη ακολουθίας εισαγωγής σε αγκύλες Ν φορές
+
+randomly permute formatted sequence in brackets, keep N characters
+Τυχαία μετάθεση σχηματοποιημένης ακολουθίας σε αγκύλες, διατήρηση Ν χαρακτήρων
+
+treat sequence as character set and insert N characters
+Διαχείριση ακολουθίας ως συνόλου χαρακτήρων και παρεμβολή Ν χαρακτήρων
+
+Additional notes:
+Πρόσθετες σημειώσεις:
+
+Text enclosed with quotation marks \"...\" is copied verbatim\nto the password.
+Κείμενο μεταξύ εισαγωγικών \"...\" αντιγράφεται αυτολεξεί\nστο κωδικό.
+
+MP Password Generator
+Γεννήτρια κωδικών MP.
+
+Master password
+Κύριος κωδικός
+
+Enter password...
+Εισάγετε κωδικό...
+
+Clear
+Καθαρισμός.
+
+Status:
+Κατάσταση:
+
+Expiry countdown:
+Αντίστροφη μέτρηση λήξης:
+
+Ask for password confirmation
+Περιμένει επιβεβαίωση κωδικού.
+
+Show checksum of password:
+Εμφάνιση αρχείου αθροίσματος κωδικού:
+
+Key expires after the following time (seconds):
+Λήξη κλειδιού, μετά τη παρέλευση του εξής χρόνου (δευτερόλεπτα):
+
+Provide compatibility with "Hashapass"
+Παροχή συμβατότητας με "Hashapass".
+
+Add password length to parameter
+Πρόσθεση μήκους κωδικού σε παράμετρο
+
+Autotype sequence:
+Αυτότυπη ακολουθία:
+
+Password generator
+Γεννήτρια κωδικών.
+
+Parameter:
+Παράμετρος:
+
+%d ch. / %.1f bits per ch.
+%d χαρ. /%.1f bits ανά χαρ.
+
+Resulting password:
+Συναγόμενος κωδικός:
+
+Use as default random generator
+Χρήση ως προκαθορισμένης τυχαίας γεννήτριας.
+
+Alphanumeric
+Αλφαριθμητικό.
+
+Hexadecimal
+Δεκαεξαδικό.
+
+Key has expired.
+Το κλειδί έχει λήξει.
+
+Key has been cleared.
+Το κλειδί καθαρίστηκε.
+
+New key generated.
+Δημιουργήθηκε νέο κλειδί.
+
+Enter or paste some text into the box below, press mouse buttons, or move your mouse within the window.
+Εισάγετε ή επικολλήστε κείμενο στο παρακάτω κουτί, πατήστε τα πλήκτρα του ποντικού, ή κουνήστε το ποντίκι εντός του παραθύρου.
+
+%d bits of entropy have been added to the random pool.
+%d bits εντροπείας έχουν προστεθεί στη τυχαία πηγή.
+
+Database not encrypted, or invalid key
+Βάση δεδομένων ακρυπτογράφητη ή άκυρο κλειδί
+
+File contents modified, or invalid key
+Τροποποιημένα περιεχόμεν' αρχείου, ή άκυρο κλειδί
+
+Unknown file format
+Άγνωστη μορφή αρχείου
+
+Invalid file format
+Άκυρη μορφή αρχείου
+
+Title
+Τίτλος
+
+Title:
+Τίτλος:
+
+User name
+Όνομα χρήστη
+
+User name:
+Όνομα χρήστη:
+
+Password
+Κωδικός
+
+Password:
+Κωδικός:
+
+URL
+URL
+
+URL:
+URL:
+
+Keyword
+Λέξη κλειδί
+
+Keyword:
+Λέξη κλειδί:
+
+Notes
+Σημειώσεις
+
+Notes:
+Σημειώσεις:
+
+Key-value list
+Κατάλογος κλειδιών τιμής
+
+Key-value list:
+Κατάλογος κλειδιών τιμής:
+
+Creation time
+Χρόνος δημιουργίας
+
+Creation time:
+Χρόνος δημιουργίας:
+
+Last modification
+Τελευταία τροποποίηση
+
+Last modification:
+Τελευταία τροποποίηση:
+
+Tags
+Ετικέτες
+
+Tags:
+Ετικέτες:
+
+Select and add existing tag
+Επιλογή και πρόσθεση υπάρχουσας ετικέτας
+
+All ((tags))
+Όλες ((ετικέτες))
+
+All search results
+Όλα τ' αποτελέσματα αναζήτησης
+
+Untagged
+Χωρίς ετικέτα
+
+Key
+Κλειδί
+
+Value
+Τιμή
+
+Edit
+Επεξεργασία
+
+View
+Προβολή
+
+New...
+Νέο...
+
+Open...
+άνοιγμα...
+
+Open as Read-only...
+Άνοιγμα μόνο γι ανάγνωση...
+
+Save
+Αποθήκευση
+
+Save As...
+Αποθήκευση Ως...
+
+Lock
+Κλείδωμα
+
+Unlock
+Ξεκλείδωμα
+
+Export to
+Εξαγωγή σε
+
+CSV File...
+Αρχείο CSV...
+
+Database Settings...
+Ρυθμίσεις Βάσης Δεδομένων...
+
+Properties...
+Ιδιότητες...
+
+Change Master Password...
+Αλλαγή Κύριου Κωδικού...
+
+Copy User Name
+Αντιγραφή Ονόματος Χρήστη
+
+Copy Password
+Αντιγραφή Κωδικού
+
+Open URL
+Φόρτωση URL
+
+Run
+Εκτέλεση
+
+Add Entry
+Πρόσθεση εγγραφής
+
+Duplicate Entry
+Διπλασιασμός εγγραφής
+
+Delete Entry
+Διαγραφή εγγραφής
+
+Show Columns
+Εμφάνιση στηλών
+
+Show Passwords in List
+Εμφάνιση Κωδικών Καταλόγου
+
+Sort Entries By
+Κατάταξη εγγραφών κατά
+
+Unsorted
+Αταξινόμητα
+
+Sort Order
+Σειρά κατάταξης
+
+Ascending
+Ανάβαση
+
+Descending
+Κάθοδος
+
+Sort Tags By
+Κατάταξη ετικετών κατά
+
+Name
+Όνομα
+
+Frequency
+Συχνότητα
+
+Change List Font...
+Αλλαγή Γραμματοσειράς Καταλόγου...
+
+Change Password Font...
+Αλλαγή Γραμματοσειράς Κωδικού...
+
+Previous entry
+Προηγούμενη εγγραφή
+
+Next entry
+Επόμενη εγγραφή
+
+Accept changes
+Αποδοχή αλλαγών
+
+Undo changes
+Επαναφορά αλλαγών
+
+Search...
+Εύρεση...
+
+Clear search
+Καθαρισμός εύρεσης
+
+Left-click: Perform search, right-click: Search options
+Δεξί-κλικ: εύρεση, αριστερό-κλικ: Επιλογές εύρεσης
+
+Case-sensitive
+Διάκριση πεζών - κεφαλαίων
+
+Fuzzy search
+Προσεγγιστική εύρεση
+
+Select fields...
+Επιλογή πεδίων...
+
+Lock/unlock database
+Κλείδωμα/ξεκλείδωμα βάσεων δεδομένων
+
+Left-click: Hide/show password, right-click: Generate password
+Δεξί-κλικ: Απόκρυψη/εμφάνιση κωδικού, Αρισερό-κλικ: Δημιουργία κωδικού
+
+Unlock %s
+Ξεκλείδωμα %s
+
+Open %s
+Φόρτωση %s
+
+Create new database
+Δημιουργία βάσης δεδομένων
+
+Could not find database file:\n\"%s\".
+Αδυναμία εύρεσης αρχείου βάσης δεδομένων\n\"%s\".
+
+Error while opening database file:\n%s.
+Σφάλμα φόρτωσης αρχείου βάσης δεδομένων:\n%s.
+
+The currently selected entry has been changed.\nDo you want to save the changes?
+Η επιλεγείσα εγγραφή άλλαξε.\nΕπιθυμείτε αποθήκευση αλλαγών;
+
+The database has been changed.\nDo you want to save the changes?
+Η βάση δεδομένων άλλαξε.\nΕπιθυμείτε αποθήκευση αλλαγών;
+
+An untitled database cannot be locked.
+Άτιτλη βάση δεδομένων δε μπορεί να κλειδωθεί.
+
+Could not save backup file\n\"%s\".
+Αδυναμία αποθήκευσης αρχείου αντιγράφου\n\"%s\".
+
+Error while saving database file:\n%s.
+Σφάλμα κατά την αποθήκευση αρχείου βάσης δεδομένων:\n%s.
+
+Please finish editing the current entry\nbefore adding new entries.
+Παρακαλώ ολοκληρώσατε την επεξεργασία της παρούσας εγγραφής\nπριν τη πρόσθεση νέων
+
+%d entries with passwords have been added.
+%d εγγραφές με κωδικούς προστέθηκαν.
+
+1 entry found.
+1 εγγραφή βρέθηκε
+
+%d entries found.
+%d εγγραφές βρέθηκαν.
+
+Search via hot key.
+Εύρεση μέσω ενεγού πλήκτρου.
+
+No matching keyword found for window text\n\"%s\".
+Αδυναμία εύρεσης ταιριαστής λέξης κλεδί για κείμενο παραθύρου\n\"%s\".
+
+New Entry
+Νέα Εγγραφή
+
+Please specify at least a title or password.
+Παρακαλώ προσδιορίσατε τουλάχιστον ένα τίτλο ή κωδικό
+
+Delete 1 entry?
+Διαγραφή 1 εγγραφής;
+
+Delete %d entries?
+Διαγραφή %d εγγραφών;
+
+Enter OLD master password
+Εισαγωγή ΠΑΛΑΙΟΥ κύριου κωδικού
+
+Enter NEW master password
+Εισαγωγή ΝΕΟΥ κύριου κωδικού
+
+Master password successfully changed.
+Ο κύριος κωδικός άλλαξ' επιτυχώς
+
+Old master password is invalid.
+Ο παλιός κύριος κωδικός είναι άκυρος
+
+Untitled
+Άτιτλο
+
+Copy ((noun))
+Αντιγραφή ((ουσιαστικό))
+
+Database successfully exported to CSV file.
+Η βάση δεδομένων εξήχθη επιτυχώς σε αρχείο CSV
+
+Error while creating CSV file:\n%s.
+Σφάλμα κατά τη δημιουργία αρχείου CSV:\n%s.
+
+Password databases
+Βάσεις δεδομένων κωδικών
+
+CSV files
+Αρχεία CSV
+
+Autotype
+Αυτότυπος
+
+Format password
+Μορφή κωδικού
+
+Rearrange Entry
+Επανατοποθέτηση εγγραφής
+
+Move to Top
+Μετακίνηση στη κορυφή
+
+Move up by one
+Μετακίνηση άνω, κατά μονάδα
+
+Move down by one
+Μετακίνηση κάτω, κατά μονάδα
+
+Move to Bottom
+Μετακίνηση στο Τέλος
+
+The maximum tag length is %d characters.\nLonger tags have been shortened.
+Το μέγιστο μήκος ετικέτας ε'ιναι %d χαρακτήρες.\nΜακρύτερες ετικέτες έχουν συντμηθεί.
+
+Enter master password
+Εισάγετε κύριο κωδικό
+
+Enter master password again
+Επανεισαγωγή κύριου κωδικού
+
+Master password is invalid.
+Άκυρος κύριος κωδικός
+
+Edit key-value list
+Επεξεργασία καταλόγου τιμών κλειδιού
+
+Profile "%s" not found.
+Το προφίλ "%s" δε βρέθηκε.
+
+Password expiry
+Λήξη κωδικού
+
+Expires:
+Λήξη:
+
+Change expiry date
+Αλλαγή ημερομηνίας λήξης
+
+Filter expired entries
+Φιλτράρισμα ληγμένων εγγραφών
+
+Filter entries that will expire soon
+Φιλτράρετε τις εγγραφές που λήγουν σύντομα.
+
+%d days
+%d μέρες
+
+The database contains expired entries.\nDo you want to filter these entries now?
+Η βάση δεδομένων περιέχει ληγμένες εγγραφές. \n Θέλετε να τις φιλτράρετε τώρα;
+
+The database contains entries that will expire soon.\nDo you want to filter these entries now?
+Η βάση δεδομένων περιέχει εγγραφές που σύντομα λήγουν. \nΘέλετε να τις φιλτράρετε τώρα;
+
+Locked
+Κλειδώθηκε
+
+Set Recovery Password...
+Επιλογή κωδικού ανάκτησης...
+
+Remove Recovery Password...
+Αφαίρεση κωδικού ανάκτησης...
+
+Enter recovery password
+Εισαγωγή κωδικού ανάκτησης...
+
+Recovery password successfully set.
+Ο κωδικός ανάκτησης τέθηκε επιτυχώς.
+
+Recovery password is invalid.
+Άκυρος κωδικός ανάκτησης.
+
+Recovery password successfully removed.
+Ο κωδικός ανάκτησης αφαιρέθηκε επιτυχώς.
+
+Recovery password set
+Καθορισμός κωδικού ανάκτησης
+
+Yes
+Ναι
+
+No
+Όχι
+
+Database format error:\n%s.\nDatabase version: %d.%d\nHighest supported version: %d.%d
+Σφάλμα μορφής βάσης δεδομένων:\n%s.\nέκδοση βάσης δεδομένων: %d.%d\nΜέγιστη υποστηριζόμενη έκδοοη: %d.%d
+
+Select columns
+Επιλογή στηλών
+
+Select at least one column.
+Επιλέξατε τουλάχιστον μία στήλη.
+
+Error while formatting string
+Σφάλμα κατά τη διαμόρφωση της σειράς.
+
+Invalid UTF-16 character encoding
+Αντικανονική κωδικοποίηση χαρακτήρων UTF-16.
+
+Error while converting string to UTF-8
+Σφάλμα μετατροπής σειράς σε UTF-8.
+
+Error while decoding UTF-8 string
+Σφάλμα αποκωδικοποίησης, σειράς UTF-8.
+
+Unicode string too long
+Πολύ μεγάλη σειρά, Unicode.
+
+Invalid ANSI or UTF-8 character encoding, or Unicode string too long
+Αντικανονική ANSI ή UTF-8 κωδικοποίηση χαρακτήρων, ή πολύ μεγάλη σειρά Unicode.
+
+Error while encoding Unicode string
+Σφάλμα κατά τη κωδικοποίηση, σειράς Unicode.
+
+Out of disk space
+Ανεπαρκής χώρος στο δίσκο.
+
+Could not open file/execute operation\n\"%s\".
+Αδυναμία ανοίγματος αρχείου/εκτέλεσης λειτουργίας\n\"%s\".
+
+Source file does not contain enough trigrams
+Το πηγαίο αρχείο, δε περιέχει αρκετά τριγράμματα.
+
+Database settings
+Ρυθμίσεις βάσης δεδομένων
+
+Default user name for new entries:
+Προκαθορισμένο όνομα χρήστη, για νέες εγγραφές:
+
+Generate passwords for new entries using format sequence:
+Δημιουργία κωδικών για νέες εγγραφές με χρήση ακολουθίας μορφής:
+
+Generate test password using format sequence
+Δημιουργία δοκιμής κωδικού με χρήση ακολουθία μορφής
+
+Encryption algorithm:
+Αλγόριθμος κρυπτογράφισης:
+
+%s with %d-bit key
+%s με %d-bit κλειδί
+
+Number of key derivation rounds:
+Αριθμός κλειδιών παραγωγής γύρων:
+
+Calculate number of rounds for a 1 second delay
+Υπολογισμός αριθμού γύρων για καθυστέρηση 1 δευτερολέπτου
+
+Invalid number of key derivation rounds.
+Άκυρος αριθμός κλειδιών παραγωγής γύρων.
+
+By default, new entries expire after the following number of days:
+Εκ προεπιλογής, νέες εγγραφές λήγουν μετά τη παρέλευση του ακόλουθου αριθμού ημερών:
+
+Key-value list editor
+Επεξεργαστής καταλόγου τιμών κλειδιού
+
+Properties
+Ιδιότητες
+
+Property
+Ιδιότητα
+
+Location
+Τοποθεσία
+
+Size
+Μέγεθος
+
+Format version
+Έκδοση Μορφοποίησης
+
+Number of entries
+Αριθμός εγγραφών
+
+Number of expired entries
+Αριθμός ληχθέντων εγγραφών
+
+Number of tags
+Αριθμός ετικετών

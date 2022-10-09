@@ -1,0 +1,1725 @@
+﻿[LANGUAGENAME]
+Russian (Русский)
+
+[LANGUAGEVERSION]
+3.4.3
+
+[LANGUAGEAUTHOR]
+Dmitry Yerokhin (erodim@mail.ru)
+
+[LANGUAGEHELPFILE]
+manual.pdf
+
+/////////////// Main Window - GUI ///////////////
+
+Info
+Информация
+
+Warning
+Внимание
+
+Question
+Вопрос
+
+Error
+Ошибка
+
+Profile:
+Профиль:
+
+Settings
+Настройки
+
+Include Characters (Pass*words*)
+Включать символы (Па*роли*)
+
+Length:
+Длина:
+
+Character Set:
+Набор символов:
+
+Show details
+Подробности
+
+Include Words (Pass*phrases*)
+Включать слова (Фра*зы*)
+
+Number:
+Количество:
+
+Word List File:
+Файл со списком слов:
+
+Browse
+Обзор
+
+Specify length*:
+Указать длину*:
+
+Combine Words with Characters
+Комбинировать слова и символы
+
+Format password:
+Форматировать:
+
+Run script:
+Выполнить скрипт:
+
+Reload script
+Перезагрузить скрипт
+
+Multiple passwords:
+Несколько паролей:
+
+Generate
+Создать
+
+Generate password list to file
+Создать список паролей в файле
+
+Advanced
+Ещё
+
+Generated Password
+Созданный пароль
+
+Click on "Generate"
+Нажмите кнопку "Создать"
+
+Hide/show password
+Показать/скрыть пароль
+
+Hold left mouse button to drag & drop password
+Удерживайте левую кнопку мыши для перетаскивания пароля
+
+File
+Файл
+
+Profile
+Профиль
+
+Profile Editor...
+Редактор профилей...
+
+Exit
+Выход
+
+Tools
+Сервис
+
+Clear Clipboard
+Очистить буфер обмена
+
+Encrypt Clipboard...
+Зашифровать данные в буфере обмена...
+
+Decrypt Clipboard...
+Расшифровать данные в буфере обмена...
+
+Create Random Data File...
+Создать файл со случайными данными...
+
+Create Trigram File...
+Создать триграмм-файл...
+
+MP Password Generator...
+Генератор паролей на основе мастер-пароля...
+
+Deterministic Random Generator
+Детерминированный генератор случайных чисел
+
+Reset
+Сброс
+
+Deactivate
+Деактивировать
+
+Provide Additional Entropy
+Дополнительная энтропия
+
+As Text...
+Как текст...
+
+From File...
+Из файла...
+
+Options
+Настройки
+
+Configuration...
+Конфигурация...
+
+Language
+Язык
+
+Always on Top
+Всегда поверх всех окон
+
+Hide Entropy Progress
+Скрывать ход энтропии
+
+Save Settings on Exit
+Сохранять настройки при выходе
+
+Save Settings Now
+Сохранить настройки
+
+Help
+Справка
+
+Open Manual
+Открыть справочное руководство
+
+Visit Website
+Посетить сайт
+
+Get Translations...
+Скачать переводы...
+
+Donate...
+Помочь материально...
+
+Check for Updates
+Проверить наличие обновлений
+
+Timer Info...
+О таймере...
+
+About %s...
+О программе %s...
+
+Restore %s
+Восстановить %s
+
+Generate Password
+Создать пароль
+
+Generate and Show Password...
+Создать и показать пароль...
+
+Generate and Autotype Password
+Создать и ввести пароль
+
+Open user manual
+Руководство пользователя
+
+Clear clipboard (text contents only)
+Очистить буфер обмена\n(только текстовое содержимое)
+
+Clipboard text encryption (left-click) or decryption (right-click)
+Зашифровать (ЛКМ) или расшифровать (ПКМ) текст в буфере обмена
+
+Load, create or delete profiles
+Загрузить, создать или удалить профили
+
+Generate passwords based on a master password
+Создать пароли на основе мастер-пароля
+
+Main configuration of the program
+Настройки программы
+
+Reset Counters
+Сброс счётчиков
+
+All files
+Все файлы
+
+Text files
+Текстовые файлы
+
+Trigram files
+Триграмм-файлы
+
+Lua scripts
+Скрипты Lua
+
+Undo
+Отменить
+
+Cut
+Вырезать
+
+Copy
+Скопировать
+
+Encrypt && Copy
+Зашифровать и скопировать
+
+Paste
+Вставить
+
+Perform Autotype
+Автонабор
+
+Add to Database
+Добавить в базу данных
+
+Delete
+Удалить
+
+Select All
+Выбрать все
+
+Clear List
+Очистить список
+
+Remove Entry
+Удалить запись
+
+Editable
+Редактируемо
+
+Enable Password Testing
+Разрешить проверку паролей
+
+Change Font...
+Изменить шрифт...
+
+Select high-entropy file
+Выбрать файл высокой энтропии
+
+Manage passwords in encrypted databases
+Управление паролями в зашифрованных базах данных
+
+Reload profile
+Перезагрузить профиль
+
+Add profile
+Добавить профиль
+
+Set up...
+Настроить...
+
+Password Manager...
+Диспетчер паролей...
+
+Enter Donor Key...
+Ввести ключ мецената...
+
+Reset All Window Positions
+Сбросить все позиции окон
+
+Could not read random seed file\n\"%s\".
+Не удалось прочитать файл со случайными данными\n\"%s\".
+
+/////////////// Main Window - Messages ///////////////
+
+Could not write to random seed file\n\"%s\".
+Не удалось записать файл со случайными данными\n\"%s\".
+
+Unknown command line switch(es):\n%s
+Неизвестные ключи командной строки:\n%s
+
+Error while loading word list file\n\"%s\".
+Ошибка загрузки файла со списком слов\n"%s\".
+
+Error while loading list of common passwords:\n%s.
+Ошибка загрузки списка общих паролей:\n%s.
+
+%s encountered %d error(s) during startup:
+При запуске %s обнаружены ошибки (%d):
+
+If you like %s, please consider\nmaking a donation. Thank you!
+Если вам нравится %s, помогите\nнам материально, пожалуйста. СпасиБо!
+
+Character set \"%s\" is invalid.
+Набор символов \"%s\" некорректный.
+
+Error while writing to configuration file:\n%s.
+Ошибка записи файла конфигурации:\n%s.
+
+%d characters / %.1f bits per character
+Символов: %d (%.1f бит на символ)
+
+%d words / %.1f bits per word
+Слов: %d (%.1f бит на слово)
+
+Could not open trigram file.
+Не удалось найти триграмм-файл.
+
+Invalid trigram file.
+Неверный триграмм-файл.
+
+Matches common password!
+Совпадает с общим паролем!
+
+Text successfully encrypted.
+Текст зашифрован.
+
+Text successfully decrypted.
+Текст расшифрован.
+
+Could not open clipboard.
+Не удалось открыть буфер обмена.
+
+The text to be encrypted is too long.
+Слишком длинный текст для шифрования.
+
+No text available to process.
+Нет текста для обработки.
+
+Not enough memory available to perform\nthe operation. Try to use a shorter text.
+Недостаточно памяти для выполнения\nоперации. Сократите текст.
+
+Decryption failed. This may be attributed\nto the following reasons:
+Ошибка расшифровки.\nВозможные причины:
+
+- You entered a wrong password.
+- Введён неверный пароль.
+
+- The text is corrupted.\n- The text is not encrypted.
+- Текст повреждён.\n- Текст не зашифрован.
+
+This should not have happened:\nDecryption successful, but decompression\nfailed.
+Этого не должно было произойти:\nРасшифровка выполнена, но\nошибка при распаковке.
+
+Could not register the following hot keys:
+Не удалось зарегистрировать эти горячие клавиши:
+
+The selected file already exists. Do you\nwant to append passwords to this file\n(existing passwords will be preserved),\nor do you want to completely overwrite it?\n\nYes\t-> append passwords,\nNo\t-> overwrite file,\nCancel\t-> cancel process.
+Выбранный файл уже существует.\nХотите добавить пароли в этот файл\n(имеющиеся пароли не пострадают),\nлибо полностью его перезаписать?\n\nДа\t-> добавить пароли,\nНет\t-> перезаписать файл,\nОтмена\t-> прервать операцию.
+
+Passphrase: Invalid length range.
+Парольная фраза: неверный диапазон длин.
+
+If the option \"Each character must occur\nonly once\" is activated, the password length\nis limited to the size of the character set (%d).
+Если выбран параметр "Запрет повтора символов",\nто длина пароля ограничена размером набора символов (%d).
+
+If the option \"Each word must occur only\nonce\" is activated, the number of words\nis limited to the size of the word list (%d).
+Если выбран параметр "Запрет повтора слов", то количество\nслов ограничено размером списка слов (%d).
+
+Error while loading script:\n%s.
+Ошибка загрузки скрипта:\n%s.
+
+Generating password list ...
+Создание списка паролей...
+
+%d of %d passwords generated.
+%d из %d паролей создано.
+
+Generating passphrase ...
+Создание парольной фразы...
+
+%d of %d passphrases generated.
+%d из %d парольных фраз создано.
+
+\"P\" is not specified.
+Параметр "P" не указан!
+
+Password not available.
+Пароль недоступен.
+
+Password too long.
+Пароль слишком длинный.
+
+Invalid format specifier \"%s\".
+Неверный формат \"%s\".
+
+Executing script
+Выполнение скрипта
+
+Waiting for script ...
+Ожидание скрипта...
+
+Script thread was terminated forcibly.\nPlease check script for infinite loops.
+Поток скрипта принудительно прерван.\nПроверьте скрипт на наличие бесконечных циклов.
+
+The estimated list size will probably exceed\nthe internal memory limit.\nPlease reduce the number of passwords
+Предполагаемый размер списка, видимо,\nпревышает предел внутренней памяти.\nСократите количество паролей.
+
+The memory limit of the password list has\nbeen reached.\n\nThe number of passwords has been\nreduced to %d.
+Достигнут предел памяти списка паролей.\n\nКоличество паролей\nсокращено до %d.
+
+%d passwords generated.
+Создано паролей: %d.
+
+%d passwords generated.\r\nSecurity of each password: %d bits.\r\nMaximum security of the entire list: %d bits.
+Создано паролей: %d.\r\nНадёжность каждого пароля: %d бит.\r\nМаксимальная надёжность всего списка: %d бит.
+
+Password copied to clipboard.
+Пароль скопирован в буфер обмена.
+
+Copying password list ...
+Копирование списка паролей...
+
+File \"%s\" successfully created.\n\n%d passwords written.
+Файл \"%s\" успешно создан.\n\nЗаписано паролей: %d.
+
+An error has occurred during password generation:\n%s.
+Ошибка при создании пароля:\n%s.
+
+%d passwords written to file \"%s\".
+Записано в файл \"%s\" паролей: %d.
+
+%d bits / %d characters
+%d бит / %d симв.
+
+Passwords: %d
+Паролей: %d
+
+Invalid character set.
+Неверный набор символов.
+
+default (English) trigrams
+Стандартный триграмм (англ.)
+
+File \"%s\"
+Файл \"%s\"
+
+(phonetic, based on trigram frequencies\nfrom the following source:\n<%s>)
+(фонетический, основанный на частотах триграммы\nиз следующего источника:\n<%s>)
+
+The character set you entered is invalid.\nIt must contain at least 2 different characters.
+Введён неверный набор символов.\nОн должен содержать хотя бы два разных символа.
+
+Currently loaded character set:
+Текущий набор символов:
+
+Could not open file.
+Не удалось открыть файл.
+
+Not enough valid words.
+Недостаточно допустимых слов.
+
+Select word list file
+Выбор файла со списком слов
+
+Error while loading the file\n\"%s\":\n%s
+Ошибка при загрузке файла\n\"%s\":\n%s
+
+default (English) word list
+стандартный список слов (англ.)
+
+Currently loaded word list:
+Текущий список слов:
+
+First word:
+Первое слово:
+
+Random word:
+Случайное слово:
+
+Last word:
+Последнее слово:
+
+The version of this language (%s) is not\ncompatible with this program version.\nThis version of %s requires a language\nversion of at least %s.\n\nDo you want to use it anyway?
+Версия этого языкового файла (%s)\nнесовместима с версией программы.\nДля %s необходима\n версия не ниже %s.\n\nВсё равно использовать?
+
+The version of this language (%s) is higher\nthan the version of this program (%s).\nTherefore, version incompatibilities may occur.\n\nDo you want to use it anyway?
+Версия этого языкового файла (%s) выше, чем версия программы (%s).\nВозможна несовместимость версий.\n\nВсё равно использовать?
+
+The language file will be loaded when you\nrestart the program.\n\nDo you want to restart now?
+Выбранный язык вступит в действие\nпри следующем запуске программы.\n\nХотите сохранить изменения и\nперезагрузить программу сейчас?
+
+Password is too long to show it in a\nmessage box like this.\n\nIt has been copied to the clipboard.
+Пароль слишком длинный для\nпоказа в окне сообщения.\n\nОн был скопирован в буфер обмена.
+
+The generated password is:\n\n%s\n\nThe estimated security is %d bits.\n\nYes\t-> copy password to clipboard,\nNo\t-> generate new password,\nCancel\t-> cancel process.
+Созданный пароль:\n\n%s\n\nНадёжность: %d бит.\n\nДа\t-> скопировать пароль в буфер обмена,\nНет\t-> создать новый пароль,\nОтмена\t-> отменить операцию.
+
+All entries will be removed from the list.\nAre you sure?
+Из списка будут удалены все записи.\nВы уверены?
+
+Total Entropy Bits: %d
+Бит общей энтропии: %d
+
+High-resolution timer used:\n%s.\n\nCurrent value: %s.
+Используется таймер высокого разрешения:\n%s.\n\nТекущее значение: %s.
+
+Could not download version file
+Не удалось загрузить файл версий
+
+URL not found, or unknown format of version file
+URL-адрес не найден, либо неизвестный формат файла версий
+
+A new version (%s) of %s is available!\nDo you want to visit the download page now?
+Доступна новая версия (%s) %s!\nПерейти на страницу загрузки?
+
+(NOTE: %s)
+(ПРИМЕЧАНИЕ: %s)
+
+Your version of %s is up-to-date.
+У вас самая новая версия %s.
+
+Error while checking for updates:\n%s.
+Ошибка проверки обновлений:\n%s.
+
+WARNING: Random generator is deterministic (press F7 to deactivate)!
+ВНИМАНИЕ: Генератор случайных чисел - детерминированный (нажмите F7, чтобы отключить)!
+
+Clipboard cleared.
+Буфер обмена очищен.
+
+Profile \"%s\" activated.
+Профиль \"%s\" активирован.
+
+Deterministic random generator has been ACTIVATED.
+Детерминированный генератор случайных чисел ВКЛЮЧЁН.
+
+Deterministic random generator has been RESET.
+Детерминированный генератор случайных чисел СБРОШЕН.
+
+Deterministic random generator has been DEACTIVATED.
+Детерминированный генератор случайных чисел ОТКЛЮЧЁН.
+
+ERROR: Profile \"%s\" not found.
+ОШИБКА: Профиль "%s" не найден.
+
+Selected profile \"%s\".
+Выбранный профиль "%s".
+
+Generating %d password(s) ...
+Создание паролей (%d)...
+
+Command line function \"gen\" is only effective\nwhen %s is run from the console.
+Функция "gen" в командной строке работает\nтолько при запуске %s из консоли.
+
+Your donor key has expired: The maximum\nnumber of updates has been reached.
+Срок вашего ключа мецената истёк:\nдостигнуто предельное число обновлений.
+
+Donor key is invalid.
+Некорректный ключ мецената.
+
+Donor Key
+Ключ мецената
+
+Enter donor key:
+Введите ключ мецената:
+
+Your Donor ID is: %s\nSupported number of updates: %s
+ID ключа мецената: %s\nМаксимум обновлений: %s
+
+Unlimited
+Неограниченно
+
+Thank you for your support!
+Благодарим за поддержку!
+
+Copy this information to the clipboard?
+Скопировать эту информацию в буфер обмена?
+
+Donor key has expired.
+Ключ мецената истёк.
+
+Settings saved.
+Настройки сохранены.
+
+Save password
+Сохранить пароль
+
+Clear Password Cache
+Очистить кэш паролей
+
+Password cache cleared.
+Кэш паролей очищен.
+
+Select Lua script file
+Выберите файл Lua-скрипта
+
+Waiting for active threads to finish ...
+Ожидание завершения активных потоков...
+
+Donate at least one of the following amounts\nto receive a Donor Key:\n\n%d EUR / %d USD:\tValid for current version and %d updates.\n%d EUR / %d USD:\tValid for the entire lifetime of version 3.\n\nDo you want to donate now?
+Пожертвуйте одну из этих сумм, чтобы\nполучить ключ мецената:\n\n%d EUR / %d USD:\tдля текущей версии и %d шт. обновлений.\n%d EUR / %d USD:\tбессрочно для версии 3.\n\nХотите пожертвовать денежную сумму?
+
+Could not access registry key\n%s.
+Нет доступа к ключу реестра\n%s.
+
+/////////////// ConfigurationDlg //////////
+
+Configuration
+Конфигурация
+
+General
+Общие
+
+Security
+Безопасность
+
+Hot Keys
+Клавиши
+
+Files
+Файлы
+
+Updates
+Обновления
+
+Database
+База данных
+
+Change font for the GUI controls:
+Изменить шрифт интерфейса:
+
+Select font
+Выбрать шрифт
+
+Show system tray icon constantly
+Показывать значок в области уведомлений постоянно
+
+Minimize program to system tray
+Сворачивать программу в область уведомлений
+
+Minimize before performing autotype
+Сворачивать перед автонабором
+
+Autotype delay between characters (ms):
+Межзнаковая задержка при автонаборе (мс):
+
+Ask before exiting application
+Запрос перед выходом из программы
+
+Launch application on system startup (for current user)
+Запускать при старте системы (для текущего пользователя)
+
+Encryption algorithm for generating random data via random pool:
+Шифрование для создания случайных данных через случайный пул:
+
+Benchmark...
+Тест...
+
+Test passwords against list of common passwords
+Проверять, нет ли паролей в списке распространённых
+
+Clear clipboard automatically after the following time (seconds):
+Автоматически очищать буфер обмена через указанное время (сек):
+
+Clear password box automatically after the following time (seconds):
+Автоматически очищать окно пароля через указанное время (сек):
+
+Automatic check for updates:
+Автоматическая проверка обновлений:
+
+Daily
+Ежедневно
+
+Weekly
+Еженедельно
+
+Monthly
+Ежемесячно
+
+Disabled
+Отключено
+
+Actions
+Действия
+
+Show/restore main window
+Показать/восстановить главное окно
+
+No further action
+Нет дальнейшего действия
+
+Generate single password in main window
+Создать один пароль в главном окне
+
+Generate multiple passwords
+Создать несколько паролей
+
+Generate password and copy it to the clipboard
+Создать пароль и скопировать его в буфер
+
+Generate password and show it in a message box
+Создать пароль и показать его в окне сообщения
+
+Generate password and perform autotype
+Создать пароль и выполнить автонабор
+
+Open MP password generator
+Открыть генератор мастер-паролей
+
+Show password manager
+Показать диспетчер паролей
+
+Show MP password generator
+Показать генератор мастер-паролей
+
+Search database for keyword in window title
+Найти в базе данных ключевое слово в заголовке окна
+
+Search database for keyword and perform autotype
+Найти в базе данных ключевое слово и выполнить автонабор
+
+Shortcut to assign:
+Горячая клавиша:
+
+Add
+Добавить
+
+Remove
+Удалить
+
+Shortcut
+Клавиша
+
+Action
+Действие
+
+Please select a hot key action.
+Выберите действие горячих клавиш.
+
+Character encoding of text files:
+Кодировка символов в текстовых файлах:
+
+Newline character sequence:
+Символы перевода строки ("новая строка"):
+
+Select language:
+Выберите язык:
+
+Clear clipboard when closing/locking database
+Очищать буфер обмена при закрытии/блокировке базы
+
+Lock database when minimizing application or database window
+Блокировать БД при сворачивании окна программы/базы
+
+Lock database after the following idle time (seconds):
+Блокировать БД после бездействия (сек):
+
+Save automatically
+Сохранять автоматически
+
+Create backup of database before saving
+Создавать резервную копию БД перед сохранением
+
+Number backups consecutively - up to:
+Последовательных резервных копий:
+
+Open window on startup
+Открывать окно при запуске
+
+Open last used database on startup
+Открывать недавнюю БД при запуске
+
+Warn if database contains expired entries
+Предупреждать о просроченных записях в БД
+
+Warn if database contains entries that will expire soon
+Предупреждать о вскоре истекающих записях в БД
+
+Number of days:
+Дней:
+
+Save automatically:
+Сохранять автоматически:
+
+After adding/modifying an entry
+При добавлении/изменении записи
+
+After every change
+При каждом изменении
+
+Default autotype sequence:
+Стандартный автонабор:
+
+Maximum number of hot keys (%d) reached.
+Достигнут максимум горячих клавиш (%d).
+
+This hot key has already been assigned.
+Эта горячая клавиша уже занята.
+
+%s (%d-bit key, operates on %d-bit blocks)
+%s (ключ %d бит, блоки по %d бит)
+
+Benchmark results (data size: %d MB):
+Результаты теста (размер данных: %d МБ):
+
+/////////////// PasswDlg ///////////////
+
+Enter password:
+Введите пароль:
+
+Confirm password:
+Подтвердите:
+
+Display password
+Показать пароль
+
+OK
+OK
+
+Cancel
+Отмена
+
+Passwords are not identical.
+Пароли не совпадают.
+
+Encrypt
+Зашифровать
+
+Decrypt
+Расшифровать
+
+Remember password (seconds):
+Помнить пароль (сек):
+
+/////////////// PasswList ///////////////
+
+Password List
+Список паролей
+
+Save As File...
+Сохранить как...
+
+Save password list
+Сохранить список паролей
+
+Error while creating file\n\"%s\":\n%s.
+Ошибка при создании файла\n\"%s\":\n%s.
+
+File \"%s\" successfully created.
+Файл \"%s\" успешно создан.
+
+/////////////// PasswOptionsDlg ///////////////
+
+Advanced Password Options
+Расширенные настройки паролей
+
+Exclude ambiguous characters
+Исключать неоднозначные символы
+
+First character must not be a lower-case letter
+Первый символ не должен быть строчным
+
+Don't separate words by a space
+Не разделять слова пробелами
+
+Don't separate words and characters by a '-' character
+Не разделять слова и символы дефисами ('-')
+
+Reverse default order of character/word combinations
+Обратный порядок комбинаций символ/слово
+
+Include at least one upper-case letter (A-Z)
+Включать хотя бы одну прописную букву (A-Z)
+
+Include at least one lower-case letter (a-z)
+Включать хотя бы одну строчную букву (a-z)
+
+Include at least one digit (0-9)
+Включать хотя бы одну цифру (0-9)
+
+Include at least one special symbol (!"#$%...)
+Включать хотя бы один особый символ (!"#$%...)
+
+Only include characters from custom character set
+Включать только символы из пользовательского набора
+
+Exclude repeating consecutive characters (e.g. aa, 11)
+Исключать повторы символов (например: аа, 11)
+
+Exclude duplicate entries in password lists
+Исключать дублирующиеся записи в списках паролей
+
+Capitalize first letter of each word
+Делать заглавной первую букву каждого слова
+
+Convert all words in word lists to lower-case
+Все слова в списках -> в нижний регистр
+
+Each character must occur only once
+Не повторять символы
+
+Each word must occur only once
+Не повторять слова
+
+Redefine ambiguous characters:
+Переопределить неоднозначные символы:
+
+Redefine special symbols:
+Переопределить особые символы:
+
+Maximum length of words in word lists (except default word list):
+Максимальная длина слов в списках (кроме списка по умолчанию):
+
+Trigram file for generating phonetic (pronounceable) passwords:
+Триграмм-файл для фонетических (легко произносимых) паролей:
+
+Applies to pass_words_.
+для парольных слов.
+
+Applies to pass_phrases_.
+для парольных фраз.
+
+Applies to formatted passwords.
+для форматированных паролей.
+
+Applies to phonetic passwords.
+для фонетических паролей.
+
+Selecting one of these options might reduce the security of generated passwords.
+Выбор этих параметров может снизить надёжность паролей.
+
+These options also apply to formatted passwords.
+Эти опции также применяются к форматированным паролям.
+
+Deselect All
+Отменить выбор
+
+Invert Selection
+Инвертировать выбор
+
+/////////////// CreateRandDataFile ///////////////
+
+Create Random Data File
+Создать файл со случайными данными
+
+File name:
+Имя файла:
+
+File size:
+Размер:
+
+Bytes
+байт
+
+Kilobytes
+КБ
+
+Megabytes
+МБ
+
+Close
+Закрыть
+
+Create file
+Создать файл
+
+Invalid file size.
+Неверный размер файла.
+
+Not enough free disk space available\nto create the file.
+Недостаточно места на диске\nдля создания файла.
+
+Creating random data file ...
+Создание файла со случайными данными...
+
+%d of %d KB written.
+%d из %d КБ записано.
+
+File \"%s\" successfully created.\n\n%d bytes written.
+Файл \"%s\" успешно создан.\n\nЗаписано байт: %d.
+
+Error while creating file\n\"%s\":\n%s.\n\n%d bytes written.
+Ошибка при создании файла\n\"%s\":\n%s.\n\nЗаписано байт: %d.
+
+//////////////// ProfileEditor ////////////////
+
+Profile Editor
+Редактор профилей
+
+Load
+Загрузить
+
+Confirm
+Подтверд.
+
+Profile name:
+Имя профиля:
+
+Move up
+Выше
+
+Move down
+Ниже
+
+Save "advanced password options" for this profile
+Сохранить в профиле расширенные опции пароля
+
+Delete profile \"%s\"?
+Удалить профиль "%s"?
+
+Delete %d profiles?
+Удалить профили (%d)?
+
+Maximum number of profiles (%d) reached.\nPlease delete or overwrite profiles.
+Достигнуто максимальное количество профилей (%d).\nУдалите или перезапишите их.
+
+A profile with the name \"%s\" already exists.\nDo you want to overwrite it?
+Профиль \"%s\" уже существует.\nПерезаписать его?
+
+/////////////// CreateTrigramFile ///////////////
+
+Create Trigram File
+Создать триграмм-файл
+
+Source file (e.g., dictionary, word list):
+Исходный файл (например словарь, список слов):
+
+Destination file (trigram file):
+Целевой файл (триграмм-файл):
+
+Trigram file \"%s\" successfully created.\n\n%d trigrams evaluated.\n%1.2f bits of entropy per letter.
+Триграмм-файл \"%s\" успешно создан.\n\nИспытано триграмм: %d.\n%1.2f бит энтропии на букву.
+
+/////////////// Callback ///////////////
+
+Process was cancelled by the user
+Процесс отменён пользователем
+
+/////////////// About ///////////////
+
+About %s
+О программе %s
+
+Current language: %s\nTranslator: %s
+Текущий язык: %s\nПеревод: %s
+
+This program is distributed under the terms and conditions of the GNU General Public License (GPL).
+Это ПО распространяется на условиях лицензии GNU GPL.
+
+View license
+Лицензионное соглашение
+
+Donor ID:
+ID мецената:
+
+/////////////// QuickHelp ///////////////
+
+Quick help
+Справка
+
+Position Automatically
+Позиция автоматически
+
+You can use the following placeholders:
+Можно использовать следующие заполнители:
+
+without ambiguous characters
+без неоднозначных символов
+
+special symbols
+особые символы
+
+brackets
+скобки
+
+punctuation marks
+знаки препинания
+
+higher ANSI characters
+верхние ANSI-символы
+
+generate phonetic password (lower-case letters)
+создать фонетический пароль (строчные буквы)
+
+generate phonetic password (upper-case letters)
+создать фонетический пароль (прописные буквы)
+
+generate phonetic password (mixed-case letters)
+создать фонетический пароль (строчные и прописные буквы)
+
+Comments may be provided in square brackets \"[...]\"\nat the beginning of the sequence.
+Комментарии заключаются в квадратные скобки \"[...]\" в начале последовательности.
+
+Format specifiers have the form \"[*][N]x\" or \"[*][M-N]x\", where the\noptional argument \"N\" specifies the number of repetitions (between 1 and\n99999), \"M-N\" specifies a random number of repetitions in the range\nfrom M to N, and \"x\" is the actual format specifier/placeholder. The\noptional asterisk (*) means that each character must occur only once in\nthe sequence. Example: \"16u\" means \"Insert 16 random upper-case letters\ninto the password\".
+Спецификаторы формата имеют форму \"%[*][N]x\" или \"%[*][M-N]x\",\nгде необязательный аргумент \"N\" определяет количество повторов (от 1 до 99999),\n\"M-N\" - случайное число повторов в диапазоне от M до N,\nа \"x\" - фактический описатель/заполнитель формата.\nНеобязательный символ звёздочки (*) означает, что каждый\nсимвол должен присутствовать в последовательности только один раз.\nПример: \"%16u\" означает \"Вставить в пароль 16 случайных прописных букв\".
+
+List of placeholders with optional argument \"N\":
+Заполнители с необязательным аргументом \"N\":
+
+custom character set
+пользовательский набор символов
+
+vowels, lower-case
+гласные, строчные
+
+vowels, mixed-case
+гласные, смешанные
+
+vowels, upper-case
+гласные, прописные
+
+consonants, lower-case
+согласные, строчные
+
+consonants, mixed-case
+согласные, смешанные
+
+consonants, upper-case
+согласные, прописные
+
+List of special format specifiers\n(possible usage of argument \"N\" is indicated by \"{N}\"):
+Особые спецификаторы\n(разрешён аргумент \"N\", обозначаемый \"{N}\"):
+
+insert password generated via \"Include characters/words\"
+вставить пароль, созданный с \"Включать символы/слова\"
+
+words from word list, multiple words are separated by spaces
+слова из списка, несколько слов разделяются пробелами
+
+words, multiple words are not separated at all
+слова, несколько слов не разделяются
+
+repeat input sequence in brackets N times
+повтор входной последовательности в скобках N раз
+
+randomly permute formatted sequence in brackets, keep N characters
+случайно перемешать отформатированную последовательность в скобках, сохранить N символов
+
+treat sequence as character set and insert N characters
+считать последовательность набором символов и вставить N символов
+
+Additional notes:
+Примечания:
+
+Text enclosed with quotation marks \"...\" is copied verbatim\nto the password.
+Текст в кавычках "..." копируется в пароль дословно.
+
+/////////////// MPPasswGen ///////////////
+
+MP Password Generator
+Генератор паролей на основе мастер-пароля
+
+Master password
+Мастер-пароль
+
+Enter password...
+Введите пароль...
+
+Clear
+Очистить
+
+Status:
+Статус:
+
+Expiry countdown:
+Истекает через:
+
+Ask for password confirmation
+Запрашивать подтверждение пароля
+
+Show checksum of password:
+Показать контрольную сумму пароля:
+
+Key expires after the following time (seconds):
+Ключ истекает через указанное время (сек):
+
+Provide compatibility with "Hashapass"
+Совместимость с онлайн-генератором Hashapass
+
+Add password length to parameter
+Добавить длину пароля в параметр
+
+Autotype sequence:
+Строка автонабора:
+
+Password generator
+Генератор паролей
+
+Parameter:
+Параметр:
+
+%d ch. / %.1f bits per ch.
+Символов: %d;  %.1f бит/символ
+
+Resulting password:
+Созданный пароль:
+
+Use as default random generator
+Использовать по умолчанию
+
+Alphanumeric
+Буквенно-цифровой
+
+Hexadecimal
+Шестнадцатеричный
+
+Key has expired.
+Ключ просрочен.
+
+Key has been cleared.
+Ключ очищен.
+
+New key generated.
+Новый ключ создан.
+
+/////////////// ProvideEntropyDlg ///////////////
+
+Enter or paste some text into the box below, press mouse buttons, or move your mouse within the window.
+Введите или вставьте текст в поле ниже, нажимайте кнопки мыши или перемещайте курсор мыши в пределах окна.
+
+%d bits of entropy have been added to the random pool.
+Добавлено бит энтропии в пул случайных значений: %d.
+
+/////////////// PasswDatabase/Manager ///////////////
+
+Database not encrypted, or invalid key
+База данных зашифрована, либо неверный ключ
+
+File contents modified, or invalid key
+Содержимое файла изменено, либо неверный ключ
+
+Unknown file format
+Неизвестный формат файла
+
+Invalid file format
+Неверный формат файла
+
+Title
+Название
+
+Title:
+Название:
+
+User name
+Пользователь
+
+User name:
+Пользователь:
+
+Password
+Пароль
+
+Password:
+Пароль:
+
+URL
+URL
+
+URL:
+URL:
+
+Keyword
+Ключевое слово
+
+Keyword:
+Ключевое слово:
+
+Notes
+Заметки
+
+Notes:
+Заметки:
+
+Key-value list
+Список ключей и значений
+
+Key-value list:
+Ключи и значения:
+
+Creation time
+Время создания
+
+Creation time:
+Создано:
+
+Last modification
+Время изменения
+
+Last modification:
+Изменено:
+
+Tags
+Теги
+
+Tags:
+Теги:
+
+Select and add existing tag
+Выбрать и добавить имеющийся тег
+
+All ((tags))
+Все ((tags))
+
+All search results
+Все результаты поиска
+
+Untagged
+Без тегов
+
+Key
+Ключ
+
+Value
+Значение
+
+Edit
+Изменить
+
+View
+Вид
+
+New...
+Создать...
+
+Open...
+Открыть...
+
+Open as Read-only...
+Открыть только для чтения...
+
+Save
+Сохранить
+
+Save As...
+Сохранить как...
+
+Lock
+Заблокировать
+
+Unlock
+Разблокировать
+
+Export to
+Экспортировать в
+
+CSV File...
+Файл CSV...
+
+Database Settings...
+Настройки базы данных...
+
+Properties...
+Свойства...
+
+Change Master Password...
+Изменить мастер-пароль...
+
+Copy User Name
+Скопировать имя пользователя
+
+Copy Password
+Скопировать пароль
+
+Open URL
+Открыть URL
+
+Run
+Выполнить
+
+Add Entry
+Добавить запись
+
+Duplicate Entry
+Дублировать запись
+
+Delete Entry
+Удалить запись
+
+Show Columns
+Показать колонки
+
+Show Passwords in List
+Показать пароли в списке
+
+Sort Entries By
+Сортировка элементов
+
+Unsorted
+Без сортировки
+
+Sort Order
+Направление сортировки
+
+Ascending
+По возрастанию
+
+Descending
+По убыванию
+
+Sort Tags By
+Сортировка тегов
+
+Name
+Имя
+
+Frequency
+Частота
+
+Change List Font...
+Изменить шрифт списка...
+
+Change Password Font...
+Изменить шрифт пароля...
+
+Previous entry
+Предыдущая запись
+
+Next entry
+Следующая запись
+
+Accept changes
+Принять изменения
+
+Undo changes
+Отменить изменения
+
+Search...
+Поиск...
+
+Clear search
+Очистить поиск
+
+Left-click: Perform search, right-click: Search options
+ЛКМ: найти, ПКМ: параметры поиска
+
+Case-sensitive search
+Учитывать регистр букв
+
+Fuzzy search (approximate matching)
+Нечёткий поиск (примерное совпадение)
+
+Lock/unlock database
+Заблокировать/разблокировать базу данных
+
+Left-click: Hide/show password, right-click: Generate password
+ЛКМ: скрыть/показать пароль, ПКМ: создать пароль
+
+Unlock %s
+Разблокировать %s
+
+Open %s
+Открыть %s
+
+Create new database
+Создать новую базу данных
+
+Could not find database file:\n\"%s\".
+Невозможно открыть файл базы данных:\n"%s".
+
+Error while opening database file:\n%s.
+Ошибка открытия файла базы данных:\n%s.
+
+The currently selected entry has been changed.\nDo you want to save the changes?
+Выбранная сейчас запись была изменена.\nХотите сохранить изменения?
+
+The database has been changed.\nDo you want to save the changes?
+База данных была изменена.\nХотите сохранить изменения?
+
+An untitled database cannot be locked.
+Нельзя заблокировать базу без имени.
+
+Could not save backup file\n\"%s\".
+Невозможно сохранить файл резервной копии:\n"%s".
+
+Error while saving database file:\n%s.
+Ошибка сохранения файла базы данных:\n%s.
+
+Please finish editing the current entry\nbefore adding new entries.
+Прежде чем добавлять новые записи,\nзавершите редактирование текущей.
+
+%d entries with passwords have been added.
+Добавлено записей с паролями: %d.
+
+1 entry found.
+Найдено записей: 1.
+
+%d entries found.
+Найдено записей: %d.
+
+Search via hot key.
+Поиск по горячей клавише.
+
+No matching keyword found for window text\n\"%s\".
+Нет подходящего ключевого слова для текста в окне\n"%s".
+
+New Entry
+Новая запись
+
+Please specify at least a title or password.
+Укажите хотя бы название или пароль.
+
+Delete 1 entry?
+Удалить запись?
+
+Delete %d entries?
+Удалить записи (%d)?
+
+Enter OLD master password
+Введите СТАРЫЙ мастер-пароль
+
+Enter NEW master password
+Введите НОВЫЙ мастер-пароль
+
+Master password successfully changed.
+Мастер-пароль успешно изменён.
+
+Old master password is invalid.
+Неверный старый мастер-пароль.
+
+Untitled
+Без названия
+
+Copy ((noun))
+Копия
+
+Database successfully exported to CSV file.
+База данных успешно экспортирована в файл CSV.
+
+Error while creating CSV file:\n%s.
+Ошибка создания CSV-файла:\n%s.
+
+Password databases
+Базы паролей
+
+CSV files
+Файлы CSV
+
+Autotype
+Автонабор
+
+Format password
+Форматирование пароля
+
+Rearrange Entry
+Переставить запись
+
+Move to Top
+Наверх
+
+Move up by one
+На одну выше
+
+Move down by one
+На одну ниже
+
+Move to Bottom
+Вниз
+
+The maximum tag length is %d characters.\nLonger tags have been shortened.
+Максимум символов в теге: %d.\nБолее длинные теги были сокращены.
+
+Enter master password again
+Введите мастер-пароль снова
+
+Master password is invalid.
+Неверный мастер-пароль.
+
+Edit key-value list
+Изменить список ключей и значений
+
+Profile "%s" not found.
+Профиль "%s" не найден.
+
+Password expiry
+Срок действия пароля
+
+Expires:
+Истекает:
+
+Change expiry date
+Изменить срок действия
+
+Filter expired entries
+Фильтровать истекшие записи
+
+Filter entries that will expire soon
+Фильтровать вскоре истекающие записи
+
+%d days
+%d дн.
+
+The database contains expired entries.\nDo you want to filter these entries now?
+В базе данных есть записи с истекшим сроком действия.\nОтфильтровать их?
+
+The database contains entries that will expire soon.\nDo you want to filter these entries now?
+В базе данных есть вскоре истекающие записи.\nОтфильтровать их?
+
+Locked
+Заблокировано
+
+/////////////// PasswMngColSelect ///////////////
+
+Select columns
+Выберите колонки
+
+Select at least one column.
+Выберите хотя бы одну колонку.
+
+/////////////// Other ///////////////
+
+Error while formatting string
+Ошибка форматирования строки
+
+Invalid UTF-16 character encoding
+Неверная кодировка символов UTF-16
+
+Error while converting string to UTF-8
+Ошибка преобразования строки в UTF-8
+
+Error while decoding UTF-8 string
+Ошибка декодирования строки UTF-8
+
+Unicode string too long
+Слишком длинная юникодная строка
+
+Invalid ANSI or UTF-8 character encoding, or Unicode string too long
+Недопустимые символы ANSI или UTF-8 для кодирования, либо слишком длинная юникодная строка
+
+Error while encoding Unicode string
+Ошибка кодирования юникодной строки
+
+Out of disk space
+Недостаточно места на диске
+
+Could not open file/execute operation\n\"%s\".
+Не удалось открыть файл/выполнить операцию\n\"%s\".
+
+Source file does not contain enough trigrams
+Недостаточно триграмм в исходном файле
+
+/////////////// PasswDbSettings ///////////////
+
+Database settings
+Настройки базы данных
+
+Default user name for new entries:
+Стандартный логин для новых записей:
+
+Generate passwords for new entries using format sequence:
+Создавать пароли для новых записей с помощью форматирующей последовательности:
+
+Generate test password using format sequence
+Создать тестовый пароль с помощью форматирующей последовательности
+
+Encryption algorithm:
+Шифрование:
+
+%s with %d-bit key
+%s с %d-бит ключом
+
+Number of key derivation rounds:
+Раундов получения ключа:
+
+Calculate number of rounds for a 1 second delay
+Вычислить число раундов для 1-секундной задержки
+
+Invalid number of key derivation rounds.
+Неверное число раундов получения ключа.
+
+By default, new entries expire after the following number of days:
+Стандартно новые записи истекают спустя это число дней:
+
+/////////////// PasswDbKeyValEdit ///////////////
+
+Key-value list editor
+Редактор списка ключей и значений
+
+/////////////// PasswDbProp ///////////////
+
+Properties
+Свойства
+
+Property
+Свойство
+
+Location
+Место
+
+Size
+Размер
+
+Format version
+Версия формата
+
+Number of entries
+Записей
+
+Number of expired entries
+Истекших записей
+
+Number of tags
+Тегов
