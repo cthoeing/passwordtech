@@ -1,0 +1,1752 @@
+﻿[LANGUAGENAME]
+日本語
+
+[LANGUAGEVERSION]
+3.4.4
+
+[LANGUAGEAUTHOR]
+maboroshin
+
+[LANGUAGEHELPFILE]
+manual.pdf
+
+Info
+情報
+
+Warning
+警告
+
+Question
+質問
+
+Error
+エラー
+
+Profile:
+プロファイル:
+
+Settings
+設定
+
+Include Characters (Pass*words*)
+文字を含める (パスワード)
+
+Length:
+長さ:
+
+Character Set:
+文字の組み合わせ:
+
+Show details
+詳細を表示
+
+Include Words (Pass*phrases*)
+単語を含める (パスフレーズ)
+
+Number:
+数:
+
+Word List File:
+単語リストのファイル:
+
+Browse
+参照
+
+Specify length*:
+長さの指定*:
+
+Combine Words with Characters
+文字と単語の組み合わせ
+
+Format password:
+書式型のパスワード:
+
+Run script:
+スクリプト実行:
+
+Reload script
+スクリプトを再読み込み
+
+Multiple passwords:
+複数のパスワード :
+
+Generate
+生成
+
+Generate password list to file
+パスワード一覧のファイルを生成
+
+Advanced
+詳細
+
+Generated Password
+生成されたパスワード
+
+Click on "Generate"
+「生成」をクリック
+
+Hide/show password
+パスワードの表示を切り替え
+
+Hold left mouse button to drag & drop password
+左クリックでパスワードをドラッグできます
+
+File
+ファイル
+
+Profile
+プロファイル
+
+Profile Editor...
+プロファイル編集...
+
+Exit
+終了
+
+Tools
+ツール
+
+Clear Clipboard
+クリップボードの内容を消去
+
+Encrypt Clipboard...
+クリップボードの内容を暗号化...
+
+Decrypt Clipboard...
+クリップボードの内容を複合化...
+
+Create Random Data File...
+ランダムデータのファイルを作成...
+
+Create Trigram File...
+トライグラムのファイルを作成...
+
+MP Password Generator...
+マスターパスワードによる生成ツール...
+
+Deterministic Random Generator
+決定性ランダム生成器
+
+Reset
+初期化
+
+Deactivate
+解除
+
+Provide Additional Entropy
+情報量を追加
+
+As Text...
+文字列から...
+
+From File...
+ファイルから...
+
+Options
+オプション
+
+Configuration...
+設定...
+
+Language
+言語
+
+Always on Top
+常に手前に表示
+
+Hide Entropy Progress
+情報量の状態を非表示
+
+Save Settings on Exit
+終了時に設定を保存
+
+Save Settings Now
+今すぐ設定を保存
+
+Help
+ヘルプ
+
+Open Manual
+説明書を開く
+
+Visit Website
+ウェブサイト
+
+Get Translations...
+翻訳ファイルを入手...
+
+Donate...
+寄付...
+
+Check for Updates
+更新を確認
+
+Timer Info...
+時計の情報...
+
+About %s...
+%s について...
+
+Restore %s
+%s を復元
+
+Generate Password
+パスワードの生成
+
+Generate and Show Password...
+パスワードを生成し表示...
+
+Generate and Autotype Password
+パスワードを生成し自動入力...
+
+Open user manual
+説明書を開く
+
+Clear clipboard (text contents only)
+クリップボードの内容を消去 (文字列のみ)
+
+Clipboard text encryption (left-click) or decryption (right-click)
+クリップボードの文字列を暗号化 (左クリック) 複合化(右クリック)
+
+Load, create or delete profiles
+プロファイルの読み込み、作成、削除
+
+Generate passwords based on a master password
+マスターパスワードに基づきパスワード生成
+
+Main configuration of the program
+プログラムの設定
+
+Reset Counters
+カウンターの初期化
+
+All files
+すべてのファイル
+
+Text files
+テキストファイル
+
+Trigram files
+トライグラムファイル
+
+Lua scripts
+Lua スクリプト
+
+Undo
+元に戻す
+
+Cut
+切り取り
+
+Copy
+コピー
+
+Encrypt && Copy
+暗号化 && コピー
+
+Paste
+貼り付け
+
+Perform Autotype
+自動入力の実行
+
+Add to Database
+データベースに追加
+
+Delete
+削除
+
+Select All
+すべて選択
+
+Clear List
+一覧を消去
+
+Remove Entry
+項目を削除
+
+Editable
+編集可能
+
+Enable Password Testing
+パスワードのテストを有効化
+
+Change Font...
+フォントの変更...
+
+Select high-entropy file
+高-情報量用のファイルを選択
+
+Manage passwords in encrypted databases
+暗号化されたデータベース内のパスワードの管理
+
+Reload profile
+プロファイルの再読み込み
+
+Add profile
+プロファイルの追加
+
+Set up...
+セットアップ...
+
+Password Manager...
+パスワード管理ツール...
+
+Enter Donor Key...
+ドナーキーを入力...
+
+Reset All Window Positions
+ウィンドウの位置をすべて初期化
+
+Could not read random seed file\n\"%s\".
+ランダムシードのファイルを読み込めません\n\“％s\”.
+
+Could not write to random seed file\n\"%s\".
+ランダムシードのファイルに書き込めません\n\“％s\”.
+
+Unknown command line switch(es):\n%s
+不明なコマンドライン引数: \n％s
+
+Error while loading word list file\n\"%s\".
+単語リストファイルの読み込み中にエラー\n\“％s\”。
+
+Error while loading list of common passwords:\n%s.
+一般パスワード一覧の読み込み中にエラー: \n％s。
+
+%s encountered %d error(s) during startup:
+%s 開始中に%dエラーが発生:
+
+If you like %s, please consider\nmaking a donation. Thank you!
+%s を気に入っていただけたら\n寄付をお考えください。ご愛顧に感謝します！
+
+Character set \"%s\" is invalid.
+文字の組み合わせ「％s」が正しくありません。
+
+Error while writing to configuration file:\n%s.
+設定ファイルへの書き込み中にエラー: \n％s。
+
+%d characters / %.1f bits per character
+%d 文字 / 1文字ごとに %.1f ビット
+
+%d words / %.1f bits per word
+%d 単語 / 単語ごとに %.1f ビット
+
+Could not open trigram file.
+トライグラム ファイルが開けません。
+
+Invalid trigram file.
+トライグラム ファイルが正しくありません。
+
+Matches common password!
+ありふれたパスワードに一致します！
+
+Text successfully encrypted.
+文字列は正常に暗号化されました。
+
+Text successfully decrypted.
+文字列は正常に複合化されました。
+
+Could not open clipboard.
+クリップボードを開けません。
+
+The text to be encrypted is too long.
+暗号化する文字列が長すぎます。
+
+No text available to process.
+処理する文字列がありません。
+
+Not enough memory available to perform\nthe operation. Try to use a shorter text.
+この操作を実行するために十分なメモリがありません。\nより短い文字列でお試しください。
+
+Decryption failed. This may be attributed\nto the following reasons:
+複合化に失敗。\n以下が原因になっている可能性があります:
+
+- You entered a wrong password.
+- 入力されたパスワードが間違っています。
+
+- The text is corrupted.\n- The text is not encrypted.
+- 文字列が壊れています。\n- 文字列は暗号化されていません。
+
+This should not have happened:\nDecryption successful, but decompression\nfailed.
+よくないことが起こりました:\n複合化に成功したが\n展開に失敗しました。
+
+Could not register the following hot keys:
+次のホットキーを登録できません:
+
+The selected file already exists. Do you\nwant to append passwords to this file\n(existing passwords will be preserved),\nor do you want to completely overwrite it?\n\nYes\t-> append passwords,\nNo\t-> overwrite file,\nCancel\t-> cancel process.
+選択したファイルは既に存在します。\nこのファイルへパスワードを追加しますか？\n(既存のパスワードは保持されます)\nまたは完全に上書しますか？\n\nはい\t-> パスワード追加\nいいえ\t-> ファイル上書き\nキャンセル\t-> 処理を取り消す
+
+Passphrase: Invalid length range.
+パスフレーズ: 長さの範囲が正しくありません。
+
+If the option \"Each character must occur\nonly once\" is activated, the password length\nis limited to the size of the character set (%d).
+オプション「Each character must occurnonly once」が有効なら\nパスワードの長さが、文字数の組み合わせの
+大きさ (%d) に制限されます。
+
+If the option \"Each word must occur only\nonce\" is activated, the number of words\nis limited to the size of the word list (%d).
+オプション「Each character must occurnonly once」が有効なら、\n単語の数は\単語リストの大きさ (％d) に制限されます。
+
+Error while loading script:\n%s.
+スクリプト読み込み中のエラー:\n％s。
+
+Generating password list ...
+パスワード一覧の生成中 ...
+
+%d of %d passwords generated.
+%d 個 / %d 個中のパスワード生成済み
+
+Generating passphrase ...
+パスフレーズの生成中 ...
+
+%d of %d passphrases generated.
+%d 個 / %d 個中のパスフレーズ生成済み
+
+\"P\" is not specified.
+\“P\”は指定されていません。
+
+Password not available.
+パスワードは利用できません。
+
+Password too long.
+パスワードが長すぎます。
+
+Invalid format specifier \"%s\".
+次の書式指定子が無効「％s」。
+
+Executing script
+スクリプト実行中
+
+Waiting for script ...
+スクリプトを待機中 ...
+
+Script thread was terminated forcibly.\nPlease check script for infinite loops.
+スクリプトのスレッドが強制終了されました。\nスクリプトに無限ループがないか確認してください。
+
+The estimated list size will probably exceed\nthe internal memory limit.\nPlease reduce the number of passwords
+一覧のサイズの推定が、内部メモリの制限を\n超えるようです。パスワードの数を\n減らしてください。
+
+The memory limit of the password list has\nbeen reached.\n\nThe number of passwords has been\nreduced to %d.
+パスワードの一覧がメモリ制限に達しました。\n\nパスワードの数は％dに減少しました。
+
+%d passwords generated.
+%d 個のパスワードを生成。
+
+%d passwords generated.\r\nSecurity of each password: %d bits.\r\nMaximum security of the entire list: %d bits.
+%d 個のパスワードを生成。\r\n各パスワードの安全性: %d ビット\r\n一覧全体の安全性の最大: %d ビット
+
+Password copied to clipboard.
+パスワードをクリップボードにコピーしました。
+
+Copying password list ...
+パスワード一覧をコピー中...
+
+File \"%s\" successfully created.\n\n%d passwords written.
+ファイル「％s」の作成に成功。\n\n％d個のパスワードが書き込まれました。
+
+An error has occurred during password generation:\n%s.
+パスワード生成中にエラーが発生:\n％s。
+
+%d passwords written to file \"%s\".
+次のファイルに％d個のパスワードが書き込まれました「％s」。
+
+%d bits / %d characters
+%d ビット / %d 文字
+
+Passwords: %d
+パスワード: ％d
+
+Invalid character set.
+文字の組み合わせが正しくありません。
+
+default (English) trigrams
+既定 (英語) トライグラム
+
+File \"%s\"
+ファイル「%s」
+
+(phonetic, based on trigram frequencies\nfrom the following source:\n<%s>)
+(音声学、次の入力元のトライグラムの頻度に\n基づく:\n<%s>)
+
+The character set you entered is invalid.\nIt must contain at least 2 different characters.
+入力された文字列の組み合わせは無効です。\n少なくとも、2文字以上の異なる文字を含めてください。
+
+Currently loaded character set:
+文字の組み合わせで呼び出される文字:
+
+Could not open file.
+ファイルを開けません。
+
+Not enough valid words.
+正しい単語が十分ではありません。
+
+Select word list file
+単語リストのファイルを選択
+
+Error while loading the file\n\"%s\":\n%s
+次のファイルの読み込み中にエラー「%s」:\n%s
+
+default (English) word list
+既定 (英語) 単語リスト
+
+Currently loaded word list:
+読み込んでいる単語リスト:
+
+First word:
+最初の単語:
+
+Random word:
+ランダムな単語:
+
+Last word:
+最後の単語:
+
+The version of this language (%s) is not\ncompatible with this program version.\nThis version of %s requires a language\nversion of at least %s.\n\nDo you want to use it anyway?
+この言語のバージョン (％s) は\n本プログラムのバージョンと互換性がありません。\nこのバージョンの ％s は最低でも\n %s の言語のバージョンが必要です。\n\nそれでも使用しますか？
+
+The version of this language (%s) is higher\nthan the version of this program (%s).\nTherefore, version incompatibilities may occur.\n\nDo you want to use it anyway?
+この言語のバージョン (％s) は\n本プログラムのバージョン (％s) より高いです。\nバージョンの互換性の問題が起こるかもしれません。\n\nそれでも使用しますか？
+
+The language file will be loaded when you\nrestart the program.\n\nDo you want to restart now?
+言語ファイルはプログラムの起動時に\n読み込まれます。\n\n今すぐ再起動しますか？
+
+Password is too long to show it in a\nmessage box like this.\n\nIt has been copied to the clipboard.
+パスワードが長く、このメッセージのようには\n表示できません。\n\nクリップボードにコピーされています。
+
+The generated password is:\n\n%s\n\nThe estimated security is %d bits.\n\nYes\t-> copy password to clipboard,\nNo\t-> generate new password,\nCancel\t-> cancel process.
+生成されたパスワード:\n\n％s\n\n推定された安全性 ％d ビット\n\nはい\t-> クリップボードにパスワードをコピー\nいいえ\t-> 新規パスワードを生成\n取消\t- > 処理を取り消す
+
+All entries will be removed from the list.\nAre you sure?
+すべての項目が一覧から除去されます。\nよろしいですか？
+
+Total Entropy Bits: %d
+情報量のビット数合計: %d
+
+High-resolution timer used:\n%s.\n\nCurrent value: %s.
+高分解能の時計を使用: \n%s \n\n現在の値: %s
+
+Could not download version file
+バージョンファイルがダウンロードできません
+
+URL not found, or unknown format of version file
+URLが存在しないか、バージョンファイルの形式が不明
+
+A new version (%s) of %s is available!\nDo you want to visit the download page now?
+%s の最新バージョン (%s) があります！\nダウンロードページを開きますか？
+
+(NOTE: %s)
+(注: %s)
+
+Your version of %s is up-to-date.
+利用中の %s は最新版です。
+
+Error while checking for updates:\n%s.
+更新確認中にエラー: \n%s
+
+WARNING: Random generator is deterministic (press F7 to deactivate)!
+警告: ランダム生成器は決定性です (F7 で無効化)！
+
+Clipboard cleared.
+クリップボードを消去しました。
+
+Profile \"%s\" activated.
+「プロファイル%s」を有効化しました。
+
+Deterministic random generator has been ACTIVATED.
+決定性ランダム生成器が有効になりました。
+
+Deterministic random generator has been RESET.
+決定性ランダム生成器は初期化されました。
+
+Deterministic random generator has been DEACTIVATED.
+決定性ランダム生成器は無効化されました。
+
+ERROR: Profile \"%s\" not found.
+エラー: プロファイル「%s」が見つかりません。
+
+Selected profile \"%s\".
+選択されたプロファイル「%s」
+
+Generating %d password(s) ...
+％d個のパスワードを生成中 ...
+
+Command line function \"gen\" is only effective\nwhen %s is run from the console.
+コマンドラインの関数 gen は、コンソールから\n%s を実行したときのみ有効です。
+
+Your donor key has expired: The maximum\nnumber of updates has been reached.
+このドナーキーは期限切れ:\n更新回数の上限に達しました。
+
+Donor key is invalid.
+ドナーキーが正しくありません。
+
+Donor Key
+ドナーキー
+
+Enter donor key:
+ドナーキーを入力:
+
+Your Donor ID is: %s\nSupported number of updates: %s
+あなたのドナーID: %s \n更新回数の上限: %s
+
+Unlimited
+無制限
+
+Thank you for your support!
+ご支援に感謝します！
+
+Copy this information to the clipboard?
+この情報をクリップボードにコピーしますか？
+
+Donor key has expired.
+ドナーキーが期限切れです。
+
+Settings saved.
+設定を保存しました。
+
+Save password
+パスワードを保存
+
+Clear Password Cache
+パスワードのキャッシュを削除
+
+Password cache cleared.
+パスワードのキャッシュを削除しました。
+
+Select Lua script file
+Lua スクリプトファイルを選択
+
+Waiting for active threads to finish ...
+アクティブなスレッドの完了を待機中 ...
+
+Donate at least one of the following amounts\nto receive a Donor Key:\n\n%d EUR / %d USD:\tValid for current version and %d updates.\n%d EUR / %d USD:\tValid for the entire lifetime of version 3.\n\nDo you want to donate now?
+下記のいずれかの金額以上の寄付で\nドナーキーが付与されます:\n\n%d ユーロ / %d ドル:\t現在以降%dバージョンの更新で有効\n%d ユーロ / %d ドル:\tバージョン3全体で有効\n\n今すぐ寄付しますか？
+
+Could not access registry key\n%s.
+レジストリーのキーにアクセスできません\n％s。
+
+Configuration
+設定
+
+General
+一般
+
+Security
+安全性
+
+Hot Keys
+ホットキー
+
+Files
+ファイル
+
+Updates
+更新
+
+Database
+データベース
+
+Change font for the GUI controls:
+GUI 用のフォントを変更:
+
+Select font
+フォントの選択
+
+Show system tray icon constantly
+常にシステムトレイにアイコンを表示
+
+Minimize program to system tray
+システムトイレ以内に最小化
+
+Minimize before performing autotype
+自動入力実行前に最小化
+
+Autotype delay between characters (ms):
+自動入力の文字間の遅延 (ミリ秒):
+
+Ask before exiting application
+プログラムの終了前に確認する
+
+Launch application on system startup (for current user)
+システムの起動時にアプリを起動 (現在のユーザー)
+
+Encryption algorithm for generating random data via random pool:
+ランダムプールによるランダムデータ生成の暗号化アルゴリズム:
+
+Benchmark...
+計測...
+
+Test passwords against list of common passwords
+ありふれたパスワードの一覧と照らし合わせるテスト
+
+Clear clipboard automatically after the following time (seconds):
+時間経過後に自動でクリップボードの内容を消去 (秒):
+
+Clear password box automatically after the following time (seconds):
+パスワード欄を時間経過後に自動で消去 (秒):
+
+Automatic check for updates:
+自動で更新確認する間隔:
+
+Daily
+毎日
+
+Weekly
+毎週
+
+Monthly
+毎月
+
+Disabled
+なし
+
+Actions
+開始
+
+Show/restore main window
+メインウィンドウの表示/復元
+
+No further action
+追加の動作なし
+
+Generate single password in main window
+メインウィンドウに1個のパスワードを生成
+
+Generate multiple passwords
+複数のパスワードを生成
+
+Generate password and copy it to the clipboard
+パスワードを生成しクリップボードにコピー
+
+Generate password and show it in a message box
+パスワードを生成しメッセージとして表示
+
+Generate password and perform autotype
+パスワードを生成し自動入力
+
+Open MP password generator
+MP パスワード生成ツールを開く
+
+Show password manager
+パスワード管理ツールを開く
+
+Show MP password generator
+MP パスワード生成ツールを表示
+
+Search database for keyword in window title
+ウィンドウ タイトル内のキーワードでデータベースを検索
+
+Search database for keyword and perform autotype
+キーワードでデータベースを検索し自動入力を実行
+
+Shortcut to assign:
+割り当てるショートカット:
+
+Add
+追加
+
+Remove
+削除
+
+Shortcut
+ショートカット
+
+Action
+動作
+
+Please select a hot key action.
+このホットキー用の動作を選択してください。
+
+Character encoding of text files:
+テキストファイルの文字コード:
+
+Newline character sequence:
+改行文字:
+
+Select language:
+言語を選択:
+
+Clear clipboard when closing/locking database
+データベースを閉じる/ロック時にクリップボードを消去
+
+Lock database when minimizing application or database window
+アプリまたはデータベースのウィンドウ最小化時にデータベースをロック
+
+Lock database after the following idle time (seconds):
+アイドル時間経過後にデータベースをロック (秒):
+
+Save automatically
+自動保存
+
+Create backup of database before saving
+保存前にデータベースのバックアップを作成
+
+Number backups consecutively - up to:
+バックアップする上限数:
+
+Open window on startup
+起動時にウィンドウを開く
+
+Open last used database on startup
+起動時に最後に使ったデータベースを開く
+
+Warn if database contains expired entries
+データベースに期限切れの項目があれば警告する
+
+Warn if database contains entries that will expire soon
+データベースに期限切れが近い項目があれば警告する
+
+Number of days:
+日数:
+
+Save automatically:
+自動保存:
+
+After adding/modifying an entry
+項目を追加/修正したら
+
+After every change
+すべての変更後
+
+Default autotype sequence:
+標準の自動入力の順番:
+
+Maximum number of hot keys (%d) reached.
+ホットキーの上限数 (%d) に達しました。
+
+This hot key has already been assigned.
+このホットキーはすでに割り当てられています。
+
+%s (%d-bit key, operates on %d-bit blocks)
+%s (%dビットキー、%dビットブロックで動作)
+
+Benchmark results (data size: %d MB):
+計測結果 (データサイズ: %d MB):
+
+Enter password:
+パスワードを入力:
+
+Confirm password:
+パスワードの確認:
+
+OK
+OK
+
+Cancel
+キャンセル
+
+Passwords are not identical.
+2つのパスワードが同一ではありません。
+
+Encrypt
+暗号化
+
+Decrypt
+複合化
+
+Remember password (seconds):
+パスワードを記憶 (秒):
+
+Key file for password database:
+パスワードのデータベース用の鍵ファイル:
+
+(None)
+(なし)
+
+Enter a password and/or select a key file.
+パスワードを入力するか、鍵ファイルを選択します(同時も可能)。
+
+The selected key file does not exist.
+選択した鍵ファイルは存在しません。
+
+Password is empty.
+パスワードが空です。
+
+Key file successfully created.
+鍵ファイルの作成に成功しました。
+
+Error while creating key file:\n%s.
+鍵ファイル作成中にエラー:\n%s。
+
+Key files
+鍵ファイル
+
+Create key file
+鍵ファイルの作成
+
+Password List
+パスワード一覧
+
+Save As File...
+名前をつけて保存...
+
+Save password list
+パスワード一覧を保存
+
+Error while creating file\n\"%s\":\n%s.
+ファイル作成中にエラー\n「%s」:\n%s。
+
+File \"%s\" successfully created.
+ファイル「%s」の作成に成功しました。
+
+Advanced Password Options
+パスワードの詳細オプション
+
+Exclude ambiguous characters
+曖昧な文字を含めない
+
+First character must not be a lower-case letter
+最初の文字を小文字にしない
+
+Don't separate words by a space
+単語を空白で区切らない
+
+Don't separate words and characters by a '-' character
+単語と文字を「-」文字で区切らない
+
+Reverse default order of character/word combinations
+文字/単語の組み合わせの標準の順序を逆にする
+
+Include at least one upper-case letter (A-Z)
+1つ以上の大文字を含める (A-Z)
+
+Include at least one lower-case letter (a-z)
+1つ以上の小文字を含める (a-z)
+
+Include at least one digit (0-9)
+1つ以上の数字を含める (0-9)
+
+Include at least one special symbol (!"#$%...)
+1つ以上の記号を含める (！“＃$％...)
+
+Only include characters from custom character set
+指定した文字の組み合わせからの文字のみを含める
+
+Exclude repeating consecutive characters (e.g. aa, 11)
+連続して繰り返す文字を含めない (例 aa, 11)
+
+Exclude duplicate entries in password lists
+パスワード一覧中の重複項目を含めない
+
+Capitalize first letter of each word
+単語の最初の文字を大文字にする
+
+Convert all words in word lists to lower-case
+単語リスト内の単語をすべて小文字に変換
+
+Each character must occur only once
+各文字は1回だけ出現
+
+Each word must occur only once
+各単語は1回だけ出現
+
+Redefine ambiguous characters:
+曖昧な文字を指定:
+
+Redefine special symbols:
+記号を指定:
+
+Maximum length of words in word lists (except default word list):
+単語リストの単語の最大文字数を指定 (標準の単語リスト以外):
+
+Trigram file for generating phonetic (pronounceable) passwords:
+音声的な (発音可能) なパスワード生成用のトライグラムのファイル:
+
+Applies to pass_words_.
+パスワードに適用
+
+Applies to pass_phrases_.
+パスフレーズに適用
+
+Applies to formatted passwords.
+書式型パスワードに適用
+
+Applies to phonetic passwords.
+音声的パスワードに適用
+
+Selecting one of these options might reduce the security of generated passwords.
+これらのオプションにより、生成されるパスワードの安全性が下がることもあります。
+
+These options also apply to formatted passwords.
+これらオプションは書式型パスワードにも適応されます。
+
+Deselect All
+すべて選択解除
+
+Invert Selection
+選択を反転
+
+Create Random Data File
+ランダムデータファイルを作成
+
+File name:
+ファイル名:
+
+File size:
+ファイルサイズ:
+
+Bytes
+バイト
+
+Kilobytes
+KB
+
+Megabytes
+MB
+
+Gigabytes
+GB
+
+Terabytes
+TB
+
+Close
+閉じる
+
+Create file
+ファイル作成
+
+Invalid file size.
+ファイルサイズが正しくありません。
+
+Not enough free disk space available\nto create the file.
+ファイル作成のための\n十分な空き容量がありません。
+
+Creating random data file ...
+ランダムデータファイルを作成中 ...
+
+%d of %d KB written.
+%d / %d KB中を書き込み済み。
+
+File \"%s\" successfully created.\n\n%d bytes written.
+ファイル「%s」の作成に成功しました。\n\n％dバイトを書き込みました。
+
+Error while creating file\n\"%s\":\n%s.\n\n%d bytes written.
+ファイル作成中にエラー\n「%s」:\n％s\n\n％dバイトを書き込みました。
+
+Profile Editor
+プロファイルの編集
+
+Load
+読み込み
+
+Confirm
+確認
+
+Profile name:
+プロファイル名:
+
+Move up
+上へ
+
+Move down
+下へ
+
+Save "advanced password options" for this profile
+「パスワードの詳細オプション」をこのプロファイル用に保存
+
+Delete profile \"%s\"?
+このプロファイル「%s」を削除しますか？
+
+Delete %d profiles?
+%d個のプロファイルを削除しますか？
+
+Maximum number of profiles (%d) reached.\nPlease delete or overwrite profiles.
+プロファイルの上限数 (%d) です。\nプロファイルを削除するか上書きしてください。
+
+A profile with the name \"%s\" already exists.\nDo you want to overwrite it?
+「%s」というプロファイル名は既に存在します。\n上書しますか？
+
+Create Trigram File
+トライグラムファイルの作成
+
+Source file (e.g., dictionary, word list):
+入力元ファイル (例 辞書、単語リスト):
+
+Destination file (trigram file):
+出力ファイル (トライグラムファイル):
+
+Trigram file \"%s\" successfully created.\n\n%d trigrams evaluated.\n%1.2f bits of entropy per letter.
+トライグラムファイル「%s」は正常に作成されました。\n\n％d 個の渡来グラムを評価。\n％1.2f ビットの情報量/1文字あたり
+
+Process was cancelled by the user
+ユーザーによって処理がキャンセルされました。
+
+About %s
+%s について
+
+Current language: %s\nTranslator: %s
+現在の言語: %s\n翻訳: %s
+
+This program is distributed under the terms and conditions of the GNU General Public License (GPL).
+このプログラムは GNU 一般公的使用許諾 (GPL) の条件に従って配布されます。
+
+View license
+ライセンスを表示
+
+Donor ID:
+ドナーID:
+
+Quick help
+かんたんヘルプ
+
+Position Automatically
+自動で配置
+
+You can use the following placeholders:
+以下のプレースホルダーを使用できます:
+
+without ambiguous characters
+かつ曖昧な文字なし
+
+special symbols
+記号
+
+brackets
+括弧
+
+punctuation marks
+句読点
+
+higher ANSI characters
+上位ANSI文字
+
+generate phonetic password (lower-case letters)
+音声的なパスワードを生成 (小文字)
+
+generate phonetic password (upper-case letters)
+音声的なパスワーを生成 (大文字)
+
+generate phonetic password (mixed-case letters)
+音声的なパスワードを生成 (大小混在)
+
+Comments may be provided in square brackets \"[...]\"\nat the beginning of the sequence.
+コメントはこれら配列の先頭にて角括弧 [...] 内に記載します。
+
+Format specifiers have the form \"[*][N]x\" or \"[*][M-N]x\", where the\noptional argument \"N\" specifies the number of repetitions (between 1 and\n99999), \"M-N\" specifies a random number of repetitions in the range\nfrom M to N, and \"x\" is the actual format specifier/placeholder. The\noptional asterisk (*) means that each character must occur only once in\nthe sequence. Example: \"16u\" means \"Insert 16 random upper-case letters\ninto the password\".
+書式指定子には、[*][N]x または [*][M-N]x の形式があります。\n任意で追加の引数 N は繰り返し回数です (1から99999)。\nM-N は、MからNの範囲でランダムな繰り返し回数になります。\nx に実際の書式指定子/プレースホルダーを指定します。\n任意で追加のアスタリスク * は、各文字がその配列内で\n1回だけ出現するという意味です。\n例: 16u の意味は 「16回のランダムな大文字」です。
+
+List of placeholders with optional argument \"N\":
+任意で追加の引数 N が可能なプレースホルダー一覧:
+
+custom character set
+文字の組み合わせを指定
+
+vowels, lower-case
+母音、小文字
+
+vowels, mixed-case
+母音、大小混在
+
+vowels, upper-case
+母音、大文字
+
+consonants, lower-case
+母音、大文字
+
+consonants, mixed-case
+子音、大小混在
+
+consonants, upper-case
+子音、大文字
+
+List of special format specifiers\n(possible usage of argument \"N\" is indicated by \"{N}\"):
+記号の指定子の一覧\n(引数 N の使用は {N} で表しています):
+
+insert password generated via \"Include characters/words\"
+「文字/単語を含める」で生成したパスワードを挿入
+
+words from word list, multiple words are separated by spaces
+単語リストからの単語、複数の単語を空白で区切る
+
+words, multiple words are not separated at all
+単語, 複数の単語間の区切りなし
+
+repeat input sequence in brackets N times
+角括弧に入力した配列をN回繰り返す
+
+randomly permute formatted sequence in brackets, keep N characters
+波カッコ内に書式型の配列をランダムな順にし、N文字数に
+
+treat sequence as character set and insert N characters
+配列を文字の組み合わせとして扱いN文字にする
+
+Additional notes:
+補注:
+
+Text enclosed with quotation marks \"...\" is copied verbatim\nto the password.
+引用符で囲まれたテキスト \"...\" は、そのままパスワードにコピー\nされます。
+
+MP Password Generator
+マスターパスワードによる生成ツール
+
+Master password
+マスターパスワード
+
+Enter password...
+パスワードを入力...
+
+Clear
+消去
+
+Status:
+状態:
+
+Expiry countdown:
+期限切れまで(秒):
+
+Ask for password confirmation
+パスワードを確認
+
+Show checksum of password:
+パスワードのチェックサムを表示:
+
+Key expires after the following time (seconds):
+次の時間でキーの期限 (秒):
+
+Provide compatibility with "Hashapass"
+Hashapass 互換にする
+
+Add password length to parameter
+引数にパスワードの長さを追加
+
+Autotype sequence:
+自動入力の順番:
+
+Password generator
+パスワード生成
+
+Parameter:
+引数:
+
+%d ch. / %.1f bits per ch.
+%d 文字 / %.1f ビット1文字毎
+
+Resulting password:
+生成されたパスワード:
+
+Use as default random generator
+既定のランダム生成器として使用
+
+Alphanumeric
+英数字
+
+Hexadecimal
+16進数
+
+Key has expired.
+キーの期限が切れました。
+
+Key has been cleared.
+キーは消去されました。
+
+New key generated.
+新しいキーを生成しました。
+
+Enter or paste some text into the box below, press mouse buttons, or move your mouse within the window.
+下のボックスにテキストを入力または貼り付けるか、マウスボタンを押すか、ウィンドウ内でマウスを動かしてください。
+
+%d bits of entropy have been added to the random pool.
+ランダムプールに %d ビットの情報量が追加されました。
+
+Database not encrypted, or invalid key
+データベースの暗号化なしかキーが無効
+
+File contents modified, or invalid key
+ファイルの内容が修正されたかキーが無効
+
+Unknown file format
+不明なファイル形式
+
+Invalid file format
+無効なファイル形式
+
+Title
+名称
+
+Title:
+名称:
+
+User name
+ユーザー名
+
+User name:
+ユーザー名:
+
+Password
+パスワード
+
+Password:
+パスワード:
+
+URL
+URL
+
+URL:
+URL:
+
+Keyword
+キーワード
+
+Keyword:
+キーワード:
+
+Notes
+説明
+
+Notes:
+説明:
+
+Key-value list
+キーと値一覧
+
+Key-value list:
+キーと値一覧:
+
+Creation time
+作成日
+
+Creation time:
+作成日:
+
+Last modification
+更新日
+
+Last modification:
+更新日:
+
+Tags
+タグ
+
+Tags:
+タグ:
+
+Select and add existing tag
+既存のタグを選択して追加
+
+All ((tags))
+すべて
+
+All search results
+すべての検索結果
+
+Untagged
+タグなし
+
+Key
+キー
+
+Value
+値
+
+Edit
+編集
+
+View
+表示
+
+New...
+新規...
+
+Open...
+開く...
+
+Open as Read-only...
+読み取り専用で開く...
+
+Save
+保存
+
+Save As...
+名前を付けて...
+
+Lock
+ロック
+
+Unlock
+ロック解除
+
+Export to
+エクスポート
+
+CSV File...
+CSV ファイル...
+
+Database Settings...
+データベースの設定...
+
+Properties...
+プロパティ...
+
+Change Master Password...
+マスターパスワードの変更...
+
+Copy User Name
+ユーザー名をコピー
+
+Copy Password
+パスワードをコピー
+
+Open URL
+URLを開く
+
+Run
+実行
+
+Add Entry
+項目を追加
+
+Duplicate Entry
+項目を複製
+
+Delete Entry
+項目を削除
+
+Show Columns
+列を表示
+
+Show Passwords in List
+一覧にパスワードを表示
+
+Sort Entries By
+項目で並び替え
+
+Unsorted
+並び替えなし
+
+Sort Order
+並び替え
+
+Ascending
+昇順
+
+Descending
+降順
+
+Sort Tags By
+タグで並び替え
+
+Name
+名前
+
+Frequency
+頻度
+
+Change List Font...
+一覧のフォントを変更...
+
+Change Password Font...
+パスワードのフォントを変更...
+
+Previous entry
+前の項目
+
+Next entry
+次の項目
+
+Accept changes
+変更の適用
+
+Undo changes
+変更を元に戻す
+
+Search...
+検索...
+
+Clear search
+検索を初期化
+
+Left-click: Perform search, right-click: Search options
+左クリック: 検索実行、右クリック: 検索オプション
+
+Case-sensitive
+大/小文字を区別
+
+Fuzzy search
+あいまい検索
+
+Select fields...
+項目欄を選択...
+
+Lock/unlock database
+データベースのロック/アンロック
+
+Left-click: Hide/show password, right-click: Generate password
+左クリック: パスワードを隠す/表示、右クリック: パスワード生成
+
+Unlock %s
+%s をアンロック
+
+Open %s
+%s を開く
+
+Create new database
+新しいデータベースを作成
+
+Could not find database file:\n\"%s\".
+データベースのファイルが見つかりません:\%s。
+
+Error while opening database file:\n%s.
+データベースを開く際にエラー:\n%s。
+
+The currently selected entry has been changed.\nDo you want to save the changes?
+現在選択している項目は変更されました。\n変更を保存しますか？
+
+The database has been changed.\nDo you want to save the changes?
+データベースは変更されました。\n変更を保存しますか？
+
+An untitled database cannot be locked.
+無題のデータベースはロックできません。
+
+Could not save backup file\n\"%s\".
+バックアップファイルを保存できません。\n%s。
+
+Error while saving database file:\n%s.
+データベースファイル保存中にエラー:\n%s。
+
+Please finish editing the current entry\nbefore adding new entries.
+新しい項目を追加する前に\n現在の項目の編集を完了してください。
+
+%d entries with passwords have been added.
+%d 個のパスワードのある項目が追加されました。
+
+1 entry found.
+1項目を発見。
+
+%d entries found.
+%d項目を発見。
+
+Search via hot key.
+ホットキーから検索。
+
+No matching keyword found for window text\n\"%s\".
+ウィンドウテキストに一致するキーワードは見つかりませんでした。\n%s
+
+New Entry
+新しい項目
+
+Please specify at least a title or password.
+少なくとも名称かパスワードは指定してください。
+
+Delete 1 entry?
+1項目を削除しますか？
+
+Delete %d entries?
+%d項目を削除しますか？
+
+Enter OLD master password
+これまでのマスターパスワードを入力
+
+Enter NEW master password
+新しいマスターパスワードを入力
+
+Master password successfully changed.
+マスターパスワードの変更に成功。
+
+Old master password is invalid.
+これまでのマスターパスワードが正しくありません。
+
+Untitled
+無題
+
+Copy ((noun))
+コピー
+
+Database successfully exported to CSV file.
+データベースをCSVファイルにエクスポートしました。
+
+Error while creating CSV file:\n%s.
+CSVファイル作成時にエラー:\n%s。
+
+Password databases
+パスワードデータベース
+
+CSV files
+CSV ファイル
+
+Autotype
+自動入力
+
+Format password
+書式型のパスワード
+
+Rearrange Entry
+項目の移動
+
+Move to Top
+一番上に移動
+
+Move up by one
+1つ上に移動
+
+Move down by one
+1つ下に移動
+
+Move to Bottom
+一番下に移動
+
+The maximum tag length is %d characters.\nLonger tags have been shortened.
+タグの長さは最大%d文字です。\n長いタグを短くしました。
+
+Enter master password
+マスターパスワードを入力
+
+Enter master password again
+マスターパスワードを確認
+
+Master password is invalid.
+マスターパスワードが正しくありません。
+
+Edit key-value list
+キーと値の一覧の編集
+
+Profile "%s" not found.
+プロファイル「％s」が見つかりません。
+
+Password expiry
+パスワードの期限
+
+Expires:
+期限:
+
+Change expiry date
+期限日の変更
+
+Filter expired entries
+期限切れの項目を絞り込み
+
+Filter entries that will expire soon
+期限が近い項目を絞り込み
+
+%d days
+%d 日
+
+The database contains expired entries.\nDo you want to filter these entries now?
+データベース内に期限切れの項目があります。\n今すぐこれらを絞り込んで表示しますか？
+
+The database contains entries that will expire soon.\nDo you want to filter these entries now?
+データベース内に期限が近い項目があります。\n今すぐこれらを絞り込んで表示しますか？
+
+Locked
+ロック
+
+Set Recovery Password...
+回復パスワードを設定...
+
+Remove Recovery Password...
+回復パスワードを削除...
+
+Enter recovery password
+回復パスワードを入力
+
+Recovery password successfully set.
+回復パスワードを設定しました。
+
+Recovery password is invalid.
+回復パスワードが正しくありません。
+
+Recovery password successfully removed.
+回復パスワードを削除しました。
+
+Recovery password set
+回復パスワードの設定
+
+Yes
+はい
+
+No
+いいえ
+
+Database format error:\n%s.\nDatabase version: %d.%d\nHighest supported version: %d.%d
+データベース形式のエラー:\n%s。\nデータベースのバージョン: %d.%d\n対応する最高のバージョン: %d.%d
+
+Select columns
+列を選択
+
+Select at least one column.
+少なくとも1つの列を選択してください.
+
+Error while formatting string
+文字列の形式化中にエラー
+
+Invalid UTF-16 character encoding
+UTF-16の文字コードが正しくありません。
+
+Error while converting string to UTF-8
+文字列をUTF-8へと変換中にエラー
+
+Error while decoding UTF-8 string
+UTF-8の文字列のデコード中にエラー
+
+Unicode string too long
+Unicodeの文字列が長すぎます
+
+Invalid ANSI or UTF-8 character encoding, or Unicode string too long
+ANSI または UTF-8 の文字コードが正しくないか、Unicodeの文字列が長すぎます
+
+Error while encoding Unicode string
+Unicodeの文字列のエンコード中にエラー
+
+Out of disk space
+ディスク容量が不足しています
+
+Could not open file/execute operation\n\"%s\".
+ファイルが開けないか操作が実行できません\n%s。
+
+Source file does not contain enough trigrams
+入力元ファイルに十分なトライグラムが含まれていません
+
+Database settings
+データベースの設定
+
+Default user name for new entries:
+新規項目で使う標準のユーザー名:
+
+Generate passwords for new entries using format sequence:
+新規項目のパスワードを生成する書式型の配列:
+
+Generate test password using format sequence
+書式型の配列によるパスワードの生成テスト
+
+Encryption algorithm:
+暗号化アルゴリズム:
+
+%s with %d-bit key
+％s で ％d ビットの鍵
+
+Number of key derivation rounds:
+鍵導出ラウンドの回数:
+
+Calculate number of rounds for a 1 second delay
+1秒の遅延に対するラウンド数の算出
+
+Invalid number of key derivation rounds.
+鍵導出ラウンドの回数が正しくありません。
+
+By default, new entries expire after the following number of days:
+新規項目を期限切れにする標準の日数:
+
+Key-value list editor
+キーと値の一覧を編集
+
+Properties
+プロパティ
+
+Property
+プロパティ
+
+Location
+場所
+
+Size
+サイズ
+
+Format version
+形式のバージョン
+
+Number of entries
+項目数
+
+Number of expired entries
+期限切れの項目数
+
+Number of tags
+タグ数
