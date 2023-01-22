@@ -1,7 +1,7 @@
 // CryptClip.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -45,7 +45,9 @@ template<int Nbits> void incrementCounter(word8* pCounter)
 
 inline word32 alignToBlockSize(word32 lLen, word32 lBlockSize)
 {
-  return ((lLen + lBlockSize - 1) / lBlockSize) * lBlockSize;
+  //return ((lLen + lBlockSize - 1) / lBlockSize) * lBlockSize;
+  word32 lRest = lLen % lBlockSize;
+  return lRest ? lLen + lBlockSize - lRest : lLen;
 }
 
 

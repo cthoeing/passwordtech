@@ -1,7 +1,7 @@
 // PasswEnter.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -56,6 +56,7 @@ __fastcall TPasswEnterDlg::TPasswEnterDlg(TComponent* AOwner)
     KeyFileBox->Items->Strings[0] = TRL(KeyFileBox->Items->Strings[0]);
     TRLCaption(OKBtn);
     TRLCaption(CancelBtn);
+    TRLHint(TogglePasswBtn);
     TRLHint(BrowseBtn);
     TRLHint(CreateKeyFileBtn);
   }
@@ -71,6 +72,7 @@ __fastcall TPasswEnterDlg::TPasswEnterDlg(TComponent* AOwner)
 __fastcall TPasswEnterDlg::~TPasswEnterDlg()
 {
   ClearPasswCache();
+  Clear();
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswEnterDlg::LoadConfig(void)
@@ -149,8 +151,6 @@ int __fastcall TPasswEnterDlg::Execute(int nFlags,
   const WString& sTitle,
   TForm* pParentForm)
 {
-  //if (nFlags & PASSWENTER_FLAG_DISABLEPASSWCACHE)
-  //  ClearPasswCache();
   bool blPasswCache = nFlags & PASSWENTER_FLAG_ENABLEPASSWCACHE;
 
   if (blPasswCache && !m_sEncryptedPassw.IsEmpty()) {
@@ -161,18 +161,12 @@ int __fastcall TPasswEnterDlg::Execute(int nFlags,
 
   if (nFlags & PASSWENTER_FLAG_ENCRYPT) {
     Caption = sTitle.IsEmpty() ? TRL("Encrypt") : sTitle;
-    //PasswLbl->Color = clBlack;//clYellow;
-    //PasswLbl->Font->Color = clBlack;
   }
   else if (nFlags & PASSWENTER_FLAG_DECRYPT) {
     Caption = sTitle.IsEmpty() ? TRL("Decrypt") : sTitle;
-    //PasswLbl->Color = clHighlight;
-    //PasswLbl->Font->Color = clBlack;
   }
   else {
     Caption = sTitle;
-    //PasswLbl->Color = clWindow;
-    //PasswLbl->Font->Color = clWindowText;
   }
 
   TogglePasswBtn->Down = true;

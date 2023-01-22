@@ -1,7 +1,7 @@
 // About.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -63,11 +63,14 @@ __fastcall TAboutForm::TAboutForm(TComponent* Owner)
     TRLCaption(OKBtn);
   }
 
-  WString sLangName = TRLDEF(LANGUAGE_NAME, "English");
-  WString sLangVer = TRLDEF(LANGUAGE_VERSION, "");
-  if (!sLangVer.IsEmpty())
-    sLangName += WString(" (v") + sLangVer + WString(")");
-  WString sTransl = TRLDEF(LANGUAGE_AUTHOR, "(original language)");
+  WString sLangName;
+  if (g_pLangSupp)
+    sLangName = g_pLangSupp->LanguageName +
+      WString(" (v") + g_pLangSupp->LanguageVersion + WString(")");
+  else
+    sLangName = LANGUAGE_DEFAULT_NAME;
+  WString sTransl = g_pLangSupp ? g_pLangSupp->TranslatorName :
+    "(original language)";
   LanguageInfoLbl->Caption = TRLFormat("Current language: %s\n"
       "Translator: %s", sLangName.c_str(), sTransl.c_str());
 }

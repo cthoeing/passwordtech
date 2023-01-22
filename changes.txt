@@ -1,9 +1,46 @@
 ﻿                            Password Tech
                             =============
-                Copyright (c) 2002-2022 by Christian Thöing
+                Copyright (c) 2002-2023 by Christian Thöing
 
 
-Version 3.4.4
+Version 3.4.5
+
+NEW FEATURES:
+
+- PassCube password manager: Added option to compress database file using the
+  "Deflate" algorithm; available in File | Database Settings | Compression
+- PassCube: When editing a database entry, password needs to be confirmed in a
+  separate dialog if it has been changed manually and if it is hidden in the box
+- PassCube: "Quality bar" below the password box in the edit panel illustrates
+  the estimated quality/security of an entry's password
+- PassCube: Added button next to URL box for opening the specified URL
+- Advanced password strength estimation ("zxcvbn" algorithm) can be enabled in
+  Configuration | Security; it is applied for passwords entered by the user into
+  the password box in the main window, as well as for passwords of database
+  entries in PassCube
+
+CHANGES & IMPROVEMENTS:
+
+- Reworked password quality bar such that the color gradient ranges from 0 bits
+  (red/orange) to 64 bits (midpoint, yellow) to 128+ bits (green); the quality
+  rating is stricter now since the green color starts to become visible at
+  ~75 bits instead of ~55 bits
+- Translations: Changed custom LNG format to PO (GNU gettext) format, which is
+  widely supported by many applications and web services, allowing translators
+  to use dedicated editors such as "Poedit"
+  NOTE FOR TRANSLATORS: Existing translations in the LNG format (.lng file) can
+  be converted into the new PO format (.po file) by loading the translation in
+  PwTech, selecting the corresponding language in the drop-down box (Options |
+  Configuration | Language), and pressing the button "Convert to new PO file
+  format"
+- Format password: Made format specifier <<...>> compatible with options
+  "asterisk (*)" and "random number from range", so that format sequences such
+  as *1-26<<<az>>> ("Randomly permute letters a..z and insert a random number
+  between 1 and 26 of permuted characters into the password") are functional
+
+----------
+
+Version 3.4.4 (2022-10-03)
 
 NEW FEATURES:
 

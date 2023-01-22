@@ -1,7 +1,7 @@
 // CryptClip.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -59,7 +59,7 @@ static void initCrypto(aes_context* pCryptCtx,
   SecureMem<word8> derivedKey(32);
 
   if (nVersion == 0) {
-    derivedKey.Clear();
+    derivedKey.Zeroize();
     memcpy(derivedKey, pSalt, 16);
 
     // hash the salt and the key together 8192 times
@@ -91,16 +91,16 @@ int EncryptText(const SecureWString* psText,
   try {
     SecureWString sText;
 
-    if (psText != NULL)
+    if (psText != nullptr)
       sText = *psText;
-    else if (!GetClipboardTextBuf(&sText, NULL))
+    else if (!GetClipboardTextBuf(&sText, nullptr))
       return CRYPTTEXT_ERROR_CLIPBOARD;
 
     if (sText.IsStrEmpty())
       return CRYPTTEXT_ERROR_NOTEXT;
 
     // get UTF-8 text length
-    word32 lTextLen = WideCharToMultiByte(CP_UTF8, 0, sText, -1, NULL, 0, NULL, NULL);
+    word32 lTextLen = WideCharToMultiByte(CP_UTF8, 0, sText, -1, nullptr, 0, nullptr, nullptr);
 
     // convert text length to length in BYTES
 //    lTextLen *= sizeof(wchar_t);
@@ -111,7 +111,7 @@ int EncryptText(const SecureWString* psText,
     SecureAnsiString asTextUtf8(lTextLen);
 
     // convert string to UTF-8
-    WideCharToMultiByte(CP_UTF8, 0, sText, -1, asTextUtf8, lTextLen, NULL, NULL);
+    WideCharToMultiByte(CP_UTF8, 0, sText, -1, asTextUtf8, lTextLen, nullptr, nullptr);
     lTextLen--; // ignore the terminating '\0' from now onwards
 
     sText.Empty();
@@ -187,7 +187,7 @@ int EncryptText(const SecureWString* psText,
 
     // get the required base64 buffer size
     size_t outBufSize = 0;
-    base64_encode(NULL, &outBufSize, NULL, lConvertLen, BASE64_LINE_LENGTH);
+    base64_encode(nullptr, &outBufSize, nullptr, lConvertLen, BASE64_LINE_LENGTH);
 
     // create a new buffer for base64
     SecureMem<word8> outBuf(outBufSize + 1);
@@ -196,7 +196,7 @@ int EncryptText(const SecureWString* psText,
     *(outBuf.end()-1) = '\0';
 
     // copy the output buffer to the clipboard
-    SetClipboardTextBuf(NULL, reinterpret_cast<char*>(outBuf.Data()));
+    SetClipboardTextBuf(nullptr, reinterpret_cast<char*>(outBuf.Data()));
   }
   catch (std::bad_alloc& e) {
     return CRYPTTEXT_ERROR_OUTOFMEMORY;
@@ -223,17 +223,16 @@ int DecryptText(const SecureWString* psText,
     SecureAnsiString asText;
     word32 lTextLen;
 
-    if (psText != NULL) {
+    if (psText != nullptr) {
       if (psText->IsStrEmpty())
         return CRYPTTEXT_ERROR_NOTEXT;
-      const wchar_t* pwszBuf = psText->c_str();
-      lTextLen = wcslen(pwszBuf) + 1;
-      asText.New(lTextLen);
-      for (word32 lI = 0; lI < lTextLen; lI++)
-        asText[lI] = pwszBuf[lI];
+      lTextLen = psText->StrLen();
+      asText.New(lTextLen + 1);
+      for (word32 lI = 0; lI <= lTextLen; lI++) // also copy terminating zero
+        asText[lI] = (*psText)[lI];
     }
     else {
-      if (!GetClipboardTextBuf(NULL, &asText))
+      if (!GetClipboardTextBuf(nullptr, &asText))
         return CRYPTTEXT_ERROR_CLIPBOARD;
       if (asText.IsEmpty())
         return CRYPTTEXT_ERROR_NOTEXT;
@@ -243,8 +242,8 @@ int DecryptText(const SecureWString* psText,
     // base64-decode the text
     size_t bufSize = 0;
     word32 lMinLen = (nVersion == 0) ? 48 : 64;
-    if (base64_decode(NULL, &bufSize, asText.Bytes(), lTextLen)
-      == POLARSSL_ERR_BASE64_INVALID_CHARACTER || bufSize < lMinLen)
+    if (base64_decode(nullptr, &bufSize, asText.Bytes(), lTextLen)
+          == POLARSSL_ERR_BASE64_INVALID_CHARACTER || bufSize < lMinLen)
       return CRYPTTEXT_ERROR_TEXTCORRUPTED;
 
     SecureMem<word8> buf(bufSize);
@@ -354,16 +353,15 @@ int DecryptText(const SecureWString* psText,
     // decompress this buffer
     lzo_uint decomprLen = header.TextBytes;
     if (lzo1x_decompress_safe(pCryptBuf + lHeaderSize, lToDecompr,
-         reinterpret_cast<word8*>(asOutBuf.Data()), &decomprLen, NULL) != LZO_E_OK)
+         reinterpret_cast<word8*>(asOutBuf.Data()), &decomprLen, nullptr) != LZO_E_OK)
       return CRYPTTEXT_ERROR_DECOMPRFAILED;
 
-    asOutBuf[static_cast<word32>(decomprLen)] = '\0';
+    *(asOutBuf.end()-1) = '\0';
 
     // copy the output buffer to the clipboard
     if (nVersion >= 2) {
       // convert UTF-8-encoded string to UTF-16
-      lTextLen =
-        MultiByteToWideChar(CP_UTF8, 0, asOutBuf, -1, NULL, 0);
+      lTextLen = MultiByteToWideChar(CP_UTF8, 0, asOutBuf, -1, nullptr, 0);
 
       if (lTextLen == 0)
         return CRYPTTEXT_ERROR_TEXTCORRUPTED;
@@ -372,10 +370,10 @@ int DecryptText(const SecureWString* psText,
 
       MultiByteToWideChar(CP_UTF8, 0, asOutBuf, -1, sTextUtf16, lTextLen);
 
-      SetClipboardTextBuf(sTextUtf16, NULL);
+      SetClipboardTextBuf(sTextUtf16, nullptr);
     }
     else
-      SetClipboardTextBuf(NULL, asOutBuf);
+      SetClipboardTextBuf(nullptr, asOutBuf);
   }
   catch (std::bad_alloc& e) {
     return CRYPTTEXT_ERROR_OUTOFMEMORY;

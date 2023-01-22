@@ -2,10 +2,11 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Password Tech"
-#define MyAppVersion "3.4.4"
+#define MyAppVersion "3.4.5"
 #define MyAppPublisher "Christian Thöing"
 #define MyAppURL "http://pwgen-win.sourceforge.net"
 #define MyAppExeName "PwTech.exe"
+#define MySetupImageIcon "c:\projekte\pwgen3\graphics\pwtech.ico"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -30,7 +31,9 @@ Compression=lzma2
 SolidCompression=yes
 WizardStyle=modern
 ArchitecturesInstallIn64BitMode=x64
-SignTool=mssign
+;SignTool=mssign
+SetupIconFile={#MySetupImageIcon}
+UninstallDisplayIcon={app}\{#MyAppExeName}
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -59,7 +62,7 @@ Source: "C:\Projekte\PWGen3\manual\scripting.pdf"; DestDir: "{app}"; Flags: igno
 Source: "C:\Projekte\PWGen3\license.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Projekte\PWGen3\common_passwords.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Projekte\PWGen3\changes.txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Projekte\PWGen3\Win64\Release\German.lng"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Projekte\PWGen3\Win64\Release\German.po"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -90,7 +93,7 @@ Type: files; Name: "{userappdata}\{#MyAppName}\randseed.dat"; Tasks: not useprog
 function MyLang(Param: String): String;
 begin
   if CompareText(Param, 'german') = 0 then begin
-    Result := 'Deutsch';
+    Result := 'de';
   end
   else begin
     Result := Param;

@@ -1,7 +1,7 @@
 // PasswManager.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -35,6 +35,7 @@
 #include <Vcl.ImgList.hpp>
 #include <Vcl.Menus.hpp>
 #include <Vcl.ToolWin.hpp>
+#include <Vcl.Imaging.jpeg.hpp>
 #include <map>
 #include <list>
 //---------------------------------------------------------------------------
@@ -192,6 +193,11 @@ __published:	// IDE-managed Components
     TMenuItem *SearchMenu_FuzzySearch;
     TMenuItem *SearchMenu_SelectFields;
     TMenuItem *SearchMenu_N1;
+    TSpeedButton *PasswQualityBtn;
+    TPanel *PasswSecurityBarPanel;
+    TImage *PasswSecurityBar;
+    TLabel *PasswSecurityLbl;
+    TSpeedButton *UrlBtn;
   void __fastcall MainMenu_File_NewClick(TObject *Sender);
   void __fastcall DbViewSelectItem(TObject *Sender,
     TListItem *Item, bool Selected);
@@ -282,6 +288,13 @@ __published:	// IDE-managed Components
     void __fastcall MainMenu_File_OpenReadOnlyClick(TObject *Sender);
     void __fastcall MainMenu_File_SetRecoveryPasswordClick(TObject *Sender);
     void __fastcall SearchMenu_SelectFieldsClick(TObject *Sender);
+    void __fastcall TitleBoxKeyPress(TObject *Sender, System::WideChar &Key);
+    void __fastcall PasswBoxChange(TObject *Sender);
+    void __fastcall PasswQualityBtnClick(TObject *Sender);
+    void __fastcall EditPanelResize(TObject *Sender);
+    void __fastcall PasswSecurityBarPanelMouseMove(TObject *Sender, TShiftState Shift,
+          int X, int Y);
+    void __fastcall UrlBtnClick(TObject *Sender);
 
 
 private:	// User declarations
@@ -296,8 +309,10 @@ private:	// User declarations
   int m_nTagsSortOrderFactor;
   int m_nSearchMode;
   int m_nLockSelItemIndex;
+  int m_nPasswEntropyBits;
   std::vector<int> m_lockSelTags;
   bool m_blItemChanged;
+  bool m_blItemPasswChangeConfirm;
   bool m_blDbChanged;
   bool m_blLocked;
   bool m_blUnlockTried;
@@ -346,6 +361,8 @@ private:	// User declarations
     const WString& sInvalidMsg,
     std::function<bool(const SecureMem<word8>&)> checkFunc);
   void __fastcall SetRecoveryKeyDependencies(void);
+  void __fastcall SetPasswQualityBarWidth(void);
+  void __fastcall EstimatePasswQuality(const wchar_t* pwszPassw = nullptr);
 public:		// User declarations
   __fastcall TPasswMngForm(TComponent* Owner);
   __fastcall ~TPasswMngForm();

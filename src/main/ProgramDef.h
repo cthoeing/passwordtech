@@ -1,7 +1,7 @@
 // ProgramDef.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -24,11 +24,11 @@
 
 const wchar_t
 PROGRAM_NAME[]         = L"Password Tech",
-PROGRAM_VERSION[]      = L"3.4.4",
-PROGRAM_LANGVER_MIN[]  = L"3.4.4",
+PROGRAM_VERSION[]      = L"3.4.5",
+PROGRAM_LANGVER_MIN[]  = L"3.4.5",
 PROGRAM_AUTHOR[]       = L"Christian Th\xF6ing",
 PROGRAM_AUTHOR_EMAIL[] = L"c.thoeing@web.de",
-PROGRAM_COPYRIGHT[]    = L"Copyright \xa9 2002-2022",
+PROGRAM_COPYRIGHT[]    = L"Copyright \xa9 2002-2023",
 PROGRAM_URL_WEBSITE[]  = L"https://pwgen-win.sourceforge.io",
 PROGRAM_URL_DONATE[]   = L"https://www.paypal.com/donate/?hosted_button_id=XLLCYFJZLS5V8",
 PROGRAM_URL_TRANSL[]   = L"https://sourceforge.net/projects/pwgen-win/files/PwTech%20language%20support/",
@@ -39,16 +39,11 @@ PROGRAM_INIFILE[]      = L"PwTech.ini",
 PROGRAM_RANDSEEDFILE[] = L"randseed.dat";
 
 const int
-PROGRAM_MAINVER_UPDATE_NUM = 8;
+PROGRAM_MAINVER_UPDATE_NUM = 9;
 
 const wchar_t
-LANGUAGE_NAME[]        = L"[LANGUAGENAME]",
-LANGUAGE_VERSION[]     = L"[LANGUAGEVERSION]",
-LANGUAGE_AUTHOR[]      = L"[LANGUAGEAUTHOR]",
-LANGUAGE_HELPFILE[]    = L"[LANGUAGEHELPFILE]";
-
-const wchar_t
-LANGUAGE_DEFAULT[]     = L"English";
+LANGUAGE_DEFAULT_NAME[]= L"English",
+LANGUAGE_DEFAULT_CODE[]= L"en";
 
 //---------------------------------------------------------------------------
 #endif

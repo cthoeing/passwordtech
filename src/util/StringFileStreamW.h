@@ -1,7 +1,7 @@
 // StringFileStreamW.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -60,11 +60,6 @@ private:
   int m_nCodeUnitSize;
   int m_nBOMLen;
 
-  /*int __fastcall GetSizeWithoutBom(void)
-  {
-  return Size - m_nBOMLen;
-  }*/
-
 public:
 
   // constructor
@@ -104,17 +99,18 @@ public:
   //    'false': write error
   bool __fastcall WriteString(const wchar_t* pwszSrc,
     int nStrLen,
-    int& nBytesWritten);
+    int* pnBytesWritten = nullptr);
 
   // set file pointer to beginning of file
-  int __fastcall FileBeginning(void)
+  void __fastcall FileBeginning(void)
   {
     m_nBufLen = m_nBufPos = 0;
-    return Seek(m_nBOMLen, soFromBeginning);
+    Seek(m_nBOMLen, soFromBeginning);
   }
 
   // set file pointer to end of file
-  int __fastcall FileEnd(void)
+  // <- file size minus BOM length
+  __int64 __fastcall FileEnd(void)
   {
     return Seek(0, soFromEnd) - m_nBOMLen;
   }

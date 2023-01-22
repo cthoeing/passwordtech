@@ -1,7 +1,7 @@
 // UnicodeUtil.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -28,8 +28,8 @@
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 
-static const int FORMAT_BUFSIZE = 4096;
-static wchar_t wszFormatBuf[FORMAT_BUFSIZE / sizeof(wchar_t)];
+static const int FORMAT_MAX_LEN = 2048;
+static wchar_t wszFormatBuf[FORMAT_MAX_LEN];
 
 
 static void formatError(void)
@@ -56,7 +56,7 @@ WString FormatW(const WString sFormat, ...)
   va_list argptr;
   va_start(argptr, sFormat);
 
-  int nStrLen = vswprintf(wszFormatBuf, sFormat.c_str(), argptr);
+  int nStrLen = vswprintf_s(wszFormatBuf, FORMAT_MAX_LEN, sFormat.c_str(), argptr);
 
   va_end(argptr);
 
@@ -66,25 +66,26 @@ WString FormatW(const WString sFormat, ...)
   return WString(wszFormatBuf);
 }
 //---------------------------------------------------------------------------
-void FormatW_Secure(SecureWString& sDest,
-  const WString sFormat, ...)
+SecureWString FormatW_Secure(const WString sFormat, ...)
 {
   if (sFormat.IsEmpty())
-    return;
+    return SecureWString();
 
   va_list argptr;
   va_start(argptr, sFormat);
 
-  int nStrLen = vswprintf(wszFormatBuf, sFormat.c_str(), argptr);
+  int nStrLen = vswprintf_s(wszFormatBuf, FORMAT_MAX_LEN, sFormat.c_str(), argptr);
 
   va_end(argptr);
 
   if (nStrLen == EOF)
     formatError();
 
-  sDest.Assign(wszFormatBuf, nStrLen + 1);
+  SecureWString sDest(wszFormatBuf, nStrLen + 1);
 
-  memzero(wszFormatBuf, FORMAT_BUFSIZE);
+  memzero(wszFormatBuf, sizeof(wszFormatBuf));
+
+  return sDest;
 }
 //---------------------------------------------------------------------------
 WString FormatW_AL(const WString sFormat, va_list arglist)
@@ -92,7 +93,7 @@ WString FormatW_AL(const WString sFormat, va_list arglist)
   if (sFormat.IsEmpty())
     return WString();
 
-  int nResult = vswprintf(wszFormatBuf, sFormat.c_str(), arglist);
+  int nResult = vswprintf_s(wszFormatBuf, FORMAT_MAX_LEN, sFormat.c_str(), arglist);
 
   if (nResult == EOF)
     formatError();
@@ -127,35 +128,37 @@ int GetNumOfUtf16Chars(const word32* pStr)
 //---------------------------------------------------------------------------
 int WCharToW32Char(const wchar_t* pwszSrc, word32* pDest)
 {
-  int nDestLen = 0;
+  const word32* pDestStart = pDest;
 
   while (*pwszSrc != '\0') {
     if (pwszSrc[0] >= 0xd800 && pwszSrc[0] <= 0xdbff) {
       if (pwszSrc[1] >= 0xdc00 && pwszSrc[1] <= 0xdfff)
-        pDest[nDestLen++] = (pwszSrc[1] << 16) | pwszSrc[0];
+        *pDest++ = (pwszSrc[1] << 16) | pwszSrc[0];
       else
         throw EUnicodeError("Invalid UTF-16 character encoding");
       pwszSrc += 2;
     }
     else
-      pDest[nDestLen++] = *pwszSrc++;
+      *pDest++ = *pwszSrc++;
   }
 
-  pDest[nDestLen] = '\0';
+  *pDest = '\0';
 
-  return nDestLen;
+  return pDest - pDestStart;
 }
 //---------------------------------------------------------------------------
 int AsciiCharToW32Char(const char* pszSrc, word32* pDest)
 {
-  int nLen;
+  const char* pszSrcStart = pszSrc;
 
-  for (nLen = 0; pszSrc[nLen] != '\0'; nLen++)
-    pDest[nLen] = pszSrc[nLen];
+  //for (nLen = 0; pszSrc[nLen] != '\0'; nLen++)
+  //  pDest[nLen] = pszSrc[nLen];
+  while (*pszSrc != '\0')
+    *pDest++ = *pszSrc++;
 
-  pDest[nLen] = '\0';
+  *pDest = '\0';
 
-  return nLen;
+  return pszSrc - pszSrcStart;
 }
 //---------------------------------------------------------------------------
 w32string WStringToW32String(const WString& sSrc)
@@ -222,10 +225,11 @@ w32string AsciiCharToW32String(const char* pszStr)
   if (nStrLen == 0)
     return w32string();
 
-  w32string sDest(nStrLen, 0);
+  w32string sDest;
+  sDest.reserve(nStrLen);
 
-  for (auto& ch : sDest)
-    ch = *pszStr++;
+  while (*pszStr != '\0')
+    sDest.push_back(*pszStr++);
 
   return sDest;
 }
@@ -235,30 +239,33 @@ AnsiString WStringToUtf8(const WString& sSrc)
   if (sSrc.IsEmpty())
     return AnsiString();
 
-  int nLen = WideCharToMultiByte(CP_UTF8, 0, sSrc.c_str(), -1, NULL, 0, NULL, NULL);
+  int nLen = WideCharToMultiByte(CP_UTF8, 0, sSrc.c_str(), -1, nullptr, 0,
+    nullptr, nullptr);
   if (nLen == 0)
     utf8EncodeError();
 
   AnsiString asDest;
   asDest.SetLength(nLen - 1);
 
-  WideCharToMultiByte(CP_UTF8, 0, sSrc.c_str(), -1, asDest.c_str(), nLen, NULL, NULL);
+  WideCharToMultiByte(CP_UTF8, 0, sSrc.c_str(), -1, &asDest[1], nLen,
+    nullptr, nullptr);
 
   return asDest;
 }
 //---------------------------------------------------------------------------
 SecureAnsiString WStringToUtf8(const wchar_t* pwszSrc)
 {
-  if (pwszSrc == NULL || *pwszSrc == '\0')
+  if (pwszSrc == nullptr || *pwszSrc == '\0')
     return SecureAnsiString();
 
-  int nLen = WideCharToMultiByte(CP_UTF8, 0, pwszSrc, -1, NULL, 0, NULL, NULL);
+  int nLen = WideCharToMultiByte(CP_UTF8, 0, pwszSrc, -1, nullptr, 0,
+    nullptr, nullptr);
   if (nLen == 0)
     utf8EncodeError();
 
   SecureAnsiString asDest(nLen);
 
-  WideCharToMultiByte(CP_UTF8, 0, pwszSrc, -1, asDest, nLen, NULL, NULL);
+  WideCharToMultiByte(CP_UTF8, 0, pwszSrc, -1, asDest, nLen, nullptr, nullptr);
   return asDest;
 }
 //---------------------------------------------------------------------------
@@ -267,24 +274,24 @@ WString Utf8ToWString(const AnsiString& asSrc)
   if (asSrc.IsEmpty())
     return WString();
 
-  int nLen = MultiByteToWideChar(CP_UTF8, 0, asSrc.c_str(), -1, NULL, 0);
+  int nLen = MultiByteToWideChar(CP_UTF8, 0, asSrc.c_str(), -1, nullptr, 0);
   if (nLen == 0)
     utf8DecodeError();
 
   WString sDest;
   sDest.SetLength(nLen - 1);
 
-  MultiByteToWideChar(CP_UTF8, 0, asSrc.c_str(), -1, sDest.c_str(), nLen);
+  MultiByteToWideChar(CP_UTF8, 0, asSrc.c_str(), -1, &sDest[1], nLen);
 
   return sDest;
 }
 //---------------------------------------------------------------------------
 SecureWString Utf8ToWString(const char* pszSrc)
 {
-  if (pszSrc == NULL || *pszSrc == '\0')
+  if (pszSrc == nullptr || *pszSrc == '\0')
     return SecureWString();
 
-  int nLen = MultiByteToWideChar(CP_UTF8, 0, pszSrc, -1, NULL, 0);
+  int nLen = MultiByteToWideChar(CP_UTF8, 0, pszSrc, -1, nullptr, 0);
   if (nLen == 0)
     utf8DecodeError();
 
@@ -294,10 +301,10 @@ SecureWString Utf8ToWString(const char* pszSrc)
   return sDest;
 }
 //---------------------------------------------------------------------------
-int w32strlen(const word32* pStr)
+size_t w32strlen(const word32* pStr)
 {
-  int nLen;
-  for (nLen = 0; pStr[nLen] != '\0'; nLen++);
-  return nLen;
+  const word32* pStart = pStr;
+  while (*pStr != '\0') pStr++;
+  return static_cast<size_t>(pStr - pStart);
 }
 //---------------------------------------------------------------------------

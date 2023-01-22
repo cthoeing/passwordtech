@@ -1,7 +1,7 @@
 // Util.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -130,6 +130,11 @@ WString FileTimeToString(FILETIME ft, bool blLongDate,
 // compare file time structures
 // returns 0 if equal, 1 if ft1>ft2, or -1 if ft1<ft2
 int CompareFileTime(FILETIME ft1, FILETIME ft2);
+
+WString EnableInt64FormatSpec(const WString& sFormatStr);
+
+std::vector<SecureWString> SplitStringBuf(const wchar_t* pwzsSrc,
+  const wchar_t* pwszSep);
 
 enum {
   DONOR_KEY_VALID = 0,

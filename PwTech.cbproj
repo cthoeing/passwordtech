@@ -7,7 +7,7 @@
         <MainSource>PwTech.cpp</MainSource>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Release</Config>
-        <Platform Condition="'$(Platform)'==''">Win64</Platform>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>3</TargetedPlatforms>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
@@ -71,8 +71,8 @@
         <Icon_MainIcon>$(BDS)\bin\cbuilder_PROJECTICON.ico</Icon_MainIcon>
         <UWP_CppLogo44>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_44.png</UWP_CppLogo44>
         <UWP_CppLogo150>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_150.png</UWP_CppLogo150>
-        <IncludePath>src\util\;src\random\;src\passw\;src\minilzo\;src\lua\;src\dragdrop\;src\crypto\;src\crypto\polarssl\;src\main\;crypto\;lua\;minilzo\;DragDrop\;polarssl\;C:\Projekte\PWGen3\;$(IncludePath)</IncludePath>
-        <ILINK_LibraryPath>src\util\;src\random\;src\passw\;src\minilzo\;src\lua\;src\dragdrop\;src\crypto\;src\crypto\polarssl\;src\main\;crypto\;lua\;minilzo\;DragDrop\;polarssl\;C:\Projekte\PWGen3\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+        <IncludePath>src\zxcvbn\;src\miniz\;src\util\;src\random\;src\passw\;src\minilzo\;src\lua\;src\dragdrop\;src\crypto\;src\crypto\polarssl\;src\main\;crypto\;lua\;minilzo\;DragDrop\;polarssl\;C:\Projekte\PWGen3\;$(IncludePath)</IncludePath>
+        <ILINK_LibraryPath>src\zxcvbn\;src\miniz\;src\util\;src\random\;src\passw\;src\minilzo\;src\lua\;src\dragdrop\;src\crypto\;src\crypto\polarssl\;src\main\;crypto\;lua\;minilzo\;DragDrop\;polarssl\;C:\Projekte\PWGen3\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
         <SanitizedProjectName>PwTech</SanitizedProjectName>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
@@ -451,6 +451,9 @@
         <CppCompile Include="src\minilzo\minilzo.c">
             <BuildOrder>70</BuildOrder>
         </CppCompile>
+        <CppCompile Include="src\miniz\miniz.c">
+            <BuildOrder>89</BuildOrder>
+        </CppCompile>
         <CppCompile Include="src\passw\diceware8k.c">
             <BuildOrder>71</BuildOrder>
         </CppCompile>
@@ -518,25 +521,28 @@
             <DependentOn>src\util\Util.h</DependentOn>
             <BuildOrder>87</BuildOrder>
         </CppCompile>
+        <CppCompile Include="src\zxcvbn\zxcvbn.cpp">
+            <BuildOrder>90</BuildOrder>
+        </CppCompile>
+        <FormResources Include="src\main\PasswManager.dfm"/>
         <FormResources Include="src\main\PasswList.dfm"/>
         <FormResources Include="src\main\PasswEnter.dfm"/>
         <FormResources Include="src\main\MPPasswGen.dfm"/>
         <FormResources Include="src\main\Main.dfm"/>
-        <FormResources Include="src\main\PasswManager.dfm"/>
+        <FormResources Include="src\main\PasswMngColSelect.dfm"/>
+        <FormResources Include="src\main\ProfileEditor.dfm"/>
         <FormResources Include="src\main\PasswOptions.dfm"/>
         <FormResources Include="src\main\PasswMngKeyValEdit.dfm"/>
         <FormResources Include="src\main\PasswMngDbSettings.dfm"/>
         <FormResources Include="src\main\PasswMngDbProp.dfm"/>
-        <FormResources Include="src\main\PasswMngColSelect.dfm"/>
         <FormResources Include="src\main\About.dfm"/>
         <FormResources Include="src\main\InfoBox.dfm"/>
         <FormResources Include="src\main\CreateTrigramFile.dfm"/>
         <FormResources Include="src\main\CreateRandDataFile.dfm"/>
         <FormResources Include="src\main\Configuration.dfm"/>
+        <FormResources Include="src\main\Progress.dfm"/>
         <FormResources Include="src\main\QuickHelp.dfm"/>
         <FormResources Include="src\main\ProvideEntropy.dfm"/>
-        <FormResources Include="src\main\Progress.dfm"/>
-        <FormResources Include="src\main\ProfileEditor.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -762,6 +768,11 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile Condition="'$(DynamicRTL)'=='true'" LocalName="$(BDS)\Redist\osx64\libcgcrtl.dylib" Class="DependencyModule">
+                    <Platform Name="OSX64">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="polarssl\sha1.c" Configuration="Release" Class="ProjectFile">
                     <Platform Name="Win64">
                         <RemoteDir>.\</RemoteDir>
@@ -771,11 +782,6 @@
                 <DeployFile LocalName="lua\ldblib.c" Configuration="Release" Class="ProjectFile">
                     <Platform Name="Win64">
                         <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile Condition="'$(DynamicRTL)'=='true'" LocalName="$(BDS)\Redist\osx64\libcgcrtl.dylib" Class="DependencyModule">
-                    <Platform Name="OSX64">
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

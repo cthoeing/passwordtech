@@ -1,7 +1,7 @@
 // Callback.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -52,7 +52,7 @@ void __fastcall TProgressForm::Init(TForm* pCaller,
   const std::atomic<word64>* pCurProgress)
 {
   m_pCaller = pCaller;
-  m_sProgressInfo = ReplaceStr(sProgressInfo, "%d", "%llu");
+  m_sProgressInfo = EnableInt64FormatSpec(sProgressInfo);
   m_qMaxValue = qMaxValue;
   m_qLastValue = -1;
   m_pCancelFlag = pCancelFlag;

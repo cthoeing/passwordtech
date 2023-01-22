@@ -1,7 +1,7 @@
 // Util.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -180,15 +180,17 @@ void ClearEditBoxTextBuf(TCustomEdit* pEdit,
   nTextLen = std::max(GetEditBoxTextLen(pEdit), nTextLen);
   if (nTextLen == 0)
     return;
+  if (nTextLen < 0)
+    nTextLen = INT_MAX;
 
   try {
-    std::wstring randStr(nTextLen, 0);
-    //randStr[nTextLen] = '\0';
+    std::vector<wchar_t> randStrBuf(nTextLen + 1);
+    randStrBuf[nTextLen] = '\0';
 
     const int BUF_SIZE = 64;
     word8 rand[BUF_SIZE];
     int nRandPos = BUF_SIZE;
-    for (auto& ch : randStr) {
+    for (auto& ch : randStrBuf) {
       if (nRandPos == BUF_SIZE) {
         g_fastRandGen.GetData(rand, BUF_SIZE);
         nRandPos = 0;
@@ -196,7 +198,7 @@ void ClearEditBoxTextBuf(TCustomEdit* pEdit,
       ch = CHARTABLE128[rand[nRandPos++] & 127];
     }
 
-    SetEditBoxTextBuf(pEdit, randStr.c_str());
+    SetEditBoxTextBuf(pEdit, randStrBuf.data());
   }
   catch (...)
   {
@@ -579,6 +581,32 @@ int CompareFileTime(FILETIME ft1, FILETIME ft2)
   if (qTime1 < qTime2)
     return -1;
   return 0;
+}
+//---------------------------------------------------------------------------
+WString EnableInt64FormatSpec(const WString& sFormatStr)
+{
+  return ReplaceStr(sFormatStr, "%d", "%llu");
+}
+//---------------------------------------------------------------------------
+std::vector<SecureWString> SplitStringBuf(const wchar_t* pwszSrc,
+  const wchar_t* pwszSep)
+{
+  std::vector<SecureWString> result;
+  while (*pwszSrc != '\0') {
+    const wchar_t* pSep = wcspbrk(pwszSrc, pwszSep);
+    if (pSep == nullptr)
+      pSep = wcschr(pwszSrc, '\0');
+    word32 lLen = static_cast<word32>(pSep - pwszSrc);
+    if (lLen > 0) {
+      SecureWString sItem(pwszSrc, lLen + 1);
+      sItem[lLen] = '\0';
+      result.push_back(std::move(sItem));
+    }
+    if (*pSep == '\0')
+      break;
+    pwszSrc = pSep + 1;
+  }
+  return result;
 }
 //---------------------------------------------------------------------------
 #define MX (((z >> 5) ^ (y << 2)) + ((y >> 3) ^ (z << 4))) ^ ((sum ^ y) + (key[(p & 3) ^ e] ^ z))

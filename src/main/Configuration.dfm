@@ -26,7 +26,7 @@ object ConfigurationDlg: TConfigurationDlg
     Top = 8
     Width = 410
     Height = 369
-    ActivePage = DatabaseSheet
+    ActivePage = LanguageSheet
     Anchors = [akLeft, akTop, akRight, akBottom]
     HotTrack = True
     TabOrder = 0
@@ -141,34 +141,34 @@ object ConfigurationDlg: TConfigurationDlg
       end
       object AutoClearClipCheck: TCheckBox
         Left = 8
-        Top = 126
+        Top = 149
         Width = 386
         Height = 17
         Anchors = [akLeft, akTop, akRight]
         Caption = 
           'Clear clipboard automatically after the following time (seconds)' +
           ':'
-        TabOrder = 2
+        TabOrder = 4
         OnClick = AutoClearClipCheckClick
       end
       object AutoClearClipTimeBox: TEdit
-        Left = 53
-        Top = 149
+        Left = 48
+        Top = 172
         Width = 49
         Height = 21
-        TabOrder = 3
+        TabOrder = 5
         Text = '1'
       end
       object AutoClearClipTimeSpinBtn: TUpDown
-        Left = 102
-        Top = 149
+        Left = 97
+        Top = 172
         Width = 16
         Height = 21
         Associate = AutoClearClipTimeBox
         Min = 1
         Max = 32767
         Position = 1
-        TabOrder = 4
+        TabOrder = 6
       end
       object TestCommonPasswCheck: TCheckBox
         Left = 8
@@ -177,7 +177,7 @@ object ConfigurationDlg: TConfigurationDlg
         Height = 17
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Test passwords against list of common passwords'
-        TabOrder = 1
+        TabOrder = 2
       end
       object RandomPoolCipherList: TComboBox
         Left = 8
@@ -190,33 +190,33 @@ object ConfigurationDlg: TConfigurationDlg
       end
       object AutoClearPasswCheck: TCheckBox
         Left = 8
-        Top = 176
+        Top = 199
         Width = 386
         Height = 17
         Anchors = [akLeft, akTop, akRight]
         Caption = 
           'Clear password box automatically after the following time (secon' +
           'ds):'
-        TabOrder = 5
+        TabOrder = 7
         OnClick = AutoClearPasswCheckClick
       end
       object AutoClearPasswTimeSpinBtn: TUpDown
-        Left = 102
-        Top = 199
+        Left = 97
+        Top = 222
         Width = 16
         Height = 21
         Associate = AutoClearPasswTimeBox
         Min = 1
         Max = 32767
         Position = 1
-        TabOrder = 7
+        TabOrder = 9
       end
       object AutoClearPasswTimeBox: TEdit
-        Left = 53
-        Top = 199
+        Left = 48
+        Top = 222
         Width = 49
         Height = 21
-        TabOrder = 6
+        TabOrder = 8
         Text = '1'
       end
       object BenchmarkBtn: TButton
@@ -226,8 +226,16 @@ object ConfigurationDlg: TConfigurationDlg
         Height = 25
         Anchors = [akTop, akRight]
         Caption = 'Benchmark...'
-        TabOrder = 8
+        TabOrder = 1
         OnClick = BenchmarkBtnClick
+      end
+      object UseAdvancedPasswEst: TCheckBox
+        Left = 8
+        Top = 126
+        Width = 377
+        Height = 17
+        Caption = 'Use advanced password strength estimation (zxcvbn)'
+        TabOrder = 3
       end
     end
     object HotKeySheet: TTabSheet
@@ -423,6 +431,17 @@ object ConfigurationDlg: TConfigurationDlg
         Height = 21
         Style = csDropDownList
         TabOrder = 0
+        OnSelect = LanguageListSelect
+      end
+      object ConvertLangFileBtn: TButton
+        Left = 8
+        Top = 62
+        Width = 198
+        Height = 25
+        Caption = 'Convert to new PO file format...'
+        Enabled = False
+        TabOrder = 1
+        OnClick = ConvertLangFileBtnClick
       end
     end
     object DatabaseSheet: TTabSheet
@@ -473,7 +492,7 @@ object ConfigurationDlg: TConfigurationDlg
         Text = '60'
       end
       object LockIdleTimeSpinBtn: TUpDown
-        Left = 108
+        Left = 109
         Top = 85
         Width = 16
         Height = 21
@@ -505,7 +524,7 @@ object ConfigurationDlg: TConfigurationDlg
       end
       object MaxNumBackupsSpinBtn: TUpDown
         Left = 330
-        Top = 136
+        Top = 135
         Width = 16
         Height = 21
         Anchors = [akTop, akRight]
@@ -613,8 +632,8 @@ object ConfigurationDlg: TConfigurationDlg
         Text = '1'
       end
       object WarnExpireNumDaysSpinBtn: TUpDown
-        Left = 223
-        Top = 256
+        Left = 225
+        Top = 255
         Width = 16
         Height = 21
         Associate = WarnExpireNumDaysBox
@@ -654,5 +673,10 @@ object ConfigurationDlg: TConfigurationDlg
     Font.Style = []
     Left = 16
     Top = 384
+  end
+  object SaveDlg: TSaveDialog
+    Filter = 'Gettext PO files (*.po)|*.po'
+    Left = 383
+    Top = 336
   end
 end

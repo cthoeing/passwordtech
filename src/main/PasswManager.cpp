@@ -1,7 +1,7 @@
 // PasswManager.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -44,6 +44,7 @@
 #include "PasswMngKeyValEdit.h"
 #include "Autocomplete.h"
 #include "PasswMngDbProp.h"
+#include "zxcvbn.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
@@ -137,7 +138,9 @@ public:
 static const int
   FORM_TAG_OPEN_DB        = 1,
   FORM_TAG_UNLOCK_DB      = 2,
-  FORM_TAG_ITEM_SELECTED  = 3;
+  FORM_TAG_ITEM_SELECTED  = 3,
+
+  PASSWBOX_TAG_PASSW_GEN  = 1;
 
 static const int STD_EXPIRY_DAYS[] = { 7, 14, 30, 90, 180, 365 };
 
@@ -224,11 +227,23 @@ static float strFindFuzzy(const wchar_t* pSrc, const wchar_t* pPattern)
   return fBestScore;
 }
 
+static void getExpiryCheckDates(word32& lCurrDate, word32& lExpirySoonDate)
+{
+  TDate today = TDateTime::CurrentDate();
+  unsigned short wYear, wMonth, wDay;
+  today.DecodeDate(&wYear, &wMonth, &wDay);
+  lCurrDate = PasswDbEntry::EncodeExpiryDate(wYear, wMonth, wDay);
+  TDate expirySoonDate = today + std::max(1,
+    std::min(100, g_config.Database.WarnExpireNumDays));
+  expirySoonDate.DecodeDate(&wYear, &wMonth, &wDay);
+  lExpirySoonDate = PasswDbEntry::EncodeExpiryDate(wYear, wMonth, wDay);
+}
+
 //---------------------------------------------------------------------------
 __fastcall TPasswMngForm::TPasswMngForm(TComponent* Owner)
   : TForm(Owner), m_pSelectedItem(nullptr), m_nSortByIdx(-1),
     m_nSortOrderFactor(1), m_nTagsSortByIdx(0), m_nTagsSortOrderFactor(1),
-    m_nSearchFlags(INT_MAX)
+    m_nSearchFlags(INT_MAX), m_nPasswEntropyBits(0)
 {
   ChangeCaption();
 
@@ -303,6 +318,7 @@ __fastcall TPasswMngForm::TPasswMngForm(TComponent* Owner)
     TRLCaption(LastModificationLbl);
     TRLCaption(TagsLbl);
     TRLCaption(ExpiryCheck);
+    TRLCaption(PasswSecurityBarPanel);
     TRLHint(PrevBtn);
     TRLHint(NextBtn);
     TRLHint(DeleteBtn);
@@ -319,6 +335,9 @@ __fastcall TPasswMngForm::TPasswMngForm(TComponent* Owner)
     TRLHint(AddTagBtn);
     TRLHint(EditKeyValBtn);
     TRLHint(ExpiryBtn);
+    TRLHint(PasswQualityBtn);
+    TRLHint(PasswSecurityBarPanel);
+    TRLHint(UrlBtn);
     SearchBox->TextHint = TRL(SearchBox->TextHint);
   }
 
@@ -428,6 +447,10 @@ void __fastcall TPasswMngForm::LoadConfig(void)
 
   TogglePasswBtn->Down = g_pIni->ReadBool(CONFIG_ID, "HidePassw", true);
   TogglePasswBtnClick(this);
+
+  PasswQualityBtn->Down = g_pIni->ReadBool(CONFIG_ID, "EstimatePasswQuality", true);
+  PasswQualityBtnClick(this);
+
   SearchMenu_CaseSensitive->Checked =
     g_pIni->ReadBool(CONFIG_ID, "FindCaseSensitive", false);
   SearchMenu_FuzzySearch->Checked = g_pIni->ReadBool(CONFIG_ID, "FindFuzzy", false);
@@ -484,6 +507,7 @@ void __fastcall TPasswMngForm::SaveConfig(void)
   g_pIni->WriteString(CONFIG_ID, "ListColWidths", sColWidths);
 
   g_pIni->WriteBool(CONFIG_ID, "HidePassw", TogglePasswBtn->Down);
+  g_pIni->WriteBool(CONFIG_ID, "EstimatePasswQuality", PasswQualityBtn->Down);
   g_pIni->WriteBool(CONFIG_ID, "FindCaseSensitive", SearchMenu_CaseSensitive->Checked);
   g_pIni->WriteBool(CONFIG_ID, "FindFuzzy", SearchMenu_FuzzySearch->Checked);
 
@@ -623,6 +647,7 @@ bool __fastcall TPasswMngForm::OpenDatabase(int nOpenFlags,
   m_nSearchMode = SEARCH_MODE_OFF;
   m_blDbChanged = false;
   m_blItemChanged = false;
+  m_blItemPasswChangeConfirm = false;
   m_blLocked = false;
 
   // ensure that entries will not be filtered by expiry status
@@ -791,6 +816,7 @@ bool __fastcall TPasswMngForm::CloseDatabase(bool blForce, int nLock)
 
   m_nSearchMode = SEARCH_MODE_OFF;
   //m_nNumSearchResults = 0;
+  m_nPasswEntropyBits = 0;
 
   //m_globalTags.clear();
   //m_searchResultTags.clear();
@@ -840,6 +866,9 @@ void __fastcall TPasswMngForm::ClearEditPanel(void)
   ExpiryDatePicker->Date = TDateTime::CurrentDate();
   CreationTimeInfo->Caption = WString();
   LastModificationInfo->Caption = WString();
+  m_nPasswEntropyBits = 0;
+  if (PasswQualityBtn->Down)
+    EstimatePasswQuality();
 }
 //---------------------------------------------------------------------------
 bool __fastcall TPasswMngForm::SaveDatabase(const WString& sFileName)
@@ -847,7 +876,7 @@ bool __fastcall TPasswMngForm::SaveDatabase(const WString& sFileName)
   SuspendIdleTimer;
 
   if (g_config.Database.CreateBackup && FileExists(sFileName)) {
-    static const WString BACKUP_EXT = ".bak";
+    const WString BACKUP_EXT = ".bak";
     WString sBackupFileName = ExtractFilePath(sFileName) +
       TPath::GetFileNameWithoutExtension(sFileName);
     if (g_config.Database.NumberBackups) {
@@ -979,8 +1008,10 @@ void __fastcall TPasswMngForm::SetItemChanged(bool blChanged)
     NextBtn->Visible = false;
     DeleteBtn->Visible = false;
   }
-  else
+  else {
+    m_blItemPasswChangeConfirm = false;
     ResetNavControls();
+  }
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswMngForm::ResetNavControls(void)
@@ -1475,14 +1506,9 @@ void __fastcall TPasswMngForm::ResetListView(int nFlags)
     }
 
     int nIdx = 0, nPrevSelIdx = -1;
-    unsigned short wYear, wMonth, wDay;
-    TDate today = TDateTime::CurrentDate();
-    today.DecodeDate(&wYear, &wMonth, &wDay);
-    word32 lCurrDate = PasswDbEntry::EncodeExpiryDate(wYear, wMonth, wDay);
-    TDate expirySoonDate = today + std::max(1,
-      std::min(100, g_config.Database.WarnExpireNumDays));
-    expirySoonDate.DecodeDate(&wYear, &wMonth, &wDay);
-    word32 lExpirySoonDate = PasswDbEntry::EncodeExpiryDate(wYear, wMonth, wDay);
+    word32 lCurrDate, lExpirySoonDate;
+
+    getExpiryCheckDates(lCurrDate, lExpirySoonDate);
 
     bool blFilterExpired = MainMenu_View_ExpiredEntries->Checked;
     bool blFilterExpireSoon = MainMenu_View_EntriesExpireSoon->Checked;
@@ -1701,12 +1727,14 @@ void __fastcall TPasswMngForm::DbViewSelectItem(TObject *Sender,
     CreationTimeInfo->Caption = WString(pEntry->CreationTimeString.c_str());
     LastModificationInfo->Caption = WString(pEntry->ModificationTimeString.c_str());
 
-    if (pEntry->HasPlaintextPassw())
-      SetEditBoxTextBuf(PasswBox, pEntry->Strings[PasswDbEntry::PASSWORD].c_str());
-    else {
-      SecureWString sPassw = m_passwDb->GetDbEntryPassw(*pEntry);
-      SetEditBoxTextBuf(PasswBox, sPassw.c_str());
-    }
+    SecureWString sPassw = pEntry->HasPlaintextPassw() ?
+      pEntry->Strings[PasswDbEntry::PASSWORD] :
+      m_passwDb->GetDbEntryPassw(*pEntry);
+
+    SetEditBoxTextBuf(PasswBox, sPassw.c_str());
+
+    if (PasswQualityBtn->Down)
+      EstimatePasswQuality(sPassw);
 
     m_tempKeyVal.reset();
   }
@@ -1723,7 +1751,10 @@ void __fastcall TPasswMngForm::DbViewSelectItem(TObject *Sender,
         if (passwGen.GetFormatPassw(sDest, sDest.Size() - 1, sFormat, 0) != 0)
         {
           W32CharToWCharInternal(sDest);
-          SetEditBoxTextBuf(PasswBox, reinterpret_cast<wchar_t*>(sDest.Data()));
+          const wchar_t* pwszPassw = reinterpret_cast<wchar_t*>(sDest.Data());
+          SetEditBoxTextBuf(PasswBox, pwszPassw);
+          if (PasswQualityBtn->Down)
+            EstimatePasswQuality(pwszPassw);
         }
         eraseStlString(sFormat);
       }
@@ -1764,10 +1795,24 @@ void __fastcall TPasswMngForm::AddModifyBtnClick(TObject *Sender)
 {
   NotifyUserAction();
 
-  if (GetEditBoxTextLen(TitleBox) == 0 && GetEditBoxTextLen(PasswBox) == 0)
+  bool blPasswEmpty = GetEditBoxTextLen(PasswBox) == 0;
+  if (GetEditBoxTextLen(TitleBox) == 0 && blPasswEmpty)
   {
     MsgBox(TRL("Please specify at least a title or password."), MB_ICONWARNING);
     return;
+  }
+
+  if (!blPasswEmpty && m_blItemPasswChangeConfirm && TogglePasswBtn->Down) {
+    bool blOk = false;
+    if (PasswEnterDlg->Execute(0, TRL("Confirm password"), this) == mrOk) {
+      if (GetEditBoxTextBuf(PasswBox) == PasswEnterDlg->GetPassw())
+        blOk = true;
+      else
+        MsgBox(TRL("Passwords are not identical."), MB_ICONERROR);
+    }
+    PasswEnterDlg->Clear();
+    if (!blOk)
+      return;
   }
 
   PasswDbEntry* pEntry = reinterpret_cast<PasswDbEntry*>(m_pSelectedItem->Data);
@@ -1803,39 +1848,28 @@ void __fastcall TPasswMngForm::AddModifyBtnClick(TObject *Sender)
 
     std::map<SecureWString,SecureWString> newTags;
 
-    while (*p != '\0') {
-      const wchar_t* pSep = wcspbrk(p, L",;");
+    auto items = SplitStringBuf(sTags.c_str(), L",;");
 
-      if (pSep == p) {
-        p++;
+    for (const auto& item : items) {
+      int nStart = 0, nEnd = item.StrLen() - 1;
+
+      // trim left side first, abort if string consists of spaces entirely
+      for (; nStart <= nEnd && item[nStart] == ' '; nStart++);
+      if (nStart > nEnd)
         continue;
-      }
 
-      if (pSep == nullptr)
-        pSep = wcschr(p, '\0');
-
-      const wchar_t* pStart = p;
-
-      // trim left side
-      for (; pStart != pSep && *pStart == ' '; pStart++);
-
-      if (pStart == pSep) {
-        p = pSep + 1;
-        continue;
-      }
-
-      const wchar_t* pEnd = pSep - 1;
-
-      // trim right side
-      for (; pEnd != pStart && *pEnd == ' '; pEnd--);
-
-      word32 lTagLen = static_cast<word32>(pEnd - pStart) + 1;
-      if (lTagLen > DB_MAX_TAG_LEN) {
-        lTagLen = DB_MAX_TAG_LEN;
+      // limit length of tag
+      if (nEnd - nStart + 1 > DB_MAX_TAG_LEN) {
+        nEnd = nStart + DB_MAX_TAG_LEN - 1;
         nNumOverlongTags++;
       }
-      SecureWString sTag(pStart, lTagLen + 1);
-      sTag[lTagLen] = '\0';
+
+      // now trim right side
+      for (; nEnd > nStart && item[nEnd] == ' '; nEnd--);
+
+      int nTagLen = nEnd - nStart + 1;
+      SecureWString sTag(&item[nStart], nTagLen + 1);
+      sTag[nTagLen] = '\0';
 
       SecureWString sCiTag = sTag;
       CharLower(sCiTag.Data());
@@ -1845,11 +1879,6 @@ void __fastcall TPasswMngForm::AddModifyBtnClick(TObject *Sender)
         newTags.emplace(it->first, it->second);
       else
         newTags.emplace(sCiTag, sTag);
-
-      if (*pSep == '\0')
-        break;
-
-      p = pSep + 1;
     }
 
     for (const auto& kv : newTags) {
@@ -1874,6 +1903,17 @@ void __fastcall TPasswMngForm::AddModifyBtnClick(TObject *Sender)
   pEntry->UpdateModificationTime();
 
   if (m_tags.empty() && pEntry->GetTagList().empty()) {
+    pEntry->UserFlags &= ~(DB_FLAG_EXPIRED | DB_FLAG_EXPIRES_SOON);
+    if (lExpiryDate != 0) {
+      word32 lCurrDate, lExpirySoonDate;
+      getExpiryCheckDates(lCurrDate, lExpirySoonDate);
+      if (pEntry->PasswExpiryDate != 0) {
+        if (lCurrDate >= pEntry->PasswExpiryDate)
+          pEntry->UserFlags |= DB_FLAG_EXPIRED;
+        else if (lExpirySoonDate >= pEntry->PasswExpiryDate)
+          pEntry->UserFlags |= DB_FLAG_EXPIRES_SOON;
+      }
+    }
     AddModifyListViewEntry(m_pSelectedItem, pEntry);
     if (blNewEntry) {
       AddModifyListViewEntry();
@@ -1988,9 +2028,11 @@ void __fastcall TPasswMngForm::MainMenu_View_ShowPasswInListClick(
 //---------------------------------------------------------------------------
 void __fastcall TPasswMngForm::TitleBoxChange(TObject *Sender)
 {
-  if (m_pSelectedItem != nullptr && Tag != FORM_TAG_ITEM_SELECTED && !m_blItemChanged) {
-    NotifyUserAction();
-    SetItemChanged(true);
+  if (m_pSelectedItem != nullptr && Tag != FORM_TAG_ITEM_SELECTED) {
+    if (!m_blItemChanged) {
+      NotifyUserAction();
+      SetItemChanged(true);
+    }
   }
 }
 //---------------------------------------------------------------------------
@@ -2227,36 +2269,43 @@ void __fastcall TPasswMngForm::TogglePasswBtnMouseUp(TObject *Sender,
 
   if (Button == mbRight) {
     bool blGenMain = true;
-    if (m_pSelectedItem != nullptr && m_pSelectedItem->Data != nullptr) {
-      const PasswDbEntry* pEntry = reinterpret_cast<PasswDbEntry*>(
-        m_pSelectedItem->Data);
-      const SecureWString* psVal = pEntry->GetKeyValue(DB_KEYVAL_KEYS[
-        DB_KEYVAL_PROFILE]);
-      if (psVal != nullptr) {
-        if (!MainForm->LoadProfile(psVal->c_str())) {
-          MsgBox(TRLFormat("Profile \"%s\" not found.", psVal->c_str()), MB_ICONERROR);
-          return;
-        }
-      }
-      else {
-        psVal = pEntry->GetKeyValue(DB_KEYVAL_KEYS[DB_KEYVAL_FORMATPASSW]);
+    PasswBox->Tag = PASSWBOX_TAG_PASSW_GEN;
+    try {
+      if (m_pSelectedItem != nullptr && m_pSelectedItem->Data != nullptr) {
+        const PasswDbEntry* pEntry = reinterpret_cast<PasswDbEntry*>(
+          m_pSelectedItem->Data);
+        const SecureWString* psVal = pEntry->GetKeyValue(DB_KEYVAL_KEYS[
+          DB_KEYVAL_PROFILE]);
         if (psVal != nullptr) {
-          w32string sFormat = WCharToW32String(psVal->c_str());
-          SecureW32String sDest(16001);
-          PasswordGenerator passwGen(g_pRandSrc);
-          if (passwGen.GetFormatPassw(sDest, sDest.Size()-1, sFormat, 0) != 0)
-          {
-            W32CharToWCharInternal(sDest);
-            SetEditBoxTextBuf(PasswBox, reinterpret_cast<wchar_t*>(sDest.Data()));
+          if (!MainForm->LoadProfile(psVal->c_str())) {
+            MsgBox(TRLFormat("Profile \"%s\" not found.", psVal->c_str()),
+              MB_ICONERROR);
+            return;
           }
-          eraseStlString(sFormat);
-          blGenMain = false;
+        }
+        else {
+          psVal = pEntry->GetKeyValue(DB_KEYVAL_KEYS[DB_KEYVAL_FORMATPASSW]);
+          if (psVal != nullptr) {
+            w32string sFormat = WCharToW32String(psVal->c_str());
+            SecureW32String sDest(16001);
+            PasswordGenerator passwGen(g_pRandSrc);
+            if (passwGen.GetFormatPassw(sDest, sDest.Size()-1, sFormat, 0) != 0)
+            {
+              W32CharToWCharInternal(sDest);
+              SetEditBoxTextBuf(PasswBox, reinterpret_cast<wchar_t*>(sDest.Data()));
+            }
+            eraseStlString(sFormat);
+            blGenMain = false;
+          }
         }
       }
+      if (blGenMain)
+        MainForm->GeneratePassw(gpdGuiSingle, PasswBox);
+      PasswBox->SetFocus();
     }
-    if (blGenMain)
-      MainForm->GeneratePassw(gpdGuiSingle, PasswBox);
-    PasswBox->SetFocus();
+    __finally {
+      PasswBox->Tag = 0;
+    }
   }
 }
 //---------------------------------------------------------------------------
@@ -2375,8 +2424,9 @@ void __fastcall TPasswMngForm::MainMenu_Edit_DuplicateEntryClick(
         pDuplicate->Strings[PasswDbEntry::NOTES] =
           pOriginal->Strings[PasswDbEntry::NOTES];
 
-        SecureWString origPassw = m_passwDb->GetDbEntryPassw(*pOriginal);
-        m_passwDb->SetDbEntryPassw(*pDuplicate, origPassw);
+        //SecureWString origPassw = m_passwDb->GetDbEntryPassw(*pOriginal);
+        m_passwDb->SetDbEntryPassw(*pDuplicate,
+          m_passwDb->GetDbEntryPassw(*pOriginal));
 
         pDuplicate->SetKeyValueList(pOriginal->GetKeyValueList());
         pDuplicate->SetTagList(pOriginal->GetTagList());
@@ -2411,6 +2461,8 @@ void __fastcall TPasswMngForm::MainMenu_File_DbSettingsClick(
   s.DefaultExpiryDays = m_passwDb->DefaultPasswExpiryDays;
   s.CipherType = m_passwDb->CipherType;
   s.NumKdfRounds = m_passwDb->KdfIterations;
+  s.Compressed = m_passwDb->Compressed;
+  s.CompressionLevel = m_passwDb->CompressionLevel;
 
   PasswDbSettingsDlg->SetSettings(s, m_passwDb->HasRecoveryKey);
   if (PasswDbSettingsDlg->ShowModal() == mrOk &&
@@ -2418,7 +2470,9 @@ void __fastcall TPasswMngForm::MainMenu_File_DbSettingsClick(
       m_passwDb->PasswFormatSeq != s.PasswFormatSeq ||
       m_passwDb->DefaultPasswExpiryDays != s.DefaultExpiryDays ||
       m_passwDb->CipherType != s.CipherType ||
-      m_passwDb->KdfIterations != s.NumKdfRounds))
+      m_passwDb->KdfIterations != s.NumKdfRounds ||
+      m_passwDb->Compressed != s.Compressed ||
+      m_passwDb->CompressionLevel != s.CompressionLevel))
     SetDbChanged();
 }
 //---------------------------------------------------------------------------
@@ -3024,6 +3078,9 @@ bool __fastcall TPasswMngForm::ApplyDbSettings(const PasswDbSettings& settings)
   m_passwDb->DefaultPasswExpiryDays = settings.DefaultExpiryDays;
   if (!m_passwDb->HasRecoveryKey)
     m_passwDb->CipherType = settings.CipherType;
+  m_passwDb->Compressed = settings.Compressed;
+  m_passwDb->CompressionLevel = settings.CompressionLevel;
+
   return true;
 }
 //---------------------------------------------------------------------------
@@ -3319,6 +3376,101 @@ void __fastcall TPasswMngForm::SearchMenu_SelectFieldsClick(TObject *Sender)
   int nNewFlags = PasswMngColDlg->Execute(this, m_nSearchFlags, true);
   if (nNewFlags >= 0)
     m_nSearchFlags = nNewFlags;
+}
+//---------------------------------------------------------------------------
+void __fastcall TPasswMngForm::TitleBoxKeyPress(TObject *Sender, System::WideChar &Key)
+
+{
+  if (Key == VK_RETURN) {
+    AddModifyBtnClick(this);
+    Key = 0;
+  }
+}
+//---------------------------------------------------------------------------
+void __fastcall TPasswMngForm::SetPasswQualityBarWidth(void)
+{
+  PasswSecurityBar->Width = PasswBox->Width - 1;
+  PasswSecurityBarPanel->Width = std::max<int>(std::min(
+    m_nPasswEntropyBits / 128.0, 1.0) * PasswSecurityBar->Width, 4);
+}
+//---------------------------------------------------------------------------
+void __fastcall TPasswMngForm::EstimatePasswQuality(const wchar_t* pwszPassw)
+{
+  m_nPasswEntropyBits = 0;
+  if (pwszPassw || PasswBox->GetTextLen() != 0) {
+    SecureWString sPassw;
+    if (!pwszPassw) {
+      sPassw = GetEditBoxTextBuf(PasswBox);
+      pwszPassw = sPassw.c_str();
+    }
+    m_nPasswEntropyBits = g_config.UseAdvancedPasswEst ? Floor(
+      ZxcvbnMatch(WStringToUtf8(pwszPassw).c_str(), nullptr, nullptr)) :
+      PasswordGenerator::EstimatePasswSecurity(pwszPassw);
+  }
+
+  PasswSecurityLbl->Caption = IntToStr(m_nPasswEntropyBits);
+  SetPasswQualityBarWidth();
+}
+//---------------------------------------------------------------------------
+void __fastcall TPasswMngForm::PasswBoxChange(TObject *Sender)
+{
+  if (m_pSelectedItem != nullptr && Tag != FORM_TAG_ITEM_SELECTED) {
+    // check whether entry has been changed
+    if (!m_blItemChanged) {
+      NotifyUserAction();
+      SetItemChanged(true);
+    }
+
+    // check whether password change needs to be confirmed
+    m_blItemPasswChangeConfirm = PasswBox->Tag != PASSWBOX_TAG_PASSW_GEN;
+
+    // estimate password quality
+    if (PasswQualityBtn->Down) {
+      EstimatePasswQuality();
+    }
+  }
+}
+//---------------------------------------------------------------------------
+void __fastcall TPasswMngForm::PasswQualityBtnClick(TObject *Sender)
+{
+  NotifyUserAction();
+  if (PasswQualityBtn->Down) {
+    PasswSecurityBar->Visible = true;
+    PasswSecurityBarPanel->ShowCaption = false;
+    EstimatePasswQuality();
+  }
+  else {
+    PasswSecurityBar->Visible = false;
+    PasswSecurityBarPanel->Width = PasswBox->Width;
+    PasswSecurityBarPanel->ShowCaption = true;
+    PasswSecurityLbl->Caption = WString();
+  }
+}
+//---------------------------------------------------------------------------
+void __fastcall TPasswMngForm::EditPanelResize(TObject *Sender)
+{
+  if (Visible) {
+    if (PasswQualityBtn->Down) {
+      SetPasswQualityBarWidth();
+    }
+    else {
+      PasswSecurityBarPanel->Width = PasswBox->Width;
+    }
+  }
+}
+//---------------------------------------------------------------------------
+void __fastcall TPasswMngForm::PasswSecurityBarPanelMouseMove(TObject *Sender, TShiftState Shift,
+          int X, int Y)
+{
+  NotifyUserAction();
+  if (Shift.Contains(ssLeft))
+    StartEditBoxDragDrop(PasswBox);
+}
+//---------------------------------------------------------------------------
+void __fastcall TPasswMngForm::UrlBtnClick(TObject *Sender)
+{
+  NotifyUserAction();
+  ExecuteShellOp(UrlBox->Text);
 }
 //---------------------------------------------------------------------------
 

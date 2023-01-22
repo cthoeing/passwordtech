@@ -1,7 +1,7 @@
 // StringFileStreamW.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -155,15 +155,16 @@ int __fastcall TStringFileStreamW::ReadString(wchar_t* pwszDest,
 //---------------------------------------------------------------------------
 bool __fastcall TStringFileStreamW::WriteString(const wchar_t* pwszSrc,
   int nStrLen,
-  int& nBytesWritten)
+  int* pnBytesWritten)
 {
   if (nStrLen == 0) {
-    nBytesWritten = 0;
+    if (pnBytesWritten)
+      *pnBytesWritten = 0;
     return true;
   }
 
   SecureAnsiString sEncBuf;
-  int nEncBytes;
+  int nEncBytes, nBytesWritten;
 
   switch (m_enc) {
   case ceAnsi:
@@ -187,6 +188,9 @@ bool __fastcall TStringFileStreamW::WriteString(const wchar_t* pwszSrc,
 
     // write the data directly to the file
     nBytesWritten = Write(pwszSrc, nEncBytes);
+    if (pnBytesWritten)
+      *pnBytesWritten = nBytesWritten;
+
     return nBytesWritten == nEncBytes;
 
   case ceUtf16BigEndian:
@@ -197,6 +201,8 @@ bool __fastcall TStringFileStreamW::WriteString(const wchar_t* pwszSrc,
   }
 
   nBytesWritten = Write(sEncBuf, nEncBytes);
+  if (pnBytesWritten)
+    *pnBytesWritten = nBytesWritten;
 
   return nBytesWritten == nEncBytes;
 }

@@ -1,7 +1,7 @@
 // UnicodeUtil.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -59,11 +59,10 @@ enum CharacterEncoding { ceAnsi, ceUtf16, ceUtf16BigEndian, ceUtf8 };
 WString FormatW(const WString sFormat, ...);
 
 // format wide string & store result in secure buffer
-// -> dest. buffer
 // -> format string
 // -> series of arguments
-void FormatW_Secure(SecureWString& sDest,
-  const WString sFormat, ...);
+// <- resulting formatted string
+SecureWString FormatW_Secure(const WString sFormat, ...);
 
 // format wide string using argument list
 // -> format string
@@ -84,7 +83,7 @@ int GetNumOfUtf16Chars(const word32* pStr);
 // determine length of wide string (32-bit)
 // -> pointer to wide string
 // <- string length
-int w32strlen(const word32* pStr);
+size_t w32strlen(const word32* pStr);
 
 // convert 16-bit wide string to 32-bit string
 // -> source buffer (16-bit)
@@ -95,7 +94,7 @@ int WCharToW32Char(const wchar_t* pwszSrc, word32* pDest);
 // convert 8-bit ASCII string to 32-bit wide string
 // -> source buffer (8-bit)
 // -> dest. buffer (32-bit)
-// -> dest. string length
+// <- dest. string length
 int AsciiCharToW32Char(const char* pszSrc, word32* pDest);
 
 // convert 16-bit wide string to 32-bit string

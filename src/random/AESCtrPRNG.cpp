@@ -1,7 +1,7 @@
 // AESCtrPRNG.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -51,7 +51,7 @@ void AESCtrPRNG::SeedWithKey(const word8* pKey,
 void AESCtrPRNG::Reset(void)
 {
   aes_setkey_enc(&m_cipherCtx, m_initialKey, KEY_SIZE*8);
-  m_counter.Clear();
+  m_counter.Zeroize();
   m_lGetBufPos = GETBUF_SIZE;
   m_lNumOfBlocks = 0;
 }

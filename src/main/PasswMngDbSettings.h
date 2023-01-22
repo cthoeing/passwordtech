@@ -1,7 +1,7 @@
 // PasswMngDbSettings.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -37,6 +37,8 @@ struct PasswDbSettings {
   word32 DefaultExpiryDays = 0;
   word32 CipherType = 0;
   word32 NumKdfRounds = 0;
+  bool Compressed;
+  int CompressionLevel;
 };
 
 class TPasswDbSettingsDlg : public TForm
@@ -61,12 +63,18 @@ __published:	// IDE-managed Components
   TEdit *Default…xpiryBox;
   TUpDown *DefaultExpiryUpDown;
   TEdit *PasswGenTestBox;
+    TTabSheet *CompressionSheet;
+    TCheckBox *EnableCompressionCheck;
+    TTrackBar *CompressionLevelBar;
+    TLabel *Label1;
+    TLabel *CompressionLevelLbl;
   void __fastcall FormShow(TObject *Sender);
   void __fastcall OKBtnClick(TObject *Sender);
   void __fastcall CalcRoundsBtnClick(TObject *Sender);
   void __fastcall FormActivate(TObject *Sender);
   void __fastcall PasswGenTestBtnClick(TObject *Sender);
   void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
+    void __fastcall EnableCompressionCheckClick(TObject *Sender);
 private:	// User declarations
   void __fastcall LoadConfig(void);
 public:		// User declarations
