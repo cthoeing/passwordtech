@@ -1,6 +1,6 @@
 ﻿                            Password Tech
                             =============
-                Copyright (c) 2002-2022 by Christian Thöing
+                Copyright (c) 2002-2023 by Christian Thöing
 
 
 COMPILING PASSWORD TECH
@@ -14,7 +14,7 @@ COMPILING PASSWORD TECH
  
 LICENSE / COPYRIGHT NOTICE
 
-  Password Tech: Copyright (c) 2002-2022 by Christian Thöing <c.thoeing@web.de>.
+  Password Tech: Copyright (c) 2002-2023 by Christian Thöing <c.thoeing@web.de>.
 
   This program is FREE software; it is distributed under the terms and
   conditions of the GNU General Public License (GPL) as published by the
@@ -31,6 +31,8 @@ LICENSE / COPYRIGHT NOTICE
       http://www.diceware.com
 	- Lua interpreter and library by Lua.org, PUC-Rio:
 	  https://www.lua.org/
+	- miniz public domain deflate/inflate:
+	  https://github.com/richgel999/miniz
 
 
 CONTACT

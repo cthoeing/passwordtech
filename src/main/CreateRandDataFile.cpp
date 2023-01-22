@@ -1,7 +1,7 @@
 // CreateRandDataFile.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -163,9 +163,8 @@ void __fastcall TCreateRandDataFileDlg::CreateFileBtnClick(TObject *Sender)
 
       while (qRestToWrite > 0 && !cancelFlag) {
         if (!progFormInit && clock.ElapsedSeconds() > 1) {
-          WString sProgressInfo = TRL("%d of %d KB written.");
-          if (sProgressStep != "KB")
-            sProgressInfo = ReplaceStr(sProgressInfo, "KB", sProgressStep);
+          WString sProgressInfo = ReplaceStr(TRL("%d of %d %s written."),
+            "%s", sProgressStep);
           TThread::Synchronize(0, [&](){
             ProgressForm->Init(this, TRL("Creating random data file ..."),
               sProgressInfo, qFileSize / qProgressStep,
@@ -191,8 +190,8 @@ void __fastcall TCreateRandDataFileDlg::CreateFileBtnClick(TObject *Sender)
       if (cancelFlag)
         sMsg = EUserCancel::UserCancelMsg;
       else {
-        sMsg = FormatW(ReplaceStr(TRL(
-          "File \"%s\" successfully created.\n\n%d bytes written."), "%d", "%llu"),
+        sMsg = FormatW(EnableInt64FormatSpec(TRL(
+          "File \"%s\" successfully created.\n\n%d bytes written.")),
           ExtractFileName(sFileName).c_str(), qTotalWritten);
         blSuccess = true;
       }
@@ -202,9 +201,9 @@ void __fastcall TCreateRandDataFileDlg::CreateFileBtnClick(TObject *Sender)
     }
 
     if (!blSuccess) {
-      sMsg = FormatW(ReplaceStr(
-        TRL("Error while creating file\n\"%s\":\n%s.\n\n%d bytes written."),
-        "%d", "%llu"), sFileName.c_str(), sMsg.c_str(), qTotalWritten);
+      sMsg = FormatW(EnableInt64FormatSpec(
+        TRL("Error while creating file\n\"%s\":\n%s.\n\n%d bytes written.")),
+        sFileName.c_str(), sMsg.c_str(), qTotalWritten);
     }
 
     TThread::Synchronize(0, [&](){

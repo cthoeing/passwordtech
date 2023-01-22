@@ -1,7 +1,7 @@
 // Configuration.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -55,7 +55,7 @@ const int RANDOM_POOL_CIPHER_INFO[NUM_RANDOM_POOL_CIPHERS][2] =
 
 //---------------------------------------------------------------------------
 __fastcall TConfigurationDlg::TConfigurationDlg(TComponent* Owner)
-  : TForm(Owner)
+  : TForm(Owner), m_pLangList(nullptr)
 {
   //Constraints->MaxHeight = Height;
   //Constraints->MinHeight = Height;
@@ -87,6 +87,7 @@ __fastcall TConfigurationDlg::TConfigurationDlg(TComponent* Owner)
     TRLCaption(RandomPoolCipherLbl);
     TRLCaption(BenchmarkBtn);
     TRLCaption(TestCommonPasswCheck);
+    //TRLCaption(UseAdvancedPasswEst);
     TRLCaption(AutoClearClipCheck);
     TRLCaption(AutoClearPasswCheck);
 
@@ -141,6 +142,9 @@ __fastcall TConfigurationDlg::TConfigurationDlg(TComponent* Owner)
     TRLCaption(CancelBtn);
   }
 
+  UseAdvancedPasswEst->Caption = TRLFormat("Use advanced password strength "
+    "estimation (%s)", L"zxcvbn");
+
   LoadConfig();
 }
 //---------------------------------------------------------------------------
@@ -169,6 +173,7 @@ void __fastcall TConfigurationDlg::GetOptions(Configuration& config)
   config.LaunchSystemStartup = LaunchSystemStartupCheck->Checked;
   config.RandomPoolCipher = RandomPoolCipherList->ItemIndex;
   config.TestCommonPassw = TestCommonPasswCheck->Checked;
+  config.UseAdvancedPasswEst = UseAdvancedPasswEst->Checked;
   config.ShowSysTrayIconConst = ShowSysTrayIconConstCheck->Checked;
   config.MinimizeToSysTray = MinimizeToSysTrayCheck->Checked;
   config.AutoCheckUpdates = AutoCheckUpdates(AutoCheckUpdatesList->ItemIndex);
@@ -202,6 +207,7 @@ void __fastcall TConfigurationDlg::SetOptions(const Configuration& config)
   ShowFontSample(FontDlg->Font);
   RandomPoolCipherList->ItemIndex = config.RandomPoolCipher;
   TestCommonPasswCheck->Checked = config.TestCommonPassw;
+  UseAdvancedPasswEst->Checked = config.UseAdvancedPasswEst;
   AutoClearClipCheck->Checked = config.AutoClearClip;
   AutoClearClipTimeSpinBtn->Position = config.AutoClearClipTime;
   AutoClearClipCheckClick(this);
@@ -218,6 +224,7 @@ void __fastcall TConfigurationDlg::SetOptions(const Configuration& config)
   FileEncodingList->ItemIndex = static_cast<int>(config.FileEncoding);
   NewlineCharList->ItemIndex = static_cast<int>(config.FileNewlineChar);
   LanguageList->ItemIndex = config.LanguageIndex;
+  LanguageListSelect(this);
   m_hotKeys = config.HotKeys;
   UpdateHotKeyList();
   //ClearClipMinimizeCheck->Checked = config.Database.ClearClipMinimize;
@@ -246,6 +253,7 @@ void __fastcall TConfigurationDlg::SetOptions(const Configuration& config)
 void __fastcall TConfigurationDlg::SetLanguageList(
   const std::vector<LanguageEntry>& languages)
 {
+  m_pLangList = &languages;
   for (std::vector<LanguageEntry>::const_iterator it = languages.begin();
     it != languages.end(); it++)
   {
@@ -422,6 +430,39 @@ void __fastcall TConfigurationDlg::BenchmarkBtnClick(TObject *Sender)
   Screen->Cursor = crDefault;
   MsgBox(TRLFormat("Benchmark results (data size: %d MB):", DATA_SIZE_MB) +
     sResult, MB_ICONINFORMATION);
+}
+//---------------------------------------------------------------------------
+void __fastcall TConfigurationDlg::ConvertLangFileBtnClick(TObject *Sender)
+{
+  if (LanguageList->ItemIndex > 0 && m_pLangList) {
+    const auto& entry = m_pLangList->at(LanguageList->ItemIndex);
+    //if (SameText(ExtractFileExt(entry.FileName), ".lng")) {
+    TopMostManager::GetInstance()->NormalizeTopMosts(this);
+    bool blSuccess = SaveDlg->Execute();
+    TopMostManager::GetInstance()->RestoreTopMosts(this);
+
+    if (blSuccess) {
+      try {
+        LanguageSupport ls(entry.FileName, false, true);
+        ls.SaveToPOFileFormat(SaveDlg->FileName,
+          (g_config.FileEncoding == ceAnsi) ? ceUtf8 : g_config.FileEncoding);
+        MsgBox("File successfully converted.", MB_ICONINFORMATION);
+      }
+      catch (Exception& e) {
+        MsgBox(e.Message + ".", MB_ICONERROR);
+      }
+    }
+  }
+}
+//---------------------------------------------------------------------------
+void __fastcall TConfigurationDlg::LanguageListSelect(TObject *Sender)
+{
+  bool blEnabled = false;
+  if (LanguageList->ItemIndex > 0 && m_pLangList) {
+    const auto& entry = m_pLangList->at(LanguageList->ItemIndex);
+    blEnabled = SameText(ExtractFileExt(entry.FileName), ".lng");
+  }
+  ConvertLangFileBtn->Enabled = blEnabled;
 }
 //---------------------------------------------------------------------------
 

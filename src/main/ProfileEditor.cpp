@@ -1,7 +1,7 @@
 // ProfileEditor.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -56,7 +56,7 @@ __fastcall TProfileEditDlg::TProfileEditDlg(TComponent* Owner)
 
   LoadConfig();
 
-  for (auto pProfile : g_profileList) {
+  for (const auto& pProfile : g_profileList) {
     WString sProfileName = pProfile->ProfileName;
     if (pProfile->AdvancedOptionsUsed)
       sProfileName += WString(" [+]");
@@ -115,7 +115,7 @@ void __fastcall TProfileEditDlg::ProfileListClick(TObject *Sender)
     MoveDownBtn->Enabled = false;
   }
   else if (ProfileList->SelCount == 1) {
-    PWGenProfile* pProfile = g_profileList[ProfileList->ItemIndex];
+    auto pProfile = g_profileList[ProfileList->ItemIndex].get();
 
     ProfileNameBox->Text = pProfile->ProfileName;
     SaveAdvancedOptionsCheck->Checked = pProfile->AdvancedOptionsUsed;

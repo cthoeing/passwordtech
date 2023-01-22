@@ -1,7 +1,7 @@
 // SecureMem.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -99,15 +99,15 @@ public:
   {
     if (!IsEmpty())
     {
-      Clear();
+      Zeroize();
       delete [] m_pData;
       m_pData = nullptr;
       m_lSize = 0;
     }
   }
 
-  // clears the data array
-  void Clear(void)
+  // fills the data array with binary zeros
+  void Zeroize(void)
   {
     if (!IsEmpty())
       memzero(m_pData, SizeBytes());
@@ -122,6 +122,12 @@ public:
     New(lSize);
     if (lSize != 0)
       memcpy(m_pData, pSrc, lSize * sizeof(T));
+  }
+
+  void Swap(SecureMem& other)
+  {
+    std::swap(m_pData, other.m_pData);
+    std::swap(m_lSize, other.m_lSize);
   }
 
   // copies the data of the source object
@@ -367,8 +373,7 @@ public:
   SecureMem& operator= (SecureMem&& src)
   {
     if (this != &src) {
-      std::swap(m_pData, src.m_pData);
-      std::swap(m_lSize, src.m_lSize);
+      Swap(src);
     }
     return *this;
   }

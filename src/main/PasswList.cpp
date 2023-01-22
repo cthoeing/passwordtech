@@ -1,7 +1,7 @@
 // PasswList.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -140,8 +140,7 @@ void __fastcall TPasswListForm::PasswListMenu_SaveAsFileClick(TObject *Sender)
     std::unique_ptr<TStringFileStreamW> pFile(new TStringFileStreamW(
         sFileName, fmCreate, g_config.FileEncoding, true, PASSW_MAX_BYTES));
 
-    int nBytesWritten;
-    if (!pFile->WriteString(sPasswList, sPasswList.StrLen(), nBytesWritten))
+    if (!pFile->WriteString(sPasswList, sPasswList.StrLen()))
       OutOfDiskSpaceError();
 
     blSuccess = true;

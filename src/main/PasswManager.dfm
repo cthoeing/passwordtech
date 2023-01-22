@@ -1,8 +1,8 @@
 object PasswMngForm: TPasswMngForm
   Left = 594
   Top = 119
-  ClientHeight = 525
-  ClientWidth = 776
+  ClientHeight = 524
+  ClientWidth = 760
   Color = clBtnFace
   Constraints.MinHeight = 480
   Constraints.MinWidth = 500
@@ -23,7 +23,7 @@ object PasswMngForm: TPasswMngForm
   object Splitter2: TSplitter
     Left = 369
     Top = 68
-    Height = 457
+    Height = 456
     Beveled = True
     ExplicitLeft = 383
     ExplicitTop = 22
@@ -32,7 +32,7 @@ object PasswMngForm: TPasswMngForm
   object Splitter1: TSplitter
     Left = 0
     Top = 65
-    Width = 776
+    Width = 760
     Height = 3
     Cursor = crVSplit
     Align = alTop
@@ -43,7 +43,7 @@ object PasswMngForm: TPasswMngForm
     Left = 0
     Top = 68
     Width = 369
-    Height = 457
+    Height = 456
     Align = alLeft
     Columns = <>
     HideSelection = False
@@ -65,15 +65,16 @@ object PasswMngForm: TPasswMngForm
   object EditPanel: TPanel
     Left = 372
     Top = 68
-    Width = 404
-    Height = 457
+    Width = 388
+    Height = 456
     Align = alClient
     BevelOuter = bvNone
     Enabled = False
     TabOrder = 1
+    OnResize = EditPanelResize
     DesignSize = (
-      404
-      457)
+      388
+      456)
     object TitleLbl: TLabel
       Left = 8
       Top = 9
@@ -106,7 +107,7 @@ object PasswMngForm: TPasswMngForm
     end
     object UrlLbl: TLabel
       Left = 8
-      Top = 90
+      Top = 115
       Width = 23
       Height = 13
       Caption = 'URL:'
@@ -114,7 +115,7 @@ object PasswMngForm: TPasswMngForm
     end
     object KeywordLbl: TLabel
       Left = 8
-      Top = 117
+      Top = 142
       Width = 46
       Height = 13
       Caption = 'Keyword:'
@@ -122,7 +123,7 @@ object PasswMngForm: TPasswMngForm
     end
     object NotesLbl: TLabel
       Left = 8
-      Top = 171
+      Top = 196
       Width = 32
       Height = 13
       Caption = 'Notes:'
@@ -130,7 +131,7 @@ object PasswMngForm: TPasswMngForm
     end
     object AddModifyBtn: TSpeedButton
       Left = 6
-      Top = 410
+      Top = 409
       Width = 41
       Height = 41
       Hint = 'Accept changes'
@@ -244,10 +245,11 @@ object PasswMngForm: TPasswMngForm
       ParentShowHint = False
       ShowHint = True
       OnClick = AddModifyBtnClick
+      ExplicitTop = 410
     end
     object PrevBtn: TSpeedButton
       Left = 6
-      Top = 410
+      Top = 409
       Width = 41
       Height = 41
       Hint = 'Previous entry'
@@ -361,10 +363,11 @@ object PasswMngForm: TPasswMngForm
       ParentShowHint = False
       ShowHint = True
       OnClick = PrevBtnClick
+      ExplicitTop = 410
     end
     object NextBtn: TSpeedButton
       Left = 50
-      Top = 410
+      Top = 409
       Width = 37
       Height = 41
       Hint = 'Next entry'
@@ -478,10 +481,11 @@ object PasswMngForm: TPasswMngForm
       ParentShowHint = False
       ShowHint = True
       OnClick = NextBtnClick
+      ExplicitTop = 410
     end
     object CancelBtn: TSpeedButton
       Left = 50
-      Top = 410
+      Top = 409
       Width = 37
       Height = 41
       Hint = 'Undo changes'
@@ -595,10 +599,11 @@ object PasswMngForm: TPasswMngForm
       ParentShowHint = False
       ShowHint = True
       OnClick = CancelBtnClick
+      ExplicitTop = 410
     end
     object CreationTimeLbl: TLabel
       Left = 8
-      Top = 357
+      Top = 353
       Width = 68
       Height = 13
       Anchors = [akLeft, akBottom]
@@ -606,14 +611,14 @@ object PasswMngForm: TPasswMngForm
     end
     object CreationTimeInfo: TLabel
       Left = 112
-      Top = 357
+      Top = 353
       Width = 3
       Height = 13
       Anchors = [akLeft, akBottom]
     end
     object DeleteBtn: TSpeedButton
       Left = 93
-      Top = 410
+      Top = 409
       Width = 41
       Height = 41
       Hint = 'Delete entry'
@@ -721,10 +726,11 @@ object PasswMngForm: TPasswMngForm
       ParentShowHint = False
       ShowHint = True
       OnClick = DeleteBtnClick
+      ExplicitTop = 410
     end
     object LastModificationLbl: TLabel
       Left = 8
-      Top = 384
+      Top = 380
       Width = 84
       Height = 13
       Anchors = [akLeft, akBottom]
@@ -732,13 +738,13 @@ object PasswMngForm: TPasswMngForm
     end
     object LastModificationInfo: TLabel
       Left = 112
-      Top = 384
+      Top = 380
       Width = 3
       Height = 13
       Anchors = [akLeft, akBottom]
     end
     object TogglePasswBtn: TSpeedButton
-      Left = 366
+      Left = 350
       Top = 58
       Width = 27
       Height = 25
@@ -758,25 +764,26 @@ object PasswMngForm: TPasswMngForm
       ShowHint = True
       OnClick = TogglePasswBtnClick
       OnMouseUp = TogglePasswBtnMouseUp
+      ExplicitLeft = 366
     end
     object KeyValueListLbl: TLabel
       Left = 8
-      Top = 144
+      Top = 169
       Width = 68
       Height = 13
       Caption = 'Key-value list:'
     end
     object TagsLbl: TLabel
       Left = 8
-      Top = 303
+      Top = 299
       Width = 27
       Height = 13
       Anchors = [akLeft, akBottom]
       Caption = 'Tags:'
     end
     object AddTagBtn: TSpeedButton
-      Left = 366
-      Top = 299
+      Left = 350
+      Top = 295
       Width = 23
       Height = 22
       Hint = 'Select and add existing tag'
@@ -812,10 +819,11 @@ object PasswMngForm: TPasswMngForm
       ParentShowHint = False
       ShowHint = True
       OnClick = AddTagBtnClick
+      ExplicitLeft = 349
     end
     object EditKeyValBtn: TSpeedButton
-      Left = 366
-      Top = 140
+      Left = 350
+      Top = 165
       Width = 23
       Height = 22
       Hint = 'Edit key-value list'
@@ -851,10 +859,11 @@ object PasswMngForm: TPasswMngForm
       ParentShowHint = False
       ShowHint = True
       OnClick = EditKeyValBtnClick
+      ExplicitLeft = 349
     end
     object ExpiryBtn: TSpeedButton
-      Left = 366
-      Top = 327
+      Left = 350
+      Top = 323
       Width = 23
       Height = 23
       Hint = 'Change expiry date'
@@ -890,29 +899,120 @@ object PasswMngForm: TPasswMngForm
       ParentShowHint = False
       ShowHint = True
       OnClick = ExpiryBtnClick
+      ExplicitLeft = 349
+    end
+    object PasswQualityBtn: TSpeedButton
+      Left = 350
+      Top = 85
+      Width = 23
+      Height = 22
+      Hint = 'Estimate password quality'
+      AllowAllUp = True
+      Anchors = [akTop, akRight]
+      GroupIndex = 2
+      Down = True
+      Flat = True
+      Glyph.Data = {
+        36030000424D3603000000000000360000002800000010000000100000000100
+        1800000000000003000000000000000000000000000000000000FFFFFFFFFFFF
+        FFFFFFFCFAF6DDCAA3CFB067BA8D22B78915B78915BA8D22CFB067DDCAA3FCFA
+        F6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3ECE0C7A86CBF8E19C8981BC6971BD1
+        9F1DD4A11ECA9A1CC8981BBF8E19C7A86CF3ECE0FFFFFFFFFFFFFFFFFFF2EBE0
+        B88F34C79A1BC7981AC39318C59829E1C06EE1C274CB9C2AC39318C7981AC79A
+        1BB88F34F2EBE0FFFFFFFBF9F6C0A16BC79A1BC7981AC29118C19018CFAB51F9
+        F1DEFBF6EAD7B35CC19018C29118C7981AC79A1BC1A26CFBF9F6D5C1A2B98B17
+        C7981AC19018C19018C19018D0AC53FBF6ECFFFEFDD9B763C19018C19018C190
+        18C6981AB88B17D5C1A2C1A064C59B18C39318C19018C19018C19018CFAC52FB
+        F7EBFEFEFCD8B662C19018C19018C19018C29118C49A18C1A064A67B2ACEAA29
+        C19018C19018C19018C19018D0AC50FBF6EAFEFDFAD8B661C19018C19018C090
+        18C08F18CEA929A67B2AA57C2AE0C457C8961AC09018C19018C19018D0AC50FB
+        F6EAFEFDFBD7B560C19018C29118C29218C39218DFC255A27A2AB98929E3CA61
+        DFB653D6A324C9971BC9971BD2AD53FAF5E7FDFBF5D5B460C49218C69419CC9B
+        21DCB451E2C95EB78726B78737E2CC63E1BC5EDEB54FD6A222D6A222E1BA5AEF
+        DCAAF2E1B6DBB555D19D1FCC991BDDB452E1BB5DE1CB60B68635CCA671DBCC77
+        E0BB58DFB855E0B959E0B959DCAF41E0B957D6AE48D8AA37E0BC5EE0BA5CDFB8
+        55E0BB59DACA75CBA570D9BE9FBD9E4AE7D587E1BA5BDFB753DEB651E1BA5AF7
+        ECD2F8F0DBE2BE63DFB856DFB857E1BA5BE7D587BD9E4AD9BE9FFBF9F6BD9164
+        DACB74E9DA94E5C470E1BC5EE3BE64FDF9F1FFFEFDE5C370E1BC5EE5C470E9DA
+        95DBCB75BE9164FBF9F6FFFFFFF2E8DEB4843ED6C76BE7DB94E9D08CDCAF40E7
+        CA7FE8CC83DDB145E9D08CE7DB94D3C567B58640F2E8DFFFFFFFFFFFFFFFFFFF
+        F2E7DEBA8E64B3983ED2C66EE2D988E7DC90E7DC90E2D988D3C770BCA145BA8E
+        64F2E7DEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBF8F6D4BBA0C4A06AA17B32A4
+        7A2EA47A2EA17B32C5A06AD5BBA1FBF8F6FFFFFFFFFFFFFFFFFF}
+      ParentShowHint = False
+      ShowHint = True
+      OnClick = PasswQualityBtnClick
+    end
+    object PasswSecurityLbl: TLabel
+      Left = 104
+      Top = 88
+      Width = 3
+      Height = 13
+      Alignment = taRightJustify
+    end
+    object UrlBtn: TSpeedButton
+      Left = 350
+      Top = 110
+      Width = 23
+      Height = 22
+      Hint = 'Open URL'
+      Anchors = [akTop, akRight]
+      Flat = True
+      Glyph.Data = {
+        36030000424D3603000000000000360000002800000010000000100000000100
+        1800000000000003000000000000000000000000000000000000FFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3E7D4FFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFAF6900E0C295FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFAF6900AB6500DEC096FFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFAF6900BA7400A76100E1C7A3FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFAF6900C68209BD7807A45F00DBBE
+        96FFFFFFFFFFFFFFFFFFC37C00BE7700C37C00C17A00BE7700BB7500B77100B3
+        6D00AF6900CC8A17CC8B17C17F11A15C00DEC4A3FFFFFFFFFFFFC37C00D29427
+        D29528D29428D29527D29428D29527D29428D29427D29528D29528D29527C686
+        1E9F5A00D8BB96FFFFFFC37C00D9A039D99F39D9A039D99F39D99F39D99F3AD9
+        9F3AD99F3AD9A039D99F39D99F39D9A03ACB8F2C9F5A00D7B993C37C00E0AB4C
+        E0AB4CE0AB4BE0AB4CE0AB4CE0AB4CE0AB4CE0AB4CE0AB4CE0AB4CE0AB4BE0AB
+        4BCB8F2C9F5A00CFAC7BC37C00E7B65DE7B65EE7B65EE6B65DE7B65EE7B65DE7
+        B65EE7B65EE7B65DE7B65DE7B65DDEA8489F5A00CCA673FFFFFFC37C00C37C00
+        C37C00C17A00BE7800BB7500B77100B36D00AF6900EDC06EEDC06EE3B054A15C
+        00D1AD7AFFFFFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFAF6900F3C97CE7B75EA45F00D2AF7BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFAE6A00EABB65A76100D3B079FFFF
+        FEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFAF6900AB6500D6B27BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFAF6900CFA45FFFFFFEFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFF0E2C9FFFFFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+      ParentShowHint = False
+      ShowHint = True
+      OnClick = UrlBtnClick
     end
     object TitleBox: TEdit
       Left = 112
       Top = 6
-      Width = 251
+      Width = 235
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
       OnChange = TitleBoxChange
+      OnKeyPress = TitleBoxKeyPress
     end
     object UserNameBox: TEdit
       Left = 112
       Top = 33
-      Width = 251
+      Width = 235
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 1
       OnChange = TitleBoxChange
+      OnKeyPress = TitleBoxKeyPress
     end
     object PasswBox: TEdit
       Left = 112
       Top = 60
-      Width = 251
+      Width = 235
       Height = 22
       Anchors = [akLeft, akTop, akRight]
       AutoSize = False
@@ -923,31 +1023,34 @@ object PasswMngForm: TPasswMngForm
       Font.Style = []
       ParentFont = False
       TabOrder = 2
-      OnChange = TitleBoxChange
+      OnChange = PasswBoxChange
+      OnKeyPress = TitleBoxKeyPress
     end
     object UrlBox: TEdit
       Left = 112
-      Top = 87
-      Width = 251
+      Top = 112
+      Width = 235
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 3
       OnChange = TitleBoxChange
+      OnKeyPress = TitleBoxKeyPress
     end
     object KeywordBox: TEdit
       Left = 112
-      Top = 114
-      Width = 251
+      Top = 139
+      Width = 235
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 4
       OnChange = TitleBoxChange
+      OnKeyPress = TitleBoxKeyPress
     end
     object NotesBox: TMemo
       Left = 112
-      Top = 168
-      Width = 251
-      Height = 126
+      Top = 193
+      Width = 235
+      Height = 97
       Anchors = [akLeft, akTop, akRight, akBottom]
       ScrollBars = ssVertical
       TabOrder = 5
@@ -955,17 +1058,18 @@ object PasswMngForm: TPasswMngForm
     end
     object TagsBox: TEdit
       Left = 112
-      Top = 300
-      Width = 251
+      Top = 296
+      Width = 235
       Height = 21
       Anchors = [akLeft, akRight, akBottom]
       TabOrder = 6
       OnChange = TitleBoxChange
+      OnKeyPress = TitleBoxKeyPress
     end
     object KeyValueListBox: TEdit
       Left = 112
-      Top = 141
-      Width = 251
+      Top = 166
+      Width = 235
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       Color = clBtnFace
@@ -974,8 +1078,8 @@ object PasswMngForm: TPasswMngForm
       OnChange = TitleBoxChange
     end
     object ExpiryCheck: TCheckBox
-      Left = 6
-      Top = 330
+      Left = 8
+      Top = 326
       Width = 97
       Height = 17
       Anchors = [akLeft, akBottom]
@@ -985,8 +1089,8 @@ object PasswMngForm: TPasswMngForm
     end
     object ExpiryDatePicker: TDateTimePicker
       Left = 112
-      Top = 327
-      Width = 251
+      Top = 323
+      Width = 235
       Height = 21
       Anchors = [akLeft, akRight, akBottom]
       Date = 44241.000000000000000000
@@ -994,12 +1098,94 @@ object PasswMngForm: TPasswMngForm
       Enabled = False
       TabOrder = 9
       OnChange = ExpiryDatePickerChange
+      OnKeyPress = TitleBoxKeyPress
+    end
+    object PasswSecurityBarPanel: TPanel
+      Left = 112
+      Top = 87
+      Width = 234
+      Height = 17
+      Hint = 'Hold left mouse button to drag & drop password'
+      BevelOuter = bvNone
+      Caption = 'Password quality estimation is disabled'
+      ParentShowHint = False
+      ShowCaption = False
+      ShowHint = True
+      TabOrder = 10
+      OnMouseMove = PasswSecurityBarPanelMouseMove
+      object PasswSecurityBar: TImage
+        Left = 0
+        Top = 0
+        Width = 234
+        Height = 17
+        ParentShowHint = False
+        Picture.Data = {
+          0A544A504547496D616765EB060000FFD8FFE000104A46494600010101004800
+          480000FFFE00134372656174656420776974682047494D50FFE202B04943435F
+          50524F46494C45000101000002A06C636D73043000006D6E7472524742205859
+          5A2007E700010008000B003B0037616373704D53465400000000000000000000
+          00000000000000000000000000000000F6D6000100000000D32D6C636D730000
+          0000000000000000000000000000000000000000000000000000000000000000
+          000000000000000000000000000D646573630000012000000040637072740000
+          01600000003677747074000001980000001463686164000001AC0000002C7258
+          595A000001D8000000146258595A000001EC000000146758595A000002000000
+          0014725452430000021400000020675452430000021400000020625452430000
+          0214000000206368726D0000023400000024646D6E640000025800000024646D
+          64640000027C000000246D6C756300000000000000010000000C656E55530000
+          00240000001C00470049004D00500020006200750069006C0074002D0069006E
+          002000730052004700426D6C756300000000000000010000000C656E55530000
+          001A0000001C005000750062006C0069006300200044006F006D00610069006E
+          000058595A20000000000000F6D6000100000000D32D73663332000000000001
+          0C42000005DEFFFFF325000007930000FD90FFFFFBA1FFFFFDA2000003DC0000
+          C06E58595A200000000000006FA0000038F50000039058595A20000000000000
+          249F00000F840000B6C458595A2000000000000062970000B787000018D97061
+          72610000000000030000000266660000F2A700000D59000013D000000A5B6368
+          726D00000000000300000000A3D70000547C00004CCD0000999A000026670000
+          0F5C6D6C756300000000000000010000000C656E5553000000080000001C0047
+          0049004D00506D6C756300000000000000010000000C656E5553000000080000
+          001C0073005200470042FFDB0043000302020302020303030304030304050805
+          050404050A070706080C0A0C0C0B0A0B0B0D0E12100D0E110E0B0B1016101113
+          141515150C0F171816141812141514FFDB00430103040405040509050509140D
+          0B0D141414141414141414141414141414141414141414141414141414141414
+          1414141414141414141414141414141414141414FFC200110800110149030111
+          00021101031101FFC40017000101010100000000000000000000000003040206
+          FFC4001C0101010101000203000000000000000000030100040509020708FFDA
+          000C0301000210031000000193EA6FD01442A30BC1A315106885461A215105F0
+          D10A883462783441A2151868854416C5980584B09403C2504B01C12C2500F096
+          119CC1398372CF39427286E59E7286E5385CBF99F61D442A20BC1A3151068854
+          61785441A30D10A883462A20BC2A30D1068854416C5980584B09403C2504B01C
+          12C2580E096119CC1B98272CF39427286E509CD3EE4385CBF99F61D442A20BC2
+          A30D106885461A20BC2A20D18A883462A20BC2A20D1868854416C5982580B094
+          13C0504B01C12C0584E096119CC1398372CF39437284E509CD3EE43F897FFFC4
+          00161001010100000000000000000000000000010010FFDA0008010100010502
+          2222222222222222222319999999999999999999C22222222222222222223199
+          99999999999999999C2222222222222222222319999999999999999999CFFFC4
+          0017110101010100000000000000000000000000010210FFDA0008010301013F
+          01AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD34D34D34D35CAAAAAAAAAAAAAAAA
+          AAAAAAAAAAAAAAAAAD34D34D34D35CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD
+          34D34D34D35CFFC40014110100000000000000000000000000000060FFDA0008
+          010201013F017DFFC40014100100000000000000000000000000000060FFDA00
+          08010100063F027DFFC400171000030100000000000000000000000000013140
+          50FFDA0008010100013F2193FF00FF00C2CA000FFF00FF00FF000B28003FFF00
+          FF00FC298003FF00FFDA000C0301000200030000001069F9510AC627D538DCA3
+          57BA158ECFB487E5477B181A94E3738D5EA8703F22F20EAD17F8416D6389C835
+          5EA15AF48BFF00FFC40014110100000000000000000000000000000060FFDA00
+          08010301013F107C869A4F7E00924927BF802924D2EDBC3FFFC4001A11010002
+          0301000000000000000000000001003010205041FFDA0008010201013F10B9E3
+          38788C75F2B6E63A7FFFC4001B10000203010101000000000000000000000041
+          011031202130FFDA0008010100013F105139B516AB7A8B553C7CFA06BA030F63
+          51ACA2F154517A7A8B7AF3AC721AEC06A30C6861EB020B5D1B814CC198AA5771
+          5D41983706E2A9798CC8C318354618D518C48C666BB91ADFFFD9}
+        ShowHint = False
+        Stretch = True
+        OnMouseMove = PasswSecurityBarPanelMouseMove
+      end
     end
   end
   object ToolBar: TToolBar
     Left = 0
     Top = 0
-    Width = 776
+    Width = 760
     Height = 22
     AutoSize = True
     ButtonWidth = 32
@@ -1110,7 +1296,7 @@ object PasswMngForm: TPasswMngForm
   object TagView: TListView
     Left = 0
     Top = 22
-    Width = 776
+    Width = 760
     Height = 43
     Align = alTop
     Columns = <>
@@ -1900,12 +2086,12 @@ object PasswMngForm: TPasswMngForm
   end
   object TagMenu: TPopupMenu
     AutoHotkeys = maManual
-    Left = 740
-    Top = 308
+    Left = 588
+    Top = 436
   end
   object ExpiryMenu: TPopupMenu
-    Left = 740
-    Top = 420
+    Left = 652
+    Top = 436
   end
   object DbIcons: TImageList
     Left = 136

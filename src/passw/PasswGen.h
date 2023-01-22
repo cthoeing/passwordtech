@@ -1,7 +1,7 @@
 // PasswGen.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -149,8 +149,8 @@ public:
     int* pnNetWordsLen = NULL) const;
 
   // generates a "formatted" password
-  // -> where to store the password
-  // -> size of the dest. buffer
+  // -> destination buffer (where to store the password)
+  // -> max. length of the resulting password (*without* terminating zero!)
   // -> format string; may contain "format specifiers" preceded by a '%' sign
   // -> format flags (PASSFORMAT_FLAG_...)
   // -> pointer to a previously generated password, which may be inserted into

@@ -1,7 +1,7 @@
 // UpdateCheck.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -92,8 +92,8 @@ int __fastcall TUpdateCheckThread::CheckForUpdates(bool blShowError)
       sVersion = "";
 
     if (sVersion.IsEmpty() || sUrl.IsEmpty())
-      throw Exception("Version or URL not specified, or unknown format of "
-        "version file");
+      throw Exception("Version or URL not specified in version file, or unknown "
+        "file format");
 
     if (CompareVersions(sVersion, PROGRAM_VERSION) > 0) {
       WString sMsg = TRLFormat("A new version (%s) of %s is available!\nDo you want "

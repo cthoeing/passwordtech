@@ -1,7 +1,7 @@
 // PasswGen.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -378,7 +378,7 @@ void PasswordGenerator::SetupCharSets(WString& sCustomChars,
     int nWLen = MultiByteToWideChar(CP_ACP, 0, szHighAnsi, -1, nullptr, 0);
     WString sWStr;
     sWStr.SetLength(nWLen-1);
-    MultiByteToWideChar(CP_ACP, 0, szHighAnsi, -1, sWStr.c_str(), nWLen);
+    MultiByteToWideChar(CP_ACP, 0, szHighAnsi, -1, &sWStr[1], nWLen);
 
     m_charSetDecodes[CHARSET_CODES_HIGHANSI] = WStringToW32String(sWStr);
   }
@@ -781,6 +781,7 @@ int PasswordGenerator::GetFormatPassw(word32* pDest,
   bool blUnique = false;
   bool blSecondNum = false;
   char szNum[] = "00000";
+  bool blNumDefault = true;
   int nNum;
   int nNumIdx = 0;
   int nRepeatIdx = 0;
@@ -846,7 +847,6 @@ int PasswordGenerator::GetFormatPassw(word32* pDest,
       }
     }
 
-    bool blNumDefault = true;
     int nParsedNum = 1;
     if (nNumIdx > 0) {
       szNum[nNumIdx] = '\0';
@@ -876,12 +876,9 @@ int PasswordGenerator::GetFormatPassw(word32* pDest,
     w32string sUserCharSet;
     const w32string* psCharSet = nullptr;
     CharSetType charSetType = cstNormal;
-    std::unique_ptr< std::set<SecureW32String> > pUniqueWordList;
+    std::unique_ptr<std::set<SecureW32String>> pUniqueWordList;
 
     switch (lChar) {
-    /*case '%': // "%%" -> '%'
-      pDest[nDestIdx++] = lChar;
-      break;*/
     case '<': // begin user-defined character set
       if (nSrcIdx < nFormatLen-1 && sFormat[nSrcIdx+1] == '<') {
         nUserCharSetNum = nNum;
@@ -907,7 +904,7 @@ int PasswordGenerator::GetFormatPassw(word32* pDest,
 
     case 'P': // copy password to dest
       if (pPassw != nullptr) {
-        nToCopy = std::min(w32strlen(pPassw), nMaxDestLen - nDestIdx);
+        nToCopy = std::min<int>(w32strlen(pPassw), nMaxDestLen - nDestIdx);
         memcpy(pDest + nDestIdx, pPassw, nToCopy * sizeof(word32));
         nDestIdx += nToCopy;
         if (pnPasswUsed != nullptr)
@@ -957,11 +954,6 @@ int PasswordGenerator::GetFormatPassw(word32* pDest,
           pDest[nDestIdx++] = ' ';
         nI++;
       }
-      /*}
-      __finally {
-      if (pUniqueWordList != nullptr)
-        delete pUniqueWordList;
-      }*/
       if (pdSecurity != nullptr) {
         if (blUnique)
           *pdSecurity += CalcPermSetEntropy(m_nWordListSize, nI);
@@ -1057,14 +1049,14 @@ int PasswordGenerator::GetFormatPassw(word32* pDest,
 
       for (nI = 0; nI < nNum && nDestIdx < nMaxDestLen; ) {
         lRand = (*psCharSet)[m_pRandGen->GetNumRange(nSetSize)];
-        bool checkRep = nDestIdx > 0;
+        //bool checkRep = nDestIdx > 0;
         if (blUnique && nI > 0) {
           if (strchpos(pDest + nStartIdx, nI, lRand) >= 0)
             continue;
-          checkRep = false;
+          //checkRep = false;
         }
-        if (checkRep &&
-          nFlags & PASSFORMAT_FLAG_EXCLUDEREPCHARS &&
+        else if (nFlags & PASSFORMAT_FLAG_EXCLUDEREPCHARS &&
+          nDestIdx > 0 &&
           lRand == pDest[nDestIdx-1])
           continue;
         pDest[nDestIdx++] = lRand;
@@ -1079,7 +1071,11 @@ int PasswordGenerator::GetFormatPassw(word32* pDest,
       }
     }
 
-    blUnique = false;
+    // do not reset certain flags when parsing a custom character set
+    if (nUserCharSetNum == 0) {
+      blUnique = false;
+      blNumDefault = true;
+    }
     blSecondNum = false;
     nNumIdx = 0;
   }
@@ -1367,7 +1363,7 @@ static double logFactorial(int nNum)
 
   static const double TWOPI = 2 * acos(-1.0);
 
-  double dNum = nNum;
+  const double dNum = nNum;
   return dNum * log(dNum) - dNum + 0.5 * log(TWOPI * dNum) + 1 / (12 * dNum);
 }
 //---------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 // Main.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -36,7 +36,7 @@
 #include <IniFiles.hpp>
 //---------------------------------------------------------------------------
 #include <windows.h>
-#include <set>
+#include <unordered_set>
 #include <atomic>
 #include "RandomPool.h"
 #include "PasswGen.h"
@@ -94,11 +94,10 @@ const int
   APPSTATE_MINIMIZED  = 0x01,
   APPSTATE_HIDDEN     = 0x02,
   APPSTATE_AUTOTYPE   = 0x04;
-//APPSTATE_SYSTEMTRAY = 0x04;
 
 extern CmdLineOptions g_cmdLineOptions;
 extern std::unique_ptr<TMemIniFile> g_pIni;
-extern std::vector<PWGenProfile*> g_profileList;
+extern std::vector<std::unique_ptr<PWGenProfile>> g_profileList;
 extern RandomGenerator* g_pRandSrc;
 extern std::unique_ptr<RandomGenerator> g_pKeySeededPRNG;
 extern WString g_sExePath;
@@ -405,7 +404,6 @@ private:	// User declarations
   RandomPool* m_pRandPool;
   EntropyManager* m_pEntropyMng;
   PasswordGenerator m_passwGen;
-  //WString m_sCmdLineProfileName;
   WString m_sCharSetInput;
   WString m_sCharSetInfo;
   WString m_sWLFileName;
@@ -413,31 +411,24 @@ private:	// User declarations
   WString m_sWLFileNameErr;
   WString m_sHelpFileName;
   WString m_sRandSeedFileName;
-  //WString m_sEntropyBitsLbl;
   WString m_sStartupErrors;
   WString m_sCharSetHelp;
   WString m_sFormatPasswHelp;
-  //int m_nCmdLineNumOfPassw;
   int m_nNumStartupErrors;
   int m_nAutoClearClipCnt;
   int m_nAutoClearPasswCnt;
-  //bool m_blConsole;
   bool m_blStartup;
   bool m_blCharSetError;
   bool m_blShowEntProgress;
   bool m_blRestart;
-  //bool m_blConfigReadOnly;
   bool m_blFakeIniFile;
-  //bool m_blHotKeySet;
-  //Configuration m_config;
   PasswOptions m_passwOptions;
   IDropTarget* m_pPasswBoxDropTarget;
   TUpdateCheckThread* m_pUpdCheckThread;
   std::atomic<bool> m_blUpdCheckThreadRunning;
   std::vector<LanguageEntry> m_languages;
-  int m_nLangIndex;
   std::vector<HotKeyEntry> m_hotKeys;
-  std::set<std::wstring> m_commonPassw;
+  std::unordered_set<std::wstring> m_commonPassw;
   int m_nCommonPasswEntropy;
   std::unique_ptr<LuaScript> m_pScript;
   TDateTime m_lastUpdateCheck;

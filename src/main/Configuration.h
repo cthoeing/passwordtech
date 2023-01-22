@@ -1,7 +1,7 @@
 // Configuration.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -92,8 +92,10 @@ struct HotKeyEntry {
 typedef std::map<TShortCut,HotKeyEntry> HotKeyList;
 
 struct LanguageEntry {
+  WString Code;
   WString Name;
   WString Version;
+  WString FileName;
 };
 
 struct Configuration {
@@ -105,6 +107,7 @@ struct Configuration {
   bool MinimizeAutotype = true;
   int AutotypeDelay = 50;
   bool TestCommonPassw = true;
+  bool UseAdvancedPasswEst = true;
   bool ShowSysTrayIconConst = true;
   bool MinimizeToSysTray = true;
   bool ConfirmExit = false;
@@ -209,6 +212,9 @@ __published:	// IDE-managed Components
     TLabel *WarnExpireNumDaysLbl;
     TEdit *WarnExpireNumDaysBox;
     TUpDown *WarnExpireNumDaysSpinBtn;
+    TButton *ConvertLangFileBtn;
+    TSaveDialog *SaveDlg;
+    TCheckBox *UseAdvancedPasswEst;
   void __fastcall SelectFontBtnClick(TObject *Sender);
   void __fastcall AutoClearClipCheckClick(TObject *Sender);
   void __fastcall FormShow(TObject *Sender);
@@ -224,8 +230,11 @@ __published:	// IDE-managed Components
   void __fastcall NumberBackupsCheckClick(TObject *Sender);
     void __fastcall AutoSaveCheckClick(TObject *Sender);
     void __fastcall BenchmarkBtnClick(TObject *Sender);
+    void __fastcall ConvertLangFileBtnClick(TObject *Sender);
+    void __fastcall LanguageListSelect(TObject *Sender);
 private:	// User declarations
   HotKeyList m_hotKeys;
+  const std::vector<LanguageEntry>* m_pLangList;
   void __fastcall ShowFontSample(TFont* pFont);
   void __fastcall UpdateHotKeyList(void);
 public:		// User declarations

@@ -22,10 +22,10 @@ USEFORM("src\main\InfoBox.cpp", InfoBoxForm);
 USEFORM("src\main\CreateTrigramFile.cpp", CreateTrigramFileDlg);
 USEFORM("src\main\CreateRandDataFile.cpp", CreateRandDataFileDlg);
 USEFORM("src\main\Configuration.cpp", ConfigurationDlg);
+USEFORM("src\main\ProfileEditor.cpp", ProfileEditDlg);
 USEFORM("src\main\QuickHelp.cpp", QuickHelpForm);
 USEFORM("src\main\ProvideEntropy.cpp", ProvideEntropyDlg);
 USEFORM("src\main\Progress.cpp", ProgressForm);
-USEFORM("src\main\ProfileEditor.cpp", ProfileEditDlg);
 //---------------------------------------------------------------------------
 HANDLE g_hAppMutex;
 

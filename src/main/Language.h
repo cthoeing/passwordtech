@@ -1,7 +1,7 @@
 // Language.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -22,23 +22,29 @@
 #define LanguageH
 //---------------------------------------------------------------------------
 #include <unordered_map>
+#include <vector>
 #include <memory>
 #include "UnicodeUtil.h"
 
+class ELanguageError : public Exception
+{
+public:
+  ELanguageError(const WString& sMsg) :
+    Exception(sMsg)
+  {}
+};
+
 class LanguageSupport
 {
-private:
-  std::unordered_map<word32, std::wstring> m_transl;
-  std::unordered_map<word32, std::wstring>::iterator m_lastEntry;
-
-  bool FindTransl(const AnsiString& asStr);
-  bool FindTransl(const WString& sStr);
-
 public:
+  enum class FileFormat {
+    LNG, PO
+  };
 
   // constructor
   // -> language file name
-  LanguageSupport(const WString& sFileName);
+  LanguageSupport(const WString& sFileName, bool blLoadHeaderOnly = false,
+    bool blConvertOldFormat = false);
 
   // translation
   // -> string to translate
@@ -58,6 +64,40 @@ public:
   // -> if 'true', remove the erroneous entry from the list
   void LastTranslError(const AnsiString& asErrMsg,
     bool blRemoveEntry = true);
+
+  void SaveToPOFileFormat(const WString& sFileName, CharacterEncoding charEnc);
+
+  __property FileFormat FormatType =
+    { read=m_format };
+
+  __property WString LanguageCode =
+    { read=m_sLanguageCode };
+
+  __property WString LanguageName =
+    { read=m_sLanguageName };
+
+  __property WString LanguageVersion =
+    { read=m_sLanguageVersion };
+
+  __property WString TranslatorName =
+    { read=m_sTranslatorName };
+
+  __property WString HelpFileName =
+    { read=m_sHelpFileName };
+
+private:
+  std::unordered_map<word32, std::wstring> m_transl;
+  std::unordered_map<word32, std::wstring>::iterator m_lastEntry;
+  std::unique_ptr<std::vector<std::pair<std::wstring, std::wstring>>> m_pFullTransl;
+  FileFormat m_format;
+  WString m_sLanguageCode;
+  WString m_sLanguageName;
+  WString m_sLanguageVersion;
+  WString m_sTranslatorName;
+  WString m_sHelpFileName;
+
+  bool FindTransl(const AnsiString& asStr);
+  bool FindTransl(const WString& sStr);
 };
 
 extern std::unique_ptr<LanguageSupport> g_pLangSupp;
@@ -69,7 +109,7 @@ WString TRL(const AnsiString& asStr);
 
 WString TRL(const WString& sStr);
 
-WString TRL(const char* pszStr, const char* pszComment = nullptr);
+WString TRL(const char* pszStr, const char* pszContext = nullptr);
 
 WString TRL(const wchar_t* pwszStr);
 

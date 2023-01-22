@@ -1,7 +1,7 @@
 // PasswDatabase.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -27,11 +27,8 @@
 #include <Classes.hpp>
 #include "UnicodeUtil.h"
 #include "SecureMem.h"
-//#include "chacha.h"
-//#include "aes.h"
+#include "DataCompressor.h"
 #include "SymmetricCipher.h"
-#include "sha256.h"
-#include "sha512.h"
 
 // class for password database entry
 class PasswDbEntry {
@@ -301,8 +298,6 @@ private:
     HASH_SHA512 = 1,
 
     KDF_PBKDF2_SHA256 = 0,
-
-    IO_BUF_SIZE = 65536
   };
 
   PasswDbList m_db;
@@ -316,8 +311,6 @@ private:
   word8* m_pDbSalt;
   word8* m_pDbKey;
   word8* m_pDbRecoveryKeyBlock;
-  std::unique_ptr<EncryptionAlgorithm::SymmetricCipher> m_dbCipher;
-  SecureMem<sha512_context> m_dbHashCtx;
   SecureMem<word8> m_cryptBuf;
   word32 m_lCryptBufPos;
   std::unique_ptr<TFileStream> m_pFile;
@@ -327,6 +320,8 @@ private:
   bool m_blPlaintextPassw;
   DbOpenState m_dbOpenState;
   bool m_blRecoveryKey;
+  bool m_blCompressed;
+  int m_nCompressionLevel;
 
   // initializes crypto engine (encryption and hash algorithms),
   // allocates RAM to protect the database master key and passwords
@@ -350,9 +345,6 @@ private:
   // -> buffer of any type
   // -> number of bytes to write
   void Write(const void* pBuf, word32 lNumOfBytes);
-
-  // encrypt internal buffer and write data to file
-  void Flush(void);
 
   // write field data (Title, User name, ...) to file
   // -> data buffer
@@ -455,13 +447,15 @@ public:
 
   enum {
     VERSION_HIGH = 1,
-    VERSION_LOW = 3,
+    VERSION_LOW = 4,
     VERSION = (VERSION_HIGH << 8) | VERSION_LOW,
 
     KEY_HASH_ITERATIONS = 16384,
 
     CIPHER_AES256 = 0,
     CIPHER_CHACHA20 = 1,
+
+    COMPRESSION_DEFLATE = 1,
   };
 
   // creation/destruction
@@ -614,6 +608,14 @@ public:
   // recovery key enabled/disabled (true/false)
   __property bool HasRecoveryKey =
   { read=m_blRecoveryKey };
+
+  // compression enabled/disabled
+  __property bool Compressed =
+  { read=m_blCompressed, write=m_blCompressed };
+
+  // compression level (0 if uncompressed)
+  __property int CompressionLevel =
+  { read=m_nCompressionLevel, write=m_nCompressionLevel };
 };
 
 

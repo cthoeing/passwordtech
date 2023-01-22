@@ -1,7 +1,7 @@
 // PasswMngDbSettings.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2022 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -62,12 +62,15 @@ __fastcall TPasswDbSettingsDlg::TPasswDbSettingsDlg(TComponent* Owner)
   if (g_pLangSupp) {
     TRLCaption(this);
     TRLCaption(GeneralSheet);
+    TRLCaption(CompressionSheet);
     TRLCaption(SecuritySheet);
     TRLCaption(DefUserNameLbl);
     TRLCaption(PasswFormatSeqLbl);
     TRLCaption(EncryptionAlgoLbl);
     TRLCaption(NumKdfRoundsLbl);
     TRLCaption(DefaultExpiryLbl);
+    TRLCaption(EnableCompressionCheck);
+    TRLCaption(CompressionLevelLbl);
 
     TRLHint(PasswGenTestBtn);
     TRLHint(CalcRoundsBtn);
@@ -98,6 +101,8 @@ void __fastcall TPasswDbSettingsDlg::GetSettings(PasswDbSettings& s)
   s.DefaultExpiryDays = DefaultExpiryUpDown->Position;
   s.CipherType = EncryptionAlgoList->ItemIndex;
   s.NumKdfRounds = StrToUInt(NumKdfRoundsBox->Text);
+  s.Compressed = EnableCompressionCheck->Checked;
+  s.CompressionLevel = s.Compressed ? CompressionLevelBar->Position : 0;
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswDbSettingsDlg::SetSettings(const PasswDbSettings& s,
@@ -110,6 +115,9 @@ void __fastcall TPasswDbSettingsDlg::SetSettings(const PasswDbSettings& s,
   EncryptionAlgoList->Enabled = !blHasRecoveryPassw;
   NumKdfRoundsBox->Text = IntToStr(static_cast<__int64>(s.NumKdfRounds));
   NumKdfRoundsBox->Enabled = !blHasRecoveryPassw;
+  EnableCompressionCheck->Checked = s.Compressed;
+  CompressionLevelBar->Position = s.Compressed ? s.CompressionLevel : 6;
+  EnableCompressionCheckClick(this);
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswDbSettingsDlg::FormShow(TObject *Sender)
@@ -146,11 +154,12 @@ void __fastcall TPasswDbSettingsDlg::CalcRoundsBtnClick(TObject *Sender)
     g_fastRandGen.GetData(key, sizeof(key));
     g_fastRandGen.GetData(salt, sizeof(salt));
 
-    const int ROUGH_EST_ROUNDS = 10000;
+    const int ROUGH_EST_ROUNDS = 10000, TEST_FACTOR = 2;
 
     Stopwatch clock;
     pbkdf2_256bit(key, sizeof(key), salt, sizeof(salt), result, ROUGH_EST_ROUNDS);
-    word32 lRoughEstimate = lround(ROUGH_EST_ROUNDS / clock.ElapsedSeconds());
+    word32 lRoughEstimate = TEST_FACTOR * lround(
+      ROUGH_EST_ROUNDS / clock.ElapsedSeconds());
 
     clock.Reset();
     pbkdf2_256bit(key, sizeof(key), salt, sizeof(salt), result, lRoughEstimate);
@@ -200,6 +209,14 @@ void __fastcall TPasswDbSettingsDlg::FormClose(TObject *Sender, TCloseAction &Ac
   ClearEditBoxTextBuf(DefUserNameBox);
   ClearEditBoxTextBuf(PasswFormatSeqBox);
   ClearEditBoxTextBuf(PasswGenTestBox);
+}
+//---------------------------------------------------------------------------
+void __fastcall TPasswDbSettingsDlg::EnableCompressionCheckClick(TObject *Sender)
+
+{
+  bool blChecked = EnableCompressionCheck->Checked;
+  CompressionLevelBar->Enabled = blChecked;
+  CompressionLevelLbl->Enabled = blChecked;
 }
 //---------------------------------------------------------------------------
 

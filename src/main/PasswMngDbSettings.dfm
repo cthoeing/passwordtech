@@ -22,12 +22,19 @@
     289)
   PixelsPerInch = 96
   TextHeight = 13
+  object Label1: TLabel
+    Left = 104
+    Top = 24
+    Width = 31
+    Height = 13
+    Caption = 'Label1'
+  end
   object ConfigPages: TPageControl
     Left = 8
     Top = 8
     Width = 377
     Height = 240
-    ActivePage = SecuritySheet
+    ActivePage = CompressionSheet
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
     object GeneralSheet: TTabSheet
@@ -139,6 +146,38 @@
         Color = clBtnFace
         ReadOnly = True
         TabOrder = 2
+      end
+    end
+    object CompressionSheet: TTabSheet
+      Caption = 'Compression'
+      ImageIndex = 2
+      object CompressionLevelLbl: TLabel
+        Left = 3
+        Top = 82
+        Width = 345
+        Height = 23
+        Alignment = taCenter
+        AutoSize = False
+        Caption = '<- Low compression, fast | High compression, slow ->'
+      end
+      object EnableCompressionCheck: TCheckBox
+        Left = 8
+        Top = 16
+        Width = 345
+        Height = 17
+        Caption = 'Enable data compression (Deflate)'
+        TabOrder = 0
+        OnClick = EnableCompressionCheckClick
+      end
+      object CompressionLevelBar: TTrackBar
+        Left = 3
+        Top = 39
+        Width = 353
+        Height = 37
+        Max = 9
+        Min = 1
+        Position = 6
+        TabOrder = 1
       end
     end
     object SecuritySheet: TTabSheet
