@@ -15,7 +15,8 @@ Password Tech runs on Windows 7 and later.
 - Pattern-based passwords
 - Password scripting with Lua
 - Fully customizable
-- Enryption of clipboard text
+- Encryption of clipboard text
+- Password quality/strength estimation
 
 ## Release Notes
 
@@ -23,7 +24,9 @@ The history of releases of main version 3 is contained in the file *changes.txt*
 
 ## Translations
 
-Available translations / language (.lng) files can be found in the *languages/* directory.
+Available translations / language files can be found in the *languages/* directory. As of version 3.4.5, Password Tech preferantially uses the PO format (.po files) for translations. The custom LNG format (.lng files) is considered deprecated. Password Tech still accepts .lng files, but I recommend all translators to switch over to the PO format at the earliest opportunity. The PO format is more powerful than the custom format and also widely supported by many applications, web services, and editors (such as [POEdit](https://poedit.net)).
+
+To convert existing translations from the LNG to the PO format, load the translation in Password Tech, select *Options | Configuration* in the main menu, go to the *Languages* tab in the Configuration window, and press the *Convert to new PO file format* button.
 
 ## License
 
@@ -45,5 +48,7 @@ Password Tech makes use of the following open source components:
 - [diceware8k](http://www.diceware.com) list by Arnold G. Reinhold
 - [Lua](https://www.lua.org/) interpreter and library by Lua.org, PUC-Rio
 - Implementation of IDropSource and IDropTarget COM interface by [J. Brown](www.catch22.net)
-- ChaCha implementation by D.J. Bernstein
+- ChaCha implementation by [D.J. Bernstein](https://cr.yp.to/djb.html)
+- [miniz](https://github.com/richgel999/miniz) library for *Deflate* compression
+- [zxcvbn-c](https://github.com/tsyrogit/zxcvbn-c) - C implementation of the *zxcvbn* algorithm to estimate the strength of passwords
 
