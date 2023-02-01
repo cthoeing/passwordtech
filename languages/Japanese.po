@@ -1,0 +1,2139 @@
+﻿# Japanese translation of Password Tech 3.4.5 (Converted)
+# Released under the GNU General Public License
+# NOTE: You have to provide the appropriate language code in the "Language" section of the following header.
+# If the language code is missing or invalid, PwTech will derive the language name from the file name.
+#. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
+msgid ""
+msgstr ""
+"Project-Id-Version: Password Tech 3.4.5\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: maboroshin\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Notepad 3\n"
+
+msgid "Info"
+msgstr "情報"
+
+msgid "Warning"
+msgstr "警告"
+
+msgid "Question"
+msgstr "質問"
+
+msgid "Error"
+msgstr "エラー"
+
+msgid "Profile:"
+msgstr "プロファイル:"
+
+msgid "Settings"
+msgstr "設定"
+
+msgid "Include Characters (Pass*words*)"
+msgstr "文字を含める (パスワード)"
+
+msgid "Length:"
+msgstr "長さ:"
+
+msgid "Character Set:"
+msgstr "文字の組み合わせ:"
+
+msgid "Show details"
+msgstr "詳細を表示"
+
+msgid "Include Words (Pass*phrases*)"
+msgstr "単語を含める (パスフレーズ)"
+
+msgid "Number:"
+msgstr "数:"
+
+msgid "Word List File:"
+msgstr "単語リストのファイル:"
+
+msgid "Browse"
+msgstr "参照"
+
+msgid "Specify length*:"
+msgstr "長さの指定*:"
+
+msgid "Combine Words with Characters"
+msgstr "文字と単語の組み合わせ"
+
+msgid "Format password:"
+msgstr "書式型のパスワード:"
+
+msgid "Run script:"
+msgstr "スクリプト実行:"
+
+msgid "Reload script"
+msgstr "スクリプトを再読み込み"
+
+msgid "Multiple passwords:"
+msgstr "複数のパスワード :"
+
+msgid "Generate"
+msgstr "生成"
+
+msgid "Generate password list to file"
+msgstr "パスワード一覧のファイルを生成"
+
+msgid "Advanced"
+msgstr "詳細"
+
+msgid "Generated Password"
+msgstr "生成されたパスワード"
+
+msgid "Click on \"Generate\""
+msgstr "「生成」をクリック"
+
+msgid "Hide/show password"
+msgstr "パスワードの表示を切り替え"
+
+msgid "Hold left mouse button to drag & drop password"
+msgstr "左クリックでパスワードをドラッグできます"
+
+msgid "File"
+msgstr "ファイル"
+
+msgid "Profile"
+msgstr "プロファイル"
+
+msgid "Profile Editor..."
+msgstr "プロファイル編集..."
+
+msgid "Exit"
+msgstr "終了"
+
+msgid "Tools"
+msgstr "ツール"
+
+msgid "Clear Clipboard"
+msgstr "クリップボードの内容を消去"
+
+msgid "Encrypt Clipboard..."
+msgstr "クリップボードの内容を暗号化..."
+
+msgid "Decrypt Clipboard..."
+msgstr "クリップボードの内容を複合化..."
+
+msgid "Create Random Data File..."
+msgstr "ランダムデータのファイルを作成..."
+
+msgid "Create Trigram File..."
+msgstr "トライグラムのファイルを作成..."
+
+msgid "MP Password Generator..."
+msgstr "マスターパスワードによる生成ツール..."
+
+msgid "Deterministic Random Generator"
+msgstr "決定性ランダム生成器"
+
+msgid "Reset"
+msgstr "初期化"
+
+msgid "Deactivate"
+msgstr "解除"
+
+msgid "Provide Additional Entropy"
+msgstr "情報量を追加"
+
+msgid "As Text..."
+msgstr "文字列から..."
+
+msgid "From File..."
+msgstr "ファイルから..."
+
+msgid "Options"
+msgstr "オプション"
+
+msgid "Configuration..."
+msgstr "設定..."
+
+msgid "Language"
+msgstr "言語"
+
+msgid "Always on Top"
+msgstr "常に手前に表示"
+
+msgid "Hide Entropy Progress"
+msgstr "情報量の状態を非表示"
+
+msgid "Save Settings on Exit"
+msgstr "終了時に設定を保存"
+
+msgid "Save Settings Now"
+msgstr "今すぐ設定を保存"
+
+msgid "Help"
+msgstr "ヘルプ"
+
+msgid "Open Manual"
+msgstr "説明書を開く"
+
+msgid "Visit Website"
+msgstr "ウェブサイト"
+
+msgid "Get Translations..."
+msgstr "翻訳ファイルを入手..."
+
+msgid "Donate..."
+msgstr "寄付..."
+
+msgid "Check for Updates"
+msgstr "更新を確認"
+
+msgid "Timer Info..."
+msgstr "時計の情報..."
+
+msgid "About %s..."
+msgstr "%s について..."
+
+msgid "Restore %s"
+msgstr "%s を復元"
+
+msgid "Generate Password"
+msgstr "パスワードの生成"
+
+msgid "Generate and Show Password..."
+msgstr "パスワードを生成し表示..."
+
+msgid "Generate and Autotype Password"
+msgstr "パスワードを生成し自動入力..."
+
+msgid "Open user manual"
+msgstr "説明書を開く"
+
+msgid "Clear clipboard (text contents only)"
+msgstr "クリップボードの内容を消去 (文字列のみ)"
+
+msgid "Clipboard text encryption (left-click) or decryption (right-click)"
+msgstr "クリップボードの文字列を暗号化 (左クリック) 複合化(右クリック)"
+
+msgid "Load, create or delete profiles"
+msgstr "プロファイルの読み込み、作成、削除"
+
+msgid "Generate passwords based on a master password"
+msgstr "マスターパスワードに基づきパスワード生成"
+
+msgid "Main configuration of the program"
+msgstr "プログラムの設定"
+
+msgid "All files"
+msgstr "すべてのファイル"
+
+msgid "Text files"
+msgstr "テキストファイル"
+
+msgid "Trigram files"
+msgstr "トライグラムファイル"
+
+msgid "Lua scripts"
+msgstr "Lua スクリプト"
+
+msgid "Undo"
+msgstr "元に戻す"
+
+msgid "Cut"
+msgstr "切り取り"
+
+msgid "Copy"
+msgstr "コピー"
+
+msgid "Encrypt && Copy"
+msgstr "暗号化 && コピー"
+
+msgid "Paste"
+msgstr "貼り付け"
+
+msgid "Perform Autotype"
+msgstr "自動入力の実行"
+
+msgid "Add to Database"
+msgstr "データベースに追加"
+
+msgid "Delete"
+msgstr "削除"
+
+msgid "Select All"
+msgstr "すべて選択"
+
+msgid "Clear List"
+msgstr "一覧を消去"
+
+msgid "Remove Entry"
+msgstr "項目を削除"
+
+msgid "Editable"
+msgstr "編集可能"
+
+msgid "Enable Password Testing"
+msgstr "パスワードのテストを有効化"
+
+msgid "Change Font..."
+msgstr "フォントの変更..."
+
+msgid "Select high-entropy file"
+msgstr "高-情報量用のファイルを選択"
+
+msgid "Manage passwords in encrypted databases"
+msgstr "暗号化されたデータベース内のパスワードの管理"
+
+msgid "Reload profile"
+msgstr "プロファイルの再読み込み"
+
+msgid "Add profile"
+msgstr "プロファイルの追加"
+
+msgid "Set up..."
+msgstr "セットアップ..."
+
+msgid "Password Manager..."
+msgstr "パスワード管理ツール..."
+
+msgid "Enter Donor Key..."
+msgstr "ドナーキーを入力..."
+
+msgid "Reset All Window Positions"
+msgstr "ウィンドウの位置をすべて初期化"
+
+msgid ""
+"Could not read random seed file\n"
+"\"%s\"."
+msgstr ""
+"ランダムシードのファイルを読み込めません\n"
+"“％s”."
+
+msgid ""
+"Could not write to random seed file\n"
+"\"%s\"."
+msgstr ""
+"ランダムシードのファイルに書き込めません\n"
+"“％s”."
+
+msgid ""
+"Unknown command line switch(es):\n"
+"%s"
+msgstr ""
+"不明なコマンドライン引数: \n"
+"％s"
+
+msgid ""
+"Error while loading word list file\n"
+"\"%s\"."
+msgstr ""
+"単語リストファイルの読み込み中にエラー\n"
+"“％s”。"
+
+msgid ""
+"Error while loading list of common passwords:\n"
+"%s."
+msgstr ""
+"一般パスワード一覧の読み込み中にエラー: \n"
+"％s。"
+
+msgid "%s encountered %d error(s) during startup:"
+msgstr "%s 開始中に%dエラーが発生:"
+
+msgid ""
+"If you like %s, please consider\n"
+"making a donation. Thank you!"
+msgstr ""
+"%s を気に入っていただけたら\n"
+"寄付をお考えください。ご愛顧に感謝します！"
+
+msgid "Character set \"%s\" is invalid."
+msgstr "文字の組み合わせ「％s」が正しくありません。"
+
+msgid ""
+"Error while writing to configuration file:\n"
+"%s."
+msgstr ""
+"設定ファイルへの書き込み中にエラー: \n"
+"％s。"
+
+msgid "%d characters / %.1f bits per character"
+msgstr "%d 文字 / 1文字ごとに %.1f ビット"
+
+msgid "%d words / %.1f bits per word"
+msgstr "%d 単語 / 単語ごとに %.1f ビット"
+
+msgid "Could not open trigram file."
+msgstr "トライグラム ファイルが開けません。"
+
+msgid "Invalid trigram file."
+msgstr "トライグラム ファイルが正しくありません。"
+
+msgid "Matches common password!"
+msgstr "ありふれたパスワードに一致します！"
+
+msgid "Text successfully encrypted."
+msgstr "文字列は正常に暗号化されました。"
+
+msgid "Text successfully decrypted."
+msgstr "文字列は正常に複合化されました。"
+
+msgid "Could not open clipboard."
+msgstr "クリップボードを開けません。"
+
+msgid "The text to be encrypted is too long."
+msgstr "暗号化する文字列が長すぎます。"
+
+msgid "No text available to process."
+msgstr "処理する文字列がありません。"
+
+msgid ""
+"Not enough memory available to perform\n"
+"the operation. Try to use a shorter text."
+msgstr ""
+"この操作を実行するために十分なメモリがありません。\n"
+"より短い文字列でお試しください。"
+
+msgid ""
+"Decryption failed. This may be attributed\n"
+"to the following reasons:"
+msgstr ""
+"複合化に失敗。\n"
+"以下が原因になっている可能性があります:"
+
+msgid "- You entered a wrong password."
+msgstr "- 入力されたパスワードが間違っています。"
+
+msgid ""
+"- The text is corrupted.\n"
+"- The text is not encrypted."
+msgstr ""
+"- 文字列が壊れています。\n"
+"- 文字列は暗号化されていません。"
+
+msgid ""
+"This should not have happened:\n"
+"Decryption successful, but decompression\n"
+"failed."
+msgstr ""
+"よくないことが起こりました:\n"
+"複合化に成功したが\n"
+"展開に失敗しました。"
+
+msgid "Could not register the following hot keys:"
+msgstr "次のホットキーを登録できません:"
+
+msgid ""
+"The selected file already exists. Do you\n"
+"want to append passwords to this file\n"
+"(existing passwords will be preserved),\n"
+"or do you want to completely overwrite it?\n"
+"\n"
+"Yes\t-> append passwords,\n"
+"No\t-> overwrite file,\n"
+"Cancel\t-> cancel process."
+msgstr ""
+"選択したファイルは既に存在します。\n"
+"このファイルへパスワードを追加しますか？\n"
+"(既存のパスワードは保持されます)\n"
+"または完全に上書しますか？\n"
+"\n"
+"はい\t-> パスワード追加\n"
+"いいえ\t-> ファイル上書き\n"
+"キャンセル\t-> 処理を取り消す"
+
+msgid "Passphrase: Invalid length range."
+msgstr "パスフレーズ: 長さの範囲が正しくありません。"
+
+msgid ""
+"If the option \"Each character must occur\n"
+"only once\" is activated, the password length\n"
+"is limited to the size of the character set (%d)."
+msgstr ""
+"オプション「Each character must occurnonly once」が有効なら\n"
+"パスワードの長さが、文字数の組み合わせの"
+
+msgid ""
+"If the option \"Each word must occur only\n"
+"once\" is activated, the number of words\n"
+"is limited to the size of the word list (%d)."
+msgstr ""
+"オプション「Each character must occurnonly once」が有効なら、\n"
+"単語の数は単語リストの大きさ (％d) に制限されます。"
+
+msgid ""
+"Error while loading script:\n"
+"%s."
+msgstr ""
+"スクリプト読み込み中のエラー:\n"
+"％s。"
+
+msgid "Generating password list ..."
+msgstr "パスワードのリストの生成中 ..."
+
+msgid "%d of %d passwords generated."
+msgstr "%d 個 / %d 個中のパスワード生成済み"
+
+msgid "\"P\" is not specified."
+msgstr "“P”は指定されていません。"
+
+msgid "Password not available."
+msgstr "パスワードは利用できません。"
+
+msgid "Password too long."
+msgstr "パスワードが長すぎます。"
+
+msgid "Invalid format specifier \"%s\"."
+msgstr "次の書式指定子が無効「％s」。"
+
+msgid "Executing script"
+msgstr "スクリプト実行中"
+
+msgid "Waiting for script ..."
+msgstr "スクリプトを待機中 ..."
+
+msgid ""
+"Script thread was terminated forcibly.\n"
+"Please check script for infinite loops."
+msgstr ""
+"スクリプトのスレッドが強制終了されました。\n"
+"スクリプトに無限ループがないか確認してください。"
+
+msgid ""
+"The estimated list size will probably exceed\n"
+"the internal memory limit.\n"
+"Please reduce the number of passwords"
+msgstr ""
+"一覧のサイズの推定が、内部メモリの制限を\n"
+"超えるようです。パスワードの数を\n"
+"減らしてください。"
+
+msgid ""
+"The memory limit of the password list has\n"
+"been reached.\n"
+"\n"
+"The number of passwords has been\n"
+"reduced to %d."
+msgstr ""
+"パスワードの一覧がメモリ制限に達しました。\n"
+"\n"
+"パスワードの数は％dに減少しました。"
+
+msgid "%d passwords generated."
+msgstr "%d 個のパスワードを生成。"
+
+msgid ""
+"%d passwords generated.\r\n"
+"Security of each password: %d bits.\r\n"
+"Maximum security of the entire list: %d bits."
+msgstr ""
+"%d 個のパスワードを生成。\r\n"
+"各パスワードの安全性: %d ビット\r\n"
+"一覧全体の安全性の最大: %d ビット"
+
+msgid "Password copied to clipboard."
+msgstr "パスワードをクリップボードにコピーしました。"
+
+msgid "Copying password list ..."
+msgstr "パスワード一覧をコピー中..."
+
+msgid ""
+"File \"%s\" successfully created.\n"
+"\n"
+"%d passwords written."
+msgstr ""
+"ファイル「％s」の作成に成功。\n"
+"\n"
+"％d個のパスワードが書き込まれました。"
+
+msgid ""
+"An error has occurred during password generation:\n"
+"%s."
+msgstr ""
+"パスワード生成中にエラーが発生:\n"
+"％s。"
+
+msgid "%d passwords written to file \"%s\"."
+msgstr "次のファイルに％d個のパスワードが書き込まれました「％s」。"
+
+msgid "%d bits / %d characters"
+msgstr "%d ビット / %d 文字"
+
+msgid "Invalid character set."
+msgstr "文字の組み合わせが正しくありません。"
+
+msgid "default (English) trigrams"
+msgstr "既定 (英語) トライグラム"
+
+msgid "File \"%s\""
+msgstr "ファイル「%s」"
+
+msgid ""
+"(phonetic, based on trigram frequencies\n"
+"from the following source:\n"
+"<%s>)"
+msgstr ""
+"(音声学、次の入力元のトライグラムの頻度に\n"
+"基づく:\n"
+"<%s>)"
+
+msgid ""
+"The character set you entered is invalid.\n"
+"It must contain at least 2 different characters."
+msgstr ""
+"入力された文字列の組み合わせは無効です。\n"
+"少なくとも、2文字以上の異なる文字を含めてください。"
+
+msgid "Currently loaded character set:"
+msgstr "文字の組み合わせで呼び出される文字:"
+
+msgid "Could not open file."
+msgstr "ファイルを開けません。"
+
+msgid "Not enough valid words."
+msgstr "正しい単語が十分ではありません。"
+
+msgid "Select word list file"
+msgstr "単語リストのファイルを選択"
+
+msgid ""
+"Error while loading the file\n"
+"\"%s\":\n"
+"%s"
+msgstr ""
+"次のファイルの読み込み中にエラー「%s」:\n"
+"%s"
+
+msgid "default (English) word list"
+msgstr "既定 (英語) 単語リスト"
+
+msgid "Currently loaded word list:"
+msgstr "読み込んでいる単語リスト:"
+
+msgid "First word:"
+msgstr "最初の単語:"
+
+msgid "Random word:"
+msgstr "ランダムな単語:"
+
+msgid "Last word:"
+msgstr "最後の単語:"
+
+msgid ""
+"The version of this language (%s) is not\n"
+"compatible with this program version.\n"
+"This version of %s requires a language\n"
+"version of at least %s.\n"
+"\n"
+"Do you want to use it anyway?"
+msgstr ""
+"この言語のバージョン (％s) は\n"
+"本プログラムのバージョンと互換性がありません。\n"
+"このバージョンの ％s は最低でも\n"
+" %s の言語のバージョンが必要です。\n"
+"\n"
+"それでも使用しますか？"
+
+msgid ""
+"The version of this language (%s) is higher\n"
+"than the version of this program (%s).\n"
+"Therefore, version incompatibilities may occur.\n"
+"\n"
+"Do you want to use it anyway?"
+msgstr ""
+"この言語のバージョン (％s) は\n"
+"本プログラムのバージョン (％s) より高いです。\n"
+"バージョンの互換性の問題が起こるかもしれません。\n"
+"\n"
+"それでも使用しますか？"
+
+msgid ""
+"The language file will be loaded when you\n"
+"restart the program.\n"
+"\n"
+"Do you want to restart now?"
+msgstr ""
+"言語ファイルはプログラムの起動時に\n"
+"読み込まれます。\n"
+"\n"
+"今すぐ再起動しますか？"
+
+msgid ""
+"Password is too long to show it in a\n"
+"message box like this.\n"
+"\n"
+"It has been copied to the clipboard."
+msgstr ""
+"パスワードが長く、このメッセージのようには\n"
+"表示できません。\n"
+"\n"
+"クリップボードにコピーされています。"
+
+msgid ""
+"The generated password is:\n"
+"\n"
+"%s\n"
+"\n"
+"The estimated security is %d bits.\n"
+"\n"
+"Yes\t-> copy password to clipboard,\n"
+"No\t-> generate new password,\n"
+"Cancel\t-> cancel process."
+msgstr ""
+"生成されたパスワード:\n"
+"\n"
+"％s\n"
+"\n"
+"推定された安全性 ％d ビット\n"
+"\n"
+"はい\t-> クリップボードにパスワードをコピー\n"
+"いいえ\t-> 新規パスワードを生成\n"
+"取消\t- > 処理を取り消す"
+
+msgid ""
+"All entries will be removed from the list.\n"
+"Are you sure?"
+msgstr ""
+"すべての項目が一覧から除去されます。\n"
+"よろしいですか？"
+
+msgid "Total Entropy Bits: %d"
+msgstr "情報量のビット数合計: %d"
+
+msgid ""
+"High-resolution timer used:\n"
+"%s.\n"
+"\n"
+"Current value: %s."
+msgstr ""
+"高分解能の時計を使用: \n"
+"%s \n"
+"\n"
+"現在の値: %s"
+
+msgid "Could not download version file"
+msgstr "バージョンファイルがダウンロードできません"
+
+msgid "Version or URL not specified in version file, or unknown file format"
+msgstr "バージョンファイル内にバージョンかURLの指定がない、または不明なファイル形式"
+
+msgid ""
+"A new version (%s) of %s is available!\n"
+"Do you want to visit the download page now?"
+msgstr ""
+"%s の最新バージョン (%s) があります！\n"
+"ダウンロードページを開きますか？"
+
+msgid "(NOTE: %s)"
+msgstr "(注: %s)"
+
+msgid "Your version of %s is up-to-date."
+msgstr "利用中の %s は最新版です。"
+
+msgid ""
+"Error while checking for updates:\n"
+"%s."
+msgstr ""
+"更新確認中にエラー: \n"
+"%s"
+
+msgid "WARNING: Random generator is deterministic (press F7 to deactivate)!"
+msgstr "警告: ランダム生成器は決定性です (F7 で無効化)！"
+
+msgid "Clipboard cleared."
+msgstr "クリップボードを消去しました。"
+
+msgid "Profile \"%s\" activated."
+msgstr "「プロファイル%s」を有効化しました。"
+
+msgid "Deterministic random generator has been ACTIVATED."
+msgstr "決定性ランダム生成器が有効になりました。"
+
+msgid "Deterministic random generator has been RESET."
+msgstr "決定性ランダム生成器は初期化されました。"
+
+msgid "Deterministic random generator has been DEACTIVATED."
+msgstr "決定性ランダム生成器は無効化されました。"
+
+msgid "ERROR: Profile \"%s\" not found."
+msgstr "エラー: プロファイル「%s」が見つかりません。"
+
+msgid "Selected profile \"%s\"."
+msgstr "選択されたプロファイル「%s」"
+
+msgid "Generating %d password(s) ..."
+msgstr "％d個のパスワードを生成中 ..."
+
+msgid ""
+"Command line function \"gen\" is only effective\n"
+"when %s is run from the console."
+msgstr ""
+"コマンドラインの関数 gen は、コンソールから\n"
+"%s を実行したときのみ有効です。"
+
+msgid ""
+"Your donor key has expired: The maximum\n"
+"number of updates has been reached."
+msgstr ""
+"このドナーキーは期限切れ:\n"
+"更新回数の上限に達しました。"
+
+msgid "Donor key is invalid."
+msgstr "ドナーキーが正しくありません。"
+
+msgid "Donor Key"
+msgstr "ドナーキー"
+
+msgid "Enter donor key:"
+msgstr "ドナーキーを入力:"
+
+msgid ""
+"Your Donor ID is: %s\n"
+"Supported number of updates: %s"
+msgstr ""
+"あなたのドナーID: %s \n"
+"更新回数の上限: %s"
+
+msgid "Unlimited"
+msgstr "無制限"
+
+msgid "Thank you for your support!"
+msgstr "ご支援に感謝します！"
+
+msgid "Copy this information to the clipboard?"
+msgstr "この情報をクリップボードにコピーしますか？"
+
+msgid "Donor key has expired."
+msgstr "ドナーキーが期限切れです。"
+
+msgid "Settings saved."
+msgstr "設定を保存しました。"
+
+msgid "Save password"
+msgstr "パスワードを保存"
+
+msgid "Clear Password Cache"
+msgstr "パスワードのキャッシュを削除"
+
+msgid "Password cache cleared."
+msgstr "パスワードのキャッシュを削除しました。"
+
+msgid "Select Lua script file"
+msgstr "Lua スクリプトファイルを選択"
+
+msgid "Waiting for active threads to finish ..."
+msgstr "アクティブなスレッドの完了を待機中 ..."
+
+msgid ""
+"Donate at least one of the following amounts\n"
+"to receive a Donor Key:\n"
+"\n"
+"%d EUR / %d USD:\tValid for current version and %d updates.\n"
+"%d EUR / %d USD:\tValid for the entire lifetime of version 3.\n"
+"\n"
+"Do you want to donate now?"
+msgstr ""
+"下記のいずれかの金額以上の寄付で\n"
+"ドナーキーが付与されます:\n"
+"\n"
+"%d ユーロ / %d ドル:\t現在以降%dバージョンの更新で有効\n"
+"%d ユーロ / %d ドル:\tバージョン3全体で有効\n"
+"\n"
+"今すぐ寄付しますか？"
+
+msgid ""
+"Could not access registry key\n"
+"%s."
+msgstr ""
+"レジストリーのキーにアクセスできません\n"
+"％s。"
+
+msgid "Configuration"
+msgstr "設定"
+
+msgid "General"
+msgstr "一般"
+
+msgid "Security"
+msgstr "安全性"
+
+msgid "Hot Keys"
+msgstr "ホットキー"
+
+msgid "Files"
+msgstr "ファイル"
+
+msgid "Updates"
+msgstr "更新"
+
+msgid "Database"
+msgstr "データベース"
+
+msgid "Change font for the GUI controls:"
+msgstr "GUI 用のフォントを変更:"
+
+msgid "Select font"
+msgstr "フォントの選択"
+
+msgid "Show system tray icon constantly"
+msgstr "常にシステムトレイにアイコンを表示"
+
+msgid "Minimize program to system tray"
+msgstr "システムトイレ以内に最小化"
+
+msgid "Minimize before performing autotype"
+msgstr "自動入力実行前に最小化"
+
+msgid "Autotype delay between characters (ms):"
+msgstr "自動入力の文字間の遅延 (ミリ秒):"
+
+msgid "Ask before exiting application"
+msgstr "プログラムの終了前に確認する"
+
+msgid "Launch application on system startup (for current user)"
+msgstr "システムの起動時にアプリを起動 (現在のユーザー)"
+
+msgid "Benchmark..."
+msgstr "計測..."
+
+msgid "Encryption algorithm for generating random data via random pool:"
+msgstr "ランダムプールによるランダムデータ生成の暗号化アルゴリズム:"
+
+msgid "Test passwords against list of common passwords"
+msgstr "ありふれたパスワードの一覧と照らし合わせるテスト"
+
+msgid "Use advanced password strength estimation (%s)"
+msgstr "高度なパスワード強度推定を使用 (%s)"
+
+msgid "Clear clipboard automatically after the following time (seconds):"
+msgstr "時間経過後に自動でクリップボードの内容を消去 (秒):"
+
+msgid "Clear password box automatically after the following time (seconds):"
+msgstr "パスワード欄を時間経過後に自動で消去 (秒):"
+
+msgid "Automatic check for updates:"
+msgstr "自動で更新確認する間隔:"
+
+msgid "Daily"
+msgstr "毎日"
+
+msgid "Weekly"
+msgstr "毎週"
+
+msgid "Monthly"
+msgstr "毎月"
+
+msgid "Disabled"
+msgstr "なし"
+
+msgid "Actions"
+msgstr "開始"
+
+msgid "Show/restore main window"
+msgstr "メインウィンドウの表示/復元"
+
+msgid "No further action"
+msgstr "追加の動作なし"
+
+msgid "Generate single password in main window"
+msgstr "メインウィンドウに1個のパスワードを生成"
+
+msgid "Generate multiple passwords"
+msgstr "複数のパスワードを生成"
+
+msgid "Generate password and copy it to the clipboard"
+msgstr "パスワードを生成しクリップボードにコピー"
+
+msgid "Generate password and show it in a message box"
+msgstr "パスワードを生成しメッセージとして表示"
+
+msgid "Generate password and perform autotype"
+msgstr "パスワードを生成し自動入力"
+
+msgid "Open MP password generator"
+msgstr "MP パスワード生成ツールを開く"
+
+msgid "Show password manager"
+msgstr "パスワード管理ツールを開く"
+
+msgid "Show MP password generator"
+msgstr "MP パスワード生成ツールを表示"
+
+msgid "Search database for keyword in window title"
+msgstr "ウィンドウ タイトル内のキーワードでデータベースを検索"
+
+msgid "Search database for keyword and perform autotype"
+msgstr "キーワードでデータベースを検索し自動入力を実行"
+
+msgid "Shortcut to assign:"
+msgstr "割り当てるショートカット:"
+
+msgid "Add"
+msgstr "追加"
+
+msgid "Remove"
+msgstr "削除"
+
+msgid "Shortcut"
+msgstr "ショートカット"
+
+msgid "Action"
+msgstr "動作"
+
+msgid "Please select a hot key action."
+msgstr "このホットキー用の動作を選択してください。"
+
+msgid "Character encoding of text files:"
+msgstr "テキストファイルの文字コード:"
+
+msgid "Newline character sequence:"
+msgstr "改行文字:"
+
+msgid "Select language:"
+msgstr "言語を選択:"
+
+msgid "Clear clipboard when closing/locking database"
+msgstr "データベースを閉じる/ロック時にクリップボードを消去"
+
+msgid "Lock database when minimizing application or database window"
+msgstr "アプリまたはデータベースのウィンドウ最小化時にデータベースをロック"
+
+msgid "Lock database after the following idle time (seconds):"
+msgstr "アイドル時間経過後にデータベースをロック (秒):"
+
+msgid "Save automatically"
+msgstr "自動保存"
+
+msgid "Create backup of database before saving"
+msgstr "保存前にデータベースのバックアップを作成"
+
+msgid "Number backups consecutively - up to:"
+msgstr "バックアップする上限数:"
+
+msgid "Open window on startup"
+msgstr "起動時にウィンドウを開く"
+
+msgid "Open last used database on startup"
+msgstr "起動時に最後に使ったデータベースを開く"
+
+msgid "Warn if database contains expired entries"
+msgstr "データベースに期限切れの項目があれば警告する"
+
+msgid "Warn if database contains entries that will expire soon"
+msgstr "データベースに期限切れが近い項目があれば警告する"
+
+msgid "Number of days:"
+msgstr "日数:"
+
+msgid "Save automatically:"
+msgstr "自動保存:"
+
+msgid "After adding/modifying an entry"
+msgstr "項目を追加/修正したら"
+
+msgid "After every change"
+msgstr "すべての変更後"
+
+msgid "Default autotype sequence:"
+msgstr "標準の自動入力の順番:"
+
+msgid "Maximum number of hot keys (%d) reached."
+msgstr "ホットキーの上限数 (%d) に達しました。"
+
+msgid "This hot key has already been assigned."
+msgstr "このホットキーはすでに割り当てられています。"
+
+msgid "%s (%d-bit key, operates on %d-bit blocks)"
+msgstr "%s (%dビットキー、%dビットブロックで動作)"
+
+msgid "Benchmark results (data size: %d MB):"
+msgstr "計測結果 (データサイズ: %d MB):"
+
+msgid "Enter password:"
+msgstr "パスワードを入力:"
+
+msgid "Confirm password:"
+msgstr "パスワードの確認:"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Cancel"
+msgstr "キャンセル"
+
+msgid "Passwords are not identical."
+msgstr "2つのパスワードが一致しません。"
+
+msgid "Encrypt"
+msgstr "暗号化"
+
+msgid "Decrypt"
+msgstr "複合化"
+
+msgid "Remember password (seconds):"
+msgstr "パスワードを記憶 (秒):"
+
+msgid "Key file for password database:"
+msgstr "パスワードのデータベース用の鍵ファイル:"
+
+msgid "(None)"
+msgstr "(なし)"
+
+msgid "Enter a password and/or select a key file."
+msgstr "パスワードを入力するか、鍵ファイルを選択します(同時も可能)。"
+
+msgid "The selected key file does not exist."
+msgstr "選択した鍵ファイルは存在しません。"
+
+msgid "Password is empty."
+msgstr "パスワードが空です。"
+
+msgid "Key file successfully created."
+msgstr "鍵ファイルの作成に成功しました。"
+
+msgid ""
+"Error while creating key file:\n"
+"%s."
+msgstr ""
+"鍵ファイル作成中にエラー:\n"
+"%s。"
+
+msgid "Key files"
+msgstr "鍵ファイル"
+
+msgid "Create key file"
+msgstr "鍵ファイルの作成"
+
+msgid "Password List"
+msgstr "パスワード一覧"
+
+msgid "Save As File..."
+msgstr "名前をつけて保存..."
+
+msgid "Save password list"
+msgstr "パスワード一覧を保存"
+
+msgid ""
+"Error while creating file\n"
+"\"%s\":\n"
+"%s."
+msgstr ""
+"ファイル作成中にエラー\n"
+"「%s」:\n"
+"%s。"
+
+msgid "File \"%s\" successfully created."
+msgstr "ファイル「%s」の作成に成功しました。"
+
+msgid "Advanced Password Options"
+msgstr "パスワードの詳細オプション"
+
+msgid "Exclude ambiguous characters"
+msgstr "曖昧な文字を含めない"
+
+msgid "First character must not be a lower-case letter"
+msgstr "最初の文字を小文字にしない"
+
+msgid "Don't separate words by a space"
+msgstr "単語を空白で区切らない"
+
+msgid "Don't separate words and characters by a '-' character"
+msgstr "単語と文字を「-」文字で区切らない"
+
+msgid "Reverse default order of character/word combinations"
+msgstr "文字/単語の組み合わせの標準の順序を逆にする"
+
+msgid "Include at least one upper-case letter (A-Z)"
+msgstr "1つ以上の大文字を含める (A-Z)"
+
+msgid "Include at least one lower-case letter (a-z)"
+msgstr "1つ以上の小文字を含める (a-z)"
+
+msgid "Include at least one digit (0-9)"
+msgstr "1つ以上の数字を含める (0-9)"
+
+msgid "Include at least one special symbol (!\"#$%...)"
+msgstr "1つ以上の記号を含める (！“＃$％...)"
+
+msgid "Only include characters from custom character set"
+msgstr "指定した文字の組み合わせからの文字のみを含める"
+
+msgid "Exclude repeating consecutive characters (e.g. aa, 11)"
+msgstr "連続して繰り返す文字を含めない (例 aa, 11)"
+
+msgid "Exclude duplicate entries in password lists"
+msgstr "パスワード一覧中の重複項目を含めない"
+
+msgid "Capitalize first letter of each word"
+msgstr "単語の最初の文字を大文字にする"
+
+msgid "Convert all words in word lists to lower-case"
+msgstr "単語リスト内の単語をすべて小文字に変換"
+
+msgid "Each character must occur only once"
+msgstr "各文字は1回だけ出現"
+
+msgid "Each word must occur only once"
+msgstr "各単語は1回だけ出現"
+
+msgid "Redefine ambiguous characters:"
+msgstr "曖昧な文字を指定:"
+
+msgid "Redefine special symbols:"
+msgstr "記号を指定:"
+
+msgid "Maximum length of words in word lists (except default word list):"
+msgstr "単語リストの単語の最大文字数を指定 (標準の単語リスト以外):"
+
+msgid "Trigram file for generating phonetic (pronounceable) passwords:"
+msgstr "音声的な (発音可能) なパスワード生成用のトライグラムのファイル:"
+
+msgid "Applies to pass_words_."
+msgstr "パスワードに適用"
+
+msgid "Applies to pass_phrases_."
+msgstr "パスフレーズに適用"
+
+msgid "Applies to formatted passwords."
+msgstr "書式型パスワードに適用"
+
+msgid "Applies to phonetic passwords."
+msgstr "音声的パスワードに適用"
+
+msgid ""
+"Selecting one of these options might reduce the security of generated "
+"passwords."
+msgstr ""
+"これらのオプションにより、生成されるパスワードの安全性が"
+"下がることもあります。"
+
+msgid "Deselect All"
+msgstr "すべて選択解除"
+
+msgid "Invert Selection"
+msgstr "選択を反転"
+
+msgid "Create Random Data File"
+msgstr "ランダムデータファイルを作成"
+
+msgid "File name:"
+msgstr "ファイル名:"
+
+msgid "File size:"
+msgstr "ファイルサイズ:"
+
+msgid "Bytes"
+msgstr "バイト"
+
+msgid "Kilobytes"
+msgstr "KB"
+
+msgid "Megabytes"
+msgstr "MB"
+
+msgid "Gigabytes"
+msgstr "GB"
+
+msgid "Terabytes"
+msgstr "TB"
+
+msgid "Close"
+msgstr "閉じる"
+
+msgid "Create file"
+msgstr "ファイル作成"
+
+msgid "Invalid file size."
+msgstr "ファイルサイズが正しくありません。"
+
+msgid ""
+"Not enough free disk space available\n"
+"to create the file."
+msgstr ""
+"ファイル作成のための\n"
+"十分な空き容量がありません。"
+
+msgid "Creating random data file ..."
+msgstr "ランダムデータファイルを作成中 ..."
+
+msgid "%d of %d %s written."
+msgstr "%d / %d 中を書き込み済み。"
+
+msgid ""
+"File \"%s\" successfully created.\n"
+"\n"
+"%d bytes written."
+msgstr ""
+"ファイル「%s」の作成に成功しました。\n"
+"\n"
+"％dバイトを書き込みました。"
+
+msgid ""
+"Error while creating file\n"
+"\"%s\":\n"
+"%s.\n"
+"\n"
+"%d bytes written."
+msgstr ""
+"ファイル作成中にエラー\n"
+"「%s」:\n"
+"％s\n"
+"\n"
+"％dバイトを書き込みました。"
+
+msgid "Profile Editor"
+msgstr "プロファイルの編集"
+
+msgid "Load"
+msgstr "読み込み"
+
+msgid "Confirm"
+msgstr "確認"
+
+msgid "Profile name:"
+msgstr "プロファイル名:"
+
+msgid "Move up"
+msgstr "上へ"
+
+msgid "Move down"
+msgstr "下へ"
+
+msgid "Save \"advanced password options\" for this profile"
+msgstr "「パスワードの詳細オプション」をこのプロファイル用に保存"
+
+msgid "Delete profile \"%s\"?"
+msgstr "このプロファイル「%s」を削除しますか？"
+
+msgid "Delete %d profiles?"
+msgstr "%d個のプロファイルを削除しますか？"
+
+msgid ""
+"Maximum number of profiles (%d) reached.\n"
+"Please delete or overwrite profiles."
+msgstr ""
+"プロファイルの上限数 (%d) です。\n"
+"プロファイルを削除するか上書きしてください。"
+
+msgid ""
+"A profile with the name \"%s\" already exists.\n"
+"Do you want to overwrite it?"
+msgstr ""
+"「%s」というプロファイル名は既に存在します。\n"
+"上書しますか？"
+
+msgid "Create Trigram File"
+msgstr "トライグラムファイルの作成"
+
+msgid "Source file (e.g., dictionary, word list):"
+msgstr "入力元ファイル (例 辞書、単語リスト):"
+
+msgid "Destination file (trigram file):"
+msgstr "出力ファイル (トライグラムファイル):"
+
+msgid ""
+"Trigram file \"%s\" successfully created.\n"
+"\n"
+"%d trigrams evaluated.\n"
+"%1.2f bits of entropy per letter."
+msgstr ""
+"トライグラムファイル「%s」は正常に作成されました。\n"
+"\n"
+"％d 個の渡来グラムを評価。\n"
+"％1.2f ビットの情報量/1文字あたり"
+
+msgid "Process was cancelled by the user"
+msgstr "ユーザーによって処理がキャンセルされました。"
+
+msgid "About %s"
+msgstr "%s について"
+
+msgid ""
+"Current language: %s\n"
+"Translator: %s"
+msgstr ""
+"現在の言語: %s\n"
+"翻訳: %s"
+
+msgid ""
+"This program is distributed under the terms and conditions of the GNU "
+"General Public License (GPL)."
+msgstr ""
+"このプログラムは GNU 一般公的使用許諾 (GPL) の条件に従って"
+"配布されます。"
+
+msgid "View license"
+msgstr "ライセンスを表示"
+
+msgid "Donor ID:"
+msgstr "ドナーID:"
+
+msgid "Quick help"
+msgstr "かんたんヘルプ"
+
+msgid "Position Automatically"
+msgstr "自動で配置"
+
+msgid "You can use the following placeholders:"
+msgstr "以下のプレースホルダーを使用できます:"
+
+msgid "without ambiguous characters"
+msgstr "かつ曖昧な文字なし"
+
+msgid "special symbols"
+msgstr "記号"
+
+msgid "brackets"
+msgstr "括弧"
+
+msgid "punctuation marks"
+msgstr "句読点"
+
+msgid "higher ANSI characters"
+msgstr "上位ANSI文字"
+
+msgid "generate phonetic password (lower-case letters)"
+msgstr "音声的なパスワードを生成 (小文字)"
+
+msgid "generate phonetic password (upper-case letters)"
+msgstr "音声的なパスワーを生成 (大文字)"
+
+msgid "generate phonetic password (mixed-case letters)"
+msgstr "音声的なパスワードを生成 (大小混在)"
+
+msgid ""
+"Comments may be provided in square brackets \"[...]\"\n"
+"at the beginning of the sequence."
+msgstr "コメントはこれら配列の先頭にて角括弧 [...] 内に記載します。"
+
+msgid ""
+"Format specifiers have the form \"[*][N]x\" or \"[*][M-N]x\", where the\n"
+"optional argument \"N\" specifies the number of repetitions (between 1 "
+"and\n"
+"99999), \"M-N\" specifies a random number of repetitions in the range\n"
+"from M to N, and \"x\" is the actual format specifier/placeholder. The\n"
+"optional asterisk (*) means that each character must occur only once in\n"
+"the sequence. Example: \"16u\" means \"Insert 16 random upper-case "
+"letters\n"
+"into the password\"."
+msgstr ""
+"書式指定子には、[*][N]x または [*][M-N]x の形式があります。\n"
+"任意で追加の引数 N は繰り返し回数です (1から99999)。\n"
+"M-N は、MからNの範囲でランダムな繰り返し回数になります。\n"
+"x に実際の書式指定子/プレースホルダーを指定します。\n"
+"任意で追加のアスタリスク * は、各文字がその配列内で\n"
+"1回だけ出現するという意味です。\n"
+"例: 16u の意味は 「16回のランダムな大文字」です。"
+
+msgid "List of placeholders with optional argument \"N\":"
+msgstr "任意で追加の引数 N が可能なプレースホルダー一覧:"
+
+msgid "custom character set"
+msgstr "文字の組み合わせを指定"
+
+msgid "vowels, lower-case"
+msgstr "母音、小文字"
+
+msgid "vowels, mixed-case"
+msgstr "母音、大小混在"
+
+msgid "vowels, upper-case"
+msgstr "母音、大文字"
+
+msgid "consonants, lower-case"
+msgstr "母音、大文字"
+
+msgid "consonants, mixed-case"
+msgstr "子音、大小混在"
+
+msgid "consonants, upper-case"
+msgstr "子音、大文字"
+
+msgid ""
+"List of special format specifiers\n"
+"(possible usage of argument \"N\" is indicated by \"{N}\"):"
+msgstr ""
+"記号の指定子の一覧\n"
+"(引数 N の使用は {N} で表しています):"
+
+msgid "insert password generated via \"Include characters/words\""
+msgstr "「文字/単語を含める」で生成したパスワードを挿入"
+
+msgid "words from word list, multiple words are separated by spaces"
+msgstr "単語リストからの単語、複数の単語を空白で区切る"
+
+msgid "words, multiple words are not separated at all"
+msgstr "単語, 複数の単語間の区切りなし"
+
+msgid "repeat input sequence in brackets N times"
+msgstr "角括弧に入力した配列をN回繰り返す"
+
+msgid "randomly permute formatted sequence in brackets, keep N characters"
+msgstr "波カッコ内に書式型の配列をランダムな順にし、N文字数に"
+
+msgid "treat sequence as character set and insert N characters"
+msgstr "配列を文字の組み合わせとして扱いN文字にする"
+
+msgid "Additional notes:"
+msgstr "補注:"
+
+msgid ""
+"Text enclosed with quotation marks \"...\" is copied verbatim\n"
+"to the password."
+msgstr ""
+"引用符で囲まれたテキスト \"...\" は、そのままパスワードにコピー\n"
+"されます。"
+
+msgid "MP Password Generator"
+msgstr "マスターパスワードによる生成ツール"
+
+msgid "Master password"
+msgstr "マスターパスワード"
+
+msgid "Enter password..."
+msgstr "パスワードを入力..."
+
+msgid "Clear"
+msgstr "消去"
+
+msgid "Status:"
+msgstr "状態:"
+
+msgid "Expiry countdown:"
+msgstr "期限切れまで(秒):"
+
+msgid "Ask for password confirmation"
+msgstr "パスワードを確認"
+
+msgid "Show checksum of password:"
+msgstr "パスワードのチェックサムを表示:"
+
+msgid "Key expires after the following time (seconds):"
+msgstr "次の時間でキーの期限 (秒):"
+
+msgid "Provide compatibility with \"Hashapass\""
+msgstr "Hashapass 互換にする"
+
+msgid "Add password length to parameter"
+msgstr "引数にパスワードの長さを追加"
+
+msgid "Autotype sequence:"
+msgstr "自動入力の順番:"
+
+msgid "Password generator"
+msgstr "パスワード生成"
+
+msgid "Parameter:"
+msgstr "引数:"
+
+msgid "%d ch. / %.1f bits per ch."
+msgstr "%d 文字 / %.1f ビット1文字毎"
+
+msgid "Resulting password:"
+msgstr "生成されたパスワード:"
+
+msgid "Use as default random generator"
+msgstr "既定のランダム生成器として使用"
+
+msgid "Alphanumeric"
+msgstr "英数字"
+
+msgid "Hexadecimal"
+msgstr "16進数"
+
+msgid "Key has expired."
+msgstr "キーの期限が切れました。"
+
+msgid "Key has been cleared."
+msgstr "キーは消去されました。"
+
+msgid "New key generated."
+msgstr "新しいキーを生成しました。"
+
+msgid ""
+"Enter or paste some text into the box below, press mouse buttons, or move "
+"your mouse within the window."
+msgstr ""
+"下のボックスにテキストを入力または貼り付けるか、マウスボタンを押すか、"
+"ウィンドウ内でマウスを動かしてください。"
+
+msgid "%d bits of entropy have been added to the random pool."
+msgstr "ランダムプールに %d ビットの情報量が追加されました。"
+
+msgid "Database not encrypted, or invalid key"
+msgstr "データベースの暗号化なしかキーが無効"
+
+msgid "File contents modified, or invalid key"
+msgstr "ファイルの内容が修正されたかキーが無効"
+
+msgid "Unknown file format"
+msgstr "不明なファイル形式"
+
+msgid "Invalid file format"
+msgstr "無効なファイル形式"
+
+msgid "Title"
+msgstr "名称"
+
+msgid "Title:"
+msgstr "名称:"
+
+msgid "User name"
+msgstr "ユーザー名"
+
+msgid "User name:"
+msgstr "ユーザー名:"
+
+msgid "Password"
+msgstr "パスワード"
+
+msgid "Password:"
+msgstr "パスワード:"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "URL:"
+msgstr "URL:"
+
+msgid "Keyword"
+msgstr "キーワード"
+
+msgid "Keyword:"
+msgstr "キーワード:"
+
+msgid "Notes"
+msgstr "説明"
+
+msgid "Notes:"
+msgstr "説明:"
+
+msgid "Key-value list"
+msgstr "キーと値一覧"
+
+msgid "Key-value list:"
+msgstr "キーと値一覧:"
+
+msgid "Creation time"
+msgstr "作成日"
+
+msgid "Creation time:"
+msgstr "作成日:"
+
+msgid "Last modification"
+msgstr "更新日"
+
+msgid "Last modification:"
+msgstr "更新日:"
+
+msgid "Tags"
+msgstr "タグ"
+
+msgid "Tags:"
+msgstr "タグ:"
+
+msgid "Select and add existing tag"
+msgstr "既存のタグを選択して追加"
+
+msgctxt "tags"
+msgid "All"
+msgstr "すべて"
+
+msgid "All search results"
+msgstr "すべての検索結果"
+
+msgid "Untagged"
+msgstr "タグなし"
+
+msgid "Key"
+msgstr "キー"
+
+msgid "Value"
+msgstr "値"
+
+msgid "Edit"
+msgstr "編集"
+
+msgid "View"
+msgstr "表示"
+
+msgid "New..."
+msgstr "新規..."
+
+msgid "Open..."
+msgstr "開く..."
+
+msgid "Open as Read-only..."
+msgstr "読み取り専用で開く..."
+
+msgid "Save"
+msgstr "保存"
+
+msgid "Save As..."
+msgstr "名前を付けて..."
+
+msgid "Lock"
+msgstr "ロック"
+
+msgid "Unlock"
+msgstr "ロック解除"
+
+msgid "Export to"
+msgstr "エクスポート"
+
+msgid "CSV File..."
+msgstr "CSV ファイル..."
+
+msgid "Database Settings..."
+msgstr "データベースの設定..."
+
+msgid "Properties..."
+msgstr "プロパティ..."
+
+msgid "Change Master Password..."
+msgstr "マスターパスワードの変更..."
+
+msgid "Copy User Name"
+msgstr "ユーザー名をコピー"
+
+msgid "Copy Password"
+msgstr "パスワードをコピー"
+
+msgid "Open URL"
+msgstr "URLを開く"
+
+msgid "Run"
+msgstr "実行"
+
+msgid "Add Entry"
+msgstr "項目を追加"
+
+msgid "Duplicate Entry"
+msgstr "項目を複製"
+
+msgid "Delete Entry"
+msgstr "項目を削除"
+
+msgid "Show Columns"
+msgstr "列を表示"
+
+msgid "Show Passwords in List"
+msgstr "一覧にパスワードを表示"
+
+msgid "Sort Entries By"
+msgstr "項目で並び替え"
+
+msgid "Unsorted"
+msgstr "並び替えなし"
+
+msgid "Ascending"
+msgstr "昇順"
+
+msgid "Descending"
+msgstr "降順"
+
+msgid "Sort Tags By"
+msgstr "タグで並び替え"
+
+msgid "Name"
+msgstr "名前"
+
+msgid "Frequency"
+msgstr "頻度"
+
+msgid "Change List Font..."
+msgstr "一覧のフォントを変更..."
+
+msgid "Change Password Font..."
+msgstr "パスワードのフォントを変更..."
+
+msgid "Previous entry"
+msgstr "前の項目"
+
+msgid "Next entry"
+msgstr "次の項目"
+
+msgid "Accept changes"
+msgstr "変更の適用"
+
+msgid "Undo changes"
+msgstr "変更を元に戻す"
+
+msgid "Search..."
+msgstr "検索..."
+
+msgid "Clear search"
+msgstr "検索を初期化"
+
+msgid "Left-click: Perform search, right-click: Search options"
+msgstr "左クリック: 検索実行、右クリック: 検索オプション"
+
+msgid "Case-sensitive"
+msgstr "大/小文字を区別"
+
+msgid "Fuzzy search"
+msgstr "あいまい検索"
+
+msgid "Select fields..."
+msgstr "項目欄を選択..."
+
+msgid "Lock/unlock database"
+msgstr "データベースのロック/アンロック"
+
+msgid "Left-click: Hide/show password, right-click: Generate password"
+msgstr "左クリック: パスワードを隠す/表示、右クリック: パスワード生成"
+
+msgid "Unlock %s"
+msgstr "%s をアンロック"
+
+msgid "Open %s"
+msgstr "%s を開く"
+
+msgid "Create new database"
+msgstr "新しいデータベースを作成"
+
+msgid ""
+"Could not find database file:\n"
+"\"%s\"."
+msgstr "データベースのファイルが見つかりません:%s。"
+
+msgid ""
+"Error while opening database file:\n"
+"%s."
+msgstr ""
+"データベースを開く際にエラー:\n"
+"%s。"
+
+msgid ""
+"The currently selected entry has been changed.\n"
+"Do you want to save the changes?"
+msgstr ""
+"現在選択している項目は変更されました。\n"
+"変更を保存しますか？"
+
+msgid ""
+"The database has been changed.\n"
+"Do you want to save the changes?"
+msgstr ""
+"データベースは変更されました。\n"
+"変更を保存しますか？"
+
+msgid "An untitled database cannot be locked."
+msgstr "無題のデータベースはロックできません。"
+
+msgid ""
+"Could not save backup file\n"
+"\"%s\"."
+msgstr ""
+"バックアップファイルを保存できません。\n"
+"%s。"
+
+msgid ""
+"Error while saving database file:\n"
+"%s."
+msgstr ""
+"データベースファイル保存中にエラー:\n"
+"%s。"
+
+msgid ""
+"Please finish editing the current entry\n"
+"before adding new entries."
+msgstr ""
+"新しい項目を追加する前に\n"
+"現在の項目の編集を完了してください。"
+
+msgid "%d entries with passwords have been added."
+msgstr "%d 個のパスワードのある項目が追加されました。"
+
+msgid "1 entry found."
+msgstr "1項目を発見。"
+
+msgid "%d entries found."
+msgstr "%d項目を発見。"
+
+msgid "Search via hot key."
+msgstr "ホットキーから検索。"
+
+msgid ""
+"No matching keyword found for window text\n"
+"\"%s\"."
+msgstr ""
+"ウィンドウテキストに一致するキーワードは見つかりませんでした。\n"
+"%s"
+
+msgid "New Entry"
+msgstr "新しい項目"
+
+msgid "Please specify at least a title or password."
+msgstr "少なくとも名称かパスワードは指定してください。"
+
+msgid "Delete 1 entry?"
+msgstr "1項目を削除しますか？"
+
+msgid "Delete %d entries?"
+msgstr "%d項目を削除しますか？"
+
+msgid "Enter OLD master password"
+msgstr "これまでのマスターパスワードを入力"
+
+msgid "Enter NEW master password"
+msgstr "新しいマスターパスワードを入力"
+
+msgid "Master password successfully changed."
+msgstr "マスターパスワードの変更に成功。"
+
+msgid "Old master password is invalid."
+msgstr "これまでのマスターパスワードが正しくありません。"
+
+msgid "Untitled"
+msgstr "無題"
+
+msgctxt "noun"
+msgid "Copy"
+msgstr "コピー"
+
+msgid "Database successfully exported to CSV file."
+msgstr "データベースをCSVファイルにエクスポートしました。"
+
+msgid ""
+"Error while creating CSV file:\n"
+"%s."
+msgstr ""
+"CSVファイル作成時にエラー:\n"
+"%s。"
+
+msgid "Password databases"
+msgstr "パスワードデータベース"
+
+msgid "CSV files"
+msgstr "CSV ファイル"
+
+msgid "Autotype"
+msgstr "自動入力"
+
+msgid "Format password"
+msgstr "書式型のパスワード"
+
+msgid "Rearrange Entry"
+msgstr "項目の移動"
+
+msgid "Move to Top"
+msgstr "一番上に移動"
+
+msgid "Move up by one"
+msgstr "1つ上に移動"
+
+msgid "Move down by one"
+msgstr "1つ下に移動"
+
+msgid "Move to Bottom"
+msgstr "一番下に移動"
+
+msgid ""
+"The maximum tag length is %d characters.\n"
+"Longer tags have been shortened."
+msgstr ""
+"タグの長さは最大%d文字です。\n"
+"長いタグを短くしました。"
+
+msgid "Enter master password"
+msgstr "マスターパスワードを入力"
+
+msgid "Enter master password again"
+msgstr "マスターパスワードを確認"
+
+msgid "Master password is invalid."
+msgstr "マスターパスワードが正しくありません。"
+
+msgid "Edit key-value list"
+msgstr "キーと値の一覧の編集"
+
+msgid "Profile \"%s\" not found."
+msgstr "プロファイル「％s」が見つかりません。"
+
+msgid "Password expiry"
+msgstr "パスワードの期限"
+
+msgid "Expires:"
+msgstr "期限:"
+
+msgid "Change expiry date"
+msgstr "期限日の変更"
+
+msgid "Filter expired entries"
+msgstr "期限切れの項目を絞り込み"
+
+msgid "Filter entries that will expire soon"
+msgstr "期限が近い項目を絞り込み"
+
+msgid "%d days"
+msgstr "%d 日"
+
+msgid ""
+"The database contains expired entries.\n"
+"Do you want to filter these entries now?"
+msgstr ""
+"データベース内に期限切れの項目があります。\n"
+"今すぐこれらを絞り込んで表示しますか？"
+
+msgid ""
+"The database contains entries that will expire soon.\n"
+"Do you want to filter these entries now?"
+msgstr ""
+"データベース内に期限が近い項目があります。\n"
+"今すぐこれらを絞り込んで表示しますか？"
+
+msgid "Locked"
+msgstr "ロック"
+
+msgid "Set Recovery Password..."
+msgstr "回復パスワードを設定..."
+
+msgid "Remove Recovery Password..."
+msgstr "回復パスワードを削除..."
+
+msgid "Enter recovery password"
+msgstr "回復パスワードを入力"
+
+msgid "Recovery password successfully set."
+msgstr "回復パスワードを設定しました。"
+
+msgid "Recovery password is invalid."
+msgstr "回復パスワードが正しくありません。"
+
+msgid "Recovery password successfully removed."
+msgstr "回復パスワードを削除しました。"
+
+msgid "Recovery password set"
+msgstr "回復パスワードの設定"
+
+msgid "Yes"
+msgstr "はい"
+
+msgid "No"
+msgstr "いいえ"
+
+msgid ""
+"Database format error:\n"
+"%s.\n"
+"Database version: %d.%d\n"
+"Highest supported version: %d.%d"
+msgstr ""
+"データベース形式のエラー:\n"
+"%s。\n"
+"データベースのバージョン: %d.%d\n"
+"対応する最高のバージョン: %d.%d"
+
+msgid "Select columns"
+msgstr "列を選択"
+
+msgid "Select at least one column."
+msgstr "少なくとも1つの列を選択してください."
+
+msgid "Error while formatting string"
+msgstr "文字列の形式化中にエラー"
+
+msgid "Invalid UTF-16 character encoding"
+msgstr "UTF-16の文字コードが正しくありません。"
+
+msgid "Error while converting string to UTF-8"
+msgstr "文字列をUTF-8へと変換中にエラー"
+
+msgid "Error while decoding UTF-8 string"
+msgstr "UTF-8の文字列のデコード中にエラー"
+
+msgid "Unicode string too long"
+msgstr "Unicodeの文字列が長すぎます"
+
+msgid "Invalid ANSI or UTF-8 character encoding, or Unicode string too long"
+msgstr "ANSI または UTF-8 の文字コードが正しくないか、Unicodeの文字列が長すぎます"
+
+msgid "Error while encoding Unicode string"
+msgstr "Unicodeの文字列のエンコード中にエラー"
+
+msgid "Out of disk space"
+msgstr "ディスク容量が不足しています"
+
+msgid ""
+"Could not open file/execute operation\n"
+"\"%s\"."
+msgstr ""
+"ファイルが開けないか操作が実行できません\n"
+"%s。"
+
+msgid "Source file does not contain enough trigrams"
+msgstr "入力元ファイルに十分なトライグラムが含まれていません"
+
+msgid "Database settings"
+msgstr "データベースの設定"
+
+msgid "Default user name for new entries:"
+msgstr "新規項目で使う標準のユーザー名:"
+
+msgid "Generate passwords for new entries using format sequence:"
+msgstr "新規項目のパスワードを生成する書式型の配列:"
+
+msgid "Generate test password using format sequence"
+msgstr "書式型の配列によるパスワードの生成テスト"
+
+msgid "Encryption algorithm:"
+msgstr "暗号化アルゴリズム:"
+
+msgid "%s with %d-bit key"
+msgstr "％s で ％d ビットの鍵"
+
+msgid "Number of key derivation rounds:"
+msgstr "鍵導出ラウンドの回数:"
+
+msgid "Calculate number of rounds for a 1 second delay"
+msgstr "1秒の遅延に対するラウンド数の算出"
+
+msgid "Invalid number of key derivation rounds."
+msgstr "鍵導出ラウンドの回数が正しくありません。"
+
+msgid "By default, new entries expire after the following number of days:"
+msgstr "新規項目を期限切れにする標準の日数:"
+
+msgid "Key-value list editor"
+msgstr "キーと値の一覧を編集"
+
+msgid "Properties"
+msgstr "プロパティ"
+
+msgid "Property"
+msgstr "プロパティ"
+
+msgid "Location"
+msgstr "場所"
+
+msgid "Size"
+msgstr "サイズ"
+
+msgid "Format version"
+msgstr "形式のバージョン"
+
+msgid "Number of entries"
+msgstr "項目数"
+
+msgid "Number of expired entries"
+msgstr "期限切れの項目数"
+
+msgid "Number of tags"
+msgstr "タグ数"
+
+msgid "Compression"
+msgstr "圧縮"
+
+msgid "Enable data compression (Deflate)"
+msgstr "データを圧縮 (Deflate)"
+
+msgid "<- Low compression, fast | High compression, slow ->"
+msgstr "<-  低圧縮 早い  |  高圧縮 遅い  ->"
+
+msgid "Confirm password"
+msgstr "パスワードの確認"
+
+msgid "Password quality estimation is disabled"
+msgstr "パスワード品質の推定は無効化されています"
+
+msgid "Estimate password quality"
+msgstr "パスワード品質の推定"
+
