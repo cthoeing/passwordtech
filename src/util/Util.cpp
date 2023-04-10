@@ -19,7 +19,7 @@
 // 02111-1307, USA.
 //---------------------------------------------------------------------------
 #include <vcl.h>
-#include <stdio.h>
+//#include <stdio.h>
 #include <clipbrd.hpp>
 #include <vector>
 #include <exception>
@@ -52,7 +52,7 @@ static SecureWString strCr2Crlf(const SecureWString& sSrc)
   const wchar_t* pwszBuf = sSrc.c_str();
 
   int nNumCR = 0;
-  while ((pwszBuf = wcschr(pwszBuf, '\r')) != NULL) {
+  while ((pwszBuf = wcschr(pwszBuf, '\r')) != nullptr) {
     if (*++pwszBuf == '\n')
       return sSrc;
     nNumCR++;
@@ -87,7 +87,7 @@ int MsgBox(const WString& sText,
   else if (nIcon >= MB_ICONERROR)
     nListIndex = 3;
 
-  if (TopMostManager::GetInstance()->AlwaysOnTop)
+  if (TopMostManager::GetInstance().AlwaysOnTop)
     nFlags |= MB_TOPMOST;
 
   BeforeDisplayDlg();
@@ -104,7 +104,7 @@ int MsgBox(const WString& sText,
   msg.WParam = 0;
   msg.LParam = 0;
   msg.Result = nResult;
-  EntropyManager::GetInstance()->AddEvent(msg, entOther, 1);
+  EntropyManager::GetInstance().AddEvent(msg, entOther, 1);
 
   return nResult;
 }
@@ -155,7 +155,7 @@ SecureWString GetRichEditSelTextBuf(TCustomRichEdit* pEdit)
 void SetEditBoxTextBuf(TCustomEdit* pEdit,
   const wchar_t* pwszSrc)
 {
-  const wchar_t* pwszBuf = (pwszSrc != NULL) ? pwszSrc : L"";
+  const wchar_t* pwszBuf = (pwszSrc != nullptr) ? pwszSrc : L"";
 
   SetWindowText(pEdit->Handle, pwszBuf);
   pEdit->Perform(CM_TEXTCHANGED, 0, static_cast<int>(0));
@@ -214,13 +214,13 @@ bool GetClipboardTextBuf(SecureWString* psDestW,
 
   try {
     pClipboard->Open();
-    if (psDestW != NULL && pClipboard->HasFormat(CF_UNICODETEXT))
+    if (psDestW != nullptr && pClipboard->HasFormat(CF_UNICODETEXT))
     {
       HGLOBAL hText = (HGLOBAL) pClipboard->GetAsHandle(CF_UNICODETEXT);
-      if (hText != NULL)
+      if (hText != nullptr)
       {
         wchar_t* pwszText = reinterpret_cast<wchar_t*>(GlobalLock(hText));
-        if (pwszText != NULL)
+        if (pwszText != nullptr)
         {
           word32 lTextLen = wcslen(pwszText);
           psDestW->Assign(pwszText, lTextLen + 1);
@@ -232,13 +232,13 @@ bool GetClipboardTextBuf(SecureWString* psDestW,
     else if (pClipboard->HasFormat(CF_TEXT))
     {
       HGLOBAL hText = (HGLOBAL) pClipboard->GetAsHandle(CF_TEXT);
-      if (hText != NULL)
+      if (hText != nullptr)
       {
         char* pszText = reinterpret_cast<char*>(GlobalLock(hText));
-        if (pszText != NULL)
+        if (pszText != nullptr)
         {
-          if (psDestW != NULL) {
-            word32 lBufLen = MultiByteToWideChar(CP_ACP, 0, pszText, -1, NULL, 0);
+          if (psDestW != nullptr) {
+            word32 lBufLen = MultiByteToWideChar(CP_ACP, 0, pszText, -1, nullptr, 0);
             psDestW->New(lBufLen);
             MultiByteToWideChar(CP_ACP, 0, pszText, -1, *psDestW, lBufLen);
             //lTextLen = lBufLen - 1; // excluding '\0'
@@ -270,10 +270,10 @@ void SetClipboardTextBuf(const wchar_t* pwszSrcW,
   try {
     pClipboard->Open();
 
-    if (pwszSrcW != NULL)
+    if (pwszSrcW != nullptr)
       pClipboard->SetTextBuf(const_cast<wchar_t*>(pwszSrcW));
     else {
-      word32 lLen = MultiByteToWideChar(CP_ACP, 0, pszSrcA, -1, NULL, 0);
+      word32 lLen = MultiByteToWideChar(CP_ACP, 0, pszSrcA, -1, nullptr, 0);
       if (lLen > 0) {
         SecureWString wideSrc(lLen);
         MultiByteToWideChar(CP_ACP, 0, pszSrcA, -1, wideSrc, lLen);
@@ -339,11 +339,11 @@ bool ExecuteShellOp(const WString& sOperation, bool blShowErrorMsg)
 
   bool blSuccess = false;
   try {
-    blSuccess = reinterpret_cast<int>(ShellExecute(NULL, L"open",
-          sOperation.c_str(), NULL, NULL, SW_SHOWNORMAL)) > 32;
+    blSuccess = reinterpret_cast<int>(ShellExecute(nullptr, L"open",
+          sOperation.c_str(), nullptr, nullptr, SW_SHOWNORMAL)) > 32;
   }
   catch (std::exception& e) {
-    throw Exception(CppStdExceptionToString(&e));
+    throw Exception(CppStdExceptionToString(e));
   }
   catch (...)
   {
@@ -371,14 +371,14 @@ bool ExecuteCommand(const WString& sCommand, bool blShowErrorMsg)
 
   try {
     // Start the child process.
-    blSuccess = CreateProcess( NULL,   // No module name (use command line)
+    blSuccess = CreateProcess( nullptr,   // No module name (use command line)
         sCommand.c_str(),        // Command line
-        NULL,           // Process handle not inheritable
-        NULL,           // Thread handle not inheritable
+        nullptr,           // Process handle not inheritable
+        nullptr,           // Thread handle not inheritable
         FALSE,          // Set handle inheritance to FALSE
         0,              // No creation flags
-        NULL,           // Use parent's environment block
-        NULL,           // Use parent's starting directory
+        nullptr,           // Use parent's environment block
+        nullptr,           // Use parent's starting directory
         &si,            // Pointer to STARTUPINFO structure
         &pi );           // Pointer to PROCESS_INFORMATION structure
   }
@@ -393,32 +393,41 @@ bool ExecuteCommand(const WString& sCommand, bool blShowErrorMsg)
   return blSuccess;
 }
 //---------------------------------------------------------------------------
-int CompareVersions(AnsiString asVer1,
-  AnsiString asVer2)
+std::vector<int> ParseVersionNumber(const WString& sVersion)
 {
-  static const char VERSION_FORMAT[] = "%d.%d.%d";
-  int ver1[3] = {-1,-1,-1}, ver2[3] = {-1,-1,-1};
-
-  sscanf(asVer1.c_str(), VERSION_FORMAT, &ver1[0], &ver1[1], &ver1[2]);
-  sscanf(asVer2.c_str(), VERSION_FORMAT, &ver2[0], &ver2[1], &ver2[2]);
-
-  // handle obsolete version numbering "x.yy":
-  // convert it to "x.0.yy"
-  if (ver1[2] < 0 && ver1[1] >= 0) {
-    ver1[2] = ver1[1];
-    ver1[1] = 0;
+  std::vector<int> version;
+  auto subStr = SplitString(sVersion, ".");
+  for (const auto& sNum : subStr) {
+    int nNum = StrToIntDef(sNum, -1);
+    if (nNum >= 0) {
+      version.push_back(nNum);
+      if (version.size() == 5)
+        break;
+    }
+    else break;
   }
-  if (ver2[2] < 0 && ver2[1] >= 0) {
-    ver2[2] = ver2[1];
-    ver2[1] = 0;
-  }
+  return version;
+}
+//---------------------------------------------------------------------------
+int CompareVersionNumbers(const WString& sVer1, const WString& sVer2)
+{
+  auto ver1 = ParseVersionNumber(sVer1);
+  auto ver2 = ParseVersionNumber(sVer2);
 
-  if (ver1[0] != ver2[0])
-    return (ver1[0] > ver2[0]) ? 1 : -1;
-  if (ver1[1] != ver2[1])
-    return (ver1[1] > ver2[1]) ? 1 : -1;
-  if (ver1[2] != ver2[2])
-    return (ver1[2] > ver2[2]) ? 1 : -1;
+  auto it1 = ver1.begin();
+  auto it2 = ver2.begin();
+
+  while (it1 != ver1.end() || it2 != ver2.end()) {
+    int n1 = 0, n2 = 0;
+    if (it1 != ver1.end())
+      n1 = *it1++;
+    if (it2 != ver2.end())
+      n2 = *it2++;
+    if (n1 > n2)
+      return 1;
+    if (n1 < n2)
+      return -1;
+  }
 
   return 0;
 }
@@ -429,7 +438,7 @@ WString GetAppDataPath(void)
 
   wchar_t wszPath[MAX_PATH];
 
-  if (SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, wszPath) == S_OK)
+  if (SHGetFolderPath(nullptr, CSIDL_APPDATA, nullptr, 0, wszPath) == S_OK)
     sPath = WString(wszPath) + WString("\\");
 
   return sPath;
@@ -437,7 +446,7 @@ WString GetAppDataPath(void)
 //---------------------------------------------------------------------------
 WString FontToString(TFont* pFont)
 {
-  return Format("%s;%d,%d,%s", ARRAYOFCONST((pFont->Name, pFont->Size,
+  return Format("%s;%d;%d;%s", ARRAYOFCONST((pFont->Name, pFont->Size,
     static_cast<int>(pFont->Style.Contains(fsBold) |
     (pFont->Style.Contains(fsItalic) << 1) |
     (pFont->Style.Contains(fsUnderline) << 2) |
@@ -445,12 +454,57 @@ WString FontToString(TFont* pFont)
     ColorToString(pFont->Color))));
 }
 //---------------------------------------------------------------------------
-int StringToFont(WString sFont,
+int StringToFont(const WString& sFont,
   TFont* pFont)
 {
   if (sFont.IsEmpty())
     return 0;
 
+  int i = 0;
+
+  try {
+    auto items = SplitString(sFont, ";");
+    for (const auto& sItem : items) {
+      switch (i) {
+      case 0:
+        pFont->Name = sItem;
+        break;
+      case 1:
+        {
+          int nSize = StrToInt(sItem);
+          if (nSize == 0)
+            return i;
+          pFont->Size = nSize;
+        }
+        break;
+      case 2:
+        {
+          int nFlags = StrToInt(sItem);
+          TFontStyles style;
+          if (nFlags & 1)
+            style << fsBold;
+          if (nFlags & 2)
+            style << fsItalic;
+          if (nFlags & 4)
+            style << fsUnderline;
+          if (nFlags & 8)
+            style << fsStrikeOut;
+          pFont->Style = style;
+        }
+        break;
+      case 3:
+        pFont->Color = StringToColor(sItem);
+        break;
+      }
+      if (++i == 4)
+        break;
+    }
+  }
+  catch (...)
+  {}
+
+  return i;
+  /*
   int nPos = sFont.Pos(";");
   if (nPos < 2)
     return 0;
@@ -498,25 +552,25 @@ int StringToFont(WString sFont,
   pFont->Color = StringToColor(sFont);
   nNumParsed++;
 
-  return nNumParsed;
+  return nNumParsed;*/
 }
 //---------------------------------------------------------------------------
-WString CppStdExceptionToString(std::exception* e)
+WString CppStdExceptionToString(const std::exception& e)
 {
   WString sMsg;
 
-  if (dynamic_cast<std::bad_alloc*>(e))
+  if (dynamic_cast<const std::bad_alloc*>(&e))
     sMsg = "std::bad_alloc: ";
-  else if (dynamic_cast<std::bad_exception*>(e))
+  else if (dynamic_cast<const std::bad_exception*>(&e))
     sMsg = "std::bad_exception: ";
-  else if (dynamic_cast<std::logic_error*>(e))
+  else if (dynamic_cast<const std::logic_error*>(&e))
     sMsg = "std::logic_error: ";
-  else if (dynamic_cast<std::runtime_error*>(e))
+  else if (dynamic_cast<const std::runtime_error*>(&e))
     sMsg = "std::runtime_error: ";
   else
     sMsg = "std::exception: ";
 
-  sMsg += e->what();
+  sMsg += e.what();
 
   return sMsg;
 }
@@ -593,20 +647,26 @@ std::vector<SecureWString> SplitStringBuf(const wchar_t* pwszSrc,
 {
   std::vector<SecureWString> result;
   while (*pwszSrc != '\0') {
-    const wchar_t* pSep = wcspbrk(pwszSrc, pwszSep);
-    if (pSep == nullptr)
-      pSep = wcschr(pwszSrc, '\0');
-    word32 lLen = static_cast<word32>(pSep - pwszSrc);
+    word32 lLen = wcscspn(pwszSrc, pwszSep);
     if (lLen > 0) {
       SecureWString sItem(pwszSrc, lLen + 1);
       sItem[lLen] = '\0';
       result.push_back(std::move(sItem));
     }
-    if (*pSep == '\0')
-      break;
-    pwszSrc = pSep + 1;
+    pwszSrc += lLen;
+    if (*pwszSrc != '\0')
+      pwszSrc++; // move pointer beyond separator character
   }
   return result;
+}
+//---------------------------------------------------------------------------
+int FloorEntropyBits(double val)
+{
+  double intpart;
+  double frac = modf(val, &intpart);
+  if (frac > 0.99)
+    intpart += 1;
+  return static_cast<int>(intpart);
 }
 //---------------------------------------------------------------------------
 #define MX (((z >> 5) ^ (y << 2)) + ((y >> 3) ^ (z << 4))) ^ ((sum ^ y) + (key[(p & 3) ^ e] ^ z))
@@ -660,7 +720,7 @@ static bool decode_96bit(word32 data[3], const word32 key[4])
 
   const word8* buf = reinterpret_cast<word8*>(data);
   for (i = 0; i < 2; i++) {
-    word8 h = sbox[buf[0] + i];
+    word8 h = sbox[(buf[0] + i)&0xff]; // avoid buffer overflow
     for (j = 1; j < 10; j++)
       h = sbox[buf[j] ^ h];
     if (h != buf[10 + i])
@@ -670,7 +730,7 @@ static bool decode_96bit(word32 data[3], const word32 key[4])
   return true;
 }
 
-static const word8 CUSTOM_BASE64_DEC_MAP[128] =
+const word8 CUSTOM_BASE64_DEC_MAP[128] =
 {
   127, 127, 127, 127, 127, 127, 127, 127, 127, 127,
   127, 127, 127, 127, 127, 127, 127, 127, 127, 127,
@@ -734,12 +794,12 @@ int CheckDonorKey(const AnsiString& asInput,
       PROGRAM_MAINVER_UPDATE_NUM - nVersion > DONOR_STD_NUM_UPDATES)
     return DONOR_KEY_EXPIRED;
 
-  if (pasId != NULL) {
+  if (pasId != nullptr) {
     buf[10] = '\0';
     *pasId = AnsiString(reinterpret_cast<char*>(buf) + 2);
   }
 
-  if (pnType != NULL)
+  if (pnType != nullptr)
     *pnType = nType;
 
   return DONOR_KEY_VALID;

@@ -74,9 +74,9 @@ void __fastcall TCreateTrigramFileDlg::BrowseBtnClick(TObject *Sender)
 {
   MainForm->OpenDlg->FilterIndex = 1;
 
-  TopMostManager::GetInstance()->NormalizeTopMosts(this);
+  TopMostManager::GetInstance().NormalizeTopMosts(this);
   bool blSuccess = MainForm->OpenDlg->Execute();
-  TopMostManager::GetInstance()->RestoreTopMosts(this);
+  TopMostManager::GetInstance().RestoreTopMosts(this);
 
   if (!blSuccess)
     return;
@@ -89,9 +89,9 @@ void __fastcall TCreateTrigramFileDlg::BrowseBtn2Click(TObject *Sender)
 {
   MainForm->SaveDlg->FilterIndex = 3;
 
-  TopMostManager::GetInstance()->NormalizeTopMosts(this);
+  TopMostManager::GetInstance().NormalizeTopMosts(this);
   bool blSuccess = MainForm->SaveDlg->Execute();
-  TopMostManager::GetInstance()->RestoreTopMosts(this);
+  TopMostManager::GetInstance().RestoreTopMosts(this);
 
   if (!blSuccess)
     return;
@@ -150,7 +150,7 @@ void __fastcall TCreateTrigramFileDlg::FormShow(TObject *Sender)
 {
   Top = MainForm->Top + (MainForm->Height - Height) / 2;
   Left = MainForm->Left + (MainForm->Width - Width) / 2;
-  TopMostManager::GetInstance()->SetForm(this);
+  TopMostManager::GetInstance().SetForm(this);
 }
 //---------------------------------------------------------------------------
 

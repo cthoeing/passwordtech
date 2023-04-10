@@ -46,7 +46,7 @@ void __fastcall TPasswMngColDlg::FormShow(TObject *Sender)
 {
   Top = m_pParentForm->Top + (m_pParentForm->Height - Height) / 2;
   Left = m_pParentForm->Left + (m_pParentForm->Width - Width) / 2;
-  TopMostManager::GetInstance()->SetForm(this);
+  TopMostManager::GetInstance().SetForm(this);
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswMngColDlg::SetColNames(const WString* pColNames)

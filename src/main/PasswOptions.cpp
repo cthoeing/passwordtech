@@ -31,22 +31,37 @@
 #pragma resource "*.dfm"
 TPasswOptionsDlg *PasswOptionsDlg;
 
-static const WString
+const WString
   CONFIG_ID = "PasswOptions";
 
-static const int
+const int
   OPTION_INDEX_TO_BIT[PASSWOPTIONS_NUM] =
-    { 0, 1, 13, 10, 2, 3, 4, 15, 12, 14, 5, 6, 7, 8, 9, 11 };
+    { 0, 1, 13, 10, 2, 3, 4, 15, 12, 14, 5, 6, 7, 8, 9, 11, 16 };
 
-static int BIT_TO_OPTION_INDEX[PASSWOPTIONS_NUM];
+template<int N>
+class _bitToOptionIndex {
+public:
+    constexpr _bitToOptionIndex() : m_table() {
+        for (auto i = 0; i != N; ++i)
+            m_table[OPTION_INDEX_TO_BIT[i]] = i;
+    }
+    int operator[](int i) const
+    {
+      return m_table[i];
+    }
+private:
+    int m_table[N];
+};
+
+//int BIT_TO_OPTION_INDEX[PASSWOPTIONS_NUM];
+const _bitToOptionIndex BIT_TO_OPTION_INDEX = _bitToOptionIndex<PASSWOPTIONS_NUM>();
 
 //---------------------------------------------------------------------------
 __fastcall TPasswOptionsDlg::TPasswOptionsDlg(TComponent* Owner)
   : TForm(Owner)
 {
-  int i;
-  for (i = 0; i < PASSWOPTIONS_NUM; i++)
-    BIT_TO_OPTION_INDEX[OPTION_INDEX_TO_BIT[i]] = i;
+  //for (int i = 0; i < PASSWOPTIONS_NUM; i++)
+  //  BIT_TO_OPTION_INDEX[OPTION_INDEX_TO_BIT[i]] = i;
 
   Constraints->MinHeight = Height;
   Constraints->MinWidth = Width;
@@ -55,7 +70,7 @@ __fastcall TPasswOptionsDlg::TPasswOptionsDlg(TComponent* Owner)
 
   if (g_pLangSupp) {
     TRLCaption(this);
-    for (i = 0; i < pStrList->Count; i++)
+    for (int i = 0; i < pStrList->Count; i++)
       pStrList->Strings[i] = TRL(pStrList->Strings[i]);
     TRLCaption(AmbigCharsLbl);
     TRLCaption(SpecialSymLbl);
@@ -67,38 +82,23 @@ __fastcall TPasswOptionsDlg::TPasswOptionsDlg(TComponent* Owner)
     TRLMenu(ListMenu);
   }
 
-  i = BIT_TO_OPTION_INDEX[0];
-  pStrList->Strings[i] = pStrList->Strings[i] + WString(" (B8G6I1l|0OQDS5Z2) [1-3] *");
-  i = BIT_TO_OPTION_INDEX[1];
-  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [1,2,4] *");
-  i = BIT_TO_OPTION_INDEX[2];
-  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [2]");
-  i = BIT_TO_OPTION_INDEX[3];
-  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [2]");
-  i = BIT_TO_OPTION_INDEX[4];
-  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [1,2]");
-  i = BIT_TO_OPTION_INDEX[5];
-  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [1,4] *");
-  i = BIT_TO_OPTION_INDEX[6];
-  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [1,4] *");
-  i = BIT_TO_OPTION_INDEX[7];
-  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [1,4] *");
-  i = BIT_TO_OPTION_INDEX[8];
-  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [1,4] *");
-  i = BIT_TO_OPTION_INDEX[9];
-  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [1]");
-  i = BIT_TO_OPTION_INDEX[10];
-  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [1,3] *");
-  i = BIT_TO_OPTION_INDEX[11];
-  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [1-4] *");
-  i = BIT_TO_OPTION_INDEX[12];
-  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [2,3] *");
-  i = BIT_TO_OPTION_INDEX[13];
-  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [1] *");
-  i = BIT_TO_OPTION_INDEX[14];
-  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [2] *");
-  i = BIT_TO_OPTION_INDEX[15];
-  pStrList->Strings[i] = pStrList->Strings[i] + WString(" [2]");
+  pStrList->Strings[BIT_TO_OPTION_INDEX[0]] += " (B8G6I1l|0OQDS5Z2) [1-3] *";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[1]] += " [1-4] *";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[2]] += " [2]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[3]] += " [2]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[4]] += " [1,2]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[5]] += " [1,4] *";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[6]] += " [1,4] *";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[7]] += " [1,4] *";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[8]] += " [1,4] *";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[9]] += " [1]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[10]] += " [1,3] *";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[11]] += " [1-4] *";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[12]] += " [2,3] *";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[13]] += " [1] *";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[14]] += " [2] *";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[15]] += " [2]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[16]] += " [1-4]";
 
   InfoLbl->Caption = FormatW("[1] %s [2] %s [3] %s [4] %s\n* %s",
       TRL("Applies to pass_words_.").c_str(),
@@ -142,7 +142,7 @@ void __fastcall TPasswOptionsDlg::SetOptions(const PasswOptions& passwOptions)
     PasswOptionsList->Checked[BIT_TO_OPTION_INDEX[nI]] = passwOptions.Flags & (1 << nI);
   AmbigCharsBox->Text = passwOptions.AmbigChars;
   SpecialSymBox->Text = passwOptions.SpecialSymbols;
-  MaxWordLenSpinBtn->Position = short(passwOptions.MaxWordLen);
+  MaxWordLenSpinBtn->Position = static_cast<short>(passwOptions.MaxWordLen);
   TrigramFileBox->Text = passwOptions.TrigramFileName;
 }
 //---------------------------------------------------------------------------
@@ -158,7 +158,7 @@ void __fastcall TPasswOptionsDlg::FormShow(TObject *Sender)
 {
   Top = MainForm->Top + (MainForm->Height - Height) / 2;
   Left = MainForm->Left + (MainForm->Width - Width) / 2;
-  TopMostManager::GetInstance()->SetForm(this);
+  TopMostManager::GetInstance().SetForm(this);
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswOptionsDlg::FormActivate(TObject *Sender)
@@ -170,9 +170,9 @@ void __fastcall TPasswOptionsDlg::BrowseBtnClick(TObject *Sender)
 {
   MainForm->OpenDlg->FilterIndex = 3;
 
-  TopMostManager::GetInstance()->NormalizeTopMosts(this);
+  TopMostManager::GetInstance().NormalizeTopMosts(this);
   bool blSuccess = MainForm->OpenDlg->Execute();
-  TopMostManager::GetInstance()->NormalizeTopMosts(this);
+  TopMostManager::GetInstance().NormalizeTopMosts(this);
 
   if (!blSuccess)
     return;

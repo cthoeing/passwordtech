@@ -71,7 +71,6 @@ __published:
   void __fastcall FormActivate(TObject *Sender);
   void __fastcall FormShow(TObject *Sender);
   void __fastcall RememberPasswCheckClick(TObject *Sender);
-  void __fastcall CancelBtnClick(TObject *Sender);
   void __fastcall KeyExpiryTimerTimer(TObject *Sender);
     void __fastcall BrowseBtnClick(TObject *Sender);
     void __fastcall CreateKeyFileBtnClick(TObject *Sender);

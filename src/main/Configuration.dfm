@@ -22,11 +22,11 @@ object ConfigurationDlg: TConfigurationDlg
   PixelsPerInch = 96
   TextHeight = 13
   object ConfigPages: TPageControl
-    Left = 11
+    Left = 8
     Top = 8
     Width = 410
     Height = 369
-    ActivePage = LanguageSheet
+    ActivePage = FilesSheet
     Anchors = [akLeft, akTop, akRight, akBottom]
     HotTrack = True
     TabOrder = 0
@@ -37,93 +37,112 @@ object ConfigurationDlg: TConfigurationDlg
         341)
       object ChangeFontLbl: TLabel
         Left = 8
-        Top = 16
+        Top = 72
         Width = 162
         Height = 13
         Caption = 'Change font for the GUI controls:'
       end
       object FontSampleLbl: TLabel
-        Left = 152
-        Top = 42
+        Left = 162
+        Top = 96
         Width = 21
         Height = 13
         Caption = 'Test'
       end
       object AutotypeDelayLbl: TLabel
         Left = 8
-        Top = 154
+        Top = 210
         Width = 201
         Height = 13
         Caption = 'Autotype delay between characters (ms):'
       end
+      object UiStyleLbl: TLabel
+        Left = 8
+        Top = 16
+        Width = 98
+        Height = 13
+        Caption = 'User interface style:'
+      end
       object SelectFontBtn: TButton
         Left = 8
-        Top = 36
+        Top = 91
         Width = 137
         Height = 25
         Caption = 'Select font'
-        TabOrder = 0
+        DropDownMenu = SelectFontMenu
+        Style = bsSplitButton
+        TabOrder = 1
         OnClick = SelectFontBtnClick
       end
       object ShowSysTrayIconConstCheck: TCheckBox
         Left = 8
-        Top = 77
+        Top = 133
         Width = 385
         Height = 17
         Caption = 'Show system tray icon constantly'
-        TabOrder = 1
+        TabOrder = 2
       end
       object MinimizeToSysTrayCheck: TCheckBox
         Left = 8
-        Top = 100
+        Top = 156
         Width = 385
         Height = 17
         Caption = 'Minimize program to system tray'
-        TabOrder = 2
+        TabOrder = 3
       end
       object AutotypeDelayBox: TEdit
-        Left = 266
-        Top = 151
+        Left = 261
+        Top = 207
         Width = 48
         Height = 21
         Anchors = [akTop, akRight]
-        TabOrder = 4
+        TabOrder = 5
         Text = '0'
       end
       object AutotypeDelaySpinBtn: TUpDown
-        Left = 314
-        Top = 151
+        Left = 309
+        Top = 207
         Width = 16
         Height = 21
         Anchors = [akTop, akRight]
         Associate = AutotypeDelayBox
         Max = 1000
-        TabOrder = 5
+        TabOrder = 6
       end
       object MinimizeAutotypeCheck: TCheckBox
         Left = 8
-        Top = 123
+        Top = 179
         Width = 385
         Height = 17
         Caption = 'Minimize before performing autotype'
-        TabOrder = 3
+        TabOrder = 4
       end
       object AskBeforeExitCheck: TCheckBox
         Left = 8
-        Top = 178
+        Top = 234
         Width = 380
         Height = 17
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Ask before exiting application'
-        TabOrder = 6
+        TabOrder = 7
       end
       object LaunchSystemStartupCheck: TCheckBox
         Left = 8
-        Top = 201
+        Top = 257
         Width = 380
         Height = 17
         Caption = 'Launch application on system startup (for current user)'
-        TabOrder = 7
+        TabOrder = 8
+      end
+      object UiStylesList: TComboBox
+        Left = 8
+        Top = 35
+        Width = 380
+        Height = 21
+        Style = csDropDownList
+        Anchors = [akLeft, akTop, akRight]
+        Sorted = True
+        TabOrder = 0
       end
     end
     object SecuritySheet: TTabSheet
@@ -148,7 +167,7 @@ object ConfigurationDlg: TConfigurationDlg
         Caption = 
           'Clear clipboard automatically after the following time (seconds)' +
           ':'
-        TabOrder = 4
+        TabOrder = 5
         OnClick = AutoClearClipCheckClick
       end
       object AutoClearClipTimeBox: TEdit
@@ -156,7 +175,7 @@ object ConfigurationDlg: TConfigurationDlg
         Top = 172
         Width = 49
         Height = 21
-        TabOrder = 5
+        TabOrder = 6
         Text = '1'
       end
       object AutoClearClipTimeSpinBtn: TUpDown
@@ -168,7 +187,7 @@ object ConfigurationDlg: TConfigurationDlg
         Min = 1
         Max = 32767
         Position = 1
-        TabOrder = 6
+        TabOrder = 7
       end
       object TestCommonPasswCheck: TCheckBox
         Left = 8
@@ -177,7 +196,7 @@ object ConfigurationDlg: TConfigurationDlg
         Height = 17
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Test passwords against list of common passwords'
-        TabOrder = 2
+        TabOrder = 3
       end
       object RandomPoolCipherList: TComboBox
         Left = 8
@@ -197,7 +216,7 @@ object ConfigurationDlg: TConfigurationDlg
         Caption = 
           'Clear password box automatically after the following time (secon' +
           'ds):'
-        TabOrder = 7
+        TabOrder = 8
         OnClick = AutoClearPasswCheckClick
       end
       object AutoClearPasswTimeSpinBtn: TUpDown
@@ -209,18 +228,18 @@ object ConfigurationDlg: TConfigurationDlg
         Min = 1
         Max = 32767
         Position = 1
-        TabOrder = 9
+        TabOrder = 10
       end
       object AutoClearPasswTimeBox: TEdit
         Left = 48
         Top = 222
         Width = 49
         Height = 21
-        TabOrder = 8
+        TabOrder = 9
         Text = '1'
       end
       object BenchmarkBtn: TButton
-        Left = 232
+        Left = 132
         Top = 62
         Width = 153
         Height = 25
@@ -235,7 +254,19 @@ object ConfigurationDlg: TConfigurationDlg
         Width = 377
         Height = 17
         Caption = 'Use advanced password strength estimation (zxcvbn)'
-        TabOrder = 3
+        TabOrder = 4
+      end
+      object BenchmarkMemList: TComboBox
+        Left = 291
+        Top = 62
+        Width = 94
+        Height = 21
+        Hint = 'Data size for benchmark test'
+        Style = csDropDownList
+        Anchors = [akTop, akRight]
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 2
       end
     end
     object HotKeySheet: TTabSheet
@@ -307,6 +338,7 @@ object ConfigurationDlg: TConfigurationDlg
             Width = 250
           end>
         MultiSelect = True
+        ReadOnly = True
         RowSelect = True
         TabOrder = 3
         ViewStyle = vsReport
@@ -349,70 +381,54 @@ object ConfigurationDlg: TConfigurationDlg
     end
     object FilesSheet: TTabSheet
       Caption = 'Files'
-      object FileEncodingLbl: TLabel
+      DesignSize = (
+        402
+        341)
+      object CharEncodingGroup: TRadioGroup
         Left = 8
         Top = 16
-        Width = 156
-        Height = 13
-        Caption = 'Character encoding of text files:'
-      end
-      object NewlineCharLbl: TLabel
-        Left = 8
-        Top = 72
-        Width = 139
-        Height = 13
-        Caption = 'Newline character sequence:'
-      end
-      object FileEncodingList: TComboBox
-        Left = 8
-        Top = 35
-        Width = 154
-        Height = 21
-        Style = csDropDownList
-        ItemIndex = 0
-        TabOrder = 0
-        Text = 'ANSI'
+        Width = 385
+        Height = 113
+        Anchors = [akLeft, akTop, akRight]
+        Caption = 'Character encoding of text files'
         Items.Strings = (
           'ANSI'
           'UTF-16'
           'UTF-16 Big Endian'
           'UTF-8')
+        TabOrder = 0
       end
-      object NewlineCharList: TComboBox
+      object NewlineCharGroup: TRadioGroup
         Left = 8
-        Top = 91
-        Width = 154
-        Height = 21
-        Style = csDropDownList
-        ItemIndex = 0
-        TabOrder = 1
-        Text = 'Windows (\r\n)'
+        Top = 135
+        Width = 385
+        Height = 68
+        Anchors = [akLeft, akTop, akRight]
+        Caption = 'Newline character sequence'
         Items.Strings = (
           'Windows (\r\n)'
           'Unix (\n)')
+        TabOrder = 1
       end
     end
     object UpdatesSheet: TTabSheet
       Caption = 'Updates'
-      object AutoCheckUpdatesLbl: TLabel
+      DesignSize = (
+        402
+        341)
+      object UpdateCheckGroup: TRadioGroup
         Left = 8
         Top = 16
-        Width = 141
-        Height = 13
-        Caption = 'Automatic check for updates:'
-      end
-      object AutoCheckUpdatesList: TComboBox
-        Left = 8
-        Top = 35
-        Width = 154
-        Height = 21
-        Style = csDropDownList
-        TabOrder = 0
+        Width = 385
+        Height = 113
+        Anchors = [akLeft, akTop, akRight]
+        Caption = 'Automatic check for updates'
         Items.Strings = (
           'Daily'
           'Weekly'
           'Monthly'
           'Disabled')
+        TabOrder = 0
       end
     end
     object LanguageSheet: TTabSheet
@@ -452,7 +468,7 @@ object ConfigurationDlg: TConfigurationDlg
         341)
       object DefaultAutotypeSeqLbl: TLabel
         Left = 8
-        Top = 309
+        Top = 313
         Width = 135
         Height = 13
         Caption = 'Default autotype sequence:'
@@ -576,7 +592,7 @@ object ConfigurationDlg: TConfigurationDlg
       end
       object NumberBackupsCheck: TCheckBox
         Left = 57
-        Top = 135
+        Top = 137
         Width = 222
         Height = 17
         Anchors = [akLeft, akTop, akRight]
@@ -676,7 +692,15 @@ object ConfigurationDlg: TConfigurationDlg
   end
   object SaveDlg: TSaveDialog
     Filter = 'Gettext PO files (*.po)|*.po'
-    Left = 383
-    Top = 336
+    Left = 47
+    Top = 384
+  end
+  object SelectFontMenu: TPopupMenu
+    Left = 212
+    Top = 120
+    object SelectFontMenu_RestoreDefault: TMenuItem
+      Caption = 'Restore Default'
+      OnClick = SelectFontMenu_RestoreDefaultClick
+    end
   end
 end

@@ -22,7 +22,8 @@
 #define PasswGenH
 //---------------------------------------------------------------------------
 #include <vector>
-#include <list>
+#include <memory>
+#include <optional>
 #include "SecureMem.h"
 #include "RandomGenerator.h"
 #include "UnicodeUtil.h"
@@ -64,7 +65,8 @@ PASSFORMAT_PWUSED_EMPTYPW       = -1; // "%P" specified, but no password availab
 
 
 enum CharSetType {
-  cstNormal,
+  cstStandard,
+  cstStandardWithFreq,
   cstPhonetic,
   cstPhoneticUpperCase,
   cstPhoneticMixedCase
@@ -76,8 +78,17 @@ class PasswordGenerator
 private:
   RandomGenerator* m_pRandGen;
   w32string m_sCustomCharSet;
+  struct CharSetFreq {
+    std::vector<std::pair<w32string,int>> items;
+    w32string sCommonCharSet;
+    bool empty() const
+    {
+      return items.empty();
+    }
+  };
+  CharSetFreq m_customCharSetFreq;
   CharSetType m_customCharSetType;
-  int m_nCustomCharSetSize;
+  //int m_nCustomCharSetSize;
   double m_dCustomCharSetEntropy;
   bool m_blCustomCharSetNonLC;
   w32string m_charSetDecodes[PASSWGEN_NUMCHARSETCODES];
@@ -95,9 +106,13 @@ private:
 
   // convert ("parse") the input string into a "unique" character set
   // -> input string
-  // -> receives identified type of character set
-  // <- string containing character set; empty if input is invalid
-  w32string ParseCharSet(w32string sInput, CharSetType& charSetType);
+  // -> receives CharSetFreq data if valid (may be nullptr)
+  // <- optional pair of
+  //    - string containing character set;
+  //    - type of character set
+  std::optional<std::pair<w32string,CharSetType>> ParseCharSet(
+    w32string sInput,
+    CharSetFreq* pCharSetFreq = nullptr) const;
 
   WString GetCustomCharSetAsWString(void) const
   {
@@ -116,10 +131,13 @@ public:
   // a character set where each character must occur only once
   // -> source string
   // -> string with ambiguous characters to be excluded from the final set
+  // -> string receiving ambiguous characters that have been removed from
+  //    the source string
   // <- unique character set
   static w32string MakeCharSetUnique(const w32string& sSrc,
-    w32string* psAmbigCharSet = NULL,
-    std::vector<w32string>* pAmbigGroups = NULL);
+    const w32string* psAmbigCharSet = nullptr,
+    const std::vector<w32string>* pAmbigGroups = nullptr,
+    w32string* psRemovedAmbigChars = nullptr);
 
   static w32string CreateSetOfAmbiguousChars(const w32string& aAmbigChars,
     std::vector<w32string>& ambigGroups);
@@ -146,7 +164,7 @@ public:
     int nWords,
     const word32* pChars,
     int nFlags,
-    int* pnNetWordsLen = NULL) const;
+    int* pnNetWordsLen = nullptr) const;
 
   // generates a "formatted" password
   // -> destination buffer (where to store the password)
@@ -154,13 +172,13 @@ public:
   // -> format string; may contain "format specifiers" preceded by a '%' sign
   // -> format flags (PASSFORMAT_FLAG_...)
   // -> pointer to a previously generated password, which may be inserted into
-  //    the target buffer if the format string contains '%P' (may be NULL)
+  //    the target buffer if the format string contains '%P' (may be nullptr)
   // -> indicates *how* the password given by pszPassw was actually used
   //    if <= 0: error, see PASSFORMAT_PWUSED_...
   //    if  > 0: number of bytes copied to the target buffer, may be less than
   //             the password length if the buffer is too small
-  //    (may be NULL)
-  // -> indicates the first invalid specifier in the format string (may be NULL)
+  //    (may be nullptr)
+  // -> indicates the first invalid specifier in the format string (may be nullptr)
   // -> estimated security of the generated password; estimation does not take
   //    into account permutations
   // <- length of the resulting password
@@ -168,10 +186,10 @@ public:
     int nMaxDestLen,
     const w32string& sFormat,
     int nFlags,
-    const word32* pPassw = NULL,
-    int* pnPasswUsed = NULL,
-    word32* plInvalidSpec = NULL,
-    double* pdSecurity = NULL);
+    const word32* pPassw = nullptr,
+    int* pnPasswUsed = nullptr,
+    word32* plInvalidSpec = nullptr,
+    double* pdSecurity = nullptr);
 
   // call this function to set up all character sets by providing user-defined
   // ambiguous characters and special symbols
@@ -186,7 +204,7 @@ public:
     bool blDetermineSubsets = false);
 
   // load a word list from a file
-  // -> file name (full path); if NULL, load the default word list
+  // -> file name (full path); if nullptr, load the default word list
   // -> maximum word length allowed in the list (does not apply to the
   //    default list)
   // <- number of words added to the list; <= 0 in case of an error
@@ -211,8 +229,8 @@ public:
   //                      must be in the range 1.0 < entropy < log_2(26)
   //    bytes 13..70316 : frequencies of all possible trigrams stored as
   //                      17,576 32-bit numbers (i.e., 4 bytes each)
-  // -> number of evaluated trigrams (NULL -> don't receive anything)
-  // -> bits of entropy per letter (may be NULL); min. entropy is 1.0!
+  // -> number of evaluated trigrams (nullptr -> don't receive anything)
+  // -> bits of entropy per letter (may be nullptr); min. entropy is 1.0!
   // function throws an exception in case of errors
   static void CreateTrigramFile(const WString& sSrcFileName,
     const WString& sDestFileName,

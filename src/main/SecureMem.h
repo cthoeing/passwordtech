@@ -23,8 +23,17 @@
 //---------------------------------------------------------------------------
 #include <algorithm>
 #include <cstring>
+#include <cwchar>
 #include "types.h"
 #include "MemUtil.h"
+
+class SecureMemError : public std::runtime_error
+{
+public:
+  SecureMemError(const char* pMsg)
+    : std::runtime_error(pMsg)
+  {}
+};
 
 
 // class for secure memory operations, fast implementation
@@ -38,7 +47,11 @@ private:
   T* m_pData;
   word32 m_lSize;
 
+  static word32 _tcslen(const T* pStr);
+
 public:
+
+  static const word32 npos = -1;
 
   // constructor
   SecureMem()
@@ -169,6 +182,14 @@ public:
       Resize(m_lSize + lAddSize, true);
   }
 
+  void GrowExp(word32 lNewSize)
+  {
+    if (lNewSize > m_lSize) {
+      word32 lNewSizeLog = __builtin_clz(lNewSize) ^ 31;
+      Resize((lNewSizeLog < 31) ? 1u << (lNewSizeLog + 1) : 0xffffffff, true);
+    }
+  }
+
   // shrinks the array (contents will be preserved)
   // -> new size
   void Shrink(word32 lNewSize)
@@ -225,29 +246,7 @@ public:
   // returns string length
   // (size without terminating zero)
   // <- string length
-  word32 StrLen(void) const
-  {
-    if (m_lSize < 2)
-      return 0;
-
-    word32 lStrLen = 0;
-    if (std::is_same<T, char>::value || std::is_same<T, word8>::value)
-      lStrLen = strlen(reinterpret_cast<const char*>(m_pData));
-    else if (std::is_same<T, wchar_t>::value)
-      lStrLen = wcslen(reinterpret_cast<const wchar_t*>(m_pData));
-    else {
-      for ( ; lStrLen < m_lSize && m_pData[lStrLen] != '\0'; lStrLen++);
-    }
-
-    if (lStrLen >= m_lSize)
-//#ifdef _DEBUG
-      throw std::runtime_error("SecureMem: StrLen() overflow");
-//#else
-//      lStrLen = m_lSize - 1;
-//#endif
-
-    return lStrLen;
-  }
+  word32 StrLen(void) const;
 
   // returns string length in bytes
   // <- string length as number of bytes
@@ -282,11 +281,28 @@ public:
   // search container for the first occurrence of an element
   // -> element to search for
   // -> index at which search is started
-  // -> number of elements to search (-1 = search until end)
-  // <- index of first element (-1 = element not found)
+  // -> number of elements to search (npos = search until end)
+  // <- index of first element (npos = element not found)
   word32 Find(const T& element,
     word32 lStart = 0,
-    word32 lLen = -1) const;
+    word32 lLen = npos) const;
+
+  // append another string to this string
+  // -> pointer to string to append (must be zero-terminated if length
+  //    is not specified)
+  // -> length of string to append (-1 = determine string length)
+  // -> position/index at which string is to be appended
+  //    (-1 = append at the end of this string);
+  //    receives new string length
+  void StrCat(const T* pStr,
+    word32 lLen,
+    word32& lPos);
+
+  void StrCat(const SecureMem<T>& src,
+    word32& lPos)
+  {
+    return StrCat(src.m_pData, src.StrLen(), lPos);
+  }
 
   // begin/end functions to enable range-based for loops
   T* begin(void)
@@ -307,6 +323,36 @@ public:
   const T* end(void) const
   {
     return m_pData + m_lSize;
+  }
+
+
+  // front/back: Access first/last element as a reference
+  T& front(void)
+  {
+    if (IsEmpty())
+      throw SecureMemError("SecureMem::front(): Array is empty");
+    return m_pData[0];
+  }
+
+  const T& front(void) const
+  {
+    if (IsEmpty())
+      throw SecureMemError("SecureMem::front(): Array is empty");
+    return m_pData[0];
+  }
+
+  T& back(void)
+  {
+    if (IsEmpty())
+      throw SecureMemError("SecureMem::back(): Array is empty");
+    return m_pData[m_lSize - 1];
+  }
+
+  const T& back(void) const
+  {
+    if (IsEmpty())
+      throw SecureMemError("SecureMem::back(): Array is empty");
+    return m_pData[m_lSize - 1];
   }
 
 
@@ -420,8 +466,8 @@ word32 SecureMem<T>::Find(const T& element,
   word32 lLen) const
 {
   if (IsEmpty() || lLen == 0 || lStart >= m_lSize)
-    return -1;
-  if (lLen == -1)
+    return npos;
+  if (lLen == npos)
     lLen = m_lSize;
   lLen = std::min(m_lSize - lStart, lLen);
   while (lLen--) {
@@ -429,7 +475,58 @@ word32 SecureMem<T>::Find(const T& element,
       return lStart;
     lStart++;
   }
-  return -1;
+  return npos;
+}
+
+template<class T>
+word32 SecureMem<T>::_tcslen(const T* pStr)
+{
+  if (std::is_same<T, char>::value || std::is_same<T, word8>::value)
+    return strlen(reinterpret_cast<const char*>(pStr));
+  if (std::is_same<T, wchar_t>::value)
+    return wcslen(reinterpret_cast<const wchar_t*>(pStr));
+
+  const T* pEnd = pStr;
+  while (*pEnd != '\0') pEnd++;
+  return static_cast<word32>(pEnd - pStr);
+}
+
+template<class T>
+word32 SecureMem<T>::StrLen(void) const
+{
+  if (m_lSize < 2)
+    return 0;
+
+  word32 lStrLen = 0;
+  if (std::is_same<T, char>::value || std::is_same<T, word8>::value)
+    lStrLen = strnlen_s(reinterpret_cast<const char*>(m_pData), m_lSize);
+  else if (std::is_same<T, wchar_t>::value)
+    lStrLen = wcsnlen_s(reinterpret_cast<const wchar_t*>(m_pData), m_lSize);
+  else {
+    for ( ; lStrLen < m_lSize && m_pData[lStrLen] != '\0'; lStrLen++);
+  }
+
+  if (lStrLen >= m_lSize)
+    throw SecureMemError("SecureMem::StrLen() overflow");
+
+  return lStrLen;
+}
+
+template<class T>
+void SecureMem<T>::StrCat(const T* pStr, word32 lLen, word32& lPos)
+{
+  if (lLen == npos)
+    lLen = _tcslen(pStr);
+  if (lPos == npos)
+    lPos = StrLen();
+  else if (lPos != 0 && lPos >= m_lSize)
+    throw SecureMemError("SecureMem::StrCat(): Invalid position");
+  if (lLen == 0)
+    return;
+  GrowExp(lPos + lLen + 1);
+  memcpy(m_pData + lPos, pStr, lLen * sizeof(T));
+  lPos += lLen;
+  m_pData[lPos] = '\0';
 }
 
 template<class T> inline bool operator== (const SecureMem<T>& a,

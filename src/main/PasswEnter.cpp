@@ -134,7 +134,7 @@ void __fastcall TPasswEnterDlg::OKBtnClick(TObject *Sender)
   {
     m_sEncryptedPassw = GetPassw();
 
-    RandomPool::GetInstance()->GetData(memcryptKey, sizeof(memcryptKey));
+    RandomPool::GetInstance().GetData(memcryptKey, sizeof(memcryptKey));
     memcrypt(m_sEncryptedPassw.Bytes(), m_sEncryptedPassw.Bytes(),
       m_sEncryptedPassw.SizeBytes(), memcryptKey, sizeof(memcryptKey));
 
@@ -178,9 +178,11 @@ int __fastcall TPasswEnterDlg::Execute(int nFlags,
   OldVersionCheck->Checked = false;
   OldVersionCheck->Enabled = nFlags & PASSWENTER_FLAG_ENABLEOLDVER;
 
+  RememberPasswCheck->Checked = false;
   RememberPasswCheck->Enabled = blPasswCache;
   RememberPasswTimeBox->Enabled = blPasswCache;
   RememberPasswTimeSpinBtn->Enabled = blPasswCache;
+  RememberPasswCheckClick(this);
 
   bool blKeyFile = nFlags & PASSWENTER_FLAG_ENABLEKEYFILE;
   KeyFileLbl->Enabled = blKeyFile;
@@ -236,7 +238,7 @@ void __fastcall TPasswEnterDlg::FormShow(TObject *Sender)
 {
   Top = m_pParentForm->Top + (m_pParentForm->Height - Height) / 2;
   Left = m_pParentForm->Left + (m_pParentForm->Width - Width) / 2;
-  TopMostManager::GetInstance()->SetForm(this);
+  TopMostManager::GetInstance().SetForm(this);
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswEnterDlg::RememberPasswCheckClick(TObject *Sender)
@@ -244,11 +246,6 @@ void __fastcall TPasswEnterDlg::RememberPasswCheckClick(TObject *Sender)
   bool blEnabled = RememberPasswCheck->Checked;
   RememberPasswTimeBox->Enabled = blEnabled;
   RememberPasswTimeSpinBtn->Enabled = blEnabled;
-}
-//---------------------------------------------------------------------------
-void __fastcall TPasswEnterDlg::CancelBtnClick(TObject *Sender)
-{
-  ModalResult = mrCancel;
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswEnterDlg::KeyExpiryTimerTimer(TObject *Sender)
@@ -259,9 +256,9 @@ void __fastcall TPasswEnterDlg::KeyExpiryTimerTimer(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TPasswEnterDlg::BrowseBtnClick(TObject *Sender)
 {
-  TopMostManager::GetInstance()->NormalizeTopMosts(this);
+  TopMostManager::GetInstance().NormalizeTopMosts(this);
   bool blSuccess = OpenDlg->Execute();
-  TopMostManager::GetInstance()->RestoreTopMosts(this);
+  TopMostManager::GetInstance().RestoreTopMosts(this);
 
   if (blSuccess) {
     int nIndex = KeyFileBox->Items->IndexOf(OpenDlg->FileName);
@@ -272,9 +269,9 @@ void __fastcall TPasswEnterDlg::BrowseBtnClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TPasswEnterDlg::CreateKeyFileBtnClick(TObject *Sender)
 {
-  TopMostManager::GetInstance()->NormalizeTopMosts(this);
+  TopMostManager::GetInstance().NormalizeTopMosts(this);
   bool blSuccess = SaveDlg->Execute();
-  TopMostManager::GetInstance()->RestoreTopMosts(this);
+  TopMostManager::GetInstance().RestoreTopMosts(this);
 
   if (blSuccess) {
     try {

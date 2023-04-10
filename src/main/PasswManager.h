@@ -36,6 +36,9 @@
 #include <Vcl.Menus.hpp>
 #include <Vcl.ToolWin.hpp>
 #include <Vcl.Imaging.jpeg.hpp>
+#include <Vcl.BaseImageCollection.hpp>
+#include <Vcl.ImageCollection.hpp>
+#include <Vcl.VirtualImageList.hpp>
 #include <map>
 #include <list>
 //---------------------------------------------------------------------------
@@ -47,10 +50,39 @@
 #include <ToolWin.hpp>
 #include <System.ImageList.hpp>
 #include <Vcl.ImgList.hpp>
-//#include <Vcl.Grids.hpp>
 #include <Vcl.ValEdit.hpp>
 #include "PasswDatabase.h"
 #include "PasswMngDbSettings.h"
+
+class TSelectItemThread : public TThread
+{
+public:
+  __fastcall TSelectItemThread(std::function<void(void)>);
+
+  __fastcall ~TSelectItemThread()
+  {
+    delete m_pEvent;
+  }
+
+  void __fastcall Trigger(void)
+  {
+    if (++m_nTriggers > 1)
+      m_pEvent->SetEvent();
+  }
+
+  void __fastcall ApplyNow(void);
+
+  void __fastcall TerminateAndWait(void);
+
+private:
+  void __fastcall Execute(void) override;
+
+  TSimpleEvent* m_pEvent;
+  std::atomic<int> m_nTriggers;
+  //std::atomic<bool> m_blStop;
+  std::function<void(void)> m_applyFunc;
+};
+
 
 class TPasswMngForm : public TForm
 {
@@ -116,7 +148,6 @@ __published:	// IDE-managed Components
   TMenuItem *MainMenu_Edit_SelectAll;
   TMenuItem *MainMenu_File_DbSettings;
   TToolButton *NewBtn;
-    TImageList *ToolBarIcons;
   TToolButton *OpenBtn;
   TMenuItem *MainMenu_File_Lock;
   TToolButton *SaveBtn;
@@ -161,7 +192,6 @@ __published:	// IDE-managed Components
     TListView *TagView;
     TLabel *TagsLbl;
     TEdit *TagsBox;
-    TImageList *TagIcons;
     TSpeedButton *AddTagBtn;
     TPopupMenu *TagMenu;
     TMenuItem *MainMenu_View_SortTagsBy;
@@ -178,7 +208,6 @@ __published:	// IDE-managed Components
   TDateTimePicker *ExpiryDatePicker;
   TSpeedButton *ExpiryBtn;
   TPopupMenu *ExpiryMenu;
-  TImageList *DbIcons;
   TMenuItem *MainMenu_View_ExpiredEntries;
   TMenuItem *MainMenu_View_N3;
     TToolButton *AddEntryBtn;
@@ -198,6 +227,14 @@ __published:	// IDE-managed Components
     TImage *PasswSecurityBar;
     TLabel *PasswSecurityLbl;
     TSpeedButton *UrlBtn;
+    TImageCollection *ImageCollection32;
+    TVirtualImageList *ImageList32;
+    TImageCollection *ImageCollection16;
+    TVirtualImageList *ImageList16;
+    TLabel *PasswChangeLbl;
+    TLabel *PasswChangeInfo;
+    TSpeedButton *PasswHistoryBtn;
+    TMenuItem *MainMenu_View_ResetListFont;
   void __fastcall MainMenu_File_NewClick(TObject *Sender);
   void __fastcall DbViewSelectItem(TObject *Sender,
     TListItem *Item, bool Selected);
@@ -262,8 +299,6 @@ __published:	// IDE-managed Components
           TDragState State, bool &Accept);
     void __fastcall DbViewDragDrop(TObject *Sender, TObject *Source, int X, int Y);
     void __fastcall DbViewMouseMove(TObject *Sender, TShiftState Shift, int X, int Y);
-  void __fastcall SearchBtnMouseUp(TObject *Sender, TMouseButton Button, TShiftState Shift,
-          int X, int Y);
   void __fastcall MainMenu_Edit_RunClick(TObject *Sender);
   void __fastcall MainMenu_Edit_AddEntryClick(TObject *Sender);
     void __fastcall SearchBoxEnter(TObject *Sender);
@@ -295,10 +330,15 @@ __published:	// IDE-managed Components
     void __fastcall PasswSecurityBarPanelMouseMove(TObject *Sender, TShiftState Shift,
           int X, int Y);
     void __fastcall UrlBtnClick(TObject *Sender);
+    void __fastcall PasswHistoryBtnClick(TObject *Sender);
+    void __fastcall MainMenu_View_ResetListFontClick(TObject *Sender);
+    void __fastcall NotesBoxKeyPress(TObject *Sender, System::WideChar &Key);
 
 
 private:	// User declarations
   std::unique_ptr<PasswDatabase> m_passwDb;
+  std::unique_ptr<TSelectItemThread> m_dbViewSelItemThread;
+  std::unique_ptr<TSelectItemThread> m_tagViewSelItemThread;
   WString m_sDbFileName;
   bool m_blDbReadOnly;
   TListItem* m_pSelectedItem;
@@ -320,6 +360,7 @@ private:	// User declarations
   TDateTime m_lastUserActionTime;
   int m_nSearchFlags;
   //int m_nNumSearchResults;
+  TColor m_defaultListColor;
   std::vector<int> m_listColWidths;
   WString m_uiFieldNames[PasswDbEntry::NUM_FIELDS];
   std::map<std::wstring, std::wstring> m_keyValNames;
@@ -328,6 +369,7 @@ private:	// User declarations
   std::map<SecureWString,SecureWString> m_globalCaseiTags;
   std::set<SecureWString> m_tagFilter;
   std::unique_ptr<PasswDbEntry::KeyValueList> m_tempKeyVal;
+  std::unique_ptr<PasswDbEntry::PasswHistory> m_tempPasswHistory;
   IDropTarget* m_pPasswBoxDropTarget;
 
   void __fastcall LoadConfig(void);
@@ -363,6 +405,9 @@ private:	// User declarations
   void __fastcall SetRecoveryKeyDependencies(void);
   void __fastcall SetPasswQualityBarWidth(void);
   void __fastcall EstimatePasswQuality(const wchar_t* pwszPassw = nullptr);
+  void __fastcall ApplyDbViewItemSelection(TListItem* pItem = nullptr);
+  void __fastcall ApplyTagViewItemSelection(void);
+  void __fastcall SetListViewSortFlag(void);
 public:		// User declarations
   __fastcall TPasswMngForm(TComponent* Owner);
   __fastcall ~TPasswMngForm();

@@ -158,7 +158,7 @@ private:
 
 bool InitAutoComplete(HWND hWnd, const std::vector<SecureWString>& items)
 {
-  if (hWnd == nullptr || items.empty())
+  if (hWnd == nullptr)
     return false;
 
   //HRESULT r=CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
@@ -173,10 +173,20 @@ bool InitAutoComplete(HWND hWnd, const std::vector<SecureWString>& items)
   IUnknown* pEnum = new AutoCompleteData(items);
 
   HRESULT res = pAC->Init(hWnd, pEnum, nullptr, nullptr);
-  if (res == S_OK)
-    pAC->SetOptions(ACO_AUTOSUGGEST);
+  if (res == S_OK) {
+    if (items.empty())
+      pAC->Enable(false);
+    else
+      pAC->SetOptions(ACO_AUTOSUGGEST);
+  }
 
   pAC->Release();
   pEnum->Release();
   return res == S_OK;
 };
+
+bool DisableAutoComplete(HWND hWnd)
+{
+  return InitAutoComplete(hWnd, std::vector<SecureWString>());
+}
+

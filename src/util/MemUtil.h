@@ -22,6 +22,8 @@
 #define MemUtilH
 //---------------------------------------------------------------------------
 #include <vector>
+#include <string>
+#include <System.hpp>
 #include "types.h"
 
 // erases a memory block, i.e., fills it with binary zeros
@@ -43,32 +45,31 @@ void memcrypt(const word8* pSrc,
   const word8* pKey,
   word32 lKeySize);
 
-// overwrite contents of STL string (std::string etc.)
-template<class T> void eraseStlString(T& s)
+// overwrite contents of vector and clear it
+template<class T> [[clang::optnone]] void eraseVector(std::vector<T>& v)
+{
+  if (!v.empty()) {
+    //v.resize(v.capacity());
+    memzero(v.data(), v.size() * sizeof(T));
+    v.clear();
+  }
+}
+
+// overwrite contents of STL string (derived from basic_string) and clear it
+template<class T> [[clang::optnone]] void eraseStlString(std::basic_string<T>& s)
 {
   if (!s.empty()) {
+    //s.resize(s.capacity());
+    //memzero(s.data(), s.length() * sizeof(T));
     std::fill(s.begin(), s.end(), 0);
     s.clear();
   }
 }
 
-template<class T> void eraseVector(T& v)
-{
-  if (!v.empty()) {
-    memzero(&v[0], v.size() * sizeof(T));
-    v.clear();
-  }
-}
+// overwrite contents of AnsiString and clear it
+//[[clang::optnone]] void eraseVclString(AnsiString& s);
 
-// overwrite contents of VCL string (AnsiString etc.)
-template<class T> void eraseVclString(T& s)
-{
-  if (!s.IsEmpty()) {
-    int nLen = s.Length();
-    for (int i = 1; i <= nLen; i++)
-      s[i] = 'x';
-    s = T();
-  }
-}
+// overwrite contents of UnicodeString and clear it
+[[clang::optnone]] void eraseVclString(UnicodeString& s);
 
 #endif

@@ -50,7 +50,7 @@ void __fastcall TPasswMngKeyValDlg::FormShow(TObject *Sender)
   //Left = PasswMngForm->Left + (PasswMngForm->Width - Width) / 2;
   KeyValueGrid->Row = 1;
   KeyValueGrid->Col = 1;
-  TopMostManager::GetInstance()->SetForm(this);
+  TopMostManager::GetInstance().SetForm(this);
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswMngKeyValDlg::LoadConfig(void)

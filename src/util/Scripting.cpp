@@ -30,9 +30,9 @@
 
 static PasswordGenerator* s_pPasswGen = NULL;
 
-static const int MAX_PASSW_CHARS = 16000;
+const int MAX_PASSW_CHARS = 16000;
 
-static const WString
+const WString
   E_LUA_ERROR    = "Lua error: ",
   E_UNKNOWN_FUNC = "Required function \"%s\" not defined in script";
 
@@ -50,7 +50,7 @@ inline double randbl_52new(void)
       (iRan2 & 0x000FFFFF) * M_RAN_INVM52);
 }
 
-static int script_random(lua_State* L)
+int script_random(lua_State* L)
 {
   int nArgs = lua_gettop(L);
   if (nArgs == 0) {
@@ -77,13 +77,13 @@ static int script_random(lua_State* L)
   return 1;
 }
 
-static SecureAnsiString w32ToUtf8(word32* pSrc)
+SecureAnsiString w32ToUtf8(word32* pSrc)
 {
   W32CharToWCharInternal(pSrc);
   return WStringToUtf8(reinterpret_cast<wchar_t*>(pSrc));
 }
 
-static int script_password(lua_State* L)
+int script_password(lua_State* L)
 {
   if (s_pPasswGen == NULL || lua_gettop(L) == 0)
     return 0;
@@ -105,7 +105,7 @@ static int script_password(lua_State* L)
   return 2;
 }
 
-static int script_passphrase(lua_State* L)
+int script_passphrase(lua_State* L)
 {
   if (s_pPasswGen == NULL || lua_gettop(L) == 0)
     return 0;
@@ -134,7 +134,7 @@ static int script_passphrase(lua_State* L)
   return 2;
 }
 
-static int script_phonetic(lua_State* L)
+int script_phonetic(lua_State* L)
 {
   if (s_pPasswGen == NULL || lua_gettop(L) == 0)
     return 0;
@@ -160,7 +160,7 @@ static int script_phonetic(lua_State* L)
   return 2;
 }
 
-static int script_word(lua_State* L)
+int script_word(lua_State* L)
 {
   if (s_pPasswGen == NULL)
     return 0;
@@ -181,7 +181,7 @@ static int script_word(lua_State* L)
   return 1;
 }
 
-static int script_numwords(lua_State* L)
+int script_numwords(lua_State* L)
 {
   if (s_pPasswGen == NULL)
     return 0;
@@ -190,7 +190,7 @@ static int script_numwords(lua_State* L)
   return 1;
 }
 
-static int script_format(lua_State* L)
+int script_format(lua_State* L)
 {
   if (s_pPasswGen == NULL || lua_gettop(L) == 0)
     return 0;
@@ -268,7 +268,7 @@ static void stackDump (lua_State *L) {
 LuaScript::LuaScript(PasswordGenerator* pPasswGen)
   : m_nScriptFlags(0)
 {
-  if (pPasswGen != NULL)
+  if (pPasswGen != nullptr)
     s_pPasswGen = pPasswGen;
   m_L = luaL_newstate();
   luaL_openlibs(m_L);
@@ -391,7 +391,7 @@ void LuaScript::CallGenerate(int nPasswNum,
   lua_pushinteger(m_L, nPasswNum);
   nInputArgs++;
 
-  if (pwszSrcPassw != NULL && *pwszSrcPassw != '\0') {
+  if (pwszSrcPassw != nullptr && *pwszSrcPassw != '\0') {
     SecureAnsiString srcPasswUtf8 = WStringToUtf8(pwszSrcPassw);
     lua_pushstring(m_L, srcPasswUtf8.c_str());
     nInputArgs++;

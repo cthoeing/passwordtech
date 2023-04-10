@@ -126,10 +126,10 @@ void __fastcall TCreateRandDataFileDlg::CreateFileBtnClick(TObject *Sender)
       if (IsRandomPoolActive()) {
         pFastRandGen.reset(new SplitMix64(g_fastRandGen.GetWord64()));
         pRandPool.reset(new RandomPool(
-          *RandomPool::GetInstance(), *pFastRandGen, false));
+          RandomPool::GetInstance(), *pFastRandGen, false));
         pRandPool->Randomize();
         pRandSrc = pRandPool.get();
-        EntropyManager::GetInstance()->ConsumeEntropyBits(RandomPool::MAX_ENTROPY);
+        EntropyManager::GetInstance().ConsumeEntropyBits(RandomPool::MAX_ENTROPY);
       }
       else
         pRandSrc = g_pRandSrc;
@@ -220,9 +220,9 @@ void __fastcall TCreateRandDataFileDlg::BrowseBtnClick(TObject *Sender)
 {
   MainForm->SaveDlg->FilterIndex = 1;
 
-  TopMostManager::GetInstance()->NormalizeTopMosts(this);
+  TopMostManager::GetInstance().NormalizeTopMosts(this);
   bool blSuccess = MainForm->SaveDlg->Execute();
-  TopMostManager::GetInstance()->RestoreTopMosts(this);
+  TopMostManager::GetInstance().RestoreTopMosts(this);
 
   if (!blSuccess)
     return;
@@ -241,7 +241,7 @@ void __fastcall TCreateRandDataFileDlg::FormShow(TObject *Sender)
 {
   Top = MainForm->Top + (MainForm->Height - Height) / 2;
   Left = MainForm->Left + (MainForm->Width - Width) / 2;
-  TopMostManager::GetInstance()->SetForm(this);
+  TopMostManager::GetInstance().SetForm(this);
 }
 //---------------------------------------------------------------------------
 void __fastcall TCreateRandDataFileDlg::FormActivate(TObject *Sender)

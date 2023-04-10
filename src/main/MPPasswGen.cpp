@@ -38,6 +38,7 @@
 #include "PasswManager.h"
 #include "SendKeys.h"
 #include "AESCtrPRNG.h"
+#include "sha256.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
@@ -283,7 +284,7 @@ void __fastcall TMPPasswGenForm::EnterPasswBtnClick(TObject *Sender)
     sPassw = PasswEnterDlg->GetPassw();
 
   PasswEnterDlg->Clear();
-  RandomPool::GetInstance()->Flush();
+  RandomPool::GetInstance().Flush();
 
   if (!blSuccess)
     return;
@@ -441,7 +442,8 @@ void __fastcall TMPPasswGenForm::GenerateBtnClick(TObject *Sender)
 
     SetEditBoxTextBuf(PasswBox, sPassw);
 
-    nPasswBits = Floor(Log2(static_cast<double>(nCharSetSize)) * nPasswLen);
+    nPasswBits = FloorEntropyBits(
+      Log2(static_cast<double>(nCharSetSize)) * nPasswLen);
   }
 
   PasswSecurityBarPanel->Visible = true;
@@ -481,7 +483,7 @@ void __fastcall TMPPasswGenForm::FormClose(TObject *Sender,
   if (!m_key.IsEmpty())
     ClearKey();
   if (Visible) {
-    TopMostManager::GetInstance()->OnFormClose(this);
+    TopMostManager::GetInstance().OnFormClose(this);
     if (g_nAppState & APPSTATE_HIDDEN)
       ShowWindow(Application->Handle, SW_HIDE);
   }
@@ -605,7 +607,7 @@ void __fastcall TMPPasswGenForm::PasswBoxMenu_SelectAllClick(
 //---------------------------------------------------------------------------
 void __fastcall TMPPasswGenForm::FormShow(TObject *Sender)
 {
-  TopMostManager::GetInstance()->SetForm(this);
+  TopMostManager::GetInstance().SetForm(this);
 }
 //---------------------------------------------------------------------------
 void __fastcall TMPPasswGenForm::PasswSecurityBarMouseMove(TObject *Sender,

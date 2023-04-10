@@ -54,7 +54,7 @@ public:
   {};
 
   // get singleton access
-  static TopMostManager* GetInstance(void);
+  static TopMostManager& GetInstance(void);
 
   // set form top-most or non-top most, depending on AlwaysOnTop parameter
   void SetForm(TForm* pForm);

@@ -1,10 +1,10 @@
-﻿# German translation of Password Tech 3.4.5
+﻿# German translation of Password Tech 3.5.0
 # Released under the GNU General Public License
 
 #. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.4.5\n"
+"Project-Id-Version: Password Tech 3.5.0\n"
 "Last-Translator: Christian Thöing\n"
 "Language: de\n"
 
@@ -99,6 +99,14 @@ msgstr "Passwort-Liste in Datei generieren"
 #. Main window, button to access advanced password options
 msgid "Advanced"
 msgstr "Erweitert"
+
+#. Main window, button to access advanced password options, dropdown menu
+msgid "Deactivate All Options"
+msgstr "Alle Optionen deaktivieren"
+
+#. Main window, button to access advanced password options, dropdown menu
+msgid "Deactivate All Starred (*) Options"
+msgstr "Alle Optionen mit Stern (*) deaktivieren"
 
 #. Main window, Generated Password groupbox
 msgid "Generated Password"
@@ -542,18 +550,18 @@ msgid ""
 "(existing passwords will be preserved),\n"
 "or do you want to completely overwrite it?\n"
 "\n"
-"Yes\t-> append passwords,\n"
-"No\t-> overwrite file,\n"
-"Cancel\t-> cancel process."
+"Yes -> append passwords,\n"
+"No -> overwrite file,\n"
+"Cancel -> cancel process."
 msgstr ""
 "Die ausgewählte Datei existiert bereits.\n"
 "Möchten Sie Passwörter zur Datei hinzufügen\n"
 "(existierende Passwörter bleiben erhalten),\n"
 "oder möchten Sie die Datei komplett überschreiben?\n"
 "\n"
-"Ja\t-> Passwörter hinzufügen,\n"
-"Nein\t-> Datei überschreiben,\n"
-"Abbr.\t-> Vorgang abbrechen."
+"Ja -> Passwörter hinzufügen,\n"
+"Nein -> Datei überschreiben,\n"
+"Abbrechen -> Vorgang abbrechen."
 
 #. Main window, Include Passphrase, Specify Length, message shown when specified length range is invalid
 msgid "Passphrase: Invalid length range."
@@ -658,12 +666,12 @@ msgstr "%d Passwörter generiert."
 #. Generate password list, info about passwords
 msgid ""
 "%d passwords generated.\r\n"
-"Security of each password: %d bits.\r\n"
-"Maximum security of the entire list: %d bits."
+"Entropy of the first password: %d bits.\r\n"
+"Maximum entropy of the entire list: %d bits."
 msgstr ""
 "%d Passwörter generiert.\r\n"
-"Sicherheit von jedem Passwort: %d Bits.\r\n"
-"Maximale Sicherheit der gesamten Liste: %d Bits."
+"Entropie des ersten Passworts: %d Bits.\r\n"
+"Maximale Entropie der gesamten Liste: %d Bits."
 
 #. Generate password to clipboard
 msgid "Password copied to clipboard."
@@ -707,6 +715,10 @@ msgstr "Ungültiger Zeichensatz."
 #. Include characters, phonetic passwords, info about trigrams
 msgid "default (English) trigrams"
 msgstr "Standard-Trigramme (Englisch)"
+
+#. Include characters, info about character set where a particular number of characters is desired for certain subsets
+msgid "(with different frequencies)"
+msgstr "(mit unterschiedlichen Häufigkeiten)"
 
 #. Data loaded from file
 msgid "File \"%s\""
@@ -809,13 +821,13 @@ msgstr ""
 
 #. Configuration, message shown when selecting language
 msgid ""
-"The language file will be loaded when you\n"
-"restart the program.\n"
+"The program has to be restarted in order\n"
+"for the changes to take effect.\n"
 "\n"
 "Do you want to restart now?"
 msgstr ""
-"Die Sprachdatei kann erst geladen werden,\n"
-"wenn Sie das Programm neu starten.\n"
+"Das Programm muss neu gestartet werden,\n"
+"damit die Änderungen wirksam werden.\n"
 "\n"
 "Möchten Sie jetzt neu starten?"
 
@@ -839,9 +851,9 @@ msgid ""
 "\n"
 "The estimated security is %d bits.\n"
 "\n"
-"Yes\t-> copy password to clipboard,\n"
-"No\t-> generate new password,\n"
-"Cancel\t-> cancel process."
+"Yes -> copy password to clipboard,\n"
+"No -> generate new password,\n"
+"Cancel -> cancel process."
 msgstr ""
 "Das generierte Passwort lautet:\n"
 "\n"
@@ -849,9 +861,9 @@ msgstr ""
 "\n"
 "Die geschätzte Sicherheit beträgt %d Bits.\n"
 "\n"
-"Ja\t-> Passwort in Zwischenablage kopieren,\n"
-"Nein\t-> neues Passwort generieren,\n"
-"Abbr.\t-> Vorgang abbrechen."
+"Ja -> Passwort in Zwischenablage kopieren,\n"
+"Nein -> neues Passwort generieren,\n"
+"Abbrechen -> Vorgang abbrechen."
 
 #. Context menu of drop-down lists in main window, menu item "Clear List"
 msgid ""
@@ -1023,19 +1035,18 @@ msgstr "Warte auf Beenden aktiver Threads ..."
 
 #. Main menu, Help submenu, Donate
 msgid ""
-"Donate at least one of the following amounts\n"
-"to receive a Donor Key:\n"
+"Donate at least one of the following amounts\nto receive a Donor Key:\n"
 "\n"
-"%d EUR / %d USD:\tValid for current version and %d updates.\n"
-"%d EUR / %d USD:\tValid for the entire lifetime of version 3.\n"
+"%d EUR / %d USD: Valid for current version and %d updates.\n"
+"%d EUR / %d USD: Valid for the entire lifetime of main version 3 (unlimited updates).\n"
 "\n"
 "Do you want to donate now?"
 msgstr ""
 "Spenden Sie mindestens einen der folgenden\n"
 "Beträge, um einen Spender-Schlüssel zu erhalten:\n"
 "\n"
-"%d EUR / %d USD:\tGültig für die aktuelle Version und %d Updates.\n"
-"%d EUR / %d USD:\tGültig für die gesamte Lebensdauer von Version 3.\n"
+"%d EUR / %d USD: Gültig für die aktuelle Version und %d Updates.\n"
+"%d EUR / %d USD: Gültig für die gesamte Lebensdauer von Version 3 (unbegrenzte Updates).\n"
 "\n"
 "Möchten Sie jetzt spenden?"
 
@@ -1076,12 +1087,20 @@ msgid "Database"
 msgstr "Datenbank"
 
 #. Configuration window, General
+msgid "User interface style:"
+msgstr "Stil der Benutzeroberfläche:"
+
+#. Configuration window, General
 msgid "Change font for the GUI controls:"
 msgstr "Schriftart für GUI-Steuerelemente ändern:"
 
 #. Configuration window, General
 msgid "Select font"
 msgstr "Schriftart auswählen"
+
+#. Configuration window, General, dropdown menu of "Select font" button
+msgid "Restore Default"
+msgstr "Voreinstellung wiederherstellen"
 
 #. Configuration window, General
 msgid "Show system tray icon constantly"
@@ -1107,9 +1126,13 @@ msgstr "Beenden der Applikation bestätigen"
 msgid "Launch application on system startup (for current user)"
 msgstr "Applikation beim Systemstart ausführen (für aktuellen Benutzer)"
 
-#. Configuration window, General
+#. Configuration window, Security
 msgid "Benchmark..."
 msgstr "Geschwindigkeitstest..."
+
+#. Configuration window, Security
+msgid "Data size for benchmark test"
+msgstr "Datenmenge für Geschwindigkeitstest"
 
 #. Configuration window, Security
 msgid "Encryption algorithm for generating random data via random pool:"
@@ -1132,8 +1155,8 @@ msgid "Clear password box automatically after the following time (seconds):"
 msgstr "Passwort-Box automatisch löschen nach folgender Zeit (Sekunden):"
 
 #. Configuration window, Updates
-msgid "Automatic check for updates:"
-msgstr "Automatische Suche nach Updates:"
+msgid "Automatic check for updates"
+msgstr "Automatische Suche nach Updates"
 
 #. Configuration window, Updates, options
 msgid "Daily"
@@ -1228,12 +1251,12 @@ msgid "Please select a hot key action."
 msgstr "Bitte wählen Sie eine Hotkey-Aktion aus."
 
 #. Configuration window, Files
-msgid "Character encoding of text files:"
-msgstr "Zeichen-Kodierung von Textdateien:"
+msgid "Character encoding of text files"
+msgstr "Zeichen-Kodierung von Textdateien"
 
 #. Configuration window, Files
-msgid "Newline character sequence:"
-msgstr "Zeichensequenz für Zeilenumbruch (\"newline\"):"
+msgid "Newline character sequence"
+msgstr "Zeichensequenz für Zeilenumbruch (\"newline\")"
 
 #. Configuration window, Language
 msgid "Select language:"
@@ -1464,6 +1487,10 @@ msgstr "Folge desselben Zeichens ausschließen (z.B. aa, 11)"
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Exclude duplicate entries in password lists"
 msgstr "Doppelte Einträge in Passwort-Listen ausschließen"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Assign entropy value to each password in password lists"
+msgstr "Jedem Passwort in Passwort-Listen einen Entropiewert zuordnen"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Capitalize first letter of each word"
@@ -1748,6 +1775,15 @@ msgstr "Phonetisches Passwort generieren (Großbuchstaben)"
 #. Quick help for "Include characters" in main window
 msgid "generate phonetic password (mixed-case letters)"
 msgstr "Phonetisches Passwort generieren (Groß- und Kleinbuchstaben)"
+
+#. Quick help for "Include characters" in main window
+msgid "You can use the following syntax to specify a (minimum) number N of characters\n"
+"for a character set:"
+msgstr "Mit folgender Syntax kann eine (Mindest-)Anzahl N von Zeichen festgelegt werden:"
+
+#. Quick help for "Include characters" in main window
+msgid "N = Include exactly N characters. N+ = Include at least N characters."
+msgstr "N = Genau N Zeichen verwenden. N+ = Mindestens N Zeichen verwenden."
 
 #. Quick help for "Include characters" in main window
 msgid ""
@@ -2191,6 +2227,10 @@ msgid "Change List Font..."
 msgstr "Schriftart für Liste ändern..."
 
 #. Password Manager window, main menu, View submenu
+msgid "Reset List Font"
+msgstr "Schriftart für Liste zurücksetzen"
+
+#. Password Manager window, main menu, View submenu
 msgid "Change Password Font..."
 msgstr "Schriftart für Passwort ändern..."
 
@@ -2219,8 +2259,8 @@ msgid "Clear search"
 msgstr "Suche löschen"
 
 #. Password Manager window, toolbar, Search button, hint
-msgid "Left-click: Perform search, right-click: Search options"
-msgstr "Linksklick: Suche durchführen, Rechtsklick: Suchoptionen"
+msgid "Perform search"
+msgstr "Suche durchführen"
 
 #. Password Manager window, toolbar, Search button, context menu
 msgid "Case-sensitive"
@@ -2269,6 +2309,10 @@ msgid ""
 msgstr ""
 "Fehler beim Öffnen der Datenbank-Datei:\n"
 "%s."
+
+#. Password Manager window, warning message when opening database
+msgid "The selected file is already opened."
+msgstr "Die ausgewählte Datei ist bereits geöffnet."
 
 #. Password Manager window, message when currently selected entry has been changed
 msgid ""
@@ -2645,6 +2689,10 @@ msgstr "Ungültige Rundenanzahl für Schlüsselableitung."
 msgid "By default, new entries expire after the following number of days:"
 msgstr "Standardmäßig verfallen neue Einträge nach der folgenden Anzahl an Tagen:"
 
+#. Password Manager window, Database Settings dialog, label
+msgid "For new entries, save the following number of previous passwords:"
+msgstr "Für neue Einträge folgende Anzahl an letzten Passwörtern speichern:"
+
 #. Password Manager window, Key-Value List Editor dialog, window title
 msgid "Key-value list editor"
 msgstr "Parameterliste editieren"
@@ -2704,3 +2752,23 @@ msgstr "Abschätzung der Passwortqualität deaktiviert"
 #. Password Manager window, Password Quality button, hint
 msgid "Estimate password quality"
 msgstr "Passwortqualität abschätzen"
+
+#. Password Manager window, field name
+msgid "Password history"
+msgstr "Passwort-Historie"
+
+#. Password Manager window, field name
+msgid "Password changed"
+msgstr "Passwort geändert"
+
+#. Password Manager window, Edit panel, label
+msgid "Password changed:"
+msgstr "Passwort geändert:"
+
+#. Password Manager window, Password History dialog, checkbox
+msgid "Keep last passwords - up to:"
+msgstr "Letzte Passwörter aufheben - bis zu:"
+
+#. Password Manager window, Password History dialog, list view, column
+msgid "Set Date/Time"
+msgstr "Gesetztes Datum/Zeit"

@@ -143,7 +143,7 @@ void __fastcall TProgressForm::FormKeyDown(TObject *Sender, WORD &Key,
 //---------------------------------------------------------------------------
 void __fastcall TProgressForm::FormShow(TObject *Sender)
 {
-  TopMostManager::GetInstance()->SetForm(this);
+  TopMostManager::GetInstance().SetForm(this);
 }
 //---------------------------------------------------------------------------
 void __fastcall TProgressForm::TimerTimer(TObject *Sender)

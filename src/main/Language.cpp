@@ -139,7 +139,7 @@ LanguageSupport::LanguageSupport(const WString& sFileName,
         if (std::regex_search(sIdVersion, m, re) && m.size() >= 3)
           m_sLanguageVersion = WString(m[2].str().c_str());
         else
-          throw ELanguageError("Missing language version number");
+          throw ELanguageError("Missing or invalid language version number");
 
         // language name: English name and native name
         it = keyVal.find(L"Language");

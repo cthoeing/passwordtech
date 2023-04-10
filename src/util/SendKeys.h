@@ -29,7 +29,7 @@ class SendKeys
 {
 public:
   struct KeySequence {
-    std::vector< std::vector<INPUT> > keys;
+    std::vector<std::vector<INPUT>> keys;
     std::vector<int> delays;
     KeySequence() {}
     ~KeySequence();
@@ -40,22 +40,22 @@ public:
   void SendString(const wchar_t* pwszStr);
 
   void SendComplexString(const WString& sStr,
-    const PasswDbEntry* pPasswDbEntry = NULL,
-    PasswDatabase* pPasswDb = NULL,
-    const wchar_t* pwszParam = NULL,
-    const wchar_t* pwszPassw = NULL,
-    KeySequence* pKeySequence = NULL);
+    const PasswDbEntry* pPasswDbEntry = nullptr,
+    PasswDatabase* pPasswDb = nullptr,
+    const wchar_t* pwszParam = nullptr,
+    const wchar_t* pwszPassw = nullptr,
+    KeySequence* pKeySequence = nullptr);
 
   void SendKeySequence(KeySequence& input);
 
 private:
 
   const wchar_t* SendUnicodeChar(const wchar_t* pwszKeyPair,
-    //std::vector<word16>* pAddKeys = NULL,
-    std::vector<INPUT>* pDest = NULL);
+    //std::vector<word16>* pAddKeys = nullptr,
+    std::vector<INPUT>* pDest = nullptr);
   void SendVirtualKey(word16 wKey,
-    std::vector<word16>* pAddKeys = NULL,
-    std::vector<INPUT>* pDest = NULL);
+    std::vector<word16>* pAddKeys = nullptr,
+    std::vector<INPUT>* pDest = nullptr);
   void AddVirtualKey(std::vector<INPUT>& dest, word16 wKey, bool blDown);
   void AddString(const wchar_t* pwszStr, KeySequence& dest);
 
@@ -92,8 +92,6 @@ public:
       pwszParam, pwszPassw, &m_keySeq);
   }
 
-  void __fastcall Execute(void);
-
   static bool __fastcall ThreadRunning(void)
   {
     return s_nThreadState != INACTIVE;
@@ -114,6 +112,8 @@ private:
     RUNNING,
     ABORTED
   };
+
+  void __fastcall Execute(void) override;
 
   void __fastcall ThreadTerminate(TObject* Sender)
   {

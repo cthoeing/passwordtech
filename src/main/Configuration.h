@@ -28,6 +28,8 @@
 #include <Forms.hpp>
 #include <ComCtrls.hpp>
 #include <Dialogs.hpp>
+#include <Vcl.ExtCtrls.hpp>
+#include <Vcl.Menus.hpp>
 #include <map>
 #include <vector>
 //---------------------------------------------------------------------------
@@ -99,6 +101,7 @@ struct LanguageEntry {
 };
 
 struct Configuration {
+  WString UiStyleName;
   WString GUIFontString;
   bool AutoClearClip = true;
   int AutoClearClipTime = AUTOCLEARCLIPTIME_DEFAULT;
@@ -150,8 +153,6 @@ __published:	// IDE-managed Components
   TButton *SelectFontBtn;
   TCheckBox *ShowSysTrayIconConstCheck;
   TCheckBox *MinimizeToSysTrayCheck;
-  TLabel *AutoCheckUpdatesLbl;
-  TComboBox *AutoCheckUpdatesList;
   TTabSheet *HotKeySheet;
   THotKey *HotKeyBox;
   TGroupBox *HotKeyActionsGroup;
@@ -162,8 +163,6 @@ __published:	// IDE-managed Components
   TFontDialog *FontDlg;
   TLabel *FontSampleLbl;
   TTabSheet *FilesSheet;
-  TLabel *FileEncodingLbl;
-  TComboBox *FileEncodingList;
   TLabel *HotKeyLbl;
   TListView *HotKeyView;
   TButton *AddBtn;
@@ -196,8 +195,6 @@ __published:	// IDE-managed Components
   TLabel *DefaultAutotypeSeqLbl;
     TEdit *DefaultAutotypeSeqBox;
     TCheckBox *MinimizeAutotypeCheck;
-  TLabel *NewlineCharLbl;
-  TComboBox *NewlineCharList;
     TCheckBox *AskBeforeExitCheck;
     TCheckBox *AutoClearPasswCheck;
     TUpDown *AutoClearPasswTimeSpinBtn;
@@ -215,6 +212,14 @@ __published:	// IDE-managed Components
     TButton *ConvertLangFileBtn;
     TSaveDialog *SaveDlg;
     TCheckBox *UseAdvancedPasswEst;
+    TLabel *UiStyleLbl;
+    TComboBox *UiStylesList;
+    TRadioGroup *UpdateCheckGroup;
+    TRadioGroup *CharEncodingGroup;
+    TRadioGroup *NewlineCharGroup;
+    TComboBox *BenchmarkMemList;
+    TPopupMenu *SelectFontMenu;
+    TMenuItem *SelectFontMenu_RestoreDefault;
   void __fastcall SelectFontBtnClick(TObject *Sender);
   void __fastcall AutoClearClipCheckClick(TObject *Sender);
   void __fastcall FormShow(TObject *Sender);
@@ -232,6 +237,7 @@ __published:	// IDE-managed Components
     void __fastcall BenchmarkBtnClick(TObject *Sender);
     void __fastcall ConvertLangFileBtnClick(TObject *Sender);
     void __fastcall LanguageListSelect(TObject *Sender);
+    void __fastcall SelectFontMenu_RestoreDefaultClick(TObject *Sender);
 private:	// User declarations
   HotKeyList m_hotKeys;
   const std::vector<LanguageEntry>* m_pLangList;

@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Password Tech"
-#define MyAppVersion "3.4.5"
+#define MyAppVersion "3.5.0"
 #define MyAppPublisher "Christian Thöing"
 #define MyAppURL "http://pwgen-win.sourceforge.net"
 #define MyAppExeName "PwTech.exe"
@@ -31,7 +31,7 @@ Compression=lzma2
 SolidCompression=yes
 WizardStyle=modern
 ArchitecturesInstallIn64BitMode=x64
-;SignTool=mssign
+SignTool=mssign
 SetupIconFile={#MySetupImageIcon}
 UninstallDisplayIcon={app}\{#MyAppExeName}
 
@@ -52,10 +52,10 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "useprogfolder"; Description: "{cm:DontUseAppDataPath}"; Flags: unchecked
 
 [Files]
-Source: "C:\Projekte\PWGen3\Win64\Release\PwTech.exe"; DestDir: "{app}"; Flags: ignoreversion; Check: Is64BitInstallMode
-Source: "C:\Projekte\PWGen3\Win64\PwTech.com"; DestDir: "{app}"; DestName: "PwTech.com"; Flags: ignoreversion; Check: Is64BitInstallMode
-Source: "C:\Projekte\PWGen3\Win32\Release\PwTech.exe"; DestDir: "{app}"; Flags: ignoreversion solidbreak; Check: not Is64BitInstallMode
-Source: "C:\Projekte\PWGen3\PwTech.com"; DestDir: "{app}"; Flags: ignoreversion; Check: not Is64BitInstallMode
+Source: "C:\Projekte\PWGen3\Release\64bit\PwTech.exe"; DestDir: "{app}"; Flags: ignoreversion; Check: Is64BitInstallMode
+Source: "C:\Projekte\PWGen3\Release\64bit\PwTech.com"; DestDir: "{app}"; DestName: "PwTech.com"; Flags: ignoreversion; Check: Is64BitInstallMode
+Source: "C:\Projekte\PWGen3\Release\32bit\PwTech.exe"; DestDir: "{app}"; Flags: ignoreversion solidbreak; Check: not Is64BitInstallMode
+Source: "C:\Projekte\PWGen3\Release\32bit\PwTech.com"; DestDir: "{app}"; Flags: ignoreversion; Check: not Is64BitInstallMode
 Source: "C:\Projekte\PWGen3\script_examples\*"; DestDir: "{app}\script_examples"; Flags: ignoreversion solidbreak
 Source: "C:\Projekte\PWGen3\manual\manual.pdf"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Projekte\PWGen3\manual\scripting.pdf"; DestDir: "{app}"; Flags: ignoreversion

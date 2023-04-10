@@ -4,12 +4,11 @@
 #. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.4.5\n"
+"Project-Id-Version: Password Tech 3.5.0\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -105,6 +104,14 @@ msgstr ""
 
 #. Main window, button to access advanced password options
 msgid "Advanced"
+msgstr ""
+
+#. Main window, button to access advanced password options, dropdown menu
+msgid "Deactivate All Options"
+msgstr ""
+
+#. Main window, button to access advanced password options, dropdown menu
+msgid "Deactivate All Starred (*) Options"
 msgstr ""
 
 #. Main window, Generated Password groupbox
@@ -525,9 +532,9 @@ msgid ""
 "(existing passwords will be preserved),\n"
 "or do you want to completely overwrite it?\n"
 "\n"
-"Yes\t-> append passwords,\n"
-"No\t-> overwrite file,\n"
-"Cancel\t-> cancel process."
+"Yes -> append passwords,\n"
+"No -> overwrite file,\n"
+"Cancel -> cancel process."
 msgstr ""
 
 #. Main window, Include Passphrase, Specify Length, message shown when specified length range is invalid
@@ -615,8 +622,8 @@ msgstr ""
 #. Generate password list, info about passwords
 msgid ""
 "%d passwords generated.\r\n"
-"Security of each password: %d bits.\r\n"
-"Maximum security of the entire list: %d bits."
+"Entropy of the first password: %d bits.\r\n"
+"Maximum entropy of the entire list: %d bits."
 msgstr ""
 
 #. Generate password to clipboard
@@ -654,6 +661,10 @@ msgstr ""
 
 #. Include characters, phonetic passwords, info about trigrams
 msgid "default (English) trigrams"
+msgstr ""
+
+#. Include characters, info about character set where a particular number of characters is desired for certain subsets
+msgid "(with different frequencies)"
 msgstr ""
 
 #. Data loaded from file
@@ -737,8 +748,8 @@ msgstr ""
 
 #. Configuration, message shown when selecting language
 msgid ""
-"The language file will be loaded when you\n"
-"restart the program.\n"
+"The program has to be restarted in order\n"
+"for the changes to take effect.\n"
 "\n"
 "Do you want to restart now?"
 msgstr ""
@@ -759,9 +770,9 @@ msgid ""
 "\n"
 "The estimated security is %d bits.\n"
 "\n"
-"Yes\t-> copy password to clipboard,\n"
-"No\t-> generate new password,\n"
-"Cancel\t-> cancel process."
+"Yes -> copy password to clipboard,\n"
+"No -> generate new password,\n"
+"Cancel -> cancel process."
 msgstr ""
 
 #. Context menu of drop-down lists in main window, menu item "Clear List"
@@ -921,8 +932,9 @@ msgid ""
 "Donate at least one of the following amounts\n"
 "to receive a Donor Key:\n"
 "\n"
-"%d EUR / %d USD:\tValid for current version and %d updates.\n"
-"%d EUR / %d USD:\tValid for the entire lifetime of version 3.\n"
+"%d EUR / %d USD: Valid for current version and %d updates.\n"
+"%d EUR / %d USD: Valid for the entire lifetime of main version 3 (unlimited "
+"updates).\n"
 "\n"
 "Do you want to donate now?"
 msgstr ""
@@ -962,11 +974,19 @@ msgid "Database"
 msgstr ""
 
 #. Configuration window, General
+msgid "User interface style:"
+msgstr ""
+
+#. Configuration window, General
 msgid "Change font for the GUI controls:"
 msgstr ""
 
 #. Configuration window, General
 msgid "Select font"
+msgstr ""
+
+#. Configuration window, General, dropdown menu of "Select font" button
+msgid "Restore Default"
 msgstr ""
 
 #. Configuration window, General
@@ -993,8 +1013,12 @@ msgstr ""
 msgid "Launch application on system startup (for current user)"
 msgstr ""
 
-#. Configuration window, General
+#. Configuration window, Security
 msgid "Benchmark..."
+msgstr ""
+
+#. Configuration window, Security
+msgid "Data size for benchmark test"
 msgstr ""
 
 #. Configuration window, Security
@@ -1018,7 +1042,7 @@ msgid "Clear password box automatically after the following time (seconds):"
 msgstr ""
 
 #. Configuration window, Updates
-msgid "Automatic check for updates:"
+msgid "Automatic check for updates"
 msgstr ""
 
 #. Configuration window, Updates, options
@@ -1114,11 +1138,11 @@ msgid "Please select a hot key action."
 msgstr ""
 
 #. Configuration window, Files
-msgid "Character encoding of text files:"
+msgid "Character encoding of text files"
 msgstr ""
 
 #. Configuration window, Files
-msgid "Newline character sequence:"
+msgid "Newline character sequence"
 msgstr ""
 
 #. Configuration window, Language
@@ -1344,6 +1368,10 @@ msgstr ""
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Exclude duplicate entries in password lists"
+msgstr ""
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Assign entropy value to each password in password lists"
 msgstr ""
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
@@ -1616,6 +1644,17 @@ msgstr ""
 
 #. Quick help for "Include characters" in main window
 msgid ""
+"You can use the following syntax to specify a (minimum) number N of "
+"characters\n"
+"for a character set:"
+msgstr ""
+
+#. Quick help for "Include characters" in main window
+msgid "N = Include exactly N characters. N+ = Include at least N characters."
+msgstr ""
+
+#. Quick help for "Include characters" in main window
+msgid ""
 "Comments may be provided in square brackets \"[...]\"\n"
 "at the beginning of the sequence."
 msgstr ""
@@ -1623,13 +1662,11 @@ msgstr ""
 #. Quick help for "Format password" in main window
 msgid ""
 "Format specifiers have the form \"[*][N]x\" or \"[*][M-N]x\", where the\n"
-"optional argument \"N\" specifies the number of repetitions (between 1 "
-"and\n"
+"optional argument \"N\" specifies the number of repetitions (between 1 and\n"
 "99999), \"M-N\" specifies a random number of repetitions in the range\n"
 "from M to N, and \"x\" is the actual format specifier/placeholder. The\n"
 "optional asterisk (*) means that each character must occur only once in\n"
-"the sequence. Example: \"16u\" means \"Insert 16 random upper-case "
-"letters\n"
+"the sequence. Example: \"16u\" means \"Insert 16 random upper-case letters\n"
 "into the password\"."
 msgstr ""
 
@@ -2049,6 +2086,10 @@ msgid "Change List Font..."
 msgstr ""
 
 #. Password Manager window, main menu, View submenu
+msgid "Reset List Font"
+msgstr ""
+
+#. Password Manager window, main menu, View submenu
 msgid "Change Password Font..."
 msgstr ""
 
@@ -2077,7 +2118,7 @@ msgid "Clear search"
 msgstr ""
 
 #. Password Manager window, toolbar, Search button, hint
-msgid "Left-click: Perform search, right-click: Search options"
+msgid "Perform search"
 msgstr ""
 
 #. Password Manager window, toolbar, Search button, context menu
@@ -2122,6 +2163,10 @@ msgstr ""
 msgid ""
 "Error while opening database file:\n"
 "%s."
+msgstr ""
+
+#. Password Manager window, warning message when opening database
+msgid "The selected file is already opened."
 msgstr ""
 
 #. Password Manager window, message when currently selected entry has been changed
@@ -2467,6 +2512,10 @@ msgstr ""
 msgid "By default, new entries expire after the following number of days:"
 msgstr ""
 
+#. Password Manager window, Database Settings dialog, label
+msgid "For new entries, save the following number of previous passwords:"
+msgstr ""
+
 #. Password Manager window, Key-Value List Editor dialog, window title
 msgid "Key-value list editor"
 msgstr ""
@@ -2525,4 +2574,24 @@ msgstr ""
 
 #. Password Manager window, Password Quality button, hint
 msgid "Estimate password quality"
+msgstr ""
+
+#. Password Manager window, field name
+msgid "Password history"
+msgstr ""
+
+#. Password Manager window, field name
+msgid "Password changed"
+msgstr ""
+
+#. Password Manager window, Edit panel, label
+msgid "Password changed:"
+msgstr ""
+
+#. Password Manager window, Password History dialog, checkbox
+msgid "Keep last passwords - up to:"
+msgstr ""
+
+#. Password Manager window, Password History dialog, list view, column
+msgid "Set Date/Time"
 msgstr ""

@@ -33,7 +33,7 @@ enum EntropyEventType {
 class EntropyManager
 {
 private:
-  RandomPool* m_pRandPool;
+  RandomPool& m_randPool;
   word32 m_lEntropyBits;
   word32 m_lTotalEntBits;
   word32 m_lMaxTimerEntBits;
@@ -62,7 +62,7 @@ public:
   // -> 'quality' of the system entropy (see TRandomPool::Randomize())
   EntropyManager(word32 lMaxTimerEntBits = 4,
     word32 lSystemEntBits = 16)
-    : m_pRandPool(RandomPool::GetInstance()), m_lEntropyBits(0), m_lTotalEntBits(0),
+    : m_randPool(RandomPool::GetInstance()), m_lEntropyBits(0), m_lTotalEntBits(0),
       m_lMaxTimerEntBits(lMaxTimerEntBits), m_lSystemEntBits(lSystemEntBits)
   {
     m_lastKeys[0] = m_lastKeys[1] = 0;
@@ -79,10 +79,10 @@ public:
     m_lastDeltas[0] = m_lastDeltas[1] = 0;
   };
 
-  static EntropyManager* GetInstance(void)
+  static EntropyManager& GetInstance(void)
   {
     static EntropyManager inst;
-    return &inst;
+    return inst;
   }
 
   // add a mouse or keyboard event to the random pool
@@ -111,7 +111,7 @@ public:
   // just add system entropy to the pool
   void AddSystemEntropy(void)
   {
-    m_pRandPool->Randomize();
+    m_randPool.Randomize();
     IncreaseEntropyBits(m_lSystemEntBits);
   }
 
@@ -153,7 +153,5 @@ public:
   { read=m_lSystemEntBits, write=m_lSystemEntBits };
 
 };
-
-//extern std::unique_ptr<EntropyManager> g_pEntropyMng;
 
 #endif

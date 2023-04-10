@@ -36,10 +36,9 @@ static const int
 
 SendKeys::KeySequence::~KeySequence()
 {
-  for (int nI = 0; nI < keys.size(); nI++) {
-    eraseVector(keys[nI]);
-    delays[nI] = 0;
-  }
+  for (auto& k : keys)
+    eraseVector(k);
+  eraseVector(delays);
 }
 //---------------------------------------------------------------------------
 SendKeys::SendKeys(int nDelay)
@@ -121,10 +120,10 @@ const wchar_t* SendKeys::SendUnicodeChar(const wchar_t* pwszKeyPair,
     pwszKeyPair += 2;
   }
 
-  if (pDest != NULL)
+  if (pDest != nullptr)
     *pDest = vi;
   else
-    SendInput(vi.size(), &vi[0], sizeof(INPUT));
+    SendInput(vi.size(), vi.data(), sizeof(INPUT));
 
   eraseVector(vi);
   memzero(&ip, sizeof(INPUT));
@@ -157,24 +156,22 @@ void SendKeys::SendVirtualKey(word16 wKey,
   std::vector<INPUT>* pDest)
 {
   std::vector<INPUT> vi;
-  if (pAddKeys != NULL) {
-    for (std::vector<word16>::iterator it = pAddKeys->begin();
-         it != pAddKeys->end(); it++)
-      AddVirtualKey(vi, *it, true);
+  if (pAddKeys != nullptr) {
+    for (auto ch : *pAddKeys)
+      AddVirtualKey(vi, ch, true);
   }
   AddVirtualKey(vi, wKey, true);
   AddVirtualKey(vi, wKey, false);
-  if (pAddKeys != NULL) {
-    for (std::vector<word16>::iterator it = pAddKeys->begin();
-         it != pAddKeys->end(); it++)
-      AddVirtualKey(vi, *it, false);
+  if (pAddKeys != nullptr) {
+    for (auto ch : *pAddKeys)
+      AddVirtualKey(vi, ch, false);
     eraseVector(*pAddKeys);
   }
 
-  if (pDest != NULL)
+  if (pDest != nullptr)
     *pDest = vi;
   else
-    SendInput(vi.size(), &vi[0], sizeof(INPUT));
+    SendInput(vi.size(), vi.data(), sizeof(INPUT));
 
   eraseVector(vi);
 }
@@ -208,7 +205,7 @@ void SendKeys::SendComplexString(const WString& sStr,
 
     if (*pwszStr == '{') {
       const wchar_t* pwszEnd = wcschr(pwszStr + 1, '}');
-      if (pwszEnd != NULL && pwszEnd != pwszStr + 1) {
+      if (pwszEnd != nullptr && pwszEnd != pwszStr + 1) {
         std::string sPlaceholder;
         sPlaceholder.reserve(static_cast<size_t>(pwszEnd - pwszStr) + 1);
         const wchar_t* pwszStart = pwszStr + 1;
@@ -243,7 +240,7 @@ void SendKeys::SendComplexString(const WString& sStr,
             if (it->second <= 0) {
               int nIdx = -it->second;
 
-              if (pPasswDbEntry != NULL && pPasswDb != NULL) {
+              if (pPasswDbEntry != nullptr && pPasswDb != nullptr) {
                 const SecureWString* psSrc;
                 SecureWString sPassw;
                 if (nIdx == PasswDbEntry::PASSWORD && !pPasswDbEntry->HasPlaintextPassw()) {
@@ -253,7 +250,7 @@ void SendKeys::SendComplexString(const WString& sStr,
                 else
                   psSrc = &pPasswDbEntry->Strings[nIdx];
                 if (!psSrc->IsStrEmpty()) {
-                  if (pDest != NULL)
+                  if (pDest != nullptr)
                     AddString(psSrc->c_str(), *pDest);
                   else
                     SendString(psSrc->c_str());
@@ -261,14 +258,14 @@ void SendKeys::SendComplexString(const WString& sStr,
               }
               else {
                 // "parameter" corresponds to "user name"
-                if (nIdx == PasswDbEntry::USERNAME && pwszParam != NULL) {
-                  if (pDest != NULL)
+                if (nIdx == PasswDbEntry::USERNAME && pwszParam != nullptr) {
+                  if (pDest != nullptr)
                     AddString(pwszParam, *pDest);
                   else
                     SendString(pwszParam);
                 }
-                else if (nIdx == PasswDbEntry::PASSWORD && pwszPassw != NULL) {
-                  if (pDest != NULL)
+                else if (nIdx == PasswDbEntry::PASSWORD && pwszPassw != nullptr) {
+                  if (pDest != nullptr)
                     AddString(pwszPassw, *pDest);
                   else
                     SendString(pwszPassw);
@@ -297,7 +294,7 @@ void SendKeys::SendComplexString(const WString& sStr,
               }
 
               if (wKey > 0) {
-                if (pDest != NULL) {
+                if (pDest != nullptr) {
                   SendVirtualKey(wKey, &bufferedKeys, &vi);
                   pDest->keys.push_back(vi);
                   if (!pDest->delays.empty())
@@ -319,10 +316,10 @@ void SendKeys::SendComplexString(const WString& sStr,
 
     if (!blFound) {
       if (bufferedKeys.empty())
-        pwszStr = SendUnicodeChar(pwszStr, pDest ? &vi : NULL);
+        pwszStr = SendUnicodeChar(pwszStr, pDest ? &vi : nullptr);
       else
-        SendVirtualKey(*pwszStr++, &bufferedKeys, pDest ? &vi : NULL);
-      if (pDest != NULL) {
+        SendVirtualKey(*pwszStr++, &bufferedKeys, pDest ? &vi : nullptr);
+      if (pDest != nullptr) {
         pDest->keys.push_back(vi);
         pDest->delays.push_back(m_nDelay);
         eraseVector(vi);
@@ -341,7 +338,7 @@ void SendKeys::SendKeySequence(KeySequence& input)
   Sleep(INIT_DELAY);
   for (int nI = 0; nI < input.keys.size(); nI++) {
     if (!input.keys[nI].empty())
-      SendInput(input.keys[nI].size(), &input.keys[nI][0], sizeof(INPUT));
+      SendInput(input.keys[nI].size(), input.keys[nI].data(), sizeof(INPUT));
     Sleep(input.delays[nI]);
   }
 }
@@ -361,7 +358,7 @@ void __fastcall TSendKeysThread::Execute(void)
         m_sendKeys.SendKeySequence(m_keySeq);
       break;
     }
-    Sleep(100);
+    TThread::Sleep(100);
     nTimeout += 100;
   }
 }
@@ -371,7 +368,7 @@ void __fastcall TSendKeysThread::TerminateAndWait(int nTimeout)
   TSendKeysThread::TerminateActiveThread();
   int nWait = 0;
   while (ThreadRunning() && nWait < nTimeout) {
-    Sleep(100);
+    TThread::Sleep(100);
     nWait += 100;
     Application->ProcessMessages();
   }

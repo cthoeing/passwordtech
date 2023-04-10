@@ -36,6 +36,11 @@
 #include <IniFiles.hpp>
 //---------------------------------------------------------------------------
 #include <windows.h>
+#include <System.ImageList.hpp>
+#include <Vcl.BaseImageCollection.hpp>
+#include <Vcl.ImageCollection.hpp>
+#include <Vcl.ImgList.hpp>
+#include <Vcl.VirtualImageList.hpp>
 #include <unordered_set>
 #include <atomic>
 #include "RandomPool.h"
@@ -97,6 +102,7 @@ const int
 
 extern CmdLineOptions g_cmdLineOptions;
 extern std::unique_ptr<TMemIniFile> g_pIni;
+extern bool g_blFakeIniFile;
 extern std::vector<std::unique_ptr<PWGenProfile>> g_profileList;
 extern RandomGenerator* g_pRandSrc;
 extern std::unique_ptr<RandomGenerator> g_pKeySeededPRNG;
@@ -296,6 +302,13 @@ __published:	// IDE-managed Components
   TMenuItem *MainMenu_Help_GetTranslations;
     TMenuItem *TrayMenu_ResetWindowPos;
     TMenuItem *TrayMenu_N5;
+    TImageCollection *ImageCollection32;
+    TVirtualImageList *ImageList32;
+    TImageCollection *ImageCollection16;
+    TVirtualImageList *ImageList16;
+    TPopupMenu *AdvancedOptionsMenu;
+    TMenuItem *AdvancedOptionsMenu_DeactivateAll;
+    TMenuItem *AdvancedOptionsMenu_DeactivateAllStarred;
   void __fastcall GenerateBtnClick(TObject *Sender);
   void __fastcall IncludeCharsCheckClick(TObject *Sender);
   void __fastcall CharSetInfoBtnClick(TObject *Sender);
@@ -400,9 +413,12 @@ __published:	// IDE-managed Components
     void __fastcall FormCloseQuery(TObject *Sender, bool &CanClose);
   void __fastcall MainMenu_Help_GetTranslationsClick(TObject *Sender);
     void __fastcall TrayMenu_ResetWindowPosClick(TObject *Sender);
+    void __fastcall AdvancedOptionsMenu_DeactivateAllClick(TObject *Sender);
+    void __fastcall AdvancedOptionsMenu_DeactivateAllStarredClick(TObject *Sender);
+
 private:	// User declarations
-  RandomPool* m_pRandPool;
-  EntropyManager* m_pEntropyMng;
+  RandomPool& m_randPool;
+  EntropyManager& m_entropyMng;
   PasswordGenerator m_passwGen;
   WString m_sCharSetInput;
   WString m_sCharSetInfo;
@@ -421,11 +437,10 @@ private:	// User declarations
   bool m_blCharSetError;
   bool m_blShowEntProgress;
   bool m_blRestart;
-  bool m_blFakeIniFile;
   PasswOptions m_passwOptions;
   IDropTarget* m_pPasswBoxDropTarget;
   TUpdateCheckThread* m_pUpdCheckThread;
-  std::atomic<bool> m_blUpdCheckThreadRunning;
+  //std::atomic<bool> m_blUpdCheckThreadRunning;
   std::vector<LanguageEntry> m_languages;
   std::vector<HotKeyEntry> m_hotKeys;
   std::unordered_set<std::wstring> m_commonPassw;
