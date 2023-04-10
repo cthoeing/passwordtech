@@ -27,10 +27,10 @@
 
 
 //---------------------------------------------------------------------------
-TopMostManager* TopMostManager::GetInstance(void)
+TopMostManager& TopMostManager::GetInstance(void)
 {
   static TopMostManager inst;
-  return &inst;
+  return inst;
 }
 //---------------------------------------------------------------------------
 bool TopMostManager::SetWindowTopMost(TForm* pForm,

@@ -102,9 +102,9 @@ void __fastcall TPasswListForm::PasswListMenu_SaveAsFileClick(TObject *Sender)
 {
   MainForm->SaveDlg->Title = TRL("Save password list");
   BeforeDisplayDlg();
-  TopMostManager::GetInstance()->NormalizeTopMosts(this);
+  TopMostManager::GetInstance().NormalizeTopMosts(this);
   bool blSuccess = MainForm->SaveDlg->Execute();
-  TopMostManager::GetInstance()->RestoreTopMosts(this);
+  TopMostManager::GetInstance().RestoreTopMosts(this);
   AfterDisplayDlg();
   if (!blSuccess)
     return;
@@ -169,17 +169,17 @@ void __fastcall TPasswListForm::PasswListMenuPopup(TObject *Sender)
 void __fastcall TPasswListForm::PasswListMenu_ChangeFontClick(TObject *Sender)
 {
   BeforeDisplayDlg();
-  TopMostManager::GetInstance()->NormalizeTopMosts(this);
+  TopMostManager::GetInstance().NormalizeTopMosts(this);
   if (FontDlg->Execute())
     PasswList->Font = FontDlg->Font;
-  TopMostManager::GetInstance()->RestoreTopMosts(this);
+  TopMostManager::GetInstance().RestoreTopMosts(this);
   AfterDisplayDlg();
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswListForm::FormClose(TObject *Sender, TCloseAction &Action)
 {
   ClearEditBoxTextBuf(PasswList);
-  TopMostManager::GetInstance()->OnFormClose(this);
+  TopMostManager::GetInstance().OnFormClose(this);
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswListForm::FormKeyPress(TObject *Sender, char &Key)
@@ -197,7 +197,7 @@ void __fastcall TPasswListForm::PasswListMenu_EncryptCopyClick(
 //---------------------------------------------------------------------------
 void __fastcall TPasswListForm::FormShow(TObject *Sender)
 {
-  TopMostManager::GetInstance()->SetForm(this);
+  TopMostManager::GetInstance().SetForm(this);
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswListForm::PasswListStartDrag(TObject *Sender,

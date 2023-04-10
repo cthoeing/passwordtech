@@ -86,7 +86,7 @@ static void initCrypto(aes_context* pCryptCtx,
 int EncryptText(const SecureWString* psText,
   const word8* pPassw,
   int nPasswLen,
-  RandomGenerator* pRandGen)
+  RandomGenerator& randGen)
 {
   try {
     SecureWString sText;
@@ -127,7 +127,7 @@ int EncryptText(const SecureWString* psText,
     SecureMem<word8> buf(lBufSize), workBuf(LZO1X_1_MEM_COMPRESS);
 
     // get a new initialization vector (IV)
-    pRandGen->GetData(buf, 16);
+    randGen.GetData(buf, 16);
 
     word8* pCryptBuf = buf + 16ul;
 
@@ -155,7 +155,7 @@ int EncryptText(const SecureWString* psText,
     buf[15] = (buf[15] & 0xF0) | bLastBlock;
 
     if (bLastBlock != 0) {
-      pRandGen->GetData(buf + 16ul + lCryptLen, 16 - bLastBlock);
+      randGen.GetData(buf + 16ul + lCryptLen, 16 - bLastBlock);
       lCryptLen += 16 - bLastBlock;
     }
 
@@ -193,7 +193,7 @@ int EncryptText(const SecureWString* psText,
     SecureMem<word8> outBuf(outBufSize + 1);
     base64_encode(outBuf, &outBufSize, buf, lConvertLen, BASE64_LINE_LENGTH);
 
-    *(outBuf.end()-1) = '\0';
+    outBuf.back() = '\0';
 
     // copy the output buffer to the clipboard
     SetClipboardTextBuf(nullptr, reinterpret_cast<char*>(outBuf.Data()));
@@ -356,7 +356,7 @@ int DecryptText(const SecureWString* psText,
          reinterpret_cast<word8*>(asOutBuf.Data()), &decomprLen, nullptr) != LZO_E_OK)
       return CRYPTTEXT_ERROR_DECOMPRFAILED;
 
-    *(asOutBuf.end()-1) = '\0';
+    asOutBuf.back() = '\0';
 
     // copy the output buffer to the clipboard
     if (nVersion >= 2) {

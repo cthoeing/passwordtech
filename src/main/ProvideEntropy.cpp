@@ -84,7 +84,7 @@ void __fastcall TProvideEntropyDlg::OKBtnClick(TObject *Sender)
   if (!sTextUtf8.IsEmpty()) {
     sText.Empty();
 
-    word32 lEntBits = EntropyManager::GetInstance()->AddData(sTextUtf8,
+    word32 lEntBits = EntropyManager::GetInstance().AddData(sTextUtf8,
         sTextUtf8.StrLen(), 0.437, 3.5);
 
     MsgBox(TRLFormat("%d bits of entropy have been added to the random pool.",
@@ -98,7 +98,7 @@ void __fastcall TProvideEntropyDlg::FormShow(TObject *Sender)
 {
   Top = MainForm->Top + (MainForm->Height - Height) / 2;
   Left = MainForm->Left + (MainForm->Width - Width) / 2;
-  TopMostManager::GetInstance()->SetForm(this);
+  TopMostManager::GetInstance().SetForm(this);
 }
 //---------------------------------------------------------------------------
 void __fastcall TProvideEntropyDlg::FormActivate(TObject *Sender)

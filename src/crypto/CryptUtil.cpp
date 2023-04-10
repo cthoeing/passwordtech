@@ -28,11 +28,11 @@
 
 
 void pbkdf2_256bit(const word8* pPassw,
-  int nPasswLen,
+  word32 lPasswLen,
   const word8* pSalt,
-  int nSaltLen,
+  word32 lSaltLen,
   word8* pDerivedKey,
-  int nIterations)
+  word32 lIterations)
 {
   const word8 counter[4] = { 0, 0, 0, 1 };
   sha256_context hashCtx;
@@ -42,14 +42,14 @@ void pbkdf2_256bit(const word8* pPassw,
   // pseudorandom function (PRF)
 
   // compute U_1 = HMAC(key, salt || counter)
-  sha256_hmac_starts(&hashCtx, pPassw, nPasswLen, 0);
-  sha256_hmac_update(&hashCtx, pSalt, nSaltLen);
+  sha256_hmac_starts(&hashCtx, pPassw, lPasswLen, 0);
+  sha256_hmac_update(&hashCtx, pSalt, lSaltLen);
   sha256_hmac_update(&hashCtx, counter, 4);
   sha256_hmac_finish(&hashCtx, pDerivedKey);
 
   SecureMem<word8> md(pDerivedKey, 32);
 
-  for (int i = 1; i < nIterations; i++) {
+  for (word32 i = 1; i < lIterations; i++) {
     // compute U_i = HMAC(key, U_{i-1})
     sha256_hmac_reset(&hashCtx);
     sha256_hmac_update(&hashCtx, md, 32);

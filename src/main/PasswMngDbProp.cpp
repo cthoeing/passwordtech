@@ -108,7 +108,7 @@ void __fastcall TPasswMngDbPropDlg::FormShow(TObject *Sender)
   Top = PasswMngForm->Top + (PasswMngForm->Height - Height) / 2;
   Left = PasswMngForm->Left + (PasswMngForm->Width - Width) / 2;
 
-  TopMostManager::GetInstance()->SetForm(this);
+  TopMostManager::GetInstance().SetForm(this);
 }
 //---------------------------------------------------------------------------
 

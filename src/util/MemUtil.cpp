@@ -38,15 +38,34 @@ void memcrypt(const word8* pSrc,
   const word8* pKey,
   word32 lKeySize)
 {
-  if (lKeySize != 16 && lKeySize != 32)
-    throw std::runtime_error("memcrypt: Key size not supported");
+  if (lKeySize < 16)
+    throw std::runtime_error("memcrypt: Key too small");
 
   chacha_ctx cryptCtx;
-  chacha_keysetup(&cryptCtx, pKey, lKeySize*8);
+  chacha_keysetup(&cryptCtx, pKey, (lKeySize >= 32) ? 256 : 128);
 
   // encryption and decryption are the same for stream cipher ChaCha
   chacha_encrypt_bytes(&cryptCtx, pSrc, pDest, lSize);
 
   memzero(&cryptCtx, sizeof(chacha_ctx));
+}
+//---------------------------------------------------------------------------
+/*[[clang::optnone]] void eraseVclString(AnsiString& s)
+{
+  if (!s.IsEmpty()) {
+    int nLen = s.Length();
+    for (int i = 1; i <= nLen; i++)
+      s[i] = 'x';
+    s = AnsiString();
+  }
+}*/
+//---------------------------------------------------------------------------
+[[clang::optnone]] void eraseVclString(UnicodeString& s)
+{
+  if (!s.IsEmpty()) {
+    for (auto& ch : s)
+      ch = 'x';
+    s = UnicodeString();
+  }
 }
 //---------------------------------------------------------------------------

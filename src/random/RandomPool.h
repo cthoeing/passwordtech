@@ -21,13 +21,10 @@
 #ifndef RandomPoolH
 #define RandomPoolH
 //---------------------------------------------------------------------------
-#include <wincrypt.h>
 #include <memory>
 #include "UnicodeUtil.h"
 #include "SecureMem.h"
 #include "RandomGenerator.h"
-#include "sha256.h"
-//#include "aes.h"
 
 // This is an implementation of a random pool and a cryptographically secure
 // pseudorandom number generator (CSPRNG). Design is inspired by:
@@ -142,7 +139,7 @@ public:
   virtual word32 GetBlockSize(void) const = 0;
 
   // returns max. number of blocks before changing key
-  virtual word32 GetMaxNumOfBlocks(void) const = 0;
+  virtual word64 GetMaxNumOfBlocks(void) const = 0;
 
   // change memory address of internal context
   virtual void Move(void* pNew) = 0;
@@ -152,7 +149,7 @@ public:
 class RandomPool : public RandomGenerator
 {
 public:
-  enum class Cipher {
+  enum class CipherType {
     AES_CTR,
     ChaCha20,
     ChaCha8,
@@ -168,17 +165,15 @@ private:
   word8* m_pSecCtr;
   word8* m_pGetBuf;
   word8* m_pTempBuf;
-  sha256_context* m_pHashCtx;
+  word8* m_pHashCtx;
   word8* m_pCipherCtx; // variable, supports different ciphers
-  Cipher m_cipherType;
+  CipherType m_cipherType;
   std::unique_ptr<RandPoolCipher::CtrBasedCipher> m_pCipher;
   word32 m_lUnusedSize;
   word32 m_lAddBufPos;
   word32 m_lGetBufPos;
-  word32 m_lNumOfBlocks;
+  word64 m_qNumOfBlocks;
   bool m_blKeySet;
-  bool m_blCryptProv;
-  HCRYPTPROV m_cryptProv;
   RandomGenerator& m_fastRandGen;
 
   // allocate pool page in virtual address space
@@ -220,14 +215,14 @@ private:
 public:
 
   enum {
-    POOL_SIZE   = 32,          // pool size (=SHA-256 digest length)
+    POOL_SIZE   = 32,          // pool size (=hash length and cipher key length)
     MAX_ENTROPY = POOL_SIZE*8, // max. entropy the RNG can provide
   };
 
   // default constructor
   // -> encryption algorithm for generating random data
   // -> fast (not necessarily cryptographically secure) PRNG for wiping memory etc.
-  RandomPool(Cipher cipher, RandomGenerator& fastRandGen, bool blLockPhysMem);
+  RandomPool(CipherType cipher, RandomGenerator& fastRandGen, bool blLockPhysMem);
 
   // create new random pool from another instance
   RandomPool(RandomPool& src, RandomGenerator& fastRandGen, bool blLockPhysMem);
@@ -236,15 +231,13 @@ public:
   ~RandomPool();
 
   // singleton access
-  static RandomPool* GetInstance(void);
+  static RandomPool& GetInstance(void);
 
   // change encryption algorithm for generating random numbers
   // -> new cipher type
-  // -> force change (e.g. for constructor)
-  void ChangeCipher(Cipher cipher,
-    bool blForce = false);
+  void ChangeCipher(CipherType cipher);
 
-  Cipher GetCipher(void) const
+  CipherType GetCipher(void) const
   {
     return m_cipherType;
   }
@@ -254,6 +247,11 @@ public:
   // -> number of bytes
   void AddData(const void* pBuf,
     word32 lNumOfBytes);
+
+  template<class T> void AddData(const T& t)
+  {
+    AddData(&t, sizeof(T));
+  }
 
   // for compatibility with RandomGenerator
   void Seed(const void* pBuf,

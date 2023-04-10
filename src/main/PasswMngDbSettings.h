@@ -35,6 +35,7 @@ struct PasswDbSettings {
   SecureWString DefaultUserName;
   SecureWString PasswFormatSeq;
   word32 DefaultExpiryDays = 0;
+  word32 DefaultMaxPasswHistorySize = 0;
   word32 CipherType = 0;
   word32 NumKdfRounds = 0;
   bool Compressed;
@@ -61,13 +62,16 @@ __published:	// IDE-managed Components
   TSpeedButton *PasswGenTestBtn;
   TLabel *DefaultExpiryLbl;
   TEdit *Default…xpiryBox;
-  TUpDown *DefaultExpiryUpDown;
+    TUpDown *DefaultExpirySpinBtn;
   TEdit *PasswGenTestBox;
     TTabSheet *CompressionSheet;
     TCheckBox *EnableCompressionCheck;
     TTrackBar *CompressionLevelBar;
     TLabel *Label1;
     TLabel *CompressionLevelLbl;
+    TLabel *PasswHistoryLbl;
+    TEdit *PasswHistoryBox;
+    TUpDown *PasswHistorySpinBtn;
   void __fastcall FormShow(TObject *Sender);
   void __fastcall OKBtnClick(TObject *Sender);
   void __fastcall CalcRoundsBtnClick(TObject *Sender);

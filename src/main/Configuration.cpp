@@ -42,7 +42,7 @@ const wchar_t* RANDOM_POOL_CIPHER_NAMES[NUM_RANDOM_POOL_CIPHERS] =
   L"AES-CTR",
   L"ChaCha20",
   L"ChaCha8",
-//  L"Speck128"
+  //L"Speck128"
 };
 
 const int RANDOM_POOL_CIPHER_INFO[NUM_RANDOM_POOL_CIPHERS][2] =
@@ -50,7 +50,7 @@ const int RANDOM_POOL_CIPHER_INFO[NUM_RANDOM_POOL_CIPHERS][2] =
   { 256, 128 },
   { 256, 512 },
   { 256, 512 },
-//  { 256, 128 }
+  //{ 256, 128 }
 };
 
 //---------------------------------------------------------------------------
@@ -64,16 +64,25 @@ __fastcall TConfigurationDlg::TConfigurationDlg(TComponent* Owner)
   AutoClearClipTimeSpinBtn->Min = AUTOCLEARCLIPTIME_MIN;
   AutoClearClipTimeSpinBtn->Max = AUTOCLEARCLIPTIME_MAX;
 
-  for (int nI = 0; nI < NUM_RANDOM_POOL_CIPHERS; nI++) {
+  for (const auto& sName : TStyleManager::StyleNames) {
+    UiStylesList->Items->Add(sName);
+  }
+
+  for (int i = 0; i < NUM_RANDOM_POOL_CIPHERS; i++) {
     WString sCipher = TRLFormat("%s (%d-bit key, operates on %d-bit blocks)",
-      RANDOM_POOL_CIPHER_NAMES[nI],
-      RANDOM_POOL_CIPHER_INFO[nI][0], RANDOM_POOL_CIPHER_INFO[nI][1]);
+      RANDOM_POOL_CIPHER_NAMES[i],
+      RANDOM_POOL_CIPHER_INFO[i][0], RANDOM_POOL_CIPHER_INFO[i][1]);
     RandomPoolCipherList->Items->Add(sCipher);
   }
+
+  for (int i = 0; i <= 10; i++)
+    BenchmarkMemList->Items->Add(IntToStr(1 << i) + " MB");
+  BenchmarkMemList->ItemIndex = 6;
 
   if (g_pLangSupp) {
     TRLCaption(this);
     TRLCaption(GeneralSheet);
+    TRLCaption(UiStyleLbl);
     TRLCaption(ChangeFontLbl);
     TRLCaption(SelectFontBtn);
     TRLCaption(ShowSysTrayIconConstCheck);
@@ -86,8 +95,8 @@ __fastcall TConfigurationDlg::TConfigurationDlg(TComponent* Owner)
     TRLCaption(SecuritySheet);
     TRLCaption(RandomPoolCipherLbl);
     TRLCaption(BenchmarkBtn);
+    TRLHint(BenchmarkMemList);
     TRLCaption(TestCommonPasswCheck);
-    //TRLCaption(UseAdvancedPasswEst);
     TRLCaption(AutoClearClipCheck);
     TRLCaption(AutoClearPasswCheck);
 
@@ -100,20 +109,20 @@ __fastcall TConfigurationDlg::TConfigurationDlg(TComponent* Owner)
     TRLCaption(HotKeyView->Columns->Items[0]);
     TRLCaption(HotKeyView->Columns->Items[1]);
 
-    int nI;
-    for (nI = 0; nI < HotKeyActionsList->Items->Count; nI++)
-      HotKeyActionsList->Items->Strings[nI] =
-        TRL(HotKeyActionsList->Items->Strings[nI]);
+    int i;
+    for (i = 0; i < HotKeyActionsList->Items->Count; i++)
+      HotKeyActionsList->Items->Strings[i] =
+        TRL(HotKeyActionsList->Items->Strings[i]);
 
     TRLCaption(FilesSheet);
-    TRLCaption(FileEncodingLbl);
-    TRLCaption(NewlineCharLbl);
+    TRLCaption(CharEncodingGroup);
+    TRLCaption(NewlineCharGroup);
 
     TRLCaption(UpdatesSheet);
-    TRLCaption(AutoCheckUpdatesLbl);
-    for (nI = 0; nI < AutoCheckUpdatesList->Items->Count; nI++)
-      AutoCheckUpdatesList->Items->Strings[nI] =
-        TRL(AutoCheckUpdatesList->Items->Strings[nI]);
+    TRLCaption(UpdateCheckGroup);
+    for (i = 0; i < UpdateCheckGroup->Items->Count; i++)
+      UpdateCheckGroup->Items->Strings[i] =
+        TRL(UpdateCheckGroup->Items->Strings[i]);
 
     TRLCaption(LanguageSheet);
     TRLCaption(SelectLanguageLbl);
@@ -134,12 +143,14 @@ __fastcall TConfigurationDlg::TConfigurationDlg(TComponent* Owner)
     TRLCaption(WarnEntriesExpireSoonCheck);
     TRLCaption(WarnExpireNumDaysLbl);
 
-    for (nI = 0; nI < AutoSaveList->Items->Count; nI++)
-      AutoSaveList->Items->Strings[nI] =
-        TRL(AutoSaveList->Items->Strings[nI]);
+    for (i = 0; i < AutoSaveList->Items->Count; i++)
+      AutoSaveList->Items->Strings[i] =
+        TRL(AutoSaveList->Items->Strings[i]);
 
     TRLCaption(OKBtn);
     TRLCaption(CancelBtn);
+
+    TRLMenu(SelectFontMenu);
   }
 
   UseAdvancedPasswEst->Caption = TRLFormat("Use advanced password strength "
@@ -162,6 +173,7 @@ void __fastcall TConfigurationDlg::SaveConfig(void)
 //---------------------------------------------------------------------------
 void __fastcall TConfigurationDlg::GetOptions(Configuration& config)
 {
+  config.UiStyleName = UiStylesList->Text;
   config.GUIFontString = FontToString(FontDlg->Font);
   config.AutoClearClip = AutoClearClipCheck->Checked;
   config.AutoClearClipTime = AutoClearClipTimeSpinBtn->Position;
@@ -176,9 +188,9 @@ void __fastcall TConfigurationDlg::GetOptions(Configuration& config)
   config.UseAdvancedPasswEst = UseAdvancedPasswEst->Checked;
   config.ShowSysTrayIconConst = ShowSysTrayIconConstCheck->Checked;
   config.MinimizeToSysTray = MinimizeToSysTrayCheck->Checked;
-  config.AutoCheckUpdates = AutoCheckUpdates(AutoCheckUpdatesList->ItemIndex);
-  config.FileEncoding = CharacterEncoding(FileEncodingList->ItemIndex);
-  config.FileNewlineChar = NewlineChar(NewlineCharList->ItemIndex);
+  config.AutoCheckUpdates = AutoCheckUpdates(UpdateCheckGroup->ItemIndex);
+  config.FileEncoding = CharacterEncoding(CharEncodingGroup->ItemIndex);
+  config.FileNewlineChar = NewlineChar(NewlineCharGroup->ItemIndex);
   config.HotKeys = m_hotKeys;
   config.LanguageIndex = LanguageList->ItemIndex;
   //config.Database.ClearClipMinimize = ClearClipMinimizeCheck->Checked;
@@ -203,6 +215,10 @@ void __fastcall TConfigurationDlg::GetOptions(Configuration& config)
 //---------------------------------------------------------------------------
 void __fastcall TConfigurationDlg::SetOptions(const Configuration& config)
 {
+  int nIndex = UiStylesList->Items->IndexOf(config.UiStyleName);
+  if (nIndex < 0)
+    nIndex = UiStylesList->Items->IndexOf("Windows");
+  UiStylesList->ItemIndex = nIndex;
   StringToFont(config.GUIFontString, FontDlg->Font);
   ShowFontSample(FontDlg->Font);
   RandomPoolCipherList->ItemIndex = config.RandomPoolCipher;
@@ -220,9 +236,9 @@ void __fastcall TConfigurationDlg::SetOptions(const Configuration& config)
   MinimizeToSysTrayCheck->Checked = config.MinimizeToSysTray;
   AskBeforeExitCheck->Checked = config.ConfirmExit;
   LaunchSystemStartupCheck->Checked = config.LaunchSystemStartup;
-  AutoCheckUpdatesList->ItemIndex = config.AutoCheckUpdates;
-  FileEncodingList->ItemIndex = static_cast<int>(config.FileEncoding);
-  NewlineCharList->ItemIndex = static_cast<int>(config.FileNewlineChar);
+  UpdateCheckGroup->ItemIndex = config.AutoCheckUpdates;
+  CharEncodingGroup->ItemIndex = static_cast<int>(config.FileEncoding);
+  NewlineCharGroup->ItemIndex = static_cast<int>(config.FileNewlineChar);
   LanguageList->ItemIndex = config.LanguageIndex;
   LanguageListSelect(this);
   m_hotKeys = config.HotKeys;
@@ -279,7 +295,7 @@ void __fastcall TConfigurationDlg::UpdateHotKeyList(void)
 
     WString sAction;
     if (it->second.ShowMainWin)
-      sAction = TRL("Show");
+      sAction = HotKeyShowMainWinCheck->Caption;
     if (it->second.Action != hkaNone) {
       if (!sAction.IsEmpty())
         sAction += ", ";
@@ -291,9 +307,9 @@ void __fastcall TConfigurationDlg::UpdateHotKeyList(void)
 //---------------------------------------------------------------------------
 void __fastcall TConfigurationDlg::SelectFontBtnClick(TObject *Sender)
 {
-  TopMostManager::GetInstance()->NormalizeTopMosts(this);
+  TopMostManager::GetInstance().NormalizeTopMosts(this);
   bool blSuccess = FontDlg->Execute();
-  TopMostManager::GetInstance()->RestoreTopMosts(this);
+  TopMostManager::GetInstance().RestoreTopMosts(this);
 
   if (blSuccess)
     ShowFontSample(FontDlg->Font);
@@ -313,7 +329,7 @@ void __fastcall TConfigurationDlg::FormShow(TObject *Sender)
   Top = MainForm->Top + (MainForm->Height - Height) / 2;
   Left = MainForm->Left + (MainForm->Width - Width) / 2;
 
-  TopMostManager::GetInstance()->SetForm(this);
+  TopMostManager::GetInstance().SetForm(this);
 
   ConfigPages->ActivePage = GeneralSheet;
 }
@@ -412,23 +428,24 @@ void __fastcall TConfigurationDlg::AutoSaveCheckClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TConfigurationDlg::BenchmarkBtnClick(TObject *Sender)
 {
-  const int DATA_SIZE_MB = 50;
+  //const int DATA_SIZE_MB = 50;
   SplitMix64 sm64(42);
-  RandomPool rp(static_cast<RandomPool::Cipher>(0), sm64, false);
+  RandomPool rp(static_cast<RandomPool::CipherType>(0), sm64, false);
   rp.Randomize();
-  std::vector<word8> data(1048576*DATA_SIZE_MB);
+  word32 lDataSizeMB = 1 << std::max(0, BenchmarkMemList->ItemIndex);
+  std::vector<word8> data(lDataSizeMB << 20);
   WString sResult;
   Screen->Cursor = crHourGlass;
   for (int i = 0; i < NUM_RANDOM_POOL_CIPHERS; i++) {
     if (i > 0)
-      rp.ChangeCipher(static_cast<RandomPool::Cipher>(i));
+      rp.ChangeCipher(static_cast<RandomPool::CipherType>(i));
     Stopwatch clock;
     rp.GetData(&data[0], data.size());
-    double rate = DATA_SIZE_MB / clock.ElapsedSeconds();
+    double rate = lDataSizeMB / clock.ElapsedSeconds();
     sResult += "\n" + FormatW("%s: %.2f MB/s", RANDOM_POOL_CIPHER_NAMES[i], rate);
   }
   Screen->Cursor = crDefault;
-  MsgBox(TRLFormat("Benchmark results (data size: %d MB):", DATA_SIZE_MB) +
+  MsgBox(TRLFormat("Benchmark results (data size: %d MB):", lDataSizeMB) +
     sResult, MB_ICONINFORMATION);
 }
 //---------------------------------------------------------------------------
@@ -437,9 +454,9 @@ void __fastcall TConfigurationDlg::ConvertLangFileBtnClick(TObject *Sender)
   if (LanguageList->ItemIndex > 0 && m_pLangList) {
     const auto& entry = m_pLangList->at(LanguageList->ItemIndex);
     //if (SameText(ExtractFileExt(entry.FileName), ".lng")) {
-    TopMostManager::GetInstance()->NormalizeTopMosts(this);
+    TopMostManager::GetInstance().NormalizeTopMosts(this);
     bool blSuccess = SaveDlg->Execute();
-    TopMostManager::GetInstance()->RestoreTopMosts(this);
+    TopMostManager::GetInstance().RestoreTopMosts(this);
 
     if (blSuccess) {
       try {
@@ -463,6 +480,16 @@ void __fastcall TConfigurationDlg::LanguageListSelect(TObject *Sender)
     blEnabled = SameText(ExtractFileExt(entry.FileName), ".lng");
   }
   ConvertLangFileBtn->Enabled = blEnabled;
+}
+//---------------------------------------------------------------------------
+void __fastcall TConfigurationDlg::SelectFontMenu_RestoreDefaultClick(TObject *Sender)
+
+{
+  auto pFont = std::make_unique<TFont>();
+  pFont->Name = "Tahoma";
+  pFont->Size = 8;
+  FontDlg->Font = pFont.get();
+  ShowFontSample(pFont.get());
 }
 //---------------------------------------------------------------------------
 

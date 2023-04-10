@@ -74,7 +74,7 @@ CRYPTTEXT_MAXTEXTBYTES = 134217728; // 128MB
 int EncryptText(const SecureWString* psText,
   const word8* pPassw,
   int nPasswLen,
-  RandomGenerator* pRandGen);
+  RandomGenerator& randGen);
 
 
 // decrypts the clipboard text

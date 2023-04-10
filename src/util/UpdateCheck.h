@@ -28,34 +28,49 @@ class TUpdateCheckThread : public TThread
 {
 public:
 
-  enum {
-    CHECK_POSITIVE,
-    CHECK_NEGATIVE,
-    CHECK_ERROR
+  enum class CheckResult {
+    NotAvailable,
+    Positive,
+    Negative,
+    Error
   };
 
-  __fastcall TUpdateCheckThread()
-    : TThread(false), m_nResult(-1)
+  __fastcall TUpdateCheckThread(std::function<void(TObject*)> terminateFunc)
+    : TThread(false), m_nResult(CheckResult::NotAvailable),
+      m_terminateFunc(terminateFunc)
   {
     FreeOnTerminate = true;
     Priority = tpIdle;
+    s_blThreadRunning = true;
+    OnTerminate = ThreadTerminate;
   }
 
-  __property int Result =
+  __property CheckResult Result =
   { read=m_nResult };
 
-  static int __fastcall CheckForUpdates(bool blShowError);
+  static CheckResult __fastcall CheckForUpdates(bool blShowError);
 
-protected:
-
-  virtual void __fastcall Execute(void)
+  static bool __fastcall ThreadRunning(void)
   {
-    ReturnValue = m_nResult = CheckForUpdates(false);
+    return s_blThreadRunning;
   }
 
-
 private:
-  int m_nResult;
+  CheckResult m_nResult;
+  std::function<void(TObject*)> m_terminateFunc;
+  static std::atomic<bool> s_blThreadRunning;
+
+  virtual void __fastcall Execute(void) override
+  {
+    m_nResult = CheckForUpdates(false);
+    ReturnValue = static_cast<int>(m_nResult);
+  }
+
+  void __fastcall ThreadTerminate(TObject* Sender)
+  {
+    m_terminateFunc(Sender);
+    s_blThreadRunning = false;
+  }
 };
 
 #endif

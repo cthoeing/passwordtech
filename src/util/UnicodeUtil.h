@@ -126,6 +126,7 @@ AnsiString WStringToUtf8(const WString& sSrc);
 
 // version for storing result in SecureString
 SecureAnsiString WStringToUtf8(const wchar_t* pwszSrc);
+//SecureAnsiString WStringToUtf8(const SecureWString& sSrc);
 
 // convert UTF-8 encoded string to wide string (16-bit)
 // -> source UTF-8-encoded string

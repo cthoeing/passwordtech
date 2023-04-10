@@ -97,9 +97,7 @@ private:
   double m_dResultPasswSec;
   WString m_sErrorMsg;
 
-protected:
-
-  virtual void __fastcall Execute(void);
+  void __fastcall Execute(void) override;
 
 public:
 
@@ -109,8 +107,8 @@ public:
     FreeOnTerminate = false;
     Priority = tpNormal;
 
-    m_pCallEvent = new TEvent(NULL, true, false, "", false);
-    m_pResultEvent = new TEvent(NULL, true, false, "", false);
+    m_pCallEvent = new TEvent(nullptr, true, false, "", false);
+    m_pResultEvent = new TEvent(nullptr, true, false, "", false);
   }
 
   __fastcall ~TScriptingThread()

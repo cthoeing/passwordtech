@@ -32,11 +32,11 @@
 // -> where to store the derived key
 // -> number of iterations (default: 8192)
 void pbkdf2_256bit(const word8* pPassw,
-  int nPasswLen,
+  word32 lPasswLen,
   const word8* pSalt,
-  int nSaltLen,
+  word32 lSaltLen,
   word8* pDerivedKey,
-  int nIterations = 8192);
+  word32 lIterations = 8192);
 
 template<int Nbits> void incrementCounter(word8* pCounter)
 {

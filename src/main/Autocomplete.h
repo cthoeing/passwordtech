@@ -27,4 +27,6 @@
 
 bool InitAutoComplete(HWND, const std::vector<SecureWString>&);
 
+bool DisableAutoComplete(HWND);
+
 #endif

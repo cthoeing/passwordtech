@@ -81,7 +81,7 @@ void __fastcall TAboutForm::FormShow(TObject *Sender)
   //  DonorLbl->Caption = WString("DONOR ID: ") + WString(g_config.DonorId);
   Top = MainForm->Top + (MainForm->Height - Height) / 2;
   Left = MainForm->Left + (MainForm->Width - Width) / 2;
-  TopMostManager::GetInstance()->SetForm(this);
+  TopMostManager::GetInstance().SetForm(this);
 }
 //---------------------------------------------------------------------------
 void __fastcall TAboutForm::LinkClick(TObject *Sender, const UnicodeString Link,

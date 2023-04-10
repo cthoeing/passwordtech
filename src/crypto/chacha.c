@@ -209,18 +209,18 @@ void chacha_keystream_bytes(chacha_ctx *x,u8 *stream,u32 bytes)
   chacha_encrypt_bytes(x,stream,stream,bytes);
 }
 /* Test vectors taken from RFC 7539 */
-const u8 test_key[3][32] = {
+static const u8 test_key[3][32] = {
   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
   {0,0xff,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
 };
 /* nonce comprises block counter and IV */
-const u8 test_nonce[3][16] = {
+static const u8 test_nonce[3][16] = {
   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
   {2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
 };
-const u8 test_keystream[3][64] = {
+static const u8 test_keystream[3][64] = {
   {0x76,0xb8,0xe0,0xad,0xa0,0xf1,0x3d,0x90,0x40,0x5d,
   0x6a,0xe5,0x53,0x86,0xbd,0x28,0xbd,0xd2,0x19,0xb8,
   0xa0,0x8d,0xed,0x1a,0xa8,0x36,0xef,0xcc,0x8b,0x77,

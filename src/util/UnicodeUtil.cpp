@@ -207,13 +207,18 @@ WString W32StringToWString(const w32string& sSrc)
     return WString();
 
   WString sDest;
-  const word32* ptr = sSrc.c_str();
-  sDest.SetLength(GetNumOfUtf16Chars(ptr));
+  const word32* pSrc = sSrc.c_str();
+  sDest.SetLength(GetNumOfUtf16Chars(pSrc));
 
-  for (int nI = 1; *ptr != '\0'; ptr++) {
-    sDest[nI++] = *ptr;
-    if (*ptr > 0xFFFF)
+  /*for (int nI = 1; *pSrc != '\0'; pSrc++) {
+    sDest[nI++] = *pSrc;
+    if (*pSrc > 0xFFFF)
       sDest[nI++] = *ptr >> 16;
+  }*/
+  for (wchar_t* pwszDest = sDest.FirstChar(); *pSrc != '\0'; pSrc++) {
+    *pwszDest++ = *pSrc;
+    if (*pSrc > 0xffff)
+      *pwszDest++ = *pSrc >> 16;
   }
 
   return sDest;
@@ -239,15 +244,15 @@ AnsiString WStringToUtf8(const WString& sSrc)
   if (sSrc.IsEmpty())
     return AnsiString();
 
-  int nLen = WideCharToMultiByte(CP_UTF8, 0, sSrc.c_str(), -1, nullptr, 0,
-    nullptr, nullptr);
-  if (nLen == 0)
+  int nDestLen = WideCharToMultiByte(CP_UTF8, 0, sSrc.c_str(), -1,
+    nullptr, 0, nullptr, nullptr);
+  if (nDestLen == 0)
     utf8EncodeError();
 
   AnsiString asDest;
-  asDest.SetLength(nLen - 1);
+  asDest.SetLength(nDestLen - 1);
 
-  WideCharToMultiByte(CP_UTF8, 0, sSrc.c_str(), -1, &asDest[1], nLen,
+  WideCharToMultiByte(CP_UTF8, 0, sSrc.c_str(), -1, &asDest[1], nDestLen,
     nullptr, nullptr);
 
   return asDest;
@@ -269,19 +274,37 @@ SecureAnsiString WStringToUtf8(const wchar_t* pwszSrc)
   return asDest;
 }
 //---------------------------------------------------------------------------
+/*SecureAnsiString WStringToUtf8(const SecureWString& sSrc)
+{
+  if (sSrc.IsStrEmpty())
+    return SecureAnsiString();
+
+  int nSrcLen = sSrc.StrLen() + 1;
+  int nDestLen = WideCharToMultiByte(CP_UTF8, 0, sSrc.c_str(), nSrcLen,
+    nullptr, 0, nullptr, nullptr);
+  if (nDestLen == 0)
+    utf8EncodeError();
+
+  SecureAnsiString asDest(nDestLen);
+
+  WideCharToMultiByte(CP_UTF8, 0, sSrc.c_str(), nSrcLen, asDest, nDestLen,
+    nullptr, nullptr);
+  return asDest;
+}*/
+//---------------------------------------------------------------------------
 WString Utf8ToWString(const AnsiString& asSrc)
 {
   if (asSrc.IsEmpty())
     return WString();
 
-  int nLen = MultiByteToWideChar(CP_UTF8, 0, asSrc.c_str(), -1, nullptr, 0);
-  if (nLen == 0)
+  int nDestLen = MultiByteToWideChar(CP_UTF8, 0, asSrc.c_str(), -1, nullptr, 0);
+  if (nDestLen == 0)
     utf8DecodeError();
 
   WString sDest;
-  sDest.SetLength(nLen - 1);
+  sDest.SetLength(nDestLen - 1);
 
-  MultiByteToWideChar(CP_UTF8, 0, asSrc.c_str(), -1, &sDest[1], nLen);
+  MultiByteToWideChar(CP_UTF8, 0, asSrc.c_str(), -1, &sDest[1], nDestLen);
 
   return sDest;
 }

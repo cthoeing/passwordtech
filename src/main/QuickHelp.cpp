@@ -123,15 +123,16 @@ WString __fastcall TQuickHelpForm::FormatString(const WString& sSrc)
 //---------------------------------------------------------------------------
 void __fastcall TQuickHelpForm::Execute(const WString& sHelp, int nPosX, int nPosY)
 {
-  QuickHelpBox->Text = sHelp;
-  QuickHelpBox->SelStart = 0;
-
   if (!Visible && QuickHelpBoxMenu_AutoPosition->Checked) {
     Left = nPosX;
     Top = nPosY;
   }
 
   Show();
+  QuickHelpBox->Text = sHelp;
+  QuickHelpBox->SelStart = 0;
+
+  //Refresh();
 }
 //---------------------------------------------------------------------------
 void __fastcall TQuickHelpForm::FormKeyPress(TObject *Sender, char &Key)
@@ -143,9 +144,9 @@ void __fastcall TQuickHelpForm::FormKeyPress(TObject *Sender, char &Key)
 void __fastcall TQuickHelpForm::QuickHelpBoxMenu_ChangeFontClick(
   TObject *Sender)
 {
-  TopMostManager::GetInstance()->NormalizeTopMosts(this);
+  TopMostManager::GetInstance().NormalizeTopMosts(this);
   bool blSuccess = FontDlg->Execute();
-  TopMostManager::GetInstance()->RestoreTopMosts(this);
+  TopMostManager::GetInstance().RestoreTopMosts(this);
 
   if (blSuccess)
     QuickHelpBox->Font = FontDlg->Font;

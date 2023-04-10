@@ -20,6 +20,11 @@
 //---------------------------------------------------------------------------
 #include <vcl.h>
 #include <stdio.h>
+#define WIN32_NO_STATUS
+#include <windows.h>
+#undef WIN32_NO_STATUS
+#include <bcrypt.h>
+#include <ntstatus.h>
 #pragma hdrstop
 
 #include "RandomPool.h"
@@ -28,8 +33,19 @@
 #include "FastPRNG.h"
 #include "aes.h"
 #include "chacha.h"
+#ifdef _WIN64
+#include "../crypto/blake2/blake2.h"
+#else
+#include "../crypto/blake2/ref/blake2.h"
+#endif
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
+
+#ifdef _WIN64
+#pragma link "bcrypt.a"
+#else
+#pragma link "bcrypt.lib"
+#endif
 
 //RandomPool* g_pRandPool = nullptr;
 
@@ -42,12 +58,12 @@ static const int
 POOLPAGE_SIZE    = 4096, // size of the entire pool page in RAM
 KEY_SIZE         = 32, // AES key size used
 CTR_SIZE         = 16, // AES block size
-ADDBUF_SIZE      = 556, // size of add buffer (size optimized for minimal padding in SHA-2)
+ADDBUF_SIZE      = 512, // size of add buffer
 GETBUF_SIZE      = 64, // size of get buffer
 TEMPBUF_SIZE     = CTR_SIZE, // size of temporary buffer
 POOL_OFFSET      = 0,
 HASHCTX_OFFSET   = POOL_OFFSET + RandomPool::POOL_SIZE,
-ADDBUF_OFFSET    = HASHCTX_OFFSET + sizeof(sha256_context),
+ADDBUF_OFFSET    = HASHCTX_OFFSET + sizeof(blake2s_state),
 CIPHERKEY_OFFSET = ADDBUF_OFFSET + ADDBUF_SIZE,
 SECCTR_OFFSET    = CIPHERKEY_OFFSET + KEY_SIZE,
 CIPHERCTX_OFFSET = SECCTR_OFFSET + CTR_SIZE,
@@ -102,7 +118,7 @@ public:
     return 16;
   }
 
-  word32 GetMaxNumOfBlocks(void) const
+  word64 GetMaxNumOfBlocks(void) const
   {
     return 65536;
   }
@@ -163,9 +179,9 @@ public:
     return 64;
   }
 
-  word32 GetMaxNumOfBlocks(void) const
+  word64 GetMaxNumOfBlocks(void) const
   {
-    return 0xffffffff;
+    return 0x400000000ull; // generate max. 1TB of data before changing key
   }
 
   void Move(void* pNew)
@@ -259,9 +275,9 @@ public:
 using namespace RandPoolCipher;
 
 //---------------------------------------------------------------------------
-RandomPool::RandomPool(Cipher cipher, RandomGenerator& fastRandGen,
+RandomPool::RandomPool(CipherType cipher, RandomGenerator& fastRandGen,
   bool blLockPhysMem)
-  : m_lAddBufPos(0), m_lGetBufPos(0), m_blKeySet(false), m_blCryptProv(false),
+  : m_lAddBufPos(0), m_lGetBufPos(0), m_blKeySet(false),
     m_fastRandGen(fastRandGen), m_blLockPhysMem(blLockPhysMem)
 {
   m_pPoolPage = AllocPoolPage();
@@ -273,13 +289,13 @@ RandomPool::RandomPool(Cipher cipher, RandomGenerator& fastRandGen,
     (UNUSED_SIZE_MAX - UNUSED_SIZE_MIN + 1));
   SetPoolPointers();
 
-  ChangeCipher(cipher, true);
+  ChangeCipher(cipher);
 
-  if (CryptAcquireContext(&m_cryptProv, nullptr, nullptr, PROV_RSA_FULL, 0))
+  /*if (CryptAcquireContext(&m_cryptProv, nullptr, nullptr, PROV_RSA_FULL, 0))
     m_blCryptProv = true;
   else if (static_cast<signed int>(GetLastError()) == NTE_BAD_KEYSET)
     m_blCryptProv = CryptAcquireContext(
-        &m_cryptProv, nullptr, nullptr, PROV_RSA_FULL, CRYPT_NEWKEYSET);
+        &m_cryptProv, nullptr, nullptr, PROV_RSA_FULL, CRYPT_NEWKEYSET);*/
 }
 //---------------------------------------------------------------------------
 RandomPool::RandomPool(RandomPool& src, RandomGenerator& fastRandGen,
@@ -294,8 +310,6 @@ RandomPool::RandomPool(RandomPool& src, RandomGenerator& fastRandGen,
 //---------------------------------------------------------------------------
 RandomPool::~RandomPool()
 {
-  if (m_blCryptProv)
-    CryptReleaseContext(m_cryptProv, 0);
   FreePoolPage();
   m_pPoolPage = nullptr;
   m_pPool = nullptr;
@@ -309,10 +323,10 @@ RandomPool::~RandomPool()
   m_lUnusedSize = 0;
 }
 //---------------------------------------------------------------------------
-RandomPool* RandomPool::GetInstance(void)
+RandomPool& RandomPool::GetInstance(void)
 {
-  static RandomPool inst(Cipher::ChaCha20, g_fastRandGen, true);
-  return &inst;
+  static RandomPool inst(CipherType::ChaCha20, g_fastRandGen, true);
+  return inst;
 }
 //---------------------------------------------------------------------------
 word8* RandomPool::AllocPoolPage(void)
@@ -348,8 +362,7 @@ void RandomPool::FreePoolPage(void)
 void RandomPool::SetPoolPointers(void)
 {
   m_pPool      = m_pPoolPage + m_lUnusedSize + POOL_OFFSET;
-  m_pHashCtx   = reinterpret_cast<sha256_context*>
-    (m_pPoolPage + m_lUnusedSize + HASHCTX_OFFSET);
+  m_pHashCtx   = m_pPoolPage + m_lUnusedSize + HASHCTX_OFFSET;
   m_pAddBuf    = m_pPoolPage + m_lUnusedSize + ADDBUF_OFFSET;
   m_pCipherKey = m_pPoolPage + m_lUnusedSize + CIPHERKEY_OFFSET;
   m_pSecCtr    = m_pPoolPage + m_lUnusedSize + SECCTR_OFFSET;
@@ -392,26 +405,25 @@ bool RandomPool::MovePool(void)
   return true;
 }
 //---------------------------------------------------------------------------
-void RandomPool::ChangeCipher(Cipher cipher,
-  bool blForce)
+void RandomPool::ChangeCipher(CipherType cipher)
 {
-  if (blForce || cipher != m_cipherType) {
+  if (!m_pCipher || cipher != m_cipherType) {
     switch (cipher) {
-    case Cipher::AES_CTR:
+    case CipherType::AES_CTR:
       m_pCipher.reset(new AES_CTR(reinterpret_cast<aes_context*>(m_pCipherCtx)));
       break;
-    case Cipher::ChaCha20:
-    case Cipher::ChaCha8:
+    case CipherType::ChaCha20:
+    case CipherType::ChaCha8:
       m_pCipher.reset(new ChaCha(reinterpret_cast<chacha_ctx*>(m_pCipherCtx),
-        cipher == Cipher::ChaCha20 ? 20 : 8));
+        cipher == CipherType::ChaCha20 ? 20 : 8));
       break;
 #if 0
-    case Cipher::Speck128:
+    case CipherType::Speck128:
       m_pCipher.reset(new Speck128(m_pCipherCtx));
       break;
 #endif
     default:
-      throw Exception("RandomPool: Cipher not supported");
+      throw RandomGeneratorError("RandomPool: Cipher not supported");
     }
     m_cipherType = cipher;
 
@@ -424,11 +436,14 @@ void RandomPool::ChangeCipher(Cipher cipher,
 void RandomPool::UpdatePool(void)
 {
   // update the pool by hashing the pool, the add buffer and a time-stamp
-  sha256_init(m_pHashCtx);
-  sha256_hmac_starts(m_pHashCtx, m_pPool, POOL_SIZE, 0);
+  //sha256_init(m_pHashCtx);
+  //sha256_hmac_starts(m_pHashCtx, m_pPool, POOL_SIZE, 0);
+  blake2s_state* pHashCtx = reinterpret_cast<blake2s_state*>(m_pHashCtx);
+  blake2s_init_key(pHashCtx, POOL_SIZE, m_pPool, POOL_SIZE);
 
   if (m_lAddBufPos != 0) {
-    sha256_hmac_update(m_pHashCtx, m_pAddBuf, m_lAddBufPos);
+    //sha256_hmac_update(m_pHashCtx, m_pAddBuf, m_lAddBufPos);
+    blake2s_update(pHashCtx, m_pAddBuf, m_lAddBufPos);
     ClearPoolBuf(m_pAddBuf, m_lAddBufPos);
     m_lAddBufPos = 0;
   }
@@ -436,18 +451,21 @@ void RandomPool::UpdatePool(void)
   if (m_blKeySet) {
     // the counter has accumulated some entropy, which we should incorporate
     // into the pool now
-    sha256_hmac_update(m_pHashCtx, m_pSecCtr, CTR_SIZE);
+    //sha256_hmac_update(m_pHashCtx, m_pSecCtr, CTR_SIZE);
+    blake2s_update(pHashCtx, m_pSecCtr, CTR_SIZE);
   }
 
   // ALWAYS add some entropy (independent of the add buffer)
   HighResTimer(m_pTempBuf);
-  sha256_hmac_update(m_pHashCtx, m_pTempBuf, sizeof(word64));
+  //sha256_hmac_update(m_pHashCtx, m_pTempBuf, sizeof(word64));
+  blake2s_update(pHashCtx, m_pTempBuf, sizeof(word64));
 
   // get new pool
-  sha256_hmac_finish(m_pHashCtx, m_pPool);
+  //sha256_hmac_finish(m_pHashCtx, m_pPool);
+  blake2s_final(pHashCtx, m_pPool, POOL_SIZE);
 
   // clear sensitive data
-  ClearPoolBuf(m_pHashCtx, sizeof(sha256_context));
+  ClearPoolBuf(m_pHashCtx, sizeof(blake2s_state));
   ClearPoolBuf(m_pTempBuf, sizeof(word64));
 
   if (m_blKeySet) {
@@ -456,7 +474,7 @@ void RandomPool::UpdatePool(void)
     ClearPoolBuf(m_pCipherCtx, sizeof(aes_context));
     ClearPoolBuf(m_pGetBuf, GETBUF_SIZE);
     m_lGetBufPos = 0;
-    m_lNumOfBlocks = 0;
+    m_qNumOfBlocks = 0;
     m_blKeySet = false;
   }
 }
@@ -467,27 +485,33 @@ void RandomPool::SetKey(void)
   UpdatePool();
 
   // don't use the pool directly as a key, but derive a new key from the pool
-  // using a time stamp as a "key" for HMAC-SHA-256
+  // using a time stamp as a "key" for the hash function
   HighResTimer(m_pTempBuf);
-  sha256_init(m_pHashCtx);
-  sha256_hmac_starts(m_pHashCtx, m_pTempBuf, TEMPBUF_SIZE, 0); // we simply use
-  // the full buffer contents here instead of only 8 bytes; it doesn't cost
-  // anything, and the rest of the buffer contains some useful pseudorandom data
-  sha256_hmac_update(m_pHashCtx, m_pPool, POOL_SIZE);
-  sha256_hmac_finish(m_pHashCtx, m_pCipherKey);
+  //sha256_init(m_pHashCtx);
+  //sha256_hmac_starts(m_pHashCtx, m_pTempBuf, TEMPBUF_SIZE, 0); // we simply use
+  blake2s_state* pHashCtx = reinterpret_cast<blake2s_state*>(m_pHashCtx);
+
+  // use the full buffer contents here (16 bytes vs. 8 bytes from the timer);
+  // it doesn't cost anything, and the rest of the buffer contains some
+  // useful pseudorandom data
+  blake2s_init_key(pHashCtx, POOL_SIZE, m_pTempBuf, TEMPBUF_SIZE);
+
+  //sha256_hmac_update(m_pHashCtx, m_pPool, POOL_SIZE);
+  //sha256_hmac_finish(m_pHashCtx, m_pCipherKey);
+  blake2s_update(pHashCtx, m_pPool, POOL_SIZE);
+  blake2s_final(pHashCtx, m_pCipherKey, POOL_SIZE);
 
   ClearPoolBuf(m_pTempBuf, TEMPBUF_SIZE);
 
   // perform the cipher's key setup
-  //aes_setkey_enc(m_pCipherCtx, m_pCipherKey, KEY_SIZE*8);
   m_pCipher->SetKey(m_pCipherKey);
 
   // destroy the key
   ClearPoolBuf(m_pCipherKey, KEY_SIZE);
 
   // is it necessary to update the pool again to ensure that the pool contents
-  // can't be derived from the AES key and vice versa...?
-  // The AES key has been derived from the pool AND a time stamp, which should
+  // can't be derived from the key and vice versa...?
+  // The cipher key has been derived from the pool AND a time stamp, which should
   // provide sufficient protection against key recovery from the pool
   // ... so the answer is "no" (for the moment)
 //  UpdatePool();
@@ -497,7 +521,7 @@ void RandomPool::SetKey(void)
   m_pCipher->ProcessCounterOrIV(m_pSecCtr);
 
   m_lGetBufPos = GETBUF_SIZE; // get buffer is yet to be filled
-  m_lNumOfBlocks = 0;
+  m_qNumOfBlocks = 0;
   m_blKeySet = true;
 }
 //---------------------------------------------------------------------------
@@ -506,18 +530,12 @@ void RandomPool::GetNewCounterOrIV(word8* pCounter)
   // get a new counter with timer values
   HighResTimer(pCounter);
   GetSystemTimeAsFileTime(reinterpret_cast<FILETIME*>(pCounter+8));
-  //m_pCipher->EncryptIv(pCounter);
-  //aes_crypt_ecb(m_pCipherCtx, AES_ENCRYPT, pCounter, pCounter);
 }
 //---------------------------------------------------------------------------
 void RandomPool::GeneratorGate(void)
 {
   // let the cipher re-key itself
   m_pCipher->SelfKey(m_pCipherKey, m_pSecCtr);
-
-  // set key and destroy it
-  //m_pCipher->SetKey(m_pGetBuf);
-  //aes_setkey_enc(m_pCipherCtx, m_pCipherKey, KEY_SIZE*8);
 
   ClearPoolBuf(m_pCipherKey, KEY_SIZE);
 
@@ -532,9 +550,8 @@ void RandomPool::GeneratorGate(void)
 
   // encrypt the xor'ed counter and set a new IV
   m_pCipher->ProcessCounterOrIV(m_pSecCtr);
-  //aes_crypt_ecb(m_pCipherCtx, AES_ENCRYPT, m_pSecCtr, m_pSecCtr);
 
-  m_lNumOfBlocks = 0;
+  m_qNumOfBlocks = 0;
 }
 //---------------------------------------------------------------------------
 word32 RandomPool::FillBuf(word8* pBuf,
@@ -552,19 +569,19 @@ word32 RandomPool::FillBuf(word8* pBuf,
   word32 lNumFullBlocks = lNumOfBytes / lBlockSize;
 
   if (lNumFullBlocks == 0)
-    throw Exception("RandomPool: Not filling any random data");
+    throw RandomGeneratorError("RandomPool::FillBuf(): Number of blocks is zero");
 
   while (lNumFullBlocks != 0)  {
-    word32 lBlocksToFill = std::min(lNumFullBlocks,
-      m_pCipher->GetMaxNumOfBlocks() - m_lNumOfBlocks);
+    word32 lBlocksToFill = std::min<word64>(lNumFullBlocks,
+      m_pCipher->GetMaxNumOfBlocks() - m_qNumOfBlocks);
 
     m_pCipher->FillBlocks(pBuf, m_pSecCtr, lBlocksToFill);
 
     pBuf += lBlocksToFill * lBlockSize;
     lNumFullBlocks -= lBlocksToFill;
-    m_lNumOfBlocks += lBlocksToFill;
+    m_qNumOfBlocks += lBlocksToFill;
 
-    if (m_lNumOfBlocks >= m_pCipher->GetMaxNumOfBlocks())
+    if (m_qNumOfBlocks >= m_pCipher->GetMaxNumOfBlocks())
       GeneratorGate();
   }
 
@@ -650,85 +667,77 @@ void RandomPool::Randomize(void)
 {
   // the following code is based on Random.cpp from Sami Tolvanen's "Eraser"
   // and rndw32.c from "libgcrypt"
-#define addEntropy(source, size)  AddData(source, size)
-#define addEntropyValue(value) \
-                lEntropyValue = word32(value); \
-                addEntropy(&lEntropyValue, sizeof(lEntropyValue))
-
   static bool blFixedItemsAdded = false;
-  word32 lEntropyValue;
 
   word64 qTimer;
   HighResTimer(&qTimer);
-  addEntropy(&qTimer, sizeof(word64));
+  AddData(qTimer);
 
   FILETIME ft;
   GetSystemTimeAsFileTime(&ft);
-  addEntropy(&ft, sizeof(FILETIME));
+  AddData(ft);
 
-  __int64 qFreeSpace;
-  qFreeSpace = DiskFree(0); // 0 = current drive
-  if (qFreeSpace != -1)
-    addEntropy(&qFreeSpace, sizeof(__int64));
+  //__int64 freeSpace;
+  // return value of -1 in case of failure is acceptable here
+  AddData(DiskFree(0)); // 0 = current drive
 
   POINT pt;
   GetCaretPos(&pt);
-  addEntropy(&pt, sizeof(POINT));
+  AddData(pt);
   GetCursorPos(&pt);
-  addEntropy(&pt, sizeof(POINT));
+  AddData(pt);
 
   MEMORYSTATUS ms;
   ms.dwLength = sizeof(MEMORYSTATUS);
   GlobalMemoryStatus(&ms);
-  addEntropy(&ms, sizeof(MEMORYSTATUS));
+  AddData(ms);
 
-  addEntropyValue(GetActiveWindow());
-  addEntropyValue(GetCapture());
-  addEntropyValue(GetClipboardOwner());
-  addEntropyValue(GetClipboardViewer());
-  addEntropyValue(GetCurrentProcess());
-  addEntropyValue(GetCurrentProcessId());
-  addEntropyValue(GetCurrentThread());
-  addEntropyValue(GetCurrentThreadId());
-  addEntropyValue(GetDesktopWindow());
-  addEntropyValue(GetFocus());
-  addEntropyValue(GetForegroundWindow());
-  addEntropyValue(GetInputState());
-  addEntropyValue(GetMessagePos());
-  addEntropyValue(GetMessageTime());
-  addEntropyValue(GetOpenClipboardWindow());
-  addEntropyValue(GetProcessHeap());
-  addEntropyValue(GetProcessWindowStation());
-  addEntropyValue(GetQueueStatus(QS_ALLEVENTS));
-  addEntropyValue(GetTickCount());
+  AddData(GetActiveWindow());
+  AddData(GetCapture());
+  AddData(GetClipboardOwner());
+  AddData(GetClipboardViewer());
+  AddData(GetCurrentProcess());
+  AddData(GetCurrentProcessId());
+  AddData(GetCurrentThread());
+  AddData(GetCurrentThreadId());
+  AddData(GetDesktopWindow());
+  AddData(GetFocus());
+  AddData(GetForegroundWindow());
+  AddData(GetInputState());
+  AddData(GetMessagePos());
+  AddData(GetMessageTime());
+  AddData(GetOpenClipboardWindow());
+  AddData(GetProcessHeap());
+  AddData(GetProcessWindowStation());
+  AddData(GetQueueStatus(QS_ALLEVENTS));
+  AddData(GetTickCount());
 
   // these exist on NT
   FILETIME ftCreationTime;
   FILETIME ftExitTime;
   FILETIME ftKernelTime;
   FILETIME ftUserTime;
-  ULARGE_INTEGER uSpace;
   if (GetThreadTimes(GetCurrentThread(), &ftCreationTime, &ftExitTime,
       &ftKernelTime, &ftUserTime)) {
-    addEntropy(&ftCreationTime, sizeof(FILETIME));
-    addEntropy(&ftExitTime,     sizeof(FILETIME));
-    addEntropy(&ftKernelTime,   sizeof(FILETIME));
-    addEntropy(&ftUserTime,     sizeof(FILETIME));
+    AddData(ftCreationTime);
+    AddData(ftExitTime);
+    AddData(ftKernelTime);
+    AddData(ftUserTime);
   }
   if (GetProcessTimes(GetCurrentProcess(), &ftCreationTime, &ftExitTime,
       &ftKernelTime, &ftUserTime)) {
-    addEntropy(&ftCreationTime, sizeof(FILETIME));
-    addEntropy(&ftExitTime,     sizeof(FILETIME));
-    addEntropy(&ftKernelTime,   sizeof(FILETIME));
-    addEntropy(&ftUserTime,     sizeof(FILETIME));
+    AddData(ftCreationTime);
+    AddData(ftExitTime);
+    AddData(ftKernelTime);
+    AddData(ftUserTime);
   }
 
-#ifndef _WIN64
-  if (GetProcessWorkingSetSize(GetCurrentProcess(), &uSpace.LowPart,
-	  &uSpace.HighPart)) {
-	addEntropy(&uSpace, sizeof(ULARGE_INTEGER));
+  SIZE_T minWorkSetSize, maxWorkSetSize;
+  if (GetProcessWorkingSetSize(GetCurrentProcess(), &minWorkSetSize,
+	  &maxWorkSetSize)) {
+	AddData(minWorkSetSize);
+    AddData(maxWorkSetSize);
   }
-#endif
 
   if (!blFixedItemsAdded) {
     STARTUPINFO startupInfo;
@@ -736,51 +745,51 @@ void RandomPool::Randomize(void)
     SYSTEM_INFO systemInfo;
     //OSVERSIONINFO versionInfo;
 
-    addEntropyValue(GetUserDefaultLangID());
-    addEntropyValue(GetUserDefaultLCID());
+    AddData(GetUserDefaultLangID());
+    AddData(GetUserDefaultLCID());
 
     // desktop geometry and colours
-    addEntropyValue(GetSystemMetrics(SM_CXSCREEN));
-    addEntropyValue(GetSystemMetrics(SM_CYSCREEN));
-    addEntropyValue(GetSystemMetrics(SM_CXHSCROLL));
-    addEntropyValue(GetSystemMetrics(SM_CYHSCROLL));
-    addEntropyValue(GetSystemMetrics(SM_CXMAXIMIZED));
-    addEntropyValue(GetSystemMetrics(SM_CYMAXIMIZED));
-    addEntropyValue(GetSysColor(COLOR_3DFACE));
-    addEntropyValue(GetSysColor(COLOR_DESKTOP));
-    addEntropyValue(GetSysColor(COLOR_INFOBK));
-    addEntropyValue(GetSysColor(COLOR_WINDOW));
-    addEntropyValue(GetDialogBaseUnits());
+    AddData(GetSystemMetrics(SM_CXSCREEN));
+    AddData(GetSystemMetrics(SM_CYSCREEN));
+    AddData(GetSystemMetrics(SM_CXHSCROLL));
+    AddData(GetSystemMetrics(SM_CYHSCROLL));
+    AddData(GetSystemMetrics(SM_CXMAXIMIZED));
+    AddData(GetSystemMetrics(SM_CYMAXIMIZED));
+    AddData(GetSysColor(COLOR_3DFACE));
+    AddData(GetSysColor(COLOR_DESKTOP));
+    AddData(GetSysColor(COLOR_INFOBK));
+    AddData(GetSysColor(COLOR_WINDOW));
+    AddData(GetDialogBaseUnits());
 
     // System information
     if (GetTimeZoneInformation(&tzi) != TIME_ZONE_ID_INVALID) {
-      addEntropy(&tzi, sizeof(TIME_ZONE_INFORMATION));
+      AddData(tzi);
     }
-    addEntropyValue(GetSystemDefaultLangID());
-    addEntropyValue(GetSystemDefaultLCID());
-    addEntropyValue(GetOEMCP());
-    addEntropyValue(GetACP());
-    addEntropyValue(GetKeyboardLayout(0));
-    addEntropyValue(GetKeyboardType(0));
-    addEntropyValue(GetKeyboardType(1));
-    addEntropyValue(GetKeyboardType(2));
-    addEntropyValue(GetDoubleClickTime());
-    addEntropyValue(GetCaretBlinkTime());
-    addEntropyValue(GetLogicalDrives());
+    AddData(GetSystemDefaultLangID());
+    AddData(GetSystemDefaultLCID());
+    AddData(GetOEMCP());
+    AddData(GetACP());
+    AddData(GetKeyboardLayout(0));
+    AddData(GetKeyboardType(0));
+    AddData(GetKeyboardType(1));
+    AddData(GetKeyboardType(2));
+    AddData(GetDoubleClickTime());
+    AddData(GetCaretBlinkTime());
+    AddData(GetLogicalDrives());
 
     // GetVersionEx is deprecated
     //versionInfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
     //if (GetVersionEx(&versionInfo)) {
-    //  addEntropy(&versionInfo, sizeof(OSVERSIONINFO));
+    //  AddData(&versionInfo, sizeof(OSVERSIONINFO));
     //}
 
     GetSystemInfo(&systemInfo);
-    addEntropy(&systemInfo, sizeof(SYSTEM_INFO));
+    AddData(systemInfo);
 
     // Process startup info
     startupInfo.cb = sizeof(STARTUPINFO);
     GetStartupInfo(&startupInfo);
-    addEntropy(&startupInfo, sizeof(STARTUPINFO));
+    AddData(startupInfo);
 
     memzero(&startupInfo, sizeof(STARTUPINFO));
     memzero(&tzi,         sizeof(TIME_ZONE_INFORMATION));
@@ -791,36 +800,38 @@ void RandomPool::Randomize(void)
   }
 
   // get some random data from the Windows API...
-  SecureMem<word8> mswinRand(POOL_SIZE);
-  if (m_blCryptProv &&
-    CryptGenRandom(m_cryptProv, POOL_SIZE, mswinRand))
-    addEntropy(mswinRand, POOL_SIZE);
+  SecureMem<word8> osRand(POOL_SIZE);
+  if (BCryptGenRandom(nullptr, osRand, POOL_SIZE,
+      BCRYPT_USE_SYSTEM_PREFERRED_RNG) == STATUS_SUCCESS)
+    AddData(osRand, POOL_SIZE);
 
   // finally, add Windows' QPC high-resolution counter
   // (not necessarily identical to the RDTSC value)
   LARGE_INTEGER qpc;
   if (QueryPerformanceCounter(&qpc))
-    addEntropy(&qpc, sizeof(LARGE_INTEGER));
+    AddData(qpc);
 
   // the notorious cleanup ...
-  memzero(&qTimer,         sizeof(word64));
-  memzero(&ft,             sizeof(FILETIME));
-  memzero(&qFreeSpace,     sizeof(word64));
-  memzero(&pt,             sizeof(POINT));
-  memzero(&ms,             sizeof(MEMORYSTATUS));
+  memzero(&qTimer, sizeof(word64));
+  memzero(&ft, sizeof(FILETIME));
+  //memzero(&qFreeSpace,     sizeof(word64));
+  memzero(&pt, sizeof(POINT));
+  memzero(&ms, sizeof(MEMORYSTATUS));
   memzero(&ftCreationTime, sizeof(FILETIME));
-  memzero(&ftExitTime,     sizeof(FILETIME));
-  memzero(&ftKernelTime,   sizeof(FILETIME));
-  memzero(&ftUserTime,     sizeof(FILETIME));
-  memzero(&uSpace,         sizeof(ULARGE_INTEGER));
-  memzero(&qpc,            sizeof(LARGE_INTEGER));
-  memzero(&lEntropyValue,  sizeof(word32));
+  memzero(&ftExitTime, sizeof(FILETIME));
+  memzero(&ftKernelTime, sizeof(FILETIME));
+  memzero(&ftUserTime, sizeof(FILETIME));
+  memzero(&minWorkSetSize, sizeof(size_t));
+  memzero(&maxWorkSetSize, sizeof(size_t));
+  memzero(&qpc, sizeof(LARGE_INTEGER));
+  //memzero(&lEntropyValue,  sizeof(word32));
+  //memzero(&qEntropyValue,  sizeof(word64));
 }
 //---------------------------------------------------------------------------
 bool RandomPool::WriteSeedFile(const WString& sFileName)
 {
   try {
-    std::unique_ptr<TFileStream> pFile(new TFileStream(sFileName, fmCreate));
+    auto pFile = std::make_unique<TFileStream>(sFileName, fmCreate);
 
     // initialize the PRNG
     SetKey();
@@ -845,7 +856,7 @@ bool RandomPool::ReadSeedFile(const WString& sFileName)
   int nBytesRead = 0;
 
   try {
-    std::unique_ptr<TFileStream> pFile(new TFileStream(sFileName, fmOpenRead));
+    auto pFile = std::make_unique<TFileStream>(sFileName, fmOpenRead);
 
     SecureMem<word8> buf(2 * POOL_SIZE);
     nBytesRead = pFile->Read(buf, buf.Size());

@@ -30,6 +30,7 @@
 #include "FastPRNG.h"
 #include "CryptUtil.h"
 #include "hrtimer.h"
+#include "PasswDatabase.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
@@ -59,6 +60,8 @@ __fastcall TPasswDbSettingsDlg::TPasswDbSettingsDlg(TComponent* Owner)
     EncryptionAlgoList->Items->Add(sCipher);
   }
 
+  PasswHistorySpinBtn->Max = PasswDatabase::MAX_PASSW_HISTORY_SIZE;
+
   if (g_pLangSupp) {
     TRLCaption(this);
     TRLCaption(GeneralSheet);
@@ -69,6 +72,7 @@ __fastcall TPasswDbSettingsDlg::TPasswDbSettingsDlg(TComponent* Owner)
     TRLCaption(EncryptionAlgoLbl);
     TRLCaption(NumKdfRoundsLbl);
     TRLCaption(DefaultExpiryLbl);
+    TRLCaption(PasswHistoryLbl);
     TRLCaption(EnableCompressionCheck);
     TRLCaption(CompressionLevelLbl);
 
@@ -98,7 +102,8 @@ void __fastcall TPasswDbSettingsDlg::GetSettings(PasswDbSettings& s)
 {
   s.DefaultUserName = GetEditBoxTextBuf(DefUserNameBox);
   s.PasswFormatSeq = GetEditBoxTextBuf(PasswFormatSeqBox);
-  s.DefaultExpiryDays = DefaultExpiryUpDown->Position;
+  s.DefaultExpiryDays = DefaultExpirySpinBtn->Position;
+  s.DefaultMaxPasswHistorySize = PasswHistorySpinBtn->Position;
   s.CipherType = EncryptionAlgoList->ItemIndex;
   s.NumKdfRounds = StrToUInt(NumKdfRoundsBox->Text);
   s.Compressed = EnableCompressionCheck->Checked;
@@ -110,7 +115,8 @@ void __fastcall TPasswDbSettingsDlg::SetSettings(const PasswDbSettings& s,
 {
   SetEditBoxTextBuf(DefUserNameBox, s.DefaultUserName.c_str());
   SetEditBoxTextBuf(PasswFormatSeqBox, s.PasswFormatSeq.c_str());
-  DefaultExpiryUpDown->Position = s.DefaultExpiryDays;
+  DefaultExpirySpinBtn->Position = s.DefaultExpiryDays;
+  PasswHistorySpinBtn->Position = s.DefaultMaxPasswHistorySize;
   EncryptionAlgoList->ItemIndex = s.CipherType;
   EncryptionAlgoList->Enabled = !blHasRecoveryPassw;
   NumKdfRoundsBox->Text = IntToStr(static_cast<__int64>(s.NumKdfRounds));
@@ -125,7 +131,7 @@ void __fastcall TPasswDbSettingsDlg::FormShow(TObject *Sender)
   Top = PasswMngForm->Top + (PasswMngForm->Height - Height) / 2;
   Left = PasswMngForm->Left + (PasswMngForm->Width - Width) / 2;
 
-  TopMostManager::GetInstance()->SetForm(this);
+  TopMostManager::GetInstance().SetForm(this);
 
   ConfigPages->ActivePage = GeneralSheet;
 

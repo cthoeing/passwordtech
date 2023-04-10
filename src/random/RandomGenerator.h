@@ -21,7 +21,16 @@
 #ifndef RandomGeneratorH
 #define RandomGeneratorH
 //---------------------------------------------------------------------------
+#include <stdexcept>
 #include "types.h"
+
+class RandomGeneratorError : public std::runtime_error
+{
+public:
+  RandomGeneratorError(const char* pMsg)
+    : std::runtime_error(pMsg)
+  {}
+};
 
 class RandomGenerator
 {
@@ -51,13 +60,13 @@ public:
     const word8* pParam,
     word32 lParamSize)
   {
-    throw Exception("SeedWithKey() not implemented");
+    throw RandomGeneratorError("RandomGenerator::SeedWithKey() not implemented");
   }
 
   // resets internal state to the last seed value
   virtual void Reset(void)
   {
-    throw Exception("Reset() not implemented");
+    throw RandomGeneratorError("RandomGenerator::Reset() not implemented");
   }
 
   // reseeds the PRNG with system parameters
@@ -99,46 +108,39 @@ public:
 
   word32 GetNumRange(word32 lNum) {
     if (lNum == 0)
-      throw Exception("Invalid range");
+      throw RandomGeneratorError("RandomGenerator::GetNumRange(): Invalid range");
 
     if (lNum == 1)
       return 0;
 
-    // NOTE: actually, in a 100% correct implementation, in the last case
-    // it should be
-    //   lRandMax = lNum * (0x100000000 / lNum),
-    // but handling a 32-bit integer here is much faster than
-    // handling a 64-bit integer.
-    // We can get along with the disadvantage that
-    // for each lNum being a power of 2, some random numbers
-    // may be discarded erroneously. The speed advantage of 32-bit
-    // vs. 64-bit far outweighs this disadvantage.
-    word32 lRandMax, lRand;
+    word32 lRand;
 
     if (lNum <= 256) {
-      lRandMax = lNum * (256 / lNum);
+      word32 lRandMax = lNum * (256 / lNum);
       while ((lRand = GetByte()) >= lRandMax);
     }
     else if (lNum <= 65536) {
-      lRandMax = lNum * (65536 / lNum);
+      word32 lRandMax = lNum * (65536 / lNum);
       while ((lRand = GetWord16()) >= lRandMax);
     }
     else {
-#ifdef _WIN64
-      lRandMax = lNum * (0x100000000ll / lNum);
-#else
-      lRandMax = lNum * (0xFFFFFFFF / lNum); // see above
-#endif
-      while ((lRand = GetWord32()) >= lRandMax);
+      // should be faster than using % operator (at least on 64-bit architecture)
+      word64 qRandMax = lNum * (0x100000000ll / lNum);
+      while ((lRand = GetWord32()) >= qRandMax);
+/*
+      // this is equivalent to 2**32 % lNum
+      word32 lRandMin = (1u + ~lNum) % lNum;
+      while ((lRand = GetWord32()) < lRandMin);
+*/
     }
 
-    return lRand % lNum;
+    return (lRand < lNum) ? lRand : lRand % lNum;
   }
 
   word32 GetNumRange(word32 lBegin, word32 lEnd)
   {
     if (lEnd <= lBegin)
-      throw Exception("Invalid range");
+      throw RandomGeneratorError("RandomGenerator::GetNumRange(): Invalid range");
 
     return lBegin + GetNumRange(lEnd - lBegin);
   }
@@ -146,6 +148,12 @@ public:
   template<class T> void Permute(T* pArray,
     word32 lSize)
   {
+    if (lSize == 0)
+      throw RandomGeneratorError("RandomGenerator::Permute(): Invalid range");
+
+    if (lSize == 1)
+      return;
+
     for (word32 i = lSize - 1; i > 0; i--) {
       word32 lRand = GetNumRange(i + 1);
       if (lRand != i)

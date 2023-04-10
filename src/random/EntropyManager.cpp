@@ -27,9 +27,8 @@
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 
-//std::unique_ptr<EntropyManager> g_pEntropyMng;
-
-static const word8 LOGTABLE256[256] =
+#if 0
+const word8 LOGTABLE256[256] =
 {
 #define LT(n) n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n
   0, 0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3,
@@ -37,21 +36,26 @@ static const word8 LOGTABLE256[256] =
   LT(7), LT(7), LT(7), LT(7), LT(7), LT(7), LT(7), LT(7)
 #undef LT
 };
+#endif
 
 // logBase2(): based on code from
 // http://graphics.stanford.edu/~seander/bithacks.html
 
 inline word32 logBase2(word32 v)
 {
+#if 1
+  return v ? __builtin_clz(v) ^ 31 : 0;
+#else
   word32 t, tt;
 
   if ((tt = v >> 16))
     return (t = tt >> 8) ? 24 + LOGTABLE256[t] : 16 + LOGTABLE256[tt];
 
   return (t = v >> 8) ? 8 + LOGTABLE256[t] : LOGTABLE256[v];
+#endif
 }
 
-static const int TIMER_ENTROPYBITS_DERATING = 4;
+const int TIMER_ENTROPYBITS_DERATING = 4;
 
 //---------------------------------------------------------------------------
 word32 EntropyManager::AddEvent(const MSG& msg,
@@ -62,10 +66,10 @@ word32 EntropyManager::AddEvent(const MSG& msg,
   word64 qTimer;
 
   HighResTimer(&qTimer);
-  m_pRandPool->AddData(&qTimer, sizeof(word64));
+  m_randPool.AddData(&qTimer, sizeof(word64));
 
   word32 lDelta = static_cast<word32>(
-    std::min<word64>(0xffffffff, qTimer - qLastTimer));
+    std::min(0xffffffffull, qTimer - qLastTimer));
   qLastTimer = qTimer;
 
   if (event == entKeyboard) {
@@ -81,7 +85,7 @@ word32 EntropyManager::AddEvent(const MSG& msg,
     m_lastPos[0] = msg.lParam;
   }
 
-  m_pRandPool->AddData(&msg, sizeof(MSG));
+  m_randPool.AddData(&msg, sizeof(MSG));
 
   if (g_highResTimer == HighResTimer::None)
     lDelta /= HRT_NONE_ACCURACY_DERATING;
@@ -97,11 +101,6 @@ word32 EntropyManager::AddEvent(const MSG& msg,
     word32 lTimerEntBits = logBase2(lDelta) - TIMER_ENTROPYBITS_DERATING;
 
     lEntBits += std::min(lTimerEntBits, m_lMaxTimerEntBits);
-
-    /*  // debug stuff
-        static word32 t[256], e[256], n=0;
-        t[n]=lDelta; e[n]=nTimerEntBits; if(++n==256) n=0;
-    */
   }
 
   IncreaseEntropyBits(lEntBits);
@@ -117,7 +116,7 @@ word32 EntropyManager::AddEvent(const TMessage& msg,
   winMsg.message = msg.Msg;
   winMsg.lParam = msg.LParam;
   winMsg.wParam = msg.WParam;
-  winMsg.time = time(NULL);
+  winMsg.time = GetMessageTime();
   GetCursorPos(&winMsg.pt);
   return AddEvent(winMsg, event, lEntBits);
 }
@@ -137,7 +136,7 @@ word32 EntropyManager::AddData(const void* pData,
   lzo1x_1_compress(reinterpret_cast<const word8*>(pData), lNumOfBytes, comprBuf,
     &comprLen, workBuf);
 
-  m_pRandPool->AddData(comprBuf, comprLen);
+  m_randPool.AddData(comprBuf, comprLen);
 
   comprLen = (comprLen > 4) ? comprLen - 4 : 1;
 

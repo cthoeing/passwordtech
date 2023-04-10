@@ -248,7 +248,7 @@ void __fastcall TProfileEditDlg::FormShow(TObject *Sender)
 {
   Top = MainForm->Top + (MainForm->Height - Height) / 2;
   Left = MainForm->Left + (MainForm->Width - Width) / 2;
-  TopMostManager::GetInstance()->SetForm(this);
+  TopMostManager::GetInstance().SetForm(this);
 }
 //---------------------------------------------------------------------------
 void __fastcall TProfileEditDlg::MoveUpBtnClick(TObject *Sender)

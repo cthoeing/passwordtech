@@ -60,7 +60,9 @@ enum HighResTimer HighResTimerCheck(void)
     HighResTimer(&qBefore);
 
     // do something
-    for (int nI = 0; nI < 100; nI++);
+    word32 lVal = 0xdeadbeef;
+    for (int i = 0; i < 10; i++)
+      lVal = (lVal << 5) + lVal + i;
 
     HighResTimer(&qAfter);
 

@@ -35,11 +35,86 @@ class PasswDbEntry {
 public:
   friend class PasswDatabase;
 
-  typedef std::pair<SecureWString,SecureWString> KeyValue;
-  typedef std::vector<KeyValue> KeyValueList;
+  using KeyValue = std::pair<SecureWString,SecureWString>;
+  using KeyValueList = std::vector<KeyValue>;
+  using PasswHistoryEntry = std::pair<FILETIME,SecureWString>;
+
+  class PasswHistory {
+  public:
+    PasswHistory(word32 lMaxSize, bool blActive)
+      : m_lMaxSize(std::max(1u, lMaxSize)), m_blActive(blActive)
+    {}
+
+    bool IsEmpty(void) const
+    {
+      return !m_blActive && m_history.empty();
+    }
+
+    word32 GetSize(void) const
+    {
+      return m_history.size();
+    }
+
+    word32 GetMaxSize(void) const
+    {
+      return m_lMaxSize;
+    }
+
+    bool GetActive(void) const
+    {
+      return m_blActive;
+    }
+
+    void SetMaxSize(word32 lMaxSize)
+    {
+      m_lMaxSize = std::max(1u, lMaxSize);
+      if (m_history.size() > m_lMaxSize)
+        m_history.erase(m_history.begin() + m_lMaxSize, m_history.end());
+    }
+
+    void SetActive(bool blActive)
+    {
+      m_blActive = blActive;
+    }
+
+    /*const std::vector<PasswHistoryEntry>& GetHistory(void) const
+    {
+      return m_history;
+    }*/
+
+    std::vector<PasswHistoryEntry>::const_iterator begin() const
+    {
+      return m_history.cbegin();
+    }
+
+    std::vector<PasswHistoryEntry>::const_iterator end() const
+    {
+      return m_history.cend();
+    }
+
+    void ClearHistory(void)
+    {
+      m_history.clear();
+    }
+
+    void AdoptFrom(const PasswHistory& src)
+    {
+      SetActive(src.m_blActive);
+      if (src.GetSize() == 0)
+        ClearHistory();
+      SetMaxSize(src.m_lMaxSize);
+    }
+
+    void AddEntry(const PasswHistoryEntry& entry, bool blToFront = true);
+
+  private:
+    std::vector<PasswHistoryEntry> m_history;
+    word32 m_lMaxSize;
+    bool m_blActive;
+  };
 
   enum {
-    NUM_FIELDS = 11,
+    NUM_FIELDS = 13,
     NUM_STRING_FIELDS = 8
   };
 
@@ -54,7 +129,9 @@ public:
     TAGS,
     CREATIONTIME,
     MODIFICATIONTIME,
+    PASSWCHANGETIME,
     PASSWEXPIRYDATE,
+    PASSWHISTORY,
 
     END = 0xff
   };
@@ -62,9 +139,11 @@ public:
   SecureWString Strings[NUM_STRING_FIELDS];
   SecureWString CreationTimeString;
   SecureWString ModificationTimeString;
+  SecureWString PasswChangeTimeString;
   SecureWString PasswExpiryDateString;
   FILETIME CreationTime;
   FILETIME ModificationTime;
+  FILETIME PasswChangeTime;
   word32 PasswExpiryDate;
   word32 UserFlags;
   int UserTag;
@@ -104,12 +183,16 @@ public:
   }
 
   // update timestamp of last modification
-  void UpdateModificationTime(void)
+  void UpdateModificationTime(bool blPasswChanged)
   {
     SYSTEMTIME st;
     GetLocalTime(&st);
     SystemTimeToFileTime(&st, &ModificationTime);
     ModificationTimeString = TimeStampToString(ModificationTime);
+    if (blPasswChanged) {
+      PasswChangeTime = ModificationTime;
+      PasswChangeTimeString = ModificationTimeString;
+    }
   }
 
   // access to key-value list
@@ -180,6 +263,21 @@ public:
     Strings[TAGS].Empty();
   }
 
+  PasswHistory& GetPasswHistory(void)
+  {
+    return m_passwHistory;
+  }
+
+  const PasswHistory& GetPasswHistory(void) const
+  {
+    return m_passwHistory;
+  }
+
+  void AddCurrentPasswToHistory(const SecureWString& sPassw)
+  {
+    m_passwHistory.AddEntry({ PasswChangeTime, sPassw });
+  }
+
   // convert timestamp to string using Windows API
   static SecureWString TimeStampToString(const FILETIME& ft);
 
@@ -209,9 +307,10 @@ private:
   // -> unique 32-bit identifier
   // -> index of entry within database
   // -> 'true': set "creation" and "last modification" timestamps
-  PasswDbEntry(word32 lId, word32 lIndex, bool blSetTimeStamps)
+  PasswDbEntry(word32 lId, word32 lIndex, bool blSetTimeStamps,
+    word32 lMaxPasswHistorySize, bool blPasswHistoryActive)
     : m_lId(lId), m_lIndex(lIndex), m_passwHash(20), UserFlags(0), UserTag(0),
-    PasswExpiryDate(0)
+    PasswExpiryDate(0), m_passwHistory(lMaxPasswHistorySize, blPasswHistoryActive)
   {
     if (blSetTimeStamps) {
       SYSTEMTIME st;
@@ -225,6 +324,7 @@ private:
       CreationTime.dwLowDateTime = CreationTime.dwHighDateTime = 0;
       ModificationTime.dwLowDateTime = ModificationTime.dwHighDateTime = 0;
     }
+    PasswChangeTime.dwLowDateTime = PasswChangeTime.dwHighDateTime = 0;
   }
 
   // parse key-value list specified as string
@@ -235,10 +335,12 @@ private:
 
   word32 m_lId;
   word32 m_lIndex;
+  word32 m_lMaxPasswHistorySize;
   SecureMem<wchar_t> m_encPassw;
   SecureMem<word8> m_passwHash;
   std::vector<KeyValue> m_keyValueList;
   std::set<SecureWString> m_tags;
+  PasswHistory m_passwHistory;
 };
 
 
@@ -317,6 +419,7 @@ private:
   SecureWString m_sDefaultUserName;
   SecureWString m_sPasswFormatSeq;
   word32 m_lDefaultPasswExpiryDays;
+  word32 m_lDefaultMaxPasswHistorySize;
   bool m_blPlaintextPassw;
   DbOpenState m_dbOpenState;
   bool m_blRecoveryKey;
@@ -365,9 +468,10 @@ private:
   }
 
   // write ASCII (non-Unicode) string to file
-  // -> string buffer (zero-terminated)
+  // -> string buffer (must be zero-terminated if length is -1)
+  // -> string length (will be determined if value of -1 is specified)
   // -> index of field (<0: index not applicable)
-  void WriteString(const char* pszStr, int nIndex = -1);
+  void WriteString(const char* pszStr, word32 lLen = -1, int nIndex = -1);
 
   // write Unicode string to file
   // -> string
@@ -443,11 +547,14 @@ private:
     m_lKdfIterations = lIter;
   }
 
+  // adds an existing entry from the database file
+  PasswDbEntry* AddDbEntry(void);
+
 public:
 
   enum {
     VERSION_HIGH = 1,
-    VERSION_LOW = 4,
+    VERSION_LOW = 5,
     VERSION = (VERSION_HIGH << 8) | VERSION_LOW,
 
     KEY_HASH_ITERATIONS = 16384,
@@ -456,6 +563,8 @@ public:
     CIPHER_CHACHA20 = 1,
 
     COMPRESSION_DEFLATE = 1,
+
+    MAX_PASSW_HISTORY_SIZE = 0xff
   };
 
   // creation/destruction
@@ -491,10 +600,10 @@ public:
   }
 
   // gets list of database entries
-  const PasswDbList& GetDatabase(void) const
+  /*const PasswDbList& GetDatabase(void) const
   {
     return m_db;
-  }
+  }*/
 
   // gets number of database entries
   word32 GetSize(void) const
@@ -502,11 +611,14 @@ public:
     return m_db.size();
   }
 
-  // adds new entry to database
-  // -> whether to set timestamps automatically
-  // -> whether to set user name to default name
-  PasswDbEntry* AddDbEntry(bool blSetTimeStamp = true,
-    bool blSetDefUserName = true);
+  // adds a new entry to the database
+  PasswDbEntry* NewDbEntry(void);
+
+  // add a duplicate of an existing entry
+  // -> original entry to be duplicated
+  // -> title of the duplicate
+  PasswDbEntry* DuplicateDbEntry(const PasswDbEntry& original,
+    const SecureWString& sTitle);
 
   // removes entry from database
   void DeleteDbEntry(PasswDbEntry& pEntry);
@@ -519,12 +631,12 @@ public:
   // changes password of a given database entry
   // -> database entry
   // <- password
-  void SetDbEntryPassw(PasswDbEntry& pEntry,
+  void SetDbEntryPassw(PasswDbEntry& entry,
     const SecureWString& sPassw);
 
   // returns password of database entry
   // -> database entry
-  SecureWString GetDbEntryPassw(const PasswDbEntry& pEntry);
+  SecureWString GetDbEntryPassw(const PasswDbEntry& entry);
 
   // determines whether passwords of all entries are stored in plaintext
   // or ciphertext format in memory (encrypted with a key stored in RAM)
@@ -576,6 +688,38 @@ public:
   static SecureMem<word8> CombineKeySources(const SecureMem<word8>& passw,
     const WString& sKeyFileName);
 
+  // iterators for accessing database entries
+  PasswDbList::iterator begin()
+  {
+    return m_db.begin();
+  }
+
+  PasswDbList::iterator end()
+  {
+    return m_db.end();
+  }
+
+  PasswDbList::const_iterator begin() const
+  {
+    return m_db.cbegin();
+  }
+
+  PasswDbList::const_iterator end() const
+  {
+    return m_db.cend();
+  }
+
+  // operator with range check for random access to database entries
+  const PasswDbEntry* operator[](word32 lIndex) const
+  {
+    return m_db.at(lIndex);
+  }
+
+  PasswDbEntry* operator[](word32 lIndex)
+  {
+    return m_db.at(lIndex);
+  }
+
   // properties
   // default user name
   __property SecureWString DefaultUserName =
@@ -588,6 +732,9 @@ public:
   // default number of expiry days for new passwords
   __property word32 DefaultPasswExpiryDays =
   { read=m_lDefaultPasswExpiryDays, write=m_lDefaultPasswExpiryDays };
+
+  __property word32 DefaultMaxPasswHistorySize =
+  { read=m_lDefaultMaxPasswHistorySize, write=m_lDefaultMaxPasswHistorySize };
 
   // database size
   __property word32 Size =

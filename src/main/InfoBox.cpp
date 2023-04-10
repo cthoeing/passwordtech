@@ -64,12 +64,12 @@ void __fastcall TInfoBoxForm::TimerTimer(TObject *Sender)
 void __fastcall TInfoBoxForm::FormClose(TObject *Sender, TCloseAction &Action)
 {
   Timer->Enabled = false;
-  TopMostManager::GetInstance()->OnFormClose(this);
+  TopMostManager::GetInstance().OnFormClose(this);
 }
 //---------------------------------------------------------------------------
 void __fastcall TInfoBoxForm::FormShow(TObject *Sender)
 {
-  TopMostManager::GetInstance()->SetForm(this);
+  TopMostManager::GetInstance().SetForm(this);
 }
 //---------------------------------------------------------------------------
 

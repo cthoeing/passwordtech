@@ -3,7 +3,38 @@
                 Copyright (c) 2002-2023 by Christian Thöing
 
 
-Version 3.4.5
+Version 3.5.0
+
+NEW FEATURES:
+
+- New high-resolution icons
+- Style of user interface can be customized, list of styles available in
+  Configuration | General, including dark styles
+- Password generator, Include characters: Specify (minimum or fixed) number of
+  characters for placeholders by using the syntax <placeholder>:N[+], e.g.
+  <symbols>:2+ (meaning "Include at least two special symbols") 
+- Advanced password options: New option "Assign entropy value to each entry in
+  password list"
+- PassCube: New field "Password changed" (date & time of last password change)
+- PassCube: New field "Password history" (history of up to 255 previous
+  passwords and associated date & time values)
+- PassCube: New option "For new entries, save the following number of previous
+  passwords" in Database Settings
+  
+CHANGES & IMPROVEMENTS:
+
+- Random pool: Cryptographic hash function HMAC-SHA-256 replaced with BLAKE2s
+  for enhanced security and speed
+  
+FIXES:
+
+- Fixed potential buffer overflows
+- Cannot generate passphrases if word list size is exactly 2**N with 17<=N<=20
+- PassCube: Various issues selecting database entries
+
+----------
+
+Version 3.4.5 (2023-01-22)
 
 NEW FEATURES:
 

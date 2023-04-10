@@ -96,14 +96,15 @@ bool ExecuteShellOp(const WString& sOperation,
 bool ExecuteCommand(const WString& sCommand,
   bool blShowErrorMsg = true);
 
+std::vector<int> ParseVersionNumber(const WString& sVersion);
+
 // compare two version strings (format x.y.z, e.g. 1.23.456)
 // -> string S1
 // -> string S2
 // <- -1 : S1 < S2
 //     0 : S1 == S2
 //     1 : S1 > S2
-int CompareVersions(AnsiString asVer1,
-  AnsiString asVer2);
+int CompareVersionNumbers(const WString& sVer1, const WString& sVer2);
 
 // returns %APPDATA% path by calling the SHGetFolderPath() function
 // from the Windows API
@@ -113,12 +114,12 @@ WString GetAppDataPath(void);
 WString FontToString(TFont* pFont);
 
 // converts string into font object
-// <- number of attributes which could be successfully parsed (max. 7)
-int StringToFont(WString sFont,
+// <- number of attributes which could be successfully parsed (max. 4)
+int StringToFont(const WString& sFont,
   TFont* pFont);
 
 // converts certain types of std::exception into string
-WString CppStdExceptionToString(std::exception* e);
+WString CppStdExceptionToString(const std::exception& e);
 
 // replaces "\n" with "\r\n"
 WString ConvertCr2Crlf(const WString& sSrc);
@@ -131,8 +132,20 @@ WString FileTimeToString(FILETIME ft, bool blLongDate,
 // returns 0 if equal, 1 if ft1>ft2, or -1 if ft1<ft2
 int CompareFileTime(FILETIME ft1, FILETIME ft2);
 
+// replace format specifiers "%d" with "%llu" to enable formatting of
+// 64-bit integers
 WString EnableInt64FormatSpec(const WString& sFormatStr);
 
+// rounds entropy value downward to nearest integer,
+// unless fractional part is >0.99 (round upward in the latter case)
+// example: 64.5 -> 64, 64.999999 -> 65
+int FloorEntropyBits(double val);
+
+// split string into multiple substrings
+// -> string buffer to split
+// -> list of characters that separate the substrings (substrings can be
+//    separated by any character specified in the separator string)
+// <- list of substrings
 std::vector<SecureWString> SplitStringBuf(const wchar_t* pwzsSrc,
   const wchar_t* pwszSep);
 
