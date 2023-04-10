@@ -1,4 +1,4 @@
-# Translation template for Password Tech 3.4.5
+# Translation template for Password Tech 3.5.0
 # Released under the GNU General Public License
 
 #. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
