@@ -54,7 +54,7 @@
 // Speck128 round keys = 272 bytes
 // sizeof(sha256_context) = 236 bytes
 
-static const int
+const int
 POOLPAGE_SIZE    = 4096, // size of the entire pool page in RAM
 KEY_SIZE         = 32, // AES key size used
 CTR_SIZE         = 16, // AES block size
@@ -69,8 +69,13 @@ SECCTR_OFFSET    = CIPHERKEY_OFFSET + KEY_SIZE,
 CIPHERCTX_OFFSET = SECCTR_OFFSET + CTR_SIZE,
 GETBUF_OFFSET    = CIPHERCTX_OFFSET + sizeof(aes_context),
 TEMPBUF_OFFSET   = GETBUF_OFFSET + GETBUF_SIZE,
-UNUSED_SIZE_MAX  = POOLPAGE_SIZE - (TEMPBUF_OFFSET + TEMPBUF_SIZE),
+POOL_DATA_SIZE   = TEMPBUF_OFFSET + TEMPBUF_SIZE,
+UNUSED_SIZE_MAX  = POOLPAGE_SIZE - POOL_DATA_SIZE,
 UNUSED_SIZE_MIN  = 64;
+
+const char
+ERROR_BLAKE2_INIT[]  = "BLAKE2 initialization failed",
+ERROR_BLAKE2_FINAL[] = "BLAKE2 finalization failed";
 
 namespace RandPoolCipher {
 class AES_CTR : public CtrBasedCipher
@@ -88,23 +93,23 @@ public:
     m_pCtx = nullptr;
   }
 
-  void SetKey(const word8 pKey[32])
+  void SetKey(const word8 pKey[32]) override
   {
     aes_setkey_enc(m_pCtx, pKey, 256);
   }
 
-  void SelfKey(word8 pKey[32], word8* pCounter)
+  void SelfKey(word8 pKey[32], word8* pCounter) override
   {
     FillBlocks(pKey, pCounter, 2);
     SetKey(pKey);
   }
 
-  void ProcessCounterOrIV(word8 pCounter[16])
+  void ProcessCounterOrIV(word8 pCounter[16]) override
   {
     aes_crypt_ecb(m_pCtx, AES_ENCRYPT, pCounter, pCounter);
   }
 
-  void FillBlocks(word8* pBuf, word8* pCounter, word32 lNumOfBlocks)
+  void FillBlocks(word8* pBuf, word8* pCounter, word32 lNumOfBlocks) override
   {
     while (lNumOfBlocks--) {
       aes_crypt_ecb(m_pCtx, AES_ENCRYPT, pCounter, pBuf);
@@ -113,17 +118,17 @@ public:
     }
   }
 
-  word32 GetBlockSize(void) const
+  word32 GetBlockSize(void) const override
   {
     return 16;
   }
 
-  word64 GetMaxNumOfBlocks(void) const
+  word64 GetMaxNumOfBlocks(void) const override
   {
     return 65536;
   }
 
-  void Move(void* pNew)
+  void Move(void* pNew) override
   {
     m_pCtx = reinterpret_cast<aes_context*>(pNew);
     m_pCtx->rk = m_pCtx->buf;
@@ -147,7 +152,7 @@ public:
     m_nRounds = 0;
   }
 
-  void SetKey(const word8 pKey[32])
+  void SetKey(const word8 pKey[32]) override
   {
     // set ChaCha key, IV can be arbitrary for now,
     // because we're using the cipher in only one direction
@@ -157,34 +162,34 @@ public:
     //chacha_ivsetup(m_pCtx, iv);
   }
 
-  void SelfKey(word8 pKey[32], word8* pCounter)
+  void SelfKey(word8 pKey[32], word8* pCounter) override
   {
     chacha_keystream_bytes(m_pCtx, pKey, 32);
     SetKey(pKey);
   }
 
-  void ProcessCounterOrIV(word8 pIV[16])
+  void ProcessCounterOrIV(word8 pIV[16]) override
   {
     chacha_encrypt_bytes(m_pCtx, pIV, pIV, 16);
     chacha_ivsetup(m_pCtx, pIV, pIV + 8);
   }
 
-  void FillBlocks(word8* pBuf, word8* pCounter, word32 lNumOfBlocks)
+  void FillBlocks(word8* pBuf, word8* pCounter, word32 lNumOfBlocks) override
   {
     chacha_keystream_bytes(m_pCtx, pBuf, lNumOfBlocks * 64);
   }
 
-  word32 GetBlockSize(void) const
+  word32 GetBlockSize(void) const override
   {
     return 64;
   }
 
-  word64 GetMaxNumOfBlocks(void) const
+  word64 GetMaxNumOfBlocks(void) const override
   {
     return 0x400000000ull; // generate max. 1TB of data before changing key
   }
 
-  void Move(void* pNew)
+  void Move(void* pNew) override
   {
     m_pCtx = reinterpret_cast<chacha_ctx*>(pNew);
   }
@@ -285,17 +290,11 @@ RandomPool::RandomPool(CipherType cipher, RandomGenerator& fastRandGen,
     OutOfMemoryError();
 
   // hide the pool contents *somewhere* within the memory page
-  m_lUnusedSize = UNUSED_SIZE_MIN + (m_fastRandGen.GetWord32() %
-    (UNUSED_SIZE_MAX - UNUSED_SIZE_MIN + 1));
+  m_lUnusedSize = m_blLockPhysMem ? UNUSED_SIZE_MIN + (m_fastRandGen.GetWord32() %
+    (UNUSED_SIZE_MAX - UNUSED_SIZE_MIN + 1)) : 0;
   SetPoolPointers();
 
   ChangeCipher(cipher);
-
-  /*if (CryptAcquireContext(&m_cryptProv, nullptr, nullptr, PROV_RSA_FULL, 0))
-    m_blCryptProv = true;
-  else if (static_cast<signed int>(GetLastError()) == NTE_BAD_KEYSET)
-    m_blCryptProv = CryptAcquireContext(
-        &m_cryptProv, nullptr, nullptr, PROV_RSA_FULL, CRYPT_NEWKEYSET);*/
 }
 //---------------------------------------------------------------------------
 RandomPool::RandomPool(RandomPool& src, RandomGenerator& fastRandGen,
@@ -333,23 +332,24 @@ word8* RandomPool::AllocPoolPage(void)
 {
   word8* pPoolPage = nullptr;
   if (m_blLockPhysMem) {
-    pPoolPage =
-      reinterpret_cast<word8*>(VirtualAlloc(nullptr, POOLPAGE_SIZE,
-        MEM_COMMIT, PAGE_READWRITE));
-    if (pPoolPage != nullptr)
+    pPoolPage = reinterpret_cast<word8*>(VirtualAlloc(nullptr, POOLPAGE_SIZE,
+      MEM_COMMIT, PAGE_READWRITE));
+    if (pPoolPage != nullptr) {
       VirtualLock(pPoolPage, POOLPAGE_SIZE);
+      ClearPoolBuf(pPoolPage, POOLPAGE_SIZE);
+    }
   }
-  else
-    pPoolPage = new word8[POOLPAGE_SIZE];
-  if (pPoolPage != nullptr)
-    ClearPoolBuf(pPoolPage, POOLPAGE_SIZE);
+  else {
+    pPoolPage = new word8[POOL_DATA_SIZE];
+    ClearPoolBuf(pPoolPage, POOL_DATA_SIZE);
+  }
   return pPoolPage;
 }
 //---------------------------------------------------------------------------
 void RandomPool::FreePoolPage(void)
 {
   if (m_pPoolPage != nullptr) {
-    ClearPoolBuf(m_pPoolPage, POOLPAGE_SIZE);
+    ClearPoolBuf(m_pPoolPage, m_blLockPhysMem ? POOLPAGE_SIZE : POOL_DATA_SIZE);
     if (m_blLockPhysMem) {
       VirtualUnlock(m_pPoolPage, POOLPAGE_SIZE);
       VirtualFree(m_pPoolPage, 0, MEM_RELEASE);
@@ -373,11 +373,13 @@ void RandomPool::SetPoolPointers(void)
 //---------------------------------------------------------------------------
 void RandomPool::TouchPool(void)
 {
-  static word32 lIndex = 0;
+  if (m_blLockPhysMem) {
+    static word32 lIndex = 0;
 
-  if (lIndex == m_lUnusedSize)
-    lIndex = 0;
-  m_pPoolPage[lIndex++]--;
+    if (lIndex == m_lUnusedSize)
+      lIndex = 0;
+    m_pPoolPage[lIndex++]--;
+  }
 }
 //---------------------------------------------------------------------------
 bool RandomPool::MovePool(void)
@@ -388,7 +390,7 @@ bool RandomPool::MovePool(void)
 
   // only copy the relevant portion of the pool page
   memcpy(pNewPoolPage + m_lUnusedSize, m_pPoolPage + m_lUnusedSize,
-    POOLPAGE_SIZE - m_lUnusedSize);
+    m_blLockPhysMem ? POOLPAGE_SIZE - m_lUnusedSize : POOL_DATA_SIZE);
 
   FreePoolPage();
   m_pPoolPage = pNewPoolPage;
@@ -439,7 +441,8 @@ void RandomPool::UpdatePool(void)
   //sha256_init(m_pHashCtx);
   //sha256_hmac_starts(m_pHashCtx, m_pPool, POOL_SIZE, 0);
   blake2s_state* pHashCtx = reinterpret_cast<blake2s_state*>(m_pHashCtx);
-  blake2s_init_key(pHashCtx, POOL_SIZE, m_pPool, POOL_SIZE);
+  if (blake2s_init_key(pHashCtx, POOL_SIZE, m_pPool, POOL_SIZE) != 0)
+    throw RandomGeneratorError(ERROR_BLAKE2_INIT);
 
   if (m_lAddBufPos != 0) {
     //sha256_hmac_update(m_pHashCtx, m_pAddBuf, m_lAddBufPos);
@@ -462,7 +465,8 @@ void RandomPool::UpdatePool(void)
 
   // get new pool
   //sha256_hmac_finish(m_pHashCtx, m_pPool);
-  blake2s_final(pHashCtx, m_pPool, POOL_SIZE);
+  if (blake2s_final(pHashCtx, m_pPool, POOL_SIZE) != 0)
+    throw RandomGeneratorError(ERROR_BLAKE2_FINAL);
 
   // clear sensitive data
   ClearPoolBuf(m_pHashCtx, sizeof(blake2s_state));
@@ -494,13 +498,16 @@ void RandomPool::SetKey(void)
   // use the full buffer contents here (16 bytes vs. 8 bytes from the timer);
   // it doesn't cost anything, and the rest of the buffer contains some
   // useful pseudorandom data
-  blake2s_init_key(pHashCtx, POOL_SIZE, m_pTempBuf, TEMPBUF_SIZE);
+  if (blake2s_init_key(pHashCtx, POOL_SIZE, m_pTempBuf, TEMPBUF_SIZE) != 0)
+    throw RandomGeneratorError(ERROR_BLAKE2_INIT);
 
   //sha256_hmac_update(m_pHashCtx, m_pPool, POOL_SIZE);
   //sha256_hmac_finish(m_pHashCtx, m_pCipherKey);
   blake2s_update(pHashCtx, m_pPool, POOL_SIZE);
-  blake2s_final(pHashCtx, m_pCipherKey, POOL_SIZE);
+  if (blake2s_final(pHashCtx, m_pCipherKey, POOL_SIZE) != 0)
+    throw RandomGeneratorError(ERROR_BLAKE2_FINAL);
 
+  ClearPoolBuf(m_pHashCtx, sizeof(blake2s_state));
   ClearPoolBuf(m_pTempBuf, TEMPBUF_SIZE);
 
   // perform the cipher's key setup
@@ -565,20 +572,19 @@ word32 RandomPool::FillBuf(word8* pBuf,
   }
 
   // fill the buffer by encrypting multiple counter values
-  const word32 lBlockSize = m_pCipher->GetBlockSize();
-  word32 lNumFullBlocks = lNumOfBytes / lBlockSize;
+  const word32 lNumFullBlocks = lNumOfBytes / m_pCipher->GetBlockSize();
 
   if (lNumFullBlocks == 0)
     throw RandomGeneratorError("RandomPool::FillBuf(): Number of blocks is zero");
 
-  while (lNumFullBlocks != 0)  {
-    word32 lBlocksToFill = std::min<word64>(lNumFullBlocks,
+  for (word32 lRemainingBlocks = lNumFullBlocks; lRemainingBlocks != 0; )  {
+    word32 lBlocksToFill = std::min<word64>(lRemainingBlocks,
       m_pCipher->GetMaxNumOfBlocks() - m_qNumOfBlocks);
 
     m_pCipher->FillBlocks(pBuf, m_pSecCtr, lBlocksToFill);
 
-    pBuf += lBlocksToFill * lBlockSize;
-    lNumFullBlocks -= lBlocksToFill;
+    pBuf += lBlocksToFill * m_pCipher->GetBlockSize();
+    lRemainingBlocks -= lBlocksToFill;
     m_qNumOfBlocks += lBlocksToFill;
 
     if (m_qNumOfBlocks >= m_pCipher->GetMaxNumOfBlocks())
@@ -590,7 +596,7 @@ word32 RandomPool::FillBuf(word8* pBuf,
     m_lGetBufPos = 0;
   }
 
-  return (lNumOfBytes / lBlockSize) * lBlockSize;
+  return lNumFullBlocks * m_pCipher->GetBlockSize();
 }
 //---------------------------------------------------------------------------
 void RandomPool::AddData(const void* pBuf,

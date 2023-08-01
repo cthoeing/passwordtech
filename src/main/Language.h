@@ -21,6 +21,7 @@
 #ifndef LanguageH
 #define LanguageH
 //---------------------------------------------------------------------------
+#include <vcl.h>
 #include <unordered_map>
 #include <vector>
 #include <memory>

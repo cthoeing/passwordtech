@@ -448,7 +448,7 @@ private:	// User declarations
   std::unique_ptr<LuaScript> m_pScript;
   TDateTime m_lastUpdateCheck;
   AnsiString m_asDonorKey;
-
+  
   void __fastcall DelayStartupError(const WString& sMsg);
   void __fastcall LoadLangConfig(void);
   bool __fastcall ChangeLanguage(const WString& sLangFileName);

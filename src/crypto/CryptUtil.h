@@ -21,6 +21,7 @@
 #ifndef CryptUtilH
 #define CryptUtilH
 //---------------------------------------------------------------------------
+#include <atomic>
 #include "types.h"
 
 // derives a 256-bit key from a password and salt using PBKDF2
@@ -36,7 +37,8 @@ void pbkdf2_256bit(const word8* pPassw,
   const word8* pSalt,
   word32 lSaltLen,
   word8* pDerivedKey,
-  word32 lIterations = 8192);
+  word32 lIterations = 8192,
+  std::atomic<bool>* pCancelFlag = nullptr);
 
 template<int Nbits> void incrementCounter(word8* pCounter)
 {

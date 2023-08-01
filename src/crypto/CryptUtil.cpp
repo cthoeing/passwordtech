@@ -32,7 +32,8 @@ void pbkdf2_256bit(const word8* pPassw,
   const word8* pSalt,
   word32 lSaltLen,
   word8* pDerivedKey,
-  word32 lIterations)
+  word32 lIterations,
+  std::atomic<bool>* pCancelFlag)
 {
   const word8 counter[4] = { 0, 0, 0, 1 };
   sha256_context hashCtx;
@@ -49,7 +50,8 @@ void pbkdf2_256bit(const word8* pPassw,
 
   SecureMem<word8> md(pDerivedKey, 32);
 
-  for (word32 i = 1; i < lIterations; i++) {
+  for (word32 i = 1; i < lIterations &&
+        !(pCancelFlag && *pCancelFlag); i++) {
     // compute U_i = HMAC(key, U_{i-1})
     sha256_hmac_reset(&hashCtx);
     sha256_hmac_update(&hashCtx, md, 32);

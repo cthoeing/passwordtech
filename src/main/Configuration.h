@@ -115,6 +115,8 @@ struct Configuration {
   bool MinimizeToSysTray = true;
   bool ConfirmExit = false;
   bool LaunchSystemStartup = false;
+  bool LoadProfileStartup = false;
+  WString LoadProfileName;
   int RandomPoolCipher = 1;
   AutoCheckUpdates AutoCheckUpdates = acuWeekly;
   CharacterEncoding FileEncoding = ceUtf8;
@@ -220,6 +222,8 @@ __published:	// IDE-managed Components
     TComboBox *BenchmarkMemList;
     TPopupMenu *SelectFontMenu;
     TMenuItem *SelectFontMenu_RestoreDefault;
+    TCheckBox *LoadProfileStartupCheck;
+    TComboBox *LoadProfileBox;
   void __fastcall SelectFontBtnClick(TObject *Sender);
   void __fastcall AutoClearClipCheckClick(TObject *Sender);
   void __fastcall FormShow(TObject *Sender);
@@ -238,11 +242,13 @@ __published:	// IDE-managed Components
     void __fastcall ConvertLangFileBtnClick(TObject *Sender);
     void __fastcall LanguageListSelect(TObject *Sender);
     void __fastcall SelectFontMenu_RestoreDefaultClick(TObject *Sender);
+    void __fastcall LoadProfileStartupCheckClick(TObject *Sender);
 private:	// User declarations
   HotKeyList m_hotKeys;
-  const std::vector<LanguageEntry>* m_pLangList;
+  std::vector<LanguageEntry> m_langList;
   void __fastcall ShowFontSample(TFont* pFont);
   void __fastcall UpdateHotKeyList(void);
+  void __fastcall UpdateProfileList(void);
 public:		// User declarations
   __fastcall TConfigurationDlg(TComponent* Owner);
   void __fastcall LoadConfig(void);

@@ -35,6 +35,14 @@ public:
   {}
 };
 
+class SecureMemSizeError : public SecureMemError
+{
+public:
+  SecureMemSizeError(const char* pMsg = nullptr)
+    : SecureMemError(pMsg ? pMsg : "SecureMem: Size exceeds limit")
+  {}
+};
+
 
 // class for secure memory operations, fast implementation
 // inspired by secblock.h in the Crypto++ package by Wei Dai
@@ -53,6 +61,11 @@ public:
 
   static const word32 npos = -1;
 
+  static word32 max_size()
+  {
+    return 0xfffffffe / sizeof(T);
+  }
+
   // constructor
   SecureMem()
     : m_pData(nullptr), m_lSize(0)
@@ -65,6 +78,8 @@ public:
     : m_pData(nullptr), m_lSize(lSize)
   {
     if (m_lSize != 0) {
+      if (m_lSize > max_size())
+        throw SecureMemSizeError();
       m_pData = new T[m_lSize];
     }
   }
@@ -77,6 +92,8 @@ public:
     : m_pData(nullptr), m_lSize(lSize)
   {
     if (m_lSize != 0) {
+      if (m_lSize > max_size())
+        throw SecureMemSizeError();
       m_pData = new T[m_lSize];
       memcpy(m_pData, pData, SizeBytes());
     }
@@ -185,8 +202,12 @@ public:
   void GrowExp(word32 lNewSize)
   {
     if (lNewSize > m_lSize) {
+      if (lNewSize > max_size())
+        throw SecureMemSizeError();
       word32 lNewSizeLog = __builtin_clz(lNewSize) ^ 31;
-      Resize((lNewSizeLog < 31) ? 1u << (lNewSizeLog + 1) : 0xffffffff, true);
+      lNewSize = (lNewSizeLog < 31) ? std::min(max_size(),
+        1u << (lNewSizeLog + 1)) : 0xfffffffe;
+      Resize(lNewSize, true);
     }
   }
 
@@ -448,6 +469,9 @@ void SecureMem<T>::Resize(word32 lNewSize,
     Empty();
   else if (lNewSize != m_lSize)
   {
+    if (lNewSize > max_size())
+        throw SecureMemSizeError();
+
     T* pNewData = new T[lNewSize];
 
     if (blPreserve && !IsEmpty())
@@ -563,5 +587,21 @@ template<class T> inline bool operator> (const SecureMem<T>& a,
 typedef SecureMem<char> SecureAnsiString;
 typedef SecureMem<wchar_t> SecureWString;
 typedef SecureMem<word32> SecureW32String;
+
+
+#include <string_view>
+
+struct SecureStringHashFunction
+{
+  size_t operator()(const SecureWString& s) const
+  {
+    return std::hash<std::wstring_view>{}(std::wstring_view(s.c_str()));
+  }
+  size_t operator()(const SecureAnsiString& s) const
+  {
+    return std::hash<std::string_view>{}(std::string_view(s.c_str()));
+  }
+};
+
 
 #endif

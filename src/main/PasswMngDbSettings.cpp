@@ -196,7 +196,7 @@ void __fastcall TPasswDbSettingsDlg::PasswGenTestBtnClick(TObject *Sender)
 
     w32string sFormat32 = WCharToW32String(sFormat.c_str());
 
-    SecureW32String sDest(16001);
+    SecureW32String sDest(16000 + 1);
     if (passwGen.GetFormatPassw(sDest, sDest.Size() - 1, sFormat32, 0) != 0)
     {
       W32CharToWCharInternal(sDest);

@@ -55,7 +55,7 @@ const int RANDOM_POOL_CIPHER_INFO[NUM_RANDOM_POOL_CIPHERS][2] =
 
 //---------------------------------------------------------------------------
 __fastcall TConfigurationDlg::TConfigurationDlg(TComponent* Owner)
-  : TForm(Owner), m_pLangList(nullptr)
+  : TForm(Owner) //, m_pLangList(nullptr)
 {
   //Constraints->MaxHeight = Height;
   //Constraints->MinHeight = Height;
@@ -91,6 +91,7 @@ __fastcall TConfigurationDlg::TConfigurationDlg(TComponent* Owner)
     TRLCaption(AutotypeDelayLbl);
     TRLCaption(AskBeforeExitCheck);
     TRLCaption(LaunchSystemStartupCheck);
+    TRLCaption(LoadProfileStartupCheck);
 
     TRLCaption(SecuritySheet);
     TRLCaption(RandomPoolCipherLbl);
@@ -128,7 +129,6 @@ __fastcall TConfigurationDlg::TConfigurationDlg(TComponent* Owner)
     TRLCaption(SelectLanguageLbl);
 
     TRLCaption(DatabaseSheet);
-    //TRLCaption(ClearClipMinimizeCheck);
     TRLCaption(ClearClipCloseLockCheck);
     TRLCaption(LockMinimizeCheck);
     TRLCaption(LockIdleCheck);
@@ -182,6 +182,8 @@ void __fastcall TConfigurationDlg::GetOptions(Configuration& config)
   config.MinimizeAutotype = MinimizeAutotypeCheck->Checked;
   config.AutotypeDelay = AutotypeDelaySpinBtn->Position;
   config.ConfirmExit = AskBeforeExitCheck->Checked;
+  config.LoadProfileStartup = LoadProfileStartupCheck->Checked;
+  config.LoadProfileName = LoadProfileBox->Text;
   config.LaunchSystemStartup = LaunchSystemStartupCheck->Checked;
   config.RandomPoolCipher = RandomPoolCipherList->ItemIndex;
   config.TestCommonPassw = TestCommonPasswCheck->Checked;
@@ -215,6 +217,11 @@ void __fastcall TConfigurationDlg::GetOptions(Configuration& config)
 //---------------------------------------------------------------------------
 void __fastcall TConfigurationDlg::SetOptions(const Configuration& config)
 {
+  static bool blInit = true;
+  if (blInit) {
+    blInit = false;
+    UpdateProfileList();
+  }
   int nIndex = UiStylesList->Items->IndexOf(config.UiStyleName);
   if (nIndex < 0)
     nIndex = UiStylesList->Items->IndexOf("Windows");
@@ -235,6 +242,9 @@ void __fastcall TConfigurationDlg::SetOptions(const Configuration& config)
   ShowSysTrayIconConstCheck->Checked = config.ShowSysTrayIconConst;
   MinimizeToSysTrayCheck->Checked = config.MinimizeToSysTray;
   AskBeforeExitCheck->Checked = config.ConfirmExit;
+  LoadProfileStartupCheck->Checked = config.LoadProfileStartup;
+  LoadProfileBox->ItemIndex = LoadProfileBox->Items->IndexOf(config.LoadProfileName);
+  LoadProfileStartupCheckClick(this);
   LaunchSystemStartupCheck->Checked = config.LaunchSystemStartup;
   UpdateCheckGroup->ItemIndex = config.AutoCheckUpdates;
   CharEncodingGroup->ItemIndex = static_cast<int>(config.FileEncoding);
@@ -269,12 +279,11 @@ void __fastcall TConfigurationDlg::SetOptions(const Configuration& config)
 void __fastcall TConfigurationDlg::SetLanguageList(
   const std::vector<LanguageEntry>& languages)
 {
-  m_pLangList = &languages;
-  for (std::vector<LanguageEntry>::const_iterator it = languages.begin();
-    it != languages.end(); it++)
+  m_langList = languages;
+  for (const auto& entry : m_langList)
   {
-    LanguageList->Items->Add(FormatW("%s (v%s)", it->Name.c_str(),
-      it->Version.c_str()));
+    LanguageList->Items->Add(FormatW("%s (v%s)", entry.Name.c_str(),
+      entry.Version.c_str()));
   }
 }
 //---------------------------------------------------------------------------
@@ -324,6 +333,20 @@ void __fastcall TConfigurationDlg::AutoClearClipCheckClick(
     AutoClearClipTimeBox->SetFocus();
 }
 //---------------------------------------------------------------------------
+void __fastcall TConfigurationDlg::UpdateProfileList(void)
+{
+  WString sCurrProfile = LoadProfileBox->Text;
+
+  LoadProfileBox->Items->Clear();
+
+  for (const auto& profile : g_profileList) {
+    LoadProfileBox->Items->Add(profile->ProfileName);
+  }
+
+  if (!sCurrProfile.IsEmpty())
+    LoadProfileBox->ItemIndex = LoadProfileBox->Items->IndexOf(sCurrProfile);
+}
+//---------------------------------------------------------------------------
 void __fastcall TConfigurationDlg::FormShow(TObject *Sender)
 {
   Top = MainForm->Top + (MainForm->Height - Height) / 2;
@@ -332,6 +355,7 @@ void __fastcall TConfigurationDlg::FormShow(TObject *Sender)
   TopMostManager::GetInstance().SetForm(this);
 
   ConfigPages->ActivePage = GeneralSheet;
+  UpdateProfileList();
 }
 //---------------------------------------------------------------------------
 void __fastcall TConfigurationDlg::OKBtnClick(TObject *Sender)
@@ -451,8 +475,9 @@ void __fastcall TConfigurationDlg::BenchmarkBtnClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TConfigurationDlg::ConvertLangFileBtnClick(TObject *Sender)
 {
-  if (LanguageList->ItemIndex > 0 && m_pLangList) {
-    const auto& entry = m_pLangList->at(LanguageList->ItemIndex);
+  int nIndex = LanguageList->ItemIndex;
+  if (nIndex > 0 && nIndex < m_langList.size()) {
+    const auto& entry = m_langList[nIndex];
     //if (SameText(ExtractFileExt(entry.FileName), ".lng")) {
     TopMostManager::GetInstance().NormalizeTopMosts(this);
     bool blSuccess = SaveDlg->Execute();
@@ -475,8 +500,9 @@ void __fastcall TConfigurationDlg::ConvertLangFileBtnClick(TObject *Sender)
 void __fastcall TConfigurationDlg::LanguageListSelect(TObject *Sender)
 {
   bool blEnabled = false;
-  if (LanguageList->ItemIndex > 0 && m_pLangList) {
-    const auto& entry = m_pLangList->at(LanguageList->ItemIndex);
+  int nIndex = LanguageList->ItemIndex;
+  if (nIndex > 0 && nIndex < m_langList.size()) {
+    const auto& entry = m_langList[nIndex];
     blEnabled = SameText(ExtractFileExt(entry.FileName), ".lng");
   }
   ConvertLangFileBtn->Enabled = blEnabled;
@@ -490,6 +516,11 @@ void __fastcall TConfigurationDlg::SelectFontMenu_RestoreDefaultClick(TObject *S
   pFont->Size = 8;
   FontDlg->Font = pFont.get();
   ShowFontSample(pFont.get());
+}
+//---------------------------------------------------------------------------
+void __fastcall TConfigurationDlg::LoadProfileStartupCheckClick(TObject *Sender)
+{
+  LoadProfileBox->Enabled = LoadProfileStartupCheck->Checked;
 }
 //---------------------------------------------------------------------------
 

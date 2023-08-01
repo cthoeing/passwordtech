@@ -34,9 +34,11 @@ TProgressForm *ProgressForm;
 
 WString EUserCancel::UserCancelMsg;
 
+const int PROGRESSBAR_MAX_VALUE = 10000;
+
 //---------------------------------------------------------------------------
 __fastcall TProgressForm::TProgressForm(TComponent* Owner)
-  : TForm(Owner), m_state(STATE_IDLE)
+  : TForm(Owner), m_mode(MODE_INACTIVE), m_state(STATE_IDLE)
 {
   EUserCancel::UserCancelMsg = TRL("Process was cancelled by the user");
 
@@ -60,36 +62,112 @@ void __fastcall TProgressForm::Init(TForm* pCaller,
 
   Caption = sTitle;
 
-  // Max/Position might be 16-bit integer, so normalize
-  // progress to a value <65535
-  ProgressBar->Max = 10000;
-  ProgressBar->Position = 0;
+  Top = pCaller->Top + (pCaller->Height - Height) / 2;
+  Left = pCaller->Left + (pCaller->Width - Width) / 2;
 
-  Top = MainForm->Top + (MainForm->Height - Height) / 2;
-  Left = MainForm->Left + (MainForm->Width - Width) / 2;
-
-  if (pCancelFlag)
-    Timer->Enabled = true;
-  else
+  if (pCancelFlag) {
+    m_mode = MODE_ASYNC;
+    if (!pCurProgress)
+      m_qMaxValue = 0;
+    if (m_qMaxValue) {
+      Timer->Interval = 250;
+      Timer->Enabled = true;
+    }
+  }
+  else {
+    m_mode = MODE_MAIN_THREAD;
+    m_state = STATE_RUNNING;
     m_pCaller->Enabled = false;
+    if (!m_qMaxValue)
+      ProgressLbl->Caption = sProgressInfo;
+  }
 
-  m_state = STATE_RUNNING;
+  if (m_qMaxValue) {
+    // Max/Position might be 16-bit integer, so normalize
+    // progress to a value <65535
+    ProgressBar->Max = PROGRESSBAR_MAX_VALUE;
+    ProgressBar->Position = 0;
+    ProgressBar->Style = pbstNormal;
+  }
+  else
+    ProgressBar->Style = pbstMarquee;
 
   Show();
+
+  if (m_mode == MODE_ASYNC)
+    UpdateProgress(pCurProgress ? pCurProgress->load() : 0);
+}
+//---------------------------------------------------------------------------
+int __fastcall TProgressForm::ExecuteModal(TForm* pCaller,
+  const WString& sTitle,
+  const WString& sProgressInfo,
+  std::atomic<bool>& cancelFlag,
+  std::function<bool(unsigned int)> waitThreadFun,
+  word64 qMaxValue,
+  const std::atomic<word64>* pCurProgress)
+{
+  m_pCaller = pCaller;
+  m_pCancelFlag = &cancelFlag;
+  m_waitThreadFun = waitThreadFun;
+  m_qMaxValue = pCurProgress ? qMaxValue : 0;
+  m_qLastValue = -1;
+  m_pCurrentProgress = pCurProgress;
+  m_mode = MODE_ASYNC_MODAL;
+
+  Caption = sTitle;
+  if (m_qMaxValue) {
+    ProgressBar->Max = PROGRESSBAR_MAX_VALUE;
+    ProgressBar->Position = 0;
+    ProgressBar->Style = pbstNormal;
+    m_sProgressInfo = sProgressInfo;
+  }
+  else {
+    ProgressLbl->Caption = sProgressInfo;
+    ProgressBar->Style = pbstMarquee;
+  }
+
+  Screen->Cursor = crAppStart;
+
+  Timer->Interval = 50;
+  Timer->Enabled = true;
+
+  Top = pCaller->Top + (pCaller->Height - Height) / 2;
+  Left = pCaller->Left + (pCaller->Width - Width) / 2;
+
+  UpdateProgress(pCurProgress ? pCurProgress->load() : 0);
+
+  return ShowModal();
 }
 //---------------------------------------------------------------------------
 void __fastcall TProgressForm::UpdateProgress(word64 qValue)
 {
-  if (qValue != m_qLastValue) {
+  if (m_mode != MODE_MAIN_THREAD) {
+    std::lock_guard<std::mutex> lock(m_lock);
+    if (!m_sProgressMsg.IsEmpty()) {
+      if (m_sProgressMsg != ProgressLbl->Caption)
+        ProgressLbl->Caption = m_sProgressMsg;
+      return;
+    }
+  }
+
+  if (m_qMaxValue && qValue != m_qLastValue) {
     m_qLastValue = qValue;
-    ProgressBar->Position = floor(10000.0 * qValue / m_qMaxValue);
+    ProgressBar->Position = static_cast<double>(PROGRESSBAR_MAX_VALUE) *
+      qValue / m_qMaxValue;
     ProgressLbl->Caption = FormatW(m_sProgressInfo, qValue, m_qMaxValue);
   }
 }
 //---------------------------------------------------------------------------
-void __fastcall TProgressForm::MainThreadCallback(word64 qValue)
+void __fastcall TProgressForm::MainThreadCallback(word64 qValue,
+  const WString& sMsg)
 {
-  UpdateProgress(qValue);
+  if (m_mode != MODE_MAIN_THREAD)
+    throw Exception("ProgressForm::MainThreadCallback(): Incompatible mode");
+
+  if (qValue != -1)
+    UpdateProgress(qValue);
+  else if (!sMsg.IsEmpty())
+    ProgressLbl->Caption = sMsg;
 
   Application->ProcessMessages();
 
@@ -99,35 +177,29 @@ void __fastcall TProgressForm::MainThreadCallback(word64 qValue)
   }
 }
 //---------------------------------------------------------------------------
-void __fastcall TProgressForm::MainThreadCallback(const WString& sMsg)
+void __fastcall TProgressForm::SetProgressMessageAsync(const WString& sMsg)
 {
-  ProgressLbl->Caption = sMsg;
+  if (m_mode == MODE_MAIN_THREAD)
+    throw Exception("ProgressForm::SetProgressMessage(): Incompatible mode");
 
-  Application->ProcessMessages();
-
-  if (m_state == STATE_CANCELED) {
-	m_state = STATE_RUNNING;
-	throw EUserCancel();
-  }
+  std::lock_guard<std::mutex> lock(m_lock);
+  m_sProgressMsg = sMsg;
 }
 //---------------------------------------------------------------------------
 void __fastcall TProgressForm::Terminate(void)
 {
-  if (!Visible) return;
-
-  if (m_pCancelFlag)
-    Timer->Enabled = false;
-  else
-    m_pCaller->Enabled = true;
-
-  m_state = STATE_IDLE;
-
-  Close();
+  if (Visible)
+    Close();
 }
 //---------------------------------------------------------------------------
 void __fastcall TProgressForm::CancelBtnClick(TObject *Sender)
 {
-  if (m_pCancelFlag)
+  if (m_mode == MODE_ASYNC_MODAL) {
+    *m_pCancelFlag = true;
+    m_waitThreadFun(-1);
+    ModalResult = mrCancel;
+  }
+  else if (m_pCancelFlag)
     *m_pCancelFlag = true;
   else
     m_state = STATE_CANCELED;
@@ -148,7 +220,29 @@ void __fastcall TProgressForm::FormShow(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TProgressForm::TimerTimer(TObject *Sender)
 {
-  UpdateProgress(*m_pCurrentProgress);
+  if (m_mode == MODE_ASYNC_MODAL) {
+    if (m_waitThreadFun(1))
+      ModalResult = mrOk;
+  }
+
+  UpdateProgress(m_pCurrentProgress ? m_pCurrentProgress->load() : 0);
 }
 //---------------------------------------------------------------------------
-
+void __fastcall TProgressForm::FormClose(TObject *Sender, TCloseAction &Action)
+{
+  Timer->Enabled = false;
+  m_sProgressMsg = WString();
+  switch (m_mode) {
+  case MODE_MAIN_THREAD:
+    m_pCaller->Enabled = true;
+    m_state = STATE_IDLE;
+    break;
+  case MODE_ASYNC_MODAL:
+    Screen->Cursor = crDefault;
+    break;
+  default:
+    break;
+  }
+  m_mode = MODE_INACTIVE;
+}
+//---------------------------------------------------------------------------

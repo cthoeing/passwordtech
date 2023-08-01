@@ -83,7 +83,7 @@ LanguageSupport::LanguageSupport(const WString& sFileName,
   bool blLoadHeaderOnly, bool blConvertOldFormat)
 {
   std::unique_ptr<TStringFileStreamW> pFile(
-    new TStringFileStreamW(sFileName, fmOpenRead));
+    new TStringFileStreamW(sFileName, fmOpenRead, ceUtf8));
   const int MSG_BUF_SIZE = 1024;
   wchar_t wszMsg[MSG_BUF_SIZE];
   wchar_t wszParsed[MSG_BUF_SIZE];
@@ -105,101 +105,30 @@ LanguageSupport::LanguageSupport(const WString& sFileName,
         throw ELanguageError(Format("Empty field \"msgstr\" (parsing line %d)",
           ARRAYOFCONST((nLine))));
 
-      // empty msgid -> file header
-      if (sMsgId.empty()) {
-        if (blHeader)
-          throw ELanguageError(Format("Empty field \"msgid\" (parsing line %d)",
-            ARRAYOFCONST((nLine))));
+      if (sMsgId.empty())
+         throw ELanguageError(Format("Empty field \"msgid\" (parsing line %d)",
+           ARRAYOFCONST((nLine))));
 
-        // prepare regex search
-        std::wregex re(L"([a-zA-Z-]+)\\s*:\\s*(.+)");
-        std::wsregex_iterator keyValIt(sMsgStr.begin(),
-          sMsgStr.end(), re),
-          keyValEnd;
-        std::unordered_map<std::wstring, std::wstring> keyVal;
+      if (!sMsgCtxt.empty())
+        sMsgId += std::wstring(L"||") + sMsgCtxt;
 
-        // iterate over regex matches
-        for (; keyValIt != keyValEnd; keyValIt++) {
-          auto m = *keyValIt;
-          if (m.size() >= 3) {
-            auto sVal = trimStr(m[2]);
-            if (!sVal.empty())
-              keyVal.emplace(m[1], sVal);
-          }
-        }
-
-        // project ID and version
-        auto it = keyVal.find(L"Project-Id-Version");
-        if (it == keyVal.end())
-          throw ELanguageError("Missing \"Project-Id-Version\" information");
-
-        std::wstring sIdVersion = it->second;
-        re = std::wregex(L"(.*)(\\d+\\.\\d+\\.\\d+)");
-        std::wsmatch m;
-        if (std::regex_search(sIdVersion, m, re) && m.size() >= 3)
-          m_sLanguageVersion = WString(m[2].str().c_str());
-        else
-          throw ELanguageError("Missing or invalid language version number");
-
-        // language name: English name and native name
-        it = keyVal.find(L"Language");
-        if (it != keyVal.end()) {
-          std::wstring sCode = it->second;
-          m_sLanguageCode = WString(sCode.c_str());
-          wchar_t buf[256];
-          int nLen = GetLocaleInfoEx(sCode.c_str(),
-            LOCALE_SENGLISHLANGUAGENAME, buf, 256);
-          if (nLen > 0) {
-            m_sLanguageName = WString(buf);
-            nLen = GetLocaleInfoEx(sCode.c_str(),
-              LOCALE_SNATIVELANGUAGENAME, buf, 256);
-            if (nLen > 0)
-              m_sLanguageName += " (" + WString(buf) + ")";
-          }
-        }
-
-        if (m_sLanguageName.IsEmpty()) {
-          // set language name to file name without extension
-          WString sName = ExtractFileName(sFileName);
-          m_sLanguageName = sName.SubString(1, sName.Length() - 3);
-        }
-
-        // translator name
-        it = keyVal.find(L"Last-Translator");
-        if (it != keyVal.end())
-          m_sTranslatorName = WString(it->second.c_str());
-        else
-          m_sTranslatorName = pszUnknown;
-
-        // help file name
-        it = keyVal.find(L"X-PasswordTech-Manual");
-        if (it != keyVal.end())
-          m_sHelpFileName = WString(it->second.c_str());
-
-        blHeader = true;
-      }
-      else {
-         if (!blHeader)
-          throw ELanguageError("Missing header information");
-
-        if (!sMsgCtxt.empty())
-          sMsgId += std::wstring(L"||") + sMsgCtxt;
-        auto ret = m_transl.emplace(strihash(sMsgId.c_str()), sMsgStr);
+      auto ret = m_transl.emplace(strihash(sMsgId.c_str()), sMsgStr);
 #ifdef _DEBUG
-        if (!ret.second) {
-          ShowMessage("Collision found:\n" + WString(sMsgId.c_str()));
-        }
-#endif
+      if (!ret.second) {
+        ShowMessage("Collision found:\n" + WString(sMsgId.c_str()));
       }
+#endif
+
       sMsgId.clear();
       sMsgStr.clear();
       sMsgCtxt.clear();
+      psDest = nullptr;
     };
 
     while ((nMsgLen = pFile->ReadString(wszMsg, MSG_BUF_SIZE)) > 0) {
       nLine++;
-      if (wszMsg[0] == '#') // skip comment
-        continue;
+      //if (wszMsg[0] == '#') // skip comment
+      //  continue;
 
       int i = 0;
       const auto* psPrev = psDest;
@@ -215,15 +144,107 @@ LanguageSupport::LanguageSupport(const WString& sFileName,
         psDest = &sMsgCtxt;
         i += 7;
       }
-      // skip lines without identifier
       else if (wszMsg[0] != '"')
-        continue;
+        psDest = nullptr;
 
       if (psPrev == &sMsgStr && psDest != psPrev) {
-        addTranslEntry();
-        if (blLoadHeaderOnly)
+        if (sMsgId.empty() && !blHeader) {
+          if (sMsgStr.empty())
+            break;
+
+          // prepare regex search
+          std::wregex re(L"([a-zA-Z-]+)\\s*:\\s*(.+)");
+          std::wsregex_iterator keyValIt(sMsgStr.begin(),
+            sMsgStr.end(), re),
+            keyValEnd;
+          std::unordered_map<std::wstring, std::wstring> keyVal;
+
+          // iterate over regex matches
+          for (; keyValIt != keyValEnd; keyValIt++) {
+            auto m = *keyValIt;
+            if (m.size() >= 3) {
+              auto sVal = trimStr(m[2]);
+              if (!sVal.empty())
+                keyVal.emplace(m[1], sVal);
+            }
+          }
+
+          // project ID and version
+          auto it = keyVal.find(L"Project-Id-Version");
+          if (it == keyVal.end())
+            throw ELanguageError("Missing \"Project-Id-Version\" information");
+
+          std::wstring sIdVersion = it->second;
+          re = std::wregex(L"(.*)(\\d+\\.\\d+\\.\\d+)");
+          std::wsmatch m;
+          if (std::regex_search(sIdVersion, m, re) && m.size() >= 3)
+            m_sLanguageVersion = WString(m[2].str().c_str());
+          else
+            throw ELanguageError("Missing or invalid language version number");
+
+          if (pFile->CharEncoding == ceUtf8 && pFile->BOMLength == 0) {
+            bool blValid = false;
+            it = keyVal.find(L"Content-Type");
+            if (it != keyVal.end()) {
+              re = std::wregex(L"charset=(UTF-8|utf-8)");
+              blValid = std::regex_search(it->second, m, re);
+            }
+            if (!blValid)
+              throw ELanguageError("Unknown charset encoding");
+          }
+
+          // language name: English name and native name
+          it = keyVal.find(L"Language");
+          if (it != keyVal.end()) {
+            std::wstring sCode = it->second;
+            m_sLanguageCode = WString(sCode.c_str());
+            wchar_t buf[256];
+            int nLen = GetLocaleInfoEx(sCode.c_str(),
+              LOCALE_SENGLISHLANGUAGENAME, buf, 256);
+            if (nLen > 0) {
+              m_sLanguageName = WString(buf);
+              nLen = GetLocaleInfoEx(sCode.c_str(),
+                LOCALE_SNATIVELANGUAGENAME, buf, 256);
+              if (nLen > 0)
+                m_sLanguageName += " (" + WString(buf) + ")";
+            }
+          }
+
+          if (m_sLanguageName.IsEmpty()) {
+            // set language name to file name without extension
+            WString sName = ExtractFileName(sFileName);
+            m_sLanguageName = sName.SubString(1, sName.Length() - 3);
+          }
+
+          // translator name
+          it = keyVal.find(L"Last-Translator");
+          if (it != keyVal.end())
+            m_sTranslatorName = WString(it->second.c_str());
+          else
+            m_sTranslatorName = pszUnknown;
+
+          // help file name
+          it = keyVal.find(L"X-PasswordTech-Manual");
+          if (it != keyVal.end())
+            m_sHelpFileName = WString(it->second.c_str());
+
+          blHeader = true;
+          sMsgId.clear();
+          sMsgStr.clear();
+          sMsgCtxt.clear();
+          psDest = nullptr;
+
+          if (blLoadHeaderOnly)
+            break;
+        }
+        else if (!blHeader)
           break;
+        else
+          addTranslEntry();
       }
+
+      if (!psDest)
+        continue;
 
       int nParsedLen = 0;
       bool blMsgStarted = false;
@@ -261,14 +282,17 @@ LanguageSupport::LanguageSupport(const WString& sFileName,
       }
 
       if (nParsedLen > 0) {
-        if (!psDest)
-          throw ELanguageError(Format("Unknown message type (parsing line %d)",
-            ARRAYOFCONST((nLine))));
+        //if (!psDest)
+        //  throw ELanguageError(Format("Unknown message type (parsing line %d)",
+        //    ARRAYOFCONST((nLine))));
 
         wszParsed[nParsedLen] = '\0';
         *psDest += std::wstring(wszParsed);
       }
     }
+
+    if (!blHeader)
+      throw ELanguageError("Missing header information");
 
     if (!sMsgStr.empty())
       addTranslEntry();

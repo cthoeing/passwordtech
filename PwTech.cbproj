@@ -65,7 +65,7 @@
         <ProjectType>CppVCLApplication</ProjectType>
         <PackageImports>inet;$(PackageImports)</PackageImports>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
-        <AllPackageLibs>rtl.lib;vcl.lib;bcbsmp.lib;vclx.lib;vclimg.lib;vclwinx.lib;bindengine.lib</AllPackageLibs>
+        <AllPackageLibs>rtl.lib;vcl.lib;bcbsmp.lib;vclx.lib;vclimg.lib;vclwinx.lib;bindengine.lib;dbrtl.lib;dsnap.lib</AllPackageLibs>
         <_TCHARMapping>wchar_t</_TCHARMapping>
         <Multithreaded>true</Multithreaded>
         <Icon_MainIcon>$(BDS)\bin\cbuilder_PROJECTICON.ico</Icon_MainIcon>
@@ -126,7 +126,7 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win64)'!=''">
         <BT_BuildType>Debug</BT_BuildType>
-        <LinkPackageImports>rtl.bpi;vcl.bpi;bcbsmp.bpi;vclx.bpi;vclimg.bpi;vclwinx.bpi;bindengine.bpi</LinkPackageImports>
+        <LinkPackageImports>rtl.bpi;vcl.bpi;bcbsmp.bpi;vclx.bpi;vclimg.bpi;vclwinx.bpi;bindengine.bpi;dbrtl.bpi;dsnap.bpi</LinkPackageImports>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=3.2.0.0;InternalName=;LegalCopyright=Copyright (c) 2002-2020 Christian Thöing;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=3.2.0.0;Comments=</VerInfo_Keys>
@@ -146,21 +146,22 @@
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <LinkPackageStatics>rtl.lib;vcl.lib;bcbsmp.lib;vclx.lib;vclimg.lib;vclwinx.lib;bindengine.lib</LinkPackageStatics>
+        <LinkPackageStatics>rtl.lib;vcl.lib;bcbsmp.lib;vclx.lib;vclimg.lib;vclwinx.lib;bindengine.lib;dbrtl.lib;dsnap.lib</LinkPackageStatics>
         <Icon_MainIcon>graphics\pwtech.ico</Icon_MainIcon>
         <Defines>LUA_INT_TYPE=1;$(Defines)</Defines>
         <VerInfo_MajorVer>3</VerInfo_MajorVer>
-        <VerInfo_Keys>CompanyName=;FileDescription=Password Tech executable;FileVersion=3.5.0.0;InternalName=;LegalCopyright=Copyright 2002-2023 by Christian Thöing;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=Password Tech;ProductVersion=3.5.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileDescription=Password Tech executable;FileVersion=3.5.1.0;InternalName=;LegalCopyright=Copyright 2002-2023 by Christian Thöing;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=Password Tech;ProductVersion=3.5.1;Comments=</VerInfo_Keys>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <BCC_UseClassicCompiler>false</BCC_UseClassicCompiler>
         <VerInfo_MinorVer>5</VerInfo_MinorVer>
         <BT_BuildType>Debug</BT_BuildType>
         <BCC_OptimizeMaximum>true</BCC_OptimizeMaximum>
         <BCC_OptimizeForSpeed>false</BCC_OptimizeForSpeed>
+        <VerInfo_Release>1</VerInfo_Release>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win64)'!=''">
-        <VerInfo_Locale>1031</VerInfo_Locale>
-        <VerInfo_Keys>CompanyName=;FileDescription=Password Tech executable;FileVersion=3.5.0.0;InternalName=;LegalCopyright=Copyright (c) 2002-2023 Christian Thöing;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=3.5.0;Comments=</VerInfo_Keys>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <VerInfo_Keys>CompanyName=;FileDescription=Password Tech executable;FileVersion=3.5.1.0;InternalName=;LegalCopyright=Copyright (c) 2002-2023 Christian Thöing;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=3.5.1;Comments=</VerInfo_Keys>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
@@ -169,10 +170,11 @@
         <VerInfo_MajorVer>3</VerInfo_MajorVer>
         <VerInfo_MinorVer>5</VerInfo_MinorVer>
         <UsePackages>false</UsePackages>
-        <LinkPackageStatics>rtl.lib;vcl.lib;bcbsmp.lib;vclx.lib;vclimg.lib;vclwinx.lib;bindengine.lib</LinkPackageStatics>
+        <LinkPackageStatics>rtl.lib;vcl.lib;bcbsmp.lib;vclx.lib;vclimg.lib;vclwinx.lib;bindengine.lib;dbrtl.lib;dsnap.lib</LinkPackageStatics>
         <BT_BuildType>Debug</BT_BuildType>
         <BCC_OptimizeMaximum>true</BCC_OptimizeMaximum>
         <BCC_OptimizeForSpeed>false</BCC_OptimizeForSpeed>
+        <VerInfo_Release>1</VerInfo_Release>
     </PropertyGroup>
     <ItemGroup>
         <CppCompile Include="PwTech.cpp">
@@ -537,23 +539,23 @@
         <CppCompile Include="src\zxcvbn\zxcvbn.cpp">
             <BuildOrder>90</BuildOrder>
         </CppCompile>
-        <FormResources Include="src\main\PasswMngColSelect.dfm"/>
         <FormResources Include="src\main\PasswManager.dfm"/>
         <FormResources Include="src\main\PasswList.dfm"/>
         <FormResources Include="src\main\PasswEnter.dfm"/>
         <FormResources Include="src\main\MPPasswGen.dfm"/>
-        <FormResources Include="src\main\PasswMngDbProp.dfm"/>
-        <FormResources Include="src\main\ProfileEditor.dfm"/>
+        <FormResources Include="src\main\Main.dfm"/>
+        <FormResources Include="src\main\PasswMngColSelect.dfm"/>
         <FormResources Include="src\main\PasswOptions.dfm"/>
         <FormResources Include="src\main\PasswMngPwHistory.dfm"/>
         <FormResources Include="src\main\PasswMngKeyValEdit.dfm"/>
         <FormResources Include="src\main\PasswMngDbSettings.dfm"/>
-        <FormResources Include="src\main\Main.dfm"/>
+        <FormResources Include="src\main\PasswMngDbProp.dfm"/>
         <FormResources Include="src\main\About.dfm"/>
         <FormResources Include="src\main\InfoBox.dfm"/>
         <FormResources Include="src\main\CreateTrigramFile.dfm"/>
         <FormResources Include="src\main\CreateRandDataFile.dfm"/>
         <FormResources Include="src\main\Configuration.dfm"/>
+        <FormResources Include="src\main\ProfileEditor.dfm"/>
         <FormResources Include="src\main\QuickHelp.dfm"/>
         <FormResources Include="src\main\ProvideEntropy.dfm"/>
         <FormResources Include="src\main\Progress.dfm"/>
@@ -708,14 +710,14 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="lua\liolib.c" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\</RemoteDir>
+                <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'!='true'" LocalName="$(BDS)\bin\cc32c270.dll" Class="DependencyModule">
+                    <Platform Name="Win32">
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'!='true'" LocalName="$(BDS)\bin\cc32c270.dll" Class="DependencyModule">
-                    <Platform Name="Win32">
+                <DeployFile LocalName="lua\liolib.c" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="Win64">
+                        <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

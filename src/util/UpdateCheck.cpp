@@ -100,8 +100,11 @@ TUpdateCheckThread::CheckResult __fastcall TUpdateCheckThread::CheckForUpdates(b
           "to visit the download page now?", sVersion.c_str(), PROGRAM_NAME);
       if (!sNote.IsEmpty())
         sMsg += WString("\n\n") + TRLFormat("(NOTE: %s)", sNote.c_str());
-      if (MsgBox(sMsg, MB_ICONINFORMATION + MB_YESNO) == IDYES)
-        ExecuteShellOp(sUrl, true);
+      TThread::Synchronize(nullptr, [&sMsg,&sUrl]()
+        {
+          if (MsgBox(sMsg, MB_ICONINFORMATION + MB_YESNO) == IDYES)
+            ExecuteShellOp(sUrl, true);
+        });
       return CheckResult::Positive;
     }
   }

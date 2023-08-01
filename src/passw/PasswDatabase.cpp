@@ -1435,7 +1435,8 @@ bool PasswDatabase::CheckRecoveryKey(const SecureMem<word8>& recoveryKey)
   return memcmp(checkKey, m_pDbKey, DB_KEY_LENGTH) == 0;
 }
 //---------------------------------------------------------------------------
-void PasswDatabase::ChangeMasterKey(const SecureMem<word8>& newKey)
+void PasswDatabase::ChangeMasterKey(const SecureMem<word8>& newKey,
+  std::atomic<bool>* pCancelFlag)
 {
   CheckDbOpen();
   CheckKeyEmpty(newKey);
@@ -1444,16 +1445,28 @@ void PasswDatabase::ChangeMasterKey(const SecureMem<word8>& newKey)
 
     SecureMem<word8> derivedKey(DB_KEY_LENGTH);
     pbkdf2_256bit(newKey, newKey.Size(), m_pDbRecoveryKeyBlock, DB_SALT_LENGTH,
-      derivedKey, m_lKdfIterations);
+      derivedKey, m_lKdfIterations, pCancelFlag);
+
+    if (pCancelFlag && *pCancelFlag)
+      return;
 
     auto cipher = CreateCipher(m_bCipherType, derivedKey,
       EncryptionAlgorithm::Mode::ENCRYPT);
     cipher->SetIV(m_pDbRecoveryKeyBlock);
     cipher->Encrypt(m_pDbKey, m_pDbRecoveryKeyBlock + DB_SALT_LENGTH, DB_KEY_LENGTH);
   }
-  else
-    pbkdf2_256bit(newKey, newKey.Size(), m_pDbSalt, DB_SALT_LENGTH, m_pDbKey,
-      m_lKdfIterations);
+  else {
+    if (pCancelFlag) {
+      SecureMem<word8> oldKey(m_pDbKey, DB_KEY_LENGTH);
+      pbkdf2_256bit(newKey, newKey.Size(), m_pDbSalt, DB_SALT_LENGTH, m_pDbKey,
+        m_lKdfIterations, pCancelFlag);
+      if (*pCancelFlag)
+        memcpy(m_pDbKey, oldKey, DB_KEY_LENGTH);
+    }
+    else
+      pbkdf2_256bit(newKey, newKey.Size(), m_pDbSalt, DB_SALT_LENGTH, m_pDbKey,
+        m_lKdfIterations);
+  }
 }
 //---------------------------------------------------------------------------
 void PasswDatabase::SetRecoveryKey(const SecureMem<word8>& key,

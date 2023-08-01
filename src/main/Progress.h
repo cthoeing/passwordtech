@@ -27,8 +27,11 @@
 #include <Forms.hpp>
 #include <ComCtrls.hpp>
 //---------------------------------------------------------------------------
-#include "UnicodeUtil.h"
 #include <Vcl.ExtCtrls.hpp>
+#include <functional>
+#include <mutex>
+#include "UnicodeUtil.h"
+
 
 class EUserCancel : public Exception
 {
@@ -53,6 +56,7 @@ __published:	// IDE-managed Components
     TShiftState Shift);
   void __fastcall FormShow(TObject *Sender);
     void __fastcall TimerTimer(TObject *Sender);
+    void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
 private:	// User declarations
   TForm* m_pCaller;
   WString m_sProgressInfo;
@@ -60,6 +64,16 @@ private:	// User declarations
   word64 m_qMaxValue;
   std::atomic<bool>* m_pCancelFlag;
   const std::atomic<word64>* m_pCurrentProgress;
+  WString m_sProgressMsg;
+  std::function<bool(unsigned int)> m_waitThreadFun;
+  std::mutex m_lock;
+
+  enum {
+    MODE_INACTIVE,
+    MODE_MAIN_THREAD,
+    MODE_ASYNC,
+    MODE_ASYNC_MODAL
+  } m_mode;
 
   enum {
     STATE_IDLE,
@@ -73,16 +87,24 @@ public:		// User declarations
   void __fastcall Init(TForm* pCaller,
     const WString& sTitle,
     const WString& sProgressInfo,
-    word64 qMaxValue,
+    word64 qMaxValue = 0,
     std::atomic<bool>* pCancelFlag = nullptr,
     const std::atomic<word64>* pCurProgress = nullptr);
-  void __fastcall MainThreadCallback(word64 qValue);
-  void __fastcall MainThreadCallback(const WString& sMsg);
-  void __fastcall Terminate(void);
-  bool __fastcall IsRunning(void)
+  int __fastcall ExecuteModal(TForm* pCaller,
+    const WString& sTitle,
+    const WString& sProgressInfo,
+    std::atomic<bool>& cancelFlag,
+    std::function<bool(unsigned int)> waitThreadFun,
+    word64 qMaxValue = 0,
+    const std::atomic<word64>* pCurProgress = nullptr);
+  void __fastcall SetProgressMessageAsync(const WString& sMsg = "");
+  void __fastcall SetProgressMessage(const WString& sMsg)
   {
-    return m_state != STATE_IDLE;
+    ProgressLbl->Caption = sMsg;
+    Refresh();
   }
+  void __fastcall MainThreadCallback(word64 qValue = -1, const WString& sMsg = "");
+  void __fastcall Terminate(void);
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TProgressForm *ProgressForm;

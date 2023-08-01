@@ -48,14 +48,16 @@ __fastcall TStringFileStreamW::TStringFileStreamW(const WString& sFileName,
 {
   if (blWriteOrAutodetectBOM) {
     if (wMode == fmOpenRead || wMode == fmOpenReadWrite) {
-      m_enc = ceAnsi;
+      // only UTF-8 or ANSI allowed if BOM not specified
+      if (m_enc != ceUtf8)
+        m_enc = ceAnsi;
       word8 bom[3] = {0,0,0};
       if (Read(bom, 3) >= 2) {
-        if (memcmp(bom, &UNICODE_BOM, 2) == 0) {
+        if (memcmp(bom, UNICODE_BOM, 2) == 0) {
           m_enc = ceUtf16;
           m_nBOMLen = 2;
         }
-        else if (memcmp(bom, &UNICODE_BOM_SWAPPED, 2) == 0) {
+        else if (memcmp(bom, UNICODE_BOM_SWAPPED, 2) == 0) {
           m_enc = ceUtf16BigEndian;
           m_nBOMLen = 2;
         }
@@ -71,11 +73,11 @@ __fastcall TStringFileStreamW::TStringFileStreamW(const WString& sFileName,
       case ceAnsi:
         break;
       case ceUtf16:
-        Write(&UNICODE_BOM, 2);
+        Write(UNICODE_BOM, 2);
         m_nBOMLen = 2;
         break;
       case ceUtf16BigEndian:
-        Write(&UNICODE_BOM_SWAPPED, 2);
+        Write(UNICODE_BOM_SWAPPED, 2);
         m_nBOMLen = 2;
         break;
       case ceUtf8:

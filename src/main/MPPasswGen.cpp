@@ -412,8 +412,6 @@ void __fastcall TMPPasswGenForm::GenerateBtnClick(TObject *Sender)
     nPasswBits = 48;
   }
   else {
-    AESCtrPRNG randGen;
-
     bool addLength = AddPasswLenToParamCheck->Checked;
     word32 lParamBytes = sParam.Length() * sizeof(wchar_t);
 
@@ -428,6 +426,7 @@ void __fastcall TMPPasswGenForm::GenerateBtnClick(TObject *Sender)
       paramData[lParamBytes + 2] = (nPasswLen >> 8) & 0xff;
     }
 
+    AESCtrPRNG randGen;
     randGen.SeedWithKey(plainKey, plainKey.Size(), paramData, paramData.Size());
 
     const char* pszCharSet = MPPG_CHARSETS[CharSetList->ItemIndex];
@@ -502,7 +501,7 @@ void __fastcall TMPPasswGenForm::UseAsDefaultRNGBtnClick(TObject *Sender)
   SecureMem<word8> plainKey(m_key.Size());
   memcrypt(m_key, plainKey, plainKey.Size(), memcryptKey, sizeof(memcryptKey));
 
-  if (g_pKeySeededPRNG.get() == NULL)
+  if (!g_pKeySeededPRNG)
     g_pKeySeededPRNG.reset(new AESCtrPRNG);
 
   WString sParam = ParameterBox->Text;
@@ -651,8 +650,9 @@ void __fastcall TMPPasswGenForm::PasswBoxMenu_PerformAutotypeClick(TObject *Send
   }
   else {
     TSendKeysThread::TerminateAndWait();
-    new TSendKeysThread(Handle, g_config.AutotypeDelay, AutotypeBox->Text,
-      NULL, NULL, sParam.c_str(), sPassw.c_str());
+    if (!TSendKeysThread::ThreadRunning())
+      new TSendKeysThread(Handle, g_config.AutotypeDelay, AutotypeBox->Text,
+        NULL, NULL, sParam.c_str(), sPassw.c_str());
   }
 }
 //---------------------------------------------------------------------------
