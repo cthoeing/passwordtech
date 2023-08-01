@@ -103,7 +103,7 @@ public:
       s_nThreadState = ABORTED;
   }
 
-  static void __fastcall TerminateAndWait(int nTimeout = 1000);
+  static void __fastcall TerminateAndWait(int nTimeout = 500);
 
 private:
 

@@ -29,6 +29,7 @@
 #include <shellapi.h>
 #include <algorithm>
 #include <io.h>
+#include <System.Threading.hpp>
 #pragma hdrstop
 
 #include "Main.h"
@@ -115,7 +116,6 @@ TIMER_WRITESEEDFILE   = 457,
 // between moving the pool and writing a new seed file, and that
 // both events will coincide quite late (after ~38 hours)
 
-PASSW_MAX_NUM         = 2000000000,
 PASSW_MAX_CHARS       = 10000,
 PASSW_MAX_WORDS       = 100,
 PASSWFORMAT_MAX_CHARS = 16000,
@@ -123,7 +123,8 @@ PASSWSCRIPT_MAX_CHARS = 16000,
 
 LISTS_MAX_ENTRIES     = 50;
 
-const word32
+const word64
+PASSW_MAX_NUM         = 1'000'000'000'000ull,
 #ifdef _WIN64
 PASSWLIST_MAX_BYTES   = 4000000000;
 #else
@@ -175,7 +176,7 @@ PASSWBOX_TAG_PASSWTEST = 1;
 int FindPWGenProfile(const WString& sName)
 {
   for (auto it = g_profileList.begin(); it != g_profileList.end(); it++) {
-    if (AnsiSameText((it->get())->ProfileName, sName))
+    if (AnsiSameText((*it)->ProfileName, sName))
       return it - g_profileList.begin();
   }
   return -1;
@@ -183,7 +184,9 @@ int FindPWGenProfile(const WString& sName)
 
 WString RemoveCommentAndTrim(WString sStr)
 {
-  if (!sStr.IsEmpty() && sStr[1] == '[') {
+  if (sStr.IsEmpty())
+    return sStr;
+  if (sStr[1] == '[') {
     int nPos = sStr.Pos("]");
     if (nPos > 0)
       sStr.Delete(1, nPos);
@@ -211,6 +214,7 @@ bool IsDisplayDlg(void)
   return g_nDisplayDlg > 0;
 }
 
+
 extern "C" int blake2s_self_test(void);
 
 //---------------------------------------------------------------------------
@@ -220,7 +224,6 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
     m_blStartup(true), m_blRestart(false),
     m_nNumStartupErrors(0), m_passwGen(&RandomPool::GetInstance()),
     m_nAutoClearClipCnt(0), m_nAutoClearPasswCnt(0), m_pUpdCheckThread(nullptr)
-    //m_blUpdCheckThreadRunning(false)
 {
 //  SetSecureMemoryManager();
 
@@ -255,7 +258,6 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
 
   // set up PRNGs and related stuff
   HighResTimerCheck();
-  //m_passwGen.RandGen = m_randPool;
   g_pRandSrc = &m_randPool;
   m_entropyMng.MaxTimerEntropyBits = ENTROPY_TIMER_MAX;
   m_entropyMng.SystemEntropyBits = ENTROPY_SYSTEM;
@@ -272,17 +274,12 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
   CharsLengthSpinBtn->Max = PASSW_MAX_CHARS;
   WordsNumSpinBtn->Max = PASSW_MAX_WORDS;
 
-  g_sExePath = ExtractFilePath(Application->ExeName);
-
   if (g_blConsole) {
     SetConsoleOutputCP(CP_UTF8);
     Caption = Caption + " (console)";
     std::wcout << FormatW("This is %s version %s.", PROGRAM_NAME,
       PROGRAM_VERSION).c_str() << std::endl;
   }
-
-  WString sIniFileName = g_cmdLineOptions.IniFileName.IsEmpty() ?
-    g_sExePath + WString(PROGRAM_INIFILE) : g_cmdLineOptions.IniFileName;
 
   LoadLangConfig();
 
@@ -301,8 +298,7 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
 
   // process errors in the command line arguments
   if (!g_cmdLineOptions.UnknownSwitches.IsEmpty()) {
-    g_cmdLineOptions.UnknownSwitches[
-      g_cmdLineOptions.UnknownSwitches.Length()-1] = '.';
+    *g_cmdLineOptions.UnknownSwitches.LastChar() = '.';
     DelayStartupError(TRLFormat("Unknown command line switch(es):\n%s",
         g_cmdLineOptions.UnknownSwitches.c_str()));
   }
@@ -449,8 +445,9 @@ __fastcall TMainForm::~TMainForm()
 void __fastcall TMainForm::FormClose(TObject *Sender, TCloseAction &Action)
 {
   if (MainMenu_Options_SaveSettingsOnExit->Checked && !g_cmdLineOptions.ConfigReadOnly
-    || m_blRestart)
+     || m_blRestart)
     SaveConfig();
+
   WriteRandSeedFile();
 }
 //---------------------------------------------------------------------------
@@ -459,18 +456,31 @@ void __fastcall TMainForm::StartupAction(void)
   if (m_blStartup) {
     m_blStartup = false;
 
-    // load profile specified by command line parameter
-    if (!g_cmdLineOptions.ProfileName.IsEmpty()) {
-      if (!LoadProfile(g_cmdLineOptions.ProfileName)) {
+    // load profile specified by command line parameter or program configuration
+    if (!g_cmdLineOptions.ProfileName.IsEmpty() ||
+        (g_config.LoadProfileStartup && !g_config.LoadProfileName.IsEmpty())) {
+      WString sProfileName = !g_cmdLineOptions.ProfileName.IsEmpty() ?
+        g_cmdLineOptions.ProfileName : g_config.LoadProfileName;
+      if (LoadProfile(sProfileName)) {
+        if (!g_blConsole) {
+          ProfileList->ItemIndex = FindPWGenProfile(sProfileName);
+        }
+      }
+      else {
         WString sErrMsg = TRLFormat("ERROR: Profile \"%s\" not found.",
-          g_cmdLineOptions.ProfileName.c_str());
+          sProfileName.c_str());
         if (!g_blConsole || g_cmdLineOptions.GenNumPassw == 0)
           DelayStartupError(sErrMsg);
         else {
           //sErrMsg += "\n";
           std::wcout << WStringToUtf8(sErrMsg).c_str() << std::endl;
         }
-        g_cmdLineOptions.ProfileName = "";
+        if (g_cmdLineOptions.ProfileName.IsEmpty()) {
+          g_config.LoadProfileStartup = false;
+          g_config.LoadProfileName = WString();
+        }
+        else
+          g_cmdLineOptions.ProfileName = WString();
       }
     }
 
@@ -523,7 +533,7 @@ void __fastcall TMainForm::FormActivate(TObject *Sender)
     if (m_nNumStartupErrors != 0) {
       MsgBox(TRLFormat("%s encountered %d error(s) during startup:",
           PROGRAM_NAME, m_nNumStartupErrors) + m_sStartupErrors, MB_ICONWARNING);
-      m_sStartupErrors = "";
+      m_sStartupErrors = WString();
     }
 
     if (m_asDonorKey.IsEmpty() &&
@@ -547,6 +557,9 @@ void __fastcall TMainForm::FormActivate(TObject *Sender)
         break;
       case acuMonthly:
         blNeedCheck = MonthsBetween(now, m_lastUpdateCheck) > 0;
+        break;
+      default:
+        break;
       }
 
       if (blNeedCheck) {
@@ -627,6 +640,11 @@ void __fastcall TMainForm::LoadLangConfig(void)
 
       try {
         LanguageSupport ls(sFileName, true);
+
+        if (std::find_if(m_languages.begin(), m_languages.end(),
+              [&ls](const LanguageEntry& e) { return e.Code == ls.LanguageCode; })
+              != m_languages.end())
+          continue;
 
         LanguageEntry e;
         e.FileName = sFileName;
@@ -759,7 +777,7 @@ void __fastcall TMainForm::SetDonorUI(int nDonorType)
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::LoadConfig(void)
 {
-  AnsiString asLastVersion = g_pIni->ReadString(CONFIG_ID, "LastVersion", "");
+  //AnsiString asLastVersion = g_pIni->ReadString(CONFIG_ID, "LastVersion", "");
 
   AnsiString asDonorKey = g_pIni->ReadString(CONFIG_ID, "DonorKey", "");
   if (!asDonorKey.IsEmpty()) {
@@ -769,7 +787,6 @@ void __fastcall TMainForm::LoadConfig(void)
     case DONOR_KEY_VALID:
       m_asDonorKey = asDonorKey.Trim();
       g_asDonorInfo = asDonorId;
-      //g_config.DonorId = asDonorId.Trim();
       SetDonorUI(nDonorType);
       break;
     case DONOR_KEY_EXPIRED:
@@ -805,15 +822,15 @@ void __fastcall TMainForm::LoadConfig(void)
     (g_pIni->ReadInteger(CONFIG_ID, "CharsLength", 16));
 
   // load the advanced password options before loading the character set!
-  AnsiString asPasswOptions = g_pIni->ReadString(CONFIG_ID,
+  WString sPasswOptions = g_pIni->ReadString(CONFIG_ID,
     "AdvancedPasswOptions", "");
-  m_passwOptions.Flags = StrToIntDef(asPasswOptions, 0);
+  m_passwOptions.Flags = StrToIntDef(sPasswOptions, 0);
 
   m_passwOptions.AmbigChars = g_pIni->ReadString(CONFIG_ID, "AmbigChars", "");
   m_passwOptions.SpecialSymbols = g_pIni->ReadString(CONFIG_ID, "SpecialSym", "");
   m_passwOptions.TrigramFileName = g_pIni->ReadString(CONFIG_ID, "TrigramFile", "");
   if (LoadTrigramFile(m_passwOptions.TrigramFileName) <= 0)
-    m_passwOptions.TrigramFileName = "";
+    m_passwOptions.TrigramFileName = WString();
 
   CharSetList->Items->CommaText = g_pIni->ReadString(CONFIG_ID,
     "CharSetListEntries", "");
@@ -896,8 +913,8 @@ void __fastcall TMainForm::LoadConfig(void)
 
   ScriptList->ItemIndex = 0;
 
-  NumPasswBox->Text = WString(g_pIni->ReadInteger(CONFIG_ID, "NumPassw", 100));
-  NumPasswBoxExit(this);
+  NumPasswBox->Text = g_pIni->ReadString(CONFIG_ID, "NumPassw", "100");
+  //NumPasswBoxExit(this);
 
   TogglePasswBtn->Down = g_pIni->ReadBool(CONFIG_ID, "HidePassw", false);
   TogglePasswBtnClick(this);
@@ -973,6 +990,12 @@ void __fastcall TMainForm::LoadConfig(void)
 
   g_config.LaunchSystemStartup = g_pIni->ReadBool(CONFIG_ID, "LaunchSystemStartup",
     false);
+
+  g_config.LoadProfileStartup = g_pIni->ReadBool(CONFIG_ID, "LoadProfileStartup",
+    false);
+
+  g_config.LoadProfileName = g_pIni->ReadString(CONFIG_ID,
+    "LoadProfileStartupName", "");
 
   MainMenu_Options_SaveSettingsOnExit->Checked = g_pIni->ReadBool(CONFIG_ID,
       "SaveSettingsOnExit", true);
@@ -1073,11 +1096,11 @@ void __fastcall TMainForm::LoadConfig(void)
     pProfile->ScriptFileName = g_pIni->ReadString(sProfileId, "ScriptFileName", "");
     pProfile->NumPassw = g_pIni->ReadInteger(sProfileId, "NumPassw", 2);
 
-    asPasswOptions = g_pIni->ReadString(sProfileId, "AdvancedPasswOptions", "");
-    pProfile->AdvancedOptionsUsed = !asPasswOptions.IsEmpty();
+    sPasswOptions = g_pIni->ReadString(sProfileId, "AdvancedPasswOptions", "");
+    pProfile->AdvancedOptionsUsed = !sPasswOptions.IsEmpty();
 
     if (pProfile->AdvancedOptionsUsed) {
-      pProfile->AdvancedPasswOptions.Flags = StrToIntDef(asPasswOptions, 0);
+      pProfile->AdvancedPasswOptions.Flags = StrToIntDef(sPasswOptions, 0);
       pProfile->AdvancedPasswOptions.AmbigChars =
         g_pIni->ReadString(sProfileId, "AmbigChars", "");
       pProfile->AdvancedPasswOptions.SpecialSymbols =
@@ -1128,7 +1151,7 @@ bool __fastcall TMainForm::SaveConfig(void)
     g_pIni->WriteString(CONFIG_ID, "FormatListEntries", FormatList->Items->CommaText);
     g_pIni->WriteBool(CONFIG_ID, "RunScript", RunScriptCheck->Checked);
     g_pIni->WriteString(CONFIG_ID, "ScriptListEntries", ScriptList->Items->CommaText);
-    g_pIni->WriteInteger(CONFIG_ID, "NumPassw", StrToIntDef(NumPasswBox->Text, 0));
+    g_pIni->WriteString(CONFIG_ID, "NumPassw", NumPasswBox->Text);
     g_pIni->WriteBool(CONFIG_ID, "HidePassw", TogglePasswBtn->Down);
     g_pIni->WriteBool(CONFIG_ID, "HideEntropyProgress",
       MainMenu_Options_HideEntProgress->Checked);
@@ -1152,6 +1175,8 @@ bool __fastcall TMainForm::SaveConfig(void)
     g_pIni->WriteBool(CONFIG_ID, "ConfirmExit", g_config.ConfirmExit);
     g_pIni->WriteBool(CONFIG_ID, "LaunchSystemStartup",
       g_config.LaunchSystemStartup);
+    g_pIni->WriteBool(CONFIG_ID, "LoadProfileStartup", g_config.LoadProfileStartup);
+    g_pIni->WriteString(CONFIG_ID, "LoadProfileStartupName", g_config.LoadProfileName);
     g_pIni->WriteInteger(CONFIG_ID, "RandomPoolCipher", g_config.RandomPoolCipher);
     g_pIni->WriteBool(CONFIG_ID, "TestCommonPassw", g_config.TestCommonPassw);
     g_pIni->WriteBool(CONFIG_ID, "UseAdvancedPasswEst",
@@ -1534,10 +1559,10 @@ void __fastcall TMainForm::ShowPasswInfo(int nPasswLen,
   }
   else if (blEstimated) {
     sCaption = "*";
-    PasswInfoLbl->Hint = ""; //TRL("Estimated");
+    PasswInfoLbl->Hint = WString(); //TRL("Estimated");
   }
   else
-    PasswInfoLbl->Hint = "";
+    PasswInfoLbl->Hint = WString();
   sCaption += TRLFormat("%d bits / %d characters", nPasswBits, nPasswLen);
   PasswInfoLbl->Caption = sCaption;
 }
@@ -1748,7 +1773,7 @@ void __fastcall TMainForm::LoadProfile(int nIndex)
   SpecifyLengthBox->Text = pProfile->SpecifyLengthString;
   FormatPasswCheck->Checked = pProfile->FormatPassw;
   FormatList->Text = pProfile->FormatString;
-  FormatPasswInfoLbl->Caption = "";
+  FormatPasswInfoLbl->Caption = WString();
   RunScriptCheck->Checked = pProfile->RunScript;
   ScriptList->Text = pProfile->ScriptFileName;
   NumPasswBox->Text = WString(pProfile->NumPassw);
@@ -1759,7 +1784,7 @@ void __fastcall TMainForm::LoadProfile(int nIndex)
     PasswOptionsDlg->SetOptions(m_passwOptions);
     SetAdvancedBtnCaption();
     if (LoadTrigramFile(m_passwOptions.TrigramFileName) <= 0)
-      m_passwOptions.TrigramFileName = "";
+      m_passwOptions.TrigramFileName = WString();
   }
 
   LoadCharSet(CharSetList->Text, true);
@@ -1930,15 +1955,33 @@ void __fastcall TMainForm::UseKeySeededPRNG(void)
 void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
   TCustomEdit* pEditBox)
 {
-  int nNumOfPassw = (dest == gpdConsole) ? g_cmdLineOptions.GenNumPassw : 1;
+  word64 qNumOfPassw = (dest == gpdConsole) ? g_cmdLineOptions.GenNumPassw : 1;
 
   WString sFileName;
   Word wFileOpenMode = fmCreate;
 
   if (dest == gpdGuiList || dest == gpdFileList) {
-    nNumOfPassw = StrToIntDef(NumPasswBox->Text, 0);
-    if (nNumOfPassw < 2 || nNumOfPassw > PASSW_MAX_NUM) {
-//      NumPasswBox->SetFocus();
+    WString sNum = NumPasswBox->Text;
+    int nFactor = 1;
+    if (!sNum.IsEmpty()) {
+      auto lastChar = toupper(*sNum.LastChar());
+      switch (lastChar) {
+      case 'K':
+        nFactor = 1000; break;
+      case 'M':
+        nFactor = 1'000'000; break;
+      case 'B':
+      case 'G':
+        nFactor = 1'000'000'000; break;
+      }
+      if (nFactor > 1)
+        sNum.Delete(sNum.Length(), 1);
+    }
+    qNumOfPassw = StrToInt64Def(sNum, 0) * nFactor;
+    if (qNumOfPassw < 2 || qNumOfPassw > PASSW_MAX_NUM) {
+      MsgBox(FormatW(EnableInt64FormatSpec(TRL("Invalid number of passwords.\n"
+        "Allowed range is %d-%d.")), 2ull, PASSW_MAX_NUM), MB_ICONERROR);
+      NumPasswBox->SetFocus();
       return;
     }
 
@@ -1980,13 +2023,13 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
   int nCharSetSize;
   int nPassphrMinLength = -1, nPassphrMaxLength = -1;
   bool blPassphrLenAllChars = false;
-  double dBasePasswSec = 0, dPasswSec = 0;
+  //double dBasePasswSec = 0;
 
   if (IncludeCharsCheck->Checked) {
     nCharSetSize = m_passwGen.CustomCharSetW32.length();
     nCharsLen = CharsLengthSpinBtn->Position;
     if (m_passwOptions.Flags & PASSWOPTION_EACHCHARONLYONCE &&
-      nCharsLen > nCharSetSize)
+        nCharsLen > nCharSetSize)
     {
       MsgBox(TRLFormat("If the option \"Each character must occur\nonly once\" is "
           "activated, the password length\nis limited to the size of the character set (%d).",
@@ -1994,47 +2037,42 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
       CharsLengthSpinBtn->Position = nCharSetSize;
       nCharsLen = nCharSetSize;
     }
-    if (m_passwGen.CustomCharSetType == cstStandard &&
-      (m_passwOptions.Flags & PASSWOPTION_EACHCHARONLYONCE))
-      dBasePasswSec = m_passwGen.CalcPermSetEntropy(nCharSetSize, nCharsLen);
-    else
-      dBasePasswSec = m_passwGen.CustomCharSetEntropy * nCharsLen;
   }
 
   if (IncludeWordsCheck->Checked) {
     nNumOfWords = WordsNumSpinBtn->Position;
     if (SpecifyLengthCheck->Checked && !SpecifyLengthBox->Text.IsEmpty()) {
-      AnsiString asText = SpecifyLengthBox->Text;
+      WString sText = SpecifyLengthBox->Text;
 
-      int nSepPos = asText.Pos("*");
+      int nSepPos = sText.Pos("*");
       if (nSepPos > 0) {
         blPassphrLenAllChars = true;
-        asText.Delete(nSepPos, 1);
+        sText.Delete(nSepPos, 1);
       }
 
-      int nLen = asText.Length();
-      if (nLen >= 2 && asText[1] == '>') {
-        bool blGtEq = nLen >= 3 && asText[2] == '=';
+      int nLen = sText.Length();
+      if (nLen >= 2 && sText[1] == '>') {
+        bool blGtEq = nLen >= 3 && sText[2] == '=';
         if (blGtEq)
-          nPassphrMinLength = asText.SubString(3, nLen - 2).ToIntDef(-1);
+          nPassphrMinLength = sText.SubString(3, nLen - 2).ToIntDef(-1);
         else
-          nPassphrMinLength = asText.SubString(2, nLen - 1).ToIntDef(-2) + 1;
+          nPassphrMinLength = sText.SubString(2, nLen - 1).ToIntDef(-2) + 1;
         nPassphrMaxLength = INT_MAX;
       }
-      else if (nLen >= 2 && asText[1] == '<') {
-        bool blLtEq = nLen >= 3 && asText[2] == '=';
+      else if (nLen >= 2 && sText[1] == '<') {
+        bool blLtEq = nLen >= 3 && sText[2] == '=';
         if (blLtEq)
-          nPassphrMaxLength = asText.SubString(3, nLen - 2).ToIntDef(-1);
+          nPassphrMaxLength = sText.SubString(3, nLen - 2).ToIntDef(-1);
         else
-          nPassphrMaxLength = asText.SubString(2, nLen - 1).ToIntDef(-1) - 1;
+          nPassphrMaxLength = sText.SubString(2, nLen - 1).ToIntDef(-1) - 1;
         nPassphrMinLength = 0;
       }
-      else if ((nSepPos = asText.Pos("-")) >= 2) {
-        nPassphrMinLength = asText.SubString(1, nSepPos - 1).ToIntDef(-1);
-        nPassphrMaxLength = asText.SubString(nSepPos + 1, nLen - nSepPos).ToIntDef(-1);
+      else if ((nSepPos = sText.Pos("-")) >= 2) {
+        nPassphrMinLength = sText.SubString(1, nSepPos - 1).ToIntDef(-1);
+        nPassphrMaxLength = sText.SubString(nSepPos + 1, nLen - nSepPos).ToIntDef(-1);
       }
       else if (nLen > 0) {
-        nPassphrMinLength = nPassphrMaxLength = asText.ToIntDef(-1);
+        nPassphrMinLength = nPassphrMaxLength = sText.ToIntDef(-1);
       }
 
       if (nPassphrMaxLength < nPassphrMinLength)
@@ -2047,7 +2085,7 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
     }
 
     if (m_passwOptions.Flags & PASSWOPTION_EACHWORDONLYONCE &&
-      nNumOfWords > m_passwGen.WordListSize)
+        nNumOfWords > m_passwGen.WordListSize)
     {
       MsgBox(TRLFormat("If the option \"Each word must occur only\nonce\" is "
           "activated, the number of words\nis limited to the size of the word list (%d).",
@@ -2055,19 +2093,16 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
       WordsNumSpinBtn->Position = m_passwGen.WordListSize;
       nNumOfWords = m_passwGen.WordListSize;
     }
-    if (m_passwOptions.Flags & PASSWOPTION_EACHWORDONLYONCE)
-      dBasePasswSec += m_passwGen.CalcPermSetEntropy(m_passwGen.WordListSize, nNumOfWords);
-    else
-      dBasePasswSec += m_passwGen.WordListEntropy * nNumOfWords;
   }
 
   w32string sFormatPassw;
   if (FormatPasswCheck->Checked)
     sFormatPassw = WStringToW32String(FormatList->Text);
 
-  bool blScriptGenStandalone = false;
+  //bool blScriptGenStandalone = false;
 
-  std::unique_ptr<TScriptingThread> pScriptThread;
+  //std::unique_ptr<TScriptingThread> pScriptThread;
+  bool blScripting = false;
   if (RunScriptCheck->Checked && ScriptList->GetTextLen() != 0) {
     WString sFileName = RemoveCommentAndTrim(ScriptList->Text);
     if (!sFileName.IsEmpty()) {
@@ -2076,7 +2111,8 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
       if (!m_pScript || CompareText(m_pScript->FileName, sFileName) != 0)
       {
         try {
-          m_pScript.reset(new LuaScript(&m_passwGen));
+          m_pScript.reset(new LuaScript);
+          m_pScript->SetPasswGenerator(&m_passwGen);
           m_pScript->LoadFile(sFileName);
         }
         catch (Exception& e)
@@ -2087,48 +2123,66 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
           return;
         }
       }
-      blScriptGenStandalone = m_pScript->Flags & LuaScript::FLAG_STANDALONE_PASSW_GEN;
-      pScriptThread.reset(new TScriptingThread(m_pScript.get()));
+      blScripting = true;
       AddEntryToList(ScriptList, ScriptList->Text, true);
     }
   }
 
   if (nCharsLen == 0 && nNumOfWords == 0 && sFormatPassw.empty() &&
-      !pScriptThread)
+      !blScripting)
     return;
 
+  WString sErrorMsg;
+  double dPasswSec = 0;
+  int nPasswSec = 0;
+  int nTotalPasswSec = 0;
+  SecureW32String sChars;
+  SecureW32String sWords;
+  SecureW32String sFormatted;
+  SecureWString sFromScript;
   SecureWString sPasswList;
-  bool blCallback = false;
-  int nPasswCnt = 0;
-  int nPasswSec;
+  wchar_t nullChar = '\0';
+  wchar_t* pwszPassw = nullptr;
+  int nPasswLen = 0;
+  int nPasswLenWChars = 0;
+  bool blCommonPasswMatch = false;
+  //bool blProgFormInit = false;
+  std::atomic<word64> qPasswCnt(0);
 
-  try {
+  std::unique_ptr<RandomPool> pRandPool;
+  std::unique_ptr<SplitMix64> pFastRandGen;
+  if (dest != gpdConsole) {
+    if (IsRandomPoolActive()) {
+      m_entropyMng.AddSystemEntropy();
+      pFastRandGen.reset(new SplitMix64(g_fastRandGen.GetWord64()));
+      pRandPool.reset(new RandomPool(m_randPool, *pFastRandGen, false));
+      m_passwGen.RandGen = pRandPool.get();
+    }
+
+    if (qNumOfPassw > 1) {
+      if (dest == gpdGuiList)
+        PasswListForm->Close();
+
+      Refresh();
+      Screen->Cursor = crHourGlass;
+    }
+
+    Enabled = false;
+  }
+
+  std::atomic<bool> cancelFlag(false);
+
+  auto generateAsync = [&]() {
+    const bool blAsync = GetCurrentThreadId() != MainThreadID;
+    std::unique_ptr<TScriptingThread> pScriptThread;
+
     try {
       int nFlags = m_passwOptions.Flags;
       bool blExcludeDuplicates = nFlags & PASSWOPTION_EXCLUDEDUPLICATES;
 
-      if (nNumOfPassw > 1 && dest != gpdConsole) {
-        if (dest == gpdGuiList)
-          PasswListForm->Close();
-
-        /*if (blExcludeDuplicates || nPassphrMinLength >= 0 ||
-          nNumOfPassw > (pScriptThread ? 100 : 5000))
-        {
-          //blCallback = true;
-          //ProgressForm->Init(this, TRL("Generating password list ..."), TRL("%d of %d "
-          //    "passwords generated."), nNumOfPassw);
-          //nCallbackFreq = (blExcludeDuplicates || pScriptThread) ? 100 : 1000;
-        }
-        else*/
-        Refresh();
-
-        Screen->Cursor = crHourGlass;
-      }
-
       int nPasswFlags = 0, nPassphrFlags = 0, nFormatFlags = 0;
       bool blFirstCharNotLC = nFlags & PASSWOPTION_FIRSTCHARNOTLC;
 
-      SecureW32String sChars;
       if (nCharsLen != 0) {
         if (blFirstCharNotLC)
           nPasswFlags |= PASSW_FLAG_FIRSTCHARNOTLC;
@@ -2152,7 +2206,6 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
         sChars.New(nCharsLen + 1);
       }
 
-      SecureW32String sWords;
       if (nNumOfWords != 0) {
         if (CombineWordsCharsCheck->Checked)
           nPassphrFlags |= PASSPHR_FLAG_COMBINEWCH;
@@ -2173,7 +2226,6 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
         sWords.New(nCharsLen + nNumOfWords * (WORDLIST_MAX_WORDLEN + 2) + 1);
       }
 
-      SecureW32String sFormatted;
       if (!sFormatPassw.empty()) {
         if (nFlags & PASSWOPTION_EXCLUDEREPCHARS)
           nFormatFlags |= PASSFORMAT_FLAG_EXCLUDEREPCHARS;
@@ -2181,9 +2233,9 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
         sFormatted.New(PASSWFORMAT_MAX_CHARS + 1);
       }
 
-      WString sInitPasswFormat;
-      if (pScriptThread) {
+      if (blScripting) {
         int nGenFlags = 0;
+        WString sInitPasswFormat;
         if (nCharsLen != 0)
           nGenFlags |= 1;
         if (nNumOfWords != 0)
@@ -2192,14 +2244,21 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
           nGenFlags |= 4;
           sInitPasswFormat = FormatList->Text;
         }
-        pScriptThread->SetInitParam(nNumOfPassw,
+        pScriptThread.reset(new TScriptingThread(m_pScript.get()));
+        pScriptThread->SetInitParam(
+          qNumOfPassw,
           dest,
           nGenFlags,
           nFlags,
           nCharsLen,
           nNumOfWords,
-          sInitPasswFormat.c_str());
-        //sFromScript.New(PASSWSCRIPT_MAX_CHARS + 1);
+          sInitPasswFormat);
+        if (m_pScript->Flags & LuaScript::FLAG_STANDALONE_PASSW_GEN) {
+          nCharsLen = nNumOfWords = 0;
+          //dBasePasswSec = 0;
+          sFormatPassw.clear();
+        }
+        m_pScript->SetRandomGenerator(pRandPool ? pRandPool.get() : g_pRandSrc);
       }
 
       word32 lMaxPasswListBytes =
@@ -2214,475 +2273,507 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
         "%d passwords generated.\r\nEntropy of the first "
         "password: %d bits.\r\nMaximum entropy of the entire list: %d bits.";
       int nPasswListHeaderLen;
-      int nTotalPasswSec = 0;
 
-      // add system entropy and initialize the PRNG
-      if (IsRandomPoolActive()) {
-        m_entropyMng.AddSystemEntropy();
-        m_randPool.RandReady();
-      }
+      bool blFirstGen = true;
+      bool blKeepPrevPassw = false;
+      bool blCheckEachPassw = qNumOfPassw > 1 &&
+        (nFlags & PASSWOPTION_CHECKEACHPASSW);
+      std::unordered_set<SecureWString,SecureStringHashFunction>
+        uniquePasswList;
+      std::unique_ptr<TStringFileStreamW> pFile;
+      WString sPasswAppendix(dest == gpdGuiList ? CRLF : g_sNewline);
 
-      try {
-        bool blFirstGen = true;
-        bool blKeepPrevPassw = false;
-        bool blCheckEachPassw = nNumOfPassw > 1 &&
-          (nFlags & PASSWOPTION_CHECKEACHPASSW);
-        int nScriptTimeouts = 0;
-        std::set<SecureWString> uniquePasswList;
-        std::unique_ptr<TStringFileStreamW> pFile;
-        wchar_t wNull = '\0';
-        WString sPasswAppendix(dest == gpdGuiList ? CRLF : g_sNewline);
+      // start script thread for the first time
+      if (pScriptThread)
+        pScriptThread->Start();
 
-        // start script thread for the first time
-        if (pScriptThread)
-          pScriptThread->Start();
+      double dBasePasswSec = 0;
+      while (qPasswCnt < qNumOfPassw && !cancelFlag) {
 
-        Stopwatch clock;
-        while (nPasswCnt < nNumOfPassw) {
-
-          if (blCallback) {
-            if (clock.ElapsedSeconds() > 0.15) {
-              ProgressForm->MainThreadCallback(nPasswCnt);
-              clock.Reset();
-            }
+        if (nCharsLen != 0 && !blKeepPrevPassw) {
+          switch (m_passwGen.CustomCharSetType) {
+          case cstStandard:
+          case cstStandardWithFreq:
+            nPasswLen = m_passwGen.GetPassword(sChars, nCharsLen, nPasswFlags);
+            break;
+          case cstPhonetic:
+          case cstPhoneticUpperCase:
+          case cstPhoneticMixedCase:
+            nPasswLen = m_passwGen.GetPhoneticPassw(sChars, nCharsLen,
+                nPasswFlags);
           }
-          else if (clock.ElapsedSeconds() > (dest == gpdConsole ? 5 : 1)) {
-            blCallback = true;
-            ProgressForm->Init(this, TRL("Generating password list ..."),
-              TRL("%d of %d passwords generated."), nNumOfPassw);
-            Screen->Cursor = crAppStart;
-            clock.Reset();
+          if (blFirstGen) {
+            if ((m_passwGen.CustomCharSetType == cstStandard ||
+                m_passwGen.CustomCharSetType == cstStandardWithFreq) &&
+                m_passwOptions.Flags & PASSWOPTION_EACHCHARONLYONCE)
+              dBasePasswSec = m_passwGen.CalcPermSetEntropy(nCharSetSize, nPasswLen);
+            else
+              dBasePasswSec = m_passwGen.CustomCharSetEntropy * nPasswLen;
           }
+        }
 
-          int nPasswLen = 0;
-          dPasswSec = dBasePasswSec;
-
-          if (nCharsLen != 0 && !blKeepPrevPassw && !blScriptGenStandalone) {
-            switch (m_passwGen.CustomCharSetType) {
-            case cstStandard:
-            case cstStandardWithFreq:
-              nPasswLen = m_passwGen.GetPassword(sChars, nCharsLen, nPasswFlags);
-              break;
-            case cstPhonetic:
-            case cstPhoneticUpperCase:
-            case cstPhoneticMixedCase:
-              nPasswLen = m_passwGen.GetPhoneticPassw(sChars, nCharsLen,
-                  nPasswFlags);
-            }
-          }
-
-          if (nNumOfWords != 0 && !blScriptGenStandalone) {
-            int nNetWordsLen;
-            nPasswLen = m_passwGen.GetPassphrase(sWords, nNumOfWords, sChars,
-              nPassphrFlags, &nNetWordsLen);
-            if (nPassphrMinLength >= 0) {
-              int nBaseLen = blPassphrLenAllChars ? nPasswLen : nNetWordsLen;
-              if (nBaseLen < nPassphrMinLength || nBaseLen > nPassphrMaxLength)
-              {
-                blKeepPrevPassw = true;
-                continue;
-              }
-            }
-          }
-
-          blKeepPrevPassw = false;
-
-          word32* pPassw = (nNumOfWords != 0) ? sWords : sChars;
-
-          if (!sFormatPassw.empty() && !blScriptGenStandalone) {
-            double dFormatSec = 0;
-            word32 lInvalidSpec;
-            int nPasswPhUsed, nFormattedLen;
-            nFormattedLen = m_passwGen.GetFormatPassw(sFormatted,
-                PASSWFORMAT_MAX_CHARS, sFormatPassw, nFormatFlags, pPassw,
-                &nPasswPhUsed, &lInvalidSpec,
-                (blFirstGen || blCheckEachPassw) ? &dFormatSec : nullptr);
-
-            if (dFormatSec > 0) {
-              if (nPasswPhUsed == PASSFORMAT_PWUSED_NOTUSED && pPassw != nullptr)
-                dPasswSec = dFormatSec;
-              else
-                dPasswSec += dFormatSec;
-            }
-
-            if (blFirstGen) {
-              FormatPasswInfoLbl->Caption = WString();
-
-              if (nPasswPhUsed == PASSFORMAT_PWUSED_NOTUSED && pPassw != nullptr)
-              {
-                //dPasswSec = dFormatSec;
-                sChars.Empty();
-                sWords.Empty();
-                nCharsLen = nNumOfWords = 0;
-                dBasePasswSec = 0;
-                FormatPasswInfoLbl->Caption = TRL("\"P\" is not specified.");
-              }
-              else if (nPasswPhUsed == PASSFORMAT_PWUSED_EMPTYPW)
-                FormatPasswInfoLbl->Caption = WString("\"P\": ") +
-                  TRL("Password not available.");
-              else if (nPasswPhUsed > 0 && nPasswPhUsed < nPasswLen)
-                FormatPasswInfoLbl->Caption = WString("\"P\": ") +
-                  TRL("Password too long.");
-              else if (lInvalidSpec != 0) {
-                w32string sW32Char(1, lInvalidSpec);
-                WString sWChar = W32StringToWString(sW32Char);
-                FormatPasswInfoLbl->Caption = TRLFormat("Invalid format specifier "
-                    "\"%s\".", sWChar.c_str());
-              }
-            }
-            pPassw = sFormatted;
-            nPasswLen = nFormattedLen;
-          }
-
-          wchar_t* pwszPassw = reinterpret_cast<wchar_t*>(pPassw);
-          int nPasswLenWChars = 0;
-          if (pwszPassw != nullptr) {
-            W32CharToWCharInternal(pwszPassw);
-            nPasswLenWChars = wcslen(pwszPassw);
-            if (blFirstCharNotLC)
-              pwszPassw[0] = toupper(pwszPassw[0]);
-          }
-
-          SecureWString sFromScript;
-
-          if (pScriptThread) {
-            pScriptThread->CallGenerate(nPasswCnt + 1, pwszPassw, dPasswSec);
-            while (true) {
-              TWaitResult wr = pScriptThread->ResultEvent->WaitFor(1000);
-
-              if (wr == wrSignaled) {
-                // check if error state has been set
-                if (!pScriptThread->ErrorMessage.IsEmpty())
-                  throw Exception(pScriptThread->ErrorMessage);
-
-                const SecureWString& sScriptPassw = pScriptThread->GetResultPassw();
-                if (!sScriptPassw.IsStrEmpty()) {
-                  sFromScript.Assign(sScriptPassw, std::min<word32>(
-                      PASSWSCRIPT_MAX_CHARS + 1, sScriptPassw.Size()));
-                  sFromScript.back() = '\0';
-                  pwszPassw = sFromScript;
-                  nPasswLen = GetNumOfUnicodeChars(sFromScript);
-                  nPasswLenWChars = sFromScript.StrLen();
-                }
-                // max. entropy is given by total number of Unicode characters
-                // (log_2(1114112) = ~20) and password length
-                dPasswSec = std::min(20.0 * sFromScript.StrLen(),
-                    std::max(0.0, pScriptThread->GetResultPasswSec()));
-                break;
-              }
-              else if (wr == wrTimeout) {
-                if (pScriptThread->Finished && !pScriptThread->ErrorMessage.IsEmpty())
-                  throw Exception(pScriptThread->ErrorMessage);
-
-                if (++nScriptTimeouts >= 5) {
-                  if (!blCallback) {
-                    blCallback = true;
-                    ProgressForm->Init(this, TRL("Executing script"),
-                      TRL("%d of %d passwords generated."), nNumOfPassw);
-                    //nCallbackFreq = 100;
-                    Screen->Cursor = crAppStart;
-                  }
-                  try {
-                    ProgressForm->MainThreadCallback(TRL("Waiting for script ..."));
-                  }
-                  catch (EUserCancel& e) {
-                    TerminateThread((HANDLE) pScriptThread->Handle, 0);
-                    m_pScript.reset();
-                    MsgBox(TRL("Script thread was terminated forcibly.\nPlease check script for infinite loops."),
-                      MB_ICONERROR);
-                    throw;
-                  }
-                }
-              }
-              else {
-                throw Exception(FormatW("ResultEvent::WaitFor() error (%d)", wr));
-              }
-            }
-          }
-
-          if (pwszPassw == nullptr)
-            pwszPassw = &wNull;
-
-          if (nNumOfPassw > 1 && nPasswLenWChars > 0 && blExcludeDuplicates) {
-            // NOTE: no need to copy terminating null character for
-            // storage in set
-            auto ret =
-              uniquePasswList.insert(SecureWString(pwszPassw, nPasswLenWChars));
-            if (!ret.second)
+        if (nNumOfWords != 0) {
+          int nNetWordsLen;
+          nPasswLen = m_passwGen.GetPassphrase(sWords, nNumOfWords, sChars,
+            nPassphrFlags, &nNetWordsLen);
+          if (nPassphrMinLength >= 0) {
+            int nBaseLen = blPassphrLenAllChars ? nPasswLen : nNetWordsLen;
+            if (nBaseLen < nPassphrMinLength || nBaseLen > nPassphrMaxLength)
+            {
+              blKeepPrevPassw = true;
               continue;
-          }
-
-          if (blFirstGen || blCheckEachPassw) {
-            dPasswSec = std::min<double>(dPasswSec, RandomPool::MAX_ENTROPY);
-            nPasswSec = FloorEntropyBits(dPasswSec);
-          }
-
-          bool blCommonPasswMatch = false;
-
-          if (nNumOfPassw == 1 || blCheckEachPassw) {
-            if (g_config.TestCommonPassw && !m_commonPassw.empty()) {
-              std::wstring testStr(pwszPassw);
-              if (m_commonPassw.count(testStr)) {
-                blCommonPasswMatch = true;
-                nPasswSec = std::min(nPasswSec, m_nCommonPasswEntropy);
-              }
-              eraseStlString(testStr);
-            }
-            if (nNumOfPassw == 1 && blCallback) {
-              ProgressForm->Terminate();
-              blCallback = false;
-              Screen->Cursor = crDefault;
-              //nPassphrFailCnt = 0;
-              //nCallbackCnt = 0;
             }
           }
+          if (blFirstGen) {
+            if (m_passwOptions.Flags & PASSWOPTION_EACHWORDONLYONCE)
+              dBasePasswSec += m_passwGen.CalcPermSetEntropy(
+                m_passwGen.WordListSize, nNumOfWords);
+            else
+              dBasePasswSec += m_passwGen.WordListEntropy * nNumOfWords;
+          }
+        }
 
-          if (blCheckEachPassw) {
-            sPasswAppendix = "  [";
-            if (blCommonPasswMatch)
-              sPasswAppendix += "*";
-            sPasswAppendix += IntToStr(nPasswSec) + "]" +
-              (dest == gpdGuiList ? CRLF : g_sNewline);
+        dPasswSec = dBasePasswSec;
+
+        blKeepPrevPassw = false;
+
+        word32* pPassw = (nNumOfWords != 0) ? sWords : sChars;
+
+        if (!sFormatPassw.empty()) {
+          double dFormatSec = 0;
+          word32 lInvalidSpec;
+          int nPasswPhUsed, nFormattedLen;
+          nFormattedLen = m_passwGen.GetFormatPassw(sFormatted,
+              PASSWFORMAT_MAX_CHARS, sFormatPassw, nFormatFlags, pPassw,
+              &nPasswPhUsed, &lInvalidSpec,
+              (blFirstGen || blCheckEachPassw) ? &dFormatSec : nullptr);
+
+          if (dFormatSec > 0) {
+            if (nPasswPhUsed == PASSFORMAT_PWUSED_NOTUSED && pPassw != nullptr)
+              dPasswSec = dFormatSec;
+            else
+              dPasswSec += dFormatSec;
           }
 
           if (blFirstGen) {
-            blFirstGen = false;
-            if (dest == gpdGuiList) {
-              nTotalPasswSec = FloorEntropyBits(std::min<double>(
-                dPasswSec * nNumOfPassw, RandomPool::MAX_ENTROPY));
+            FormatPasswInfoLbl->Caption = WString();
 
-              WString sHeader = TRLFormat(asPasswListHeader,
-                  nNumOfPassw, nPasswSec, nTotalPasswSec) + CRLF + CRLF;
-              nPasswListHeaderLen = sHeader.Length();
-
-              // use 64-bit int to avoid 32-bit overflow
-              word64 qEstSizeWChars = nPasswListHeaderLen +
-                (nPasswLenWChars + sPasswAppendix.Length()) * nNumOfPassw + 1;
-              if (qEstSizeWChars * sizeof(wchar_t) > lMaxPasswListBytes)
-                throw Exception(TRL("The estimated list size will probably exceed\n"
-                    "the internal memory limit.\nPlease reduce the number of passwords"));
-
-              sPasswList.New(qEstSizeWChars);
-
-              //wcscpy(sPasswList, sHeader.c_str());
-              //lPasswListWChars = nPasswListHeaderLen;
-              sPasswList.StrCat(sHeader.c_str(), nPasswListHeaderLen,
-                lPasswListWChars);
+            if (nPasswPhUsed == PASSFORMAT_PWUSED_NOTUSED && pPassw != nullptr)
+            {
+              //dPasswSec = dFormatSec;
+              sChars.Empty();
+              sWords.Empty();
+              nCharsLen = nNumOfWords = 0;
+              dBasePasswSec = 0;
+              FormatPasswInfoLbl->Caption = TRL("\"P\" is not specified.");
             }
-            else if (dest == gpdFileList) {
-              pFile.reset(new TStringFileStreamW(sFileName, wFileOpenMode,
-                  g_config.FileEncoding, PASSW_MAX_BYTES));
-              if (wFileOpenMode == fmOpenReadWrite) {
-                pFile->FileEnd();
-              }
+            else if (nPasswPhUsed == PASSFORMAT_PWUSED_EMPTYPW)
+              FormatPasswInfoLbl->Caption = WString("\"P\": ") +
+                TRL("Password not available.");
+            else if (nPasswPhUsed > 0 && nPasswPhUsed < nPasswLen)
+              FormatPasswInfoLbl->Caption = WString("\"P\": ") +
+                TRL("Password too long.");
+            else if (lInvalidSpec != 0) {
+              w32string sW32Char(1, lInvalidSpec);
+              WString sWChar = W32StringToWString(sW32Char);
+              FormatPasswInfoLbl->Caption = TRLFormat("Invalid format specifier "
+                  "\"%s\".", sWChar.c_str());
             }
           }
+          pPassw = sFormatted;
+          nPasswLen = nFormattedLen;
+        }
 
-          bool blBreakLoop = false;
-          switch (dest) {
-          case gpdGuiSingle:
-            if (pEditBox == nullptr) {
-              int nTemp = PasswBox->Tag;
-              PasswBox->Tag = 0;
-              ClearEditBoxTextBuf(PasswBox);
-              SetEditBoxTextBuf(PasswBox, pwszPassw);
-              PasswBox->Tag = nTemp;
-              ShowPasswInfo(nPasswLen, nPasswSec, blCommonPasswMatch);
-              //PasswInfoLbl->Font->Color = clWindowText;
-              PasswBox->SetFocus();
-              if (g_config.AutoClearPassw)
-                m_nAutoClearPasswCnt = g_config.AutoClearPasswTime;
-            }
-            else
-              SetEditBoxTextBuf(pEditBox, pwszPassw);
-            break;
+        pwszPassw = reinterpret_cast<wchar_t*>(pPassw);
+        if (pwszPassw != nullptr) {
+          W32CharToWCharInternal(pwszPassw);
+          nPasswLenWChars = wcslen(pwszPassw);
+          if (blFirstCharNotLC)
+            pwszPassw[0] = toupper(pwszPassw[0]);
+        }
 
-          case gpdGuiList:
-            {
-              int nAppendixLen = sPasswAppendix.Length();
-              if (lPasswListWChars + nPasswLenWChars +
-                  nAppendixLen >= sPasswList.Size()) {
-                word64 qNewSizeWChars = static_cast<double>(lPasswListWChars) /
-                  nPasswCnt * nNumOfPassw + nPasswLenWChars + nAppendixLen + 1;
-                if (qNewSizeWChars * sizeof(wchar_t) > lMaxPasswListBytes) {
-                  NumPasswBox->Text = WString(nPasswCnt);
-                  MsgBox(TRLFormat("The memory limit of the password list has\n"
-                      "been reached.\n\nThe number of passwords has been\n"
-                      "reduced to %d.", nPasswCnt), MB_ICONWARNING);
-                  blBreakLoop = true;
-                  break;
-                }
-                sPasswList.Grow(qNewSizeWChars);
+        if (pScriptThread) {
+          pScriptThread->CallGenerate(
+            qPasswCnt + 1,
+            pwszPassw, dPasswSec);
+          int nTimeouts = 0;
+          while (!cancelFlag) {
+            TWaitResult wr = pScriptThread->ResultEvent->WaitFor(1000);
+
+            if (wr == wrSignaled) {
+              // check if error state has been set
+              if (!pScriptThread->ErrorMessage.IsEmpty())
+                throw Exception(pScriptThread->ErrorMessage);
+
+              const SecureWString& sScriptPassw = pScriptThread->GetResultPassw();
+              if (!sScriptPassw.IsStrEmpty()) {
+                sFromScript.Assign(sScriptPassw, std::min<word32>(
+                    PASSWSCRIPT_MAX_CHARS + 1, sScriptPassw.Size()));
+                sFromScript.back() = '\0';
+                pwszPassw = sFromScript;
+                nPasswLen = GetNumOfUnicodeChars(sFromScript);
+                nPasswLenWChars = sFromScript.StrLen();
               }
-
-              //wcscpy(sPasswList + lPasswListWChars, pwszPassw);
-              //lPasswListWChars += nPasswLenWChars;
-              //wcscpy(sPasswList + lPasswListWChars, sPasswAppendix.c_str());
-              //lPasswListWChars += nAppendixLen;
-              sPasswList.StrCat(pwszPassw, nPasswLenWChars, lPasswListWChars);
-              sPasswList.StrCat(sPasswAppendix.c_str(), sPasswAppendix.Length(),
-                lPasswListWChars);
+              // max. entropy is given by total number of Unicode characters
+              // (log_2(1114112) = ~20) and password length
+              dPasswSec = std::min(20.0 * sFromScript.StrLen(),
+                  std::max(0.0, pScriptThread->GetResultPasswSec()));
+              break;
             }
+            else if (wr == wrTimeout) {
+              if (pScriptThread->Finished && !pScriptThread->ErrorMessage.IsEmpty())
+                throw Exception(pScriptThread->ErrorMessage);
 
-            break;
-
-          case gpdFileList:
-
-            if (!pFile->WriteString(pwszPassw, nPasswLenWChars))
-              OutOfDiskSpaceError();
-
-            if (!pFile->WriteString(sPasswAppendix.c_str(), sPasswAppendix.Length()))
-              OutOfDiskSpaceError();
-
-            break;
-
-          case gpdMsgBox:
-
-            if (nPasswLen > 1000)
-              MsgBox(TRL("Password is too long to show it in a\nmessage box like this.\n\n"
-                  "It will be copied to the clipboard."),
-                MB_ICONWARNING);
+              if (blAsync && ++nTimeouts == 1) {
+                ProgressForm->SetProgressMessageAsync(
+                  TRL("Waiting for script ..."));
+              }
+            }
             else {
-              SecureWString sPasswMsg = FormatW_Secure(
-                TRL("The generated password is:\n\n%s\n\nThe estimated "
-                  "security is %d bits.\n\nYes -> copy password to clipboard,\n"
-                  "No -> generate new password,\nCancel -> cancel process."),
-                pwszPassw, nPasswSec);
+              throw Exception(FormatW("ResultEvent::WaitFor() error (%d)",
+                static_cast<int>(wr)));
+            }
+          }
+          if (cancelFlag) {
+            if (nTimeouts > 0) {
+              TerminateThread(reinterpret_cast<HANDLE>(pScriptThread->Handle), 0);
+              m_pScript.reset();
+              TThread::Synchronize(nullptr, [this]() {
+                MsgBox(TRL("Script thread was terminated forcibly.\n"
+                  "Please check script for infinite loops."),
+                  MB_ICONERROR);
+                });
+            }
+            break;
+          }
+          if (nTimeouts > 0) {
+            ProgressForm->SetProgressMessageAsync(WString());
+          }
+        }
 
-              switch (MessageBox(Application->Handle, sPasswMsg, PROGRAM_NAME,
-                  MB_ICONINFORMATION + MB_YESNOCANCEL)) {
-              case IDCANCEL:
+        if (pwszPassw == nullptr)
+          pwszPassw = &nullChar;
+
+        if (qNumOfPassw > 1 && nPasswLenWChars > 0 && blExcludeDuplicates) {
+          auto ret = uniquePasswList.emplace(pwszPassw, nPasswLenWChars + 1);
+          if (!ret.second)
+            continue;
+        }
+
+        if (blFirstGen || blCheckEachPassw) {
+          dPasswSec = std::min<double>(dPasswSec, RandomPool::MAX_ENTROPY);
+          nPasswSec = FloorEntropyBits(dPasswSec);
+        }
+
+        if (qNumOfPassw == 1 || blCheckEachPassw) {
+          if (g_config.TestCommonPassw && !m_commonPassw.empty()) {
+            std::wstring testStr(pwszPassw);
+            if (m_commonPassw.count(testStr)) {
+              blCommonPasswMatch = true;
+              nPasswSec = std::min(nPasswSec, m_nCommonPasswEntropy);
+            }
+            eraseStlString(testStr);
+          }
+        }
+
+        if (blCheckEachPassw) {
+          sPasswAppendix = "  [";
+          if (blCommonPasswMatch)
+            sPasswAppendix += "*";
+          sPasswAppendix += IntToStr(nPasswSec) + "]" +
+            (dest == gpdGuiList ? CRLF : g_sNewline);
+        }
+
+        if (blFirstGen) {
+          blFirstGen = false;
+          if (dest == gpdGuiList) {
+            nTotalPasswSec = FloorEntropyBits(std::min<double>(
+              dPasswSec * qNumOfPassw, RandomPool::MAX_ENTROPY));
+
+            WString sHeader = FormatW(EnableInt64FormatSpec(TRL(
+              asPasswListHeader)), qNumOfPassw, static_cast<word64>(nPasswSec),
+              static_cast<word64>(nTotalPasswSec)) + CRLF + CRLF;
+            nPasswListHeaderLen = sHeader.Length();
+
+            // use 64-bit int to avoid 32-bit overflow
+            word64 qEstSizeWChars = nPasswListHeaderLen +
+              (nPasswLenWChars + sPasswAppendix.Length()) * qNumOfPassw + 1;
+            if (qEstSizeWChars * sizeof(wchar_t) > lMaxPasswListBytes)
+              throw Exception(TRL("The estimated list size will probably exceed\n"
+                  "the internal memory limit.\nPlease reduce the number of passwords"));
+
+            sPasswList.New(qEstSizeWChars);
+
+            //wcscpy(sPasswList, sHeader.c_str());
+            //lPasswListWChars = nPasswListHeaderLen;
+            sPasswList.StrCat(sHeader.c_str(), nPasswListHeaderLen,
+              lPasswListWChars);
+          }
+          else if (dest == gpdFileList) {
+            pFile.reset(new TStringFileStreamW(sFileName, wFileOpenMode,
+                g_config.FileEncoding, true, PASSW_MAX_BYTES));
+            if (wFileOpenMode == fmOpenReadWrite) {
+              pFile->FileEnd();
+            }
+          }
+        }
+
+        bool blBreakLoop = false;
+        switch (dest) {
+        case gpdGuiList:
+          {
+            int nAppendixLen = sPasswAppendix.Length();
+            if (lPasswListWChars + nPasswLenWChars +
+                nAppendixLen >= sPasswList.Size()) {
+              word64 qNewSizeWChars = static_cast<double>(lPasswListWChars) /
+                qPasswCnt * qNumOfPassw + nPasswLenWChars + nAppendixLen + 1;
+              if (qNewSizeWChars * sizeof(wchar_t) > lMaxPasswListBytes) {
+                TThread::Synchronize(nullptr, [&]() {
+                  NumPasswBox->Text = IntToStr(static_cast<__int64>(qPasswCnt));
+                  MsgBox(FormatW(EnableInt64FormatSpec(TRL(
+                    "The memory limit of the password list has\n"
+                    "been reached.\n\nThe number of passwords has been\n"
+                    "reduced to %d.")), qPasswCnt.load()), MB_ICONWARNING);
+                });
                 blBreakLoop = true;
                 break;
-              case IDNO:
-                continue;
               }
+              sPasswList.Grow(qNewSizeWChars);
             }
 
-            // no break if user pressed OK
-            if (blBreakLoop)
-              break;
-
-          case gpdClipboard:
-
-            Clipboard()->Clear();
-            SetClipboardTextBuf(pwszPassw, nullptr);
-            CopiedSensitiveDataToClipboard();
-            ShowTrayInfo(TRL("Password copied to clipboard."));
-            break;
-
-          case gpdConsole:
-
-            {
-              SecureAnsiString asPasswUtf8 = WStringToUtf8(pwszPassw);
-              std::wcout << asPasswUtf8.c_str() << std::endl;
-            }
-            break;
-
-          case gpdAutotype:
-            TSendKeysThread::TerminateAndWait();
-            new TSendKeysThread(Handle, g_config.AutotypeDelay,
-              pwszPassw, nPasswLenWChars);
+            sPasswList.StrCat(pwszPassw, nPasswLenWChars, lPasswListWChars);
+            sPasswList.StrCat(sPasswAppendix.c_str(), sPasswAppendix.Length(),
+              lPasswListWChars);
           }
 
-          if (blBreakLoop)
-            break;
+          break;
 
-          nPasswCnt++;
+        case gpdFileList:
+
+          if (!pFile->WriteString(pwszPassw, nPasswLenWChars))
+            OutOfDiskSpaceError();
+
+          if (!pFile->WriteString(sPasswAppendix.c_str(), sPasswAppendix.Length()))
+            OutOfDiskSpaceError();
+
+          break;
+
+        case gpdMsgBox:
+          {
+            bool blContinue = false;
+            TThread::Synchronize(nullptr, [&]() {
+              if (nPasswLen > 1000)
+                MsgBox(TRL("Password is too long to show it in a\nmessage box like this.\n\n"
+                    "It will be copied to the clipboard."),
+                  MB_ICONWARNING);
+              else {
+                SecureWString sPasswMsg = FormatW_Secure(
+                  TRL("The generated password is:\n\n%s\n\nThe estimated "
+                    "security is %d bits.\n\nYes -> copy password to clipboard,\n"
+                    "No -> generate new password,\nCancel -> cancel process."),
+                  pwszPassw, nPasswSec);
+
+                BeforeDisplayDlg();
+                switch (MessageBox(Application->Handle, sPasswMsg, PROGRAM_NAME,
+                    MB_ICONINFORMATION + MB_YESNOCANCEL)) {
+                case IDCANCEL:
+                  blBreakLoop = true;
+                  pwszPassw = nullptr;
+                  break;
+                case IDNO:
+                  blContinue = true;
+                }
+                AfterDisplayDlg();
+              }
+            });
+            if (blContinue)
+              continue;
+          }
+
+          break;
+
+        case gpdConsole:
+            std::wcout << WStringToUtf8(pwszPassw).c_str() << std::endl;
+          break;
+
+        default:
+          break;
         }
+
+        if (blBreakLoop)
+          break;
+
+        qPasswCnt++;
       }
-      catch (EUserCancel& e) {
-        if (nNumOfPassw > 1)
-          MsgBox(e.Message + WString(".\n\n") + TRLFormat(
-              "%d passwords generated.", nPasswCnt), MB_ICONWARNING);
+
+      if (cancelFlag && qNumOfPassw > 1) {
+        TThread::Synchronize(nullptr, [&qPasswCnt]() {
+          MsgBox(EUserCancel::UserCancelMsg + ".\n\n" +
+            FormatW(EnableInt64FormatSpec(
+              TRL("%d passwords generated.")), qPasswCnt.load()), MB_ICONWARNING);
+        });
       }
 
       if (pScriptThread)
         pScriptThread->Terminate();
 
-      if (IsRandomPoolActive()) {
-        m_randPool.Flush();
+      if (nTotalPasswSec == 0)
+        nTotalPasswSec = FloorEntropyBits(
+          std::min<double>(dPasswSec * qPasswCnt, RandomPool::MAX_ENTROPY));
 
-        if (nTotalPasswSec == 0)
-          nTotalPasswSec = FloorEntropyBits(
-            std::min<double>(dPasswSec * nPasswCnt, RandomPool::MAX_ENTROPY));
+      //if (dest != gpdConsole)
+      //  Refresh();
 
-        m_entropyMng.ConsumeEntropyBits(nTotalPasswSec);
-        UpdateEntropyProgress();
-      }
+      if (dest == gpdGuiList && qPasswCnt != 0) {
+        int nStrOffset = 0;
 
-      if (dest != gpdConsole)
-        Refresh();
+        if (qPasswCnt < qNumOfPassw) {
+          WString sNewHeader = FormatW(EnableInt64FormatSpec(TRL(asPasswListHeader)),
+              qPasswCnt.load(), static_cast<word64>(nPasswSec),
+              static_cast<word64>(nTotalPasswSec)) + CRLF + CRLF;
+          int nNewHeaderLen = sNewHeader.Length();
+          nStrOffset = nPasswListHeaderLen - nNewHeaderLen;
 
-      if (nNumOfPassw > 1 && nPasswCnt > 0 && dest != gpdConsole) {
-        if (blCallback)
-          ProgressForm->MainThreadCallback(nPasswCnt);
-
-        if (dest == gpdGuiList) {
-          if (blCallback)
-            ProgressForm->MainThreadCallback(TRL("Copying password list ..."));
-
-          int nStrOffset = 0;
-
-          if (nPasswCnt < nNumOfPassw) {
-            WString sNewHeader = TRLFormat(asPasswListHeader,
-                nPasswCnt, nPasswSec, nTotalPasswSec) + WString("\r\n\r\n");
-            int nNewHeaderLen = sNewHeader.Length();
-            nStrOffset = nPasswListHeaderLen - nNewHeaderLen;
-
-            wcsncpy(sPasswList.Data() + nStrOffset, sNewHeader.c_str(), nNewHeaderLen);
-          }
-
-          sPasswList[lPasswListWChars - 2] = '\0';
-
-          SetEditBoxTextBuf(PasswListForm->PasswList, sPasswList.Data() + nStrOffset);
-          sPasswList.Empty();
-        }
-        else {
-          MsgBox(TRLFormat("File \"%s\" successfully created.\n\n%d passwords "
-              "written.", ExtractFileName(SaveDlg->FileName).c_str(), nPasswCnt),
-            MB_ICONINFORMATION);
+          wcsncpy(sPasswList.Data() + nStrOffset, sNewHeader.c_str(), nNewHeaderLen);
         }
 
-        if (blCallback) {
-          ProgressForm->Terminate();
-          blCallback = false;
-        }
+        sPasswList[lPasswListWChars - 2] = '\0';
 
-        Screen->Cursor = crDefault;
-
-        if (dest == gpdGuiList)
-          PasswListForm->Execute();
-      }
-      else if (blCallback) {
-        ProgressForm->Terminate();
-        blCallback = false;
-        Screen->Cursor = crDefault;
+        //SetEditBoxTextBuf(PasswListForm->PasswList, sPasswList.Data() + nStrOffset);
+        //sPasswList.Empty();
+        pwszPassw = &sPasswList[nStrOffset];
       }
     }
     catch (std::exception& e) {
-      throw Exception(CppStdExceptionToString(e));
+      sErrorMsg = CppStdExceptionToString(e);
     }
-  }
-  catch (Exception& e) {
+    catch (Exception& e) {
+      sErrorMsg = e.Message;
+    }
+
+    if (!sErrorMsg.IsEmpty()) {
+      sErrorMsg = TRLFormat("An error has occurred during password generation:\n%s.",
+          sErrorMsg.c_str());
+      if (dest == gpdFileList) {
+        sErrorMsg += WString("\n\n") + FormatW(EnableInt64FormatSpec(TRL(
+          "%d passwords written to file \"%s\".")),
+          qPasswCnt.load(), ExtractFileName(SaveDlg->FileName).c_str());
+      }
+    }
+
     if (pScriptThread)
       pScriptThread->Terminate();
-    WString sMsg = TRLFormat("An error has occurred during password generation:\n%s.",
-        e.Message.c_str());
-    if (dest == gpdFileList) {
-      sMsg += WString("\n\n") + TRLFormat("%d passwords written to file \"%s\".",
-          nPasswCnt, ExtractFileName(SaveDlg->FileName).c_str());
-    }
-    MsgBox(sMsg, MB_ICONERROR);
-    m_randPool.Flush();
-    if (blCallback)
-      ProgressForm->Terminate();
-    Screen->Cursor = crDefault;
-  }
+  };
 
-  // wait for script thread to finish before destruction
-  if (pScriptThread)
-    pScriptThread->WaitFor();
+  if (dest == gpdConsole) {
+    generateAsync();
+    if (!sErrorMsg.IsEmpty())
+      std::wcout << WStringToUtf8(sErrorMsg).c_str() << std::endl;
+  }
+  else {
+    auto pTask = TTask::Create(generateAsync);
+
+    pTask->Start();
+
+    int nTimeouts = 0;
+    bool blProgInit = false;
+    while (!pTask->Wait(10)) {
+      Application->ProcessMessages();
+
+      nTimeouts += 10;
+      if (!blProgInit && nTimeouts >= 1000 && !ProgressForm->Visible) {
+        blProgInit = true;
+        ProgressForm->Init(this,
+          TRL(qNumOfPassw == 1 ? "Generating password" :
+              "Generating password list"),
+          TRL("%d of %d passwords generated."),
+          qNumOfPassw,
+          &cancelFlag,
+          &qPasswCnt);
+
+        Screen->Cursor = crAppStart;
+      }
+    }
+
+    Enabled = true;
+    Screen->Cursor = crDefault;
+
+    if (!sErrorMsg.IsEmpty())
+      MsgBox(sErrorMsg, MB_ICONERROR);
+    else if (qPasswCnt != 0 && pwszPassw != nullptr) {
+      try {
+        switch (dest) {
+        case gpdGuiSingle:
+          if (pEditBox == nullptr) {
+            int nTemp = PasswBox->Tag;
+            PasswBox->Tag = 0;
+            ClearEditBoxTextBuf(PasswBox);
+            SetEditBoxTextBuf(PasswBox, pwszPassw);
+            PasswBox->Tag = nTemp;
+            ShowPasswInfo(nPasswLen, nPasswSec, blCommonPasswMatch);
+            PasswBox->SetFocus();
+            if (g_config.AutoClearPassw)
+              m_nAutoClearPasswCnt = g_config.AutoClearPasswTime;
+          }
+          else
+            SetEditBoxTextBuf(pEditBox, pwszPassw);
+          break;
+
+        case gpdGuiList:
+          if (blProgInit) {
+            ProgressForm->SetProgressMessage(TRL("Copying password list ..."));
+          }
+          SetEditBoxTextBuf(PasswListForm->PasswList, pwszPassw);
+          PasswListForm->Execute();
+          break;
+
+        case gpdFileList:
+          MsgBox(FormatW(EnableInt64FormatSpec(TRL(
+            "File \"%s\" successfully created.\n\n%d passwords "
+            "written.")), ExtractFileName(SaveDlg->FileName).c_str(), qPasswCnt.load()),
+            MB_ICONINFORMATION);
+          break;
+
+        case gpdMsgBox:
+        case gpdClipboard:
+          Clipboard()->Clear();
+          SetClipboardTextBuf(pwszPassw, nullptr);
+          CopiedSensitiveDataToClipboard();
+          ShowTrayInfo(TRL("Password copied to clipboard."));
+          break;
+
+        case gpdAutotype:
+          TSendKeysThread::TerminateAndWait();
+          if (!TSendKeysThread::ThreadRunning())
+            new TSendKeysThread(Handle, g_config.AutotypeDelay,
+              pwszPassw, nPasswLenWChars);
+          break;
+
+        default:
+          break;
+        }
+      }
+      catch (std::exception& e) {
+        sErrorMsg = CppStdExceptionToString(e);
+      }
+      catch (Exception& e) {
+        sErrorMsg = e.Message;
+      }
+
+      if (!sErrorMsg.IsEmpty())
+        MsgBox(TRLFormat("An error has occurred while trying to send/\n"
+          "process the password data:\n%s.", sErrorMsg.c_str()), MB_ICONERROR);
+    }
+
+    ProgressForm->Terminate();
+
+    if (IsRandomPoolActive()) {
+      m_randPool.Flush();
+      m_entropyMng.ConsumeEntropyBits(nTotalPasswSec);
+      m_passwGen.RandGen = &m_randPool;
+      UpdateEntropyProgress();
+    }
+  }
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::ShowTrayInfo(const WString& sInfo,
@@ -2775,6 +2866,9 @@ void __fastcall TMainForm::CharSetInfoBtnClick(TObject *Sender)
       sCharsW16 += WString("\n\n") + TRLFormat("(phonetic, based on trigram frequencies\n"
           "from the following source:\n<%s>)", sSource.c_str());
     }
+    break;
+  default:
+    break;
   }
 
   WString sMsg;
@@ -2884,6 +2978,7 @@ void __fastcall TMainForm::AppMessage(MSG& msg, bool& blHandled)
 
   case WM_KEYDOWN:
     nEntBits = m_entropyMng.AddEvent(msg, entKeyboard, ENTROPY_KEYBOARD);
+    break;
   }
 
   if (nEntBits != 0)
@@ -2894,12 +2989,13 @@ void __fastcall TMainForm::AppException(TObject* Sender, Sysutils::Exception* E)
 {
   // this should not happen...
   // maybe it's better not to translate this message to avoid further errors...?
+  BeforeDisplayDlg();
   Application->MessageBox(FormatW("Sorry, this should not have happened.\n"
       "The following error has not been handled\nproperly by the application:\n\n\"%s\"\n\n"
       "It is recommended to restart the program\nto avoid an undefined behavior.\n\n"
       "Please report this error to %s.\nThank you!", E->Message.c_str(),
       PROGRAM_AUTHOR_EMAIL).c_str(), L"Unhandled exception", MB_ICONERROR);
-
+  AfterDisplayDlg();
   // is it really necessary to terminate the program? No...
 //  Application->Terminate();
 }
@@ -3105,7 +3201,7 @@ void __fastcall TMainForm::ListMenu_PasteClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::ListMenu_DeleteClick(TObject *Sender)
 {
-  ((TComboBox*) ListMenu->PopupComponent)->SelText = "";
+  ((TComboBox*) ListMenu->PopupComponent)->SelText = WString();
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::ListMenu_SelectAllClick(TObject *Sender)
@@ -3233,12 +3329,12 @@ void __fastcall TMainForm::MainMenu_Help_DonateClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::NumPasswBoxExit(TObject *Sender)
 {
-  int nValue = StrToIntDef(NumPasswBox->Text, 0);
+  /*int nValue = StrToIntDef(NumPasswBox->Text, 0);
 
   if (nValue < 2)
     NumPasswBox->Text = WString("2");
   else if (nValue > PASSW_MAX_NUM)
-    NumPasswBox->Text = WString(PASSW_MAX_NUM);
+    NumPasswBox->Text = WString(PASSW_MAX_NUM);*/
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::FormatListExit(TObject *Sender)
@@ -3253,7 +3349,7 @@ void __fastcall TMainForm::WLFNListExit(TObject *Sender)
   WString sFileName = WLFNList->Text;
 
   if (sFileName.IsEmpty() || SameFileName(sFileName, WLFNLIST_DEFAULT))
-    LoadWordListFile("", true, m_sWLFileName.IsEmpty());
+    LoadWordListFile(WString(), true, m_sWLFileName.IsEmpty());
   else
     LoadWordListFile(sFileName, true, SameFileName(sFileName, m_sWLFileName));
 }
@@ -3383,7 +3479,7 @@ void __fastcall TMainForm::PasswBoxMenu_PasteClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::PasswBoxMenu_DeleteClick(TObject *Sender)
 {
-  PasswBox->SelText = "";
+  PasswBox->SelText = WString();
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::PasswBoxMenu_EditableClick(TObject *Sender)
@@ -3517,11 +3613,10 @@ void __fastcall TMainForm::OnHotKey(TMessage& msg)
 void __fastcall TMainForm::TrayMenuPopup(TObject *Sender)
 {
   bool blEnable = true;
-  if (IsDisplayDlg())
+  if (IsDisplayDlg() || ProgressForm->Visible)
     blEnable = false;
   else if (Screen->ActiveForm != nullptr)
-    blEnable = !(Screen->ActiveForm->FormState.Contains(fsModal) ||
-        (Screen->ActiveForm == ProgressForm && ProgressForm->IsRunning()));
+    blEnable = !Screen->ActiveForm->FormState.Contains(fsModal);
 
   for (int nI = 0; nI < TrayMenu->Items->Count; nI++)
     TrayMenu->Items->Items[nI]->Enabled = blEnable;
@@ -3544,6 +3639,9 @@ void __fastcall TMainForm::MainMenu_Help_CheckForUpdatesClick(
   // no break here!
   case TUpdateCheckThread::CheckResult::Positive:
     m_lastUpdateCheck = TDateTime::CurrentDate();
+    break;
+  default:
+    break;
   }
 
   Screen->Cursor = crDefault;
@@ -3729,8 +3827,8 @@ void __fastcall TMainForm::PasswBoxMenu_SaveAsFileClick(TObject *Sender)
   try {
     SecureWString sPassw = GetEditBoxTextBuf(PasswBox);
 
-    std::unique_ptr<TStringFileStreamW> pFile(new TStringFileStreamW(sFileName, fmCreate,
-        g_config.FileEncoding, true, PASSW_MAX_BYTES));
+    std::unique_ptr<TStringFileStreamW> pFile(new TStringFileStreamW(
+       sFileName, fmCreate, g_config.FileEncoding, true, PASSW_MAX_BYTES));
 
     if (!pFile->WriteString(sPassw, sPassw.StrLen()))
       OutOfDiskSpaceError();
@@ -3815,7 +3913,7 @@ void __fastcall TMainForm::MainMenu_Options_HideEntProgressClick(TObject *Sender
   if (m_blShowEntProgress)
     UpdateEntropyProgress(true);
   else
-    StatusBar->Panels->Items[2]->Text = "";
+    StatusBar->Panels->Items[2]->Text = WString();
   //StatusBar->Panels->Items[4]->Text = "";
 }
 //---------------------------------------------------------------------------
@@ -3910,8 +4008,9 @@ void __fastcall TMainForm::PasswBoxMenu_PerformAutotypeClick(TObject *Sender)
   }
   else {
     TSendKeysThread::TerminateAndWait();
-    new TSendKeysThread(Handle, g_config.AutotypeDelay,
-      sPassw.c_str(), sPassw.StrLen());
+    if (!TSendKeysThread::ThreadRunning())
+      new TSendKeysThread(Handle, g_config.AutotypeDelay,
+        sPassw.c_str(), sPassw.StrLen());
   }
 }
 //---------------------------------------------------------------------------
@@ -3927,23 +4026,29 @@ void __fastcall TMainForm::FormCloseQuery(TObject *Sender, bool &CanClose)
   CanClose = PasswMngForm->CloseQuery();
   if (CanClose) {
     try {
-      int nTimeMs = 0;
-      bool blInit = true;
-      const int WAIT_TIME_MS = 10000, DELAY_MS = 500;
-      TSendKeysThread::TerminateAndWait(300);
-      while (TUpdateCheckThread::ThreadRunning() ||
-             TSendKeysThread::ThreadRunning()) {
-        if (blInit) {
-          blInit = false;
-          ProgressForm->Init(this, PROGRAM_NAME,
-            TRL("Waiting for active threads to finish ..."), WAIT_TIME_MS);
+      TSendKeysThread::TerminateAndWait(250);
+
+      if (TUpdateCheckThread::ThreadRunning() ||
+          TSendKeysThread::ThreadRunning()) {
+        std::atomic<bool> cancelFlag(false);
+
+        auto pTask = TTask::Create([&cancelFlag]()
+        {
+          while ((TUpdateCheckThread::ThreadRunning() ||
+                 TSendKeysThread::ThreadRunning()) && !cancelFlag)
+            Sleep(10);
+        });
+
+        pTask->Start();
+
+        if (!pTask->Wait(250)) {
+          ProgressForm->ExecuteModal(this, PROGRAM_NAME,
+            TRL("Waiting for active threads to finish ..."), cancelFlag,
+            [&pTask](unsigned int timeout)
+            {
+              return pTask->Wait(timeout);
+            });
         }
-        else
-          ProgressForm->MainThreadCallback(nTimeMs);
-        Sleep(DELAY_MS);
-        nTimeMs += DELAY_MS;
-        if (nTimeMs > WAIT_TIME_MS)
-          nTimeMs = 0;
       }
     }
     catch (...)

@@ -49,12 +49,12 @@ public:
     FLAG_STANDALONE_PASSW_GEN = 1
   };
 
-  LuaScript(PasswordGenerator* pPasswGen = NULL);
+  LuaScript();
   ~LuaScript();
 
   void LoadFile(const WString&);
 
-  bool InitGenerate(int nNumPassw,
+  bool InitGenerate(word64 qNumPassw,
 	int nDestType,
 	int nGenFlags,
 	int nAdvancedFlags,
@@ -62,11 +62,14 @@ public:
 	int nNumWords,
 	const wchar_t* pwszFormatPassw);
 
-  void CallGenerate(int nPasswNum,
+  void CallGenerate(word64 qPasswNum,
 	const wchar_t* pwszSrcPassw,
 	double dSrcPasswSec,
 	SecureWString& sDestPassw,
 	double& dDestPasswSec);
+
+  static void SetRandomGenerator(RandomGenerator* pSrc);
+  static void SetPasswGenerator(PasswordGenerator* pSrc);
 
   __property WString FileName =
   { read=m_sFileName };
@@ -80,17 +83,18 @@ class TScriptingThread : public TThread
 {
 private:
   LuaScript* m_pScript;
-  TEvent* m_pCallEvent;
-  TEvent* m_pResultEvent;
+  TSimpleEvent* m_pCallEvent;
+  TSimpleEvent* m_pResultEvent;
   bool m_blInit;
-  int m_nInitNumPassw;
+  word64 m_qInitNumPassw;
   int m_nInitGenFlags;
   int m_nInitDestType;
   int m_nInitNumChars;
   int m_nInitNumWords;
   int m_nInitAdvancedFlags;
-  int m_nPasswNum;
-  const wchar_t* m_pwszInitFormatPassw;
+  word64 m_qPasswNum;
+  //const wchar_t* m_pwszInitFormatPassw;
+  WString m_sInitFormatPassw;
   const wchar_t* m_pwszSrcPassw;
   double m_dSrcPasswSec;
   SecureWString m_sResultPassw;
@@ -107,8 +111,8 @@ public:
     FreeOnTerminate = false;
     Priority = tpNormal;
 
-    m_pCallEvent = new TEvent(nullptr, true, false, "", false);
-    m_pResultEvent = new TEvent(nullptr, true, false, "", false);
+    m_pCallEvent = new TSimpleEvent(nullptr, false, false, "", false);
+    m_pResultEvent = new TSimpleEvent(nullptr, false, false, "", false);
   }
 
   __fastcall ~TScriptingThread()
@@ -118,25 +122,26 @@ public:
     m_dResultPasswSec = 0;
   }
 
-  void __fastcall SetInitParam(int nNumPassw,
+  void __fastcall SetInitParam(word64 qNumPassw,
     int nDestType,
     int nGenFlags,
     int nAdvancedFlags,
     int nNumChars,
     int nNumWords,
-    const wchar_t* pwszFormatPassw)
+    const WString& sInitFormatPassw)
   {
     m_blInit = true;
-    m_nInitNumPassw = nNumPassw;
+    m_qInitNumPassw = qNumPassw;
     m_nInitDestType = nDestType;
     m_nInitGenFlags = nGenFlags;
     m_nInitAdvancedFlags = nAdvancedFlags;
     m_nInitNumChars = nNumChars;
     m_nInitNumWords = nNumWords;
-    m_pwszInitFormatPassw = pwszFormatPassw;
+    //m_pwszInitFormatPassw = pwszFormatPassw;
+    m_sInitFormatPassw = sInitFormatPassw;
   }
 
-  void __fastcall CallGenerate(int nPasswNum,
+  void __fastcall CallGenerate(word64 qPasswNum,
     const wchar_t* pwszPassw, double dPasswSec);
 
   const SecureWString& __fastcall GetResultPassw(void)

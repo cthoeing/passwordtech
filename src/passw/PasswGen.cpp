@@ -254,7 +254,7 @@ w32string PasswordGenerator::CreateSetOfAmbiguousChars(
 //---------------------------------------------------------------------------
 std::optional<std::pair<w32string,CharSetType>> PasswordGenerator::ParseCharSet(
   w32string sInput,
-  CharSetFreq* pCharSetFreq) const
+  std::optional<CharSetFreq>* pCharSetFreq) const
 {
   if (sInput.length() < 2)
     return {};
@@ -359,10 +359,10 @@ std::optional<std::pair<w32string,CharSetType>> PasswordGenerator::ParseCharSet(
     blHasFreq = (charSetFreq.size() + (sInput.length() >= 2 ? 1 : 0)) >= 2;
 
   w32string sRemovedAmbigChars;
-  w32string sCharSet = MakeCharSetUnique(sFullCharSet, &m_sAmbigCharSet,
+  sFullCharSet = MakeCharSetUnique(sFullCharSet, &m_sAmbigCharSet,
     &m_ambigGroups, blHasFreq ? &sRemovedAmbigChars : nullptr);
 
-  if (sCharSet.length() < 2)
+  if (sFullCharSet.length() < 2)
     return {};
 
   if (blHasFreq) {
@@ -372,23 +372,22 @@ std::optional<std::pair<w32string,CharSetType>> PasswordGenerator::ParseCharSet(
       uniqueCharSetFreq = charSetFreq;
     else {
       for (const auto& kv : charSetFreq) {
-        w32string sCharSet = MakeCharSetUnique(kv.first, &sRemovedAmbigChars);
-        if (sCharSet.length() >= 2)
-          uniqueCharSetFreq.emplace(sCharSet, kv.second);
+        w32string sCurrCharSet = MakeCharSetUnique(kv.first, &sRemovedAmbigChars);
+        if (sCurrCharSet.length() >= 2)
+          uniqueCharSetFreq.emplace(sCurrCharSet, kv.second);
       }
     }
     if (!sInput.empty()) {
-      w32string sCharSet = MakeCharSetUnique(sInput, &sRemovedAmbigChars);
-        charSetFreq.emplace(sCharSet, 0);
-      if (sCharSet.length() >= 2)
-        uniqueCharSetFreq.emplace(sCharSet, 0);
+      w32string sInputCharSet = MakeCharSetUnique(sInput, &sRemovedAmbigChars);
+      if (!sInputCharSet.empty())
+        uniqueCharSetFreq.emplace(sInputCharSet, 0);
     }
     if (uniqueCharSetFreq.size() >= 2) {
       w32string sCommonCharSet;
       std::vector<std::pair<w32string,int>> freqList;
       for (const auto& kv : uniqueCharSetFreq) {
         int nNumChars = abs(kv.second);
-        if (nNumChars > 0)
+        if (nNumChars > 0 && kv.first.length() >= 2)
           freqList.emplace_back(kv.first, nNumChars);
         if (kv.second <= 0)
           sCommonCharSet += kv.first;
@@ -404,15 +403,18 @@ std::optional<std::pair<w32string,CharSetType>> PasswordGenerator::ParseCharSet(
         {
           return a.second > b.second;
         });
-        pCharSetFreq->items = std::move(freqList);
-        pCharSetFreq->sCommonCharSet = std::move(sCommonCharSet);
+        *pCharSetFreq = std::make_optional(CharSetFreq{
+          std::move(freqList), std::move(sCommonCharSet)});
         return std::make_optional(std::make_pair(
-          sCharSet, cstStandardWithFreq));
+          sFullCharSet, cstStandardWithFreq));
       }
     }
   }
 
-  return std::make_optional(std::make_pair(sCharSet, cstStandard));
+  if (pCharSetFreq)
+    pCharSetFreq->reset();
+
+  return std::make_optional(std::make_pair(sFullCharSet, cstStandard));
 }
 //---------------------------------------------------------------------------
 void PasswordGenerator::SetupCharSets(WString& sCustomChars,
@@ -470,7 +472,7 @@ void PasswordGenerator::SetupCharSets(WString& sCustomChars,
   }
 
   CharSetType charSetType;
-  CharSetFreq charSetFreq;
+  std::optional<CharSetFreq> charSetFreq;
   auto customCharSetResult = ParseCharSet(WStringToW32String(sCustomChars),
       &charSetFreq);
 
@@ -630,23 +632,46 @@ int PasswordGenerator::GetPassword(word32* pDest,
   word32 lChar;
   std::unique_ptr<std::set<word32>> pPasswCharSet;
 
-  if (!m_customCharSetFreq.empty()) {
-    nFlags &= ~PASSW_FLAG_EACHCHARONLYONCE;
+  if (m_customCharSetFreq) {
+    nFlags &= ~PASSW_FLAG_EXCLUDEREPCHARS;
+    auto charSetFreq = m_customCharSetFreq.value();
     int nPos = 0;
-    for (const auto& p : m_customCharSetFreq.items) {
-      for (int i = 0; i < p.second && nPos < nLength; i++) {
+    int nItemIdx = 0;
+
+    auto removeChar = [](w32string& sCharSet, word32 lChar)
+    {
+      // characters are sorted since std::set was used for creating the set
+      // hence, we may perform a binary search
+      auto it = std::lower_bound(sCharSet.begin(), sCharSet.end(), lChar);
+      if (it != sCharSet.end() && *it == lChar)
+        sCharSet.erase(it);
+    };
+
+    for (auto& p : charSetFreq.items) {
+      for (int i = 0; i < p.second && !p.first.empty() && nPos < nLength; i++) {
         lChar = p.first[m_pRandGen->GetNumRange(p.first.length())];
         pDest[nPos++] = lChar;
+        if (nFlags & PASSW_FLAG_EACHCHARONLYONCE) {
+          for (int j = nItemIdx; j < charSetFreq.items.size(); j++) {
+            removeChar(charSetFreq.items[j].first, lChar);
+          }
+          removeChar(charSetFreq.sCommonCharSet, lChar);
+        }
       }
       if (nPos >= nLength)
         break;
+      nItemIdx++;
     }
-    int nSetSize = m_customCharSetFreq.sCommonCharSet.length();
-    while (nPos < nLength) {
-      lChar = m_customCharSetFreq.sCommonCharSet[
-        m_pRandGen->GetNumRange(nSetSize)];
+
+    auto& sCommonCharSet = charSetFreq.sCommonCharSet;
+    while (!sCommonCharSet.empty() && nPos < nLength) {
+      lChar = sCommonCharSet[m_pRandGen->GetNumRange(sCommonCharSet.length())];
       pDest[nPos++] = lChar;
+      if (nFlags & PASSW_FLAG_EACHCHARONLYONCE)
+        removeChar(sCommonCharSet, lChar);
     }
+
+    nLength = nPos;
     if (nLength >= 2)
       m_pRandGen->Permute<word32>(pDest, nLength);
   }
@@ -663,8 +688,7 @@ int PasswordGenerator::GetPassword(word32* pDest,
         continue;
       if (nFlags & PASSW_FLAG_EACHCHARONLYONCE) {
         if (pPasswCharSet) {
-          std::pair<std::set<word32>::iterator, bool> ret =
-            pPasswCharSet->insert(lChar);
+          auto ret = pPasswCharSet->insert(lChar);
           if (!ret.second)
             continue;
         }
@@ -749,16 +773,27 @@ int PasswordGenerator::GetPassword(word32* pDest,
 
   lChar = 0;
 
-  // debug stuff
-  /*if (nFlags & PASSW_FLAG_EACHCHARONLYONCE) {
+#ifdef _DEBUG
+  if (nFlags & (PASSW_FLAG_EACHCHARONLYONCE | PASSW_FLAG_EXCLUDEREPCHARS)) {
     std::set<word32> testSet;
-    for (nI = 0; nI < nLength; nI++) {
-      std::pair<std::set<word32>::iterator, bool> ret =
-        testSet.insert(pDest[nI]);
-      if (!ret.second)
-        ShowMessageFmt("Duplicate i=%d, c=%d",ARRAYOFCONST((nI,int(pDest[nI]))));
+    for (int i = 0; i < nLength; i++) {
+      bool blFail;
+      if (nFlags & PASSW_FLAG_EACHCHARONLYONCE) {
+        auto ret = testSet.insert(pDest[i]);
+        blFail = !ret.second;
+      }
+      else
+        blFail = i > 0 && pDest[i] == pDest[i-1];
+      if (blFail) {
+        WString s;
+        s.SetLength(nLength);
+        for (int j = 0; j < nLength; j++)
+          s[j+1] = static_cast<wchar_t>(pDest[j]);
+        throw Exception("Duplicate or rep. char in password " + s);
+      }
     }
-  }*/
+  }
+#endif
 
   return nLength;
 }

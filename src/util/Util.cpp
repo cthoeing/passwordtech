@@ -177,11 +177,11 @@ void ClearEditBoxTextBuf(TCustomEdit* pEdit,
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
     "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~                                  ";
 
-  nTextLen = std::max(GetEditBoxTextLen(pEdit), nTextLen);
+  nTextLen = std::min(1'000'000, std::max(GetEditBoxTextLen(pEdit), nTextLen));
   if (nTextLen == 0)
     return;
-  if (nTextLen < 0)
-    nTextLen = INT_MAX;
+  //if (nTextLen < 0)
+  //  nTextLen = INT_MAX;
 
   try {
     std::vector<wchar_t> randStrBuf(nTextLen + 1);
@@ -306,8 +306,8 @@ bool StartEditBoxDragDrop(TCustomEdit* pEdit)
 
   GlobalUnlock(hMem);
 
-  FORMATETC fmtetc = { CF_UNICODETEXT, 0, DVASPECT_CONTENT, -1, TYMED_HGLOBAL };
-  STGMEDIUM stgmed = { TYMED_HGLOBAL, { 0 }, 0 };
+  FORMATETC fmtetc{ CF_UNICODETEXT, 0, DVASPECT_CONTENT, -1, TYMED_HGLOBAL };
+  STGMEDIUM stgmed{ TYMED_HGLOBAL, { 0 }, 0 };
 
   // transfer the current selection into the IDataObject
   stgmed.hGlobal = hMem;
@@ -504,55 +504,6 @@ int StringToFont(const WString& sFont,
   {}
 
   return i;
-  /*
-  int nPos = sFont.Pos(";");
-  if (nPos < 2)
-    return 0;
-
-  pFont->Name = sFont.SubString(1, nPos - 1);
-  int nNumParsed = 1;
-
-  sFont.Delete(1, nPos);
-
-  nPos = sFont.Pos(",");
-  if (nPos < 2)
-    return nNumParsed;
-
-  int nSize = StrToIntDef(sFont.SubString(1, nPos - 1), 0);
-  if (nSize == 0)
-    return nNumParsed;
-
-  pFont->Size = nSize;
-  nNumParsed++;
-
-  sFont.Delete(1, nPos);
-
-  nPos = sFont.Pos(",");
-  if (nPos == 1 || nPos > 3)
-    return nNumParsed;
-
-  int nFlags = StrToIntDef(sFont.SubString(1, nPos - 1), 0);
-  TFontStyles style;
-  if (nFlags & 1)
-    style << fsBold;
-  if (nFlags & 2)
-    style << fsItalic;
-  if (nFlags & 4)
-    style << fsUnderline;
-  if (nFlags & 8)
-    style << fsStrikeOut;
-
-  pFont->Style = style;
-  nNumParsed++;
-
-  sFont.Delete(1, nPos);
-  if (sFont.Length() == 0)
-    return nNumParsed;
-
-  pFont->Color = StringToColor(sFont);
-  nNumParsed++;
-
-  return nNumParsed;*/
 }
 //---------------------------------------------------------------------------
 WString CppStdExceptionToString(const std::exception& e)

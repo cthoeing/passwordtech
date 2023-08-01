@@ -27,6 +27,7 @@
 #include <DateUtils.hpp>
 #include <Clipbrd.hpp>
 #include <StrUtils.hpp>
+#include <System.Threading.hpp>
 #pragma hdrstop
 
 #include "PasswManager.h"
@@ -46,6 +47,7 @@
 #include "PasswMngDbProp.h"
 #include "zxcvbn.h"
 #include "PasswMngPwHistory.h"
+#include "Progress.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
@@ -2672,9 +2674,8 @@ void __fastcall TPasswMngForm::MainMenu_File_ExitClick(TObject *Sender)
 void __fastcall TPasswMngForm::IdleTimerTimer(TObject *Sender)
 {
   if (IsDbOpen() && g_config.Database.LockIdle && !m_blItemChanged &&
-     !m_blLocked && !IsDisplayDlg() &&
-     (Screen->ActiveForm == nullptr || !(Screen->ActiveForm->FormState.Contains(fsModal) ||
-        (Screen->ActiveForm == ProgressForm && ProgressForm->IsRunning()))))
+     !m_blLocked && !IsDisplayDlg() && !ProgressForm->Visible &&
+     !(Screen->ActiveForm != nullptr && Screen->ActiveForm->FormState.Contains(fsModal)))
   {
     if (SecondsBetween(Now(), m_lastUserActionTime) >= g_config.Database.LockIdleTime)
       LockOrUnlockDatabase(true);
@@ -2956,8 +2957,9 @@ void __fastcall TPasswMngForm::MainMenu_Edit_PerformAutotypeClick(TObject *Sende
   }
   else {
     TSendKeysThread::TerminateAndWait();
-    new TSendKeysThread(Handle, g_config.AutotypeDelay,
-      getDbEntryAutotypeSeq(pEntry), pEntry, m_passwDb.get());
+    if (!TSendKeysThread::ThreadRunning())
+      new TSendKeysThread(Handle, g_config.AutotypeDelay,
+        getDbEntryAutotypeSeq(pEntry), pEntry, m_passwDb.get());
   }
 }
 //---------------------------------------------------------------------------
@@ -3201,19 +3203,44 @@ bool __fastcall TPasswMngForm::ApplyDbSettings(const PasswDbSettings& settings)
 {
   if (!m_passwDb->HasRecoveryKey &&
       settings.NumKdfRounds != m_passwDb->KdfIterations) {
-    //bool blSuccess = false;
-
     auto key = RequestPasswAndCheck(TRL("Enter master password again"),
       TRL("Master password is invalid."), m_passwDb->CheckMasterKey);
 
     if (key.IsEmpty())
       return false;
 
+    const word32 lOldSetting = m_passwDb->KdfIterations;
     m_passwDb->KdfIterations = settings.NumKdfRounds;
 
-    Screen->Cursor = crHourGlass;
-    m_passwDb->ChangeMasterKey(key);
-    Screen->Cursor = crDefault;
+    std::atomic<bool> cancelFlag(false);
+
+    auto pTask = TTask::Create([this,&key,&cancelFlag]() {
+      m_passwDb->ChangeMasterKey(key, &cancelFlag);
+    });
+
+    pTask->Start();
+
+    while (!pTask->Wait(1000)) {
+      if (!ProgressForm->Visible) {
+        ProgressForm->ExecuteModal(
+          PasswDbSettingsDlg,
+          TRL("Changing number of KDF iterations"),
+          TRL("Computing derived key ..."),
+          cancelFlag,
+          [&pTask](unsigned int timeout)
+          {
+            return pTask->Wait(timeout);
+          }
+        );
+        break;
+      }
+    }
+
+    if (cancelFlag) {
+      m_passwDb->KdfIterations = lOldSetting;
+      MsgBox(EUserCancel::UserCancelMsg, MB_ICONERROR);
+      return false;
+    }
   }
 
   m_passwDb->DefaultUserName = settings.DefaultUserName;
@@ -3624,8 +3651,10 @@ void __fastcall TPasswMngForm::UrlBtnClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TPasswMngForm::PasswHistoryBtnClick(TObject *Sender)
 {
-  if (!m_passwDb->IsOpen() || m_pSelectedItem == nullptr)
+  if (!m_passwDb->IsOpen() || m_pSelectedItem == nullptr) {
+    NotifyUserAction();
     return;
+  }
 
   SuspendIdleTimer;
 
@@ -3669,6 +3698,7 @@ void __fastcall TPasswMngForm::PasswHistoryBtnClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TPasswMngForm::MainMenu_View_ResetListFontClick(TObject *Sender)
 {
+  NotifyUserAction();
   DbView->Font = Font;
   if (m_nSearchMode != SEARCH_MODE_OFF)
     DbView->Font->Color = DBVIEW_SEARCH_COLOR;

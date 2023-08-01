@@ -23,12 +23,14 @@
 
 #include "Scripting.h"
 #include "StringFileStreamW.h"
-#include "Main.h"
+#include "RandomPool.h"
 #include "Language.h"
+#include "Util.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 
-static PasswordGenerator* s_pPasswGen = NULL;
+static RandomGenerator* s_pRandGen = &RandomPool::GetInstance();
+static PasswordGenerator* s_pPasswGen = nullptr;
 
 const int MAX_PASSW_CHARS = 16000;
 
@@ -44,8 +46,8 @@ const WString
 // https://www.doornik.com/research/randomdouble.pdf
 inline double randbl_52new(void)
 {
-  int iRan1 = g_pRandSrc->GetWord32();
-  int iRan2 = g_pRandSrc->GetWord32();
+  int iRan1 = s_pRandGen->GetWord32();
+  int iRan2 = s_pRandGen->GetWord32();
   return (iRan1 * M_RAN_INVM32 + (0.5 + M_RAN_INVM52 / 2) +
       (iRan2 & 0x000FFFFF) * M_RAN_INVM52);
 }
@@ -69,7 +71,7 @@ int script_random(lua_State* L)
   if (nEnd < nStart)
     return 0;
 
-  int nRand = g_pRandSrc->GetNumRange(nEnd - nStart + 1) + nStart;
+  int nRand = s_pRandGen->GetNumRange(nEnd - nStart + 1) + nStart;
 
   lua_pushinteger(L, nRand);
   nRand = 0;
@@ -85,7 +87,7 @@ SecureAnsiString w32ToUtf8(word32* pSrc)
 
 int script_password(lua_State* L)
 {
-  if (s_pPasswGen == NULL || lua_gettop(L) == 0)
+  if (s_pPasswGen == nullptr || lua_gettop(L) == 0)
     return 0;
 
   int nLength = lua_tointeger(L, 1);
@@ -107,7 +109,7 @@ int script_password(lua_State* L)
 
 int script_passphrase(lua_State* L)
 {
-  if (s_pPasswGen == NULL || lua_gettop(L) == 0)
+  if (s_pPasswGen == nullptr || lua_gettop(L) == 0)
     return 0;
 
   int nWords = std::min<int>(100, lua_tointeger(L, 1));
@@ -116,15 +118,15 @@ int script_passphrase(lua_State* L)
 
   const char* pszChars = lua_tostring(L, 2);
   SecureW32String sInputPassw;
-  if (pszChars != NULL && *pszChars != '\0') {
+  if (pszChars != nullptr && *pszChars != '\0') {
     SecureWString sUtf16 = Utf8ToWString(pszChars);
-    sInputPassw.New(GetNumOfUnicodeChars(sUtf16));
+    sInputPassw.New(GetNumOfUnicodeChars(sUtf16) + 1);
     WCharToW32Char(sUtf16, sInputPassw);
   }
 
   int nFlags = lua_tointeger(L, 3);
 
-  SecureW32String sPassphrase(nWords * WORDLIST_MAX_WORDLEN + 1);
+  SecureW32String sPassphrase(nWords * (WORDLIST_MAX_WORDLEN + 2) + 1);
   s_pPasswGen->GetPassphrase(sPassphrase, nWords, sInputPassw, nFlags);
 
   SecureAnsiString asUtf8 = w32ToUtf8(sPassphrase);
@@ -136,7 +138,7 @@ int script_passphrase(lua_State* L)
 
 int script_phonetic(lua_State* L)
 {
-  if (s_pPasswGen == NULL || lua_gettop(L) == 0)
+  if (s_pPasswGen == nullptr || lua_gettop(L) == 0)
     return 0;
 
   int nLength = std::min<int>(MAX_PASSW_CHARS, lua_tointeger(L, 1));
@@ -162,12 +164,12 @@ int script_phonetic(lua_State* L)
 
 int script_word(lua_State* L)
 {
-  if (s_pPasswGen == NULL)
+  if (s_pPasswGen == nullptr)
     return 0;
 
   int nIndex = 0;
   if (lua_gettop(L) == 0)
-    nIndex = g_pRandSrc->GetNumRange(s_pPasswGen->WordListSize);
+    nIndex = s_pRandGen->GetNumRange(s_pPasswGen->WordListSize);
   else {
     nIndex = lua_tointeger(L, 1) - 1;
     if (nIndex < 0 || nIndex >= s_pPasswGen->WordListSize)
@@ -183,7 +185,7 @@ int script_word(lua_State* L)
 
 int script_numwords(lua_State* L)
 {
-  if (s_pPasswGen == NULL)
+  if (s_pPasswGen == nullptr)
     return 0;
 
   lua_pushinteger(L, s_pPasswGen->WordListSize);
@@ -192,11 +194,11 @@ int script_numwords(lua_State* L)
 
 int script_format(lua_State* L)
 {
-  if (s_pPasswGen == NULL || lua_gettop(L) == 0)
+  if (s_pPasswGen == nullptr || lua_gettop(L) == 0)
     return 0;
 
   const char* pszUtf8 = lua_tostring(L, 1);
-  if (pszUtf8 == NULL || *pszUtf8 == '\0')
+  if (pszUtf8 == nullptr || *pszUtf8 == '\0')
     return 0;
 
   int nFlags = lua_tointeger(L, 2);
@@ -209,7 +211,7 @@ int script_format(lua_State* L)
   double dPasswSec;
 
   int nPasswLen = s_pPasswGen->GetFormatPassw(sPassw, MAX_PASSW_CHARS,
-      sFormat, nFlags, NULL, NULL, NULL, &dPasswSec);
+      sFormat, nFlags, nullptr, nullptr, nullptr, &dPasswSec);
 
   if (nPasswLen == 0)
     return 0;
@@ -265,11 +267,9 @@ static void stackDump (lua_State *L) {
 }*/
 
 //---------------------------------------------------------------------------
-LuaScript::LuaScript(PasswordGenerator* pPasswGen)
+LuaScript::LuaScript()
   : m_nScriptFlags(0)
 {
-  if (pPasswGen != nullptr)
-    s_pPasswGen = pPasswGen;
   m_L = luaL_newstate();
   luaL_openlibs(m_L);
   lua_pushcfunction(m_L, script_random);
@@ -346,7 +346,7 @@ void LuaScript::LoadFile(const WString& sFileName)
   m_sFileName = sFileName;
 }
 //---------------------------------------------------------------------------
-bool LuaScript::InitGenerate(int nNumPassw,
+bool LuaScript::InitGenerate(word64 qNumPassw,
   int nDestType,
   int nGenFlags,
   int nAdvancedFlags,
@@ -359,7 +359,7 @@ bool LuaScript::InitGenerate(int nNumPassw,
     return false;
   }
 
-  lua_pushinteger(m_L, nNumPassw);
+  lua_pushinteger(m_L, qNumPassw);
   lua_pushinteger(m_L, nDestType);
   lua_pushinteger(m_L, nGenFlags);
   lua_pushinteger(m_L, nAdvancedFlags);
@@ -375,7 +375,7 @@ bool LuaScript::InitGenerate(int nNumPassw,
   return true;
 }
 //---------------------------------------------------------------------------
-void LuaScript::CallGenerate(int nPasswNum,
+void LuaScript::CallGenerate(word64 qPasswNum,
   const wchar_t* pwszSrcPassw,
   double dSrcPasswSec,
   SecureWString& sDestPassw,
@@ -388,7 +388,7 @@ void LuaScript::CallGenerate(int nPasswNum,
 
   int nInputArgs = 0;
 
-  lua_pushinteger(m_L, nPasswNum);
+  lua_pushinteger(m_L, qPasswNum);
   nInputArgs++;
 
   if (pwszSrcPassw != nullptr && *pwszSrcPassw != '\0') {
@@ -428,45 +428,85 @@ void LuaScript::CallGenerate(int nPasswNum,
   //stackDump(m_L);
 }
 //---------------------------------------------------------------------------
+void LuaScript::SetRandomGenerator(RandomGenerator* pSrc)
+{
+  s_pRandGen = pSrc;
+}
+//---------------------------------------------------------------------------
+void LuaScript::SetPasswGenerator(PasswordGenerator* pSrc)
+{
+  s_pPasswGen = pSrc;
+}
+
+//---------------------------------------------------------------------------
 void __fastcall TScriptingThread::Execute(void)
 {
+  const WString sErrorPrefix = "ScriptingThread::Execute(): ";
   try {
-    while (!Terminated) {
-      if (m_pCallEvent->WaitFor(10) == wrSignaled) {
-        m_pCallEvent->ResetEvent();
-        if (m_blInit) {
-          m_blInit = false;
-          m_pScript->InitGenerate(m_nInitNumPassw,
-            m_nInitDestType,
-            m_nInitGenFlags,
-            m_nInitAdvancedFlags,
-            m_nInitNumChars,
-            m_nInitNumWords,
-            m_pwszInitFormatPassw);
+    __try {
+      while (!Terminated) {
+        switch (m_pCallEvent->WaitFor(10)) {
+        case wrSignaled:
+          //m_pCallEvent->ResetEvent();
+          if (m_blInit) {
+            m_blInit = false;
+            m_pScript->InitGenerate(
+              m_qInitNumPassw,
+              m_nInitDestType,
+              m_nInitGenFlags,
+              m_nInitAdvancedFlags,
+              m_nInitNumChars,
+              m_nInitNumWords,
+              m_sInitFormatPassw.c_str());
+          }
+          m_pScript->CallGenerate(m_qPasswNum, m_pwszSrcPassw, m_dSrcPasswSec,
+            m_sResultPassw, m_dResultPasswSec);
+          m_pResultEvent->SetEvent();
+          break;
+
+        case wrError:
+          throw Exception("Wait result error code " +
+            IntToStr(m_pCallEvent->LastError));
+
+        case wrAbandoned:
+          throw Exception("Event object abandoned while still waiting");
+
+        default:
+          break;
         }
-        m_pScript->CallGenerate(m_nPasswNum, m_pwszSrcPassw, m_dSrcPasswSec,
-          m_sResultPassw, m_dResultPasswSec);
-        m_pResultEvent->SetEvent();
       }
+    }
+    __except (EXCEPTION_EXECUTE_HANDLER) {
+      DWORD dwError = GetExceptionCode();
+      m_sErrorMsg = sErrorPrefix;
+      if (dwError == 0)
+        m_sErrorMsg += "Synchronization error";
+      else
+        m_sErrorMsg += "Exception code " + IntToStr(static_cast<int>(dwError));
+      m_pResultEvent->SetEvent();
     }
   }
   catch (Exception& e) {
-    m_sErrorMsg = e.Message;
+    m_sErrorMsg = sErrorPrefix + e.Message;
+    m_pResultEvent->SetEvent();
+  }
+  catch (std::exception& e) {
+    m_sErrorMsg = sErrorPrefix + CppStdExceptionToString(e);
     m_pResultEvent->SetEvent();
   }
   catch (...) {
-    m_sErrorMsg = "ScriptingThread::Execute(): Unknown error";
+    m_sErrorMsg = sErrorPrefix + "Unknown error";
     m_pResultEvent->SetEvent();
   }
 }
 //---------------------------------------------------------------------------
-void __fastcall TScriptingThread::CallGenerate(int nPasswNum,
+void __fastcall TScriptingThread::CallGenerate(word64 qPasswNum,
   const wchar_t* pwszPassw, double dPasswSec)
 {
-  m_nPasswNum = nPasswNum;
+  m_qPasswNum = qPasswNum;
   m_pwszSrcPassw = pwszPassw;
   m_dSrcPasswSec = dPasswSec;
-  m_pResultEvent->ResetEvent();
+  //m_pResultEvent->ResetEvent();
   m_pCallEvent->SetEvent();
 }
 //---------------------------------------------------------------------------

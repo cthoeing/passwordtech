@@ -652,7 +652,10 @@ public:
 
   // changes master key
   // -> new master key
-  void ChangeMasterKey(const SecureMem<word8>& newKey);
+  // -> pointer to flag for cancelling operation (if number of iterations
+  //    is too high)
+  void ChangeMasterKey(const SecureMem<word8>& newKey,
+    std::atomic<bool>* pCancelFlag = nullptr);
 
   // sets recovery key
   // -> master key (new or old)

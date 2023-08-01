@@ -26,7 +26,7 @@ object ConfigurationDlg: TConfigurationDlg
     Top = 8
     Width = 410
     Height = 369
-    ActivePage = FilesSheet
+    ActivePage = GeneralSheet
     Anchors = [akLeft, akTop, akRight, akBottom]
     HotTrack = True
     TabOrder = 0
@@ -95,7 +95,7 @@ object ConfigurationDlg: TConfigurationDlg
         Top = 207
         Width = 48
         Height = 21
-        Anchors = [akTop, akRight]
+        AutoSelect = False
         TabOrder = 5
         Text = '0'
       end
@@ -104,7 +104,6 @@ object ConfigurationDlg: TConfigurationDlg
         Top = 207
         Width = 16
         Height = 21
-        Anchors = [akTop, akRight]
         Associate = AutotypeDelayBox
         Max = 1000
         TabOrder = 6
@@ -128,7 +127,7 @@ object ConfigurationDlg: TConfigurationDlg
       end
       object LaunchSystemStartupCheck: TCheckBox
         Left = 8
-        Top = 257
+        Top = 280
         Width = 380
         Height = 17
         Caption = 'Launch application on system startup (for current user)'
@@ -143,6 +142,24 @@ object ConfigurationDlg: TConfigurationDlg
         Anchors = [akLeft, akTop, akRight]
         Sorted = True
         TabOrder = 0
+      end
+      object LoadProfileStartupCheck: TCheckBox
+        Left = 8
+        Top = 257
+        Width = 240
+        Height = 17
+        Caption = 'Load the following profile on startup:'
+        TabOrder = 9
+        OnClick = LoadProfileStartupCheckClick
+      end
+      object LoadProfileBox: TComboBox
+        Left = 261
+        Top = 253
+        Width = 127
+        Height = 21
+        Style = csDropDownList
+        Anchors = [akLeft, akTop, akRight]
+        TabOrder = 10
       end
     end
     object SecuritySheet: TTabSheet
@@ -612,7 +629,7 @@ object ConfigurationDlg: TConfigurationDlg
       object AutoSaveList: TComboBox
         Left = 176
         Top = 282
-        Width = 209
+        Width = 212
         Height = 21
         Style = csDropDownList
         Anchors = [akLeft, akTop, akRight]

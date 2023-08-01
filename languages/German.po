@@ -1,10 +1,10 @@
-﻿# German translation of Password Tech 3.5.0
+﻿# German translation of Password Tech 3.5.1
 # Released under the GNU General Public License
 
 #. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.0\n"
+"Project-Id-Version: Password Tech 3.5.1\n"
 "Last-Translator: Christian Thöing\n"
 "Language: de\n"
 
@@ -543,6 +543,14 @@ msgstr ""
 msgid "Could not register the following hot keys:"
 msgstr "Konnte folgende Hotkeys nicht registrieren:"
 
+#. Main window, Generate password list, message shown when specified number of passwords is invalid
+msgid ""
+"Invalid number of passwords.\n"
+"Allowed range is %d-%d."
+msgstr ""
+"Ungültige Anzahl an Passwörtern.\n"
+"Erlaubter Wertebereich ist %d-%d."
+
 #. Main window, Generate password list to file, message shown when selected file already exists
 msgid ""
 "The selected file already exists. Do you\n"
@@ -595,9 +603,13 @@ msgstr ""
 "Fehler beim Laden des Skripts:\n"
 "%s."
 
+#. Title of Progress window when generating a single password
+msgid "Generating password"
+msgstr "Generiere Passwort"
+
 #. Title of Progress window when generating password list
-msgid "Generating password list ..."
-msgstr "Generiere Passwort-Liste ..."
+msgid "Generating password list"
+msgstr "Generiere Passwort-Liste"
 
 #. Progress info when generating password list
 msgid "%d of %d passwords generated."
@@ -691,13 +703,23 @@ msgstr ""
 "\n"
 "%d Passwörter geschrieben."
 
-#. Generate password, generic error message
+#. Generate password, error message
 msgid ""
 "An error has occurred during password generation:\n"
 "%s."
 msgstr ""
 "Während der Passwort-Generierung ist ein\n"
 "Fehler aufgetreten:\n"
+"%s."
+
+#. Generate password, error message
+msgid ""
+"An error has occurred while trying to send/\n"
+"process the password data:\n"
+"%s."
+msgstr ""
+"Beim Versuch, Passwortdaten zu senden oder\n"
+"zu verarbeiten, ist ein Fehler aufgetreten:\n"
 "%s."
 
 #. Generate password, error message, additional info when generating passwords to file
@@ -1125,6 +1147,14 @@ msgstr "Beenden der Applikation bestätigen"
 #. Configuration window, General
 msgid "Launch application on system startup (for current user)"
 msgstr "Applikation beim Systemstart ausführen (für aktuellen Benutzer)"
+
+#. Configuration window, General
+msgid "Load the following profile on startup:"
+msgstr "Folgendes Profil beim Programmstart laden:"
+
+#. Configuration window, General
+msgid "Load pr"
+msgstr "Profil beim Start laden:"
 
 #. Configuration window, Security
 msgid "Benchmark..."
@@ -1973,6 +2003,10 @@ msgstr "Schlüssel wurde gelöscht."
 msgid "New key generated."
 msgstr "Neuer Schlüssel generiert."
 
+#. MP Password Generator Window, label next to password quality bar
+msgid "%d bits"
+msgstr "%d Bits"
+
 #. Provide Additional Entropy window, label
 msgid "Enter or paste some text into the box below, press mouse buttons, or move your mouse within the window."
 msgstr "Geben Sie Text in die Box unten ein, drücken Sie Maustasten oder bewegen Sie die Maus innerhalb des Fensters."
@@ -2692,6 +2726,14 @@ msgstr "Standardmäßig verfallen neue Einträge nach der folgenden Anzahl an Ta
 #. Password Manager window, Database Settings dialog, label
 msgid "For new entries, save the following number of previous passwords:"
 msgstr "Für neue Einträge folgende Anzahl an letzten Passwörtern speichern:"
+
+#. Password Manager window, Database Settings dialog, title of progress dialog when changing number of KDF iterations
+msgid "Changing number of KDF iterations"
+msgstr "Anzahl der KDF-Iterationen ändern"
+
+#. Password Manager window, Database Settings dialog, title of progress dialog when changing number of KDF iterations
+msgid "Computing derived key ..."
+msgstr "Berechne abgeleiteten Schlüssel ..."
 
 #. Password Manager window, Key-Value List Editor dialog, window title
 msgid "Key-value list editor"

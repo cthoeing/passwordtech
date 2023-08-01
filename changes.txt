@@ -3,7 +3,38 @@
                 Copyright (c) 2002-2023 by Christian Thöing
 
 
-Version 3.5.0
+Version 3.5.1
+
+NEW FEATURES:
+
+- New option "Load the following profile on startup" in Configuration | General
+
+CHANGES & IMPROVEMENTS:
+
+- Maximum number of passwords that can be generated at once extended to
+  1 trillion (1,000,000,000,000) (note that larger amounts >~10**8 can only be
+  stored in files since the number of Unicode characters displayed in the
+  password list window is limited to 500 million/2 billion in the 32/64-bit
+  version)
+- Suffixes "K", "M", "G"/"B" can be specified in the "Multiple passwords" box
+  to generate multiples of thousands, millions, and billions, respectively
+- Passwords are generated asynchronously in a separate thread, so that progress
+  window stays responsive
+- Include characters / character sets with different frequencies: Now compatible
+  with password option "Each character must occur only once"
+- Password manager: When changing number of KDF rounds via File | Database
+  Settings, the process can be canceled after 1 sec (in case the number of
+  rounds has accidentally been set too high)
+
+FIXES:
+
+- Launching PwTech on system startup caused an error (configuration file and/or
+  randseed.dat file not found)
+- Fixed potential buffer overflows
+
+----------
+
+Version 3.5.0 (2023-04-10)
 
 NEW FEATURES:
 

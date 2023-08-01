@@ -118,67 +118,55 @@ void __fastcall TCreateRandDataFileDlg::CreateFileBtnClick(TObject *Sender)
     return;
   }
 
-  TTask::Run([=](){
-    std::unique_ptr<RandomPool> pRandPool;
-    std::unique_ptr<SplitMix64> pFastRandGen;
-    RandomGenerator* pRandSrc;
-    TThread::Synchronize(0, [&]() {
-      if (IsRandomPoolActive()) {
-        pFastRandGen.reset(new SplitMix64(g_fastRandGen.GetWord64()));
-        pRandPool.reset(new RandomPool(
-          RandomPool::GetInstance(), *pFastRandGen, false));
-        pRandPool->Randomize();
-        pRandSrc = pRandPool.get();
-        EntropyManager::GetInstance().ConsumeEntropyBits(RandomPool::MAX_ENTROPY);
-      }
-      else
-        pRandSrc = g_pRandSrc;
-      Enabled = false;
-    });
+  std::unique_ptr<RandomPool> pRandPool;
+  std::unique_ptr<SplitMix64> pFastRandGen;
+  RandomGenerator* pRandSrc;
 
-    bool blSuccess = false;
-    String sMsg;
-    word64 qProgressStep;
-    WString sProgressStep;
-    if (qFileSize >= 104857600) {
-      qProgressStep = 1048576;
-      sProgressStep = "MB";
-    }
-    else {
-      qProgressStep = 1024;
-      sProgressStep = "KB";
-    }
-    word64 qTotalWritten = 0;
-    std::atomic<bool> cancelFlag(false);
-    std::atomic<word64> progress(0);
+  if (IsRandomPoolActive()) {
+    pFastRandGen.reset(new SplitMix64(g_fastRandGen.GetWord64()));
+    pRandPool.reset(new RandomPool(
+      RandomPool::GetInstance(), *pFastRandGen, false));
+    pRandPool->Randomize();
+    pRandSrc = pRandPool.get();
+    EntropyManager::GetInstance().ConsumeEntropyBits(RandomPool::MAX_ENTROPY);
+  }
+  else
+    pRandSrc = g_pRandSrc;
 
+  WString sMsg;
+  word64 qTotalWritten = 0;
+  std::atomic<bool> cancelFlag(false);
+  std::atomic<word64> progress(0);
+  word64 qProgressStep;
+  WString sProgressStep;
+  if (qFileSize >= 104857600) {
+    qProgressStep = 1048576;
+    sProgressStep = "MB";
+  }
+  else {
+    qProgressStep = 1024;
+    sProgressStep = "KB";
+  }
+  Screen->Cursor = crHourGlass;
+
+  auto pTask = TTask::Create([&](){
     try {
       std::unique_ptr<TFileStream> pFile(new TFileStream(sFileName, fmCreate));
 
       SecureMem<word8> randBuf(qFileSize >= 10485760 ? 1048576 : 65536);
 
       word64 qRestToWrite = qFileSize;
-      Stopwatch clock;
-      bool progFormInit = false;
 
       while (qRestToWrite > 0 && !cancelFlag) {
-        if (!progFormInit && clock.ElapsedSeconds() > 1) {
-          WString sProgressInfo = ReplaceStr(TRL("%d of %d %s written."),
-            "%s", sProgressStep);
-          TThread::Synchronize(0, [&](){
-            ProgressForm->Init(this, TRL("Creating random data file ..."),
-              sProgressInfo, qFileSize / qProgressStep,
-              &cancelFlag, &progress);
-            Screen->Cursor = crAppStart;
-          });
-          progFormInit = true;
-        }
-
         int nBytesToWrite = std::min<word64>(qRestToWrite, randBuf.Size());
 
         pRandSrc->GetData(randBuf, nBytesToWrite);
 
+#ifdef _DEBUG
+        int nBytesWritten = nBytesToWrite;
+#else
         int nBytesWritten = pFile->Write(randBuf, nBytesToWrite);
+#endif
         qTotalWritten += nBytesWritten;
         qRestToWrite -= nBytesWritten;
         progress = qTotalWritten / qProgressStep;
@@ -186,34 +174,50 @@ void __fastcall TCreateRandDataFileDlg::CreateFileBtnClick(TObject *Sender)
         if (nBytesWritten < nBytesToWrite)
           OutOfDiskSpaceError();
       }
-
-      if (cancelFlag)
-        sMsg = EUserCancel::UserCancelMsg;
-      else {
-        sMsg = FormatW(EnableInt64FormatSpec(TRL(
-          "File \"%s\" successfully created.\n\n%d bytes written.")),
-          ExtractFileName(sFileName).c_str(), qTotalWritten);
-        blSuccess = true;
-      }
     }
     catch (Exception& e) {
       sMsg = e.Message;
     }
-
-    if (!blSuccess) {
-      sMsg = FormatW(EnableInt64FormatSpec(
-        TRL("Error while creating file\n\"%s\":\n%s.\n\n%d bytes written.")),
-        sFileName.c_str(), sMsg.c_str(), qTotalWritten);
-    }
-
-    TThread::Synchronize(0, [&](){
-      Enabled = true;
-      Screen->Cursor = crDefault;
-      MainForm->UpdateEntropyProgress();
-      MsgBox(sMsg, blSuccess ? MB_ICONINFORMATION : MB_ICONERROR);
-      ProgressForm->Terminate();
-    });
   });
+
+  //Enabled = false;
+
+  pTask->Start();
+
+  while (!pTask->Wait(1000)) {
+    if (!ProgressForm->Visible) {
+      WString sProgressInfo = ReplaceStr(TRL("%d of %d %s written."), "%s", sProgressStep);
+      ProgressForm->ExecuteModal(this,
+        TRL("Creating random data file ..."),
+        sProgressInfo,
+        cancelFlag,
+        [&pTask](unsigned int timeout)
+        {
+          return pTask->Wait(timeout);
+        },
+        qFileSize / qProgressStep,
+        &progress);
+      break;
+    }
+  }
+
+  if (cancelFlag || !sMsg.IsEmpty()) {
+    if (cancelFlag)
+      sMsg = EUserCancel::UserCancelMsg;
+    sMsg = FormatW(EnableInt64FormatSpec(
+      TRL("Error while creating file\n\"%s\":\n%s.\n\n%d bytes written.")),
+      sFileName.c_str(), sMsg.c_str(), qTotalWritten);
+    MsgBox(sMsg, MB_ICONERROR);
+  }
+  else {
+    MsgBox(FormatW(EnableInt64FormatSpec(TRL(
+      "File \"%s\" successfully created.\n\n%d bytes written.")),
+      ExtractFileName(sFileName).c_str(), qTotalWritten), MB_ICONINFORMATION);
+  }
+
+  Screen->Cursor = crDefault;
+  MainForm->UpdateEntropyProgress();
+  ProgressForm->Terminate();
 }
 //---------------------------------------------------------------------------
 void __fastcall TCreateRandDataFileDlg::BrowseBtnClick(TObject *Sender)

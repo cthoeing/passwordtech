@@ -81,12 +81,8 @@ private:
   struct CharSetFreq {
     std::vector<std::pair<w32string,int>> items;
     w32string sCommonCharSet;
-    bool empty() const
-    {
-      return items.empty();
-    }
   };
-  CharSetFreq m_customCharSetFreq;
+  std::optional<CharSetFreq> m_customCharSetFreq;
   CharSetType m_customCharSetType;
   //int m_nCustomCharSetSize;
   double m_dCustomCharSetEntropy;
@@ -112,7 +108,7 @@ private:
   //    - type of character set
   std::optional<std::pair<w32string,CharSetType>> ParseCharSet(
     w32string sInput,
-    CharSetFreq* pCharSetFreq = nullptr) const;
+    std::optional<CharSetFreq>* pCharSetFreq = nullptr) const;
 
   WString GetCustomCharSetAsWString(void) const
   {

@@ -32,6 +32,15 @@ public:
   {}
 };
 
+class RandomGeneratorRangeError : public RandomGeneratorError
+{
+public:
+  RandomGeneratorRangeError(const char* pMsg)
+    : RandomGeneratorError(pMsg)
+  {}
+};
+
+
 class RandomGenerator
 {
 public:
@@ -108,7 +117,7 @@ public:
 
   word32 GetNumRange(word32 lNum) {
     if (lNum == 0)
-      throw RandomGeneratorError("RandomGenerator::GetNumRange(): Invalid range");
+      throw RandomGeneratorRangeError("RandomGenerator::GetNumRange(): Invalid range");
 
     if (lNum == 1)
       return 0;
@@ -140,7 +149,7 @@ public:
   word32 GetNumRange(word32 lBegin, word32 lEnd)
   {
     if (lEnd <= lBegin)
-      throw RandomGeneratorError("RandomGenerator::GetNumRange(): Invalid range");
+      throw RandomGeneratorRangeError("RandomGenerator::GetNumRange(): Invalid range");
 
     return lBegin + GetNumRange(lEnd - lBegin);
   }
@@ -149,7 +158,7 @@ public:
     word32 lSize)
   {
     if (lSize == 0)
-      throw RandomGeneratorError("RandomGenerator::Permute(): Invalid range");
+      throw RandomGeneratorRangeError("RandomGenerator::Permute(): Invalid range");
 
     if (lSize == 1)
       return;

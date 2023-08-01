@@ -10,23 +10,23 @@
 //---------------------------------------------------------------------------
 #include <Vcl.Styles.hpp>
 #include <Vcl.Themes.hpp>
-USEFORM("src\main\PasswMngColSelect.cpp", PasswMngColDlg);
 USEFORM("src\main\PasswManager.cpp", PasswMngForm);
 USEFORM("src\main\PasswList.cpp", PasswListForm);
 USEFORM("src\main\PasswEnter.cpp", PasswEnterDlg);
 USEFORM("src\main\MPPasswGen.cpp", MPPasswGenForm);
-USEFORM("src\main\PasswMngDbProp.cpp", PasswMngDbPropDlg);
-USEFORM("src\main\ProfileEditor.cpp", ProfileEditDlg);
+USEFORM("src\main\Main.cpp", MainForm);
+USEFORM("src\main\PasswMngColSelect.cpp", PasswMngColDlg);
 USEFORM("src\main\PasswOptions.cpp", PasswOptionsDlg);
 USEFORM("src\main\PasswMngPwHistory.cpp", PasswHistoryDlg);
 USEFORM("src\main\PasswMngKeyValEdit.cpp", PasswMngKeyValDlg);
 USEFORM("src\main\PasswMngDbSettings.cpp", PasswDbSettingsDlg);
-USEFORM("src\main\Main.cpp", MainForm);
+USEFORM("src\main\PasswMngDbProp.cpp", PasswMngDbPropDlg);
 USEFORM("src\main\About.cpp", AboutForm);
 USEFORM("src\main\InfoBox.cpp", InfoBoxForm);
 USEFORM("src\main\CreateTrigramFile.cpp", CreateTrigramFileDlg);
 USEFORM("src\main\CreateRandDataFile.cpp", CreateRandDataFileDlg);
 USEFORM("src\main\Configuration.cpp", ConfigurationDlg);
+USEFORM("src\main\ProfileEditor.cpp", ProfileEditDlg);
 USEFORM("src\main\QuickHelp.cpp", QuickHelpForm);
 USEFORM("src\main\ProvideEntropy.cpp", ProvideEntropyDlg);
 USEFORM("src\main\Progress.cpp", ProgressForm);
@@ -47,6 +47,8 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
         PROGRAM_NAME, MB_ICONWARNING);
       return 0;
     }
+
+    g_sExePath = ExtractFilePath(Application->ExeName);
 
     Application->Initialize();
     Application->MainFormOnTaskBar = false;
@@ -109,7 +111,7 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
     }
 
     WString sIniFileName = g_cmdLineOptions.IniFileName.IsEmpty() ?
-    g_sExePath + WString(PROGRAM_INIFILE) : g_cmdLineOptions.IniFileName;
+      g_sExePath + WString(PROGRAM_INIFILE) : g_cmdLineOptions.IniFileName;
 
     // load the configuration file
     WString sTryIniFileName = sIniFileName;
@@ -129,8 +131,6 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
         CopyFile(sIniFileName.c_str(), sTryIniFileName.c_str(), true);
         g_pIni.reset(new TMemIniFile(sTryIniFileName, TEncoding::UTF8));
       }
-      else
-        g_sAppDataPath = g_sExePath;
     }
     catch (Exception& e) {
       MsgBox(FormatW("Could not load configuration file\n\"%s\":\n%s",
@@ -139,6 +139,9 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
       g_pIni.reset(new TMemIniFile("~pwtech~fake~ini"));
       g_blFakeIniFile = true;
     }
+
+    if (g_sAppDataPath.IsEmpty())
+      g_sAppDataPath = g_sExePath;
 
     const WString DEFAULT_STYLE_NAME = "Windows";
 
