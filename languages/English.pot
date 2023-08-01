@@ -4,7 +4,7 @@
 #. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.0\n"
+"Project-Id-Version: Password Tech 3.5.1\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
@@ -12,7 +12,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #. Message box caption
 msgid "Info"
@@ -525,6 +525,12 @@ msgstr ""
 msgid "Could not register the following hot keys:"
 msgstr ""
 
+#. Main window, Generate password list, message shown when specified number of passwords is invalid
+msgid ""
+"Invalid number of passwords.\n"
+"Allowed range is %d-%d."
+msgstr ""
+
 #. Main window, Generate password list to file, message shown when selected file already exists
 msgid ""
 "The selected file already exists. Do you\n"
@@ -561,8 +567,12 @@ msgid ""
 "%s."
 msgstr ""
 
+#. Title of Progress window when generating a single password
+msgid "Generating password"
+msgstr ""
+
 #. Title of Progress window when generating password list
-msgid "Generating password list ..."
+msgid "Generating password list"
 msgstr ""
 
 #. Progress info when generating password list
@@ -641,9 +651,16 @@ msgid ""
 "%d passwords written."
 msgstr ""
 
-#. Generate password, generic error message
+#. Generate password, error message
 msgid ""
 "An error has occurred during password generation:\n"
+"%s."
+msgstr ""
+
+#. Generate password, error message
+msgid ""
+"An error has occurred while trying to send/\n"
+"process the password data:\n"
 "%s."
 msgstr ""
 
@@ -1011,6 +1028,14 @@ msgstr ""
 
 #. Configuration window, General
 msgid "Launch application on system startup (for current user)"
+msgstr ""
+
+#. Configuration window, General
+msgid "Load the following profile on startup:"
+msgstr ""
+
+#. Configuration window, General
+msgid "Load pr"
 msgstr ""
 
 #. Configuration window, Security
@@ -1830,6 +1855,10 @@ msgstr ""
 msgid "New key generated."
 msgstr ""
 
+#. MP Password Generator Window, label next to password quality bar
+msgid "%d bits"
+msgstr ""
+
 #. Provide Additional Entropy window, label
 msgid ""
 "Enter or paste some text into the box below, press mouse buttons, or move "
@@ -2514,6 +2543,14 @@ msgstr ""
 
 #. Password Manager window, Database Settings dialog, label
 msgid "For new entries, save the following number of previous passwords:"
+msgstr ""
+
+#. Password Manager window, Database Settings dialog, title of progress dialog when changing number of KDF iterations
+msgid "Changing number of KDF iterations"
+msgstr ""
+
+#. Password Manager window, Database Settings dialog, title of progress dialog when changing number of KDF iterations
+msgid "Computing derived key ..."
 msgstr ""
 
 #. Password Manager window, Key-Value List Editor dialog, window title
