@@ -1,0 +1,2820 @@
+# Released under the GNU General Public License
+msgid ""
+msgstr ""
+"Project-Id-Version: Password Tech 3.5.1\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Thomas Du <thomas_du@outlook.com>\n"
+"Language-Team: Thomas Du\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.3.2\n"
+"X-Poedit-Basepath: ../../../../../Program Files/PwTech\n"
+"X-Poedit-SearchPath-0: zh_TW.po\n"
+
+#. Message box caption
+msgid "Info"
+msgstr "資訊"
+
+#. Message box caption
+msgid "Warning"
+msgstr "警告"
+
+#. Message box caption
+msgid "Question"
+msgstr "問題"
+
+#. Message box caption
+msgid "Error"
+msgstr "錯誤"
+
+#. Main window, label attached to password profile drop-down list
+msgid "Profile:"
+msgstr "配置檔:"
+
+#. Main window, Settings groupbox
+msgid "Settings"
+msgstr "設定"
+
+#. Main window, checkbox
+msgid "Include Characters (Pass*words*)"
+msgstr "包含字符（口令*單詞*）"
+
+#. Main window, Password length
+msgid "Length:"
+msgstr "長度："
+
+#. Main window, user-defined character set
+msgid "Character Set:"
+msgstr "字符集："
+
+#. Main window, button to show currently loaded character set
+msgid "Show details"
+msgstr "顯示詳細資訊"
+
+#. Main window, checkbox
+msgid "Include Words (Pass*phrases*)"
+msgstr "包含單詞（口令*短語*）"
+
+#. Main window, number of words from word list to generate
+msgid "Number:"
+msgstr "數量:"
+
+#. Main window, select word list file
+msgid "Word List File:"
+msgstr "單詞列表文件："
+
+#. Main window, button to browse for word list file
+msgid "Browse"
+msgstr "瀏覽"
+
+#. Main window, specify length of passphrase (composed of words)
+msgid "Specify length*:"
+msgstr "指定長度*:"
+
+#. Main window, checkbox
+msgid "Combine Words with Characters"
+msgstr "將單詞與字符結合起來"
+
+#. Main window, checkbox
+msgid "Format password:"
+msgstr "密碼格式："
+
+#. Main window, checkbox, execute custom Lua script for password generation
+msgid "Run script:"
+msgstr "執行腳本："
+
+#. Main window, button to reload script file
+msgid "Reload script"
+msgstr "重新載入腳本"
+
+#. Main window, label attached to input box for number of passwords
+msgid "Multiple passwords:"
+msgstr "多種的密碼："
+
+#. Main window, button to generate password
+msgid "Generate"
+msgstr "產生"
+
+#. Main window, button to store generated passwords in a file
+msgid "Generate password list to file"
+msgstr "產生密碼列表到檔案"
+
+#. Main window, button to access advanced password options
+msgid "Advanced"
+msgstr "進階"
+
+#. Main window, button to access advanced password options, dropdown menu
+msgid "Deactivate All Options"
+msgstr "停用所有選項"
+
+#. Main window, button to access advanced password options, dropdown menu
+msgid "Deactivate All Starred (*) Options"
+msgstr "停用所有加星標 (*) 的選項"
+
+#. Main window, Generated Password groupbox
+msgid "Generated Password"
+msgstr "產生的密碼"
+
+#. Main window, label below password box
+msgid "Click on \"Generate\""
+msgstr "點擊“產生”"
+
+#. Main window, button to toggle password display (either display as-is or hide behind symbols)
+msgid "Hide/show password"
+msgstr "隱藏/顯示密碼"
+
+#. Main window, password groupbox, hint of quality bar
+msgid "Hold left mouse button to drag & drop password"
+msgstr "按住滑鼠左鍵拖放密碼"
+
+#. Main menu, File submenu
+msgid "File"
+msgstr "檔案"
+
+#. Main menu, File submenu, Profile for password generation
+msgid "Profile"
+msgstr "配置檔"
+
+#. Main menu, File submenu, Profile submenu, Profile Editor
+msgid "Profile Editor..."
+msgstr "配置檔編輯器..."
+
+#. Main menu, File submenu, Exit program
+msgid "Exit"
+msgstr "結束"
+
+#. Main menu, Tools submenu
+msgid "Tools"
+msgstr "工具"
+
+#. Main window, Clear Clipboard button and menu item
+msgid "Clear Clipboard"
+msgstr "清除剪貼簿"
+
+#. Main window, Encrypt Clipboard button and menu item
+msgid "Encrypt Clipboard..."
+msgstr "加密剪貼簿..."
+
+#. Main window, Decrypt Clipboard button and menu item
+msgid "Decrypt Clipboard..."
+msgstr "解密剪貼簿..."
+
+#. Main menu, Tools submenu
+msgid "Create Random Data File..."
+msgstr "建立隨機資料檔案..."
+
+#. Main menu, Tools submenu
+msgid "Create Trigram File..."
+msgstr "建立三元組檔案..."
+
+#. Main menu, Tools submenu
+msgid "MP Password Generator..."
+msgstr "主密碼產生器..."
+
+#. Main menu, Tools submenu
+msgid "Deterministic Random Generator"
+msgstr "定性隨機產生器"
+
+#. Main menu, Tools submenu, Deterministic Random Generator submenu
+msgid "Reset"
+msgstr "重設"
+
+#. Main menu, Tools submenu, Deterministic Random Generator submenu
+msgid "Deactivate"
+msgstr "停用"
+
+#. Main menu, Tools submenu
+msgid "Provide Additional Entropy"
+msgstr "提供額外的熵"
+
+#. Main menu, Tools submenu, Provide Additional Entropy submenu
+msgid "As Text..."
+msgstr "作為文本..."
+
+#. Main menu, Tools submenu, Provide Additional Entropy submenu
+msgid "From File..."
+msgstr "從檔案..."
+
+#. Main menu, Options submenu
+msgid "Options"
+msgstr "選項"
+
+#. Main menu, Options submenu
+msgid "Configuration..."
+msgstr "設置..."
+
+#. Configuration window, Language tab
+msgid "Language"
+msgstr "語言"
+
+#. Main menu, Options submenu
+msgid "Always on Top"
+msgstr "總在最上面"
+
+#. Main menu, Options submenu
+msgid "Hide Entropy Progress"
+msgstr "隱藏熵進度"
+
+#. Main menu, Options submenu
+msgid "Save Settings on Exit"
+msgstr "離開時儲存設定"
+
+#. Main menu, Options submenu
+msgid "Save Settings Now"
+msgstr "立即儲存設定"
+
+#. Main menu, Help submenu
+msgid "Help"
+msgstr "說明"
+
+#. Main window, Help button hint
+msgid "Open Manual"
+msgstr "打開手冊"
+
+#. Main menu, Help submenu
+msgid "Visit Website"
+msgstr "訪問網站"
+
+#. Main window, Help submenu
+msgid "Get Translations..."
+msgstr "獲取翻譯..."
+
+#. Main window, Help submenu
+msgid "Donate..."
+msgstr "捐贈..."
+
+#. Main window, Help submenu
+msgid "Check for Updates"
+msgstr "檢查更新"
+
+#. Main window, Help submenu
+msgid "Timer Info..."
+msgstr "定時器資訊..."
+
+#. Main window, Help submenu
+msgid "About %s..."
+msgstr "關於 %s..."
+
+#. System tray context menu, Restore application
+msgid "Restore %s"
+msgstr "還原 %s"
+
+#. System tray context menu, Generate Password to clipboard
+msgid "Generate Password"
+msgstr "產生密碼"
+
+#. System tray context menu, Generate Password and Show in message box
+msgid "Generate and Show Password..."
+msgstr "產生並顯示密碼..."
+
+#. System tray context menu, Generate Password and Autotype into other windows
+msgid "Generate and Autotype Password"
+msgstr "產生並自動輸入密碼"
+
+#. System tray context menu
+msgid "Open user manual"
+msgstr "開啟用戶手冊"
+
+#. Main window, Clear Clipboard button hint
+msgid "Clear clipboard (text contents only)"
+msgstr "清除剪貼簿（僅文本內容）"
+
+#. Main window, Encrypt/Decrypt Clipboard button hint
+msgid "Clipboard text encryption (left-click) or decryption (right-click)"
+msgstr "剪貼簿文本加密（左鍵單擊）或解密（右鍵單擊）"
+
+#. Main window, Profile Editor button hint
+msgid "Load, create or delete profiles"
+msgstr "載入、建立或刪除配置文件"
+
+#. Main window, MP Password Generator button hint
+msgid "Generate passwords based on a master password"
+msgstr "根據主密碼產生密碼"
+
+#. Main window, Configuration button hint
+msgid "Main configuration of the program"
+msgstr "程式的主要設置"
+
+#. Open/Save dialogs, filter for All files (*.*)
+msgid "All files"
+msgstr "全部檔案"
+
+#. Open/Save dialogs, filter for Text files (*.txt)
+msgid "Text files"
+msgstr "文本檔案"
+
+#. Open/Save dialogs, filter for Trigram files (*.tgm)
+msgid "Trigram files"
+msgstr "三元組檔"
+
+#. Open/Save dialogs, filter for Lua script files (*.lua)
+msgid "Lua scripts"
+msgstr "Lua腳本"
+
+#. Various context menus, Undo last operation
+msgid "Undo"
+msgstr "還原"
+
+#. Various context menus, Cut selected text and copy to clipboard
+msgid "Cut"
+msgstr "剪下"
+
+#. Various context menus, Copy selected text to clipboard
+msgid "Copy"
+msgstr "複製"
+
+#. Main window, Password box, context menu
+msgid "Encrypt && Copy"
+msgstr "加密&&複製"
+
+#. Variuos context menus, paste text from clipboard
+msgid "Paste"
+msgstr "貼上"
+
+#. Main window, Password box, context menu
+msgid "Perform Autotype"
+msgstr "執行自動輸入"
+
+#. Main window, Password box, context menu
+msgid "Add to Database"
+msgstr "新增到資料庫"
+
+#. Various context menus, Delete selected text
+msgid "Delete"
+msgstr "刪除"
+
+#. Various context menus, select entire text
+msgid "Select All"
+msgstr "全選"
+
+#. Context menus of Character set, Word list file, Format password, and Run script drop-down lists: Clear history of list entries
+msgid "Clear List"
+msgstr "清除清單"
+
+#. Main window, context menus of Character set, Word list file, Format password, and Run script drop-down lists: Clear currently selected entry
+msgid "Remove Entry"
+msgstr "刪除項目"
+
+#. Main window, Passowrd box, context menu, make box editable
+msgid "Editable"
+msgstr "可編輯"
+
+#. Main window, Password box, context menu, enable automatic estimation of password quality when entering text
+msgid "Enable Password Testing"
+msgstr "啟用密碼測試"
+
+#. Main window, Password box, context menu
+msgid "Change Font..."
+msgstr "變更字體..."
+
+#. Title of open dialog when selecting Main menu | Tools | Provide Additional Entropy | From File
+msgid "Select high-entropy file"
+msgstr "選擇高熵文件"
+
+#. Main window, Password Database button hint
+msgid "Manage passwords in encrypted databases"
+msgstr "管理加密資料庫中的密碼"
+
+#. Main window, Reload Profile button hint
+msgid "Reload profile"
+msgstr "重新載入配置檔"
+
+#. Main window, Add Profile button hint
+msgid "Add profile"
+msgstr "新增配置檔"
+
+#. Main menu, Tools submenu, Deterministic Random Generator submenu
+msgid "Set up..."
+msgstr "設置..."
+
+#. Main menu, File submenu
+msgid "Password Manager..."
+msgstr "密碼管理器..."
+
+#. Main menu, Help submenu
+msgid "Enter Donor Key..."
+msgstr "輸入捐贈者密鑰..."
+
+#. System tray context menu
+msgid "Reset All Window Positions"
+msgstr "重置所有視窗位置"
+
+#. Message shown when randseed.dat could not be read
+msgid ""
+"Could not read random seed file\n"
+"\"%s\"."
+msgstr ""
+"無法讀取隨機種子文件\n"
+"“%s”。"
+
+#. Message shown when writing randseed.dat failed
+msgid ""
+"Could not write to random seed file\n"
+"\"%s\"."
+msgstr ""
+"無法寫入隨機種子文件\n"
+"“%s”。"
+
+#. List of unknown command line parameters (when the application is run from the command line)
+msgid ""
+"Unknown command line switch(es):\n"
+"%s"
+msgstr ""
+"未知的命令行開關：\n"
+"%s"
+
+#. Message shown when word list could not be loaded
+msgid ""
+"Error while loading word list file\n"
+"\"%s\"."
+msgstr ""
+"載入單詞列表文件時出錯\n"
+"“%s”。"
+
+#. Message shown when passwords from common_passwords.txt could not be loaded
+msgid ""
+"Error while loading list of common passwords:\n"
+"%s."
+msgstr ""
+"載入常用密碼列表時出錯：\n"
+"%s。"
+
+#. List of errors that occurred during startup phase of the application
+msgid "%s encountered %d error(s) during startup:"
+msgstr "%s 在啟動過程中遇到 %d 個錯誤："
+
+#. Reminder to make a donation, shown with a certain frequency on startup
+msgid ""
+"If you like %s, please consider\n"
+"making a donation. Thank you!"
+msgstr ""
+"如果您喜歡%s，請考慮\n"
+"進行捐贈。感謝你！"
+
+#. Message shown when selected character set is invalid
+msgid "Character set \"%s\" is invalid."
+msgstr "字符集“%s”無效。"
+
+#. Message shown when configuration file could not be written
+msgid ""
+"Error while writing to configuration file:\n"
+"%s."
+msgstr ""
+"寫入設置檔時出錯：\n"
+"%s。"
+
+#. Information about selected character set (number N of unique characters and entropy bits (=log2(N)) per character)
+msgid "%d characters / %.1f bits per character"
+msgstr "每個字符 %d 個字符/%.1f 位"
+
+#. Information about selected word list file (number N of unique words and entropy bits (=log2(N)) per word)
+msgid "%d words / %.1f bits per word"
+msgstr "%d 個字/每個字 %.1f 位"
+
+#. Message shown when selected trigram file could not be read
+msgid "Could not open trigram file."
+msgstr "無法打開 三元組 文件。"
+
+#. Message shown when selected trigram file has an invalid format
+msgid "Invalid trigram file."
+msgstr "三元組檔無效。"
+
+#. Main window, Generated Password groupbox, label below Password box, hint shown when generated or entered password matches a common password
+msgid "Matches common password!"
+msgstr "匹配常用密碼！"
+
+#. Encrypt Clipboard, message shown when text has been encrypted successfully
+msgid "Text successfully encrypted."
+msgstr "文本已成功加密。"
+
+#. Decrypt Clipboard, message shown when text has been decrypted successfully
+msgid "Text successfully decrypted."
+msgstr "文本解密成功。"
+
+#. Encrypt/Decrypt Clipboard, message shown when clipboard could not be opened
+msgid "Could not open clipboard."
+msgstr "無法打開剪貼簿。"
+
+#. Encrypt/Decrypt Clipboard, message shown when contained text is too long
+msgid "The text to be encrypted is too long."
+msgstr "要加密的文本太長。"
+
+#. Encrypt/Decrypt Clipboard, message shown when clipboard is empty
+msgid "No text available to process."
+msgstr "沒有可供處理的文本。"
+
+#. Encrypt/Decrypt Clipboard, message shown when out of memory
+msgid ""
+"Not enough memory available to perform\n"
+"the operation. Try to use a shorter text."
+msgstr ""
+"沒有足夠的記憶體來執行\n"
+"操作。嘗試使用較短的文本。"
+
+#. Decrypt Clipboard, message shown when decryption failed
+msgid ""
+"Decryption failed. This may be attributed\n"
+"to the following reasons:"
+msgstr ""
+"解密失敗。這可能歸因於\n"
+"出於以下原因："
+
+#. Decrypt Clipboard, possible reason for failure
+msgid "- You entered a wrong password."
+msgstr "- 您輸入了錯誤的密碼。"
+
+#. Decrypt Clipboard, possible reason for failure
+msgid ""
+"- The text is corrupted.\n"
+"- The text is not encrypted."
+msgstr ""
+"- 文本已損壞。\n"
+"- 文本未加密。"
+
+#. Decrypt Clipboard, message shown when decompression failed
+msgid ""
+"This should not have happened:\n"
+"Decryption successful, but decompression\n"
+"failed."
+msgstr ""
+"這不應該發生：\n"
+"解密成功，但解壓縮\n"
+"失敗。"
+
+#. Message shown when certain hot key(s) could not be registered
+msgid "Could not register the following hot keys:"
+msgstr "無法註冊以下熱鍵："
+
+#. Main window, Generate password list, message shown when specified number of passwords is invalid
+msgid ""
+"Invalid number of passwords.\n"
+"Allowed range is %d-%d."
+msgstr ""
+"密碼數量無效。\n"
+"允許的範圍是 %d-%d。"
+
+#. Main window, Generate password list to file, message shown when selected file already exists
+msgid ""
+"The selected file already exists. Do you\n"
+"want to append passwords to this file\n"
+"(existing passwords will be preserved),\n"
+"or do you want to completely overwrite it?\n"
+"\n"
+"Yes -> append passwords,\n"
+"No -> overwrite file,\n"
+"Cancel -> cancel process."
+msgstr ""
+"所選檔案已存在。你\n"
+"想要將密碼附加到該檔案\n"
+"（現有密碼將被保留），\n"
+"或者你想完全覆蓋它嗎？\n"
+"\n"
+"是 -> 附加密碼，\n"
+"否 -> 覆蓋文件，\n"
+"取消 -> 取消進程。"
+
+#. Main window, Include Passphrase, Specify Length, message shown when specified length range is invalid
+msgid "Passphrase: Invalid length range."
+msgstr "密碼短語：長度範圍無效。"
+
+#. Message shown for a certain configuration of password settings
+msgid ""
+"If the option \"Each character must occur\n"
+"only once\" is activated, the password length\n"
+"is limited to the size of the character set (%d)."
+msgstr ""
+"如果選項“每個字符必須出現\n"
+"僅一次”被激活，密碼長度\n"
+"受限於字符集 (%d) 的大小。"
+
+#. Message shown for a certain configuration of passphrase settings
+msgid ""
+"If the option \"Each word must occur only\n"
+"once\" is activated, the number of words\n"
+"is limited to the size of the word list (%d)."
+msgstr ""
+"如果選項“每個單詞必須只出現\n"
+"一旦”被激活，字數\n"
+"受限於單詞列表 (%d) 的大小。"
+
+#. Message shown when selected script file could not be loaded
+msgid ""
+"Error while loading script:\n"
+"%s."
+msgstr ""
+"載入腳本時出錯：\n"
+"%s。"
+
+#. Title of Progress window when generating a single password
+msgid "Generating password"
+msgstr "產生密碼"
+
+#. Title of Progress window when generating password list
+msgid "Generating password list"
+msgstr "產生密碼列表"
+
+#. Progress info when generating password list
+msgid "%d of %d passwords generated."
+msgstr "已產生 %d 個密碼（共 %d 個）。"
+
+#. Formatted password, Include Characters/Words selected, but format specifier "P" not found in format string
+msgid "\"P\" is not specified."
+msgstr "“P”未指定。"
+
+#. Formatted password, format specifier "P" contained in format string, but no password available to insert
+msgid "Password not available."
+msgstr "密碼不可用。"
+
+#. Formatted password, format specifier "P" contained in format string, but password cannot be fully inserted
+msgid "Password too long."
+msgstr "密碼太長。"
+
+#. Formatted password, format string contains unknown specifier
+msgid "Invalid format specifier \"%s\"."
+msgstr "格式說明符“%s”無效。"
+
+#. Run script, executing Lua script
+msgid "Executing script"
+msgstr "執行腳本"
+
+#. Run script, waiting for response
+msgid "Waiting for script ..."
+msgstr "等待腳本..."
+
+#. Run script, message shown when execution was cancelled
+msgid ""
+"Script thread was terminated forcibly.\n"
+"Please check script for infinite loops."
+msgstr ""
+"腳本線程被強制終止。\n"
+"請檢查腳本是否存在無限循環。"
+
+#. Generate password list, message shown when list size is about to exceed internal limit
+msgid ""
+"The estimated list size will probably exceed\n"
+"the internal memory limit.\n"
+"Please reduce the number of passwords"
+msgstr ""
+"估計列表大小可能會超過\n"
+"內部記憶體限制。\n"
+"請減少密碼數量"
+
+#. Generate password list, message shown when list size has exceeded internal limit
+msgid ""
+"The memory limit of the password list has\n"
+"been reached.\n"
+"\n"
+"The number of passwords has been\n"
+"reduced to %d."
+msgstr ""
+"密碼列表的記憶體限制\n"
+"已達到。\n"
+"\n"
+"密碼數量已\n"
+"減少到%d。"
+
+#. Generate password list, number of generated passwords
+msgid "%d passwords generated."
+msgstr "已產生 %d 個密碼。"
+
+#. Generate password list, info about passwords
+msgid ""
+"%d passwords generated.\r\n"
+"Entropy of the first password: %d bits.\r\n"
+"Maximum entropy of the entire list: %d bits."
+msgstr ""
+"已產生 %d 個密碼。\r\n"
+"第一個密碼的熵：%d 位。\r\n"
+"整個列表的最大熵：%d位。"
+
+#. Generate password to clipboard
+msgid "Password copied to clipboard."
+msgstr "密碼已復製到剪貼簿。"
+
+#. Generate password list, copy list to UI
+msgid "Copying password list ..."
+msgstr "正在複製密碼列表..."
+
+#. Generate password list to file
+msgid ""
+"File \"%s\" successfully created.\n"
+"\n"
+"%d passwords written."
+msgstr ""
+"文件“%s”已成功建立。\n"
+"\n"
+"已寫入 %d 個密碼。"
+
+#. Generate password, error message
+msgid ""
+"An error has occurred during password generation:\n"
+"%s."
+msgstr ""
+"密碼產生過程中出現錯誤：\n"
+"%s。"
+
+#. Generate password, error message
+msgid ""
+"An error has occurred while trying to send/\n"
+"process the password data:\n"
+"%s."
+msgstr ""
+"嘗試發送時發生錯誤/\n"
+"處理密碼資料：\n"
+"%s。"
+
+#. Generate password, error message, additional info when generating passwords to file
+msgid "%d passwords written to file \"%s\"."
+msgstr "%d 個密碼已寫入檔案“%s”。"
+
+#. Include characters, info about character set
+msgid "%d bits / %d characters"
+msgstr "%d 位/%d 個字符"
+
+#. Include characters, error message shown when character set is invalid
+msgid "Invalid character set."
+msgstr "字符集無效。"
+
+#. Include characters, phonetic passwords, info about trigrams
+msgid "default (English) trigrams"
+msgstr "預設（英語）三元組"
+
+#. Include characters, info about character set where a particular number of characters is desired for certain subsets
+msgid "(with different frequencies)"
+msgstr "（不同頻率）"
+
+#. Data loaded from file
+msgid "File \"%s\""
+msgstr "檔案“%s”"
+
+#. Include characters, info about phonetic passwords
+msgid ""
+"(phonetic, based on trigram frequencies\n"
+"from the following source:\n"
+"<%s>)"
+msgstr ""
+"（語音，基於三元組頻率\n"
+"來自以下來源：\n"
+"<%s>)"
+
+#. Include characters, more detailed error message
+msgid ""
+"The character set you entered is invalid.\n"
+"It must contain at least 2 different characters."
+msgstr ""
+"您輸入的字符集無效。\n"
+"它必須包含至少 2 個不同的字符。"
+
+#. Include characters, info about currently loaded character set
+msgid "Currently loaded character set:"
+msgstr "當前載入的字符集："
+
+#. Include words, error message shown when word list file could not be opened
+msgid "Could not open file."
+msgstr "無法打開檔案。"
+
+#. Include words, error message shown when word list does not contain enough words
+msgid "Not enough valid words."
+msgstr "沒有足夠的有效詞。"
+
+#. Include words, title of file selection dialog
+msgid "Select word list file"
+msgstr "選擇單詞列表檔"
+
+#. Include words, more detailed error message
+msgid ""
+"Error while loading the file\n"
+"\"%s\":\n"
+"%s"
+msgstr ""
+"載入檔案時出錯\n"
+"“%s”：\n"
+"%s"
+
+#. Include words, info about default word list
+msgid "default (English) word list"
+msgstr "預設（英語）單詞列表"
+
+#. Include words, info about currently loaded word list
+msgid "Currently loaded word list:"
+msgstr "當前載入的單詞列表："
+
+#. Include words, info about currently loaded word list
+msgid "First word:"
+msgstr "第一個字："
+
+#. Include words, info about currently loaded word list
+msgid "Random word:"
+msgstr "隨機詞："
+
+#. Include words, info about currently loaded word list
+msgid "Last word:"
+msgstr "結語："
+
+#. Configuration, warning message shown when version of selected language is not compatible (lower) with program version
+msgid ""
+"The version of this language (%s) is not\n"
+"compatible with this program version.\n"
+"This version of %s requires a language\n"
+"version of at least %s.\n"
+"\n"
+"Do you want to use it anyway?"
+msgstr ""
+"該語言的版本 (%s) 不是\n"
+"與該程式版本兼容。\n"
+"此版本的 %s 需要一種語言\n"
+"版本至少為 %s。\n"
+"\n"
+"您還想使用它嗎？"
+
+#. Configuration, warning message shown when version of selected language is not compatible (higher) with program version
+msgid ""
+"The version of this language (%s) is higher\n"
+"than the version of this program (%s).\n"
+"Therefore, version incompatibilities may occur.\n"
+"\n"
+"Do you want to use it anyway?"
+msgstr ""
+"該語言 (%s) 的版本較高\n"
+"與該程式的版本 (%s) 不同。\n"
+"因此，可能會出現版本不兼容的情況。\n"
+"\n"
+"你還想用它嗎？"
+
+#. Configuration, message shown when selecting language
+msgid ""
+"The program has to be restarted in order\n"
+"for the changes to take effect.\n"
+"\n"
+"Do you want to restart now?"
+msgstr ""
+"必須重新啟動程式才能正常運行\n"
+"以使更改生效。\n"
+"\n"
+"您想現在重新啟動嗎？"
+
+#. Generate password and show it in a message box, message shown when password is too long
+msgid ""
+"Password is too long to show it in a\n"
+"message box like this.\n"
+"\n"
+"It has been copied to the clipboard."
+msgstr ""
+"密碼太長，無法顯示在\n"
+"像這樣的訊息框。\n"
+"\n"
+"它已被複製到剪貼簿。"
+
+#. Generate password and show it in a message box
+msgid ""
+"The generated password is:\n"
+"\n"
+"%s\n"
+"\n"
+"The estimated security is %d bits.\n"
+"\n"
+"Yes -> copy password to clipboard,\n"
+"No -> generate new password,\n"
+"Cancel -> cancel process."
+msgstr ""
+"產生的密碼為：\n"
+"\n"
+"%s\n"
+"\n"
+"估計安全性為 %d 位。\n"
+"\n"
+"是 -> 將密碼複製到剪貼簿，\n"
+"否 -> 產生新密碼，\n"
+"取消 -> 取消進程。"
+
+#. Context menu of drop-down lists in main window, menu item "Clear List"
+msgid ""
+"All entries will be removed from the list.\n"
+"Are you sure?"
+msgstr ""
+"所有項目都將從列表中刪除。\n"
+"你確定嗎？"
+
+#. Main menu, Help submenu
+msgid "Total Entropy Bits: %d"
+msgstr "總熵位：%d"
+
+#. Main menu, Help submenu, info about high-resolution timer
+msgid ""
+"High-resolution timer used:\n"
+"%s.\n"
+"\n"
+"Current value: %s."
+msgstr ""
+"使用的高分辨率定時器：\n"
+"%s。\n"
+"\n"
+"當前值：%s。"
+
+#. Check for updates, message shown when version file could not be downloaded
+msgid "Could not download version file"
+msgstr "無法下載版本文件"
+
+#. Check for updates, message shown when version file cannot be parsed due to missing information or unknown format
+msgid "Version or URL not specified in version file, or unknown file format"
+msgstr "版本文件中未指定版本或 URL，或文件格式未知"
+
+#. Check for updates, message shown when a new version is available
+msgid ""
+"A new version (%s) of %s is available!\n"
+"Do you want to visit the download page now?"
+msgstr ""
+"%s 的新版本 (%s) 現已推出！\n"
+"您現在想訪問下載頁面嗎？"
+
+#. Check for updates, additional info about new version
+msgid "(NOTE: %s)"
+msgstr "（注意：%s）"
+
+#. Check for updates, message shown when there's no new version to download
+msgid "Your version of %s is up-to-date."
+msgstr "您的 %s 版本是最新的。"
+
+#. Check for updates, general error message
+msgid ""
+"Error while checking for updates:\n"
+"%s."
+msgstr ""
+"檢查更新時出錯：\n"
+"%s。"
+
+#. Main window, info shown in window title when using deterministic random generator
+msgid "WARNING: Random generator is deterministic (press F7 to deactivate)!"
+msgstr "警告：隨機產生器是確定性的（按 F7 停用）！"
+
+#. Message shown after clearing clipboard
+msgid "Clipboard cleared."
+msgstr "剪貼簿已清除。"
+
+#. Message shown after loading profile
+msgid "Profile \"%s\" activated."
+msgstr "配置檔“%s”已激活。"
+
+#. Message shown after activating deterministic random generator
+msgid "Deterministic random generator has been ACTIVATED."
+msgstr "定性隨機發生器已激活。"
+
+#. Message shown after resetting deterministic random generator
+msgid "Deterministic random generator has been RESET."
+msgstr "定性隨機發生器已重置。"
+
+#. Message shown after deactivating deterministic random generator
+msgid "Deterministic random generator has been DEACTIVATED."
+msgstr "定性隨機產生器已被停用。"
+
+#. Message shown on command line in case profile specified in command line parameters could not be found
+msgid "ERROR: Profile \"%s\" not found."
+msgstr "錯誤：找不到配置檔“%s”。"
+
+#. Message shown on command line if profile was specified in command line parameters
+msgid "Selected profile \"%s\"."
+msgstr "已選擇配置檔“%s”。"
+
+#. Message shown on command line if password generation was requested
+msgid "Generating %d password(s) ..."
+msgstr "正在產生 %d 個密碼..."
+
+#. Message shown during startup if password generation was requested but program is not run from console
+msgid ""
+"Command line function \"gen\" is only effective\n"
+"when %s is run from the console."
+msgstr ""
+"命令行函數“gen”才有效\n"
+"當從控制台運行 %s 時。"
+
+#. Message shown when donor key has expired
+msgid ""
+"Your donor key has expired: The maximum\n"
+"number of updates has been reached."
+msgstr ""
+"您的捐贈密鑰已過期：最多\n"
+"已達到更新次數。"
+
+#. Message shown when donor key is invalid
+msgid "Donor key is invalid."
+msgstr "捐贈者密鑰無效。"
+
+#. Main menu, Help submenu, Enter Donor Key, title of input window
+msgid "Donor Key"
+msgstr "捐贈者鑰匙"
+
+#. Main menu, Help submenu, Enter Donor Key, caption of input box
+msgid "Enter donor key:"
+msgstr "輸入捐贈者密鑰："
+
+#. Message shown after entering valid donor key
+msgid ""
+"Your Donor ID is: %s\n"
+"Supported number of updates: %s"
+msgstr ""
+"您的捐贈者 ID 是：%s\n"
+"支持的更新數量：%s"
+
+#. Donor key, unlimited number of updates ("Donor Pro")
+msgid "Unlimited"
+msgstr "無制限"
+
+#. Message shown after entering valid donor key
+msgid "Thank you for your support!"
+msgstr "謝謝您的支持！"
+
+#. Message shown after entering valid donor key
+msgid "Copy this information to the clipboard?"
+msgstr "將此信息複製到剪貼簿嗎？"
+
+#. Message shown after entering donor key that has expired
+msgid "Donor key has expired."
+msgstr "捐贈者密鑰已過期。"
+
+#. Main menu, Options submenu, Save Settings Now, message shown after saving settings
+msgid "Settings saved."
+msgstr "設定已儲存。"
+
+#. Main window, password box, context menu, Save As File, title of save dialog
+msgid "Save password"
+msgstr "保存密碼"
+
+#. Main menu, Options submenu, Clear Password Cache, only enabled if "Remember password" functionality has been activated in "Enter password" dialog
+msgid "Clear Password Cache"
+msgstr "清除密碼緩存"
+
+#. Message shown after clearing password cache
+msgid "Password cache cleared."
+msgstr "密碼緩存已清除。"
+
+#. Main window, Run script, browse button, title of open dialog
+msgid "Select Lua script file"
+msgstr "選擇Lua腳本文件"
+
+#. Main window, exit program, title of progress window that is shown when threads besides main thread are still running
+msgid "Waiting for active threads to finish ..."
+msgstr "正在等待活動線程完成..."
+
+#. Main menu, Help submenu, Donate
+msgid ""
+"Donate at least one of the following amounts\n"
+"to receive a Donor Key:\n"
+"\n"
+"%d EUR / %d USD: Valid for current version and %d updates.\n"
+"%d EUR / %d USD: Valid for the entire lifetime of main version 3 (unlimited updates).\n"
+"\n"
+"Do you want to donate now?"
+msgstr ""
+"捐贈至少以下金額之一\n"
+"接收捐贈者密鑰：\n"
+"\n"
+"%d 歐元/%d 美元：適用於當前版本和 %d 更新。\n"
+"%d 歐元/%d 美元：在主版本 3 的整個生命週期內有效（無限制更新）。\n"
+"\n"
+"你現在想捐款嗎？"
+
+#. Main window, error message shown when access to registry failed
+msgid ""
+"Could not access registry key\n"
+"%s."
+msgstr ""
+"無法訪問註冊表項\n"
+"%s。"
+
+#. Configuration window, caption
+msgid "Configuration"
+msgstr "組態"
+
+#. Configuration window, General page
+msgid "General"
+msgstr "一般"
+
+#. Configuration window, Security page
+msgid "Security"
+msgstr "安全性"
+
+#. Configuration window, Hot Keys page
+msgid "Hot Keys"
+msgstr "熱鍵"
+
+#. Configuration window, Files page
+msgid "Files"
+msgstr "檔案"
+
+#. Configuration window, Updates page
+msgid "Updates"
+msgstr "更新"
+
+#. Configuration window, Database page
+msgid "Database"
+msgstr "資料庫"
+
+#. Configuration window, General
+msgid "User interface style:"
+msgstr "用戶界面風格："
+
+#. Configuration window, General
+msgid "Change font for the GUI controls:"
+msgstr "更改 GUI 控件的字體："
+
+#. Configuration window, General
+msgid "Select font"
+msgstr "選擇字體"
+
+#. Configuration window, General, dropdown menu of "Select font" button
+msgid "Restore Default"
+msgstr "重置為默認值"
+
+#. Configuration window, General
+msgid "Show system tray icon constantly"
+msgstr "不斷顯示系統托盤圖標"
+
+#. Configuration window, General
+msgid "Minimize program to system tray"
+msgstr "最小化程序到系統托盤"
+
+#. Configuration window, General
+msgid "Minimize before performing autotype"
+msgstr "執行自動輸入之前最小化"
+
+#. Configuration window, General
+msgid "Autotype delay between characters (ms):"
+msgstr "自動輸入字符之間的延遲（毫秒）："
+
+#. Configuration window, General
+msgid "Ask before exiting application"
+msgstr "結束應用程式前詢問"
+
+#. Configuration window, General
+msgid "Launch application on system startup (for current user)"
+msgstr "在系統啟動時啟動應用程序（對於當前用戶）"
+
+#. Configuration window, General
+msgid "Load the following profile on startup:"
+msgstr "啟動時載入以下配置檔："
+
+#. Configuration window, General
+msgid "Load pr"
+msgstr "負載壓力"
+
+#. Configuration window, Security
+msgid "Benchmark..."
+msgstr "基準..."
+
+#. Configuration window, Security
+msgid "Data size for benchmark test"
+msgstr "基準測試的資料大小"
+
+#. Configuration window, Security
+msgid "Encryption algorithm for generating random data via random pool:"
+msgstr "通過隨機池產生隨機數據的加密算法："
+
+#. Configuration window, Security
+msgid "Test passwords against list of common passwords"
+msgstr "根據常用密碼列表測試密碼"
+
+#. Configuration window, Security
+msgid "Use advanced password strength estimation (%s)"
+msgstr "使用高級密碼強度估計 (%s)"
+
+#. Configuration window, Security
+msgid "Clear clipboard automatically after the following time (seconds):"
+msgstr "在以下時間（秒）後自動清除剪貼簿："
+
+#. Configuration window, Security
+msgid "Clear password box automatically after the following time (seconds):"
+msgstr "在以下時間（秒）後自動清除密碼框："
+
+#. Configuration window, Updates
+msgid "Automatic check for updates"
+msgstr "自動檢查更新"
+
+#. Configuration window, Updates, options
+msgid "Daily"
+msgstr "每日"
+
+#. Configuration window, Updates, options
+msgid "Weekly"
+msgstr "每週"
+
+#. Configuration window, Updates, options
+msgid "Monthly"
+msgstr "每月"
+
+#. Configuration window, Updates, options
+msgid "Disabled"
+msgstr "停用"
+
+#. Configuration window, Hot Keys, Actions group box
+msgid "Actions"
+msgstr "動作"
+
+#. Configuration window, Hot Keys, Actions group box
+msgid "Show/restore main window"
+msgstr "顯示/恢復主窗口"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "No further action"
+msgstr "沒有進一步的行動"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Generate single password in main window"
+msgstr "在主窗口中產生單一密碼"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Generate multiple passwords"
+msgstr "產生多個密碼"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Generate password and copy it to the clipboard"
+msgstr "產生密碼並將其複製到剪貼板"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Generate password and show it in a message box"
+msgstr "產生密碼並將其顯示在消息框中"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Generate password and perform autotype"
+msgstr "產生密碼並執行自動輸入"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Open MP password generator"
+msgstr "打開主密碼產生器"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Show password manager"
+msgstr "顯示密碼管理器"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Show MP password generator"
+msgstr "顯示主密碼產生器"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Search database for keyword in window title"
+msgstr "在資料庫中搜索窗口標題中的關鍵字"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Search database for keyword and perform autotype"
+msgstr "在資料庫中搜索關鍵字並執行自動輸入"
+
+#. Configuration window, Hot Keys
+msgid "Shortcut to assign:"
+msgstr "分配的快捷方式："
+
+#. Configuration window, Hot Keys, button
+msgid "Add"
+msgstr "新增"
+
+#. Configuration window, Hot Keys, button
+msgid "Remove"
+msgstr "移除"
+
+#. Configuration window, Hot Keys, list view, column
+msgid "Shortcut"
+msgstr "捷徑"
+
+#. Configuration window, Hot Keys, list view, column
+msgid "Action"
+msgstr "動作"
+
+#. Configuration window, Hot Keys, message shown when trying to add a hot key without a corresponding action
+msgid "Please select a hot key action."
+msgstr "請選擇一個熱鍵操作。"
+
+#. Configuration window, Files
+msgid "Character encoding of text files"
+msgstr "文本文件的字符編碼"
+
+#. Configuration window, Files
+msgid "Newline character sequence"
+msgstr "換行符序列"
+
+#. Configuration window, Language
+msgid "Select language:"
+msgstr "選擇語言："
+
+#. Configuration window, Database
+msgid "Clear clipboard when closing/locking database"
+msgstr "關閉/鎖定數據庫時清除剪貼簿"
+
+#. Configuration window, Database
+msgid "Lock database when minimizing application or database window"
+msgstr "最小化應用程序或數據庫窗口時鎖定資料庫"
+
+#. Configuration window, Database
+msgid "Lock database after the following idle time (seconds):"
+msgstr "在以下空閒時間（秒）後鎖定資料庫："
+
+#. Configuration window, Database, save database automatically when database is being locked due to idle time
+msgid "Save automatically"
+msgstr "自動保存"
+
+#. Configuration window, Database
+msgid "Create backup of database before saving"
+msgstr "保存前創建資料庫備份"
+
+#. Configuration window, Database
+msgid "Number backups consecutively - up to:"
+msgstr "連續備份數量 - 最多："
+
+#. Configuration window, Database
+msgid "Open window on startup"
+msgstr "啟動時打開窗口"
+
+#. Configuration window, Database
+msgid "Open last used database on startup"
+msgstr "啟動時打開上次使用的資料庫"
+
+#. Configuration window, Database
+msgid "Warn if database contains expired entries"
+msgstr "如果數據庫包含過期項目則發出警告"
+
+#. Configuration window, Database
+msgid "Warn if database contains entries that will expire soon"
+msgstr "如果數據庫包含即將過期的項目，則發出警告"
+
+#. Configuration window, Database, entries that will expire soon, define number of days before expiry date
+msgid "Number of days:"
+msgstr "購買後許可證密鑰的有效天數。如果許可證密鑰未過期，請留空。不能與“到期於”字段同時使用:"
+
+#. Configuration window, Database, Save database automatically after certain actions
+msgid "Save automatically:"
+msgstr "自動保存："
+
+#. Configuration window, Database, Save automatically, options
+msgid "After adding/modifying an entry"
+msgstr "添加/修改項目後"
+
+#. Configuration window, Database, Save automatically, options
+msgid "After every change"
+msgstr "每次改變之後"
+
+#. Configuration window, Database
+msgid "Default autotype sequence:"
+msgstr "預設自動輸入序列："
+
+#. Configuration window, Hot Keys, message shown when max. number of hot keys has been exhausted
+msgid "Maximum number of hot keys (%d) reached."
+msgstr "已達到熱鍵最大數量 (%d)。"
+
+#. Configuration window, Hot Keys, message shown when hot key has already been assigned
+msgid "This hot key has already been assigned."
+msgstr "該熱鍵已被指定。"
+
+#. Configuration window, Security, Random pool cipher
+msgid "%s (%d-bit key, operates on %d-bit blocks)"
+msgstr "%s（%d 位密鑰，在 %d 位塊上運行）"
+
+#. Configuration window, Security, Random pool cipher, Benchmark results
+msgid "Benchmark results (data size: %d MB):"
+msgstr "基準測試結果（數據大小：%d MB）："
+
+#. Enter password window, label
+msgid "Enter password:"
+msgstr "輸入密碼："
+
+#. Enter password window, label
+msgid "Confirm password:"
+msgstr "確認密碼："
+
+#. Generic dialog window, button
+msgid "OK"
+msgstr "確定"
+
+#. Generic dialog window, button
+msgid "Cancel"
+msgstr "取消"
+
+#. Enter password window, message shown when passwords are not identical
+msgid "Passwords are not identical."
+msgstr "密碼不相同。"
+
+#. Enter password window, caption for encryption
+msgid "Encrypt"
+msgstr "加密"
+
+#. Enter password window, caption for decryption
+msgid "Decrypt"
+msgstr "解密"
+
+#. Enter password window
+msgid "Remember password (seconds):"
+msgstr "記住密碼（秒）："
+
+#. Enter password window
+msgid "Key file for password database:"
+msgstr "密碼資料庫的密鑰文件："
+
+#. Enter password window, Key file, None selected
+msgid "(None)"
+msgstr "（沒有任何）"
+
+#. Enter password window, message shown when neither password nor key file entered/selected
+msgid "Enter a password and/or select a key file."
+msgstr "輸入密碼和/或選擇密鑰檔。"
+
+#. Enter password window, message shown when selected key file could not be found
+msgid "The selected key file does not exist."
+msgstr "所選的密鑰檔不存在。"
+
+#. Enter password window, message shown when password is empty
+msgid "Password is empty."
+msgstr "密碼為空。"
+
+#. Enter password window, Create key file, message shown when creation was successful
+msgid "Key file successfully created."
+msgstr "密鑰檔案已成功建立。"
+
+#. Enter password window, Create key file, message shown when key file could not be created
+msgid ""
+"Error while creating key file:\n"
+"%s."
+msgstr ""
+"建立密鑰檔時出錯：\n"
+"%s。"
+
+#. Enter password window, Open file dialog, filter for *.key files
+msgid "Key files"
+msgstr "密鑰檔"
+
+#. Enter password window, Create Key File button, hint
+msgid "Create key file"
+msgstr "建立密鑰檔"
+
+#. Password List window, title
+msgid "Password List"
+msgstr "密碼列表"
+
+#. Password List window, context menu
+msgid "Save As File..."
+msgstr "另存新檔..."
+
+#. Password List window, Save as file, Save file dialog, title
+msgid "Save password list"
+msgstr "保存密碼列表"
+
+#. Password List window, Save as file, error message
+msgid ""
+"Error while creating file\n"
+"\"%s\":\n"
+"%s."
+msgstr ""
+"建立檔案時出錯\n"
+"“%s”：\n"
+"%s。"
+
+#. Password List window, Save as file, success message
+msgid "File \"%s\" successfully created."
+msgstr "檔案“%s”已成功建立。"
+
+#. Advanced Password Options window, title
+msgid "Advanced Password Options"
+msgstr "高級密碼選項"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Exclude ambiguous characters"
+msgstr "排除不明確的字符"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "First character must not be a lower-case letter"
+msgstr "第一個字符不能是小寫字母"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Don't separate words by a space"
+msgstr "不要用空格分隔單詞"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Don't separate words and characters by a '-' character"
+msgstr "不要用“-”字符分隔單詞和字符"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Reverse default order of character/word combinations"
+msgstr "反轉字符/單詞組合的預設順序"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Include at least one upper-case letter (A-Z)"
+msgstr "至少包含一個大寫字母 (A-Z)"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Include at least one lower-case letter (a-z)"
+msgstr "至少包含一個小寫字母 (a-z)"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Include at least one digit (0-9)"
+msgstr "至少包含一位數字 (0-9)"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Include at least one special symbol (!\"#$%...)"
+msgstr "至少包含一個特殊符號 (!\"#$%...)"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Only include characters from custom character set"
+msgstr "僅包含自定義字符集中的字符"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Exclude repeating consecutive characters (e.g. aa, 11)"
+msgstr "排除重複的連續字符（例如 aa、11）"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Exclude duplicate entries in password lists"
+msgstr "排除密碼列表中的重複項目"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Assign entropy value to each password in password lists"
+msgstr "為密碼列表中的每個密碼分配熵值"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Capitalize first letter of each word"
+msgstr "每個單詞的第一個字母大寫"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Convert all words in word lists to lower-case"
+msgstr "將單詞列表中的所有單詞轉換為小寫"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Each character must occur only once"
+msgstr "每個字符只能出現一次"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Each word must occur only once"
+msgstr "每個單詞只能出現一次"
+
+#. Advanced Password Options window, label
+msgid "Redefine ambiguous characters:"
+msgstr "重新定義不明確的字符："
+
+#. Advanced Password Options window, label
+msgid "Redefine special symbols:"
+msgstr "重新定義特殊符號："
+
+#. Advanced Password Options window, label
+msgid "Maximum length of words in word lists (except default word list):"
+msgstr "單詞列表中單詞的最大長度（預設單詞列表除外）："
+
+#. Advanced Password Options window, label
+msgid "Trigram file for generating phonetic (pronounceable) passwords:"
+msgstr "用於產生語音（可發音）密碼的三元組 文件："
+
+#. Advanced Password Options window, footnotes of checkbox list
+msgid "Applies to pass_words_."
+msgstr "適用於pass_words_。"
+
+#. Advanced Password Options window, footnotes of checkbox list
+msgid "Applies to pass_phrases_."
+msgstr "適用於 pass_phrases_。"
+
+#. Advanced Password Options window, footnotes of checkbox list
+msgid "Applies to formatted passwords."
+msgstr "適用於格式化密碼。"
+
+#. Advanced Password Options window, footnotes of checkbox list
+msgid "Applies to phonetic passwords."
+msgstr "適用於拼音密碼。"
+
+#. Advanced Password Options window, footnotes of checkbox list
+msgid "Selecting one of these options might reduce the security of generated passwords."
+msgstr "選擇這些選項之一可能會降低產生密碼的安全性。"
+
+#. Advanced Password Options window, checkbox list, context menu
+msgid "Deselect All"
+msgstr "取消全選"
+
+#. Advanced Password Options window, checkbox list, context menu
+msgid "Invert Selection"
+msgstr "反向選擇"
+
+#. Create Random Data File dialog, title
+msgid "Create Random Data File"
+msgstr "建立隨機數據文件"
+
+#. Create Random Data File dialog, label
+msgid "File name:"
+msgstr "檔案名稱："
+
+#. Create Random Data File dialog, label
+msgid "File size:"
+msgstr "檔案大小:"
+
+#. Create Random Data File dialog, drop-down list of file size units
+msgid "Bytes"
+msgstr "位元組"
+
+#. Create Random Data File dialog, drop-down list of file size units
+msgid "Kilobytes"
+msgstr "Kilobytes"
+
+#. Create Random Data File dialog, drop-down list of file size units
+msgid "Megabytes"
+msgstr "百萬位元組"
+
+#. Create Random Data File dialog, Close button
+msgid "Close"
+msgstr "關閉"
+
+#. Create Random Data File dialog, Create file button
+msgid "Create file"
+msgstr "建立文件"
+
+#. Create Random Data File dialog, message shown when specified file size is invalid
+msgid "Invalid file size."
+msgstr "文件大小無效。"
+
+#. Create Random Data File dialog, message shown when there's not enough free disk space to create the file
+msgid ""
+"Not enough free disk space available\n"
+"to create the file."
+msgstr ""
+"可用磁碟空間不足\n"
+"建立文件。"
+
+#. Create Random Data File dialog, title of progress window
+msgid "Creating random data file ..."
+msgstr "建立隨機數據文件..."
+
+#. Create Random Data File dialog, Progress window, progress message
+msgid "%d of %d %s written."
+msgstr "已寫入 %d 個，共 %d 個 %s 個。"
+
+#. Create Random Data File dialog, success message
+msgid ""
+"File \"%s\" successfully created.\n"
+"\n"
+"%d bytes written."
+msgstr ""
+"檔案“%s”已成功建立。\n"
+"\n"
+"已寫入 %d 個字節。"
+
+#. Create Random Data File dialog, error message
+msgid ""
+"Error while creating file\n"
+"\"%s\":\n"
+"%s.\n"
+"\n"
+"%d bytes written."
+msgstr ""
+"建立文件時出錯\n"
+"“%s”：\n"
+"%s。\n"
+"\n"
+"已寫入 %d 個字節。"
+
+#. Profile Editor dialog, title
+msgid "Profile Editor"
+msgstr "配置檔編輯器"
+
+#. Profile Editor dialog, Load Profile button
+msgid "Load"
+msgstr "載入"
+
+#. Profile Editor dialog, Confirm checkbox
+msgid "Confirm"
+msgstr "確認"
+
+#. Profile Editor dialog, label
+msgid "Profile name:"
+msgstr "配置檔名稱："
+
+#. Profile Editor dialog, Move Up button, hint
+msgid "Move up"
+msgstr "向上移動"
+
+#. Profile Editor dialog, Move Down button, hint
+msgid "Move down"
+msgstr "向下移動"
+
+#. Profile Editor dialog, checkbox
+msgid "Save \"advanced password options\" for this profile"
+msgstr "為此配置檔保存“高級密碼選項”"
+
+#. Profile Editor dialog, message shown before deleting a single profile
+msgid "Delete profile \"%s\"?"
+msgstr "刪除配置檔“%s”嗎？"
+
+#. Profile Editor dialog, message shown before deleting multiple profiles
+msgid "Delete %d profiles?"
+msgstr "刪除 %d 個配置檔？"
+
+#. Profile Editor dialog, message shown when max. number of profiles has been reached
+msgid ""
+"Maximum number of profiles (%d) reached.\n"
+"Please delete or overwrite profiles."
+msgstr ""
+"已達到配置檔的最大數量 (%d)。\n"
+"請刪除或覆蓋配置文件。"
+
+#. Profile Editor dialog, message shown when a profile already exists
+msgid ""
+"A profile with the name \"%s\" already exists.\n"
+"Do you want to overwrite it?"
+msgstr ""
+"名為“%s”的配置檔已存在。\n"
+"您想覆蓋它嗎？"
+
+#. Create Trigram File dialog, title
+msgid "Create Trigram File"
+msgstr "創建三元組文件"
+
+#. Create Trigram File dialog, label
+msgid "Source file (e.g., dictionary, word list):"
+msgstr "來源文件（例如詞典、單詞列表）："
+
+#. Create Trigram File dialog, label
+msgid "Destination file (trigram file):"
+msgstr "目標文件（三元組文件）："
+
+#. Create Trigram File dialog, success message
+msgid ""
+"Trigram file \"%s\" successfully created.\n"
+"\n"
+"%d trigrams evaluated.\n"
+"%1.2f bits of entropy per letter."
+msgstr ""
+"三元組文件“%s”已成功創建。\n"
+"\n"
+"評估了 %d 個三元組。\n"
+"每個字母有 %1.2f 位熵。"
+
+#. Create Trigram File dialog, message shown when process was cancelled
+msgid "Process was cancelled by the user"
+msgstr "進程被用戶取消"
+
+#. Main menu, Help submenu
+msgid "About %s"
+msgstr "關於 %s"
+
+#. About window, info about translation
+msgid ""
+"Current language: %s\n"
+"Translator: %s"
+msgstr ""
+"當前語言：%s\n"
+"譯者：%s"
+
+#. About window, license info
+msgid "This program is distributed under the terms and conditions of the GNU General Public License (GPL)."
+msgstr "該程序根據 GNU 通用公共許可證 (GPL) 的條款和條件分發。"
+
+#. About window, button
+msgid "View license"
+msgstr "查看許可證"
+
+#. About window, info about Donor ID extracted from Donor Key
+msgid "Donor ID:"
+msgstr "奉獻者ID："
+
+#. Quick Help window, title
+msgid "Quick help"
+msgstr "快速幫助"
+
+#. Quick Help window, context menu
+msgid "Position Automatically"
+msgstr "自動定位"
+
+#. Quick help for "Include characters" in main window
+msgid "You can use the following placeholders:"
+msgstr "可以使用下列標籤："
+
+#. Quick help for "Include characters" in main window
+msgid "without ambiguous characters"
+msgstr "沒有歧義的字符"
+
+#. Quick help for "Include characters" in main window
+msgid "special symbols"
+msgstr "特殊符號"
+
+#. Quick help for "Include characters" in main window
+msgid "brackets"
+msgstr "包圍曝光"
+
+#. Quick help for "Include characters" in main window
+msgid "punctuation marks"
+msgstr "標點符號"
+
+#. Quick help for "Include characters" in main window
+msgid "higher ANSI characters"
+msgstr "更高的 ANSI 字符"
+
+#. Quick help for "Include characters" in main window
+msgid "generate phonetic password (lower-case letters)"
+msgstr "產生拼音密碼（小寫字母）"
+
+#. Quick help for "Include characters" in main window
+msgid "generate phonetic password (upper-case letters)"
+msgstr "產生拼音密碼（大寫字母）"
+
+#. Quick help for "Include characters" in main window
+msgid "generate phonetic password (mixed-case letters)"
+msgstr "產生拼音密碼（大小寫字母混合）"
+
+#. Quick help for "Include characters" in main window
+msgid ""
+"You can use the following syntax to specify a (minimum) number N of characters\n"
+"for a character set:"
+msgstr ""
+"您可以使用以下語法指定（最小）N 個字符\n"
+"對於字符集："
+
+#. Quick help for "Include characters" in main window
+msgid "N = Include exactly N characters. N+ = Include at least N characters."
+msgstr "N = 恰好包含 N 個字符。 N+ = 至少包含 N 個字符。"
+
+#. Quick help for "Include characters" in main window
+msgid ""
+"Comments may be provided in square brackets \"[...]\"\n"
+"at the beginning of the sequence."
+msgstr ""
+"註釋可以在方括號“[...]”中提供\n"
+"在序列的開頭。"
+
+#. Quick help for "Format password" in main window
+msgid ""
+"Format specifiers have the form \"[*][N]x\" or \"[*][M-N]x\", where the\n"
+"optional argument \"N\" specifies the number of repetitions (between 1 and\n"
+"99999), \"M-N\" specifies a random number of repetitions in the range\n"
+"from M to N, and \"x\" is the actual format specifier/placeholder. The\n"
+"optional asterisk (*) means that each character must occur only once in\n"
+"the sequence. Example: \"16u\" means \"Insert 16 random upper-case letters\n"
+"into the password\"."
+msgstr ""
+"格式說明符的形式為“[*][N]x”或“[*][M-N]x”，其中\n"
+"可選參數“N”指定重複次數（1 到 1 之間）\n"
+"99999），“M-N”指定範圍內的隨機重複次數\n"
+"從 M 到 N，“x”是實際的格式說明符/佔位符。這\n"
+"可選的星號 (*) 表示每個字符只能出現一次\n"
+"序列。示例：“16u”表示“插入16個隨機大寫字母\n"
+"進入密碼”。"
+
+#. Quick help for "Format password" in main window
+msgid "List of placeholders with optional argument \"N\":"
+msgstr "帶有可選參數“N”的佔位符列表："
+
+#. Quick help for "Format password" in main window
+msgid "custom character set"
+msgstr "自定義字符集"
+
+#. Quick help for "Format password" in main window
+msgid "vowels, lower-case"
+msgstr "元音，小寫"
+
+#. Quick help for "Format password" in main window
+msgid "vowels, mixed-case"
+msgstr "元音，混合大小寫"
+
+#. Quick help for "Format password" in main window
+msgid "vowels, upper-case"
+msgstr "元音，大寫"
+
+#. Quick help for "Format password" in main window
+msgid "consonants, lower-case"
+msgstr "輔音，小寫"
+
+#. Quick help for "Format password" in main window
+msgid "consonants, mixed-case"
+msgstr "輔音，混合大小寫"
+
+#. Quick help for "Format password" in main window
+msgid "consonants, upper-case"
+msgstr "輔音，大寫"
+
+#. Quick help for "Format password" in main window
+msgid ""
+"List of special format specifiers\n"
+"(possible usage of argument \"N\" is indicated by \"{N}\"):"
+msgstr ""
+"特殊格式說明符列表\n"
+"（參數“N”的可能用法由“{N}”指示）："
+
+#. Quick help for "Format password" in main window
+msgid "insert password generated via \"Include characters/words\""
+msgstr "插入通過“包含字符/單詞”產生的密碼"
+
+#. Quick help for "Format password" in main window
+msgid "words from word list, multiple words are separated by spaces"
+msgstr "單詞列表中的單詞，多個單詞之間用空格分隔"
+
+#. Quick help for "Format password" in main window
+msgid "words, multiple words are not separated at all"
+msgstr "單詞，多個單詞根本沒有分開"
+
+#. Quick help for "Format password" in main window
+msgid "repeat input sequence in brackets N times"
+msgstr "重複括號中的輸入序列 N 次"
+
+#. Quick help for "Format password" in main window
+msgid "randomly permute formatted sequence in brackets, keep N characters"
+msgstr "隨機排列括號內的格式化序列，保留 N 個字符"
+
+#. Quick help for "Format password" in main window
+msgid "treat sequence as character set and insert N characters"
+msgstr "將序列視為字符集並插入 N 個字符"
+
+#. Quick help for "Format password" in main window
+msgid "Additional notes:"
+msgstr "補充備註："
+
+#. Quick help for "Format password" in main window
+msgid ""
+"Text enclosed with quotation marks \"...\" is copied verbatim\n"
+"to the password."
+msgstr ""
+"用引號“...”括起來的文本將逐字複製\n"
+"到密碼。"
+
+#. Master-Password based Password Generator window, title
+msgid "MP Password Generator"
+msgstr "主密碼產生器"
+
+#. MP Password Generator window, group box
+msgid "Master password"
+msgstr "主密碼"
+
+#. MP Password Generator window, button
+msgid "Enter password..."
+msgstr "輸入密碼..."
+
+#. MP Password Generator window, button to clear master password cache
+msgid "Clear"
+msgstr "清除"
+
+#. MP Password Generator window, label for status of master password cache
+msgid "Status:"
+msgstr "狀態："
+
+#. MP Password Generator window, countdown for master password expiry
+msgid "Expiry countdown:"
+msgstr "到期倒計時："
+
+#. MP Password Generator window, checkbox
+msgid "Ask for password confirmation"
+msgstr "要求確認密碼"
+
+#. MP Password Generator window, checkbox
+msgid "Show checksum of password:"
+msgstr "顯示密碼校驗和："
+
+#. MP Password Generator window, checkbox
+msgid "Key expires after the following time (seconds):"
+msgstr "密鑰在以下時間（秒）後過期："
+
+#. MP Password Generator window, checkbox
+msgid "Provide compatibility with \"Hashapass\""
+msgstr "提供與“Hashapass”的兼容性"
+
+#. MP Password Generator window, checkbox
+msgid "Add password length to parameter"
+msgstr "將密碼長度添加到參數中"
+
+#. MP Password Generator window, checkbox
+msgid "Autotype sequence:"
+msgstr "自動輸入序列："
+
+#. MP Password Generator window, group box
+msgid "Password generator"
+msgstr "密碼產生器"
+
+#. MP Password Generator window, label
+msgid "Parameter:"
+msgstr "參數："
+
+#. MP Password Generator window, label
+msgid "%d ch. / %.1f bits per ch."
+msgstr "%d 章。 / 每通道 %.1f 位。"
+
+#. MP Password Generator window, label
+msgid "Resulting password:"
+msgstr "產生的密碼："
+
+#. MP Password Generator window, button
+msgid "Use as default random generator"
+msgstr "用作預設隨機產生器"
+
+#. MP Password Generator window, Character set drop-down list
+msgid "Alphanumeric"
+msgstr "英數文字"
+
+#. MP Password Generator window, Character set drop-down list
+msgid "Hexadecimal"
+msgstr "十六進制"
+
+#. MP Password Generator window, message when master password has expired
+msgid "Key has expired."
+msgstr "密鑰已過期。"
+
+#. MP Password Generator window, message when master password has been cleared by the user
+msgid "Key has been cleared."
+msgstr "密鑰已被清除。"
+
+#. MP Password Generator window, message when new master password has been set
+msgid "New key generated."
+msgstr "產生新密鑰。"
+
+#. MP Password Generator Window, label next to password quality bar
+msgid "%d bits"
+msgstr "%d 位"
+
+#. Provide Additional Entropy window, label
+msgid "Enter or paste some text into the box below, press mouse buttons, or move your mouse within the window."
+msgstr "在下面的框中輸入或粘貼一些文本，按滑鼠按鈕，或在窗口內移動滑鼠。"
+
+#. Provide Additional Entropy window, message shown when entropy has been added
+msgid "%d bits of entropy have been added to the random pool."
+msgstr "%d 位熵已添加到隨機池中。"
+
+#. Password Manager window, Open database, error message
+msgid "Database not encrypted, or invalid key"
+msgstr "資料庫未加密或密鑰無效"
+
+#. Password Manager window, Open database, error message
+msgid "File contents modified, or invalid key"
+msgstr "檔案內容已修改，或密鑰無效"
+
+#. Password Manager window, Open database, error message
+msgid "Unknown file format"
+msgstr "未知的檔案格式"
+
+#. Password Manager window, Open database, error message
+msgid "Invalid file format"
+msgstr "無效的檔案格式"
+
+#. Password Manager window, field name
+msgid "Title"
+msgstr "標題"
+
+#. Password Manager window, field name
+msgid "Title:"
+msgstr "標題:"
+
+#. Password Manager window, field name
+msgid "User name"
+msgstr "用戶名"
+
+#. Password Manager window, field name
+msgid "User name:"
+msgstr "使用者名稱："
+
+#. Password Manager window, field name
+msgid "Password"
+msgstr "密碼"
+
+#. Password Manager window, field name
+msgid "Password:"
+msgstr "密碼："
+
+#. Password Manager window, field name
+msgid "URL"
+msgstr "網址"
+
+#. Password Manager window, field name
+msgid "URL:"
+msgstr "網址："
+
+#. Password Manager window, field name
+msgid "Keyword"
+msgstr "關鍵字"
+
+#. Password Manager window, field name
+msgid "Keyword:"
+msgstr "關鍵字："
+
+#. Password Manager window, field name
+msgid "Notes"
+msgstr "備註"
+
+#. Password Manager window, field name
+msgid "Notes:"
+msgstr "備註："
+
+#. Password Manager window, field name
+msgid "Key-value list"
+msgstr "鍵值列表"
+
+#. Password Manager window, field name
+msgid "Key-value list:"
+msgstr "鍵值列表："
+
+#. Password Manager window, field name
+msgid "Creation time"
+msgstr "建立時間"
+
+#. Password Manager window, field name
+msgid "Creation time:"
+msgstr "建立時間："
+
+#. Password Manager window, field name
+msgid "Last modification"
+msgstr "最後修改"
+
+#. Password Manager window, field name
+msgid "Last modification:"
+msgstr "最後修改："
+
+#. Password Manager window, field name
+msgid "Tags"
+msgstr "標籤"
+
+#. Password Manager window, field name
+msgid "Tags:"
+msgstr "標籤："
+
+#. Password Manager window, field name
+msgid "Select and add existing tag"
+msgstr "選擇並添加現有標籤"
+
+#. Password Manager window, Tag view, first item "All (tags)" (plural)
+msgctxt "tags"
+msgid "All"
+msgstr "全部"
+
+#. Password Manager window, Tag view when searching
+msgid "All search results"
+msgstr "所有搜索結果"
+
+#. Password Manager window, Tag view
+msgid "Untagged"
+msgstr "無標籤"
+
+#. Password Manager window, Key/value field
+msgid "Key"
+msgstr "密鑰"
+
+#. Password Manager window, Key/value field
+msgid "Value"
+msgstr "值"
+
+#. Password Manager window, main menu, Edit submenu
+msgid "Edit"
+msgstr "編輯"
+
+#. Password Manager window, main menu, View submenu
+msgid "View"
+msgstr "查看"
+
+#. Password Manager window, main menu, File submenu
+msgid "New..."
+msgstr "新增…"
+
+#. Password Manager window, main menu, File submenu
+msgid "Open..."
+msgstr "開啟..."
+
+#. Password Manager window, main menu, File submenu
+msgid "Open as Read-only..."
+msgstr "以唯讀方式打開..."
+
+#. Password Manager window, main menu, File submenu
+msgid "Save"
+msgstr "儲存"
+
+#. Password Manager window, main menu, File submenu
+msgid "Save As..."
+msgstr "儲存為⋯"
+
+#. Password Manager window, main menu, File submenu
+msgid "Lock"
+msgstr "鎖定"
+
+#. Password Manager window, main menu, File submenu
+msgid "Unlock"
+msgstr "解鎖"
+
+#. Password Manager window, main menu, File submenu
+msgid "Export to"
+msgstr "匯出到"
+
+#. Password Manager window, main menu, File submenu, Export To submenu
+msgid "CSV File..."
+msgstr "CSV 文件..."
+
+#. Password Manager window, main menu, File submenu
+msgid "Database Settings..."
+msgstr "資料庫設置..."
+
+#. Password Manager window, main menu, File submenu
+msgid "Properties..."
+msgstr "屬性..."
+
+#. Password Manager window, main menu, File submenu
+msgid "Change Master Password..."
+msgstr "更改主密碼..."
+
+#. Password Manager window, main menu, Edit submenu
+msgid "Copy User Name"
+msgstr "複製用戶名"
+
+#. Password Manager window, main menu, Edit submenu
+msgid "Copy Password"
+msgstr "複製密碼"
+
+#. Password Manager window, main menu, Edit submenu
+msgid "Open URL"
+msgstr "打開網址"
+
+#. Password Manager window, main menu, Edit submenu
+msgid "Run"
+msgstr "執行"
+
+#. Password Manager window, main menu, Edit submenu
+msgid "Add Entry"
+msgstr "增加紀錄"
+
+#. Password Manager window, main menu, Edit submenu
+msgid "Duplicate Entry"
+msgstr "複製項目"
+
+#. Password Manager window, main menu, Edit submenu
+msgid "Delete Entry"
+msgstr "刪除條目"
+
+#. Password Manager window, main menu, View submenu
+msgid "Show Columns"
+msgstr "顯示列"
+
+#. Password Manager window, main menu, View submenu
+msgid "Show Passwords in List"
+msgstr "在列表中顯示密碼"
+
+#. Password Manager window, main menu, View submenu
+msgid "Sort Entries By"
+msgstr "項目排序依據"
+
+#. Password Manager window, main menu, View submenu, Sort submenu
+msgid "Unsorted"
+msgstr "未分類"
+
+#. Password Manager window, main menu, View submenu, Sort submenu
+msgid "Ascending"
+msgstr "升序"
+
+#. Password Manager window, main menu, View submenu, Sort submenu
+msgid "Descending"
+msgstr "降序"
+
+#. Password Manager window, main menu, View submenu
+msgid "Sort Tags By"
+msgstr "標籤排序依據"
+
+#. Password Manager window, main menu, View submenu, Sort Tags submenu
+msgid "Name"
+msgstr "名稱"
+
+#. Password Manager window, main menu, View submenu, Sort Tags submenu
+msgid "Frequency"
+msgstr "頻率"
+
+#. Password Manager window, main menu, View submenu
+msgid "Change List Font..."
+msgstr "更改列表字體..."
+
+#. Password Manager window, main menu, View submenu
+msgid "Reset List Font"
+msgstr "重置列表字體"
+
+#. Password Manager window, main menu, View submenu
+msgid "Change Password Font..."
+msgstr "更改密碼字體..."
+
+#. Password Manager window, Edit panel, Arrow Up button, hint
+msgid "Previous entry"
+msgstr "上一個項目"
+
+#. Password Manager window, Edit panel, Arrow Down button, hint
+msgid "Next entry"
+msgstr "下一個項目"
+
+#. Password Manager window, Edit panel, Accept button, hint
+msgid "Accept changes"
+msgstr "接受變更"
+
+#. Password Manager window, Edit panel, Undo button, hint
+msgid "Undo changes"
+msgstr "復原更改"
+
+#. Password Manager window, toolbar, Search box, text hint
+msgid "Search..."
+msgstr "搜尋..."
+
+#. Password Manager window, toolbar, Search button, context menu
+msgid "Clear search"
+msgstr "清除搜索"
+
+#. Password Manager window, toolbar, Search button, hint
+msgid "Perform search"
+msgstr "執行搜索"
+
+#. Password Manager window, toolbar, Search button, context menu
+msgid "Case-sensitive"
+msgstr "區分大小寫"
+
+#. Password Manager window, toolbar, Search button, context menu
+msgid "Fuzzy search"
+msgstr "模糊搜索"
+
+#. Password Manager window, toolbar, Search button, context menu
+msgid "Select fields..."
+msgstr "選擇字段..."
+
+#. Password Manager window, toolbar, Lock/unlock button, hint
+msgid "Lock/unlock database"
+msgstr "鎖定/解鎖資料庫"
+
+#. Password Manager window, Edit panel, Toggle password button, hint
+msgid "Left-click: Hide/show password, right-click: Generate password"
+msgstr "左鍵單擊：隱藏/顯示密碼，右鍵單擊：產生密碼"
+
+#. Password Manager window, title of password entry dialog when unlocking database
+msgid "Unlock %s"
+msgstr "解鎖%s"
+
+#. Password Manager window, title of password entry dialog when opening database
+msgid "Open %s"
+msgstr "開啟 %s"
+
+#. Password Manager window, title of password entry dialog when creating new database
+msgid "Create new database"
+msgstr "建立新資料庫"
+
+#. Password Manager window, error message when opening database
+msgid ""
+"Could not find database file:\n"
+"\"%s\"."
+msgstr ""
+"找不到資料庫文件：\n"
+"“%s”。"
+
+#. Password Manager window, error message when opening database
+msgid ""
+"Error while opening database file:\n"
+"%s."
+msgstr ""
+"打開資料庫文件時出錯：\n"
+"%s。"
+
+#. Password Manager window, warning message when opening database
+msgid "The selected file is already opened."
+msgstr "所選檔案已打開。"
+
+#. Password Manager window, message when currently selected entry has been changed
+msgid ""
+"The currently selected entry has been changed.\n"
+"Do you want to save the changes?"
+msgstr ""
+"當前選定的項目已更改。\n"
+"您想保存更改嗎？"
+
+#. Password Manager window, message when database has been changed
+msgid ""
+"The database has been changed.\n"
+"Do you want to save the changes?"
+msgstr ""
+"資料庫已更改。\n"
+"您想保存更改嗎？"
+
+#. Password Manager window, message when trying to lock an untitled database
+msgid "An untitled database cannot be locked."
+msgstr "無法鎖定未命名的資料庫。"
+
+#. Password Manager window, error message when trying to save backup file
+msgid ""
+"Could not save backup file\n"
+"\"%s\"."
+msgstr ""
+"無法保存備份檔\n"
+"“%s”。"
+
+#. Password Manager window, error message
+msgid ""
+"Error while saving database file:\n"
+"%s."
+msgstr ""
+"保存資料庫文件時出錯：\n"
+"%s。"
+
+#. Password Manager window, message when editing an entry and trying to add new entries
+msgid ""
+"Please finish editing the current entry\n"
+"before adding new entries."
+msgstr ""
+"請完成當前項目的編輯\n"
+"在添加新項目之前。"
+
+#. Password Manager window, message when new entries have been added
+msgid "%d entries with passwords have been added."
+msgstr "已添加 %d 個帶密碼的項目。"
+
+#. Password Manager window, Search result
+msgid "1 entry found."
+msgstr "找到 1 個項目。"
+
+#. Password Manager window, Search result
+msgid "%d entries found."
+msgstr "找到 %d 個條目。"
+
+#. Password Manager window, Search result (via hot key)
+msgid "Search via hot key."
+msgstr "通過熱鍵搜索。"
+
+#. Password Manager window, Search via hot key, no match found
+msgid ""
+"No matching keyword found for window text\n"
+"\"%s\"."
+msgstr ""
+"沒有找到與窗口文本匹配的關鍵字\n"
+"“%s”。"
+
+#. Password Manager window, placeholder for New Entry in list view
+msgid "New Entry"
+msgstr "新增項目"
+
+#. Password Manager window, message when trying to add new entry without title and password
+msgid "Please specify at least a title or password."
+msgstr "請至少指定一個標題或密碼。"
+
+#. Password Manager window, confirm deletion of entry
+msgid "Delete 1 entry?"
+msgstr "刪除 1 條記錄？"
+
+#. Password Manager window, confirm deletion of entries
+msgid "Delete %d entries?"
+msgstr "刪除 %d 個項目？"
+
+#. Password Manager window, Change master password, query old password
+msgid "Enter OLD master password"
+msgstr "輸入舊主密碼"
+
+#. Password Manager window, Change master password, query new password
+msgid "Enter NEW master password"
+msgstr "輸入新的主密碼"
+
+#. Password Manager window, Change master password, success message
+msgid "Master password successfully changed."
+msgstr "主密碼更改成功。"
+
+#. Password Manager window, Change master password, error message
+msgid "Old master password is invalid."
+msgstr "舊主密碼無效。"
+
+#. Password Manager window, New database, default name
+msgid "Untitled"
+msgstr "無標題"
+
+#. Password Manager window, text added to title when creating a duplicate of an existing entry
+msgctxt "noun"
+msgid "Copy"
+msgstr "複製"
+
+#. Password Manager window, Export database to CSV, success message
+msgid "Database successfully exported to CSV file."
+msgstr "資料庫已成功導出到 CSV 文件。"
+
+#. Password Manager window, Export database to CSV, error message
+msgid ""
+"Error while creating CSV file:\n"
+"%s."
+msgstr ""
+"建立CSV 文件時出錯：\n"
+"%s。"
+
+#. Password Manager window, Open/Save dialog, filter for .pwdb files
+msgid "Password databases"
+msgstr "密碼資料庫"
+
+#. Password Manager window, Open/Save dialog, filter for .csv files
+msgid "CSV files"
+msgstr "CSV 文件"
+
+#. Password Manager window, Key-Value field, Autotype key
+msgid "Autotype"
+msgstr "自動輸入"
+
+#. Password Manager window, Key-Value field, Format Password key
+msgid "Format password"
+msgstr "設置密碼格式"
+
+#. Password Manager window, main menu, Edit submenu
+msgid "Rearrange Entry"
+msgstr "重新排列項目"
+
+#. Password Manager window, main menu, Edit submenu, Rearrange Entry submenu
+msgid "Move to Top"
+msgstr "移至頂部"
+
+#. Password Manager window, main menu, Edit submenu, Rearrange Entry submenu
+msgid "Move up by one"
+msgstr "向上移動一位"
+
+#. Password Manager window, main menu, Edit submenu, Rearrange Entry submenu
+msgid "Move down by one"
+msgstr "下移一位"
+
+#. Password Manager window, main menu, Edit submenu, Rearrange Entry submenu
+msgid "Move to Bottom"
+msgstr "移至底部"
+
+#. Password Manager window, Edit panel, message shown when one or more tags of the selected entry are too long
+msgid ""
+"The maximum tag length is %d characters.\n"
+"Longer tags have been shortened."
+msgstr ""
+"標記的最大長度為 %d 個字符。\n"
+"較長的標籤已被縮短。"
+
+#. Password Manager window, main menu, File submenu, Set Recovery Password, title of password entry dialog
+msgid "Enter master password"
+msgstr "輸入主要密碼"
+
+#. Password Manager window, main menu, File submenu, Database settings, when applying certain settings, title of password entry dialog
+msgid "Enter master password again"
+msgstr "再次輸入主密碼"
+
+#. Password Manager window, main menu, File submenu, Database settings, when applying certain settings, message shown when master password is invalid
+msgid "Master password is invalid."
+msgstr "主密碼無效。"
+
+#. Password Manager window, Edit panel, Key-value list button, hint
+msgid "Edit key-value list"
+msgstr "編輯鍵值列表"
+
+#. Password Manager window, Edit panel, password box, generate password, message shown when profile specified by corresponding key-value pair could not be found
+msgid "Profile \"%s\" not found."
+msgstr "未找到配置檔案“%s”。"
+
+#. Password Manager window, field name
+msgid "Password expiry"
+msgstr "密碼過期"
+
+#. Password Manager window, Edit panel, checkbox
+msgid "Expires:"
+msgstr "到期:"
+
+#. Password Manager window, Edit panel, Expiry button, hint
+msgid "Change expiry date"
+msgstr "更改到期日期"
+
+#. Password Manager window, main menu, View submenu
+msgid "Filter expired entries"
+msgstr "過濾過期項目"
+
+#. Password Manager window, main menu, View submenu
+msgid "Filter entries that will expire soon"
+msgstr "過濾即將過期的項目"
+
+#. Password Manager window, Edit panel, context menu of Expiry button, menu items
+msgid "%d days"
+msgstr "%d 日"
+
+#. Password Manager window, when opening database, message shown if database contains expired entries
+msgid ""
+"The database contains expired entries.\n"
+"Do you want to filter these entries now?"
+msgstr ""
+"資料庫包含過期項目。\n"
+"您現在想過濾這些項目嗎？"
+
+#. Password Manager window, when opening database, message shown if database contains expired entries that will expire soon
+msgid ""
+"The database contains entries that will expire soon.\n"
+"Do you want to filter these entries now?"
+msgstr ""
+"資料庫包含即將過期的項目。\n"
+"您現在想過濾這些項目嗎？"
+
+#. Password Manager window, text added to window title when database is locked
+msgid "Locked"
+msgstr "鎖定"
+
+#. Password Manager window, main menu, File submenu
+msgid "Set Recovery Password..."
+msgstr "設置復原密碼..."
+
+#. Password Manager window, main menu, File submenu
+msgid "Remove Recovery Password..."
+msgstr "刪除復原密碼..."
+
+#. Password Manager window, main menu, File submenu, Set Recovery Password, title of password entry dialog
+msgid "Enter recovery password"
+msgstr "輸入復原密碼"
+
+#. Password Manager window, main menu, File submenu, Set Recovery Password, message shown when procedure was successful
+msgid "Recovery password successfully set."
+msgstr "復原密碼已成功設置。"
+
+#. Password Manager window, main menu, File submenu, Remove Recovery Password, error message
+msgid "Recovery password is invalid."
+msgstr "復原密碼無效。"
+
+#. Password Manager window, main menu, File submenu, Remove Recovery Password, message shown when procedure was successful
+msgid "Recovery password successfully removed."
+msgstr "復原密碼已成功刪除。"
+
+#. Password Manager window, main menu, File submenu, Database Properties, entry in left column
+msgid "Recovery password set"
+msgstr "復原密碼設置"
+
+#. Indicates whether option is set
+msgid "Yes"
+msgstr "是"
+
+#. Indicates whether option is set
+msgid "No"
+msgstr "否"
+
+#. Password Manager window, Opening database, message shown in case of version incompatibility
+msgid ""
+"Database format error:\n"
+"%s.\n"
+"Database version: %d.%d\n"
+"Highest supported version: %d.%d"
+msgstr ""
+"資料庫格式錯誤：\n"
+"%s。\n"
+"資料庫版本：%d.%d\n"
+"支持的最高版本：%d.%d"
+
+#. Password Manager window, Select Columns dialog, window title
+msgid "Select columns"
+msgstr "選擇欄"
+
+#. Password Manager window, Select Columns dialog, message shown if no column selected
+msgid "Select at least one column."
+msgstr "至少選擇一列。"
+
+#. Generic string formatting error message
+msgid "Error while formatting string"
+msgstr "格式化字符串時出錯"
+
+#. Unicode error message
+msgid "Invalid UTF-16 character encoding"
+msgstr "無效的 UTF-16 字符編碼"
+
+#. Unicode error message
+msgid "Error while converting string to UTF-8"
+msgstr "將字符串轉換為 UTF-8 時出錯"
+
+#. Unicode error message
+msgid "Error while decoding UTF-8 string"
+msgstr "解碼 UTF-8 字符串時出錯"
+
+#. Unicode error message
+msgid "Unicode string too long"
+msgstr "Unicode 字符串太長"
+
+#. Unicode error message
+msgid "Invalid ANSI or UTF-8 character encoding, or Unicode string too long"
+msgstr "ANSI 或 UTF-8 字符編碼無效，或者 Unicode 字符串太長"
+
+#. Unicode error message
+msgid "Error while encoding Unicode string"
+msgstr "編碼 Unicode 字符串時出錯"
+
+#. Error message
+msgid "Out of disk space"
+msgstr "磁碟空間不足"
+
+#. Error message when trying to open a file or execute a command
+msgid ""
+"Could not open file/execute operation\n"
+"\"%s\"."
+msgstr ""
+"無法打開檔案/執行操作\n"
+"“%s”。"
+
+#. Main menu, Tools submenu, Create Trigram File, message shown when source file does not contain enough 3-letter combinations (trigrams) to create the trigram file
+msgid "Source file does not contain enough trigrams"
+msgstr "來源文件不包含足夠的三元組"
+
+#. Password Manager window, Database Settings dialog, window title
+msgid "Database settings"
+msgstr "資料庫設置"
+
+#. Password Manager window, Database Settings dialog, label
+msgid "Default user name for new entries:"
+msgstr "新項目的預設用戶名："
+
+#. Password Manager window, Database Settings dialog, label
+msgid "Generate passwords for new entries using format sequence:"
+msgstr "使用格式序列為新項目產生密碼："
+
+#. Password Manager window, Database Settings dialog, Generate Password button, hint
+msgid "Generate test password using format sequence"
+msgstr "使用格式序列產生測試密碼"
+
+#. Password Manager window, Database Settings dialog, label
+msgid "Encryption algorithm:"
+msgstr "加密演算法："
+
+#. Password Manager window, Database Settings dialog, items in list of encryption algorithms
+msgid "%s with %d-bit key"
+msgstr "%s 具有 %d 位密鑰"
+
+#. Password Manager window, Database Settings dialog, label
+msgid "Number of key derivation rounds:"
+msgstr "密鑰推導輪數："
+
+#. Password Manager window, Database Settings dialog, Calculate KDF Rounds button, hint
+msgid "Calculate number of rounds for a 1 second delay"
+msgstr "計算 1 秒延遲的輪數"
+
+#. Password Manager window, Database Settings dialog, message shown when number of KDF rounds is invalid
+msgid "Invalid number of key derivation rounds."
+msgstr "密鑰派生輪數無效。"
+
+#. Password Manager window, Database Settings dialog, label
+msgid "By default, new entries expire after the following number of days:"
+msgstr "預設情況下，新項目將在以下天數後過期："
+
+#. Password Manager window, Database Settings dialog, label
+msgid "For new entries, save the following number of previous passwords:"
+msgstr "對於新項目，請保存以下數量的先前密碼："
+
+#. Password Manager window, Database Settings dialog, title of progress dialog when changing number of KDF iterations
+msgid "Changing number of KDF iterations"
+msgstr "更改 KDF 迭代次數"
+
+#. Password Manager window, Database Settings dialog, title of progress dialog when changing number of KDF iterations
+msgid "Computing derived key ..."
+msgstr "計算派生密鑰..."
+
+#. Password Manager window, Key-Value List Editor dialog, window title
+msgid "Key-value list editor"
+msgstr "鍵值列表編輯器"
+
+#. Password Manager window, Database Properties dialog, window title
+msgid "Properties"
+msgstr "屬性"
+
+#. Password Manager window, Database Properties dialog, title of left column
+msgid "Property"
+msgstr "屬性"
+
+#. Password Manager window, Database Properties dialog, entry in left column
+msgid "Location"
+msgstr "地點"
+
+#. Password Manager window, Database Properties dialog, entry in left column
+msgid "Size"
+msgstr "尺寸"
+
+#. Password Manager window, Database Properties dialog, entry in left column
+msgid "Format version"
+msgstr "格式版本"
+
+#. Password Manager window, Database Properties dialog, entry in left column
+msgid "Number of entries"
+msgstr "條目數量"
+
+#. Password Manager window, Database Properties dialog, entry in left column
+msgid "Number of expired entries"
+msgstr "過期項目數"
+
+#. Password Manager window, Database Properties dialog, entry in left column
+msgid "Number of tags"
+msgstr "標籤數量"
+
+#. Password Manager window, Database Settings dialog, title of Compression tab
+msgid "Compression"
+msgstr "壓縮"
+
+#. Password Manager window, Database Settings dialog, Compression, checkbox
+msgid "Enable data compression (Deflate)"
+msgstr "啟用資料壓縮（Deflate）"
+
+#. Password Manager window, Database Settings dialog, compression, label
+msgid "<- Low compression, fast | High compression, slow ->"
+msgstr "<- 低壓縮，快速 |高壓縮，慢 ->"
+
+#. Password Manager window, Edit panel, title of password entry dialog when password has been changed and needs to be confirmed
+msgid "Confirm password"
+msgstr "確認密碼"
+
+#. Password Manager window, Password quality bar, caption when quality estimation is disabled
+msgid "Password quality estimation is disabled"
+msgstr "密碼品質評估已禁用"
+
+#. Password Manager window, Password Quality button, hint
+msgid "Estimate password quality"
+msgstr "估計密碼品質"
+
+#. Password Manager window, field name
+msgid "Password history"
+msgstr "密碼歷史記錄"
+
+#. Password Manager window, field name
+msgid "Password changed"
+msgstr "密碼已更改"
+
+#. Password Manager window, Edit panel, label
+msgid "Password changed:"
+msgstr "密碼已更改："
+
+#. Password Manager window, Password History dialog, checkbox
+msgid "Keep last passwords - up to:"
+msgstr "保留最後的密碼 - 最多："
+
+#. Password Manager window, Password History dialog, list view, column
+msgid "Set Date/Time"
+msgstr "設定日期/時間"
