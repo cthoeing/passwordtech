@@ -421,7 +421,7 @@ void __fastcall TConfigurationDlg::LockIdleCheckClick(TObject *Sender)
   bool blEnabled = LockIdleCheck->Checked;
   LockIdleTimeBox->Enabled = blEnabled;
   LockIdleTimeSpinBtn->Enabled = blEnabled;
-  LockAutoSaveCheck->Enabled = blEnabled;
+  //LockAutoSaveCheck->Enabled = blEnabled;
 }
 //---------------------------------------------------------------------------
 void __fastcall TConfigurationDlg::CreateBackupCheckClick(TObject *Sender)
@@ -453,18 +453,19 @@ void __fastcall TConfigurationDlg::AutoSaveCheckClick(TObject *Sender)
 void __fastcall TConfigurationDlg::BenchmarkBtnClick(TObject *Sender)
 {
   //const int DATA_SIZE_MB = 50;
-  SplitMix64 sm64(42);
-  RandomPool rp(static_cast<RandomPool::CipherType>(0), sm64, false);
+  //SplitMix64 sm64(42);
+  RandomPool rp(static_cast<RandomPool::CipherType>(0));
   rp.Randomize();
   word32 lDataSizeMB = 1 << std::max(0, BenchmarkMemList->ItemIndex);
-  std::vector<word8> data(lDataSizeMB << 20);
+  word32 lBufSize = lDataSizeMB << 20;
+  auto buf = std::make_unique<word8[]>(lBufSize);
   WString sResult;
   Screen->Cursor = crHourGlass;
   for (int i = 0; i < NUM_RANDOM_POOL_CIPHERS; i++) {
     if (i > 0)
       rp.ChangeCipher(static_cast<RandomPool::CipherType>(i));
     Stopwatch clock;
-    rp.GetData(&data[0], data.size());
+    rp.GetData(buf.get(), lBufSize);
     double rate = lDataSizeMB / clock.ElapsedSeconds();
     sResult += "\n" + FormatW("%s: %.2f MB/s", RANDOM_POOL_CIPHER_NAMES[i], rate);
   }

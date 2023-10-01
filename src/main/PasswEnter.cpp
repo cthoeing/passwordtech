@@ -42,7 +42,7 @@ static word8 memcryptKey[16];
 
 //---------------------------------------------------------------------
 __fastcall TPasswEnterDlg::TPasswEnterDlg(TComponent* AOwner)
-  : TForm(AOwner), m_pParentForm(MainForm), m_nExpiryCountdown(0)
+  : TForm(AOwner), /*m_pParentForm(MainForm),*/ m_nExpiryCountdown(0)
 {
   Constraints->MaxHeight = Height;
   Constraints->MinHeight = Height;
@@ -97,7 +97,7 @@ void __fastcall TPasswEnterDlg::SaveConfig(void)
 void __fastcall TPasswEnterDlg::ClearPasswCache(void)
 {
   if (!m_sEncryptedPassw.IsEmpty()) {
-    m_sEncryptedPassw.Empty();
+    m_sEncryptedPassw.Clear();
     memzero(memcryptKey, sizeof(memcryptKey));
     m_nExpiryCountdown = 0;
     KeyExpiryTimer->Enabled = false;
@@ -149,7 +149,8 @@ void __fastcall TPasswEnterDlg::OKBtnClick(TObject *Sender)
 //---------------------------------------------------------------------------
 int __fastcall TPasswEnterDlg::Execute(int nFlags,
   const WString& sTitle,
-  TForm* pParentForm)
+  TForm* pParentForm,
+  bool blUpdateScreenPos)
 {
   bool blPasswCache = nFlags & PASSWENTER_FLAG_ENABLEPASSWCACHE;
 
@@ -193,7 +194,32 @@ int __fastcall TPasswEnterDlg::Execute(int nFlags,
   //KeyFileBox->ItemIndex = 0;
 
   m_nFlags = nFlags;
-  m_pParentForm = (pParentForm == NULL) ? MainForm : pParentForm;
+  if (!pParentForm)
+    pParentForm = MainForm;
+
+  int nTop, nLeft, nHeight, nWidth;
+  if (!blUpdateScreenPos) {
+    auto it = m_formDim.find(pParentForm);
+    if (it != m_formDim.end()) {
+      nTop = it->second[0];
+      nLeft = it->second[1];
+      nHeight = it->second[2];
+      nWidth = it->second[3];
+    }
+    else
+      blUpdateScreenPos = true;
+  }
+
+  if (blUpdateScreenPos) {
+    nTop = pParentForm->Top;
+    nLeft = pParentForm->Left;
+    nHeight = pParentForm->Height;
+    nWidth = pParentForm->Width;
+    m_formDim[pParentForm] = std::array<int,4>{nTop,nLeft,nHeight,nWidth};
+  }
+
+  Top = nTop + (nHeight - Height) / 2;
+  Left = nLeft + (nWidth - Width) / 2;
 
   return ShowModal();
 }
@@ -236,8 +262,8 @@ void __fastcall TPasswEnterDlg::FormActivate(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TPasswEnterDlg::FormShow(TObject *Sender)
 {
-  Top = m_pParentForm->Top + (m_pParentForm->Height - Height) / 2;
-  Left = m_pParentForm->Left + (m_pParentForm->Width - Width) / 2;
+  //Top = m_pParentForm->Top + (m_pParentForm->Height - Height) / 2;
+  //Left = m_pParentForm->Left + (m_pParentForm->Width - Width) / 2;
   TopMostManager::GetInstance().SetForm(this);
 }
 //---------------------------------------------------------------------------
@@ -301,4 +327,11 @@ WString __fastcall TPasswEnterDlg::GetKeyFileName(void)
     KeyFileBox->ItemIndex > 0) ? KeyFileBox->Text : WString();
 }
 //---------------------------------------------------------------------------
-
+void __fastcall TPasswEnterDlg::OnEndSession(void)
+{
+  if (!m_sEncryptedPassw.IsEmpty()) {
+    m_sEncryptedPassw.Clear();
+    memzero(memcryptKey, sizeof(memcryptKey));
+  }
+}
+//---------------------------------------------------------------------------

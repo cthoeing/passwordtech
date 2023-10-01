@@ -21,6 +21,7 @@
 #ifndef UtilH
 #define UtilH
 //---------------------------------------------------------------------------
+#include <vcl.h>
 #include "SecureMem.h"
 #include "UnicodeUtil.h"
 
@@ -62,28 +63,17 @@ void SetEditBoxTextBuf(TCustomEdit* pEdit,
 void ClearEditBoxTextBuf(TCustomEdit* pControl,
   int nTextLen = 0);
 
-// gets text contents of clipboard
-// -> pointer to secure wide string object, must be specified
-//    if Unicode contents are to be retrieved
-//    should be NULL otherwise
-// -> pointer to secure string (8-bit) object, must be specified
-//    if ANSI contents are to be retrieved
-//    should be NULL otherwise
-// <- 'false' if clipboard doesn't contain any text
-// NOTE: function throws an error if clipboard cannot be opened!
-bool GetClipboardTextBuf(SecureWString* psDestW,
-  SecureAnsiString* psDestA);
+// gets text contents of clipboard (UTF-16 or ANSI format)
+// <- text stored in secure wide/ANSI string
+// note: function may throw an exception if clipboard cannot be opened!
+SecureWString GetClipboardTextBuf(void);
+SecureAnsiString GetClipboardTextBufAnsi(void);
 
-// sets text contents of clipboard
-// -> pointer to secure wide string object, must be specified
-//    if Unicode contents are to be copied
-//    should be NULL otherwise
-// -> pointer to secure string (8-bit) object, must be specified
-//    if ANSI contents are to be copied
-//    should be NULL otherwise
-// NOTE: function throws an error if clipboard cannot be opened!
-void SetClipboardTextBuf(const wchar_t* pwszSrcW,
-  const char* pszSrcA);
+// sets text contents of clipboard (UTF-16 or ANSI format)
+// -> pointer to zero-terminated string
+// note: function may throw an exception if clipboard cannot be opened!
+void SetClipboardTextBuf(const wchar_t* pwszSrc);
+void SetClipboardTextBufAnsi(const char* pszSrc);
 
 bool StartEditBoxDragDrop(TCustomEdit* pEdit);
 

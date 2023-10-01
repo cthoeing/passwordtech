@@ -3,60 +3,79 @@ object CreateTrigramFileDlg: TCreateTrigramFileDlg
   Top = 138
   BorderIcons = [biSystemMenu]
   Caption = 'Create Trigram File'
-  ClientHeight = 147
-  ClientWidth = 340
+  ClientHeight = 184
+  ClientWidth = 388
   Color = clBtnFace
   Font.Charset = ANSI_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -14
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   OnActivate = FormActivate
   OnShow = FormShow
+  PixelsPerInch = 120
   DesignSize = (
-    340
-    147)
-  PixelsPerInch = 96
-  TextHeight = 13
+    388
+    184)
+  TextHeight = 17
   object SourceFileLbl: TLabel
-    Left = 8
-    Top = 8
-    Width = 186
-    Height = 13
+    Left = 13
+    Top = 10
+    Width = 230
+    Height = 17
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Caption = 'Source file (e.g., dictionary, word list):'
   end
   object DestFileLbl: TLabel
-    Left = 8
-    Top = 56
-    Width = 137
-    Height = 13
+    Left = 13
+    Top = 70
+    Width = 169
+    Height = 17
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Caption = 'Destination file (trigram file):'
   end
   object SourceFileBox: TEdit
-    Left = 8
-    Top = 24
-    Width = 281
-    Height = 21
+    Left = 13
+    Top = 30
+    Width = 317
+    Height = 25
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akLeft, akTop, akRight]
     TabOrder = 0
     OnChange = SourceFileBoxChange
   end
   object DestFileBox: TEdit
-    Left = 8
-    Top = 72
-    Width = 281
-    Height = 21
+    Left = 13
+    Top = 90
+    Width = 317
+    Height = 25
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akLeft, akTop, akRight]
     TabOrder = 1
     OnChange = SourceFileBoxChange
   end
   object BrowseBtn: TButton
-    Left = 296
-    Top = 22
-    Width = 33
-    Height = 25
+    Left = 338
+    Top = 27
+    Width = 41
+    Height = 31
     Hint = 'Browse'
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akTop, akRight]
     Caption = '...'
     ParentShowHint = False
@@ -65,11 +84,15 @@ object CreateTrigramFileDlg: TCreateTrigramFileDlg
     OnClick = BrowseBtnClick
   end
   object BrowseBtn2: TButton
-    Left = 296
-    Top = 70
-    Width = 33
-    Height = 25
+    Left = 338
+    Top = 87
+    Width = 41
+    Height = 31
     Hint = 'Browse'
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akTop, akRight]
     Caption = '...'
     ParentShowHint = False
@@ -78,10 +101,14 @@ object CreateTrigramFileDlg: TCreateTrigramFileDlg
     OnClick = BrowseBtn2Click
   end
   object CreateFileBtn: TButton
-    Left = 144
-    Top = 112
-    Width = 105
-    Height = 25
+    Left = 146
+    Top = 140
+    Width = 131
+    Height = 31
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akTop, akRight]
     Caption = 'Create file'
     Default = True
@@ -90,10 +117,14 @@ object CreateTrigramFileDlg: TCreateTrigramFileDlg
     OnClick = CreateFileBtnClick
   end
   object CloseBtn: TButton
-    Left = 256
-    Top = 112
-    Width = 75
-    Height = 25
+    Left = 285
+    Top = 140
+    Width = 94
+    Height = 31
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akTop, akRight]
     Cancel = True
     Caption = 'Close'

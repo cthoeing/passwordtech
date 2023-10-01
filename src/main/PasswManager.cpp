@@ -48,6 +48,8 @@
 #include "zxcvbn.h"
 #include "PasswMngPwHistory.h"
 #include "Progress.h"
+#include "SecureClipboard.h"
+#include "TaskCancel.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
@@ -63,7 +65,8 @@ const char* UI_FIELD_NAMES[PasswDbEntry::NUM_FIELDS] =
 
 const WString
   CONFIG_ID          = "PasswManager",
-  PASSW_MANAGER_NAME = "PassCube";
+  PASSW_MANAGER_NAME = "PassCube",
+  PWDB_FILE_EXT      = ".pwdb";
 
 const char
   PASSWORD_CHAR = '*';
@@ -101,8 +104,27 @@ const int
   DB_OPEN_FLAG_UNLOCK   = 2,
   DB_OPEN_FLAG_READONLY = 4,
 
+  DB_LOCK_MANUAL  = 1,
+  DB_LOCK_AUTO    = 2,
+
   TAGVIEW_IMAGE_INDEX_START = 6,
-  DBVIEW_IMAGE_INDEX_START  = 9;
+  DBVIEW_IMAGE_INDEX_START  = 9,
+
+  FORM_TAG_OPEN_DB        = 1,
+  FORM_TAG_UNLOCK_DB      = 2,
+  FORM_TAG_ITEM_SELECTED  = 3,
+
+  PASSWBOX_TAG_PASSW_GEN  = 1;
+
+const int
+  STD_EXPIRY_DAYS[] = { 7, 14, 30, 90, 180, 365 };
+
+const word32
+  DB_FLAG_FOUND        = 1,
+  DB_FLAG_EXPIRED      = 2,
+  DB_FLAG_EXPIRES_SOON = 4;
+
+const TColor DBVIEW_SEARCH_COLOR = clBlue;
 
 const wchar_t* DB_KEYVAL_KEYS[DB_NUM_KEYVAL_KEYS] =
 {
@@ -113,14 +135,6 @@ const wchar_t* DB_KEYVAL_UI_KEYS[DB_NUM_KEYVAL_KEYS] =
 {
   L"Autotype", L"Run", L"Profile", L"Format password"
 };
-
-
-const word32
-  DB_FLAG_FOUND        = 1,
-  DB_FLAG_EXPIRED      = 2,
-  DB_FLAG_EXPIRES_SOON = 4;
-
-const TColor DBVIEW_SEARCH_COLOR = clBlue;
 
 int s_nNumIdleTimerSuspendInst = 0;
 
@@ -143,15 +157,6 @@ public:
 };
 
 #define SuspendIdleTimer IdleTimerSuspender _its
-
-const int
-  FORM_TAG_OPEN_DB        = 1,
-  FORM_TAG_UNLOCK_DB      = 2,
-  FORM_TAG_ITEM_SELECTED  = 3,
-
-  PASSWBOX_TAG_PASSW_GEN  = 1;
-
-const int STD_EXPIRY_DAYS[] = { 7, 14, 30, 90, 180, 365 };
 
 const wchar_t* getDbEntryAutotypeSeq(const PasswDbEntry* pEntry)
 {
@@ -248,6 +253,17 @@ void getExpiryCheckDates(word32& lCurrDate, word32& lExpirySoonDate)
   lExpirySoonDate = PasswDbEntry::EncodeExpiryDate(wYear, wMonth, wDay);
 }
 
+WString getTimeStampString(bool blMillisec = false)
+{
+  SYSTEMTIME st;
+  GetLocalTime(&st);
+  WString sResult = FormatW("%d%.2d%.2d%.2d%.2d%.2d",
+    st.wYear, st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond);
+  if (blMillisec)
+    sResult += FormatW("_%.3d", st.wMilliseconds);
+  return sResult;
+}
+
 __fastcall TSelectItemThread::TSelectItemThread(std::function<void(void)> func)
     : TThread(false), m_nTriggers(0), m_applyFunc(func)
 {
@@ -285,7 +301,6 @@ void __fastcall TSelectItemThread::ApplyNow(void)
   }
   m_applyFunc();
 }
-
 
 //---------------------------------------------------------------------------
 __fastcall TPasswMngForm::TPasswMngForm(TComponent* Owner)
@@ -540,6 +555,10 @@ void __fastcall TPasswMngForm::LoadConfig(void)
       "WarnEntriesExpireSoon", false);
   g_config.Database.WarnExpireNumDays = g_pIni->ReadInteger(CONFIG_ID,
       "WarnExpireNumDays", 7);
+  g_config.Database.AutoSave = g_pIni->ReadBool(CONFIG_ID, "AutoSave", false);
+  int nOption = g_pIni->ReadInteger(CONFIG_ID, "AutoSaveOption", 0);
+  if (nOption >= asdEntryModification && nOption <= asdEveryChange)
+    g_config.Database.AutoSaveOption = static_cast<AutoSaveDatabase>(nOption);
   g_config.Database.DefaultAutotypeSequence = g_pIni->ReadString(CONFIG_ID,
     "DefaultAutotypeSeq", "{username}{tab}{password}{enter}");
 }
@@ -597,6 +616,8 @@ void __fastcall TPasswMngForm::SaveConfig(void)
     g_config.Database.WarnEntriesExpireSoon);
   g_pIni->WriteInteger(CONFIG_ID, "WarnExpireNumDays",
     g_config.Database.WarnExpireNumDays);
+  g_pIni->WriteBool(CONFIG_ID, "AutoSave", g_config.Database.AutoSave);
+  g_pIni->WriteInteger(CONFIG_ID, "AutoSaveOption", g_config.Database.AutoSaveOption);
   g_pIni->WriteString(CONFIG_ID, "DefaultAutotypeSeq",
     g_config.Database.DefaultAutotypeSequence);
 }
@@ -652,7 +673,12 @@ bool __fastcall TPasswMngForm::OpenDatabase(int nOpenFlags,
 
   while (true) {
     try {
-      if (PasswEnterDlg->Execute(nPasswEnterFlags, sCaption, this) != mrOk) {
+      if (PasswEnterDlg->Execute(
+            nPasswEnterFlags,
+            sCaption,
+            this,
+            !((nOpenFlags & DB_OPEN_FLAG_UNLOCK) && !m_blUnlockTried))
+            != mrOk) {
         PasswEnterDlg->Clear();
         RandomPool::GetInstance().Flush();
         return false;
@@ -820,13 +846,13 @@ int __fastcall TPasswMngForm::AskSaveChanges(int nLock)
   }
 
   if (m_blDbChanged) {
-    if (nLock == 2 && g_config.Database.LockAutoSave) {
+    if (nLock == DB_LOCK_AUTO && g_config.Database.LockAutoSave) {
       MainMenu_File_SaveClick(this);
       if (m_blDbChanged)
         return ASK_SAVE_ERROR;
     }
     else {
-      if (nLock == 2)
+      if (nLock == DB_LOCK_AUTO)
         FlashWindow(Application->Handle, true);
       switch (MsgBox(TRL("The database has been changed.\nDo you want to save "
             "the changes?"), MB_ICONQUESTION + MB_YESNOCANCEL))
@@ -891,6 +917,7 @@ bool __fastcall TPasswMngForm::CloseDatabase(bool blForce, int nLock)
   //m_pSelectedItem = nullptr;
 
   SetItemChanged(false);
+  ToggleShutdownBlocker();
 
   m_nSearchMode = SEARCH_MODE_OFF;
   //m_nNumSearchResults = 0;
@@ -990,13 +1017,14 @@ bool __fastcall TPasswMngForm::SaveDatabase(const WString& sFileName)
         sBackupFileName += BACKUP_EXT;
     }
     else {
-      SYSTEMTIME st;
-      GetLocalTime(&st);
-      sBackupFileName += FormatW("_%d%.2d%.2d%.2d%.2d%.2d", st.wYear,
-        st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond);
-      if (FileExists(sBackupFileName + BACKUP_EXT))
-        sBackupFileName += FormatW("_%.3d", st.wMilliseconds);
-      sBackupFileName += BACKUP_EXT;
+      WString sTryFileName = sBackupFileName + "_" +
+        getTimeStampString() + BACKUP_EXT;
+      if (FileExists(sTryFileName))
+        sBackupFileName = sBackupFileName + "_" +
+          getTimeStampString(true) + BACKUP_EXT;
+      else
+        sBackupFileName = sTryFileName;
+      //sBackupFileName += BACKUP_EXT;
     }
     // close file in case target file is equal to currently opened file
     m_passwDb->ReleaseFile();
@@ -1093,6 +1121,9 @@ void __fastcall TPasswMngForm::SetItemChanged(bool blChanged)
     m_blItemPasswChangeConfirm = false;
     ResetNavControls();
   }
+
+  ToggleShutdownBlocker(m_blItemChanged ?
+    TRL("Password database entry is being edited.") : WString());
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswMngForm::ResetNavControls(void)
@@ -1122,7 +1153,7 @@ int __fastcall TPasswMngForm::AddPassw(const wchar_t* pwszPassw,
   int nNumPassw = 0;
   SecureWString sParam;
   if (pwszParam != nullptr && pwszParam[0] != '\0')
-    sParam.Assign(pwszParam, wcslen(pwszParam) + 1);
+    sParam.AssignStr(pwszParam);
 
   do {
     pwszNext = wcsstr(pwszPassw, CRLF);
@@ -1171,9 +1202,12 @@ void __fastcall TPasswMngForm::SearchDatabase(WString sStr,
   if (!IsDbOpen() || sStr.IsEmpty() || nFlags == 0)
     return;
 
-  blFuzzy = blFuzzy && sStr.Length() >= 4;
+  // "fuzzy" always performs case-insensitive search, even if the actual
+  // fuzzy algorithm is not used
   if (blFuzzy)
     blCaseSensitive = false;
+  if (sStr.Length() < 4)
+    blFuzzy = false;
 
   if (!blCaseSensitive)
     sStr = AnsiLowerCase(sStr);
@@ -2411,16 +2445,21 @@ void __fastcall TPasswMngForm::ChangeCaption(void)
 //---------------------------------------------------------------------------
 void __fastcall TPasswMngForm::SetDbChanged(bool blChanged, bool blEntryChanged)
 {
-  if (blChanged != m_blDbChanged) {
-    m_blDbChanged = blChanged;
-    ChangeCaption();
-  }
   if (blChanged && g_config.Database.AutoSave && !m_sDbFileName.IsEmpty() &&
       (g_config.Database.AutoSaveOption == asdEveryChange ||
       (g_config.Database.AutoSaveOption == asdEntryModification && blEntryChanged)))
   {
-    MainMenu_File_SaveClick(this);
+    if (SaveDatabase(m_sDbFileName))
+      blChanged = false;
   }
+
+  if (blChanged != m_blDbChanged) {
+    m_blDbChanged = blChanged;
+    ChangeCaption();
+  }
+
+  ToggleShutdownBlocker(blChanged ?
+    TRL("Password database contains unsaved changes.") : WString());
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswMngForm::MainMenu_File_SaveClick(TObject *Sender)
@@ -2484,7 +2523,6 @@ void __fastcall TPasswMngForm::FormCloseQuery(TObject *Sender,
   bool &CanClose)
 {
   NotifyUserAction();
-
   CanClose = CloseDatabase();
 }
 //---------------------------------------------------------------------------
@@ -2529,8 +2567,9 @@ void __fastcall TPasswMngForm::MainMenu_Edit_CopyUserNameClick(
 
   PasswDbEntry* pEntry = reinterpret_cast<PasswDbEntry*>(m_pSelectedItem->Data);
   if (!pEntry->Strings[PasswDbEntry::USERNAME].IsStrEmpty()) {
-    SetClipboardTextBuf(pEntry->Strings[PasswDbEntry::USERNAME].c_str(), nullptr);
-    MainForm->CopiedSensitiveDataToClipboard();
+    SecureClipboard::GetInstance().SetData(
+      pEntry->Strings[PasswDbEntry::USERNAME].c_str());
+    //MainForm->CopiedSensitiveDataToClipboard();
   }
 }
 //---------------------------------------------------------------------------
@@ -2545,8 +2584,8 @@ void __fastcall TPasswMngForm::MainMenu_Edit_CopyPasswClick(
   PasswDbEntry* pEntry = reinterpret_cast<PasswDbEntry*>(m_pSelectedItem->Data);
   SecureWString sPassw = m_passwDb->GetDbEntryPassw(*pEntry);
   if (!sPassw.IsStrEmpty()) {
-    SetClipboardTextBuf(sPassw.c_str(), nullptr);
-    MainForm->CopiedSensitiveDataToClipboard();
+    SecureClipboard::GetInstance().SetData(sPassw.c_str());
+    //MainForm->CopiedSensitiveDataToClipboard();
   }
 }
 //---------------------------------------------------------------------------
@@ -2581,10 +2620,10 @@ void __fastcall TPasswMngForm::MainMenu_Edit_DuplicateEntryClick(
         SecureWString sNewTitle = pOriginal->Strings[PasswDbEntry::TITLE];
         if (!sNewTitle.IsEmpty()) {
           sNewTitle.GrowBy(sCopyStr.Length());
-          wcscat(sNewTitle.Data(), sCopyStr.c_str());
+          wcscat(sNewTitle, sCopyStr.c_str());
         }
         else
-          sNewTitle.Assign(sCopyStr.c_str(), sCopyStr.Length() + 1);
+          sNewTitle.AssignStr(sCopyStr.c_str());
         m_passwDb->DuplicateDbEntry(*pOriginal, sNewTitle);
       }
     }
@@ -2647,7 +2686,7 @@ void __fastcall TPasswMngForm::LockOrUnlockDatabase(bool blAuto)
   if (m_blLocked) {
     OpenDatabase(DB_OPEN_FLAG_EXISTING | DB_OPEN_FLAG_UNLOCK);
   }
-  else if (CloseDatabase(false, blAuto ? 2 : 1)) {
+  else if (CloseDatabase(false, blAuto ? DB_LOCK_AUTO : DB_LOCK_MANUAL)) {
     m_blLocked = true;
     m_blUnlockTried = false;
     MainMenu_File_Lock->Caption = TRL("Unlock");
@@ -2674,7 +2713,7 @@ void __fastcall TPasswMngForm::MainMenu_File_ExitClick(TObject *Sender)
 void __fastcall TPasswMngForm::IdleTimerTimer(TObject *Sender)
 {
   if (IsDbOpen() && g_config.Database.LockIdle && !m_blItemChanged &&
-     !m_blLocked && !IsDisplayDlg() && !ProgressForm->Visible &&
+     !m_blLocked && !IsDisplayDlg() && /*!ProgressForm->Visible &&*/
      !(Screen->ActiveForm != nullptr && Screen->ActiveForm->FormState.Contains(fsModal)))
   {
     if (SecondsBetween(Now(), m_lastUserActionTime) >= g_config.Database.LockIdleTime)
@@ -2807,14 +2846,35 @@ void __fastcall TPasswMngForm::WMSize(TWMSize& msg)
       Tag = FORM_TAG_UNLOCK_DB;
     break;
 
-  case SIZE_MINIMIZED:
+  /*case SIZE_MINIMIZED:
+    if (IsDbOpen()) {
+      if (g_config.Database.LockMinimize)
+        MainMenu_File_LockClick(this);
+    }
+    m_blUnlockTried = false;*/
+  }
+
+  TForm::Dispatch(&msg);
+}
+//---------------------------------------------------------------------------
+void __fastcall TPasswMngForm::OnWindowPosChanging(TWMWindowPosChanging& msg)
+{
+  //const int SWP_STATECHANGED = 0x8000
+  const int HIDE1 = SWP_NOCOPYBITS | SWP_SHOWWINDOW | SWP_FRAMECHANGED | SWP_NOACTIVATE;
+  const int HIDE2 = SWP_HIDEWINDOW | SWP_NOACTIVATE | SWP_NOZORDER | SWP_NOMOVE | SWP_NOSIZE;
+  /*if (msg.WindowPos->flags & (SWP_STATECHANGED | SWP_FRAMECHANGED) &&
+      msg.WindowPos->x < 0 && msg.WindowPos->y < 0) {
+    Caption = "Maximize";
+  }
+  else*/
+  if ((msg.WindowPos->flags & HIDE1) == HIDE1 ||
+      (msg.WindowPos->flags & HIDE2) == HIDE2) {
     if (IsDbOpen()) {
       if (g_config.Database.LockMinimize)
         MainMenu_File_LockClick(this);
     }
     m_blUnlockTried = false;
   }
-
   TForm::Dispatch(&msg);
 }
 //---------------------------------------------------------------------------
@@ -3209,24 +3269,26 @@ bool __fastcall TPasswMngForm::ApplyDbSettings(const PasswDbSettings& settings)
     if (key.IsEmpty())
       return false;
 
-    const word32 lOldSetting = m_passwDb->KdfIterations;
-    m_passwDb->KdfIterations = settings.NumKdfRounds;
+    //std::atomic<bool> cancelFlag(false);
+    TaskCancelToken cancelToken;
+    word32 lKdfIterations = settings.NumKdfRounds;
 
-    std::atomic<bool> cancelFlag(false);
-
-    auto pTask = TTask::Create([this,&key,&cancelFlag]() {
-      m_passwDb->ChangeMasterKey(key, &cancelFlag);
+    auto pTask = TTask::Create([this,&key,&cancelToken,lKdfIterations]() {
+      m_passwDb->ChangeMasterKey(key, lKdfIterations, cancelToken.Get().get());
     });
 
     pTask->Start();
 
-    while (!pTask->Wait(1000)) {
-      if (!ProgressForm->Visible) {
+    int nTimeout = 0;
+    while (!pTask->Wait(100)) {
+      Application->ProcessMessages();
+      nTimeout += 100;
+      if (nTimeout >= 1000 && !ProgressForm->Visible) {
         ProgressForm->ExecuteModal(
           PasswDbSettingsDlg,
           TRL("Changing number of KDF iterations"),
           TRL("Computing derived key ..."),
-          cancelFlag,
+          cancelToken.Get(),
           [&pTask](unsigned int timeout)
           {
             return pTask->Wait(timeout);
@@ -3236,9 +3298,9 @@ bool __fastcall TPasswMngForm::ApplyDbSettings(const PasswDbSettings& settings)
       }
     }
 
-    if (cancelFlag) {
-      m_passwDb->KdfIterations = lOldSetting;
-      MsgBox(EUserCancel::UserCancelMsg, MB_ICONERROR);
+    if (cancelToken) {
+      if (cancelToken.Reason == TaskCancelReason::UserCancel)
+        MsgBox(EUserCancel::UserCancelMsg, MB_ICONERROR);
       return false;
     }
   }
@@ -3251,6 +3313,7 @@ bool __fastcall TPasswMngForm::ApplyDbSettings(const PasswDbSettings& settings)
     m_passwDb->CipherType = settings.CipherType;
   m_passwDb->Compressed = settings.Compressed;
   m_passwDb->CompressionLevel = settings.CompressionLevel;
+  //m_passwDb->KdfIterations = settings.NumKdfRounds;
 
   return true;
 }
@@ -3712,4 +3775,70 @@ void __fastcall TPasswMngForm::NotesBoxKeyPress(TObject *Sender, System::WideCha
     Key = 0;
 }
 //---------------------------------------------------------------------------
+bool __fastcall TPasswMngForm::SaveDbOnShutdown(void)
+{
+  if (IsDbOpen()) {
+    if (m_blItemChanged)
+      return false;
+    if (!m_blDbChanged)
+      return true;
+    if (!g_config.Database.LockAutoSave)
+      return false;
 
+    WString sSaveFileName;
+    if (m_sDbFileName.IsEmpty())
+      sSaveFileName = "Untitled_" + getTimeStampString() + PWDB_FILE_EXT;
+    else if (!m_blDbReadOnly)
+      sSaveFileName = m_sDbFileName;
+    else {
+      WString sFilePath = ExtractFilePath(m_sDbFileName),
+        sFileName = ExtractFileName(m_sDbFileName),
+        sFileNameWithoutExt, sFileExt;
+      int nPos = sFileName.LastDelimiter(".");
+      if (nPos > 1) {
+        sFileNameWithoutExt = sFileName.SubString(1, nPos - 1);
+        sFileExt = sFileName.SubString(nPos, sFileName.Length() - nPos + 1);
+      }
+      else
+        sFileNameWithoutExt = sFileName;
+      sSaveFileName = sFilePath + sFileNameWithoutExt + "_session_" +
+        getTimeStampString() + sFileExt;
+    }
+
+    return SaveDatabase(sSaveFileName);
+  }
+  return true;
+}
+//---------------------------------------------------------------------------
+void __fastcall TPasswMngForm::OnEndSession(TWMEndSession& msg)
+{
+  if (msg.EndSession) {
+    m_passwDb.reset();
+  }
+  else {
+    g_terminateAction = TerminateAction::None;
+  }
+  msg.Result = 0;
+}
+//---------------------------------------------------------------------------
+void __fastcall TPasswMngForm::OnQueryEndSession(TWMQueryEndSession& msg)
+{
+  g_terminateAction = TerminateAction::SystemShutdown;
+  msg.Result = SaveDbOnShutdown();
+  //if (msg.Result)
+  //  ToggleShutdownBlocker();
+}
+//---------------------------------------------------------------------------
+void __fastcall TPasswMngForm::ToggleShutdownBlocker(const WString& sMsg)
+{
+  static bool blActive = false;
+  if (!sMsg.IsEmpty()) {
+    ShutdownBlockReasonCreate(Handle, sMsg.c_str());
+    blActive = true;
+  }
+  else if (blActive) {
+    ShutdownBlockReasonDestroy(Handle);
+    blActive = false;
+  }
+}
+//---------------------------------------------------------------------------

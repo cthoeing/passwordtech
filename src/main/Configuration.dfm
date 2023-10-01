@@ -3,71 +3,98 @@ object ConfigurationDlg: TConfigurationDlg
   Top = 187
   BorderIcons = [biSystemMenu, biMaximize]
   Caption = 'Configuration'
-  ClientHeight = 424
-  ClientWidth = 429
+  ClientHeight = 524
+  ClientWidth = 537
   Color = clBtnFace
-  Constraints.MinHeight = 421
-  Constraints.MinWidth = 445
+  Constraints.MinHeight = 444
+  Constraints.MinWidth = 451
   Font.Charset = ANSI_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -14
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   PopupMode = pmAuto
   OnShow = FormShow
+  PixelsPerInch = 120
   DesignSize = (
-    429
-    424)
-  PixelsPerInch = 96
-  TextHeight = 13
+    537
+    524)
+  TextHeight = 17
   object ConfigPages: TPageControl
-    Left = 8
-    Top = 8
-    Width = 410
-    Height = 369
-    ActivePage = GeneralSheet
+    Left = 13
+    Top = 10
+    Width = 515
+    Height = 455
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
+    ActivePage = SecuritySheet
     Anchors = [akLeft, akTop, akRight, akBottom]
     HotTrack = True
     TabOrder = 0
     object GeneralSheet: TTabSheet
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'General'
       DesignSize = (
-        402
-        341)
+        507
+        423)
       object ChangeFontLbl: TLabel
-        Left = 8
-        Top = 72
-        Width = 162
-        Height = 13
+        Left = 10
+        Top = 90
+        Width = 205
+        Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Change font for the GUI controls:'
       end
       object FontSampleLbl: TLabel
-        Left = 162
-        Top = 96
-        Width = 21
-        Height = 13
+        Left = 203
+        Top = 120
+        Width = 26
+        Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Test'
       end
       object AutotypeDelayLbl: TLabel
-        Left = 8
-        Top = 210
-        Width = 201
-        Height = 13
+        Left = 10
+        Top = 263
+        Width = 254
+        Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Autotype delay between characters (ms):'
       end
       object UiStyleLbl: TLabel
-        Left = 8
-        Top = 16
-        Width = 98
-        Height = 13
+        Left = 10
+        Top = 20
+        Width = 120
+        Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'User interface style:'
       end
       object SelectFontBtn: TButton
-        Left = 8
-        Top = 91
-        Width = 137
-        Height = 25
+        Left = 10
+        Top = 114
+        Width = 171
+        Height = 31
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Select font'
         DropDownMenu = SelectFontMenu
         Style = bsSplitButton
@@ -75,131 +102,192 @@ object ConfigurationDlg: TConfigurationDlg
         OnClick = SelectFontBtnClick
       end
       object ShowSysTrayIconConstCheck: TCheckBox
-        Left = 8
-        Top = 133
-        Width = 385
-        Height = 17
+        Left = 10
+        Top = 166
+        Width = 481
+        Height = 22
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Show system tray icon constantly'
         TabOrder = 2
       end
       object MinimizeToSysTrayCheck: TCheckBox
-        Left = 8
-        Top = 156
-        Width = 385
-        Height = 17
+        Left = 10
+        Top = 195
+        Width = 481
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Minimize program to system tray'
         TabOrder = 3
       end
       object AutotypeDelayBox: TEdit
-        Left = 261
-        Top = 207
-        Width = 48
-        Height = 21
+        Left = 326
+        Top = 259
+        Width = 60
+        Height = 25
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         AutoSelect = False
         TabOrder = 5
         Text = '0'
       end
       object AutotypeDelaySpinBtn: TUpDown
-        Left = 309
-        Top = 207
-        Width = 16
-        Height = 21
+        Left = 386
+        Top = 259
+        Width = 20
+        Height = 25
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Associate = AutotypeDelayBox
         Max = 1000
         TabOrder = 6
       end
       object MinimizeAutotypeCheck: TCheckBox
-        Left = 8
-        Top = 179
-        Width = 385
-        Height = 17
+        Left = 10
+        Top = 224
+        Width = 481
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Minimize before performing autotype'
         TabOrder = 4
       end
       object AskBeforeExitCheck: TCheckBox
-        Left = 8
-        Top = 234
-        Width = 380
-        Height = 17
+        Left = 10
+        Top = 293
+        Width = 479
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Ask before exiting application'
         TabOrder = 7
       end
       object LaunchSystemStartupCheck: TCheckBox
-        Left = 8
-        Top = 280
-        Width = 380
-        Height = 17
+        Left = 10
+        Top = 350
+        Width = 475
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Launch application on system startup (for current user)'
         TabOrder = 8
       end
       object UiStylesList: TComboBox
-        Left = 8
-        Top = 35
-        Width = 380
-        Height = 21
+        Left = 10
+        Top = 44
+        Width = 479
+        Height = 25
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Style = csDropDownList
         Anchors = [akLeft, akTop, akRight]
         Sorted = True
         TabOrder = 0
       end
       object LoadProfileStartupCheck: TCheckBox
-        Left = 8
-        Top = 257
-        Width = 240
-        Height = 17
+        Left = 10
+        Top = 321
+        Width = 300
+        Height = 22
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Load the following profile on startup:'
         TabOrder = 9
         OnClick = LoadProfileStartupCheckClick
       end
       object LoadProfileBox: TComboBox
-        Left = 261
-        Top = 253
-        Width = 127
-        Height = 21
+        Left = 326
+        Top = 316
+        Width = 163
+        Height = 25
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Style = csDropDownList
         Anchors = [akLeft, akTop, akRight]
         TabOrder = 10
       end
     end
     object SecuritySheet: TTabSheet
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Security'
       ImageIndex = 6
       DesignSize = (
-        402
-        341)
+        507
+        423)
       object RandomPoolCipherLbl: TLabel
-        Left = 8
-        Top = 16
-        Width = 317
-        Height = 13
+        Left = 10
+        Top = 20
+        Width = 409
+        Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Encryption algorithm for generating random data via random pool:'
       end
       object AutoClearClipCheck: TCheckBox
-        Left = 8
-        Top = 149
-        Width = 386
-        Height = 17
+        Left = 10
+        Top = 186
+        Width = 487
+        Height = 22
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akLeft, akTop, akRight]
         Caption = 
           'Clear clipboard automatically after the following time (seconds)' +
           ':'
         TabOrder = 5
         OnClick = AutoClearClipCheckClick
+        ExplicitWidth = 463
       end
       object AutoClearClipTimeBox: TEdit
-        Left = 48
-        Top = 172
-        Width = 49
-        Height = 21
+        Left = 60
+        Top = 215
+        Width = 61
+        Height = 25
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         TabOrder = 6
         Text = '1'
       end
       object AutoClearClipTimeSpinBtn: TUpDown
-        Left = 97
-        Top = 172
-        Width = 16
-        Height = 21
+        Left = 121
+        Top = 215
+        Width = 20
+        Height = 25
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Associate = AutoClearClipTimeBox
         Min = 1
         Max = 32767
@@ -207,40 +295,59 @@ object ConfigurationDlg: TConfigurationDlg
         TabOrder = 7
       end
       object TestCommonPasswCheck: TCheckBox
-        Left = 8
-        Top = 103
-        Width = 386
-        Height = 17
+        Left = 10
+        Top = 129
+        Width = 487
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Test passwords against list of common passwords'
         TabOrder = 3
+        ExplicitWidth = 463
       end
       object RandomPoolCipherList: TComboBox
-        Left = 8
-        Top = 35
-        Width = 377
-        Height = 21
+        Left = 10
+        Top = 44
+        Width = 476
+        Height = 25
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Style = csDropDownList
         Anchors = [akLeft, akTop, akRight]
         TabOrder = 0
+        ExplicitWidth = 452
       end
       object AutoClearPasswCheck: TCheckBox
-        Left = 8
-        Top = 199
-        Width = 386
-        Height = 17
+        Left = 10
+        Top = 249
+        Width = 487
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akLeft, akTop, akRight]
         Caption = 
           'Clear password box automatically after the following time (secon' +
           'ds):'
         TabOrder = 8
         OnClick = AutoClearPasswCheckClick
+        ExplicitWidth = 463
       end
       object AutoClearPasswTimeSpinBtn: TUpDown
-        Left = 97
-        Top = 222
-        Width = 16
-        Height = 21
+        Left = 121
+        Top = 278
+        Width = 20
+        Height = 25
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Associate = AutoClearPasswTimeBox
         Min = 1
         Max = 32767
@@ -248,80 +355,118 @@ object ConfigurationDlg: TConfigurationDlg
         TabOrder = 10
       end
       object AutoClearPasswTimeBox: TEdit
-        Left = 48
-        Top = 222
-        Width = 49
-        Height = 21
+        Left = 60
+        Top = 278
+        Width = 61
+        Height = 25
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         TabOrder = 9
         Text = '1'
       end
       object BenchmarkBtn: TButton
-        Left = 132
-        Top = 62
-        Width = 153
-        Height = 25
+        Left = 169
+        Top = 78
+        Width = 192
+        Height = 31
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akTop, akRight]
         Caption = 'Benchmark...'
         TabOrder = 1
         OnClick = BenchmarkBtnClick
+        ExplicitLeft = 145
       end
       object UseAdvancedPasswEst: TCheckBox
-        Left = 8
-        Top = 126
-        Width = 377
-        Height = 17
+        Left = 10
+        Top = 158
+        Width = 471
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Use advanced password strength estimation (zxcvbn)'
         TabOrder = 4
       end
       object BenchmarkMemList: TComboBox
-        Left = 291
-        Top = 62
-        Width = 94
-        Height = 21
+        Left = 368
+        Top = 78
+        Width = 118
+        Height = 25
         Hint = 'Data size for benchmark test'
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Style = csDropDownList
         Anchors = [akTop, akRight]
         ParentShowHint = False
         ShowHint = True
         TabOrder = 2
+        ExplicitLeft = 344
       end
     end
     object HotKeySheet: TTabSheet
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Hot Keys'
       DesignSize = (
-        402
-        341)
+        507
+        423)
       object HotKeyLbl: TLabel
-        Left = 8
-        Top = 108
-        Width = 91
-        Height = 13
+        Left = 10
+        Top = 135
+        Width = 117
+        Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Shortcut to assign:'
       end
       object HotKeyActionsGroup: TGroupBox
-        Left = 8
-        Top = 16
-        Width = 386
-        Height = 77
+        Left = 10
+        Top = 20
+        Width = 487
+        Height = 96
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Actions'
         TabOrder = 0
         DesignSize = (
-          386
-          77)
+          487
+          96)
         object HotKeyShowMainWinCheck: TCheckBox
-          Left = 8
-          Top = 20
-          Width = 281
-          Height = 17
+          Left = 10
+          Top = 25
+          Width = 351
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Show/restore main window'
           TabOrder = 0
         end
         object HotKeyActionsList: TComboBox
-          Left = 8
-          Top = 44
-          Width = 370
-          Height = 21
+          Left = 10
+          Top = 55
+          Width = 467
+          Height = 25
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Style = csDropDownList
           Anchors = [akLeft, akTop, akRight]
           DropDownCount = 10
@@ -340,19 +485,23 @@ object ConfigurationDlg: TConfigurationDlg
         end
       end
       object HotKeyView: TListView
-        Left = 8
-        Top = 136
-        Width = 385
-        Height = 162
+        Left = 10
+        Top = 170
+        Width = 486
+        Height = 199
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akLeft, akTop, akRight, akBottom]
         Columns = <
           item
             Caption = 'Shortcut'
-            Width = 100
+            Width = 125
           end
           item
             Caption = 'Action'
-            Width = 250
+            Width = 313
           end>
         MultiSelect = True
         ReadOnly = True
@@ -362,10 +511,14 @@ object ConfigurationDlg: TConfigurationDlg
         OnSelectItem = HotKeyViewSelectItem
       end
       object HotKeyBox: THotKey
-        Left = 160
-        Top = 104
-        Width = 146
-        Height = 21
+        Left = 200
+        Top = 130
+        Width = 187
+        Height = 25
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akLeft, akTop, akRight]
         HotKey = 0
         InvalidKeys = [hcNone]
@@ -374,10 +527,14 @@ object ConfigurationDlg: TConfigurationDlg
         OnChange = HotKeyBoxChange
       end
       object AddBtn: TButton
-        Left = 312
-        Top = 102
-        Width = 81
-        Height = 25
+        Left = 394
+        Top = 128
+        Width = 102
+        Height = 31
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akTop, akRight]
         Caption = 'Add'
         Enabled = False
@@ -385,10 +542,14 @@ object ConfigurationDlg: TConfigurationDlg
         OnClick = AddBtnClick
       end
       object RemoveBtn: TButton
-        Left = 312
-        Top = 305
-        Width = 81
-        Height = 25
+        Left = 394
+        Top = 378
+        Width = 102
+        Height = 31
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akRight, akBottom]
         Caption = 'Remove'
         Enabled = False
@@ -397,15 +558,23 @@ object ConfigurationDlg: TConfigurationDlg
       end
     end
     object FilesSheet: TTabSheet
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Files'
       DesignSize = (
-        402
-        341)
+        507
+        423)
       object CharEncodingGroup: TRadioGroup
-        Left = 8
-        Top = 16
-        Width = 385
-        Height = 113
+        Left = 10
+        Top = 20
+        Width = 486
+        Height = 141
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Character encoding of text files'
         Items.Strings = (
@@ -416,10 +585,14 @@ object ConfigurationDlg: TConfigurationDlg
         TabOrder = 0
       end
       object NewlineCharGroup: TRadioGroup
-        Left = 8
-        Top = 135
-        Width = 385
-        Height = 68
+        Left = 10
+        Top = 169
+        Width = 486
+        Height = 85
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Newline character sequence'
         Items.Strings = (
@@ -429,15 +602,23 @@ object ConfigurationDlg: TConfigurationDlg
       end
     end
     object UpdatesSheet: TTabSheet
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Updates'
       DesignSize = (
-        402
-        341)
+        507
+        423)
       object UpdateCheckGroup: TRadioGroup
-        Left = 8
-        Top = 16
-        Width = 385
-        Height = 113
+        Left = 10
+        Top = 20
+        Width = 486
+        Height = 141
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Automatic check for updates'
         Items.Strings = (
@@ -449,28 +630,44 @@ object ConfigurationDlg: TConfigurationDlg
       end
     end
     object LanguageSheet: TTabSheet
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Language'
       object SelectLanguageLbl: TLabel
-        Left = 8
-        Top = 16
-        Width = 80
-        Height = 13
+        Left = 10
+        Top = 20
+        Width = 100
+        Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Select language:'
       end
       object LanguageList: TComboBox
-        Left = 8
-        Top = 35
-        Width = 249
-        Height = 21
+        Left = 10
+        Top = 44
+        Width = 311
+        Height = 25
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Style = csDropDownList
         TabOrder = 0
         OnSelect = LanguageListSelect
       end
       object ConvertLangFileBtn: TButton
-        Left = 8
-        Top = 62
-        Width = 198
-        Height = 25
+        Left = 10
+        Top = 78
+        Width = 248
+        Height = 31
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Convert to new PO file format...'
         Enabled = False
         TabOrder = 1
@@ -478,57 +675,85 @@ object ConfigurationDlg: TConfigurationDlg
       end
     end
     object DatabaseSheet: TTabSheet
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Database'
       ImageIndex = 5
       DesignSize = (
-        402
-        341)
+        507
+        423)
       object DefaultAutotypeSeqLbl: TLabel
-        Left = 8
-        Top = 313
-        Width = 135
-        Height = 13
+        Left = 10
+        Top = 391
+        Width = 170
+        Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Default autotype sequence:'
       end
       object WarnExpireNumDaysLbl: TLabel
-        Left = 58
-        Top = 259
-        Width = 80
-        Height = 13
+        Left = 73
+        Top = 324
+        Width = 103
+        Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Number of days:'
       end
       object LockMinimizeCheck: TCheckBox
-        Left = 8
-        Top = 39
-        Width = 377
-        Height = 17
+        Left = 10
+        Top = 49
+        Width = 476
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Lock database when minimizing application or database window'
         TabOrder = 1
       end
       object LockIdleCheck: TCheckBox
-        Left = 8
-        Top = 62
-        Width = 377
-        Height = 17
+        Left = 10
+        Top = 78
+        Width = 476
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Lock database after the following idle time (seconds):'
         TabOrder = 2
         OnClick = LockIdleCheckClick
       end
       object LockIdleTimeBox: TEdit
-        Left = 58
-        Top = 85
-        Width = 51
-        Height = 21
+        Left = 73
+        Top = 106
+        Width = 63
+        Height = 25
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         TabOrder = 3
         Text = '60'
       end
       object LockIdleTimeSpinBtn: TUpDown
-        Left = 109
-        Top = 85
-        Width = 16
-        Height = 21
+        Left = 136
+        Top = 106
+        Width = 20
+        Height = 25
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Associate = LockIdleTimeBox
         Min = 10
         Max = 32767
@@ -536,30 +761,42 @@ object ConfigurationDlg: TConfigurationDlg
         TabOrder = 4
       end
       object CreateBackupCheck: TCheckBox
-        Left = 8
-        Top = 112
-        Width = 377
-        Height = 17
+        Left = 10
+        Top = 140
+        Width = 476
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Create backup of database before saving'
         TabOrder = 6
         OnClick = CreateBackupCheckClick
       end
       object MaxNumBackupsBox: TEdit
-        Left = 285
-        Top = 135
-        Width = 45
-        Height = 21
+        Left = 361
+        Top = 169
+        Width = 56
+        Height = 25
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akTop, akRight]
         NumbersOnly = True
         TabOrder = 8
         Text = '1'
       end
       object MaxNumBackupsSpinBtn: TUpDown
-        Left = 330
-        Top = 135
-        Width = 16
-        Height = 21
+        Left = 417
+        Top = 169
+        Width = 20
+        Height = 25
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akTop, akRight]
         Associate = MaxNumBackupsBox
         Min = 1
@@ -568,69 +805,101 @@ object ConfigurationDlg: TConfigurationDlg
         TabOrder = 9
       end
       object OpenDbOnStartupCheck: TCheckBox
-        Left = 8
-        Top = 186
-        Width = 377
-        Height = 17
+        Left = 10
+        Top = 233
+        Width = 471
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Open last used database on startup'
         TabOrder = 11
       end
       object ClearClipCloseLockCheck: TCheckBox
-        Left = 8
-        Top = 16
-        Width = 380
-        Height = 17
+        Left = 10
+        Top = 20
+        Width = 475
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Clear clipboard when closing/locking database'
         TabOrder = 0
       end
       object OpenWindowOnStartupCheck: TCheckBox
-        Left = 8
-        Top = 163
-        Width = 377
-        Height = 17
+        Left = 10
+        Top = 204
+        Width = 471
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Open window on startup'
         TabOrder = 10
       end
       object LockAutoSaveCheck: TCheckBox
-        Left = 139
-        Top = 89
-        Width = 249
-        Height = 17
+        Left = 174
+        Top = 111
+        Width = 311
+        Height = 22
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Save automatically'
         TabOrder = 5
       end
       object DefaultAutotypeSeqBox: TEdit
-        Left = 176
-        Top = 309
-        Width = 212
-        Height = 21
+        Left = 220
+        Top = 386
+        Width = 269
+        Height = 25
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akLeft, akTop, akRight]
         TabOrder = 15
       end
       object NumberBackupsCheck: TCheckBox
-        Left = 57
-        Top = 137
-        Width = 222
-        Height = 17
+        Left = 71
+        Top = 171
+        Width = 282
+        Height = 22
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Number backups consecutively - up to:'
         TabOrder = 7
         OnClick = NumberBackupsCheckClick
       end
       object AutoSaveCheck: TCheckBox
-        Left = 8
-        Top = 282
-        Width = 162
-        Height = 21
+        Left = 10
+        Top = 353
+        Width = 203
+        Height = 26
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Save automatically:'
         TabOrder = 13
         OnClick = AutoSaveCheckClick
       end
       object AutoSaveList: TComboBox
-        Left = 176
-        Top = 282
-        Width = 212
-        Height = 21
+        Left = 220
+        Top = 353
+        Width = 269
+        Height = 25
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Style = csDropDownList
         Anchors = [akLeft, akTop, akRight]
         ItemIndex = 0
@@ -641,34 +910,50 @@ object ConfigurationDlg: TConfigurationDlg
           'After every change')
       end
       object WarnExpiredEntriesCheck: TCheckBox
-        Left = 8
-        Top = 210
-        Width = 377
-        Height = 17
+        Left = 10
+        Top = 263
+        Width = 471
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Warn if database contains expired entries'
         TabOrder = 12
       end
       object WarnEntriesExpireSoonCheck: TCheckBox
-        Left = 8
-        Top = 233
-        Width = 377
-        Height = 17
+        Left = 10
+        Top = 291
+        Width = 471
+        Height = 22
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Warn if database contains entries that will expire soon'
         TabOrder = 16
       end
       object WarnExpireNumDaysBox: TEdit
-        Left = 176
-        Top = 255
-        Width = 49
-        Height = 21
+        Left = 220
+        Top = 319
+        Width = 61
+        Height = 25
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         TabOrder = 17
         Text = '1'
       end
       object WarnExpireNumDaysSpinBtn: TUpDown
-        Left = 225
-        Top = 255
-        Width = 16
-        Height = 21
+        Left = 281
+        Top = 319
+        Width = 20
+        Height = 25
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Associate = WarnExpireNumDaysBox
         Min = 1
         Position = 1
@@ -677,10 +962,14 @@ object ConfigurationDlg: TConfigurationDlg
     end
   end
   object OKBtn: TButton
-    Left = 265
-    Top = 388
-    Width = 75
-    Height = 25
+    Left = 332
+    Top = 478
+    Width = 94
+    Height = 32
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akRight, akBottom]
     Caption = 'OK'
     Default = True
@@ -688,10 +977,14 @@ object ConfigurationDlg: TConfigurationDlg
     OnClick = OKBtnClick
   end
   object CancelBtn: TButton
-    Left = 345
-    Top = 388
-    Width = 75
-    Height = 25
+    Left = 434
+    Top = 478
+    Width = 94
+    Height = 32
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akRight, akBottom]
     Cancel = True
     Caption = 'Cancel'
@@ -704,17 +997,17 @@ object ConfigurationDlg: TConfigurationDlg
     Font.Height = -11
     Font.Name = 'MS Sans Serif'
     Font.Style = []
-    Left = 16
-    Top = 384
+    Left = 69
+    Top = 451
   end
   object SaveDlg: TSaveDialog
     Filter = 'Gettext PO files (*.po)|*.po'
-    Left = 47
-    Top = 384
+    Left = 19
+    Top = 452
   end
   object SelectFontMenu: TPopupMenu
-    Left = 212
-    Top = 120
+    Left = 481
+    Top = 62
     object SelectFontMenu_RestoreDefault: TMenuItem
       Caption = 'Restore Default'
       OnClick = SelectFontMenu_RestoreDefaultClick

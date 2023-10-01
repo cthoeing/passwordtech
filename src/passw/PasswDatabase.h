@@ -219,7 +219,7 @@ public:
   void ClearKeyValueList(void)
   {
     m_keyValueList.clear();
-    Strings[KEYVALUELIST].Empty();
+    Strings[KEYVALUELIST].Clear();
   }
 
   // update internal key-value list string, key-value pairs separated by ','
@@ -260,7 +260,7 @@ public:
   void ClearTagList(void)
   {
     m_tags.clear();
-    Strings[TAGS].Empty();
+    Strings[TAGS].Clear();
   }
 
   PasswHistory& GetPasswHistory(void)
@@ -652,9 +652,13 @@ public:
 
   // changes master key
   // -> new master key
+  // -> new setting for number of KDF iterations
+  //    (will only be adopted if operation is successful/not canceled)
+  //    0 = use current database setting
   // -> pointer to flag for cancelling operation (if number of iterations
   //    is too high)
   void ChangeMasterKey(const SecureMem<word8>& newKey,
+    word32 lKdfIterOverride = 0,
     std::atomic<bool>* pCancelFlag = nullptr);
 
   // sets recovery key

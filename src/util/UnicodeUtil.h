@@ -68,7 +68,7 @@ SecureWString FormatW_Secure(const WString sFormat, ...);
 // -> format string
 // -> argument list
 // <- formatted wide string
-WString FormatW_AL(const WString sFormat, va_list arglist);
+WString FormatW_ArgList(const WString sFormat, va_list arglist);
 
 // count Unicode characters in wide string (16-bit)
 // -> pointer to wide string

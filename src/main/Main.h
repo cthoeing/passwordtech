@@ -115,6 +115,12 @@ extern Configuration g_config;
 extern AnsiString g_asDonorInfo;
 extern WString g_sNewline;
 
+enum class TerminateAction {
+  None, RestartProgram, SystemShutdown
+};
+extern TerminateAction g_terminateAction;
+
+
 bool IsRandomPoolActive(void);
 
 void BeforeDisplayDlg(void);
@@ -126,6 +132,7 @@ bool IsDisplayDlg(void);
 enum GeneratePasswDest
 { gpdGuiSingle,  // single password in edit control
   gpdGuiList,    // password list in multiline edit control
+  gpdClipboardList,  // password list in clipboard
   gpdFileList,   // password list in file
   gpdClipboard,  // copy password to clipboard
   gpdMsgBox,     // show password in message box
@@ -247,7 +254,6 @@ __published:	// IDE-managed Components
   TMenuItem *TrayMenu_Profile;
   TMenuItem *TrayMenu_Profile_N1;
   TMenuItem *TrayMenu_Profile_ProfileEditor;
-  TSpeedButton *GenerateBtn3;
   TMenuItem *MainMenu_File_N1;
   TMenuItem *MainMenu_Tools_N3;
   TMenuItem *MainMenu_Tools_CreateTrigramFile;
@@ -309,6 +315,9 @@ __published:	// IDE-managed Components
     TPopupMenu *AdvancedOptionsMenu;
     TMenuItem *AdvancedOptionsMenu_DeactivateAll;
     TMenuItem *AdvancedOptionsMenu_DeactivateAllStarred;
+  TPopupMenu *GenerateMenu;
+  TMenuItem *GenerateMenu_Clipboard;
+  TMenuItem *GenerateMenu_File;
   void __fastcall GenerateBtnClick(TObject *Sender);
   void __fastcall IncludeCharsCheckClick(TObject *Sender);
   void __fastcall CharSetInfoBtnClick(TObject *Sender);
@@ -436,7 +445,7 @@ private:	// User declarations
   bool m_blStartup;
   bool m_blCharSetError;
   bool m_blShowEntProgress;
-  bool m_blRestart;
+  //bool m_blRestart;
   PasswOptions m_passwOptions;
   IDropTarget* m_pPasswBoxDropTarget;
   TUpdateCheckThread* m_pUpdCheckThread;
@@ -448,7 +457,7 @@ private:	// User declarations
   std::unique_ptr<LuaScript> m_pScript;
   TDateTime m_lastUpdateCheck;
   AnsiString m_asDonorKey;
-  
+
   void __fastcall DelayStartupError(const WString& sMsg);
   void __fastcall LoadLangConfig(void);
   bool __fastcall ChangeLanguage(const WString& sLangFileName);
@@ -480,6 +489,8 @@ private:	// User declarations
   void __fastcall OnUpdCheckThreadTerminate(TObject* Sender);
   void __fastcall SetDonorUI(int nDonorType);
   void __fastcall RestoreAction(void);
+  void __fastcall OnSetSensitiveClipboardData(void);
+  void __fastcall OnQueryEndSession(TWMQueryEndSession& msg);
 public:		// User declarations
   __fastcall TMainForm(TComponent* Owner);
   __fastcall ~TMainForm();
@@ -498,13 +509,15 @@ public:		// User declarations
   void __fastcall CryptText(bool blEncrypt,
     const SecureWString* psText = nullptr,
     TForm* pParentForm = nullptr);
-  void __fastcall CopiedSensitiveDataToClipboard(void);
   void __fastcall GeneratePassw(GeneratePasswDest dest,
     TCustomEdit* pEditBox = NULL);
   void __fastcall ShowTrayInfo(const WString& sInfo,
     TBalloonFlags flags = bfNone);
+  void __fastcall OnEndSession(TWMEndSession& msg);
   BEGIN_MESSAGE_MAP
     MESSAGE_HANDLER(WM_HOTKEY, TMessage, OnHotKey)
+    MESSAGE_HANDLER(WM_QUERYENDSESSION, TWMQueryEndSession, OnQueryEndSession)
+    MESSAGE_HANDLER(WM_ENDSESSION, TWMEndSession, OnEndSession)
   END_MESSAGE_MAP(TForm)
 };
 //---------------------------------------------------------------------------

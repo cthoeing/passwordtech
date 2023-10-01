@@ -3,40 +3,47 @@ object PasswMngColDlg: TPasswMngColDlg
   Top = 0
   BorderIcons = [biSystemMenu, biMaximize]
   Caption = 'Select columns'
-  ClientHeight = 232
-  ClientWidth = 254
+  ClientHeight = 290
+  ClientWidth = 325
   Color = clBtnFace
-  Constraints.MinHeight = 200
-  Constraints.MinWidth = 188
+  Constraints.MinHeight = 250
+  Constraints.MinWidth = 235
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -14
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   OnShow = FormShow
+  PixelsPerInch = 120
   DesignSize = (
-    254
-    232)
-  PixelsPerInch = 96
-  TextHeight = 13
+    325
+    290)
+  TextHeight = 17
   object OptionsList: TCheckListBox
     Left = 0
     Top = 0
-    Width = 254
-    Height = 194
+    Width = 325
+    Height = 231
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     Anchors = [akLeft, akTop, akRight, akBottom]
     Flat = False
-    ItemHeight = 18
+    ItemHeight = 23
     Style = lbOwnerDrawFixed
     TabOrder = 0
   end
   object OKBtn: TButton
-    Left = 90
-    Top = 200
-    Width = 75
-    Height = 25
+    Left = 113
+    Top = 245
+    Width = 93
+    Height = 31
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akRight, akBottom]
     Caption = 'OK'
     Default = True
@@ -44,10 +51,14 @@ object PasswMngColDlg: TPasswMngColDlg
     OnClick = OKBtnClick
   end
   object CancelBtn: TButton
-    Left = 171
-    Top = 200
-    Width = 75
-    Height = 25
+    Left = 214
+    Top = 245
+    Width = 94
+    Height = 31
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akRight, akBottom]
     Cancel = True
     Caption = 'Cancel'

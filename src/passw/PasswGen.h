@@ -78,12 +78,14 @@ class PasswordGenerator
 private:
   RandomGenerator* m_pRandGen;
   w32string m_sCustomCharSet;
-  struct CharSetFreq {
+  /*struct CharSetFreq {
     std::vector<std::pair<w32string,int>> items;
     w32string sCommonCharSet;
-  };
+  };*/
+  using CharSetFreq = std::vector<std::pair<w32string,int>>;
   std::optional<CharSetFreq> m_customCharSetFreq;
   CharSetType m_customCharSetType;
+  int m_nCustomCharSetUniqueSize;
   //int m_nCustomCharSetSize;
   double m_dCustomCharSetEntropy;
   bool m_blCustomCharSetNonLC;
@@ -289,6 +291,9 @@ public:
 
   __property double CustomCharSetEntropy =
   { read=m_dCustomCharSetEntropy };
+
+  __property int CustomCharSetUniqueSize =
+  { read=m_nCustomCharSetUniqueSize };
 
   __property double WordListEntropy =
   { read=m_dWordListEntropy };

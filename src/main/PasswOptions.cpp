@@ -67,11 +67,13 @@ __fastcall TPasswOptionsDlg::TPasswOptionsDlg(TComponent* Owner)
   Constraints->MinWidth = Width;
 
   TStrings* pStrList = PasswOptionsList->Items;
+  m_pOptionsList.reset(new TStringList);
 
   if (g_pLangSupp) {
-    TRLCaption(this);
     for (int i = 0; i < pStrList->Count; i++)
-      pStrList->Strings[i] = TRL(pStrList->Strings[i]);
+      m_pOptionsList->Add(TRL(pStrList->Strings[i]));
+    pStrList->Assign(m_pOptionsList.get());
+    TRLCaption(this);
     TRLCaption(AmbigCharsLbl);
     TRLCaption(SpecialSymLbl);
     TRLCaption(MaxWordLenLbl);
@@ -81,6 +83,8 @@ __fastcall TPasswOptionsDlg::TPasswOptionsDlg(TComponent* Owner)
     TRLCaption(CancelBtn);
     TRLMenu(ListMenu);
   }
+  else
+    m_pOptionsList->Assign(pStrList);
 
   pStrList->Strings[BIT_TO_OPTION_INDEX[0]] += " (B8G6I1l|0OQDS5Z2) [1-3] *";
   pStrList->Strings[BIT_TO_OPTION_INDEX[1]] += " [1-4] *";
@@ -199,6 +203,12 @@ void __fastcall TPasswOptionsDlg::ListMenu_InvertSelectionClick(
 {
   for (int nI = 0; nI < PASSWOPTIONS_NUM; nI++)
     PasswOptionsList->Checked[nI] = !PasswOptionsList->Checked[nI];
+}
+//---------------------------------------------------------------------------
+WString __fastcall TPasswOptionsDlg::BitToString(int nBitPos)
+{
+  return (nBitPos < PASSWOPTIONS_NUM) ? m_pOptionsList->Strings[
+    BIT_TO_OPTION_INDEX[nBitPos]] : WString();
 }
 //---------------------------------------------------------------------------
 

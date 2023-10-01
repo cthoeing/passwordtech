@@ -182,7 +182,7 @@ void PasswDbEntry::SetKeyValue(const wchar_t* pwszKey, const wchar_t* pwszValue)
   for (auto it = m_keyValueList.begin(); it != m_keyValueList.end(); it++)
   {
     if (_wcsicmp(it->first.c_str(), pwszKey) == 0) {
-      it->second.Assign(pwszValue, wcslen(pwszValue) + 1);
+      it->second.AssignStr(pwszValue);
       return;
     }
   }
@@ -391,16 +391,16 @@ void PasswDatabase::Close(void)
   m_bCipherType = CIPHER_AES256;
   m_lKdfIterations = KEY_HASH_ITERATIONS;
   m_lDefaultPasswExpiryDays = 0;
-  m_cryptBuf.Empty();
+  m_cryptBuf.Clear();
 
   for (auto pEntry : m_db)
-	delete pEntry;
+	  delete pEntry;
 
   m_db.clear();
   m_pFile.reset();
   m_lDbEntryId = 0;
   m_lCryptBufPos = 0;
-  m_sDefaultUserName.Empty();
+  m_sDefaultUserName.Clear();
   m_dbOpenState = DbOpenState::Closed;
   m_blRecoveryKey = false;
   m_blCompressed = false;
@@ -843,7 +843,7 @@ void PasswDatabase::Open(const SecureMem<word8>& key,
 #endif
   }
 
-  m_cryptBuf.Empty();
+  m_cryptBuf.Clear();
   memzero(&header, sizeof(header));
   memzero(&fh, sizeof(fh));
 
@@ -858,7 +858,7 @@ void PasswDatabase::Write(const void* pBuf, word32 lNumOfBytes)
 
   const word8* pSrcBuf = reinterpret_cast<const word8*>(pBuf);
 
-  m_cryptBuf.GrowExp(m_lCryptBufPos + lNumOfBytes);
+  m_cryptBuf.BufferedGrow(m_lCryptBufPos + lNumOfBytes);
   //word32 lNewSize = m_lCryptBufPos + lNumOfBytes;
   //if (lNewSize > m_cryptBuf.Size()) {
   //  m_cryptBuf.GrowBy(alignToBlockSize(
@@ -1089,7 +1089,7 @@ void PasswDatabase::SaveToFile(const WString& sFileName)
         true,
         lChunkSize);
       if (lChunkSize) {
-        comprBuf.GrowExp(lComprBufPos + lChunkSize);
+        comprBuf.BufferedGrow(lComprBufPos + lChunkSize);
         //if (lComprBufPos + lChunkSize > comprBuf.Size())
         //  comprBuf.GrowBy(comprBuf.Size());
         memcpy(comprBuf + lComprBufPos, workBuf, lChunkSize);
@@ -1161,7 +1161,7 @@ void PasswDatabase::SaveToFile(const WString& sFileName)
     m_pFile->Write(hmac, hmac.Size());
   }
   __finally {
-    m_cryptBuf.Empty();
+    m_cryptBuf.Clear();
     m_pFile.reset();
   }
 
@@ -1326,8 +1326,8 @@ void PasswDatabase::SetDbEntryPassw(PasswDbEntry& entry,
   const SecureWString& sPassw)
 {
   if (sPassw.IsStrEmpty()) {
-    entry.m_encPassw.Empty();
-    entry.Strings[PasswDbEntry::PASSWORD].Empty();
+    entry.m_encPassw.Clear();
+    entry.Strings[PasswDbEntry::PASSWORD].Clear();
     entry.m_passwHash.Zeroize();
     return;
   }
@@ -1394,7 +1394,7 @@ void PasswDatabase::SetPlaintextPassw(bool blPlaintextPassw)
     if (blPlaintextPassw)
       pEntry->Strings[PasswDbEntry::PASSWORD] = GetDbEntryPassw(*pEntry);
     else
-      pEntry->Strings[PasswDbEntry::PASSWORD].Empty();
+      pEntry->Strings[PasswDbEntry::PASSWORD].Clear();
   }
 }
 //---------------------------------------------------------------------------
@@ -1436,16 +1436,19 @@ bool PasswDatabase::CheckRecoveryKey(const SecureMem<word8>& recoveryKey)
 }
 //---------------------------------------------------------------------------
 void PasswDatabase::ChangeMasterKey(const SecureMem<word8>& newKey,
+  word32 lKdfIterOverride,
   std::atomic<bool>* pCancelFlag)
 {
   CheckDbOpen();
   CheckKeyEmpty(newKey);
+  if (lKdfIterOverride == 0)
+    lKdfIterOverride = m_lKdfIterations;
   if (m_blRecoveryKey) {
     RandomPool::GetInstance().GetData(m_pDbRecoveryKeyBlock, DB_SALT_LENGTH);
 
     SecureMem<word8> derivedKey(DB_KEY_LENGTH);
     pbkdf2_256bit(newKey, newKey.Size(), m_pDbRecoveryKeyBlock, DB_SALT_LENGTH,
-      derivedKey, m_lKdfIterations, pCancelFlag);
+      derivedKey, lKdfIterOverride, pCancelFlag);
 
     if (pCancelFlag && *pCancelFlag)
       return;
@@ -1457,15 +1460,18 @@ void PasswDatabase::ChangeMasterKey(const SecureMem<word8>& newKey,
   }
   else {
     if (pCancelFlag) {
-      SecureMem<word8> oldKey(m_pDbKey, DB_KEY_LENGTH);
-      pbkdf2_256bit(newKey, newKey.Size(), m_pDbSalt, DB_SALT_LENGTH, m_pDbKey,
-        m_lKdfIterations, pCancelFlag);
-      if (*pCancelFlag)
-        memcpy(m_pDbKey, oldKey, DB_KEY_LENGTH);
+      SecureMem<word8> derivedKey(DB_KEY_LENGTH);
+      pbkdf2_256bit(newKey, newKey.Size(), m_pDbSalt, DB_SALT_LENGTH, derivedKey,
+        lKdfIterOverride, pCancelFlag);
+      if (!(*pCancelFlag))
+        memcpy(m_pDbKey, derivedKey, DB_KEY_LENGTH);
     }
     else
       pbkdf2_256bit(newKey, newKey.Size(), m_pDbSalt, DB_SALT_LENGTH, m_pDbKey,
-        m_lKdfIterations);
+        lKdfIterOverride);
+  }
+  if (!(pCancelFlag && *pCancelFlag)) {
+    m_lKdfIterations = lKdfIterOverride;
   }
 }
 //---------------------------------------------------------------------------
