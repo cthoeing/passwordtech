@@ -50,21 +50,22 @@ public:
   // translation
   // -> string to translate
   // <- translated string
-  WString Translate(const AnsiString& asStr);
-  WString Translate(const WString& sStr);
+  WString Translate(const AnsiString& asStr) const;
+  WString Translate(const WString& sStr) const;
+  WString Translate(word32 lHash) const;
 
   // translation
   // -> string to translate
   // -> default string to return if translation couldn't be found
   // <- translated string
   WString TranslateDef(const AnsiString& asStr,
-    const AnsiString& asDefault);
+    const AnsiString& asDefault) const;
 
   // call this function if the last translation failed (i.e., caused an exception)
   // -> error message to display
   // -> if 'true', remove the erroneous entry from the list
-  void LastTranslError(const AnsiString& asErrMsg,
-    bool blRemoveEntry = true);
+  //void LastTranslError(const AnsiString& asErrMsg,
+  //  bool blRemoveEntry = true);
 
   void SaveToPOFileFormat(const WString& sFileName, CharacterEncoding charEnc);
 
@@ -88,7 +89,7 @@ public:
 
 private:
   std::unordered_map<word32, std::wstring> m_transl;
-  std::unordered_map<word32, std::wstring>::iterator m_lastEntry;
+  //std::unordered_map<word32, std::wstring>::iterator m_lastEntry;
   std::unique_ptr<std::vector<std::pair<std::wstring, std::wstring>>> m_pFullTransl;
   FileFormat m_format;
   WString m_sLanguageCode;
@@ -96,9 +97,6 @@ private:
   WString m_sLanguageVersion;
   WString m_sTranslatorName;
   WString m_sHelpFileName;
-
-  bool FindTransl(const AnsiString& asStr);
-  bool FindTransl(const WString& sStr);
 };
 
 extern std::unique_ptr<LanguageSupport> g_pLangSupp;
@@ -132,7 +130,7 @@ template <class T> void TRLHint(T* pControl)
   pControl->Hint = TRL(pControl->Hint);
 }
 
-WString TRLFormat(const AnsiString asFormat, ...);
+WString TRLFormat(const WString asFormat, ...);
 
 
 #endif

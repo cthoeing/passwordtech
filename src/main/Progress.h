@@ -62,8 +62,10 @@ private:	// User declarations
   WString m_sProgressInfo;
   word64 m_qLastValue;
   word64 m_qMaxValue;
-  std::atomic<bool>* m_pCancelFlag;
-  const std::atomic<word64>* m_pCurrentProgress;
+  //std::atomic<bool>* m_pCancelFlag;
+  std::weak_ptr<std::atomic<bool>> m_cancelFlag;
+  std::weak_ptr<std::atomic<word64>> m_currentProgress;
+  //const std::atomic<word64>* m_pCurrentProgress;
   WString m_sProgressMsg;
   std::function<bool(unsigned int)> m_waitThreadFun;
   std::mutex m_lock;
@@ -88,23 +90,28 @@ public:		// User declarations
     const WString& sTitle,
     const WString& sProgressInfo,
     word64 qMaxValue = 0,
-    std::atomic<bool>* pCancelFlag = nullptr,
-    const std::atomic<word64>* pCurProgress = nullptr);
+    std::shared_ptr<std::atomic<bool>> cancelFlag = {},
+    std::shared_ptr<std::atomic<word64>> curProgress = {});
   int __fastcall ExecuteModal(TForm* pCaller,
     const WString& sTitle,
     const WString& sProgressInfo,
-    std::atomic<bool>& cancelFlag,
+    std::shared_ptr<std::atomic<bool>> cancelFlag,
     std::function<bool(unsigned int)> waitThreadFun,
     word64 qMaxValue = 0,
-    const std::atomic<word64>* pCurProgress = nullptr);
-  void __fastcall SetProgressMessageAsync(const WString& sMsg = "");
-  void __fastcall SetProgressMessage(const WString& sMsg)
+    std::shared_ptr<std::atomic<word64>> curProgress = {});
+  // this can be called from any thread
+  void __fastcall SetProgressMessageAsync(const TForm* pCaller, const WString& sMsg = "");
+  // this must be called from main thread only
+  void __fastcall SetProgressMessage(const TForm* pCaller, const WString& sMsg)
   {
-    ProgressLbl->Caption = sMsg;
-    Refresh();
+    if (pCaller == m_pCaller) {
+      ProgressLbl->Caption = sMsg;
+      Refresh();
+    }
   }
+  // these must be called from main thread
   void __fastcall MainThreadCallback(word64 qValue = -1, const WString& sMsg = "");
-  void __fastcall Terminate(void);
+  void __fastcall Terminate(const TForm* pCaller);
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TProgressForm *ProgressForm;

@@ -121,11 +121,11 @@ public:
   // destructor
   ~SecureMem()
   {
-    Empty();
+    Clear();
   }
 
   // empties the object and securely wipes the data array
-  void Empty(void)
+  void Clear(void)
   {
     if (!IsEmpty())
     {
@@ -154,19 +154,29 @@ public:
       memcpy(m_pData, pSrc, lSize * sizeof(T));
   }
 
+  // copies string into data array and adds terminating zero
+  // -> pointer to string to copy
+  // -> string length/number of characters to copy
+  void AssignStr(const T* pSrc,
+    word32 lStrLen)
+  {
+    NewStr(lStrLen);
+    if (lStrLen != 0)
+      memcpy(m_pData, pSrc, lStrLen * sizeof(T));
+  }
+
+  // copies string into data array, including terminating zero
+  // -> pointer to zero-terminated string
+  void AssignStr(const T* pSrc)
+  {
+    return AssignStr(pSrc, _tcslen(pSrc));
+  }
+
   void Swap(SecureMem& other)
   {
     std::swap(m_pData, other.m_pData);
     std::swap(m_lSize, other.m_lSize);
   }
-
-  // copies the data of the source object
-  // -> object reference
-  //void Assign(const SecureMem& src)
-  //{
-  //  New(src.m_lSize);
-  //  memcpy(m_pData, src.m_pData, src.SizeBytes());
-  //}
 
   // resizes the data array (see below for the implementation)
   // -> new size
@@ -175,12 +185,33 @@ public:
   void Resize(word32 lNewSize,
     bool blPreserve = true);
 
+  // resizes the data array to hold a zero-terminated string
+  // -> string length (without terminating zero)
+  // -> preserve or discard existing data
+  void ResizeStr(word32 lStrLen,
+    bool blPreserve = true)
+  {
+    if (lStrLen != 0) {
+      Resize(lStrLen + 1, blPreserve);
+      back() = '\0';
+    }
+    else
+      Clear();
+  }
+
   // creates a new data array of the given size
   // existing data will NOT be preserved
   // -> new size of the data array
   void New(word32 lNewSize)
   {
     Resize(lNewSize, false);
+  }
+
+  // creates new data array for holding a zero-terminated string
+  // -> string length (without terminating zero)
+  void NewStr(word32 lStrLen)
+  {
+    ResizeStr(lStrLen, false);
   }
 
   // expands the data array (contents will be preserved)
@@ -199,7 +230,10 @@ public:
       Resize(m_lSize + lAddSize, true);
   }
 
-  void GrowExp(word32 lNewSize)
+  // expands the array to a size corresponding to the next higher power of 2
+  // to reduce number of reallocations if the array grows continuously
+  // -> new minimum size
+  void BufferedGrow(word32 lNewSize)
   {
     if (lNewSize > m_lSize) {
       if (lNewSize > max_size())
@@ -466,7 +500,7 @@ void SecureMem<T>::Resize(word32 lNewSize,
   bool blPreserve)
 {
   if (lNewSize == 0)
-    Empty();
+    Clear();
   else if (lNewSize != m_lSize)
   {
     if (lNewSize > max_size())
@@ -477,7 +511,7 @@ void SecureMem<T>::Resize(word32 lNewSize,
     if (blPreserve && !IsEmpty())
       memcpy(pNewData, m_pData, std::min(m_lSize, lNewSize) * sizeof(T));
 
-    Empty();
+    Clear();
 
     m_pData = pNewData;
     m_lSize = lNewSize;
@@ -505,10 +539,10 @@ word32 SecureMem<T>::Find(const T& element,
 template<class T>
 word32 SecureMem<T>::_tcslen(const T* pStr)
 {
-  if (std::is_same<T, char>::value || std::is_same<T, word8>::value)
-    return strlen(reinterpret_cast<const char*>(pStr));
-  if (std::is_same<T, wchar_t>::value)
-    return wcslen(reinterpret_cast<const wchar_t*>(pStr));
+  if constexpr(std::is_same<T, char>::value)
+    return strlen(pStr);
+  if constexpr(std::is_same<T, wchar_t>::value)
+    return wcslen(pStr);
 
   const T* pEnd = pStr;
   while (*pEnd != '\0') pEnd++;
@@ -522,10 +556,10 @@ word32 SecureMem<T>::StrLen(void) const
     return 0;
 
   word32 lStrLen = 0;
-  if (std::is_same<T, char>::value || std::is_same<T, word8>::value)
-    lStrLen = strnlen_s(reinterpret_cast<const char*>(m_pData), m_lSize);
-  else if (std::is_same<T, wchar_t>::value)
-    lStrLen = wcsnlen_s(reinterpret_cast<const wchar_t*>(m_pData), m_lSize);
+  if constexpr(std::is_same<T, char>::value)
+    lStrLen = strnlen_s(m_pData, m_lSize);
+  else if constexpr(std::is_same<T, wchar_t>::value)
+    lStrLen = wcsnlen_s(m_pData, m_lSize);
   else {
     for ( ; lStrLen < m_lSize && m_pData[lStrLen] != '\0'; lStrLen++);
   }
@@ -547,7 +581,7 @@ void SecureMem<T>::StrCat(const T* pStr, word32 lLen, word32& lPos)
     throw SecureMemError("SecureMem::StrCat(): Invalid position");
   if (lLen == 0)
     return;
-  GrowExp(lPos + lLen + 1);
+  BufferedGrow(lPos + lLen + 1);
   memcpy(m_pData + lPos, pStr, lLen * sizeof(T));
   lPos += lLen;
   m_pData[lPos] = '\0';

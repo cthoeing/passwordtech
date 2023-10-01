@@ -1,10 +1,10 @@
-# Translation template for Password Tech 3.5.0
+# Translation template for Password Tech 3.5.2
 # Released under the GNU General Public License
 
 #. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.1\n"
+"Project-Id-Version: Password Tech 3.5.2\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
@@ -98,12 +98,20 @@ msgstr ""
 msgid "Generate"
 msgstr ""
 
-#. Main window, button to store generated passwords in a file
-msgid "Generate password list to file"
+#. Main window, button to generate multiple passwords
+msgid "Generate to Clipboard"
+msgstr ""
+
+#. Main window, button to generate multiple passwords
+msgid "Generate to File..."
 msgstr ""
 
 #. Main window, button to access advanced password options
 msgid "Advanced"
+msgstr ""
+
+#. Main window, button to access advanced password options, tooltip
+msgid "%d option(s) active"
 msgstr ""
 
 #. Main window, button to access advanced password options, dropdown menu
@@ -126,7 +134,7 @@ msgstr ""
 msgid "Hide/show password"
 msgstr ""
 
-#. Main window, password groupbox, hint of quality bar
+#. Main window, password groupbox, tooltip of quality bar
 msgid "Hold left mouse button to drag & drop password"
 msgstr ""
 
@@ -230,7 +238,7 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
-#. Main window, Help button hint
+#. Main window, Help button tooltip
 msgid "Open Manual"
 msgstr ""
 
@@ -278,23 +286,23 @@ msgstr ""
 msgid "Open user manual"
 msgstr ""
 
-#. Main window, Clear Clipboard button hint
+#. Main window, Clear Clipboard button tooltip
 msgid "Clear clipboard (text contents only)"
 msgstr ""
 
-#. Main window, Encrypt/Decrypt Clipboard button hint
+#. Main window, Encrypt/Decrypt Clipboard button tooltip
 msgid "Clipboard text encryption (left-click) or decryption (right-click)"
 msgstr ""
 
-#. Main window, Profile Editor button hint
+#. Main window, Profile Editor button tooltip
 msgid "Load, create or delete profiles"
 msgstr ""
 
-#. Main window, MP Password Generator button hint
+#. Main window, MP Password Generator button tooltip
 msgid "Generate passwords based on a master password"
 msgstr ""
 
-#. Main window, Configuration button hint
+#. Main window, Configuration button tooltip
 msgid "Main configuration of the program"
 msgstr ""
 
@@ -374,15 +382,15 @@ msgstr ""
 msgid "Select high-entropy file"
 msgstr ""
 
-#. Main window, Password Database button hint
+#. Main window, Password Database button tooltip
 msgid "Manage passwords in encrypted databases"
 msgstr ""
 
-#. Main window, Reload Profile button hint
+#. Main window, Reload Profile button tooltip
 msgid "Reload profile"
 msgstr ""
 
-#. Main window, Add Profile button hint
+#. Main window, Add Profile button tooltip
 msgid "Add profile"
 msgstr ""
 
@@ -468,7 +476,7 @@ msgstr ""
 msgid "Invalid trigram file."
 msgstr ""
 
-#. Main window, Generated Password groupbox, label below Password box, hint shown when generated or entered password matches a common password
+#. Main window, Generated Password groupbox, label below Password box, tooltip shown when generated or entered password matches a common password
 msgid "Matches common password!"
 msgstr ""
 
@@ -551,7 +559,7 @@ msgstr ""
 msgid ""
 "If the option \"Each character must occur\n"
 "only once\" is activated, the password length\n"
-"is limited to the size of the character set (%d)."
+"is limited to %d unique characters."
 msgstr ""
 
 #. Message shown for a certain configuration of passphrase settings
@@ -642,6 +650,10 @@ msgstr ""
 
 #. Generate password list, copy list to UI
 msgid "Copying password list ..."
+msgstr ""
+
+#. Generate password list to clipboard
+msgid "Password list copied to clipboard."
 msgstr ""
 
 #. Generate password list to file
@@ -860,10 +872,6 @@ msgstr ""
 
 #. Message shown after deactivating deterministic random generator
 msgid "Deterministic random generator has been DEACTIVATED."
-msgstr ""
-
-#. Message shown on command line in case profile specified in command line parameters could not be found
-msgid "ERROR: Profile \"%s\" not found."
 msgstr ""
 
 #. Message shown on command line if profile was specified in command line parameters
@@ -1316,7 +1324,7 @@ msgstr ""
 msgid "Key files"
 msgstr ""
 
-#. Enter password window, Create Key File button, hint
+#. Enter password window, Create Key File button, tooltip
 msgid "Create key file"
 msgstr ""
 
@@ -1543,11 +1551,11 @@ msgstr ""
 msgid "Profile name:"
 msgstr ""
 
-#. Profile Editor dialog, Move Up button, hint
+#. Profile Editor dialog, Move Up button, tooltip
 msgid "Move up"
 msgstr ""
 
-#. Profile Editor dialog, Move Down button, hint
+#. Profile Editor dialog, Move Down button, tooltip
 msgid "Move down"
 msgstr ""
 
@@ -2122,23 +2130,23 @@ msgstr ""
 msgid "Change Password Font..."
 msgstr ""
 
-#. Password Manager window, Edit panel, Arrow Up button, hint
+#. Password Manager window, Edit panel, Arrow Up button, tooltip
 msgid "Previous entry"
 msgstr ""
 
-#. Password Manager window, Edit panel, Arrow Down button, hint
+#. Password Manager window, Edit panel, Arrow Down button, tooltip
 msgid "Next entry"
 msgstr ""
 
-#. Password Manager window, Edit panel, Accept button, hint
+#. Password Manager window, Edit panel, Accept button, tooltip
 msgid "Accept changes"
 msgstr ""
 
-#. Password Manager window, Edit panel, Undo button, hint
+#. Password Manager window, Edit panel, Undo button, tooltip
 msgid "Undo changes"
 msgstr ""
 
-#. Password Manager window, toolbar, Search box, text hint
+#. Password Manager window, toolbar, Search box, text tooltip
 msgid "Search..."
 msgstr ""
 
@@ -2146,7 +2154,7 @@ msgstr ""
 msgid "Clear search"
 msgstr ""
 
-#. Password Manager window, toolbar, Search button, hint
+#. Password Manager window, toolbar, Search button, tooltip
 msgid "Perform search"
 msgstr ""
 
@@ -2162,11 +2170,11 @@ msgstr ""
 msgid "Select fields..."
 msgstr ""
 
-#. Password Manager window, toolbar, Lock/unlock button, hint
+#. Password Manager window, toolbar, Lock/unlock button, tooltip
 msgid "Lock/unlock database"
 msgstr ""
 
-#. Password Manager window, Edit panel, Toggle password button, hint
+#. Password Manager window, Edit panel, Toggle password button, tooltip
 msgid "Left-click: Hide/show password, right-click: Generate password"
 msgstr ""
 
@@ -2359,7 +2367,7 @@ msgstr ""
 msgid "Master password is invalid."
 msgstr ""
 
-#. Password Manager window, Edit panel, Key-value list button, hint
+#. Password Manager window, Edit panel, Key-value list button, tooltip
 msgid "Edit key-value list"
 msgstr ""
 
@@ -2375,7 +2383,7 @@ msgstr ""
 msgid "Expires:"
 msgstr ""
 
-#. Password Manager window, Edit panel, Expiry button, hint
+#. Password Manager window, Edit panel, Expiry button, tooltip
 msgid "Change expiry date"
 msgstr ""
 
@@ -2513,7 +2521,7 @@ msgstr ""
 msgid "Generate passwords for new entries using format sequence:"
 msgstr ""
 
-#. Password Manager window, Database Settings dialog, Generate Password button, hint
+#. Password Manager window, Database Settings dialog, Generate Password button, tooltip
 msgid "Generate test password using format sequence"
 msgstr ""
 
@@ -2529,7 +2537,7 @@ msgstr ""
 msgid "Number of key derivation rounds:"
 msgstr ""
 
-#. Password Manager window, Database Settings dialog, Calculate KDF Rounds button, hint
+#. Password Manager window, Database Settings dialog, Calculate KDF Rounds button, tooltip
 msgid "Calculate number of rounds for a 1 second delay"
 msgstr ""
 
@@ -2609,7 +2617,7 @@ msgstr ""
 msgid "Password quality estimation is disabled"
 msgstr ""
 
-#. Password Manager window, Password Quality button, hint
+#. Password Manager window, Password Quality button, tooltip
 msgid "Estimate password quality"
 msgstr ""
 
@@ -2631,4 +2639,12 @@ msgstr ""
 
 #. Password Manager window, Password History dialog, list view, column
 msgid "Set Date/Time"
+msgstr ""
+
+#. Password Manager window, shutdown blocker message
+msgid "Password database entry is being edited."
+msgstr ""
+
+#. Password Manager window, shutdown blocker message
+msgid "Password database contains unsaved changes."
 msgstr ""

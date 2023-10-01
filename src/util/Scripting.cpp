@@ -120,7 +120,7 @@ int script_passphrase(lua_State* L)
   SecureW32String sInputPassw;
   if (pszChars != nullptr && *pszChars != '\0') {
     SecureWString sUtf16 = Utf8ToWString(pszChars);
-    sInputPassw.New(GetNumOfUnicodeChars(sUtf16) + 1);
+    sInputPassw.NewStr(GetNumOfUnicodeChars(sUtf16));
     WCharToW32Char(sUtf16, sInputPassw);
   }
 
@@ -327,22 +327,32 @@ void LuaScript::LoadFile(const WString& sFileName)
 {
   std::unique_ptr<TStringFileStreamW> pFile(new TStringFileStreamW(sFileName,
       fmOpenRead, ceAnsi, true, 0));
+
+  if (pFile->Size > 1'485'760)
+    throw EStreamError("Script file too large");
+
   int nChunkLen = pFile->Size - pFile->BOMLength;
-  std::vector<char> chunk(nChunkLen);
-  pFile->Read(&chunk[0], nChunkLen);
+  auto buf = std::make_unique<char[]>(nChunkLen);
+
+  pFile->Read(buf.get(), nChunkLen);
   pFile.reset();
-  int nResult = luaL_loadbuffer(m_L, &chunk[0], chunk.size(),
+
+  int nResult = luaL_loadbuffer(m_L, buf.get(), nChunkLen,
       AnsiString(ExtractFileName(sFileName)).c_str());
   if (nResult != 0)
     ThrowLuaError(nResult);
+
   nResult = lua_pcall(m_L, 0, 0, 0);
   if (nResult != 0)
-	ThrowLuaError(nResult);
+	  ThrowLuaError(nResult);
+
   if (lua_getglobal(m_L, "script_flags") == LUA_TNUMBER)
-	m_nScriptFlags = lua_tointeger(m_L, -1);
+	  m_nScriptFlags = lua_tointeger(m_L, -1);
   else
-	m_nScriptFlags = 0;
+	  m_nScriptFlags = 0;
+
   lua_pop(m_L, 1);
+
   m_sFileName = sFileName;
 }
 //---------------------------------------------------------------------------

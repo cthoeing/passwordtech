@@ -30,6 +30,7 @@
 #include <ExtCtrls.hpp>
 #include <Menus.hpp>
 //---------------------------------------------------------------------------
+#include <memory>
 #include "UnicodeUtil.h"
 
 const int
@@ -111,12 +112,14 @@ __published:	// IDE-managed Components
   void __fastcall ListMenu_DeselectAllClick(TObject *Sender);
   void __fastcall ListMenu_InvertSelectionClick(TObject *Sender);
 private:	// User declarations
+  std::unique_ptr<TStringList> m_pOptionsList;
 public:		// User declarations
   __fastcall TPasswOptionsDlg(TComponent* Owner);
   void __fastcall GetOptions(PasswOptions& passwOptions);
   void __fastcall SetOptions(const PasswOptions& passwOptions);
   void __fastcall LoadConfig(void);
   void __fastcall SaveConfig(void);
+  WString __fastcall BitToString(int nBitPos);
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TPasswOptionsDlg *PasswOptionsDlg;

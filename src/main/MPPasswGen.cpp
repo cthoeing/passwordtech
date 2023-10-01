@@ -39,6 +39,7 @@
 #include "SendKeys.h"
 #include "AESCtrPRNG.h"
 #include "sha256.h"
+#include "SecureClipboard.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
@@ -226,7 +227,7 @@ void __fastcall TMPPasswGenForm::SaveConfig(void)
 void __fastcall TMPPasswGenForm::ClearKey(bool blExpired,
   bool blClearKeyOnly)
 {
-  m_key.Empty();
+  m_key.Clear();
   memzero(memcryptKey, sizeof(memcryptKey));
 
   if (!blClearKeyOnly) {
@@ -571,14 +572,25 @@ void __fastcall TMPPasswGenForm::PasswBoxMenu_UndoClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMPPasswGenForm::PasswBoxMenu_CutClick(TObject *Sender)
 {
-  PasswBox->CutToClipboard();
-  MainForm->CopiedSensitiveDataToClipboard();
+  if (g_config.AutoClearClip) {
+    SecureWString sCut = GetEditBoxSelTextBuf(PasswBox);
+    SecureClipboard::GetInstance().SetData(sCut.c_str());
+    PasswBox->SetSelTextBuf(L"");
+  }
+  else
+    PasswBox->CutToClipboard();
+  //MainForm->CopiedSensitiveDataToClipboard();
 }
 //---------------------------------------------------------------------------
 void __fastcall TMPPasswGenForm::PasswBoxMenu_CopyClick(TObject *Sender)
 {
-  PasswBox->CopyToClipboard();
-  MainForm->CopiedSensitiveDataToClipboard();
+  if (g_config.AutoClearClip) {
+    SecureWString sCopy = GetEditBoxSelTextBuf(PasswBox);
+    SecureClipboard::GetInstance().SetData(sCopy.c_str());
+  }
+  else
+    PasswBox->CopyToClipboard();
+  //MainForm->CopiedSensitiveDataToClipboard();
 }
 //---------------------------------------------------------------------------
 void __fastcall TMPPasswGenForm::PasswBoxMenu_EncryptCopyClick(
@@ -653,6 +665,14 @@ void __fastcall TMPPasswGenForm::PasswBoxMenu_PerformAutotypeClick(TObject *Send
     if (!TSendKeysThread::ThreadRunning())
       new TSendKeysThread(Handle, g_config.AutotypeDelay, AutotypeBox->Text,
         NULL, NULL, sParam.c_str(), sPassw.c_str());
+  }
+}
+//---------------------------------------------------------------------------
+void __fastcall TMPPasswGenForm::OnEndSession(void)
+{
+  if (!m_key.IsEmpty()) {
+    m_key.Clear();
+    memzero(memcryptKey, sizeof(memcryptKey));
   }
 }
 //---------------------------------------------------------------------------

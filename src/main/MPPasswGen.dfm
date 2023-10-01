@@ -2,85 +2,114 @@ object MPPasswGenForm: TMPPasswGenForm
   Left = 219
   Top = 131
   Caption = 'MP Password Generator'
-  ClientHeight = 511
-  ClientWidth = 395
+  ClientHeight = 638
+  ClientWidth = 492
   Color = clBtnFace
   Font.Charset = ANSI_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -14
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   PopupMode = pmExplicit
   OnActivate = FormActivate
   OnClose = FormClose
   OnShow = FormShow
+  PixelsPerInch = 120
   DesignSize = (
-    395
-    511)
-  PixelsPerInch = 96
-  TextHeight = 13
+    492
+    638)
+  TextHeight = 17
   object MasterPasswGroup: TGroupBox
-    Left = 8
-    Top = 8
-    Width = 377
-    Height = 265
+    Left = 13
+    Top = 9
+    Width = 470
+    Height = 331
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akLeft, akTop, akRight]
     Caption = 'Master password'
     TabOrder = 0
     DesignSize = (
-      377
-      265)
+      470
+      331)
     object PasswStatusLbl: TLabel
-      Left = 8
-      Top = 64
-      Width = 35
-      Height = 13
+      Left = 10
+      Top = 80
+      Width = 44
+      Height = 17
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Status:'
     end
     object PasswExpiryCountdownLbl: TLabel
-      Left = 256
-      Top = 82
-      Width = 3
-      Height = 13
+      Left = 320
+      Top = 103
+      Width = 4
+      Height = 17
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
     end
     object KeyExpiryInfoLbl: TLabel
-      Left = 272
-      Top = 64
-      Width = 90
-      Height = 13
+      Left = 339
+      Top = 80
+      Width = 118
+      Height = 17
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akTop, akRight]
       Caption = 'Expiry countdown:'
+      ExplicitLeft = 325
     end
     object KeyExpiryCountdownLbl: TLabel
-      Left = 272
-      Top = 84
-      Width = 3
-      Height = 13
+      Left = 339
+      Top = 105
+      Width = 4
+      Height = 17
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akTop, akRight]
       Font.Charset = ANSI_CHARSET
       Font.Color = clBlack
-      Font.Height = -11
+      Font.Height = -14
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
+      ExplicitLeft = 325
     end
     object AutotypeLbl: TLabel
-      Left = 10
-      Top = 236
-      Width = 98
-      Height = 13
+      Left = 13
+      Top = 295
+      Width = 124
+      Height = 17
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Autotype sequence:'
     end
     object EnterPasswBtn: TButton
-      Left = 40
-      Top = 24
-      Width = 185
-      Height = 25
+      Left = 50
+      Top = 30
+      Width = 231
+      Height = 31
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Enter password...'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
-      Font.Height = -11
+      Font.Height = -14
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
@@ -88,94 +117,138 @@ object MPPasswGenForm: TMPPasswGenForm
       OnClick = EnterPasswBtnClick
     end
     object ConfirmPasswCheck: TCheckBox
-      Left = 8
-      Top = 112
-      Width = 361
-      Height = 17
+      Left = 10
+      Top = 140
+      Width = 451
+      Height = 21
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Ask for password confirmation'
       TabOrder = 3
     end
     object ShowPasswHashCheck: TCheckBox
-      Left = 8
-      Top = 135
-      Width = 258
-      Height = 17
+      Left = 10
+      Top = 169
+      Width = 323
+      Height = 21
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Show checksum of password:'
       TabOrder = 4
       OnClick = ShowPasswHashCheckClick
     end
     object KeyExpiryCheck: TCheckBox
-      Left = 8
-      Top = 158
-      Width = 258
-      Height = 17
+      Left = 10
+      Top = 198
+      Width = 323
+      Height = 21
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Key expires after the following time (seconds):'
       TabOrder = 5
       OnClick = KeyExpiryCheckClick
     end
     object KeyExpiryTimeBox: TEdit
-      Left = 272
-      Top = 155
-      Width = 49
-      Height = 21
+      Left = 339
+      Top = 194
+      Width = 61
+      Height = 25
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akTop, akRight]
       TabOrder = 6
       Text = '1'
+      ExplicitLeft = 321
     end
     object KeyExpiryTimeSpinBtn: TUpDown
-      Left = 321
-      Top = 155
-      Width = 16
-      Height = 21
+      Left = 400
+      Top = 194
+      Width = 20
+      Height = 25
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akTop, akRight]
       Associate = KeyExpiryTimeBox
       Max = 32767
       Position = 1
       TabOrder = 7
+      ExplicitLeft = 382
     end
     object PasswStatusBox: TEdit
-      Left = 9
-      Top = 83
-      Width = 257
-      Height = 21
+      Left = 11
+      Top = 104
+      Width = 321
+      Height = 25
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akLeft, akTop, akRight]
       Color = clBtnFace
       ReadOnly = True
       TabOrder = 2
+      ExplicitWidth = 303
     end
     object ClearKeyBtn: TButton
-      Left = 272
-      Top = 24
-      Width = 97
-      Height = 25
+      Left = 336
+      Top = 30
+      Width = 121
+      Height = 31
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akTop, akRight]
       Caption = 'Clear'
       Enabled = False
       TabOrder = 1
       OnClick = ClearKeyBtnClick
+      ExplicitLeft = 318
     end
     object HashapassCompatCheck: TCheckBox
-      Left = 8
-      Top = 182
-      Width = 361
-      Height = 17
+      Left = 10
+      Top = 228
+      Width = 451
+      Height = 21
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Provide compatibility with "Hashapass"'
       TabOrder = 8
       OnClick = HashapassCompatCheckClick
     end
     object AddPasswLenToParamCheck: TCheckBox
-      Left = 8
-      Top = 205
-      Width = 354
-      Height = 17
+      Left = 10
+      Top = 256
+      Width = 443
+      Height = 22
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Add password length to parameter'
       TabOrder = 9
     end
     object PasswHashList: TComboBox
-      Left = 273
-      Top = 128
-      Width = 89
-      Height = 21
+      Left = 340
+      Top = 160
+      Width = 112
+      Height = 25
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Style = csDropDownList
       Anchors = [akTop, akRight]
       ItemIndex = 2
@@ -186,70 +259,101 @@ object MPPasswGenForm: TMPPasswGenForm
         'Dec 0-9999'
         'Hex 16-bit'
         'Hex 32-bit')
+      ExplicitLeft = 322
     end
     object AutotypeBox: TEdit
-      Left = 160
-      Top = 233
-      Width = 202
-      Height = 21
+      Left = 200
+      Top = 291
+      Width = 252
+      Height = 25
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 11
+      ExplicitWidth = 234
     end
   end
   object PasswGeneratorGroup: TGroupBox
-    Left = 8
-    Top = 279
-    Width = 377
-    Height = 191
+    Left = 13
+    Top = 347
+    Width = 470
+    Height = 238
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Password generator'
     TabOrder = 1
     DesignSize = (
-      377
-      191)
+      470
+      238)
     object ParameterLbl: TLabel
-      Left = 8
-      Top = 24
-      Width = 54
-      Height = 13
+      Left = 10
+      Top = 30
+      Width = 68
+      Height = 17
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Parameter:'
       OnMouseMove = ParameterLblMouseMove
     end
     object CharSetLbl: TLabel
-      Left = 8
-      Top = 72
-      Width = 70
-      Height = 13
+      Left = 10
+      Top = 90
+      Width = 87
+      Height = 17
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Character set:'
     end
     object LengthLbl: TLabel
-      Left = 272
-      Top = 72
-      Width = 37
-      Height = 13
+      Left = 339
+      Top = 90
+      Width = 48
+      Height = 17
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akTop, akRight]
       Caption = 'Length:'
+      ExplicitLeft = 325
     end
     object ResultingPasswLbl: TLabel
-      Left = 8
-      Top = 120
-      Width = 113
-      Height = 13
+      Left = 10
+      Top = 150
+      Width = 140
+      Height = 17
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Resulting password:'
       Font.Charset = ANSI_CHARSET
       Font.Color = clBlack
-      Font.Height = -11
+      Font.Height = -14
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
       OnMouseMove = PasswSecurityBarMouseMove
     end
     object TogglePasswBtn: TSpeedButton
-      Left = 242
-      Top = 134
-      Width = 27
-      Height = 25
+      Left = 302
+      Top = 166
+      Width = 33
+      Height = 31
       Hint = 'Hide/show password'
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       AllowAllUp = True
       Anchors = [akTop, akRight]
       GroupIndex = 1
@@ -257,130 +361,183 @@ object MPPasswGenForm: TMPPasswGenForm
       Flat = True
       Font.Charset = SYMBOL_CHARSET
       Font.Color = clMaroon
-      Font.Height = -15
+      Font.Height = -19
       Font.Name = 'Symbol'
       Font.Style = []
       ParentFont = False
       ParentShowHint = False
       ShowHint = True
       OnClick = TogglePasswBtnClick
+      ExplicitLeft = 286
     end
     object PasswInfoLbl: TLabel
-      Left = 248
-      Top = 166
-      Width = 3
-      Height = 13
+      Left = 310
+      Top = 208
+      Width = 4
+      Height = 17
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Font.Charset = ANSI_CHARSET
       Font.Color = clBlack
-      Font.Height = -11
+      Font.Height = -14
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
       Visible = False
     end
     object CharSetInfoLbl: TLabel
-      Left = 260
-      Top = 72
-      Width = 3
-      Height = 13
+      Left = 324
+      Top = 90
+      Width = 4
+      Height = 17
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Alignment = taRightJustify
       Anchors = [akTop, akRight]
+      ExplicitLeft = 310
     end
     object ParameterBox: TEdit
-      Left = 8
-      Top = 40
-      Width = 257
-      Height = 21
+      Left = 10
+      Top = 50
+      Width = 320
+      Height = 25
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
       OnKeyPress = ParameterBoxKeyPress
+      ExplicitWidth = 302
     end
     object CharSetList: TComboBox
-      Left = 8
-      Top = 88
-      Width = 257
-      Height = 21
+      Left = 10
+      Top = 110
+      Width = 320
+      Height = 25
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Style = csDropDownList
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 2
       OnChange = CharSetListChange
+      ExplicitWidth = 302
     end
     object PasswLengthBox: TEdit
-      Left = 272
-      Top = 88
-      Width = 81
-      Height = 21
+      Left = 339
+      Top = 110
+      Width = 101
+      Height = 25
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akTop, akRight]
       TabOrder = 3
       Text = '1'
+      ExplicitLeft = 321
     end
     object PasswLengthSpinBtn: TUpDown
-      Left = 353
-      Top = 88
-      Width = 16
-      Height = 21
+      Left = 440
+      Top = 110
+      Width = 20
+      Height = 25
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akTop, akRight]
       Associate = PasswLengthBox
       Min = 1
       Position = 1
       TabOrder = 4
+      ExplicitLeft = 422
     end
     object ClearParameterBtn: TButton
-      Left = 272
-      Top = 38
-      Width = 97
-      Height = 25
+      Left = 338
+      Top = 45
+      Width = 121
+      Height = 31
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akTop, akRight]
       Caption = 'Clear'
       TabOrder = 1
       OnClick = ClearParameterBtnClick
+      ExplicitLeft = 320
     end
     object PasswBox: TEdit
-      Left = 8
-      Top = 136
-      Width = 233
-      Height = 21
+      Left = 10
+      Top = 170
+      Width = 290
+      Height = 25
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akLeft, akTop, akRight]
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
-      Font.Height = -11
+      Font.Height = -14
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
       PopupMenu = PasswBoxMenu
       TabOrder = 5
+      ExplicitWidth = 272
     end
     object GenerateBtn: TButton
-      Left = 272
-      Top = 134
-      Width = 97
-      Height = 25
+      Left = 339
+      Top = 168
+      Width = 121
+      Height = 31
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akTop, akRight]
       Caption = 'Generate'
       Default = True
       Enabled = False
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
-      Font.Height = -11
+      Font.Height = -14
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 6
       OnClick = GenerateBtnClick
+      ExplicitLeft = 321
     end
     object PasswSecurityBarPanel: TPanel
-      Left = 8
-      Top = 162
-      Width = 233
-      Height = 25
+      Left = 10
+      Top = 203
+      Width = 291
+      Height = 31
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       BevelOuter = bvNone
       TabOrder = 7
       Visible = False
       object PasswSecurityBar: TImage
         Left = 1
-        Top = 2
-        Width = 233
-        Height = 17
+        Top = 3
+        Width = 292
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         ParentShowHint = False
         Picture.Data = {
           0A544A504547496D616765BB0A0000FFD8FFE000104A4649460001010100C800
@@ -477,21 +634,30 @@ object MPPasswGenForm: TMPPasswGenForm
     end
   end
   object UseAsDefaultRNGBtn: TButton
-    Left = 8
-    Top = 476
-    Width = 249
-    Height = 25
+    Left = 13
+    Top = 595
+    Width = 311
+    Height = 31
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akLeft, akBottom]
     Caption = 'Use as default random generator'
     Enabled = False
     TabOrder = 2
     OnClick = UseAsDefaultRNGBtnClick
+    ExplicitTop = 594
   end
   object CloseBtn: TButton
-    Left = 304
-    Top = 476
-    Width = 83
-    Height = 25
+    Left = 379
+    Top = 595
+    Width = 104
+    Height = 31
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akRight, akBottom]
     Cancel = True
     Caption = 'Close'
@@ -501,8 +667,8 @@ object MPPasswGenForm: TMPPasswGenForm
   object KeyExpiryTimer: TTimer
     Enabled = False
     OnTimer = KeyExpiryTimerTimer
-    Left = 328
-    Top = 96
+    Left = 259
+    Top = 79
   end
   object PasswBoxMenu: TPopupMenu
     OnPopup = PasswBoxMenuPopup

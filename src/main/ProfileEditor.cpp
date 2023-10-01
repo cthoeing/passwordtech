@@ -257,7 +257,9 @@ void __fastcall TProfileEditDlg::MoveUpBtnClick(TObject *Sender)
   if (nIdx > 0) {
     ProfileList->Items->Move(nIdx, nIdx - 1);
     std::swap(g_profileList[nIdx], g_profileList[nIdx - 1]);
-    ProfileList->ItemIndex = nIdx - 1;
+    ProfileList->ItemIndex = --nIdx;
+    MoveUpBtn->Enabled = nIdx > 0;
+    MoveDownBtn->Enabled = true;
   }
   m_blModified = true;
 }
@@ -268,7 +270,9 @@ void __fastcall TProfileEditDlg::MoveDownBtnClick(TObject *Sender)
   if (nIdx >= 0 && nIdx < ProfileList->Count - 1) {
     ProfileList->Items->Move(nIdx, nIdx + 1);
     std::swap(g_profileList[nIdx], g_profileList[nIdx + 1]);
-    ProfileList->ItemIndex = nIdx + 1;
+    ProfileList->ItemIndex = ++nIdx;
+    MoveUpBtn->Enabled = true;
+    MoveDownBtn->Enabled = nIdx < ProfileList->Count - 1;
   }
   m_blModified = true;
 }

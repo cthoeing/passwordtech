@@ -3,47 +3,59 @@ object PasswHistoryDlg: TPasswHistoryDlg
   Top = 0
   BorderIcons = [biSystemMenu, biMaximize]
   Caption = 'Password history'
-  ClientHeight = 191
-  ClientWidth = 298
+  ClientHeight = 239
+  ClientWidth = 381
   Color = clBtnFace
-  Constraints.MinHeight = 200
-  Constraints.MinWidth = 314
+  Constraints.MinHeight = 229
+  Constraints.MinWidth = 316
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -14
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   OnShow = FormShow
+  PixelsPerInch = 120
   DesignSize = (
-    298
-    191)
-  PixelsPerInch = 96
-  TextHeight = 13
+    381
+    239)
+  TextHeight = 17
   object EnableHistoryCheck: TCheckBox
-    Left = 8
-    Top = 8
-    Width = 214
-    Height = 17
+    Left = 13
+    Top = 11
+    Width = 233
+    Height = 21
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akLeft, akTop, akRight]
     Caption = 'Keep last passwords - up to:'
     TabOrder = 0
     OnClick = EnableHistoryCheckClick
+    ExplicitWidth = 227
   end
   object HistorySizeBox: TEdit
-    Left = 232
-    Top = 8
-    Width = 41
-    Height = 21
+    Left = 292
+    Top = 9
+    Width = 51
+    Height = 25
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akTop, akRight]
     TabOrder = 1
     Text = '1'
   end
   object HistorySizeSpinBtn: TUpDown
-    Left = 273
-    Top = 8
-    Width = 16
-    Height = 21
+    Left = 346
+    Top = 11
+    Width = 20
+    Height = 25
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akTop, akRight]
     Associate = HistorySizeBox
     Min = 1
@@ -51,17 +63,23 @@ object PasswHistoryDlg: TPasswHistoryDlg
     TabOrder = 2
   end
   object HistoryView: TListView
-    Left = 8
-    Top = 35
-    Width = 281
-    Height = 118
+    Left = 13
+    Top = 44
+    Width = 353
+    Height = 140
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akLeft, akTop, akRight, akBottom]
     Columns = <
       item
         Caption = 'Set Date/Time'
+        Width = 63
       end
       item
         Caption = 'Password'
+        Width = 63
       end>
     MultiSelect = True
     ReadOnly = True
@@ -69,46 +87,70 @@ object PasswHistoryDlg: TPasswHistoryDlg
     TabOrder = 3
     ViewStyle = vsReport
     OnKeyDown = HistoryViewKeyDown
+    ExplicitWidth = 347
+    ExplicitHeight = 139
   end
   object ClearBtn: TButton
-    Left = 8
-    Top = 159
-    Width = 57
-    Height = 25
+    Left = 13
+    Top = 196
+    Width = 71
+    Height = 31
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akLeft, akBottom]
     Caption = 'Clear'
     TabOrder = 4
     OnClick = ClearBtnClick
+    ExplicitTop = 195
   end
   object CopyBtn: TButton
-    Left = 71
-    Top = 159
-    Width = 58
-    Height = 25
+    Left = 88
+    Top = 196
+    Width = 71
+    Height = 31
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akLeft, akBottom]
     Caption = 'Copy'
     TabOrder = 5
     OnClick = CopyBtnClick
+    ExplicitTop = 195
   end
   object OKBtn: TButton
-    Left = 135
-    Top = 159
-    Width = 75
-    Height = 25
+    Left = 174
+    Top = 196
+    Width = 92
+    Height = 31
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akRight, akBottom]
     Caption = 'OK'
     Default = True
     ModalResult = 1
     TabOrder = 6
+    ExplicitLeft = 168
+    ExplicitTop = 195
   end
   object CancelBtn: TButton
-    Left = 216
-    Top = 159
-    Width = 75
-    Height = 25
+    Left = 274
+    Top = 196
+    Width = 92
+    Height = 31
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akRight, akBottom]
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 7
+    ExplicitLeft = 268
+    ExplicitTop = 195
   end
 end

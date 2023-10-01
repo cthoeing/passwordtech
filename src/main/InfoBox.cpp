@@ -40,7 +40,7 @@ void __fastcall TInfoBoxForm::ShowInfo(const WString& sInfo,
  TForm* pParentForm)
 {
   TextLbl->Caption = sInfo;
-  Width = TextLbl->Width + 30;
+  Width = TextLbl->Width + 50;
   if (pParentForm == nullptr)
     pParentForm = MainForm;
   Top = pParentForm->Top + (pParentForm->Height - Height) / 2;

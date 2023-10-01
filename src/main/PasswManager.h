@@ -398,6 +398,7 @@ private:	// User declarations
   void __fastcall OnTagMenuItemClick(TObject* Sender);
   void __fastcall OnExpiryMenuItemClick(TObject* Sender);
   void __fastcall WMSize(TWMSize& msg);
+  void __fastcall OnWindowPosChanging(TWMWindowPosChanging& msg);
   SecureMem<word8> __fastcall RequestPasswAndCheck(
     const WString& sRequestMsg,
     const WString& sInvalidMsg,
@@ -408,6 +409,8 @@ private:	// User declarations
   void __fastcall ApplyDbViewItemSelection(TListItem* pItem = nullptr);
   void __fastcall ApplyTagViewItemSelection(void);
   void __fastcall SetListViewSortFlag(void);
+  void __fastcall OnQueryEndSession(TWMQueryEndSession& msg);
+  void __fastcall ToggleShutdownBlocker(const WString& sMsg = WString());
 public:		// User declarations
   __fastcall TPasswMngForm(TComponent* Owner);
   __fastcall ~TPasswMngForm();
@@ -427,8 +430,14 @@ public:		// User declarations
   bool __fastcall ApplyDbSettings(const PasswDbSettings& settings);
   SecureWString __fastcall BuildTranslKeyValString(
     const PasswDbEntry::KeyValueList& keyValList);
+  void __fastcall OnEndSession(TWMEndSession& msg);
+  bool __fastcall SaveDbOnShutdown(void);
+
   BEGIN_MESSAGE_MAP
     MESSAGE_HANDLER(WM_SIZE, TWMSize, WMSize);
+    MESSAGE_HANDLER(WM_WINDOWPOSCHANGING, TWMWindowPosChanging, OnWindowPosChanging);
+    MESSAGE_HANDLER(WM_QUERYENDSESSION, TWMQueryEndSession, OnQueryEndSession);
+    MESSAGE_HANDLER(WM_ENDSESSION, TWMEndSession, OnEndSession)
   END_MESSAGE_MAP(TForm)
 };
 //---------------------------------------------------------------------------
