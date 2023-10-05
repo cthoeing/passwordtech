@@ -1,6 +1,10 @@
+# Translation template for Password Tech 3.5.2
+# Released under the GNU General Public License
+
+#. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.1\n"
+"Project-Id-Version: Password Tech 3.5.2\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: Dmitry Yerokhin <erodim@mail.ru>\n"
@@ -99,13 +103,21 @@ msgstr "Несколько паролей:"
 msgid "Generate"
 msgstr "Создать"
 
-#. Main window, button to store generated passwords in a file
-msgid "Generate password list to file"
-msgstr "Создать список паролей в файле"
+#. Main window, button to generate multiple passwords
+msgid "Generate to Clipboard"
+msgstr "Создать в буфере обмена"
+
+#. Main window, button to generate multiple passwords
+msgid "Generate to File..."
+msgstr "Создать в файле..."
 
 #. Main window, button to access advanced password options
 msgid "Advanced"
 msgstr "Ещё"
+
+#. Main window, button to access advanced password options, tooltip
+msgid "%d option(s) active"
+msgstr "Активно опций: %d"
 
 #. Main window, button to access advanced password options, dropdown menu
 msgid "Deactivate All Options"
@@ -127,7 +139,7 @@ msgstr "Нажмите кнопку \"Создать\""
 msgid "Hide/show password"
 msgstr "Показать/скрыть пароль"
 
-#. Main window, password groupbox, hint of quality bar
+#. Main window, password groupbox, tooltip of quality bar
 msgid "Hold left mouse button to drag & drop password"
 msgstr "Удерживайте левую кнопку мыши для перетаскивания пароля"
 
@@ -231,7 +243,7 @@ msgstr "Сохранить настройки"
 msgid "Help"
 msgstr "Справка"
 
-#. Main window, Help button hint
+#. Main window, Help button tooltip
 msgid "Open Manual"
 msgstr "Открыть справочное руководство"
 
@@ -279,25 +291,25 @@ msgstr "Создать и ввести пароль"
 msgid "Open user manual"
 msgstr "Руководство пользователя"
 
-#. Main window, Clear Clipboard button hint
+#. Main window, Clear Clipboard button tooltip
 msgid "Clear clipboard (text contents only)"
 msgstr ""
 "Очистить буфер обмена\n"
 "(только текстовое содержимое)"
 
-#. Main window, Encrypt/Decrypt Clipboard button hint
+#. Main window, Encrypt/Decrypt Clipboard button tooltip
 msgid "Clipboard text encryption (left-click) or decryption (right-click)"
 msgstr "Зашифровать (ЛКМ) или расшифровать (ПКМ) текст в буфере обмена"
 
-#. Main window, Profile Editor button hint
+#. Main window, Profile Editor button tooltip
 msgid "Load, create or delete profiles"
 msgstr "Загрузить, создать или удалить профили"
 
-#. Main window, MP Password Generator button hint
+#. Main window, MP Password Generator button tooltip
 msgid "Generate passwords based on a master password"
 msgstr "Создать пароли на основе мастер-пароля"
 
-#. Main window, Configuration button hint
+#. Main window, Configuration button tooltip
 msgid "Main configuration of the program"
 msgstr "Настройки программы"
 
@@ -377,15 +389,15 @@ msgstr "Изменить шрифт..."
 msgid "Select high-entropy file"
 msgstr "Выбрать файл высокой энтропии"
 
-#. Main window, Password Database button hint
+#. Main window, Password Database button tooltip
 msgid "Manage passwords in encrypted databases"
 msgstr "Управление паролями в зашифрованных базах данных"
 
-#. Main window, Reload Profile button hint
+#. Main window, Reload Profile button tooltip
 msgid "Reload profile"
 msgstr "Перезагрузить профиль"
 
-#. Main window, Add Profile button hint
+#. Main window, Add Profile button tooltip
 msgid "Add profile"
 msgstr "Добавить профиль"
 
@@ -485,7 +497,7 @@ msgstr "Не удалось найти триграмм-файл."
 msgid "Invalid trigram file."
 msgstr "Неверный триграмм-файл."
 
-#. Main window, Generated Password groupbox, label below Password box, hint shown when generated or entered password matches a common password
+#. Main window, Generated Password groupbox, label below Password box, tooltip shown when generated or entered password matches a common password
 msgid "Matches common password!"
 msgstr "Совпадает с общим паролем!"
 
@@ -587,10 +599,10 @@ msgstr "Парольная фраза: неверный диапазон дли�
 msgid ""
 "If the option \"Each character must occur\n"
 "only once\" is activated, the password length\n"
-"is limited to the size of the character set (%d)."
+"is limited to %d unique characters."
 msgstr ""
 "Если выбран параметр \"Запрет повтора символов\",\n"
-"то длина пароля ограничена размером набора символов (%d)."
+"то длина пароля ограничена %d шт. уникальных символов."
 
 #. Message shown for a certain configuration of passphrase settings
 msgid ""
@@ -698,6 +710,10 @@ msgstr "Пароль скопирован в буфер обмена."
 msgid "Copying password list ..."
 msgstr "Копирование списка паролей..."
 
+#. Generate password list to clipboard
+msgid "Password list copied to clipboard."
+msgstr "Список паролей скопирован в буфер обмена."
+
 #. Generate password list to file
 msgid ""
 "File \"%s\" successfully created.\n"
@@ -728,7 +744,7 @@ msgstr ""
 
 #. Generate password, error message, additional info when generating passwords to file
 msgid "%d passwords written to file \"%s\"."
-msgstr "Записано в файл \"%s\" паролей: %d."
+msgstr "Записано %d шт. паролей в файл \"%s\"."
 
 #. Include characters, info about character set
 msgid "%d bits / %d characters"
@@ -971,10 +987,6 @@ msgstr "Детерминированный генератор случайных
 #. Message shown after deactivating deterministic random generator
 msgid "Deterministic random generator has been DEACTIVATED."
 msgstr "Детерминированный генератор случайных чисел ОТКЛЮЧЁН."
-
-#. Message shown on command line in case profile specified in command line parameters could not be found
-msgid "ERROR: Profile \"%s\" not found."
-msgstr "ОШИБКА: Профиль \"%s\" не найден."
 
 #. Message shown on command line if profile was specified in command line parameters
 msgid "Selected profile \"%s\"."
@@ -1443,7 +1455,7 @@ msgstr ""
 msgid "Key files"
 msgstr "Ключевые файлы"
 
-#. Enter password window, Create Key File button, hint
+#. Enter password window, Create Key File button, tooltip
 msgid "Create key file"
 msgstr "Создать ключевой файл"
 
@@ -1683,11 +1695,11 @@ msgstr "Подтверд."
 msgid "Profile name:"
 msgstr "Имя профиля:"
 
-#. Profile Editor dialog, Move Up button, hint
+#. Profile Editor dialog, Move Up button, tooltip
 msgid "Move up"
 msgstr "Выше"
 
-#. Profile Editor dialog, Move Down button, hint
+#. Profile Editor dialog, Move Down button, tooltip
 msgid "Move down"
 msgstr "Ниже"
 
@@ -1856,7 +1868,7 @@ msgstr ""
 "а \"x\" - фактический описатель/заполнитель формата.\n"
 "Необязательный символ звёздочки (*) означает, что каждый\n"
 "символ должен присутствовать в последовательности только один раз.\n"
-"Пример: \"%16u\" означает \"Вставить в пароль 16 случайных прописных букв\"."
+"Пример: \"16u\" означает \"Вставить в пароль 16 случайных прописных букв\"."
 
 #. Quick help for "Format password" in main window
 msgid "List of placeholders with optional argument \"N\":"
@@ -2291,23 +2303,23 @@ msgstr "Сбросить список шрифтов"
 msgid "Change Password Font..."
 msgstr "Изменить шрифт пароля..."
 
-#. Password Manager window, Edit panel, Arrow Up button, hint
+#. Password Manager window, Edit panel, Arrow Up button, tooltip
 msgid "Previous entry"
 msgstr "Предыдущая запись"
 
-#. Password Manager window, Edit panel, Arrow Down button, hint
+#. Password Manager window, Edit panel, Arrow Down button, tooltip
 msgid "Next entry"
 msgstr "Следующая запись"
 
-#. Password Manager window, Edit panel, Accept button, hint
+#. Password Manager window, Edit panel, Accept button, tooltip
 msgid "Accept changes"
 msgstr "Принять изменения"
 
-#. Password Manager window, Edit panel, Undo button, hint
+#. Password Manager window, Edit panel, Undo button, tooltip
 msgid "Undo changes"
 msgstr "Отменить изменения"
 
-#. Password Manager window, toolbar, Search box, text hint
+#. Password Manager window, toolbar, Search box, text tooltip
 msgid "Search..."
 msgstr "Поиск..."
 
@@ -2315,7 +2327,7 @@ msgstr "Поиск..."
 msgid "Clear search"
 msgstr "Очистить поиск"
 
-#. Password Manager window, toolbar, Search button, hint
+#. Password Manager window, toolbar, Search button, tooltip
 msgid "Perform search"
 msgstr "Выполнить поиск"
 
@@ -2331,11 +2343,11 @@ msgstr "Нечёткий поиск"
 msgid "Select fields..."
 msgstr "Выберите поля..."
 
-#. Password Manager window, toolbar, Lock/unlock button, hint
+#. Password Manager window, toolbar, Lock/unlock button, tooltip
 msgid "Lock/unlock database"
 msgstr "Заблокировать/разблокировать базу данных"
 
-#. Password Manager window, Edit panel, Toggle password button, hint
+#. Password Manager window, Edit panel, Toggle password button, tooltip
 msgid "Left-click: Hide/show password, right-click: Generate password"
 msgstr "ЛКМ: скрыть/показать пароль, ПКМ: создать пароль"
 
@@ -2548,7 +2560,7 @@ msgstr "Введите мастер-пароль снова"
 msgid "Master password is invalid."
 msgstr "Неверный мастер-пароль."
 
-#. Password Manager window, Edit panel, Key-value list button, hint
+#. Password Manager window, Edit panel, Key-value list button, tooltip
 msgid "Edit key-value list"
 msgstr "Изменить список ключей и значений"
 
@@ -2564,7 +2576,7 @@ msgstr "Срок действия пароля"
 msgid "Expires:"
 msgstr "Истекает:"
 
-#. Password Manager window, Edit panel, Expiry button, hint
+#. Password Manager window, Edit panel, Expiry button, tooltip
 msgid "Change expiry date"
 msgstr "Изменить срок действия"
 
@@ -2716,7 +2728,7 @@ msgstr ""
 "Создавать пароли для новых записей с помощью форматирующей "
 "последовательности:"
 
-#. Password Manager window, Database Settings dialog, Generate Password button, hint
+#. Password Manager window, Database Settings dialog, Generate Password button, tooltip
 msgid "Generate test password using format sequence"
 msgstr "Создать тестовый пароль с помощью форматирующей последовательности"
 
@@ -2732,7 +2744,7 @@ msgstr "%s с %d-бит ключом"
 msgid "Number of key derivation rounds:"
 msgstr "Раундов получения ключа:"
 
-#. Password Manager window, Database Settings dialog, Calculate KDF Rounds button, hint
+#. Password Manager window, Database Settings dialog, Calculate KDF Rounds button, tooltip
 msgid "Calculate number of rounds for a 1 second delay"
 msgstr "Вычислить число раундов для 1-секундной задержки"
 
@@ -2812,7 +2824,7 @@ msgstr "Подтвердите пароль"
 msgid "Password quality estimation is disabled"
 msgstr "Оценка отключена"
 
-#. Password Manager window, Password Quality button, hint
+#. Password Manager window, Password Quality button, tooltip
 msgid "Estimate password quality"
 msgstr "Оценить качество пароля"
 
@@ -2835,6 +2847,14 @@ msgstr "Хранить последние пароли до:"
 #. Password Manager window, Password History dialog, list view, column
 msgid "Set Date/Time"
 msgstr "Установить дату/время"
+
+#. Password Manager window, shutdown blocker message
+msgid "Password database entry is being edited."
+msgstr "Запись в базе паролей редактируется."
+
+#. Password Manager window, shutdown blocker message
+msgid "Password database contains unsaved changes."
+msgstr "База паролей содержит несохранённые изменения."
 
 #~ msgid "Left-click: Perform search, right-click: Search options"
 #~ msgstr "ЛКМ: найти, ПКМ: параметры поиска"
