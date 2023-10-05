@@ -133,6 +133,7 @@ public:		// User declarations
   __fastcall TMPPasswGenForm(TComponent* Owner);
   __fastcall ~TMPPasswGenForm();
   void __fastcall SaveConfig(void);
+  void __fastcall OnEndSession(void);
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TMPPasswGenForm *MPPasswGenForm;

@@ -3,37 +3,40 @@ object PasswMngDbPropDlg: TPasswMngDbPropDlg
   Top = 0
   BorderIcons = [biSystemMenu, biMaximize]
   Caption = 'Properties'
-  ClientHeight = 305
-  ClientWidth = 404
+  ClientHeight = 381
+  ClientWidth = 513
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -14
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   OnClose = FormClose
   OnShow = FormShow
+  PixelsPerInch = 120
   DesignSize = (
-    404
-    305)
-  PixelsPerInch = 96
-  TextHeight = 13
+    513
+    381)
+  TextHeight = 17
   object PropView: TListView
     Left = 0
     Top = 0
-    Width = 404
-    Height = 262
+    Width = 513
+    Height = 328
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     Anchors = [akLeft, akTop, akRight, akBottom]
     Columns = <
       item
         Caption = 'Property'
-        Width = 150
+        Width = 188
       end
       item
         Caption = 'Value'
-        Width = 240
+        Width = 300
       end>
     Groups = <
       item
@@ -75,12 +78,18 @@ object PasswMngDbPropDlg: TPasswMngDbPropDlg
     RowSelect = True
     TabOrder = 0
     ViewStyle = vsReport
+    ExplicitWidth = 507
+    ExplicitHeight = 327
   end
   object CloseBtn: TButton
-    Left = 184
-    Top = 272
-    Width = 75
-    Height = 25
+    Left = 210
+    Top = 340
+    Width = 94
+    Height = 31
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akLeft, akBottom]
     Caption = 'Close'
     ModalResult = 1

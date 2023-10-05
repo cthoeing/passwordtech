@@ -156,64 +156,6 @@ public:
     //Speck128
   };
 
-private:
-  bool m_blLockPhysMem;
-  word8* m_pPoolPage;
-  word8* m_pPool;
-  word8* m_pAddBuf;
-  word8* m_pCipherKey;
-  word8* m_pSecCtr;
-  word8* m_pGetBuf;
-  word8* m_pTempBuf;
-  word8* m_pHashCtx;
-  word8* m_pCipherCtx; // variable, supports different ciphers
-  CipherType m_cipherType;
-  std::unique_ptr<RandPoolCipher::CtrBasedCipher> m_pCipher;
-  word32 m_lUnusedSize;
-  word32 m_lAddBufPos;
-  word32 m_lGetBufPos;
-  word64 m_qNumOfBlocks;
-  bool m_blKeySet;
-  RandomGenerator& m_fastRandGen;
-
-  // allocate pool page in virtual address space
-  // <- pointer to the page, NULL if allocation failed
-  word8* AllocPoolPage(void);
-
-  // destroy & free the pool page
-  void FreePoolPage(void);
-
-  // set pointers m_pPool, m_pAddBuf, ... to the corresponding
-  // positions in the pool page
-  void SetPoolPointers(void);
-
-  // rehash pool with the entropy buffer
-  void UpdatePool(void);
-
-  // set the AES key using the pool contents
-  void SetKey(void);
-
-  // create a new secure 128-bit IV/counter by encrypting two 64-bit timer values
-  // -> where to store the counter (16 bytes)
-  void GetNewCounterOrIV(word8* pCounter);
-
-  // change key & counter
-  void GeneratorGate(void);
-
-  // fill get buffer with encrypted (i.e., pseudorandom) data
-  // -> buffer to fill; if NULL, fill get buffer
-  // -> number of bytes
-  word32 FillBuf(word8* pBuf = NULL,
-    word32 lNumOfBytes = 0);
-
-  // fill buffer with random data
-  void ClearPoolBuf(void* pBuf, word32 lSize)
-  {
-    m_fastRandGen.GetData(pBuf, lSize);
-  }
-
-public:
-
   enum {
     POOL_SIZE   = 32,          // pool size (=hash length and cipher key length)
     MAX_ENTROPY = POOL_SIZE*8, // max. entropy the RNG can provide
@@ -222,10 +164,12 @@ public:
   // default constructor
   // -> encryption algorithm for generating random data
   // -> fast (not necessarily cryptographically secure) PRNG for wiping memory etc.
-  RandomPool(CipherType cipher, RandomGenerator& fastRandGen, bool blLockPhysMem);
+  RandomPool(CipherType cipher, RandomGenerator* pFastRandGen = nullptr)
+    : RandomPool(cipher, pFastRandGen, false)
+  {}
 
   // create new random pool from another instance
-  RandomPool(RandomPool& src, RandomGenerator& fastRandGen, bool blLockPhysMem);
+  RandomPool(RandomPool& src, RandomGenerator* pFastRandGen = nullptr);
 
   // destructor
   ~RandomPool();
@@ -304,6 +248,72 @@ public:
   // -> name of the seed file
   // <- 'true': success, 'false': I/O error
   bool ReadSeedFile(const WString& sFileName);
+
+private:
+  bool m_blLockPhysMem;
+  word8* m_pPoolPage;
+  word8* m_pPool;
+  word8* m_pAddBuf;
+  word8* m_pCipherKey;
+  word8* m_pSecCtr;
+  word8* m_pGetBuf;
+  word8* m_pTempBuf;
+  word8* m_pHashCtx;
+  word8* m_pCipherCtx; // variable, supports different ciphers
+  CipherType m_cipherType;
+  std::unique_ptr<RandPoolCipher::CtrBasedCipher> m_pCipher;
+  word32 m_lUnusedSize;
+  word32 m_lAddBufPos;
+  word32 m_lGetBufPos;
+  word64 m_qNumOfBlocks;
+  bool m_blKeySet;
+  RandomGenerator* m_pFastRandGen;
+
+  // private constructor, allows locking pool into physical memory
+  // (only used by singleton instance)
+  RandomPool(CipherType cipher, RandomGenerator* pFastRandGen, bool blLockPhysMem);
+
+  // allocate pool page in virtual address space
+  // <- pointer to the page, NULL if allocation failed
+  word8* AllocPoolPage(void);
+
+  // destroy & free the pool page
+  void FreePoolPage(void);
+
+  // set pointers m_pPool, m_pAddBuf, ... to the corresponding
+  // positions in the pool page
+  void SetPoolPointers(void);
+
+  // rehash pool with the entropy buffer
+  void UpdatePool(void);
+
+  // set the AES key using the pool contents
+  void SetKey(void);
+
+  // create a new secure 128-bit IV/counter by encrypting two 64-bit timer values
+  // -> where to store the counter (16 bytes)
+  void GetNewCounterOrIV(word8* pCounter);
+
+  // change key & counter
+  void GeneratorGate(void);
+
+  // fill buffer with encrypted (i.e., pseudorandom) data
+  // -> buffer to fill
+  // -> number of bytes
+  word32 FillBuf(word8* pBuf,
+    word32 lNumOfBytes);
+
+  // fill get buffer with pseudorandom data
+  void FillGetBuf(void);
+
+  // fill buffer with random data
+  void ClearPoolBuf(void* pBuf, word32 lSize)
+  {
+    if (m_pFastRandGen)
+      m_pFastRandGen->GetData(pBuf, lSize);
+    else
+      memzero(pBuf, lSize);
+  }
 };
 
 //extern RandomPool* g_pRandPool;

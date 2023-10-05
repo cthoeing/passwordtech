@@ -56,8 +56,9 @@ static word32 strihash(const T* pStr)
   word32 lHash = 0;
   int ch;
 
-  while ((ch = *pStr++) != '\0')
+  while ((ch = *pStr++) != '\0') {
     lHash = toupper(ch) + (lHash << 6) + (lHash << 16) - lHash;
+  }
 
   return lHash;
 }
@@ -76,6 +77,24 @@ std::wstring trimStr(const std::wstring& s)
   auto pos2 = s.find_last_not_of(WHITESPACE_CHARS);
 
   return s.substr(pos1, pos2 - pos1 + 1);
+}
+
+std::wstring extractFormatSpec(const std::wstring& s)
+{
+  static const std::wregex re(L"%[-+ #0]{0,5}(?:\\d{1,4}|\\*)?(?:\\.\\d{1,2}|\\.\\*)?"
+    "(h|hh|l|ll|j|z|t|L)?([diuoxXfFeEgGaAcspn])");
+  std::wsregex_iterator it(s.begin(), s.end(), re), endIt;
+  std::wstring sFormatSpec;
+
+  for (; it != endIt; it++) {
+    auto match = *it;
+    const int n = match.size();
+    for (int i = 1; i < n; i++) {
+      sFormatSpec += match[i].str();
+    }
+  }
+
+  return sFormatSpec;
 }
 
 //---------------------------------------------------------------------------
@@ -108,6 +127,12 @@ LanguageSupport::LanguageSupport(const WString& sFileName,
       if (sMsgId.empty())
          throw ELanguageError(Format("Empty field \"msgid\" (parsing line %d)",
            ARRAYOFCONST((nLine))));
+
+      if (extractFormatSpec(sMsgStr) != extractFormatSpec(sMsgId)) {
+        throw ELanguageError(Format("Incompatible format specifiers "
+          "(parsing line %d):\nOriginal: \"%s\"\nTranslation: \"%s\"",
+          ARRAYOFCONST((nLine, WString(sMsgId.c_str()), WString(sMsgStr.c_str())))));
+      }
 
       if (!sMsgCtxt.empty())
         sMsgId += std::wstring(L"||") + sMsgCtxt;
@@ -175,10 +200,10 @@ LanguageSupport::LanguageSupport(const WString& sFileName,
             throw ELanguageError("Missing \"Project-Id-Version\" information");
 
           std::wstring sIdVersion = it->second;
-          re = std::wregex(L"(.*)(\\d+\\.\\d+\\.\\d+)");
+          re = std::wregex(L"(\\d+\\.\\d+\\.\\d+)");
           std::wsmatch m;
-          if (std::regex_search(sIdVersion, m, re) && m.size() >= 3)
-            m_sLanguageVersion = WString(m[2].str().c_str());
+          if (std::regex_search(sIdVersion, m, re) && m.size() >= 2)
+            m_sLanguageVersion = WString(m[1].str().c_str());
           else
             throw ELanguageError("Missing or invalid language version number");
 
@@ -402,7 +427,7 @@ LanguageSupport::LanguageSupport(const WString& sFileName,
   if (!blLoadHeaderOnly && m_transl.empty())
     throw ELanguageError("Language file does not contain any valid entries");
 
-  m_lastEntry = m_transl.end();
+  //m_lastEntry = m_transl.end();
 }
 //---------------------------------------------------------------------------
 void LanguageSupport::SaveToPOFileFormat(const WString& sFileName,
@@ -500,83 +525,97 @@ void LanguageSupport::SaveToPOFileFormat(const WString& sFileName,
   }
 }
 //---------------------------------------------------------------------------
-bool LanguageSupport::FindTransl(const AnsiString& asStr)
+WString LanguageSupport::Translate(const AnsiString& asStr) const
 {
   if (!asStr.IsEmpty()) {
     word32 lHash = strihash(asStr.c_str());
 
-    if ((m_lastEntry = m_transl.find(lHash)) != m_transl.end())
-      return true;
+    auto it = m_transl.find(lHash);
+    if (it != m_transl.end())
+      return WString(it->second.c_str());
   }
 
-  return false;
+  return asStr;
 }
 //---------------------------------------------------------------------------
-bool LanguageSupport::FindTransl(const WString& sStr)
+WString LanguageSupport::Translate(const WString& sStr) const
 {
   if (!sStr.IsEmpty()) {
     word32 lHash = strihash(sStr.c_str());
 
-    if ((m_lastEntry = m_transl.find(lHash)) != m_transl.end())
-      return true;
+    auto it = m_transl.find(lHash);
+    if (it != m_transl.end())
+      return WString(it->second.c_str());
   }
 
-  return false;
+  return sStr;
 }
 //---------------------------------------------------------------------------
-WString LanguageSupport::Translate(const AnsiString& asStr)
+WString LanguageSupport::Translate(word32 lHash) const
 {
-  // not found? return the original string
-  if (!FindTransl(asStr))
-    return asStr;
-  return WString(m_lastEntry->second.c_str());
-}
-//---------------------------------------------------------------------------
-WString LanguageSupport::Translate(const WString& sStr)
-{
-  if (!FindTransl(sStr))
-    return sStr;
-  return WString(m_lastEntry->second.c_str());
+  auto it = m_transl.find(lHash);
+  return (it != m_transl.end()) ? WString(it->second.c_str()) : WString();
 }
 //---------------------------------------------------------------------------
 WString LanguageSupport::TranslateDef(const AnsiString& asStr,
-  const AnsiString& asDefault)
+  const AnsiString& asDefault) const
 {
-  // not found? return the default string
-  if (!FindTransl(asStr))
-    return asDefault;
-  return WString(m_lastEntry->second.c_str());
+  if (asStr.IsEmpty())
+    return WString();
+
+  word32 lHash = strihash(asStr.c_str());
+
+  auto it = m_transl.find(lHash);
+  return (it != m_transl.end()) ? WString(it->second.c_str()) :
+    WString(asDefault);
 }
 //---------------------------------------------------------------------------
-void LanguageSupport::LastTranslError(const AnsiString& asErrMsg,
-  bool blRemoveEntry)
-{
-  if (m_lastEntry != m_transl.end()) {
-    Application->MessageBox(
-      FormatW("An error has occurred while trying to process\nthe translated "
-        "message\n\n\"%s\":\n\n%s.", m_lastEntry->second.c_str(),
-        asErrMsg.c_str()).c_str(),
-      L"Error", MB_ICONERROR);
-    if (blRemoveEntry) {
-      m_transl.erase(m_lastEntry);
-      m_lastEntry = m_transl.end();
-    }
-  }
-}
-//---------------------------------------------------------------------------
-WString TRLFormat(const AnsiString asFormat, ...)
+std::vector<word32> s_faultyTransl;
+
+WString TRLFormat(const WString sFormat, ...)
 {
   va_list argptr;
-  va_start(argptr, asFormat);
+  va_start(argptr, sFormat);
 
-  WString sResult;
-  try {
-    sResult = FormatW_AL(TRL(asFormat), argptr);
+  WString sTransl, sResult;
+  word32 lHash;
+
+  if (g_pLangSupp) {
+    lHash = strihash(sFormat.c_str());
+    auto it = std::find(s_faultyTransl.begin(), s_faultyTransl.end(), lHash);
+    if (it == s_faultyTransl.end()) {
+      sTransl = g_pLangSupp->Translate(lHash);
+    }
   }
-  catch (...)
+
+  try {
+    sResult = FormatW_ArgList(!sTransl.IsEmpty() ? sTransl : sFormat, argptr);
+  }
+  catch (Exception& e)
   {
-    g_pLangSupp->LastTranslError("Error while formatting translated string");
-    sResult = FormatW(asFormat, argptr);
+    va_end(argptr);
+
+    bool blRethrow = true;
+
+    if (!sTransl.IsEmpty()) {
+      s_faultyTransl.push_back(lHash);
+
+      WString sMsg = "Error while formatting translated string\n\"" + sTransl +
+        "\":\n" + e.Message + ".";
+      Application->MessageBox(sMsg.c_str(), L"Error", MB_ICONERROR);
+
+      va_start(argptr, sFormat);
+      try {
+        sResult = FormatW_ArgList(sFormat, argptr);
+        blRethrow = false;
+      }
+      catch (...) {
+		  va_end(argptr);
+      }
+    }
+
+    if (blRethrow)
+      throw;
   }
 
   va_end(argptr);
@@ -587,16 +626,16 @@ WString TRLFormat(const AnsiString asFormat, ...)
 
 WString TRL(const AnsiString& asStr)
 {
-  if (!g_pLangSupp)
-    return asStr;
-  return g_pLangSupp->Translate(asStr);
+  if (g_pLangSupp)
+    return g_pLangSupp->Translate(asStr);
+  return asStr;
 }
 
 WString TRL(const WString& sStr)
 {
-  if (!g_pLangSupp)
-    return sStr;
-  return g_pLangSupp->Translate(sStr);
+  if (g_pLangSupp)
+    return g_pLangSupp->Translate(sStr);
+  return sStr;
 }
 
 WString TRL(const char* pszStr, const char* pszContext)
@@ -617,16 +656,16 @@ WString TRL(const char* pszStr, const char* pszContext)
 
 WString TRL(const wchar_t* pwszStr)
 {
-  if (!g_pLangSupp)
-    return WString(pwszStr);
-  return g_pLangSupp->Translate(WString(pwszStr));
+  if (g_pLangSupp)
+    return g_pLangSupp->Translate(WString(pwszStr));
+  return WString(pwszStr);
 }
 
 WString TRLDEF(const AnsiString& asStr, const AnsiString& asDefault)
 {
-  if (!g_pLangSupp)
-    return asDefault;
-  return g_pLangSupp->TranslateDef(asStr, asDefault);
+  if (g_pLangSupp)
+    return g_pLangSupp->TranslateDef(asStr, asDefault);
+  return asDefault;
 }
 
 void TRLS(WString& sStr)

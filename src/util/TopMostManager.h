@@ -21,13 +21,13 @@
 #ifndef TopMostManagerH
 #define TopMostManagerH
 //---------------------------------------------------------------------------
-#include <unordered_map>
+#include <map>
 #include <Forms.hpp>
 
 class TopMostManager
 {
 private:
-  std::unordered_map<TForm*,bool> m_formStates;
+  std::map<TForm*,bool> m_formStates;
   bool m_blAlwaysOnTop;
   //bool m_blMainFormOnTopNorm;
 

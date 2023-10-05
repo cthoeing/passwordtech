@@ -140,7 +140,7 @@ void __fastcall TPasswDbSettingsDlg::FormShow(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TPasswDbSettingsDlg::OKBtnClick(TObject *Sender)
 {
-  word32 lKdfRounds = StrToUInt(NumKdfRoundsBox->Text);
+  word32 lKdfRounds = StrToUIntDef(NumKdfRoundsBox->Text, 0);
   if (lKdfRounds == 0) {
     MsgBox(TRL("Invalid number of key derivation rounds."), MB_ICONERROR);
     return;

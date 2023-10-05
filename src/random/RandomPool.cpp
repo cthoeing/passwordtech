@@ -280,26 +280,25 @@ public:
 using namespace RandPoolCipher;
 
 //---------------------------------------------------------------------------
-RandomPool::RandomPool(CipherType cipher, RandomGenerator& fastRandGen,
+RandomPool::RandomPool(CipherType cipher, RandomGenerator* pFastRandGen,
   bool blLockPhysMem)
   : m_lAddBufPos(0), m_lGetBufPos(0), m_blKeySet(false),
-    m_fastRandGen(fastRandGen), m_blLockPhysMem(blLockPhysMem)
+    m_pFastRandGen(pFastRandGen), m_blLockPhysMem(blLockPhysMem)
 {
   m_pPoolPage = AllocPoolPage();
   if (m_pPoolPage == nullptr)
     OutOfMemoryError();
 
   // hide the pool contents *somewhere* within the memory page
-  m_lUnusedSize = m_blLockPhysMem ? UNUSED_SIZE_MIN + (m_fastRandGen.GetWord32() %
-    (UNUSED_SIZE_MAX - UNUSED_SIZE_MIN + 1)) : 0;
+  m_lUnusedSize = (m_blLockPhysMem && m_pFastRandGen) ? UNUSED_SIZE_MIN +
+    (m_pFastRandGen->GetWord32() % (UNUSED_SIZE_MAX - UNUSED_SIZE_MIN + 1)) : 0;
   SetPoolPointers();
 
   ChangeCipher(cipher);
 }
 //---------------------------------------------------------------------------
-RandomPool::RandomPool(RandomPool& src, RandomGenerator& fastRandGen,
-  bool blLockPhysMem)
-  : RandomPool(src.m_cipherType, fastRandGen, blLockPhysMem)
+RandomPool::RandomPool(RandomPool& src, RandomGenerator* pFastRandGen)
+  : RandomPool(src.m_cipherType, pFastRandGen, false)
 {
   SecureMem<word8> entropy(POOL_SIZE);
   src.GetData(entropy, POOL_SIZE);
@@ -324,7 +323,7 @@ RandomPool::~RandomPool()
 //---------------------------------------------------------------------------
 RandomPool& RandomPool::GetInstance(void)
 {
-  static RandomPool inst(CipherType::ChaCha20, g_fastRandGen, true);
+  static RandomPool inst(CipherType::ChaCha20, &g_fastRandGen, true);
   return inst;
 }
 //---------------------------------------------------------------------------
@@ -564,13 +563,6 @@ void RandomPool::GeneratorGate(void)
 word32 RandomPool::FillBuf(word8* pBuf,
   word32 lNumOfBytes)
 {
-  bool blGetBuf = pBuf == nullptr;
-
-  if (blGetBuf) {
-    pBuf = m_pGetBuf;
-    lNumOfBytes = GETBUF_SIZE;
-  }
-
   // fill the buffer by encrypting multiple counter values
   const word32 lNumFullBlocks = lNumOfBytes / m_pCipher->GetBlockSize();
 
@@ -591,12 +583,14 @@ word32 RandomPool::FillBuf(word8* pBuf,
       GeneratorGate();
   }
 
-  if (blGetBuf) {
-    GeneratorGate();
-    m_lGetBufPos = 0;
-  }
-
   return lNumFullBlocks * m_pCipher->GetBlockSize();
+}
+//---------------------------------------------------------------------------
+void RandomPool::FillGetBuf(void)
+{
+  FillBuf(m_pGetBuf, GETBUF_SIZE);
+  GeneratorGate();
+  m_lGetBufPos = 0;
 }
 //---------------------------------------------------------------------------
 void RandomPool::AddData(const void* pBuf,
@@ -644,7 +638,7 @@ void RandomPool::GetData(void* pBuf,
       }
 
       // refill get buffer
-      FillBuf();
+      FillGetBuf();
     }
 
     word32 lToCopy = std::min(lNumOfBytes, GETBUF_SIZE - m_lGetBufPos);
@@ -664,7 +658,7 @@ word8 RandomPool::GetByte(void)
     SetKey();
 
   if (m_lGetBufPos == GETBUF_SIZE)
-    FillBuf();
+    FillGetBuf();
 
   return m_pGetBuf[m_lGetBufPos++];
 }

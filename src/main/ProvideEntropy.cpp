@@ -82,7 +82,7 @@ void __fastcall TProvideEntropyDlg::OKBtnClick(TObject *Sender)
   SecureAnsiString sTextUtf8 = WStringToUtf8(sText.c_str());
 
   if (!sTextUtf8.IsEmpty()) {
-    sText.Empty();
+    sText.Clear();
 
     word32 lEntBits = EntropyManager::GetInstance().AddData(sTextUtf8,
         sTextUtf8.StrLen(), 0.437, 3.5);

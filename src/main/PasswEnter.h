@@ -36,6 +36,8 @@
 #include "SecureMem.h"
 #include "UnicodeUtil.h"
 #include <Vcl.Dialogs.hpp>
+#include <map>
+#include <array>
 
 const int
 PASSWENTER_FLAG_ENCRYPT               = 0x0001,
@@ -79,14 +81,16 @@ private:
   int m_nFlags;
   int m_nExpiryCountdown;
   SecureWString m_sEncryptedPassw;
-  TForm* m_pParentForm;
+  //TForm* m_pParentForm;
+  std::map<TForm*,std::array<int,4>> m_formDim;
 
 public:
   virtual __fastcall TPasswEnterDlg(TComponent* AOwner);
   virtual __fastcall ~TPasswEnterDlg();
   int __fastcall Execute(int nFlags,
     const WString& sTitle = "",
-    TForm* pParentForm = NULL);
+    TForm* pParentForm = nullptr,
+    bool blUpdateScreenPos = true);
   SecureWString __fastcall GetPassw(int nPassw = 0);
   SecureMem<word8> __fastcall GetPasswBinary(void);
   WString __fastcall GetKeyFileName(void);
@@ -94,6 +98,7 @@ public:
   void __fastcall SaveConfig(void);
   void __fastcall Clear(void);
   void __fastcall ClearPasswCache(void);
+  void __fastcall OnEndSession(void);
   int __fastcall GetPasswCacheExpiryCountdown(void)
   {
     return m_sEncryptedPassw.IsEmpty() ? -1 :

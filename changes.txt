@@ -3,7 +3,41 @@
                 Copyright (c) 2002-2023 by Christian Thöing
 
 
-Version 3.5.1
+Version 3.5.2
+
+NEW FEATURES:
+
+- Generate multiple passwords: "Generate" button redesigned; arrow button opens
+  context menu that allows generating passwords to the clipboard (new) as well
+  as generating passwords to a file
+
+CHANGES & IMPROVEMENTS:
+
+- Appropriate reaction to Windows "end session" event (e.g., system shutdown):
+  All tasks are canceled, configuration settings are saved, database is closed
+  gracefully if possible; otherwise, shutdown is blocked with a corresponding
+  message (e.g., if a database entry is being edited and the changes haven't
+  been confirmed yet)
+- "Advanced Password Option" button in main window displays number of enabled
+  (boolean) options and extended tooltip information
+- Clear clipboard automatically: Clipboard is only cleared if the SHA-256 hash
+  of its contents match the hash of the data that was copied originally
+- External Windows dialogs (e.g., file open/save dialogs) have the same style
+  as the selected user interface style (Configuration | General)
+- PassCube: Database settings: Changing "Number of key derivation rounds" can
+  be canceled in case the parameter has accidentally been set too large
+  
+FIXES:
+
+- "Clear password box automatically" settings not saved to configuration file
+- PassCube: Database not locked when minimizing window
+- PassCube: Wrong position of "Enter password" dialog when restoring window
+  and unlocking database
+- PassCube: "Save automatically" settings not saved to configuration file
+
+----------
+
+Version 3.5.1 (2023-08-01)
 
 NEW FEATURES:
 

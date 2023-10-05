@@ -184,21 +184,22 @@ void ClearEditBoxTextBuf(TCustomEdit* pEdit,
   //  nTextLen = INT_MAX;
 
   try {
-    std::vector<wchar_t> randStrBuf(nTextLen + 1);
+    //std::vector<wchar_t> randStrBuf(nTextLen + 1);
+    auto randStrBuf = std::make_unique<wchar_t[]>(nTextLen + 1);
     randStrBuf[nTextLen] = '\0';
 
     const int BUF_SIZE = 64;
-    word8 rand[BUF_SIZE];
+    word8 randBuf[BUF_SIZE];
     int nRandPos = BUF_SIZE;
-    for (auto& ch : randStrBuf) {
+    for (int i = 0; i < nTextLen; i++) {
       if (nRandPos == BUF_SIZE) {
-        g_fastRandGen.GetData(rand, BUF_SIZE);
+        g_fastRandGen.GetData(randBuf, BUF_SIZE);
         nRandPos = 0;
       }
-      ch = CHARTABLE128[rand[nRandPos++] & 127];
+      randStrBuf[i] = CHARTABLE128[randBuf[nRandPos++] & 127];
     }
 
-    SetEditBoxTextBuf(pEdit, randStrBuf.data());
+    SetEditBoxTextBuf(pEdit, randStrBuf.get());
   }
   catch (...)
   {
@@ -207,78 +208,85 @@ void ClearEditBoxTextBuf(TCustomEdit* pEdit,
   pEdit->Clear();
 }
 //---------------------------------------------------------------------------
-bool GetClipboardTextBuf(SecureWString* psDestW,
-  SecureAnsiString* psDestA)
+SecureWString GetClipboardTextBuf(void)
 {
   TClipboard* pClipboard = Clipboard();
+  SecureWString sText;
 
   try {
     pClipboard->Open();
-    if (psDestW != nullptr && pClipboard->HasFormat(CF_UNICODETEXT))
-    {
+    if (pClipboard->HasFormat(CF_UNICODETEXT)) {
       HGLOBAL hText = (HGLOBAL) pClipboard->GetAsHandle(CF_UNICODETEXT);
-      if (hText != nullptr)
-      {
-        wchar_t* pwszText = reinterpret_cast<wchar_t*>(GlobalLock(hText));
-        if (pwszText != nullptr)
-        {
-          word32 lTextLen = wcslen(pwszText);
-          psDestW->Assign(pwszText, lTextLen + 1);
-
-          GlobalUnlock(hText);
-        }
-      }
-    }
-    else if (pClipboard->HasFormat(CF_TEXT))
-    {
-      HGLOBAL hText = (HGLOBAL) pClipboard->GetAsHandle(CF_TEXT);
-      if (hText != nullptr)
-      {
-        char* pszText = reinterpret_cast<char*>(GlobalLock(hText));
-        if (pszText != nullptr)
-        {
-          if (psDestW != nullptr) {
-            word32 lBufLen = MultiByteToWideChar(CP_ACP, 0, pszText, -1, nullptr, 0);
-            psDestW->New(lBufLen);
-            MultiByteToWideChar(CP_ACP, 0, pszText, -1, *psDestW, lBufLen);
-            //lTextLen = lBufLen - 1; // excluding '\0'
-          }
-          else {
-            word32 lTextLen = strlen(pszText);
-            psDestA->Assign(pszText, lTextLen + 1);
-          }
+      if (hText != nullptr) {
+        const wchar_t* pwszText = reinterpret_cast<const wchar_t*>(
+          GlobalLock(hText));
+        if (pwszText != nullptr) {
+          //word32 lTextLen = wcslen(pwszText);
+          sText.AssignStr(pwszText);
 
           GlobalUnlock(hText);
         }
       }
     }
   }
-  catch (...) {
+  __finally {
     pClipboard->Close();
-    return false;
   }
 
-  pClipboard->Close();
-  return true;
+  return sText;
 }
 //---------------------------------------------------------------------------
-void SetClipboardTextBuf(const wchar_t* pwszSrcW,
-  const char* pszSrcA)
+SecureAnsiString GetClipboardTextBufAnsi(void)
+{
+  TClipboard* pClipboard = Clipboard();
+  SecureAnsiString asText;
+
+  try {
+    if (pClipboard->HasFormat(CF_TEXT)) {
+      HGLOBAL hText = (HGLOBAL) pClipboard->GetAsHandle(CF_TEXT);
+      if (hText != nullptr) {
+        const char* pszText = reinterpret_cast<const char*>(GlobalLock(hText));
+        if (pszText != nullptr) {
+          //word32 lTextLen = strlen(pszText);
+          asText.AssignStr(pszText);
+
+          GlobalUnlock(hText);
+        }
+      }
+    }
+  }
+  __finally {
+    pClipboard->Close();
+  }
+
+  return asText;
+}
+//---------------------------------------------------------------------------
+void SetClipboardTextBuf(const wchar_t* pwszSrc)
+{
+  TClipboard* pClipboard = Clipboard();
+
+  try {
+    pClipboard->Open();
+    pClipboard->SetTextBuf(const_cast<wchar_t*>(pwszSrc));
+  }
+  __finally {
+    pClipboard->Close();
+  }
+}
+//---------------------------------------------------------------------------
+void SetClipboardTextBufAnsi(const char* pszSrc)
 {
   TClipboard* pClipboard = Clipboard();
 
   try {
     pClipboard->Open();
 
-    if (pwszSrcW != nullptr)
-      pClipboard->SetTextBuf(const_cast<wchar_t*>(pwszSrcW));
-    else {
-      word32 lLen = MultiByteToWideChar(CP_ACP, 0, pszSrcA, -1, nullptr, 0);
-      if (lLen > 0) {
-        SecureWString wideSrc(lLen);
-        MultiByteToWideChar(CP_ACP, 0, pszSrcA, -1, wideSrc, lLen);
-        pClipboard->SetTextBuf(wideSrc);
-      }
+    word32 lLen = MultiByteToWideChar(CP_ACP, 0, pszSrc, -1, nullptr, 0);
+    if (lLen > 0) {
+      SecureWString wideSrc(lLen);
+      MultiByteToWideChar(CP_ACP, 0, pszSrc, -1, wideSrc, lLen);
+      pClipboard->SetTextBuf(wideSrc);
     }
   }
   __finally {

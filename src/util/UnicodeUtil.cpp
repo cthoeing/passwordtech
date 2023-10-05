@@ -28,9 +28,7 @@
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 
-static const int FORMAT_MAX_LEN = 2048;
-static wchar_t wszFormatBuf[FORMAT_MAX_LEN];
-
+const int FORMAT_MAX_LEN = 1500;
 
 static void formatError(void)
 {
@@ -54,16 +52,27 @@ WString FormatW(const WString sFormat, ...)
     return WString();
 
   va_list argptr;
-  va_start(argptr, sFormat);
+  int nSize = sFormat.Length() * 2 + 50;
+  WString sResult;
 
-  int nStrLen = vswprintf_s(wszFormatBuf, FORMAT_MAX_LEN, sFormat.c_str(), argptr);
+  for (int i = 0; i < 2; i++) {
+    auto buf = std::make_unique<wchar_t[]>(nSize);
 
-  va_end(argptr);
+    va_start(argptr, sFormat);
+    const int nChars = vsnwprintf_s(buf.get(), nSize, sFormat.c_str(), argptr);
+    va_end(argptr);
 
-  if (nStrLen == EOF)
-    formatError();
+    if (nChars < 0)
+      formatError();
+    else if (nChars < nSize) {
+      sResult = WString(buf.get());
+      break;
+    }
+    else
+      nSize = nChars + 1;
+  }
 
-  return WString(wszFormatBuf);
+  return sResult;
 }
 //---------------------------------------------------------------------------
 SecureWString FormatW_Secure(const WString sFormat, ...)
@@ -72,33 +81,54 @@ SecureWString FormatW_Secure(const WString sFormat, ...)
     return SecureWString();
 
   va_list argptr;
-  va_start(argptr, sFormat);
+  int nSize = sFormat.Length() * 2 + 50;
+  SecureWString sResult;
 
-  int nStrLen = vswprintf_s(wszFormatBuf, FORMAT_MAX_LEN, sFormat.c_str(), argptr);
+  for (int i = 0; i < 2; i++) {
+    SecureWString buf(nSize);
 
-  va_end(argptr);
+    va_start(argptr, sFormat);
+    const int nChars = vsnwprintf_s(buf, nSize, sFormat.c_str(), argptr);
+    va_end(argptr);
 
-  if (nStrLen == EOF)
-    formatError();
+    if (nChars < 0)
+      formatError();
+    else if (nChars < nSize) {
+      sResult.AssignStr(buf, nChars);
+      break;
+    }
+    else
+      nSize = nChars + 1;
+  }
 
-  SecureWString sDest(wszFormatBuf, nStrLen + 1);
-
-  memzero(wszFormatBuf, sizeof(wszFormatBuf));
-
-  return sDest;
+  return sResult;
 }
 //---------------------------------------------------------------------------
-WString FormatW_AL(const WString sFormat, va_list arglist)
+WString FormatW_ArgList(const WString sFormat, va_list arglist)
 {
   if (sFormat.IsEmpty())
     return WString();
 
-  int nResult = vswprintf_s(wszFormatBuf, FORMAT_MAX_LEN, sFormat.c_str(), arglist);
+  va_list argptr;
+  int nSize = sFormat.Length() * 2 + 50;
+  WString sResult;
 
-  if (nResult == EOF)
-    formatError();
+  for (int i = 0; i < 2; i++) {
+    auto buf = std::make_unique<wchar_t[]>(nSize);
 
-  return WString(wszFormatBuf);
+    const int nChars = vsnwprintf_s(buf.get(), nSize, sFormat.c_str(), arglist);
+
+    if (nChars < 0)
+      formatError();
+    else if (nChars < nSize) {
+      sResult = WString(buf.get());
+      break;
+    }
+    else
+      nSize = nChars + 1;
+  }
+
+  return sResult;
 }
 //---------------------------------------------------------------------------
 int GetNumOfUnicodeChars(const wchar_t* pwszStr)

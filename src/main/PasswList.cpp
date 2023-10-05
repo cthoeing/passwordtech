@@ -28,6 +28,7 @@
 #include "StringFileStreamW.h"
 #include "TopMostManager.h"
 #include "PasswManager.h"
+#include "SecureClipboard.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
@@ -89,8 +90,14 @@ void __fastcall TPasswListForm::Execute(void)
 //---------------------------------------------------------------------------
 void __fastcall TPasswListForm::PasswListMenu_CopyClick(TObject *Sender)
 {
-  PasswList->CopyToClipboard();
-  MainForm->CopiedSensitiveDataToClipboard();
+  if (g_config.AutoClearClip) {
+    SecureWString sCopy = GetRichEditSelTextBuf(PasswList);
+    SecureClipboard::GetInstance().SetData(sCopy.c_str());
+  }
+  else
+    PasswList->CopyToClipboard();
+  //PasswList->CopyToClipboard();
+  //MainForm->CopiedSensitiveDataToClipboard();
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswListForm::PasswListMenu_SelectAllClick(TObject *Sender)
@@ -132,9 +139,7 @@ void __fastcall TPasswListForm::PasswListMenu_SaveAsFileClick(TObject *Sender)
           *pwszDest++ = *pwszSrc++;
       }
       *pwszDest = '\0';
-      //memset(pwszDest, 0, (sNewList.Size() - (pwszDest - sNewList.Data()) + 1) *
-      //  sizeof(wchar_t));
-      sPasswList = sNewList;
+      sPasswList.Swap(sNewList);
     }
 
     std::unique_ptr<TStringFileStreamW> pFile(new TStringFileStreamW(

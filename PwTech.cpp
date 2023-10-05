@@ -10,26 +10,26 @@
 //---------------------------------------------------------------------------
 #include <Vcl.Styles.hpp>
 #include <Vcl.Themes.hpp>
+USEFORM("src\main\PasswMngColSelect.cpp", PasswMngColDlg);
 USEFORM("src\main\PasswManager.cpp", PasswMngForm);
 USEFORM("src\main\PasswList.cpp", PasswListForm);
 USEFORM("src\main\PasswEnter.cpp", PasswEnterDlg);
 USEFORM("src\main\MPPasswGen.cpp", MPPasswGenForm);
-USEFORM("src\main\Main.cpp", MainForm);
-USEFORM("src\main\PasswMngColSelect.cpp", PasswMngColDlg);
+USEFORM("src\main\PasswMngDbProp.cpp", PasswMngDbPropDlg);
+USEFORM("src\main\ProfileEditor.cpp", ProfileEditDlg);
 USEFORM("src\main\PasswOptions.cpp", PasswOptionsDlg);
 USEFORM("src\main\PasswMngPwHistory.cpp", PasswHistoryDlg);
 USEFORM("src\main\PasswMngKeyValEdit.cpp", PasswMngKeyValDlg);
 USEFORM("src\main\PasswMngDbSettings.cpp", PasswDbSettingsDlg);
-USEFORM("src\main\PasswMngDbProp.cpp", PasswMngDbPropDlg);
+USEFORM("src\main\Main.cpp", MainForm);
 USEFORM("src\main\About.cpp", AboutForm);
 USEFORM("src\main\InfoBox.cpp", InfoBoxForm);
 USEFORM("src\main\CreateTrigramFile.cpp", CreateTrigramFileDlg);
 USEFORM("src\main\CreateRandDataFile.cpp", CreateRandDataFileDlg);
 USEFORM("src\main\Configuration.cpp", ConfigurationDlg);
-USEFORM("src\main\ProfileEditor.cpp", ProfileEditDlg);
+USEFORM("src\main\Progress.cpp", ProgressForm);
 USEFORM("src\main\QuickHelp.cpp", QuickHelpForm);
 USEFORM("src\main\ProvideEntropy.cpp", ProvideEntropyDlg);
-USEFORM("src\main\Progress.cpp", ProgressForm);
 //---------------------------------------------------------------------------
 HANDLE g_hAppMutex;
 
@@ -37,12 +37,13 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 {
   try
   {
-    g_hAppMutex = CreateMutex(NULL, true, L"Password Tech Password Generator by C.T.");
-    if (g_hAppMutex == NULL)
+    g_hAppMutex = CreateMutex(nullptr, true,
+      L"Password Tech Password Generator by C.T.");
+    if (g_hAppMutex == nullptr)
       RaiseLastOSError();
 
     if (GetLastError() == ERROR_ALREADY_EXISTS) {
-      MessageBox(NULL, L"An instance of Password Tech is already running.\n"
+      MessageBox(nullptr, L"An instance of Password Tech is already running.\n"
         "Please close it before starting a new instance.",
         PROGRAM_NAME, MB_ICONWARNING);
       return 0;
@@ -79,7 +80,7 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
         if (nI < nParamCount) {
           WString sIniFileName = ParamStr(++nI);
           if (ExtractFilePath(sIniFileName).IsEmpty())
-            sIniFileName = ExtractFilePath(Application->ExeName) + sIniFileName;
+            sIniFileName = g_sExePath + sIniFileName;
           g_cmdLineOptions.IniFileName = sIniFileName;
         }
       }
@@ -145,39 +146,39 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 
     const WString DEFAULT_STYLE_NAME = "Windows";
 
-    g_config.UiStyleName = DEFAULT_STYLE_NAME;
-    WString sStyleName = g_pIni->ReadString("Main", "GUIStyle",
+	g_config.UiStyleName = DEFAULT_STYLE_NAME;
+	WString sStyleName = g_pIni->ReadString("Main", "GUIStyle",
       DEFAULT_STYLE_NAME);
     if (!sStyleName.IsEmpty() && !SameText(sStyleName, DEFAULT_STYLE_NAME))
     {
       // TODO: Remove this when C++ Builder fully supports styles for
       // Windows dialogs
-      TStyleManager::SystemHooks >>= TStyleManager::TSystemHook::shDialogs;
+	  //TStyleManager::SystemHooks >>= TStyleManager::TSystemHook::shDialogs;
       if (TStyleManager::TrySetStyle(sStyleName))
         g_config.UiStyleName = sStyleName;
     }
 
     Application->CreateForm(__classid(TMainForm), &MainForm);
-         Application->CreateForm(__classid(TAboutForm), &AboutForm);
-         Application->CreateForm(__classid(TConfigurationDlg), &ConfigurationDlg);
-         Application->CreateForm(__classid(TCreateRandDataFileDlg), &CreateRandDataFileDlg);
-         Application->CreateForm(__classid(TCreateTrigramFileDlg), &CreateTrigramFileDlg);
-         Application->CreateForm(__classid(TInfoBoxForm), &InfoBoxForm);
-         Application->CreateForm(__classid(TMPPasswGenForm), &MPPasswGenForm);
-         Application->CreateForm(__classid(TPasswEnterDlg), &PasswEnterDlg);
-         Application->CreateForm(__classid(TPasswListForm), &PasswListForm);
-         Application->CreateForm(__classid(TPasswMngForm), &PasswMngForm);
-         Application->CreateForm(__classid(TPasswMngColDlg), &PasswMngColDlg);
-         Application->CreateForm(__classid(TPasswMngDbPropDlg), &PasswMngDbPropDlg);
-         Application->CreateForm(__classid(TPasswDbSettingsDlg), &PasswDbSettingsDlg);
-         Application->CreateForm(__classid(TPasswMngKeyValDlg), &PasswMngKeyValDlg);
-         Application->CreateForm(__classid(TPasswOptionsDlg), &PasswOptionsDlg);
-         Application->CreateForm(__classid(TProfileEditDlg), &ProfileEditDlg);
-         Application->CreateForm(__classid(TProgressForm), &ProgressForm);
-         Application->CreateForm(__classid(TProvideEntropyDlg), &ProvideEntropyDlg);
-         Application->CreateForm(__classid(TQuickHelpForm), &QuickHelpForm);
-         Application->CreateForm(__classid(TPasswHistoryDlg), &PasswHistoryDlg);
-         MainForm->StartupAction();
+     Application->CreateForm(__classid(TAboutForm), &AboutForm);
+     Application->CreateForm(__classid(TConfigurationDlg), &ConfigurationDlg);
+     Application->CreateForm(__classid(TCreateRandDataFileDlg), &CreateRandDataFileDlg);
+     Application->CreateForm(__classid(TCreateTrigramFileDlg), &CreateTrigramFileDlg);
+     Application->CreateForm(__classid(TInfoBoxForm), &InfoBoxForm);
+     Application->CreateForm(__classid(TMPPasswGenForm), &MPPasswGenForm);
+     Application->CreateForm(__classid(TPasswEnterDlg), &PasswEnterDlg);
+     Application->CreateForm(__classid(TPasswListForm), &PasswListForm);
+     Application->CreateForm(__classid(TPasswMngForm), &PasswMngForm);
+     Application->CreateForm(__classid(TPasswMngColDlg), &PasswMngColDlg);
+     Application->CreateForm(__classid(TPasswMngDbPropDlg), &PasswMngDbPropDlg);
+     Application->CreateForm(__classid(TPasswDbSettingsDlg), &PasswDbSettingsDlg);
+     Application->CreateForm(__classid(TPasswMngKeyValDlg), &PasswMngKeyValDlg);
+     Application->CreateForm(__classid(TPasswOptionsDlg), &PasswOptionsDlg);
+     Application->CreateForm(__classid(TProfileEditDlg), &ProfileEditDlg);
+     Application->CreateForm(__classid(TProgressForm), &ProgressForm);
+     Application->CreateForm(__classid(TProvideEntropyDlg), &ProvideEntropyDlg);
+     Application->CreateForm(__classid(TQuickHelpForm), &QuickHelpForm);
+     Application->CreateForm(__classid(TPasswHistoryDlg), &PasswHistoryDlg);
+     MainForm->StartupAction();
 
          Application->Run();
   }

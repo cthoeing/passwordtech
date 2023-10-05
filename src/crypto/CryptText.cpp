@@ -93,8 +93,8 @@ int EncryptText(const SecureWString* psText,
 
     if (psText != nullptr)
       sText = *psText;
-    else if (!GetClipboardTextBuf(&sText, nullptr))
-      return CRYPTTEXT_ERROR_CLIPBOARD;
+    else
+      sText = GetClipboardTextBuf();
 
     if (sText.IsStrEmpty())
       return CRYPTTEXT_ERROR_NOTEXT;
@@ -114,7 +114,7 @@ int EncryptText(const SecureWString* psText,
     WideCharToMultiByte(CP_UTF8, 0, sText, -1, asTextUtf8, lTextLen, nullptr, nullptr);
     lTextLen--; // ignore the terminating '\0' from now onwards
 
-    sText.Empty();
+    sText.Clear();
 
     word32 lBufSize = HEADER_SIZE + lTextLen + lTextLen / 16 + 64 + 3 + HMAC_LENGTH;
     //                ^^^^^^^^^^^   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -144,8 +144,8 @@ int EncryptText(const SecureWString* psText,
       &comprLen, workBuf);
 
     // destroy the text buffer and the work memory
-    asTextUtf8.Empty();
-    workBuf.Empty();
+    asTextUtf8.Clear();
+    workBuf.Clear();
 
     // prepare the crypto stuff...
     word32 lCryptLen = HEADER_SIZE + comprLen + HMAC_LENGTH;
@@ -173,7 +173,7 @@ int EncryptText(const SecureWString* psText,
     sha256_hmac_update(hashCtx, pCryptBuf, HEADER_SIZE + comprLen);
     sha256_hmac_finish(hashCtx, hmac);
 
-    hashCtx.Empty();
+    hashCtx.Clear();
 
     // copy the HMAC to the buffer
     memcpy(pCryptBuf + HEADER_SIZE + comprLen, hmac, HMAC_LENGTH);
@@ -181,7 +181,7 @@ int EncryptText(const SecureWString* psText,
     // now encrypt the buffer (*with* HMAC)
     aes_crypt_cbc(cryptCtx, AES_ENCRYPT, lCryptLen, iv, pCryptBuf, pCryptBuf);
 
-    cryptCtx.Empty();
+    cryptCtx.Clear();
 
     word32 lConvertLen = 16 + lCryptLen;
 
@@ -196,7 +196,10 @@ int EncryptText(const SecureWString* psText,
     outBuf.back() = '\0';
 
     // copy the output buffer to the clipboard
-    SetClipboardTextBuf(nullptr, reinterpret_cast<char*>(outBuf.Data()));
+    SetClipboardTextBufAnsi(reinterpret_cast<const char*>(outBuf.c_str()));
+  }
+  catch (EClipboardException& e) {
+    return CRYPTTEXT_ERROR_CLIPBOARD;
   }
   catch (std::bad_alloc& e) {
     return CRYPTTEXT_ERROR_OUTOFMEMORY;
@@ -232,8 +235,7 @@ int DecryptText(const SecureWString* psText,
         asText[lI] = (*psText)[lI];
     }
     else {
-      if (!GetClipboardTextBuf(nullptr, &asText))
-        return CRYPTTEXT_ERROR_CLIPBOARD;
+      asText = GetClipboardTextBufAnsi();
       if (asText.IsEmpty())
         return CRYPTTEXT_ERROR_NOTEXT;
       lTextLen = asText.StrLen();
@@ -249,7 +251,7 @@ int DecryptText(const SecureWString* psText,
     SecureMem<word8> buf(bufSize);
     base64_decode(buf, &bufSize, reinterpret_cast<word8*>(asText.Data()), lTextLen);
 
-    asText.Empty();
+    asText.Clear();
 
     // length must be a multiple of 16!
     if ((bufSize & 0x0F) != 0)
@@ -287,7 +289,7 @@ int DecryptText(const SecureWString* psText,
       sha256_hmac_update(hashCtx, buf, bufSize - 16);
       sha256_hmac_finish(hashCtx, hmac);
 
-      hashCtx.Empty();
+      hashCtx.Clear();
 
       // verify the HMAC
       if (memcmp(pCryptBuf + lCryptLen, hmac, lHmacLen) != 0)
@@ -328,7 +330,7 @@ int DecryptText(const SecureWString* psText,
         lCryptLen - lHmacLen : lCryptLen);
       sha256_hmac_finish(hashCtx, hmac);
 
-      hashCtx.Empty();
+      hashCtx.Clear();
 
       // verify the HMAC
       if (memcmp((encHmac) ? pCryptBuf + lCryptLen - lHmacLen :
@@ -336,7 +338,7 @@ int DecryptText(const SecureWString* psText,
         return CRYPTTEXT_ERROR_BADKEY;
     }
 
-    cryptCtx.Empty();
+    cryptCtx.Clear();
 
     // create the output buffer
     SecureAnsiString asOutBuf(header.TextBytes + 1);
@@ -370,10 +372,13 @@ int DecryptText(const SecureWString* psText,
 
       MultiByteToWideChar(CP_UTF8, 0, asOutBuf, -1, sTextUtf16, lTextLen);
 
-      SetClipboardTextBuf(sTextUtf16, nullptr);
+      SetClipboardTextBuf(sTextUtf16.c_str());
     }
     else
-      SetClipboardTextBuf(nullptr, asOutBuf);
+      SetClipboardTextBufAnsi(asOutBuf.c_str());
+  }
+  catch (EClipboardException& e) {
+    return CRYPTTEXT_ERROR_CLIPBOARD;
   }
   catch (std::bad_alloc& e) {
     return CRYPTTEXT_ERROR_OUTOFMEMORY;

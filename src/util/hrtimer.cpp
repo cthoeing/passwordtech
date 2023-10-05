@@ -29,7 +29,7 @@
 
 enum HighResTimer g_highResTimer = HighResTimer::None;
 
-void rdtsc(word64* pCounter)
+inline void rdtsc(word64* pCounter)
 {
   //word64 x;
   //__asm volatile (".byte 0x0f, 0x31" : "=A" (x));

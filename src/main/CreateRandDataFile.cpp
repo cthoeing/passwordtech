@@ -33,6 +33,7 @@
 #include "TopMostManager.h"
 #include "hrtimer.h"
 #include "FastPRNG.h"
+#include "TaskCancel.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
@@ -119,13 +120,12 @@ void __fastcall TCreateRandDataFileDlg::CreateFileBtnClick(TObject *Sender)
   }
 
   std::unique_ptr<RandomPool> pRandPool;
-  std::unique_ptr<SplitMix64> pFastRandGen;
+  //std::unique_ptr<SplitMix64> pFastRandGen;
   RandomGenerator* pRandSrc;
 
   if (IsRandomPoolActive()) {
-    pFastRandGen.reset(new SplitMix64(g_fastRandGen.GetWord64()));
-    pRandPool.reset(new RandomPool(
-      RandomPool::GetInstance(), *pFastRandGen, false));
+    //pFastRandGen.reset(new SplitMix64(g_fastRandGen.GetWord64()));
+    pRandPool.reset(new RandomPool(RandomPool::GetInstance()));
     pRandPool->Randomize();
     pRandSrc = pRandPool.get();
     EntropyManager::GetInstance().ConsumeEntropyBits(RandomPool::MAX_ENTROPY);
@@ -135,8 +135,10 @@ void __fastcall TCreateRandDataFileDlg::CreateFileBtnClick(TObject *Sender)
 
   WString sMsg;
   word64 qTotalWritten = 0;
-  std::atomic<bool> cancelFlag(false);
-  std::atomic<word64> progress(0);
+  //std::atomic<bool> cancelFlag(false);
+  TaskCancelToken cancelToken;
+  auto progressPtr = std::make_shared<std::atomic<word64>>(0);
+  //std::atomic<word64> progress(0);
   word64 qProgressStep;
   WString sProgressStep;
   if (qFileSize >= 104857600) {
@@ -157,7 +159,7 @@ void __fastcall TCreateRandDataFileDlg::CreateFileBtnClick(TObject *Sender)
 
       word64 qRestToWrite = qFileSize;
 
-      while (qRestToWrite > 0 && !cancelFlag) {
+      while (qRestToWrite > 0 && !cancelToken) {
         int nBytesToWrite = std::min<word64>(qRestToWrite, randBuf.Size());
 
         pRandSrc->GetData(randBuf, nBytesToWrite);
@@ -169,7 +171,7 @@ void __fastcall TCreateRandDataFileDlg::CreateFileBtnClick(TObject *Sender)
 #endif
         qTotalWritten += nBytesWritten;
         qRestToWrite -= nBytesWritten;
-        progress = qTotalWritten / qProgressStep;
+        *progressPtr = qTotalWritten / qProgressStep;
 
         if (nBytesWritten < nBytesToWrite)
           OutOfDiskSpaceError();
@@ -184,40 +186,44 @@ void __fastcall TCreateRandDataFileDlg::CreateFileBtnClick(TObject *Sender)
 
   pTask->Start();
 
-  while (!pTask->Wait(1000)) {
-    if (!ProgressForm->Visible) {
+  int nTimeout = 0;
+  while (!pTask->Wait(100)) {
+    Application->ProcessMessages();
+    nTimeout += 100;
+    if (nTimeout >= 1000 && !ProgressForm->Visible) {
       WString sProgressInfo = ReplaceStr(TRL("%d of %d %s written."), "%s", sProgressStep);
       ProgressForm->ExecuteModal(this,
         TRL("Creating random data file ..."),
         sProgressInfo,
-        cancelFlag,
+        cancelToken.Get(),
         [&pTask](unsigned int timeout)
         {
           return pTask->Wait(timeout);
         },
         qFileSize / qProgressStep,
-        &progress);
+        progressPtr);
       break;
     }
   }
 
-  if (cancelFlag || !sMsg.IsEmpty()) {
-    if (cancelFlag)
-      sMsg = EUserCancel::UserCancelMsg;
-    sMsg = FormatW(EnableInt64FormatSpec(
-      TRL("Error while creating file\n\"%s\":\n%s.\n\n%d bytes written.")),
-      sFileName.c_str(), sMsg.c_str(), qTotalWritten);
-    MsgBox(sMsg, MB_ICONERROR);
-  }
-  else {
-    MsgBox(FormatW(EnableInt64FormatSpec(TRL(
-      "File \"%s\" successfully created.\n\n%d bytes written.")),
-      ExtractFileName(sFileName).c_str(), qTotalWritten), MB_ICONINFORMATION);
-  }
+  if (!cancelToken || cancelToken.Reason == TaskCancelReason::UserCancel) {
+    if (cancelToken || !sMsg.IsEmpty()) {
+      if (cancelToken)
+        sMsg = EUserCancel::UserCancelMsg;
+      sMsg = FormatW(EnableInt64FormatSpec(
+        TRL("Error while creating file\n\"%s\":\n%s.\n\n%d bytes written.")),
+        sFileName.c_str(), sMsg.c_str(), qTotalWritten);
+      MsgBox(sMsg, MB_ICONERROR);
+    }
+    else {
+      MsgBox(FormatW(EnableInt64FormatSpec(TRL(
+        "File \"%s\" successfully created.\n\n%d bytes written.")),
+        ExtractFileName(sFileName).c_str(), qTotalWritten), MB_ICONINFORMATION);
+    }
 
-  Screen->Cursor = crDefault;
-  MainForm->UpdateEntropyProgress();
-  ProgressForm->Terminate();
+    Screen->Cursor = crDefault;
+    MainForm->UpdateEntropyProgress();
+  }
 }
 //---------------------------------------------------------------------------
 void __fastcall TCreateRandDataFileDlg::BrowseBtnClick(TObject *Sender)
