@@ -13,9 +13,6 @@ object PasswMngKeyValDlg: TPasswMngKeyValDlg
   Font.Style = []
   OnShow = FormShow
   PixelsPerInch = 120
-  DesignSize = (
-    473
-    209)
   TextHeight = 17
   object KeyValueGrid: TStringGrid
     Left = 0
@@ -42,7 +39,8 @@ object PasswMngKeyValDlg: TPasswMngKeyValDlg
       249)
   end
   object OKBtn: TButton
-    Left = 262
+    Tag = 12
+    Left = 268
     Top = 164
     Width = 94
     Height = 31
@@ -50,14 +48,14 @@ object PasswMngKeyValDlg: TPasswMngKeyValDlg
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    Anchors = [akRight, akBottom]
     Caption = 'OK'
     Default = True
     ModalResult = 1
     TabOrder = 1
   end
   object CancelBtn: TButton
-    Left = 364
+    Tag = 12
+    Left = 370
     Top = 164
     Width = 94
     Height = 31
@@ -65,7 +63,6 @@ object PasswMngKeyValDlg: TPasswMngKeyValDlg
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    Anchors = [akRight, akBottom]
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 2

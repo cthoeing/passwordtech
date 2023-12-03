@@ -3,7 +3,33 @@
                 Copyright (c) 2002-2023 by Christian Thöing
 
 
-Version 3.5.2
+Version 3.5.3
+
+NEW FEATURES:
+
+- Advanced Password Options: New option "Include at least one character from
+  each subset"
+- Advanced Password Options: Min./max. length of words in word lists; upper
+  limit increased to 100 (previously 30)
+- Advanced Password Options: Redefine separators in passphrases, i.e.,
+  separator between words and between words and characters (when combining
+  words with characters from password)
+- PassCube: New filter option "Entries with weak passwords" (View | Filter)
+- PassCube: Applied filter (via View | Filter) displayed in toolbar; can be
+  removed by pressing "(x)" button next to "Filtered" label
+
+CHANGES & IMPROVEMENTS:
+
+- Entropy values of passwords displayed with one decimal (e.g., "92.3")
+- Format password: More verbose information about invalid specifiers
+
+FIXES:
+
+- Encryption/decryption of text from clipboard not functional
+
+----------
+
+Version 3.5.2 (2023-10-01)
 
 NEW FEATURES:
 

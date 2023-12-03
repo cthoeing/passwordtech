@@ -2,8 +2,8 @@ object MPPasswGenForm: TMPPasswGenForm
   Left = 219
   Top = 131
   Caption = 'MP Password Generator'
-  ClientHeight = 638
-  ClientWidth = 492
+  ClientHeight = 635
+  ClientWidth = 474
   Color = clBtnFace
   Font.Charset = ANSI_CHARSET
   Font.Color = clWindowText
@@ -15,24 +15,21 @@ object MPPasswGenForm: TMPPasswGenForm
   OnClose = FormClose
   OnShow = FormShow
   PixelsPerInch = 120
-  DesignSize = (
-    492
-    638)
   TextHeight = 17
   object MasterPasswGroup: TGroupBox
+    Tag = 7
     Left = 13
     Top = 9
-    Width = 470
+    Width = 452
     Height = 331
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    Anchors = [akLeft, akTop, akRight]
     Caption = 'Master password'
     TabOrder = 0
     DesignSize = (
-      470
+      452
       331)
     object PasswStatusLbl: TLabel
       Left = 10
@@ -56,7 +53,7 @@ object MPPasswGenForm: TMPPasswGenForm
       Margins.Bottom = 4
     end
     object KeyExpiryInfoLbl: TLabel
-      Left = 339
+      Left = 321
       Top = 80
       Width = 118
       Height = 17
@@ -69,7 +66,7 @@ object MPPasswGenForm: TMPPasswGenForm
       ExplicitLeft = 325
     end
     object KeyExpiryCountdownLbl: TLabel
-      Left = 339
+      Left = 321
       Top = 105
       Width = 4
       Height = 17
@@ -155,7 +152,7 @@ object MPPasswGenForm: TMPPasswGenForm
       OnClick = KeyExpiryCheckClick
     end
     object KeyExpiryTimeBox: TEdit
-      Left = 339
+      Left = 321
       Top = 194
       Width = 61
       Height = 25
@@ -166,10 +163,10 @@ object MPPasswGenForm: TMPPasswGenForm
       Anchors = [akTop, akRight]
       TabOrder = 6
       Text = '1'
-      ExplicitLeft = 321
+      ExplicitLeft = 303
     end
     object KeyExpiryTimeSpinBtn: TUpDown
-      Left = 400
+      Left = 382
       Top = 194
       Width = 20
       Height = 25
@@ -182,12 +179,12 @@ object MPPasswGenForm: TMPPasswGenForm
       Max = 32767
       Position = 1
       TabOrder = 7
-      ExplicitLeft = 382
+      ExplicitLeft = 364
     end
     object PasswStatusBox: TEdit
       Left = 11
       Top = 104
-      Width = 321
+      Width = 303
       Height = 25
       Margins.Left = 4
       Margins.Top = 4
@@ -197,10 +194,10 @@ object MPPasswGenForm: TMPPasswGenForm
       Color = clBtnFace
       ReadOnly = True
       TabOrder = 2
-      ExplicitWidth = 303
+      ExplicitWidth = 285
     end
     object ClearKeyBtn: TButton
-      Left = 336
+      Left = 318
       Top = 30
       Width = 121
       Height = 31
@@ -213,7 +210,7 @@ object MPPasswGenForm: TMPPasswGenForm
       Enabled = False
       TabOrder = 1
       OnClick = ClearKeyBtnClick
-      ExplicitLeft = 318
+      ExplicitLeft = 300
     end
     object HashapassCompatCheck: TCheckBox
       Left = 10
@@ -241,7 +238,7 @@ object MPPasswGenForm: TMPPasswGenForm
       TabOrder = 9
     end
     object PasswHashList: TComboBox
-      Left = 340
+      Left = 322
       Top = 160
       Width = 112
       Height = 25
@@ -259,12 +256,11 @@ object MPPasswGenForm: TMPPasswGenForm
         'Dec 0-9999'
         'Hex 16-bit'
         'Hex 32-bit')
-      ExplicitLeft = 322
     end
     object AutotypeBox: TEdit
       Left = 200
       Top = 291
-      Width = 252
+      Width = 234
       Height = 25
       Margins.Left = 4
       Margins.Top = 4
@@ -272,23 +268,23 @@ object MPPasswGenForm: TMPPasswGenForm
       Margins.Bottom = 4
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 11
-      ExplicitWidth = 234
+      ExplicitWidth = 216
     end
   end
   object PasswGeneratorGroup: TGroupBox
+    Tag = 13
     Left = 13
-    Top = 347
-    Width = 470
+    Top = 344
+    Width = 452
     Height = 238
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    Anchors = [akLeft, akRight, akBottom]
     Caption = 'Password generator'
     TabOrder = 1
     DesignSize = (
-      470
+      452
       238)
     object ParameterLbl: TLabel
       Left = 10
@@ -314,7 +310,7 @@ object MPPasswGenForm: TMPPasswGenForm
       Caption = 'Character set:'
     end
     object LengthLbl: TLabel
-      Left = 339
+      Left = 321
       Top = 90
       Width = 48
       Height = 17
@@ -345,7 +341,7 @@ object MPPasswGenForm: TMPPasswGenForm
       OnMouseMove = PasswSecurityBarMouseMove
     end
     object TogglePasswBtn: TSpeedButton
-      Left = 302
+      Left = 284
       Top = 166
       Width = 33
       Height = 31
@@ -388,7 +384,7 @@ object MPPasswGenForm: TMPPasswGenForm
       Visible = False
     end
     object CharSetInfoLbl: TLabel
-      Left = 324
+      Left = 306
       Top = 90
       Width = 4
       Height = 17
@@ -403,7 +399,7 @@ object MPPasswGenForm: TMPPasswGenForm
     object ParameterBox: TEdit
       Left = 10
       Top = 50
-      Width = 320
+      Width = 302
       Height = 25
       Margins.Left = 4
       Margins.Top = 4
@@ -412,12 +408,12 @@ object MPPasswGenForm: TMPPasswGenForm
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
       OnKeyPress = ParameterBoxKeyPress
-      ExplicitWidth = 302
+      ExplicitWidth = 284
     end
     object CharSetList: TComboBox
       Left = 10
       Top = 110
-      Width = 320
+      Width = 302
       Height = 25
       Margins.Left = 4
       Margins.Top = 4
@@ -427,10 +423,9 @@ object MPPasswGenForm: TMPPasswGenForm
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 2
       OnChange = CharSetListChange
-      ExplicitWidth = 302
     end
     object PasswLengthBox: TEdit
-      Left = 339
+      Left = 321
       Top = 110
       Width = 101
       Height = 25
@@ -441,10 +436,10 @@ object MPPasswGenForm: TMPPasswGenForm
       Anchors = [akTop, akRight]
       TabOrder = 3
       Text = '1'
-      ExplicitLeft = 321
+      ExplicitLeft = 303
     end
     object PasswLengthSpinBtn: TUpDown
-      Left = 440
+      Left = 422
       Top = 110
       Width = 20
       Height = 25
@@ -457,10 +452,10 @@ object MPPasswGenForm: TMPPasswGenForm
       Min = 1
       Position = 1
       TabOrder = 4
-      ExplicitLeft = 422
+      ExplicitLeft = 404
     end
     object ClearParameterBtn: TButton
-      Left = 338
+      Left = 320
       Top = 45
       Width = 121
       Height = 31
@@ -472,12 +467,12 @@ object MPPasswGenForm: TMPPasswGenForm
       Caption = 'Clear'
       TabOrder = 1
       OnClick = ClearParameterBtnClick
-      ExplicitLeft = 320
+      ExplicitLeft = 302
     end
     object PasswBox: TEdit
       Left = 10
       Top = 170
-      Width = 290
+      Width = 272
       Height = 25
       Margins.Left = 4
       Margins.Top = 4
@@ -492,10 +487,10 @@ object MPPasswGenForm: TMPPasswGenForm
       ParentFont = False
       PopupMenu = PasswBoxMenu
       TabOrder = 5
-      ExplicitWidth = 272
+      ExplicitWidth = 254
     end
     object GenerateBtn: TButton
-      Left = 339
+      Left = 321
       Top = 168
       Width = 121
       Height = 31
@@ -515,7 +510,7 @@ object MPPasswGenForm: TMPPasswGenForm
       ParentFont = False
       TabOrder = 6
       OnClick = GenerateBtnClick
-      ExplicitLeft = 321
+      ExplicitLeft = 303
     end
     object PasswSecurityBarPanel: TPanel
       Left = 10
@@ -634,32 +629,30 @@ object MPPasswGenForm: TMPPasswGenForm
     end
   end
   object UseAsDefaultRNGBtn: TButton
+    Tag = 9
     Left = 13
-    Top = 595
+    Top = 592
     Width = 311
     Height = 31
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    Anchors = [akLeft, akBottom]
     Caption = 'Use as default random generator'
     Enabled = False
     TabOrder = 2
     OnClick = UseAsDefaultRNGBtnClick
-    ExplicitTop = 594
   end
   object CloseBtn: TButton
-    Left = 379
-    Top = 595
+    Tag = 12
+    Left = 361
+    Top = 592
     Width = 104
     Height = 31
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    Anchors = [akRight, akBottom]
-    Cancel = True
     Caption = 'Close'
     TabOrder = 3
     OnClick = CloseBtnClick

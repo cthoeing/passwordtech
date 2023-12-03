@@ -38,6 +38,8 @@ CONFIG_ID = "ProfileEditor";
 __fastcall TProfileEditDlg::TProfileEditDlg(TComponent* Owner)
   : TForm(Owner)
 {
+  SetFormComponentsAnchors(this);
+
   Constraints->MinHeight = Height;
   Constraints->MinWidth = Width;
 
@@ -58,7 +60,7 @@ __fastcall TProfileEditDlg::TProfileEditDlg(TComponent* Owner)
 
   for (const auto& pProfile : g_profileList) {
     WString sProfileName = pProfile->ProfileName;
-    if (pProfile->AdvancedOptionsUsed)
+    if (pProfile->AdvancedPasswOptions)
       sProfileName += WString(" [+]");
 
     ProfileList->Items->Add(sProfileName);
@@ -118,7 +120,7 @@ void __fastcall TProfileEditDlg::ProfileListClick(TObject *Sender)
     auto pProfile = g_profileList[ProfileList->ItemIndex].get();
 
     ProfileNameBox->Text = pProfile->ProfileName;
-    SaveAdvancedOptionsCheck->Checked = pProfile->AdvancedOptionsUsed;
+    SaveAdvancedOptionsCheck->Checked = pProfile->AdvancedPasswOptions.has_value();
 
     LoadBtn->Enabled = true;
     DeleteBtn->Enabled = true;
@@ -154,10 +156,11 @@ void __fastcall TProfileEditDlg::DeleteBtnClick(TObject *Sender)
   if (ConfirmCheck->Checked) {
     WString sMsg;
     if (ProfileList->SelCount == 1)
-      sMsg = TRLFormat("Delete profile \"%s\"?",
-        ProfileList->Items->Strings[ProfileList->ItemIndex].c_str());
+      sMsg = TRLFormat("Delete profile \"%1\"?",
+        { ProfileList->Items->Strings[ProfileList->ItemIndex] });
     else
-      sMsg = TRLFormat("Delete %d profiles?", ProfileList->SelCount);
+      sMsg = TRLFormat("Delete %d profiles?",
+      { IntToStr(ProfileList->SelCount) });
     if (MsgBox(sMsg, MB_ICONWARNING + MB_YESNO + MB_DEFBUTTON2) == IDNO)
       return;
   }
@@ -189,17 +192,17 @@ void __fastcall TProfileEditDlg::AddBtnClick(TObject *Sender)
   int nFoundIdx = FindPWGenProfile(sProfileName);
 
   if (nFoundIdx < 0 && g_profileList.size() == PROFILES_MAX_NUM) {
-    MsgBox(TRLFormat("Maximum number of profiles (%d) reached.\nPlease delete "
-        "or overwrite profiles.", PROFILES_MAX_NUM),
+    MsgBox(TRLFormat("Maximum number of profiles (%1) reached.\nPlease delete "
+        "or overwrite profiles.", { IntToStr(PROFILES_MAX_NUM) }),
       MB_ICONWARNING);
     return;
   }
 
   if (nFoundIdx >= 0) {
     if (ConfirmCheck->Checked &&
-      MsgBox(TRLFormat("A profile with the name \"%s\" already exists.\n"
+      MsgBox(TRLFormat("A profile with the name \"%1\" already exists.\n"
           "Do you want to overwrite it?",
-          g_profileList[nFoundIdx]->ProfileName.c_str()),
+          { g_profileList[nFoundIdx]->ProfileName }),
         MB_ICONWARNING + MB_YESNO + MB_DEFBUTTON2) == IDNO) {
       ProfileNameBox->SetFocus();
       return;

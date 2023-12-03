@@ -4,7 +4,7 @@ object PasswHistoryDlg: TPasswHistoryDlg
   BorderIcons = [biSystemMenu, biMaximize]
   Caption = 'Password history'
   ClientHeight = 239
-  ClientWidth = 381
+  ClientWidth = 386
   Color = clBtnFace
   Constraints.MinHeight = 229
   Constraints.MinWidth = 316
@@ -16,13 +16,13 @@ object PasswHistoryDlg: TPasswHistoryDlg
   OnShow = FormShow
   PixelsPerInch = 120
   DesignSize = (
-    381
+    386
     239)
   TextHeight = 17
   object EnableHistoryCheck: TCheckBox
     Left = 13
     Top = 11
-    Width = 233
+    Width = 226
     Height = 21
     Margins.Left = 4
     Margins.Top = 4
@@ -32,10 +32,11 @@ object PasswHistoryDlg: TPasswHistoryDlg
     Caption = 'Keep last passwords - up to:'
     TabOrder = 0
     OnClick = EnableHistoryCheckClick
-    ExplicitWidth = 227
+    ExplicitWidth = 215
   end
   object HistorySizeBox: TEdit
-    Left = 292
+    Tag = 6
+    Left = 298
     Top = 9
     Width = 51
     Height = 25
@@ -43,35 +44,34 @@ object PasswHistoryDlg: TPasswHistoryDlg
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    Anchors = [akTop, akRight]
     TabOrder = 1
     Text = '1'
   end
   object HistorySizeSpinBtn: TUpDown
-    Left = 346
-    Top = 11
+    Tag = 6
+    Left = 349
+    Top = 9
     Width = 20
     Height = 25
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    Anchors = [akTop, akRight]
     Associate = HistorySizeBox
     Min = 1
     Position = 1
     TabOrder = 2
   end
   object HistoryView: TListView
+    Tag = 15
     Left = 13
     Top = 44
-    Width = 353
-    Height = 140
+    Width = 359
+    Height = 139
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    Anchors = [akLeft, akTop, akRight, akBottom]
     Columns = <
       item
         Caption = 'Set Date/Time'
@@ -87,70 +87,62 @@ object PasswHistoryDlg: TPasswHistoryDlg
     TabOrder = 3
     ViewStyle = vsReport
     OnKeyDown = HistoryViewKeyDown
-    ExplicitWidth = 347
-    ExplicitHeight = 139
   end
   object ClearBtn: TButton
+    Tag = 9
     Left = 13
-    Top = 196
+    Top = 195
     Width = 71
     Height = 31
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    Anchors = [akLeft, akBottom]
     Caption = 'Clear'
     TabOrder = 4
     OnClick = ClearBtnClick
-    ExplicitTop = 195
   end
   object CopyBtn: TButton
+    Tag = 9
     Left = 88
-    Top = 196
+    Top = 195
     Width = 71
     Height = 31
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    Anchors = [akLeft, akBottom]
     Caption = 'Copy'
     TabOrder = 5
     OnClick = CopyBtnClick
-    ExplicitTop = 195
   end
   object OKBtn: TButton
-    Left = 174
-    Top = 196
+    Tag = 12
+    Left = 180
+    Top = 195
     Width = 92
     Height = 31
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    Anchors = [akRight, akBottom]
     Caption = 'OK'
     Default = True
     ModalResult = 1
     TabOrder = 6
-    ExplicitLeft = 168
-    ExplicitTop = 195
   end
   object CancelBtn: TButton
-    Left = 274
-    Top = 196
+    Tag = 12
+    Left = 280
+    Top = 195
     Width = 92
     Height = 31
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    Anchors = [akRight, akBottom]
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 7
-    ExplicitLeft = 268
-    ExplicitTop = 195
   end
 end

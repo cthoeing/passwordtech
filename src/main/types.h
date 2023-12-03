@@ -27,5 +27,8 @@ typedef unsigned __int16 word16; // prefix "w"
 typedef unsigned __int32 word32; // prefix "l"
 typedef unsigned __int64 word64; // prefix "q"
 
+#define WORD64_HI(v) ((v >> 32) & 0xffffffff)
+#define WORD64_LO(v) (v & 0xffffffff)
+
 
 #endif

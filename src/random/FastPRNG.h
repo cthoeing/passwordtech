@@ -24,18 +24,63 @@
 #include "types.h"
 #include "RandomGenerator.h"
 
-class FastPRNG : public RandomGenerator
+// Bob Jenkin's Small PRNG ("Jenkins Small Fast 32-bit")
+// https://burtleburtle.net/bob/rand/smallprng.html
+class Jsf32RandGen : public RandomGenerator
 {
 public:
-  FastPRNG()
+  Jsf32RandGen()
+  {
+    Randomize();
+  }
+
+  ~Jsf32RandGen()
+  {
+    m_a = m_b = m_c = m_d = 0;
+  }
+
+  void Seed(const void*, word32) override;
+
+  void Randomize() override;
+
+  word32 GetWord32() override;
+
+  void GetData(void*, word32) override;
+
+private:
+  inline word32 NextRand();
+
+  word32 m_a, m_b, m_c, m_d;
+};
+
+extern Jsf32RandGen g_fastRandGen;
+
+// returns a random 32-bit value
+inline word32 fprng_rand(void)
+{
+  return g_fastRandGen.GetWord32();
+}
+
+inline word32 fprng_rand(word32 lNum)
+{
+  return g_fastRandGen.GetWord32() % lNum;
+}
+
+
+#if 0
+// Bob Jenkin's IA PRNG (precursor of ISAAC CSPRNG)
+class IARandGen : public RandomGenerator
+{
+public:
+  IARandGen()
   {
     Reset();
     Randomize();
   }
 
-  FastPRNG(const FastPRNG& src);
+  IARandGen(const IARandGen& src);
 
-  ~FastPRNG()
+  ~IARandGen()
   {
     Reset();
   }
@@ -55,31 +100,36 @@ private:
   word8 m_c;
 };
 
-extern FastPRNG g_fastRandGen;
-
-// lets the PRNG reseed itself with a nice seed derived from timers
-//void fprng_randomize(void);
-
-// returns a random 32-bit value
-inline word32 fprng_rand(void)
+// implementation of Xoroshiro128++ or Xoroshiro128**
+class Xoroshiro128 : public RandomGenerator
 {
-  return g_fastRandGen.GetWord32();
-}
+public:
+  Xoroshiro128()
+  {
+    Randomize();
+  }
 
-inline word32 fprng_rand(word32 lNum)
-{
-  return g_fastRandGen.GetWord32() % lNum;
-}
+  ~Xoroshiro128()
+  {
+    memset(m_state, 0, sizeof(m_state));
+  }
 
-// fills buffer with random data, optimized for speed
-// -> pointer to the buffer
-// -> number of bytes to fill
-//void fprng_fill_buf(void* pMem, word32 lSize);
+  void Seed(const void*, word32) override {}
+
+  void Randomize() override;
+
+  word32 GetWord32() override;
+
+  void GetData(void* pMem, word32 lSize) override;
+
+private:
+  word32 m_state[4];
+};
 
 class SplitMix64 : public RandomGenerator
 {
 public:
-  SplitMix64(word64 qSeed) : m_qState(qSeed) {}
+  SplitMix64(word64 qSeed = 0) : m_qState(qSeed) {}
 
   ~SplitMix64() { m_qState = 0; }
 
@@ -91,27 +141,6 @@ public:
 
 private:
   word64 m_qState;
-};
-
-#if 0
-class Xoshiro256StarStar : public RandomGenerator
-{
-public:
-  Xoshiro256StarStar(word64* qSeed = nullptr)
-  {
-    if (qSeed) Seed(qSeed, sizeof(m_qState));
-  }
-
-  ~Xoshiro256StarStar();
-
-  void Seed(const void* pData, word32 lNumBytes) override;
-
-  void GetData(void* pDest, word32 lNumBytes) override;
-
-  word64 GetWord64(void) override;
-
-private:
-  word64 m_qState[4];
 };
 #endif
 

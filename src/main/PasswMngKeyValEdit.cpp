@@ -25,6 +25,7 @@
 #include "TopMostManager.h"
 #include "Main.h"
 #include "Language.h"
+#include "Util.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
@@ -36,6 +37,7 @@ const WString CONFIG_ID = "PasswMngKeyValEdit";
 __fastcall TPasswMngKeyValDlg::TPasswMngKeyValDlg(TComponent* Owner)
   : TForm(Owner)
 {
+  SetFormComponentsAnchors(this);
   if (g_pLangSupp) {
     TRLCaption(this);
     TRLCaption(OKBtn);

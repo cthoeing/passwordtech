@@ -57,6 +57,8 @@ const int RANDOM_POOL_CIPHER_INFO[NUM_RANDOM_POOL_CIPHERS][2] =
 __fastcall TConfigurationDlg::TConfigurationDlg(TComponent* Owner)
   : TForm(Owner) //, m_pLangList(nullptr)
 {
+  SetFormComponentsAnchors(this);
+
   //Constraints->MaxHeight = Height;
   //Constraints->MinHeight = Height;
   Constraints->MinWidth = Width;
@@ -69,9 +71,10 @@ __fastcall TConfigurationDlg::TConfigurationDlg(TComponent* Owner)
   }
 
   for (int i = 0; i < NUM_RANDOM_POOL_CIPHERS; i++) {
-    WString sCipher = TRLFormat("%s (%d-bit key, operates on %d-bit blocks)",
-      RANDOM_POOL_CIPHER_NAMES[i],
-      RANDOM_POOL_CIPHER_INFO[i][0], RANDOM_POOL_CIPHER_INFO[i][1]);
+    WString sCipher = TRLFormat("%1 (%2-bit key, operates on %3-bit blocks)",
+      { RANDOM_POOL_CIPHER_NAMES[i],
+        IntToStr(RANDOM_POOL_CIPHER_INFO[i][0]),
+        IntToStr(RANDOM_POOL_CIPHER_INFO[i][1]) });
     RandomPoolCipherList->Items->Add(sCipher);
   }
 
@@ -154,7 +157,7 @@ __fastcall TConfigurationDlg::TConfigurationDlg(TComponent* Owner)
   }
 
   UseAdvancedPasswEst->Caption = TRLFormat("Use advanced password strength "
-    "estimation (%s)", L"zxcvbn");
+    "estimation (%1)", { "zxcvbn" });
 
   LoadConfig();
 }
@@ -282,14 +285,15 @@ void __fastcall TConfigurationDlg::SetLanguageList(
   m_langList = languages;
   for (const auto& entry : m_langList)
   {
-    LanguageList->Items->Add(FormatW("%s (v%s)", entry.Name.c_str(),
-      entry.Version.c_str()));
+    LanguageList->Items->Add(FormatW("%1 (v%2)", { entry.Name,
+      entry.Version }));
   }
 }
 //---------------------------------------------------------------------------
 void __fastcall TConfigurationDlg::ShowFontSample(TFont* pFont)
 {
-  FontSampleLbl->Caption = FormatW("%s, %dpt", pFont->Name.c_str(), pFont->Size);
+  FontSampleLbl->Caption = FormatW("%1, %2pt", { pFont->Name,
+    IntToStr(pFont->Size) });
   FontSampleLbl->Font = pFont;
 }
 //---------------------------------------------------------------------------
@@ -375,8 +379,8 @@ void __fastcall TConfigurationDlg::HotKeyBoxChange(TObject *Sender)
 void __fastcall TConfigurationDlg::AddBtnClick(TObject *Sender)
 {
   if (m_hotKeys.size() == HOTKEYS_MAX_NUM) {
-    MsgBox(TRLFormat("Maximum number of hot keys (%d) reached.",
-        HOTKEYS_MAX_NUM), MB_ICONWARNING);
+    MsgBox(TRLFormat("Maximum number of hot keys (%1) reached.",
+      { IntToStr(HOTKEYS_MAX_NUM) }), MB_ICONWARNING);
     return;
   }
 
@@ -452,8 +456,6 @@ void __fastcall TConfigurationDlg::AutoSaveCheckClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TConfigurationDlg::BenchmarkBtnClick(TObject *Sender)
 {
-  //const int DATA_SIZE_MB = 50;
-  //SplitMix64 sm64(42);
   RandomPool rp(static_cast<RandomPool::CipherType>(0));
   rp.Randomize();
   word32 lDataSizeMB = 1 << std::max(0, BenchmarkMemList->ItemIndex);
@@ -467,11 +469,12 @@ void __fastcall TConfigurationDlg::BenchmarkBtnClick(TObject *Sender)
     Stopwatch clock;
     rp.GetData(buf.get(), lBufSize);
     double rate = lDataSizeMB / clock.ElapsedSeconds();
-    sResult += "\n" + FormatW("%s: %.2f MB/s", RANDOM_POOL_CIPHER_NAMES[i], rate);
+    sResult += "\n" + FormatW("%1: %2 MB/s", { RANDOM_POOL_CIPHER_NAMES[i],
+      FormatFloat("0.00", rate) });
   }
   Screen->Cursor = crDefault;
-  MsgBox(TRLFormat("Benchmark results (data size: %d MB):", lDataSizeMB) +
-    sResult, MB_ICONINFORMATION);
+  MsgBox(TRLFormat("Benchmark results (data size: %1 MB):",
+    { IntToStr(static_cast<int>(lDataSizeMB)) }) + sResult, MB_ICONINFORMATION);
 }
 //---------------------------------------------------------------------------
 void __fastcall TConfigurationDlg::ConvertLangFileBtnClick(TObject *Sender)

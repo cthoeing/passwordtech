@@ -44,6 +44,8 @@ static word8 memcryptKey[16];
 __fastcall TPasswEnterDlg::TPasswEnterDlg(TComponent* AOwner)
   : TForm(AOwner), /*m_pParentForm(MainForm),*/ m_nExpiryCountdown(0)
 {
+  SetFormComponentsAnchors(this);
+
   Constraints->MaxHeight = Height;
   Constraints->MinHeight = Height;
   Constraints->MinWidth = Width;
@@ -61,9 +63,8 @@ __fastcall TPasswEnterDlg::TPasswEnterDlg(TComponent* AOwner)
     TRLHint(CreateKeyFileBtn);
   }
 
-  OpenDlg->Filter = FormatW("%s (*.key)|*.key|%s (*.*)|*.*",
-    TRL("Key files").c_str(),
-    TRL("All files").c_str());
+  OpenDlg->Filter = FormatW("%1 (*.key)|*.key|%2 (*.*)|*.*",
+    { TRL("Key files"), TRL("All files") });
   SaveDlg->Filter = OpenDlg->Filter;
 
   LoadConfig();
@@ -309,7 +310,7 @@ void __fastcall TPasswEnterDlg::CreateKeyFileBtnClick(TObject *Sender)
         KeyFileBox->Items->Add(sFileName) : nIndex;
     }
     catch (Exception& e) {
-      MsgBox(TRLFormat("Error while creating key file:\n%s.", e.Message.c_str()),
+      MsgBox(TRLFormat("Error while creating key file:\n%1.", { e.Message }),
         MB_ICONERROR);
     }
   }

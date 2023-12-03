@@ -208,12 +208,12 @@ __published:	// IDE-managed Components
   TDateTimePicker *ExpiryDatePicker;
   TSpeedButton *ExpiryBtn;
   TPopupMenu *ExpiryMenu;
-  TMenuItem *MainMenu_View_ExpiredEntries;
+  TMenuItem *MainMenu_View_Filter_Expired;
   TMenuItem *MainMenu_View_N3;
     TToolButton *AddEntryBtn;
     TMenuItem *MainMenu_File_Properties;
     TMenuItem *MainMenu_File_N5;
-    TMenuItem *MainMenu_View_EntriesExpireSoon;
+  TMenuItem *MainMenu_View_Filter_ExpireSoon;
     TMenuItem *MainMenu_File_OpenReadOnly;
     TMenuItem *MainMenu_File_SetRecoveryPassword;
     TToolButton *SearchBtn;
@@ -235,6 +235,10 @@ __published:	// IDE-managed Components
     TLabel *PasswChangeInfo;
     TSpeedButton *PasswHistoryBtn;
     TMenuItem *MainMenu_View_ResetListFont;
+  TMenuItem *MainMenu_View_Filter;
+  TMenuItem *MainMenu_View_Filter_WeakPassw;
+  TPanel *FilterInfoPanel;
+  TSpeedButton *ClearFilterBtn;
   void __fastcall MainMenu_File_NewClick(TObject *Sender);
   void __fastcall DbViewSelectItem(TObject *Sender,
     TListItem *Item, bool Selected);
@@ -317,7 +321,6 @@ __published:	// IDE-managed Components
   void __fastcall ExpiryCheckClick(TObject *Sender);
   void __fastcall ExpiryDatePickerChange(TObject *Sender);
   void __fastcall ExpiryBtnClick(TObject *Sender);
-  void __fastcall MainMenu_View_ExpiredEntriesClick(TObject *Sender);
   void __fastcall DbViewKeyDown(TObject *Sender, WORD &Key, TShiftState Shift);
     void __fastcall MainMenu_File_PropertiesClick(TObject *Sender);
     void __fastcall MainMenu_File_OpenReadOnlyClick(TObject *Sender);
@@ -333,10 +336,12 @@ __published:	// IDE-managed Components
     void __fastcall PasswHistoryBtnClick(TObject *Sender);
     void __fastcall MainMenu_View_ResetListFontClick(TObject *Sender);
     void __fastcall NotesBoxKeyPress(TObject *Sender, System::WideChar &Key);
+  void __fastcall MainMenu_View_Filter_ExpiredClick(TObject *Sender);
+  void __fastcall ClearFilterBtnClick(TObject *Sender);
 
 
 private:	// User declarations
-  std::unique_ptr<PasswDatabase> m_passwDb;
+  std::shared_ptr<PasswDatabase> m_passwDb;
   std::unique_ptr<TSelectItemThread> m_dbViewSelItemThread;
   std::unique_ptr<TSelectItemThread> m_tagViewSelItemThread;
   WString m_sDbFileName;

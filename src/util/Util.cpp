@@ -340,6 +340,25 @@ bool StartEditBoxDragDrop(TCustomEdit* pEdit)
   return dwResult == DRAGDROP_S_DROP;
 }
 //---------------------------------------------------------------------------
+void SetFormComponentsAnchors(TForm* pForm)
+{
+  for (int i = 0; i < pForm->ComponentCount; i++) {
+    auto pControl = dynamic_cast<TControl*>(pForm->Components[i]);
+    if (pControl && pControl->Tag != 0) {
+      int nTag = pControl->Tag;
+      if (nTag != 0) {
+        TAnchors anc;
+        if (nTag & 1) anc << akLeft;
+        if (nTag & 2) anc << akTop;
+        if (nTag & 4) anc << akRight;
+        if (nTag & 8) anc << akBottom;
+        pControl->Anchors = anc;
+        pControl->Tag = 0;
+      }
+    }
+  }
+}
+//---------------------------------------------------------------------------
 bool ExecuteShellOp(const WString& sOperation, bool blShowErrorMsg)
 {
   if (sOperation.IsEmpty())
@@ -358,8 +377,8 @@ bool ExecuteShellOp(const WString& sOperation, bool blShowErrorMsg)
   }
 
   if (!blSuccess && blShowErrorMsg)
-    MsgBox(TRLFormat("Could not open file/execute operation\n\"%s\".",
-      sOperation.c_str()),  MB_ICONERROR);
+    MsgBox(TRLFormat("Could not open file/execute operation\n\"%1\".",
+      { sOperation }),  MB_ICONERROR);
 
   return blSuccess;
 }
@@ -395,7 +414,7 @@ bool ExecuteCommand(const WString& sCommand, bool blShowErrorMsg)
   }
 
   if (!blSuccess && blShowErrorMsg)
-    MsgBox(TRLFormat("Could not execute command\n\"%s\"", sCommand.c_str()),
+    MsgBox(TRLFormat("Could not execute command\n\"%1\"", { sCommand }),
       MB_ICONERROR);
 
   return blSuccess;
@@ -596,10 +615,10 @@ int CompareFileTime(FILETIME ft1, FILETIME ft2)
   return 0;
 }
 //---------------------------------------------------------------------------
-WString EnableInt64FormatSpec(const WString& sFormatStr)
+/*WString EnableInt64FormatSpec(const WString& sFormatStr)
 {
   return ReplaceStr(sFormatStr, "%d", "%llu");
-}
+}*/
 //---------------------------------------------------------------------------
 std::vector<SecureWString> SplitStringBuf(const wchar_t* pwszSrc,
   const wchar_t* pwszSep)
@@ -617,6 +636,25 @@ std::vector<SecureWString> SplitStringBuf(const wchar_t* pwszSrc,
       pwszSrc++; // move pointer beyond separator character
   }
   return result;
+}
+//---------------------------------------------------------------------------
+WString RemoveAccessKeysFromStr(const WString& sCaption)
+{
+  std::wstring sConv;
+  sConv.reserve(sCaption.Length());
+  for (auto it = sCaption.begin(); it != sCaption.end(); ) {
+    if (*it == '&') {
+      it++;
+      if (it != sCaption.end() && *it == '&') {
+        sConv.push_back('&');
+        sConv.push_back('&');
+        it++;
+      }
+    }
+    else
+      sConv.push_back(*it++);
+  }
+  return WString(sConv.c_str(), sConv.length());
 }
 //---------------------------------------------------------------------------
 int FloorEntropyBits(double val)

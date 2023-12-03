@@ -166,8 +166,7 @@ PasswordGenerator::PasswordGenerator(RandomGenerator* pRandGen)
   for (int nI = 0; nI < PASSWGEN_NUMCHARSETCODES; nI++)
     m_charSetDecodes[nI] = AsciiCharToW32String(CHARSET_DECODES[nI]);
 
-  WString sCharSetDef = CHARSET_FORMAT[2];
-  SetupCharSets(sCharSetDef);
+  SetupCharSets(WString(CHARSET_FORMAT[2]));
   LoadWordListFile();
   LoadTrigramFile();
 };
@@ -254,6 +253,7 @@ w32string PasswordGenerator::CreateSetOfAmbiguousChars(
 //---------------------------------------------------------------------------
 std::optional<std::pair<w32string,CharSetType>> PasswordGenerator::ParseCharSet(
   w32string sInput,
+  bool blIncludeCharFromEachSubset,
   std::optional<CharSetFreq>* pCharSetFreq) const
 {
   if (sInput.length() < 2)
@@ -339,8 +339,9 @@ std::optional<std::pair<w32string,CharSetType>> PasswordGenerator::ParseCharSet(
           if (blAtLeast)
             nLen++;
         }
-
       }
+      if (blIncludeCharFromEachSubset && mapIt->second == 0)
+        mapIt->second = -1;
       sInput.erase(nStartPos, nLen);
       //nStartPos = 0;
     }
@@ -417,9 +418,10 @@ std::optional<std::pair<w32string,CharSetType>> PasswordGenerator::ParseCharSet(
   return std::make_optional(std::make_pair(sFullCharSet, cstStandard));
 }
 //---------------------------------------------------------------------------
-void PasswordGenerator::SetupCharSets(WString& sCustomChars,
+WString PasswordGenerator::SetupCharSets(const WString& sCustomChars,
   const WString& sAmbigChars,
   const WString& sSpecialSymbols,
+  bool blIncludeCharFromEachSubset,
   bool blExcludeAmbigChars,
   bool blDetermineSubsets)
 {
@@ -455,7 +457,7 @@ void PasswordGenerator::SetupCharSets(WString& sCustomChars,
   m_charSetDecodes[CHARSET_CODES_SYMBOLS] = sSpecialSymCharSet;
 
   if (m_charSetDecodes[CHARSET_CODES_HIGHANSI].empty()) {
-    static const int HIGHANSI_NUM = 129;
+    const int HIGHANSI_NUM = 129;
 
     char szHighAnsi[HIGHANSI_NUM+1];
     for (int i = 0; i < HIGHANSI_NUM; i++)
@@ -472,8 +474,10 @@ void PasswordGenerator::SetupCharSets(WString& sCustomChars,
 
   CharSetType charSetType;
   std::optional<CharSetFreq> charSetFreq;
-  auto customCharSetResult = ParseCharSet(WStringToW32String(sCustomChars),
-      &charSetFreq);
+  auto customCharSetResult = ParseCharSet(
+    WStringToW32String(sCustomChars),
+    blIncludeCharFromEachSubset,
+    &charSetFreq);
 
   // are there any non-lowercase letters in the set?
   m_blCustomCharSetNonLC = false;
@@ -486,8 +490,9 @@ void PasswordGenerator::SetupCharSets(WString& sCustomChars,
     }
   }
 
-  sCustomChars = customCharSetResult ?
-    W32StringToWString(customCharSetResult->first) : WString();
+  WString sCustomCharSet;
+  if (customCharSetResult)
+    sCustomCharSet = W32StringToWString(customCharSetResult->first);
   m_nCustomCharSetUniqueSize = 0;
 
   if (customCharSetResult) {
@@ -570,13 +575,16 @@ void PasswordGenerator::SetupCharSets(WString& sCustomChars,
       size_t pos = 0;
       while ((pos = m_sCustomCharSet.find_first_of(m_includeCharSets[i], pos))
                != w32string::npos)
-      sSubset.push_back(m_sCustomCharSet[pos++]);
+        sSubset.push_back(m_sCustomCharSet[pos++]);
       m_customSubsets[i] = sSubset;
     }
   }
+
+  return sCustomCharSet;
 }
 //---------------------------------------------------------------------------
 int PasswordGenerator::LoadWordListFile(WString sFileName,
+  int nMinWordLen,
   int nMaxWordLen,
   bool blConvertToLC)
 {
@@ -594,26 +602,29 @@ int PasswordGenerator::LoadWordListFile(WString sFileName,
       auto pFile = std::make_unique<TStringFileStreamW>(
           sFileName, fmOpenRead, ceAnsi, true, 65536, "\n\t ");
 
-      static const int WORDBUF_SIZE = 1024;
+      const int WORDBUF_SIZE = 1024;
       wchar_t wszWord[WORDBUF_SIZE];
+      nMinWordLen = std::max(1, nMinWordLen);
+      nMaxWordLen = std::max(nMinWordLen, nMaxWordLen);
+      int nWordLen;
 
-      while (pFile->ReadString(wszWord, WORDBUF_SIZE) > 0 &&
+      while ((nWordLen = pFile->ReadString(wszWord, WORDBUF_SIZE)) > 0 &&
         wordListVec.size() < WORDLIST_MAX_SIZE)
       {
-        WString sWord = WString(wszWord).Trim();
+        WString sWord = WString(wszWord, nWordLen).Trim();
 
         if (sWord.IsEmpty())
           continue;
 
-        int nWordLen = GetNumOfUnicodeChars(sWord.c_str());
+        nWordLen = GetNumOfUnicodeChars(sWord.c_str());
 
-        if (nWordLen == 0 || nWordLen > nMaxWordLen)
+        if (nWordLen < nMinWordLen || nWordLen > nMaxWordLen)
           continue;
 
         if (blConvertToLC)
           sWord = LowerCase(sWord);
 
-        auto ret = wordListSet.insert(sWord.c_str());
+        auto ret = wordListSet.emplace(sWord.c_str(), sWord.Length());
         if (ret.second)
           wordListVec.push_back(*ret.first);
       }
@@ -646,12 +657,18 @@ int PasswordGenerator::LoadWordListFile(WString sFileName,
   return nNumOfWords;
 }
 //---------------------------------------------------------------------------
-int PasswordGenerator::GetPassword(word32* pDest,
+int PasswordGenerator::GetPassword(SecureW32String& sDest,
   int nLength,
   int nFlags) const
 {
+  if (nLength <= 0)
+    return 0;
+
   word32 lChar;
   std::unique_ptr<std::set<word32>> pPasswCharSet;
+
+  if (static_cast<word32>(nLength + 1) < sDest.Size())
+    sDest.New(nLength + 1);
 
   if (m_customCharSetFreq) {
     nFlags &= ~PASSW_FLAG_EXCLUDEREPCHARS;
@@ -671,7 +688,7 @@ int PasswordGenerator::GetPassword(word32* pDest,
     for (auto& p : charSetFreq) {
       for (int i = 0; i < p.second && !p.first.empty() && nPos < nLength; i++) {
         lChar = p.first[m_pRandGen->GetNumRange(p.first.length())];
-        pDest[nPos++] = lChar;
+        sDest[nPos++] = lChar;
         if ((nFlags & PASSW_FLAG_EACHCHARONLYONCE) && nPos < nLength) {
           for (int j = nItemIdx; j < charSetFreq.size(); j++) {
             //removeChar(charSetFreq[j].first, lChar);
@@ -699,7 +716,7 @@ int PasswordGenerator::GetPassword(word32* pDest,
 
     nLength = nPos;
     if (nLength >= 2)
-      m_pRandGen->Permute<word32>(pDest, nLength);
+      m_pRandGen->Permute<word32>(sDest, nLength);
   }
   else {
     if ((nFlags & PASSW_FLAG_EACHCHARONLYONCE) &&
@@ -718,16 +735,16 @@ int PasswordGenerator::GetPassword(word32* pDest,
           if (!ret.second)
             continue;
         }
-        else if (nI > 0 && strchpos(pDest, nI, lChar) >= 0)
+        else if (nI > 0 && strchpos(sDest.begin(), nI, lChar) >= 0)
           continue;
       }
-      else if (nI > 0 && nFlags & PASSW_FLAG_EXCLUDEREPCHARS && lChar == pDest[nI-1])
+      else if (nI > 0 && nFlags & PASSW_FLAG_EXCLUDEREPCHARS && lChar == sDest[nI-1])
         continue;
-      pDest[nI++] = lChar;
+      sDest[nI++] = lChar;
     }
   }
 
-  pDest[nLength] = '\0';
+  sDest[nLength] = '\0';
 
   if (nFlags >= PASSW_FLAG_INCLUDEUPPERCASE) {
     SecureMem<int> randPerm(PASSWGEN_NUMINCLUDECHARSETS);
@@ -763,11 +780,11 @@ int PasswordGenerator::GetPassword(word32* pDest,
 
       randPerm[nJ++] = nRand;
 
-      if (psCharSets[nI].find(pDest[nRand]) != w32string::npos)
+      if (psCharSets[nI].find(sDest[nRand]) != w32string::npos)
         continue;
 
       if (nFlags & PASSW_FLAG_EACHCHARONLYONCE &&
-        psCharSets[nI].find_first_not_of(pDest) == w32string::npos)
+        psCharSets[nI].find_first_not_of(sDest) == w32string::npos)
         continue;
 
       int nSetSize = psCharSets[nI].length();
@@ -780,18 +797,18 @@ int PasswordGenerator::GetPassword(word32* pDest,
             if (!ret.second)
               continue;
           }
-          else if (strchpos(pDest, nLength, lChar) >= 0)
+          else if (strchpos(sDest.begin(), nLength, lChar) >= 0)
             continue;
         }
         else if (nFlags & PASSW_FLAG_EXCLUDEREPCHARS && nSetSize >= 3) {
-          if (nRand > 0 && lChar == pDest[nRand-1])
+          if (nRand > 0 && lChar == sDest[nRand-1])
             continue;
-          if (nRand < nLength-1 && lChar == pDest[nRand+1])
+          if (nRand < nLength-1 && lChar == sDest[nRand+1])
             continue;
         }
         break;
       }
-      pDest[nRand] = lChar;
+      sDest[nRand] = lChar;
     }
 
     nRand = 0;
@@ -799,22 +816,22 @@ int PasswordGenerator::GetPassword(word32* pDest,
 
   lChar = 0;
 
-#ifdef _DEBUG
+#if 0 //ifdef _DEBUG
   if (nFlags & (PASSW_FLAG_EACHCHARONLYONCE | PASSW_FLAG_EXCLUDEREPCHARS)) {
     std::set<word32> testSet;
     for (int i = 0; i < nLength; i++) {
       bool blFail;
       if (nFlags & PASSW_FLAG_EACHCHARONLYONCE) {
-        auto ret = testSet.insert(pDest[i]);
+        auto ret = testSet.insert(sDest[i]);
         blFail = !ret.second;
       }
       else
-        blFail = i > 0 && pDest[i] == pDest[i-1];
+        blFail = i > 0 && sDest[i] == sDest[i-1];
       if (blFail) {
         WString s;
         s.SetLength(nLength);
         for (int j = 0; j < nLength; j++)
-          s[j+1] = static_cast<wchar_t>(pDest[j]);
+          s[j+1] = static_cast<wchar_t>(sDest[j]);
         throw Exception("Duplicate or rep. char in password " + s);
       }
     }
@@ -824,29 +841,39 @@ int PasswordGenerator::GetPassword(word32* pDest,
   return nLength;
 }
 //---------------------------------------------------------------------------
-int PasswordGenerator::GetPassphrase(word32* pDest,
+int PasswordGenerator::GetPassphrase(SecureW32String& sDest,
   int nWords,
   const word32* pChars,
+  int nCharsLen,
   int nFlags,
   int* pnNetWordsLen) const
 {
-  int nCharsLen = (pChars != nullptr) ? w32strlen(pChars) : 0;
-  int nLength = 0;
+  if (nWords <= 0)
+    return 0;
+
+  //int nCharsLen = (pChars != nullptr) ? w32strlen(pChars) : 0;
+  //int nLength = 0;
+  word32 lPos = 0;
   bool blAppendChars = false;
 
-  if (nCharsLen != 0 && !(nFlags & PASSPHR_FLAG_COMBINEWCH)) {
+  if (nCharsLen > 0 && !(nFlags & PASSPHR_FLAG_COMBINEWCH)) {
     if (nFlags & PASSPHR_FLAG_REVERSEWCHORDER)
       blAppendChars = true;
     else {
-      memcpy(pDest, pChars, nCharsLen * sizeof(word32));
-      nLength = nCharsLen;
-      pDest[nLength++] = ' ';
+      //memcpy(pDest, pChars, nCharsLen * sizeof(word32));
+      //nLength = nCharsLen;
+      //pDest[nLength++] = ' ';
+      sDest.StrCat(pChars, nCharsLen, lPos);
+      if (m_sWordSep.empty())
+        sDest.StrCat(' ', lPos);
+      else
+        sDest.StrCat(m_sWordSep.c_str(), m_sWordSep.length(), lPos);
     }
   }
 
   int nRand;
-  const int nCharsPerWord = nCharsLen / nWords;
-  const int nCharsRest = nCharsLen % nWords;
+  const int nCharsPerWord = (nCharsLen > 0) ? nCharsLen / nWords : 0;
+  const int nCharsRest = (nCharsLen > 0) ? nCharsLen % nWords : 0;
   int nCharsPos = 0;
   SecureW32String sWord(WORDLIST_MAX_WORDLEN + 1);
   std::unique_ptr<std::set<int>> pUniqueWordIdx;
@@ -856,7 +883,7 @@ int PasswordGenerator::GetPassphrase(word32* pDest,
 
   int nNetWordsLen = 0;
 
-  for (int nI = 0; nI < nWords; ) {
+  for (int i = 0; i < nWords; ) {
     nRand = m_pRandGen->GetNumRange(m_nWordListSize);
 
     if (pUniqueWordIdx) {
@@ -874,73 +901,118 @@ int PasswordGenerator::GetPassphrase(word32* pDest,
     if (nFlags & PASSPHR_FLAG_CAPITALIZEWORDS)
       sWord[0] = toupper(sWord[0]);
 
-    int nInsertWordIdx = nLength;
-
     if (nFlags & PASSPHR_FLAG_COMBINEWCH && nCharsPos < nCharsLen) {
       int nToCopy = nCharsPerWord;
-      if (nI < nCharsRest)
+      if (i < nCharsRest)
         nToCopy++;
 
       if (nFlags & PASSPHR_FLAG_REVERSEWCHORDER) {
-        memcpy(pDest + nLength, pChars + nCharsPos, nToCopy * sizeof(word32));
-        nLength += nToCopy;
+        //memcpy(pDest + nLength, pChars + nCharsPos, nToCopy * sizeof(word32));
+        //nLength += nToCopy;
+        sDest.StrCat(pChars + nCharsPos, nToCopy, lPos);
 
-        if (!(nFlags & PASSPHR_FLAG_DONTSEPWCH))
-          pDest[nLength++] = '-';
+        if (!(nFlags & PASSPHR_FLAG_DONTSEPWCH)) {
+          if (m_sWordCharSep.empty())
+            //pDest[nLength++] = '-';
+            sDest.StrCat('-', lPos);
+          else {
+            //memcpy(pDest + nLength, m_sWordCharSep.c_str(),
+            //  m_sWordCharSep.length() * sizeof(word32));
+            //nLength += m_sWordCharSep.length();
+            sDest.StrCat(m_sWordCharSep.c_str(), m_sWordCharSep.length(), lPos);
+          }
+        }
 
-        nInsertWordIdx = nLength;
+        //memcpy(pDest + nLength, sWord, nWordLen * sizeof(word32));
+        //nLength += nWordLen;
+        sDest.StrCat(sWord, lPos);
       }
       else {
-        if (!(nFlags & PASSPHR_FLAG_DONTSEPWCH))
-          pDest[nLength++ + nWordLen] = '-';
+        //memcpy(pDest + nLength, sWord, nWordLen * sizeof(word32));
+        //nLength += nWordLen;
+        sDest.StrCat(sWord, lPos);
 
-        memcpy(pDest + nLength + nWordLen, pChars + nCharsPos, nToCopy * sizeof(word32));
-        nLength += nToCopy;
+        if (!(nFlags & PASSPHR_FLAG_DONTSEPWCH)) {
+          if (m_sWordCharSep.empty())
+            //pDest[nLength++] = '-';
+            sDest.StrCat('-', lPos);
+          else {
+            //memmcpy(pDest + nLength, m_sWordCharSep.c_str(),
+            //m_sWordCharSep.length() * sizeof(word32));
+            //nLength += m_sWordCharSep.length();
+            sDest.StrCat(m_sWordCharSep.c_str(), m_sWordCharSep.length(), lPos);
+          }
+        }
+
+        //memcpy(pDest + nLength, pChars + nCharsPos, nToCopy * sizeof(word32));
+        //nLength += nToCopy;
+        sDest.StrCat(pChars + nCharsPos, nToCopy, lPos);
       }
 
       nCharsPos += nToCopy;
     }
+    else {
+      //memcpy(pDest + nLength, sWord, nWordLen * sizeof(word32));
+      //nLength += nWordLen;
+      sDest.StrCat(sWord, lPos);
+    }
 
-    memcpy(pDest + nInsertWordIdx, sWord, nWordLen * sizeof(word32));
-    nLength += nWordLen;
     nNetWordsLen += nWordLen;
 
-    if (++nI < nWords) {
+    if (++i < nWords) {
       if (!(nFlags & PASSPHR_FLAG_DONTSEPWORDS)) {
-        pDest[nLength++] = ' ';
-        nNetWordsLen++;
+        if (m_sWordSep.empty()) {
+          //pDest[nLength++] = ' ';
+          sDest.StrCat(' ', lPos);
+          nNetWordsLen++;
+        }
+        else {
+          //memcpy(pDest + nLength, m_sWordSep.c_str(),
+          //  m_sWordSep.length() * sizeof(word32));
+          //nLength += m_sWordSep.length();
+          sDest.StrCat(m_sWordSep.c_str(), m_sWordSep.length(), lPos);
+          nNetWordsLen += m_sWordSep.length();
+        }
       }
     }
-    else
-      pDest[nLength] = '\0';
   }
 
   if (blAppendChars) {
-    pDest[nLength++] = ' ';
-    memcpy(pDest + nLength, pChars, nCharsLen * sizeof(word32));
-    nLength += nCharsLen;
-    pDest[nLength] = '\0';
+    //pDest[nLength++] = ' ';
+    //memcpy(pDest + nLength, pChars, nCharsLen * sizeof(word32));
+    //nLength += nCharsLen;
+    if (m_sWordSep.empty())
+      sDest.StrCat(' ', lPos);
+    else
+      sDest.StrCat(m_sWordSep.c_str(), m_sWordSep.length(), lPos);
+    sDest.StrCat(pChars, nCharsLen, lPos);
   }
+
+  //pDest[nLength] = '\0';
 
   if (pnNetWordsLen != nullptr)
     *pnNetWordsLen = nNetWordsLen;
 
   nRand = 0;
 
-  return nLength;
+  return lPos; //nLength;
 }
 //---------------------------------------------------------------------------
-int PasswordGenerator::GetFormatPassw(word32* pDest,
-  int nMaxDestLen,
+int PasswordGenerator::GetFormatPassw(SecureW32String& sDest,
   const w32string& sFormat,
   int nFlags,
   const word32* pPassw,
   int* pnPasswUsed,
-  word32* plInvalidSpec,
+  w32string* pInvalidSpec,
   double* pdSecurity)
 {
+  if (sDest.Size() < 2 || sFormat.empty())
+    return 0;
+
+  word32* pDest = sDest.begin();
+  const int nMaxDestLen = std::min(1'000'000'000u, sDest.Size() - 1);
+  const int nFormatLen = sFormat.length();
   int nSrcIdx = 0, nDestIdx = 0, nI;
-  int nFormatLen = sFormat.length();
   bool blComment = false;
   bool blVerbatim = false;
   //bool blSpecMode = true;
@@ -962,10 +1034,10 @@ int PasswordGenerator::GetFormatPassw(word32* pDest,
   double dPermSecurity;
 
   if (pnPasswUsed != nullptr)
-    *pnPasswUsed = PASSFORMAT_PWUSED_NOTUSED;
+    *pnPasswUsed = pPassw ? PASSFORMAT_PWUSED_NOSPECIFIER : 0;
 
-  if (plInvalidSpec != nullptr)
-    *plInvalidSpec = 0;
+  //if (plInvalidSpec != nullptr)
+  //  *plInvalidSpec = 0;
 
   if (sFormat[0] == '[') {
     nSrcIdx++;
@@ -974,7 +1046,7 @@ int PasswordGenerator::GetFormatPassw(word32* pDest,
   }
 
   for ( ; nSrcIdx < nFormatLen && nDestIdx < nMaxDestLen; nSrcIdx++) {
-    word32 lChar = sFormat[nSrcIdx];
+    const word32 lChar = sFormat[nSrcIdx];
 
     if (nUserCharSetNum > 0) {
       bool blCharSetEnds = false;
@@ -1038,11 +1110,9 @@ int PasswordGenerator::GetFormatPassw(word32* pDest,
       }
     }
 
-    SecureW32String sWord(WORDLIST_MAX_WORDLEN + 1);
     w32string sUserCharSet;
     const w32string* psCharSet = nullptr;
     CharSetType charSetType = cstStandard;
-    std::unique_ptr<std::set<SecureW32String>> pUniqueWordList;
 
     switch (lChar) {
     case '<': // begin user-defined character set
@@ -1074,12 +1144,16 @@ int PasswordGenerator::GetFormatPassw(word32* pDest,
         nToCopy = std::min<int>(w32strlen(pPassw), nMaxDestLen - nDestIdx);
         memcpy(pDest + nDestIdx, pPassw, nToCopy * sizeof(word32));
         nDestIdx += nToCopy;
-        if (pnPasswUsed != nullptr)
+        if (pnPasswUsed != nullptr) {
           *pnPasswUsed = nToCopy;
-        pPassw = nullptr; // must be used only once
+          pnPasswUsed = nullptr;
+        }
+        //pPassw = nullptr; // must be used only once
       }
-      else if (pnPasswUsed != nullptr && *pnPasswUsed <= 0)
-        *pnPasswUsed = PASSFORMAT_PWUSED_EMPTYPW;
+      else if (pnPasswUsed != nullptr) {
+        *pnPasswUsed = PASSFORMAT_PWUSED_EMPTYPASSW;
+        pnPasswUsed = nullptr;
+      }
       break;
 
     case 'q':
@@ -1095,11 +1169,14 @@ int PasswordGenerator::GetFormatPassw(word32* pDest,
       break;
 
     case 'W': // add word
-    case 'w': // add word + space
-      //try {
+    case 'w': // add word + separator string
+    {
+      SecureW32String sWord(WORDLIST_MAX_WORDLEN + 1);
+      std::unique_ptr<std::set<word32>> pUniqueWordIdx;
+
       if (blUnique) {
         nNum = blNumDefault ? m_nWordListSize : std::min(nNum, m_nWordListSize);
-        pUniqueWordList.reset(new std::set<SecureW32String>);
+        pUniqueWordIdx.reset(new std::set<word32>);
       }
       for (nI = 0; nI < nNum && nDestIdx < nMaxDestLen; ) {
         lRand = m_pRandGen->GetNumRange(m_nWordListSize);
@@ -1109,16 +1186,22 @@ int PasswordGenerator::GetFormatPassw(word32* pDest,
         else
           nWordLen = WCharToW32Char(m_wordList[lRand].c_str(), sWord);
         if (blUnique) {
-          std::pair<std::set<SecureW32String>::iterator, bool> ret =
-            pUniqueWordList->insert(sWord);
+          auto ret = pUniqueWordIdx->insert(lRand);
           if (!ret.second)
             continue;
         }
         nToCopy = std::min(nWordLen, nMaxDestLen - nDestIdx);
         memcpy(pDest + nDestIdx, sWord, nToCopy * sizeof(word32));
         nDestIdx += nToCopy;
-        if (lChar == 'w' && nI < nNum-1 && nDestIdx < nMaxDestLen)
-          pDest[nDestIdx++] = ' ';
+        if (lChar == 'w' && nI < nNum-1 && nDestIdx < nMaxDestLen) {
+          if (m_sWordSep.empty())
+            pDest[nDestIdx++] = ' ';
+          else {
+            nToCopy = std::min<int>(m_sWordSep.length(), nMaxDestLen - nDestIdx);
+            memcpy(pDest + nDestIdx, m_sWordSep.c_str(), nToCopy * sizeof(word32));
+            nDestIdx += nToCopy;
+          }
+        }
         nI++;
       }
       if (pdSecurity != nullptr) {
@@ -1128,7 +1211,7 @@ int PasswordGenerator::GetFormatPassw(word32* pDest,
           *pdSecurity += m_dWordListEntropy * nI;
       }
       break;
-
+    }
     case '[': // start index for repeating a sequence in sFormat
       if (nRepeatIdx < FORMAT_REPEAT_MAXDEPTH) {
         repeatNum[nRepeatIdx] = nNum - 1;
@@ -1157,9 +1240,9 @@ int PasswordGenerator::GetFormatPassw(word32* pDest,
     case '}': // end
       if (nPermNum >= 0) {
         int nPermSize = nDestIdx - nPermStart;
-        int nToUse = (nPermNum == 0) ? nPermSize : std::min(nPermNum, nPermSize);
         if (nPermSize >= 2) { // now permute!
           m_pRandGen->Permute<word32>(pDest + nPermStart, nPermSize);
+          int nToUse = (nPermNum == 0) ? nPermSize : std::min(nPermNum, nPermSize);
           nDestIdx = nPermStart + nToUse;
           if (pdSecurity != nullptr && nToUse < nPermSize)
             *pdSecurity = dPermSecurity + (*pdSecurity - dPermSecurity) * nToUse / nPermSize;
@@ -1179,9 +1262,8 @@ int PasswordGenerator::GetFormatPassw(word32* pDest,
           else
             psCharSet = &m_formatCharSets[nPlaceholder];
         }
-        else if (plInvalidSpec != nullptr) {
-          *plInvalidSpec = lChar;
-          plInvalidSpec = nullptr;
+        else if (pInvalidSpec != nullptr) {
+          pInvalidSpec->push_back(lChar);
         }
       }
       else {
@@ -1198,8 +1280,10 @@ int PasswordGenerator::GetFormatPassw(word32* pDest,
       else if (charSetType == cstPhoneticMixedCase)
         nFlags |= PASSW_FLAG_PHONETICMIXEDCASE;
 
-      int nLen = GetPhoneticPassw(pDest + nDestIdx,
-          std::min(nNum, nMaxDestLen - nDestIdx), nFlags);
+      int nLen = std::min(nNum, nMaxDestLen - nDestIdx);
+      SecureW32String phoneticPassw(nLen + 1);
+      nLen = GetPhoneticPassw(phoneticPassw, nLen, nFlags);
+      memcpy(pDest + nDestIdx, phoneticPassw, nLen * sizeof(word32));
 
       nDestIdx += nLen;
 
@@ -1259,7 +1343,8 @@ WString PasswordGenerator::GetWord(int nIndex) const
   if (m_wordList.empty())
     return getDiceWd(nIndex);
 
-  return WString(m_wordList[nIndex].c_str());
+  const auto& sWord = m_wordList[nIndex];
+  return WString(sWord.c_str(), sWord.length());
 }
 //---------------------------------------------------------------------------
 void PasswordGenerator::CreateTrigramFile(const WString& sSrcFileName,
@@ -1277,7 +1362,7 @@ void PasswordGenerator::CreateTrigramFile(const WString& sSrcFileName,
 
   int nWordLen;
   while ((nWordLen = pSrcFile->ReadString(wszWord, WORDBUF_SIZE)) > 0) {
-    WString sWord = Trim(WString(wszWord));
+    WString sWord = Trim(WString(wszWord, nWordLen));
     nWordLen = sWord.Length();
 
     if (nWordLen < 3)
@@ -1374,20 +1459,26 @@ int PasswordGenerator::LoadTrigramFile(WString sFileName)
   return 1;
 }
 //---------------------------------------------------------------------------
-int PasswordGenerator::GetPhoneticPassw(word32* pDest,
+int PasswordGenerator::GetPhoneticPassw(SecureW32String& sDest,
   int nLength,
   int nFlags) const
 {
+  if (nLength <= 0)
+    return 0;
+
 //  word32* pTris = (m_pPhoneticTris == nullptr) ? (word32*) PHONETIC_TRIS : m_pPhoneticTris;
 //#define getLetter(x)  x + (blMixedCase ? ((m_pRandGen->GetByte() & 1) ? 'a' : 'A') : base)
-  bool blDefaultTris = m_phoneticTris.empty();
-  bool blMixedCase = nFlags & PASSW_FLAG_PHONETICMIXEDCASE;
+  const bool blDefaultTris = m_phoneticTris.empty();
+  const bool blMixedCase = nFlags & PASSW_FLAG_PHONETICMIXEDCASE;
   word32 lSumFreq = m_lPhoneticSigma;
   word32 lRand = m_pRandGen->GetNumRange(lSumFreq);
   word32 lSum = 0;
   int nChars = 0, nI;
   char base = (nFlags & PASSW_FLAG_PHONETICUPPERCASE) ? 'A' : 'a';
   char ch1, ch2, ch3;
+
+  if (static_cast<word32>(nLength + 1) < sDest.Size())
+    sDest.New(nLength + 1);
 
   std::function<char(char)> getLetter;
   if (blMixedCase)
@@ -1409,11 +1500,11 @@ int PasswordGenerator::GetPhoneticPassw(word32* pDest,
   }
 
   if (nLength >= 1)
-    pDest[nChars++] = getLetter(ch1);
+    sDest[nChars++] = getLetter(ch1);
   if (nLength >= 2)
-    pDest[nChars++] = getLetter(ch2);
+    sDest[nChars++] = getLetter(ch2);
   if (nLength >= 3)
-    pDest[nChars++] = getLetter(ch3);
+    sDest[nChars++] = getLetter(ch3);
 
   while (nChars < nLength) {
     ch1 = ch2;
@@ -1448,10 +1539,10 @@ int PasswordGenerator::GetPhoneticPassw(word32* pDest,
       }
     }
 
-    pDest[nChars++] = getLetter(ch3);
+    sDest[nChars++] = getLetter(ch3);
   }
 
-  pDest[nChars] = '\0';
+  sDest[nChars] = '\0';
   lRand = 0;
 
   if (nFlags >= PASSW_FLAG_INCLUDEUPPERCASE) {
@@ -1499,11 +1590,11 @@ int PasswordGenerator::GetPhoneticPassw(word32* pDest,
       randPerm[nJ++] = nRand;
 
       if (nFlagVal == PASSW_FLAG_INCLUDEUPPERCASE)
-        pDest[nRand] = toupper(pDest[nRand]);
+        sDest[nRand] = toupper(sDest[nRand]);
       else if (nFlagVal == PASSW_FLAG_INCLUDELOWERCASE)
-        pDest[nRand] = tolower(pDest[nRand]);
+        sDest[nRand] = tolower(sDest[nRand]);
       else
-        pDest[nRand] = m_includeCharSets[nI][m_pRandGen->GetNumRange(
+        sDest[nRand] = m_includeCharSets[nI][m_pRandGen->GetNumRange(
           m_includeCharSets[nI].length())];
     }
 
@@ -1531,7 +1622,7 @@ double PasswordGenerator::CalcPermSetEntropy(int nSetSize,
   return (logFactorial(nSetSize) - logFactorial(nSetSize - nNumOfSamples)) / LOG2;
 }
 //---------------------------------------------------------------------------
-int PasswordGenerator::EstimatePasswSecurity(const wchar_t* pwszPassw)
+double PasswordGenerator::EstimatePasswSecurity(const wchar_t* pwszPassw)
 {
   if (pwszPassw == nullptr || pwszPassw[0] == '\0')
     return 0;
@@ -1604,6 +1695,6 @@ int PasswordGenerator::EstimatePasswSecurity(const wchar_t* pwszPassw)
   if (blSpecial) nCharSpace += 33; // special
   // maximum ANSI space = 97
 
-  return Ceil(Log2(static_cast<double>(nCharSpace)) * dEffectiveLength);
+  return Log2(static_cast<double>(nCharSpace)) * dEffectiveLength;
 }
 //---------------------------------------------------------------------------

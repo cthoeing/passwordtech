@@ -213,25 +213,24 @@ public:
     m_pRoundKeys = nullptr;
   }
 
-  #define ER64(x,y,k) (x=_rotr64(x,8), x+=y, x^=k, y=_rotl64(y,3), y^=x)
+  #define ER64(x,y,k) (x=(_rotr64(x,8)+y)^k, y=_rotl64(y,3)^x)
 
   void SetKey(const word8 pKey[32])
   {
     const word64* K = reinterpret_cast<const word64*>(pKey);
     word64 i, D = K[3], C = K[2], B = K[1], A = K[0];
-	for (i = 0; i < 33;) {
-		m_pRoundKeys[i] = A; ER64(B, A, i++);
-		m_pRoundKeys[i] = A; ER64(C, A, i++);
-		m_pRoundKeys[i] = A; ER64(D, A, i++);
-	}
-	m_pRoundKeys[i] = A;
+	  for (i = 0; i < 33; ) {
+		  m_pRoundKeys[i] = A; ER64(B, A, i++);
+		  m_pRoundKeys[i] = A; ER64(C, A, i++);
+		  m_pRoundKeys[i] = A; ER64(D, A, i++);
+    }
+	  m_pRoundKeys[i] = A;
   }
 
   void Encrypt(word64 Pt[2], word64 Ct[2]) const
   {
-	//Ct[0] = Pt[0]; Ct[1] = Pt[1];
     word64 A = Pt[0], B = Pt[1];
-	for (int i = 0; i < 34; ) ER64(A, B, m_pRoundKeys[i++]);
+	  for (int i = 0; i < 34; ) ER64(A, B, m_pRoundKeys[i++]);
     Ct[0] = A;
     Ct[1] = B;
   }
@@ -263,9 +262,9 @@ public:
     return 16;
   }
 
-  word32 GetMaxNumOfBlocks(void) const
+  word64 GetMaxNumOfBlocks(void) const
   {
-    return 65536;
+    return 65536ull;
   }
 
   void Move(void* pNew)

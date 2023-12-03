@@ -40,6 +40,8 @@ CONFIG_ID = "ProvideEntropy";
 __fastcall TProvideEntropyDlg::TProvideEntropyDlg(TComponent* Owner)
   : TForm(Owner)
 {
+  SetFormComponentsAnchors(this);
+
   Constraints->MinHeight = Height;
   Constraints->MinWidth = Width;
 
@@ -87,8 +89,8 @@ void __fastcall TProvideEntropyDlg::OKBtnClick(TObject *Sender)
     word32 lEntBits = EntropyManager::GetInstance().AddData(sTextUtf8,
         sTextUtf8.StrLen(), 0.437, 3.5);
 
-    MsgBox(TRLFormat("%d bits of entropy have been added to the random pool.",
-        lEntBits), MB_ICONINFORMATION);
+    MsgBox(TRLFormat("%1 bits of entropy have been added to the random pool.",
+      { UIntToStr(lEntBits) }), MB_ICONINFORMATION);
   }
 
   ModalResult = mrOk;

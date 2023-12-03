@@ -43,6 +43,7 @@
 #include <Vcl.VirtualImageList.hpp>
 #include <unordered_set>
 #include <atomic>
+#include <optional>
 #include "RandomPool.h"
 #include "PasswGen.h"
 #include "PasswOptions.h"
@@ -84,9 +85,9 @@ struct PWGenProfile {
   WString FormatString;
   bool RunScript;
   WString ScriptFileName;
-  int NumPassw;
-  bool AdvancedOptionsUsed;
-  PasswOptions AdvancedPasswOptions;
+  WString NumPassw;
+  //bool AdvancedOptionsUsed;
+  std::optional<PasswOptions> AdvancedPasswOptions;
 };
 
 int FindPWGenProfile(const WString& sName);
@@ -361,7 +362,6 @@ __published:	// IDE-managed Components
   void __fastcall WordsNumBoxExit(TObject *Sender);
   void __fastcall MainMenu_Help_VisitWebsiteClick(TObject *Sender);
   void __fastcall MainMenu_Help_DonateClick(TObject *Sender);
-  void __fastcall NumPasswBoxExit(TObject *Sender);
   void __fastcall FormatListExit(TObject *Sender);
   void __fastcall WLFNListExit(TObject *Sender);
   void __fastcall WordListInfoBtnClick(TObject *Sender);
@@ -453,7 +453,7 @@ private:	// User declarations
   std::vector<LanguageEntry> m_languages;
   std::vector<HotKeyEntry> m_hotKeys;
   std::unordered_set<std::wstring> m_commonPassw;
-  int m_nCommonPasswEntropy;
+  double m_dCommonPasswEntropy;
   std::unique_ptr<LuaScript> m_pScript;
   TDateTime m_lastUpdateCheck;
   AnsiString m_asDonorKey;
@@ -473,7 +473,7 @@ private:	// User declarations
   int  __fastcall AddEntryToList(TComboBox* pComboBox,
     const WString& sEntry,
     bool blCaseSensitive);
-  void __fastcall ShowPasswInfo(int nPasswLen, int nPasswBits,
+  void __fastcall ShowPasswInfo(int nPasswLen, double dPasswBits,
     bool blCommonPassw = false,
     bool blEstimated = false);
   void __fastcall AppMessage(MSG& msg, bool& blHandled);

@@ -34,7 +34,7 @@
 #include "UnicodeUtil.h"
 
 const int
-PASSWOPTIONS_NUM              = 17,
+PASSWOPTIONS_NUM              = 18,
 
 PASSWOPTION_EXCLUDEAMBIG      = 0x00001,
 PASSWOPTION_FIRSTCHARNOTLC    = 0x00002,
@@ -52,11 +52,12 @@ PASSWOPTION_LOWERCASEWORDS    = 0x01000,
 PASSWOPTION_EACHCHARONLYONCE  = 0x02000,
 PASSWOPTION_EACHWORDONLYONCE  = 0x04000,
 PASSWOPTION_CAPITALIZEWORDS   = 0x08000,
-PASSWOPTION_CHECKEACHPASSW    = 0x10000;
+PASSWOPTION_CHECKEACHPASSW    = 0x10000,
+PASSWOPTION_INCLUDE_CHAR_FROM_EACH_SUBSET = 0x20000;
 
 const bool PASSWOPTIONS_STARRED[PASSWOPTIONS_NUM] =
-{ true, true, false, false, false, true, true, true, true, false, true,
-  true, true, true, true, false
+{ true, true, false, false, false, false, false, false, false, false, true,
+  true, true, true, true, false, false
 };
 
 template<int N>
@@ -77,7 +78,10 @@ struct PasswOptions {
   int Flags;
   WString AmbigChars;
   WString SpecialSymbols;
+  int MinWordLen;
   int MaxWordLen;
+  WString WordSeparator;
+  WString WordCharSeparator;
   WString TrigramFileName;
 };
 
@@ -88,8 +92,8 @@ __published:	// IDE-managed Components
   TLabel *InfoLbl;
   TLabel *AmbigCharsLbl;
   TLabel *SpecialSymLbl;
-  TLabel *MaxWordLenLbl;
-  TUpDown *MaxWordLenSpinBtn;
+  TLabel *MinMaxWordLenLbl;
+  TUpDown *MinWordLenSpinBtn;
   TLabel *TrigramFileLbl;
   TBevel *Separator;
   TButton *OKBtn;
@@ -97,14 +101,21 @@ __published:	// IDE-managed Components
   TButton *BrowseBtn;
   TEdit *AmbigCharsBox;
   TEdit *SpecialSymBox;
-  TEdit *MaxWordLenBox;
+  TEdit *MinWordLenBox;
   TEdit *TrigramFileBox;
   TPopupMenu *ListMenu;
   TMenuItem *ListMenu_SelectAll;
   TMenuItem *ListMenu_DeselectAll;
   TMenuItem *ListMenu_InvertSelection;
   TMenuItem *ListMenu_N1;
-  void __fastcall MaxWordLenBoxExit(TObject *Sender);
+  TLabel *SeparatorsLbl;
+  TEdit *WordSepBox;
+  TLabel *WordSepLbl;
+  TLabel *WordCharSepLbl;
+  TEdit *WordCharSepBox;
+  TEdit *MaxWordLenBox;
+  TUpDown *MaxWordLenSpinBtn;
+  void __fastcall MinMaxWordLenBoxExit(TObject *Sender);
   void __fastcall FormShow(TObject *Sender);
   void __fastcall FormActivate(TObject *Sender);
   void __fastcall BrowseBtnClick(TObject *Sender);

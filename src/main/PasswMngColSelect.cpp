@@ -35,6 +35,7 @@ TPasswMngColDlg *PasswMngColDlg;
 __fastcall TPasswMngColDlg::TPasswMngColDlg(TComponent* Owner)
   : TForm(Owner)
 {
+  SetFormComponentsAnchors(this);
   if (g_pLangSupp) {
     TRLCaption(this);
     TRLCaption(OKBtn);

@@ -114,7 +114,9 @@ const int
   FORM_TAG_UNLOCK_DB      = 2,
   FORM_TAG_ITEM_SELECTED  = 3,
 
-  PASSWBOX_TAG_PASSW_GEN  = 1;
+  PASSWBOX_TAG_PASSW_GEN  = 1,
+
+  WEAK_PASSW_THRESHOLD = 75;
 
 const int
   STD_EXPIRY_DAYS[] = { 7, 14, 30, 90, 180, 365 };
@@ -257,10 +259,10 @@ WString getTimeStampString(bool blMillisec = false)
 {
   SYSTEMTIME st;
   GetLocalTime(&st);
-  WString sResult = FormatW("%d%.2d%.2d%.2d%.2d%.2d",
-    st.wYear, st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond);
+  WString sResult = Format("%d%.2d%.2d%.2d%.2d%.2d",
+    ARRAYOFCONST((st.wYear, st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond)));
   if (blMillisec)
-    sResult += FormatW("_%.3d", st.wMilliseconds);
+    sResult += Format("_%.3d", ARRAYOFCONST((st.wMilliseconds)));
   return sResult;
 }
 
@@ -308,6 +310,8 @@ __fastcall TPasswMngForm::TPasswMngForm(TComponent* Owner)
     m_nSortOrderFactor(1), m_nTagsSortByIdx(0), m_nTagsSortOrderFactor(1),
     m_nSearchFlags(INT_MAX), m_nPasswEntropyBits(0)
 {
+  SetFormComponentsAnchors(this);
+
   ChangeCaption();
 
   AddModifyBtn->Left = PrevBtn->Left;
@@ -339,7 +343,7 @@ __fastcall TPasswMngForm::TPasswMngForm(TComponent* Owner)
 
   for (int t : STD_EXPIRY_DAYS) {
     TMenuItem* pItem = new TMenuItem(ExpiryMenu);
-    pItem->Caption = TRLFormat("%d days", t);
+    pItem->Caption = TRLFormat("%1 days", { IntToStr(t) });
     pItem->Tag = t;
     pItem->OnClick = OnExpiryMenuItemClick;
     ExpiryMenu->Items->Add(pItem);
@@ -355,6 +359,9 @@ __fastcall TPasswMngForm::TPasswMngForm(TComponent* Owner)
   ResetDbOpenControls();
 
   ConfigurationDlg->SetOptions(g_config);
+
+  FilterInfoPanel->Caption = TRL("Filtered");
+  FilterInfoPanel->Font->Color = clBlue;
 
   if (g_pLangSupp) {
     auto translKeyValNames = m_keyValNames;
@@ -407,16 +414,17 @@ __fastcall TPasswMngForm::TPasswMngForm(TComponent* Owner)
     TRLHint(PasswSecurityBarPanel);
     TRLHint(UrlBtn);
     TRLHint(PasswHistoryBtn);
+    TRLHint(ClearFilterBtn);
     SearchBox->TextHint = TRL(SearchBox->TextHint);
   }
 
-  OpenDlg->Filter = FormatW("%s (*.pwdb)|*.pwdb|%s (*.*)|*.*",
-      TRL("Password databases").c_str(),
-      TRL("All files").c_str());
-  SaveDlg->Filter = FormatW("%s (*.pwdb)|*.pwdb|%s (*.csv)|*.csv|%s (*.*)|*.*",
-      TRL("Password databases").c_str(),
-      TRL("CSV files").c_str(),
-      TRL("All files").c_str());
+  OpenDlg->Filter = FormatW("%1 (*.pwdb)|*.pwdb|%2 (*.*)|*.*",
+      { TRL("Password databases"),
+        TRL("All files") });
+  SaveDlg->Filter = FormatW("%1 (*.pwdb)|*.pwdb|%2 (*.csv)|*.csv|%3 (*.*)|*.*",
+      { TRL("Password databases"),
+        TRL("CSV files"),
+        TRL("All files") });
 
   RegisterDropWindow(PasswBox->Handle, &m_pPasswBoxDropTarget);
 }
@@ -521,8 +529,8 @@ void __fastcall TPasswMngForm::LoadConfig(void)
     }*/
   }
 
-  TogglePasswBtn->Down = g_pIni->ReadBool(CONFIG_ID, "HidePassw", true);
-  TogglePasswBtnClick(this);
+  //TogglePasswBtn->Down = g_pIni->ReadBool(CONFIG_ID, "HidePassw", true);
+  //TogglePasswBtnClick(this);
 
   PasswQualityBtn->Down = g_pIni->ReadBool(CONFIG_ID, "EstimatePasswQuality", true);
   PasswQualityBtnClick(this);
@@ -586,7 +594,7 @@ void __fastcall TPasswMngForm::SaveConfig(void)
 
   g_pIni->WriteString(CONFIG_ID, "ListColWidths", sColWidths);
 
-  g_pIni->WriteBool(CONFIG_ID, "HidePassw", TogglePasswBtn->Down);
+  //g_pIni->WriteBool(CONFIG_ID, "HidePassw", TogglePasswBtn->Down);
   g_pIni->WriteBool(CONFIG_ID, "EstimatePasswQuality", PasswQualityBtn->Down);
   g_pIni->WriteBool(CONFIG_ID, "FindCaseSensitive", SearchMenu_CaseSensitive->Checked);
   g_pIni->WriteBool(CONFIG_ID, "FindFuzzy", SearchMenu_FuzzySearch->Checked);
@@ -637,7 +645,7 @@ bool __fastcall TPasswMngForm::OpenDatabase(int nOpenFlags,
   if (nOpenFlags & DB_OPEN_FLAG_EXISTING) {
     if (nOpenFlags & DB_OPEN_FLAG_UNLOCK) {
       sFileName = m_sDbFileName;
-      sCaption = TRLFormat("Unlock %s", ExtractFileName(sFileName).c_str());
+      sCaption = TRLFormat("Unlock %1", { ExtractFileName(sFileName) });
     }
     else {
       if (sFileName.IsEmpty()) {
@@ -655,11 +663,11 @@ bool __fastcall TPasswMngForm::OpenDatabase(int nOpenFlags,
         }
       }
       else if (!FileExists(sFileName)) {
-        MsgBox(TRLFormat("Could not find database file:\n\"%s\".", sFileName.c_str()),
-          MB_ICONERROR);
+        MsgBox(TRLFormat("Could not find database file:\n\"%1\".",
+          { sFileName.c_str() }), MB_ICONERROR);
         return false;
       }
-      sCaption = TRLFormat("Open %s", ExtractFileName(sFileName).c_str());
+      sCaption = TRLFormat("Open %1", { ExtractFileName(sFileName) });
     }
     nPasswEnterFlags |= PASSWENTER_FLAG_DECRYPT;
   }
@@ -706,10 +714,13 @@ bool __fastcall TPasswMngForm::OpenDatabase(int nOpenFlags,
     }
     catch (EPasswDbInvalidFormat& e) {
       Screen->Cursor = crDefault;
-      MsgBox(TRLFormat("Database format error:\n%s.\nDatabase version: %d.%d\n"
-        "Highest supported version: %d.%d",
-        e.Message.c_str(), passwDb->Version>>8, passwDb->Version&0xff,
-        PasswDatabase::VERSION_HIGH, PasswDatabase::VERSION_LOW),
+      MsgBox(TRLFormat("Database format error:\n%1.\nDatabase version: %2.%3\n"
+        "Highest supported version: %4.%5",
+        { e.Message,
+          IntToStr(passwDb->Version>>8),
+          IntToStr(passwDb->Version&0xff),
+          IntToStr(PasswDatabase::VERSION_HIGH),
+          IntToStr(PasswDatabase::VERSION_LOW) }),
         MB_ICONERROR);
       return false;
     }
@@ -720,7 +731,7 @@ bool __fastcall TPasswMngForm::OpenDatabase(int nOpenFlags,
     }
     catch (Exception& e) {
       Screen->Cursor = crDefault;
-      MsgBox(TRLFormat("Error while opening database file:\n%s.", e.Message.c_str()),
+      MsgBox(TRLFormat("Error while opening database file:\n%1.", { e.Message }),
         MB_ICONERROR);
       return false;
     }
@@ -729,7 +740,8 @@ bool __fastcall TPasswMngForm::OpenDatabase(int nOpenFlags,
   Screen->Cursor = crDefault;
   if (m_passwDb)
     CloseDatabase(true);
-  m_passwDb = std::move(passwDb);
+  //m_passwDb = std::move(passwDb);
+  m_passwDb.reset(passwDb.release());
   m_pSelectedItem = nullptr;
   m_nSearchMode = SEARCH_MODE_OFF;
   m_blDbChanged = false;
@@ -737,9 +749,12 @@ bool __fastcall TPasswMngForm::OpenDatabase(int nOpenFlags,
   m_blItemPasswChangeConfirm = false;
   m_blLocked = false;
 
-  // ensure that entries will not be filtered by expiry status
-  MainMenu_View_ExpiredEntries->Checked = false;
-  MainMenu_View_EntriesExpireSoon->Checked = false;
+  if (!(nOpenFlags & DB_OPEN_FLAG_UNLOCK)) {
+    // ensure that entries will not be filtered by expiry status
+    for (int i = 0; i < MainMenu_View_Filter->Count; i++) {
+      MainMenu_View_Filter->Items[i]->Checked = false;
+    }
+  }
 
   if (nOpenFlags & DB_OPEN_FLAG_EXISTING) {
     ResetListView(RELOAD_TAGS);
@@ -807,7 +822,7 @@ bool __fastcall TPasswMngForm::OpenDatabase(int nOpenFlags,
           MsgBox(TRL("The database contains expired entries.\nDo you want to filter "
             "these entries now?"),
             MB_ICONWARNING + MB_YESNO + MB_DEFBUTTON2) == IDYES) {
-      MainMenu_View_ExpiredEntries->Checked = true;
+      MainMenu_View_Filter_Expired->Checked = true;
       ResetListView();
     }
     if (g_config.Database.WarnEntriesExpireSoon &&
@@ -815,8 +830,8 @@ bool __fastcall TPasswMngForm::OpenDatabase(int nOpenFlags,
           MsgBox(TRL("The database contains entries that will expire soon.\n"
             "Do you want to filter these entries now?"),
             MB_ICONWARNING + MB_YESNO + MB_DEFBUTTON2) == IDYES) {
-      MainMenu_View_ExpiredEntries->Checked = false;
-      MainMenu_View_EntriesExpireSoon->Checked = true;
+      //MainMenu_View_Filter_Expired->Checked = false;
+      MainMenu_View_Filter_ExpireSoon->Checked = true;
       ResetListView();
     }
 
@@ -824,6 +839,9 @@ bool __fastcall TPasswMngForm::OpenDatabase(int nOpenFlags,
       DbView->Items->Item[0]->Selected = true;
     }
   }
+
+  TogglePasswBtn->Down = true;
+  TogglePasswBtnClick(this);
 
   NotifyUserAction();
   IdleTimer->Enabled = true;
@@ -890,6 +908,12 @@ bool __fastcall TPasswMngForm::CloseDatabase(bool blForce, int nLock)
       return false;
   }
 
+#ifdef _DEBUG
+  if (m_passwDb.use_count() > 1) {
+    ShowMessage("Database object is still in use somewhere!");
+  }
+#endif
+
   m_nLockSelItemIndex = -1;
   m_lockSelTags.clear();
 
@@ -910,7 +934,9 @@ bool __fastcall TPasswMngForm::CloseDatabase(bool blForce, int nLock)
     m_tagViewSelItemThread->TerminateAndWait();
     m_tagViewSelItemThread.reset();
   }
+
   m_passwDb.reset();
+
   //m_tempKeyVal.reset();
   //m_tempPasswHistory.reset();
 
@@ -948,6 +974,7 @@ bool __fastcall TPasswMngForm::CloseDatabase(bool blForce, int nLock)
   ChangeCaption();
   //ClearEditPanel();
   SearchResultPanel->Caption = WString();
+  FilterInfoPanel->Visible = false;
 
   IdleTimer->Enabled = false;
 
@@ -997,8 +1024,8 @@ bool __fastcall TPasswMngForm::SaveDatabase(const WString& sFileName)
         int nOldestNum = 0;
         TDateTime oldestAge;
         for (; nBackupNum <= nMaxNumBackups; nBackupNum++) {
-          WString sCheckFileName = sBackupFileName + FormatW("%.3d", nBackupNum) +
-            BACKUP_EXT;
+          WString sCheckFileName = sBackupFileName + Format("%.3d",
+            ARRAYOFCONST((nBackupNum))) + BACKUP_EXT;
           TDateTime fileAge;
           if (FileAge(sCheckFileName, fileAge)) {
             if (nOldestNum == 0 || fileAge < oldestAge) {
@@ -1011,7 +1038,7 @@ bool __fastcall TPasswMngForm::SaveDatabase(const WString& sFileName)
         }
         if (nBackupNum > nMaxNumBackups)
           nBackupNum = std::max(1, nOldestNum);
-        sBackupFileName += FormatW("%.3d", nBackupNum) + BACKUP_EXT;
+        sBackupFileName += Format("%.3d", ARRAYOFCONST((nBackupNum))) + BACKUP_EXT;
       }
       else
         sBackupFileName += BACKUP_EXT;
@@ -1029,7 +1056,7 @@ bool __fastcall TPasswMngForm::SaveDatabase(const WString& sFileName)
     // close file in case target file is equal to currently opened file
     m_passwDb->ReleaseFile();
     if (!CopyFile(sFileName.c_str(), sBackupFileName.c_str(), false))
-      MsgBox(TRLFormat("Could not save backup file\n\"%s\".", sBackupFileName.c_str()),
+      MsgBox(TRLFormat("Could not save backup file\n\"%1\".", { sBackupFileName }),
         MB_ICONERROR);
   }
 
@@ -1045,7 +1072,7 @@ bool __fastcall TPasswMngForm::SaveDatabase(const WString& sFileName)
   }
 
   if (!sError.IsEmpty()) {
-    MsgBox(TRLFormat("Error while saving database file:\n%s.", sError.c_str()),
+    MsgBox(TRLFormat("Error while saving database file:\n%1.", { sError }),
       MB_ICONERROR);
     return false;
   }
@@ -1187,7 +1214,8 @@ int __fastcall TPasswMngForm::AddPassw(const wchar_t* pwszPassw,
 
   if (blShowNumPassw) {
     SuspendIdleTimer;
-    MsgBox(TRLFormat("%d entries with passwords have been added.", nNumPassw),
+    MsgBox(TRLFormat("%1 entries with passwords have been added.",
+      { IntToStr(nNumPassw) }),
       MB_ICONINFORMATION);
   }
 
@@ -1276,8 +1304,8 @@ void __fastcall TPasswMngForm::SearchDatabase(WString sStr,
 
   ResetListView(RELOAD_TAGS);
 
-  SearchResultPanel->Caption = TRLFormat(nNumFound == 1 ? "1 entry found." :
-    "%d entries found.", nNumFound);
+  SearchResultPanel->Caption = nNumFound == 1 ? TRL("1 entry found.") :
+    TRLFormat("%1 entries found.", { IntToStr(nNumFound) });
 
   //if (DbView->Items->Count > 0) {
   //  DbView->Items->Item[0]->Selected = true;
@@ -1325,14 +1353,14 @@ void __fastcall TPasswMngForm::SearchDbForKeyword(bool blAutotype)
   WString sMsg;
   if (!pFound) {
     SuspendIdleTimer;
-    sMsg = TRLFormat("No matching keyword found for window text\n\"%s\".",
-        sWinTitle.c_str());
+    sMsg = TRLFormat("No matching keyword found for window text\n\"%1\".",
+        { sWinTitle });
   }
 
   if (blAutotype) {
     if (pFound) {
       SendKeys sk(g_config.AutotypeDelay);
-      sk.SendComplexString(getDbEntryAutotypeSeq(pFound), pFound, m_passwDb.get());
+      sk.SendComplexString(getDbEntryAutotypeSeq(pFound), pFound, m_passwDb);
     }
     else
       MainForm->ShowTrayInfo(sMsg, bfWarning);
@@ -1455,8 +1483,8 @@ void __fastcall TPasswMngForm::AddModifyListViewEntry(TListItem* pItem,
         }
         if (nColIdx == 0) {
           if (m_nSearchMode == SEARCH_MODE_FUZZY)
-            pItem->Caption = FormatW("[%d%%] %s",
-              std::min(100, pEntry->UserTag), pwszSrc);
+            pItem->Caption = Format("[%d%%] ",
+              ARRAYOFCONST((std::min(100, pEntry->UserTag)))) + WString(pwszSrc);
           else
             pItem->Caption = WString(pwszSrc);
         }
@@ -1594,9 +1622,9 @@ void __fastcall TPasswMngForm::ResetListView(int nFlags)
 
       auto pItem = TagView->Items->Add();
       pItem->Caption = (m_nSearchMode == SEARCH_MODE_OFF ? TRL("All", "tags") :
-          TRL("All search results")) + FormatW(" (%d)",
-          (m_nSearchMode == SEARCH_MODE_OFF) ?
-            m_passwDb->Size : lNumSearchResults);
+          TRL("All search results")) + FormatW(" (%1)",
+          { UIntToStr((m_nSearchMode == SEARCH_MODE_OFF) ?
+            m_passwDb->Size : lNumSearchResults) });
       pItem->ImageIndex = TAGVIEW_IMAGE_INDEX_START + 1;
       pItem->Data = nullptr;
 
@@ -1609,7 +1637,8 @@ void __fastcall TPasswMngForm::ResetListView(int nFlags)
 
         auto pItem = TagView->Items->Add();
 
-        pItem->Caption = WString(sTag.c_str()) + FormatW(" (%d)", kv.second);
+        pItem->Caption = WString(sTag.c_str()) + Format(" (%d)",
+          ARRAYOFCONST((kv.second)));
         pItem->ImageIndex = TAGVIEW_IMAGE_INDEX_START;
         pItem->Data = &m_tags.back();
 
@@ -1632,7 +1661,8 @@ void __fastcall TPasswMngForm::ResetListView(int nFlags)
       if (blShowUntagged) {
         m_tags.emplace_back(SecureWString(), lBaseNumUntagged);
         pItem = TagView->Items->Add();
-        pItem->Caption = TRL("Untagged") + FormatW(" (%d)", lBaseNumUntagged);
+        pItem->Caption = TRL("Untagged") + Format(" (%d)",
+          ARRAYOFCONST((lBaseNumUntagged)));
         pItem->ImageIndex = TAGVIEW_IMAGE_INDEX_START + 2;
         pItem->Data = &m_tags.back();
         if (m_tagFilter.count(SecureWString()) != 0) {
@@ -1662,8 +1692,18 @@ void __fastcall TPasswMngForm::ResetListView(int nFlags)
 
     getExpiryCheckDates(lCurrDate, lExpirySoonDate);
 
-    bool blFilterExpired = MainMenu_View_ExpiredEntries->Checked;
-    bool blFilterExpireSoon = MainMenu_View_EntriesExpireSoon->Checked;
+    enum class FilterType {
+      None,
+      Expired,
+      ExpireSoon,
+      WeakPassw
+    } filterType = FilterType::None;
+    if (MainMenu_View_Filter_Expired->Checked)
+      filterType = FilterType::Expired;
+    else if (MainMenu_View_Filter_ExpireSoon->Checked)
+      filterType = FilterType::ExpireSoon;
+    else if (MainMenu_View_Filter_WeakPassw->Checked)
+      filterType = FilterType::WeakPassw;
     std::map<SecureWString, SecureWString> userNamesMap;
 
     for (const auto pEntry : *m_passwDb) {
@@ -1681,10 +1721,26 @@ void __fastcall TPasswMngForm::ResetListView(int nFlags)
           pEntry->UserFlags |= DB_FLAG_EXPIRES_SOON;
       }
 
-      if ((blFilterExpired && !(pEntry->UserFlags & DB_FLAG_EXPIRED)) ||
-          (blFilterExpireSoon && !(pEntry->UserFlags & DB_FLAG_EXPIRES_SOON)) ||
+      if ((filterType == FilterType::Expired && !(pEntry->UserFlags & DB_FLAG_EXPIRED)) ||
+          (filterType == FilterType::ExpireSoon && !(pEntry->UserFlags & DB_FLAG_EXPIRES_SOON)) ||
           (m_nSearchMode != SEARCH_MODE_OFF && !(pEntry->UserFlags & DB_FLAG_FOUND)))
         continue;
+
+      if (filterType == FilterType::WeakPassw) {
+        auto sPassw = m_passwDb->GetDbEntryPassw(*pEntry);
+        if (!sPassw.IsStrEmpty()) {
+          int nEntropyBits;
+          if (g_config.UseAdvancedPasswEst)
+            nEntropyBits = FloorEntropyBits(ZxcvbnMatch(
+              WStringToUtf8(sPassw).c_str(), nullptr, nullptr));
+          else
+            nEntropyBits = PasswordGenerator::EstimatePasswSecurity(sPassw.c_str());
+          if (nEntropyBits >= WEAK_PASSW_THRESHOLD)
+            continue;
+        }
+        else
+          continue;
+      }
 
       if (!m_tagFilter.empty()) {
         bool blMatch = false;
@@ -1711,7 +1767,7 @@ void __fastcall TPasswMngForm::ResetListView(int nFlags)
       nIdx++;
     }
 
-    if (m_nSearchMode == SEARCH_MODE_OFF && !blFilterExpired && !blFilterExpireSoon)
+    if (m_nSearchMode == SEARCH_MODE_OFF && filterType == FilterType::None)
       AddModifyListViewEntry();
 
     if (DbView->Items->Count >= 2 && m_nSearchMode == SEARCH_MODE_FUZZY &&
@@ -1753,6 +1809,25 @@ void __fastcall TPasswMngForm::ResetListView(int nFlags)
     }
     else
       DisableAutoComplete(UserNameBox->Handle);
+
+    if (filterType != FilterType::None) {
+      FilterInfoPanel->Visible = true;
+
+      WString sInfo;
+      switch (filterType) {
+      case FilterType::Expired:
+        sInfo = MainMenu_View_Filter_Expired->Caption; break;
+      case FilterType::ExpireSoon:
+        sInfo = MainMenu_View_Filter_ExpireSoon->Caption; break;
+      case FilterType::WeakPassw:
+        sInfo = MainMenu_View_Filter_WeakPassw->Caption; break;
+      }
+
+      FilterInfoPanel->Hint = RemoveAccessKeysFromStr(sInfo);
+    }
+    else {
+      FilterInfoPanel->Visible = false;
+    }
   }
 }
 //---------------------------------------------------------------------------
@@ -1911,8 +1986,7 @@ void __fastcall TPasswMngForm::ApplyDbViewItemSelection(TListItem* pItem)
       w32string sFormat = WCharToW32String(m_passwDb->PasswFormatSeq.c_str());
       PasswordGenerator passwGen(&RandomPool::GetInstance());
       SecureW32String sDest(16001);
-      if (passwGen.GetFormatPassw(sDest, sDest.Size() - 1, sFormat, 0) != 0)
-      {
+      if (passwGen.GetFormatPassw(sDest, sFormat, 0) != 0) {
         W32CharToWCharInternal(sDest);
         const wchar_t* pwszPassw = reinterpret_cast<wchar_t*>(sDest.Data());
         SetEditBoxTextBuf(PasswBox, pwszPassw);
@@ -2103,7 +2177,8 @@ void __fastcall TPasswMngForm::AddModifyBtnClick(TObject *Sender)
     AddModifyListViewEntry(m_pSelectedItem, pEntry);
     if (blNewEntry) {
       AddModifyListViewEntry();
-      WString sAll = TRL("All", "tags") + FormatW(" (%d)", m_passwDb->Size);
+      WString sAll = TRL("All", "tags") + Format(" (%d)",
+        ARRAYOFCONST((m_passwDb->Size)));
       TListItem* pItem = (TagView->Items->Count > 0) ?
         TagView->Items->Item[0] : TagView->Items->Add();
       pItem->Caption = sAll;
@@ -2121,8 +2196,9 @@ void __fastcall TPasswMngForm::AddModifyBtnClick(TObject *Sender)
   SetDbChanged(true, true);
 
   if (nNumOverlongTags > 0) {
-    MsgBox(TRLFormat("The maximum tag length is %d characters.\n"
-      "Longer tags have been shortened.", DB_MAX_TAG_LEN), MB_ICONWARNING);
+    MsgBox(TRLFormat("The maximum tag length is %1 characters.\n"
+      "Longer tags have been shortened.", { IntToStr(DB_MAX_TAG_LEN) }),
+      MB_ICONWARNING);
   }
 
   NextBtnClick(this);
@@ -2248,8 +2324,9 @@ void __fastcall TPasswMngForm::DeleteBtnClick(TObject *Sender)
     }
   }
 
-  if (MsgBox(TRLFormat(nNumValid == 1 ? "Delete 1 entry?" : "Delete %d entries?",
-        nNumValid), MB_ICONWARNING + MB_YESNO + MB_DEFBUTTON2) == IDNO)
+  WString sMsg = nNumValid == 1 ? TRL("Delete 1 entry?") :
+    TRLFormat("Delete %1 entries?", { IntToStr(nNumValid) });
+  if (MsgBox(sMsg, MB_ICONWARNING + MB_YESNO + MB_DEFBUTTON2) == IDNO)
     return;
 
   for (int nI = 0; nI < DbView->Items->Count; nI++) {
@@ -2488,7 +2565,8 @@ void __fastcall TPasswMngForm::TogglePasswBtnMouseUp(TObject *Sender,
           DB_KEYVAL_PROFILE]);
         if (psVal != nullptr) {
           if (!MainForm->LoadProfile(psVal->c_str())) {
-            MsgBox(TRLFormat("Profile \"%s\" not found.", psVal->c_str()),
+            MsgBox(TRLFormat("Profile \"%1\" not found.",
+              { WString(psVal->c_str()) }),
               MB_ICONERROR);
             return;
           }
@@ -2499,8 +2577,7 @@ void __fastcall TPasswMngForm::TogglePasswBtnMouseUp(TObject *Sender,
             w32string sFormat = WCharToW32String(psVal->c_str());
             SecureW32String sDest(16001);
             PasswordGenerator passwGen(g_pRandSrc);
-            if (passwGen.GetFormatPassw(sDest, sDest.Size()-1, sFormat, 0) != 0)
-            {
+            if (passwGen.GetFormatPassw(sDest, sFormat, 0) != 0) {
               W32CharToWCharInternal(sDest);
               SetEditBoxTextBuf(PasswBox, reinterpret_cast<wchar_t*>(sDest.Data()));
             }
@@ -2869,9 +2946,9 @@ void __fastcall TPasswMngForm::OnWindowPosChanging(TWMWindowPosChanging& msg)
   else*/
   if ((msg.WindowPos->flags & HIDE1) == HIDE1 ||
       (msg.WindowPos->flags & HIDE2) == HIDE2) {
-    if (IsDbOpen()) {
-      if (g_config.Database.LockMinimize)
-        MainMenu_File_LockClick(this);
+    if (IsDbOpen() && !(g_nAppState & APPSTATE_AUTOTYPE) &&
+        g_config.Database.LockMinimize) {
+      MainMenu_File_LockClick(this);
     }
     m_blUnlockTried = false;
   }
@@ -2904,7 +2981,8 @@ void __fastcall TPasswMngForm::MainMenu_File_Export_CsvFileClick(TObject *Sender
     MsgBox(TRL("Database successfully exported to CSV file."), MB_ICONINFORMATION);
   }
   catch (Exception& e) {
-    MsgBox(TRLFormat("Error while creating CSV file:\n%s.", e.Message.c_str()),
+    MsgBox(TRLFormat("Error while creating CSV file:\n%1.",
+      { e.Message }),
       MB_ICONERROR);
   }
 }
@@ -2927,7 +3005,8 @@ void __fastcall TPasswMngForm::MainMenu_EditClick(TObject *Sender)
   MainMenu_Edit_Rearrange->Enabled = blExtEnabled && m_nSortByIdx < 0 &&
     DbView->SelCount < m_passwDb->Size;
   //AddEntryBtn->Enabled = m_nSearchMode == SEARCH_MODE_OFF;
-  MainMenu_Edit_AddEntry->Enabled = m_nSearchMode == SEARCH_MODE_OFF;
+  MainMenu_Edit_AddEntry->Enabled = m_nSearchMode == SEARCH_MODE_OFF &&
+    !FilterInfoPanel->Visible;
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswMngForm::UserNameLblMouseMove(TObject *Sender,
@@ -3009,17 +3088,20 @@ void __fastcall TPasswMngForm::MainMenu_Edit_PerformAutotypeClick(TObject *Sende
   const PasswDbEntry* pEntry = reinterpret_cast<PasswDbEntry*>(m_pSelectedItem->Data);
 
   if (g_config.MinimizeAutotype) {
+    // hold local copy of database pointer to prevent object from being destroyed
+    // before calling autotype function
+    auto passwDb = m_passwDb;
     g_nAppState |= APPSTATE_AUTOTYPE;
     Application->Minimize();
     SendKeys sk(g_config.AutotypeDelay);
-    sk.SendComplexString(getDbEntryAutotypeSeq(pEntry), pEntry, m_passwDb.get());
+    sk.SendComplexString(getDbEntryAutotypeSeq(pEntry), pEntry, passwDb);
     g_nAppState &= ~APPSTATE_AUTOTYPE;
   }
   else {
     TSendKeysThread::TerminateAndWait();
     if (!TSendKeysThread::ThreadRunning())
       new TSendKeysThread(Handle, g_config.AutotypeDelay,
-        getDbEntryAutotypeSeq(pEntry), pEntry, m_passwDb.get());
+        getDbEntryAutotypeSeq(pEntry), pEntry, m_passwDb);
   }
 }
 //---------------------------------------------------------------------------
@@ -3273,8 +3355,15 @@ bool __fastcall TPasswMngForm::ApplyDbSettings(const PasswDbSettings& settings)
     TaskCancelToken cancelToken;
     word32 lKdfIterations = settings.NumKdfRounds;
 
+    // no need to create a thread-safe RNG instance if database doesn't
+    // use a recovery key
+    //RandomPool randPool(RandomPool::GetInstance());
+
     auto pTask = TTask::Create([this,&key,&cancelToken,lKdfIterations]() {
-      m_passwDb->ChangeMasterKey(key, lKdfIterations, cancelToken.Get().get());
+      m_passwDb->ChangeMasterKey(
+        key,
+        lKdfIterations,
+        cancelToken.Get().get());
     });
 
     pTask->Start();
@@ -3438,15 +3527,6 @@ void __fastcall TPasswMngForm::OnExpiryMenuItemClick(TObject* Sender)
       SetItemChanged(true);
     }
   }
-}
-//---------------------------------------------------------------------------
-void __fastcall TPasswMngForm::MainMenu_View_ExpiredEntriesClick(TObject *Sender)
-{
-  if (Sender == MainMenu_View_ExpiredEntries)
-    MainMenu_View_EntriesExpireSoon->Checked = false;
-  else
-    MainMenu_View_ExpiredEntries->Checked = false;
-  ResetListView(0);
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswMngForm::DbViewKeyDown(TObject *Sender, WORD &Key, TShiftState Shift)
@@ -3842,3 +3922,18 @@ void __fastcall TPasswMngForm::ToggleShutdownBlocker(const WString& sMsg)
   }
 }
 //---------------------------------------------------------------------------
+void __fastcall TPasswMngForm::MainMenu_View_Filter_ExpiredClick(TObject *Sender)
+
+{
+  ResetListView(0);
+}
+//---------------------------------------------------------------------------
+void __fastcall TPasswMngForm::ClearFilterBtnClick(TObject *Sender)
+{
+  for (int i = 0; i < MainMenu_View_Filter->Count; i++) {
+    MainMenu_View_Filter->Items[i]->Checked = false;
+  }
+  ResetListView(0);
+}
+//---------------------------------------------------------------------------
+

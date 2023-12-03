@@ -27,6 +27,7 @@
 #include "TopMostManager.h"
 #include "Main.h"
 #include "Language.h"
+#include "Util.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
@@ -38,6 +39,7 @@ const WString CONFIG_ID = "PasswHistoryDlg";
 __fastcall TPasswHistoryDlg::TPasswHistoryDlg(TComponent* Owner)
     : TForm(Owner)
 {
+  SetFormComponentsAnchors(this);
   HistorySizeSpinBtn->Max = PasswDatabase::MAX_PASSW_HISTORY_SIZE;
   if (g_pLangSupp) {
     TRLCaption(this);

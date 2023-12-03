@@ -29,6 +29,7 @@
 #include "SecureMem.h"
 #include "DataCompressor.h"
 #include "SymmetricCipher.h"
+#include "RandomGenerator.h"
 
 // class for password database entry
 class PasswDbEntry {
@@ -657,9 +658,12 @@ public:
   //    0 = use current database setting
   // -> pointer to flag for cancelling operation (if number of iterations
   //    is too high)
+  // -> pointer to thread-safe random generator instance (in case function
+  //    is called from separate thread)
   void ChangeMasterKey(const SecureMem<word8>& newKey,
     word32 lKdfIterOverride = 0,
-    std::atomic<bool>* pCancelFlag = nullptr);
+    std::atomic<bool>* pCancelFlag = nullptr,
+    RandomGenerator* pThreadSafeRandGen = nullptr);
 
   // sets recovery key
   // -> master key (new or old)

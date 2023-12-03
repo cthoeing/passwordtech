@@ -23,6 +23,7 @@
 //---------------------------------------------------------------------------
 #include <vector>
 #include <atomic>
+#include <memory>
 #include "PasswDatabase.h"
 
 class SendKeys
@@ -41,7 +42,7 @@ public:
 
   void SendComplexString(const WString& sStr,
     const PasswDbEntry* pPasswDbEntry = nullptr,
-    PasswDatabase* pPasswDb = nullptr,
+    std::shared_ptr<PasswDatabase> pPasswDb = {},
     const wchar_t* pwszParam = nullptr,
     const wchar_t* pwszPassw = nullptr,
     KeySequence* pKeySequence = nullptr);
@@ -80,7 +81,7 @@ public:
     int nDelay,
     const WString& sStr,
     const PasswDbEntry* pPasswDbEntry = nullptr,
-    PasswDatabase* pPasswDb = nullptr,
+    std::shared_ptr<PasswDatabase> pPasswDb = {},
     const wchar_t* pwszParam = nullptr,
     const wchar_t* pwszPassw = nullptr)
     : m_sendKeys(nDelay), m_hSender(hSender)

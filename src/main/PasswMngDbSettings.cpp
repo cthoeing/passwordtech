@@ -54,9 +54,12 @@ static const WString CONFIG_ID = "PasswMngDbSettings";
 __fastcall TPasswDbSettingsDlg::TPasswDbSettingsDlg(TComponent* Owner)
   : TForm(Owner)
 {
+  SetFormComponentsAnchors(this);
+
   for (int i = 0; i < NUM_CIPHERS; i++) {
-    WString sCipher = TRLFormat("%s with %d-bit key", CIPHER_NAMES[i],
-      CIPHER_KEY_SIZES[i]);
+    WString sCipher = TRLFormat("%1 with %2-bit key",
+      { CIPHER_NAMES[i],
+        IntToStr(CIPHER_KEY_SIZES[i]) });
     EncryptionAlgoList->Items->Add(sCipher);
   }
 
@@ -197,7 +200,7 @@ void __fastcall TPasswDbSettingsDlg::PasswGenTestBtnClick(TObject *Sender)
     w32string sFormat32 = WCharToW32String(sFormat.c_str());
 
     SecureW32String sDest(16000 + 1);
-    if (passwGen.GetFormatPassw(sDest, sDest.Size() - 1, sFormat32, 0) != 0)
+    if (passwGen.GetFormatPassw(sDest, sFormat32, 0) != 0)
     {
       W32CharToWCharInternal(sDest);
       sPasswTest += " " + WString(reinterpret_cast<wchar_t*>(sDest.Data()));

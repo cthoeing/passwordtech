@@ -31,45 +31,70 @@
 #pragma package(smart_init)
 
 
-// Implementation of the IA (Indirection, Addition) random number generator
-// by R.J. Jenkins.
-// It can be considered as a "predecessor" of the cryptographically secure
-// generator ISAAC:
-// http://burtleburtle.net/bob/rand/isaac.html
-// IA is inspired by RC4, but seems to be faster (since operating on 32-bit
-// words instead of 8-bit bytes as in RC4) and more secure, although
-// its output is, like RC4, to a certain degree biased, according to Jenkins.
-// The bias can be detected in the correlated gap test.
-// Nevertheless, IA seems to be an excellent choice for the purpose of a
-// fast PRNG here, because it is very simple and additionally offers a
-// certain degree of security against state recovery attacks (unlike other
-// popular PRNGs).
+Jsf32RandGen g_fastRandGen;
 
-// Note that we do NOT expect this generator to have cryptographic security,
-// and PWGen does NOT rely on its security in critical situations (i.e., when
-// generating random numbers for passwords).
-// But a certain degree of security is certainly nice to protect the random
-// pool from being located in RAM.
+void Jsf32RandGen::Randomize()
+{
+  m_a = 0xf1ea5eed; // avoid short cycles
+  word64 timer;
+  GetSystemTimeAsFileTime(reinterpret_cast<FILETIME*>(&timer));
+  m_b = WORD64_HI(timer);
+  m_c = WORD64_LO(timer);
+  QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&timer));
+  m_d = WORD64_HI(timer) + WORD64_LO(timer);
 
-//static word32 m[256];
-//static word32 x; // x and y are temporarily assigned to values in m
-//static word32 y;
-//static word32 r; // output 32-bit random number
-//static word8 c;  // 8-bit counter (0..255) for indexing m
-
-//#define NEXT_RAND x=m[c]; m[c]=y=m[x&0xFF]+r; r=m[(y>>8)&0xFF]+x; c++
-
-FastPRNG g_fastRandGen;
-
+  for (int i = 0; i < 20; i++) {
+    (void) GetWord32();
+  }
+}
 //---------------------------------------------------------------------------
-FastPRNG::FastPRNG(const FastPRNG& src)
+void Jsf32RandGen::Seed(const void* pSeed, word32 lSize)
+{
+  m_a = 0xf1ea5eed;
+  word32 seed[3] = {0, 0, 0};
+  memcpy(seed, pSeed, std::min<size_t>(sizeof(seed), lSize));
+  m_b = seed[0];
+  m_c = seed[1];
+  m_d = seed[2];
+}
+//---------------------------------------------------------------------------
+word32 Jsf32RandGen::GetWord32()
+{
+  return NextRand();
+}
+//---------------------------------------------------------------------------
+inline word32 Jsf32RandGen::NextRand()
+{
+  const word32 e = m_a - _lrotl(m_b, 27);
+  m_a = m_b ^ _lrotl(m_c, 17);
+  m_b = m_c + m_d;
+  m_c = m_d + e;
+  m_d = e + m_a;
+  return m_d;
+}
+//---------------------------------------------------------------------------
+void Jsf32RandGen::GetData(void* pMem, word32 lSize)
+{
+  word32* pBuf = reinterpret_cast<word32*>(pMem);
+
+  for ( ; lSize >= 4; lSize -= 4)
+    *pBuf++ = NextRand();
+
+  if (lSize != 0) {
+    word32 lRand = GetWord32();
+    memcpy(pBuf, &lRand, lSize);
+  }
+}
+
+#if 0
+IARandGen::IARandGen(const IARandGen& src)
 {
   memcpy(m_m, src.m_m, sizeof(m_m));
   m_r = src.m_r;
   Randomize();
 }
 //---------------------------------------------------------------------------
-void FastPRNG::Randomize(void)
+void IARandGen::Randomize(void)
 {
   // we have to ensure that the m array is filled with good pseudorandom data;
   // otherwise, we can't really expect good results...
@@ -118,7 +143,7 @@ void FastPRNG::Randomize(void)
   memzero(&cryptCtx, sizeof(chacha_ctx));
 }
 //---------------------------------------------------------------------------
-word32 FastPRNG::GetWord32(void)
+word32 IARandGen::GetWord32(void)
 {
   word32 x = m_m[m_c], y;
   m_m[m_c] = y = m_m[x&0xFF] + m_r;
@@ -128,7 +153,7 @@ word32 FastPRNG::GetWord32(void)
   return m_r;
 }
 //---------------------------------------------------------------------------
-void FastPRNG::GetData(void* pMem, word32 lSize)
+void IARandGen::GetData(void* pMem, word32 lSize)
 {
   word32* pBuf = reinterpret_cast<word32*>(pMem);
 
@@ -141,11 +166,52 @@ void FastPRNG::GetData(void* pMem, word32 lSize)
   }
 }
 //---------------------------------------------------------------------------
-void FastPRNG::Reset(void)
+void IARandGen::Reset(void)
 {
   memzero(m_m, sizeof(m_m));
   m_r = 0;
   m_c = 0;
+}
+//---------------------------------------------------------------------------
+void Xoroshiro128::Randomize()
+{
+  HighResTimer(m_state);
+  GetSystemTimeAsFileTime(reinterpret_cast<FILETIME*>(m_state+2));
+
+  // avoid state of all zeros
+  if (m_state[0] == 0 && m_state[1] == 0 && m_state[2] == 0 && m_state[3] == 0)
+    m_state[1] = 0x9E3779B9; // golden ratio decimals
+}
+//---------------------------------------------------------------------------
+word32 Xoroshiro128::GetWord32()
+{
+  const word32 result = _lrotl(m_state[1] * 5, 7) * 9;
+
+	const word32 t = m_state[1] << 9;
+
+	m_state[2] ^= m_state[0];
+	m_state[3] ^= m_state[1];
+	m_state[1] ^= m_state[2];
+	m_state[0] ^= m_state[3];
+
+	m_state[2] ^= t;
+
+	m_state[3] = _lrotl(m_state[3], 11);
+
+	return result;
+}
+//---------------------------------------------------------------------------
+void Xoroshiro128::GetData(void* pMem, word32 lSize)
+{
+  word32* pBuf = reinterpret_cast<word32*>(pMem);
+
+  for ( ; lSize >= 4; lSize -= 4)
+    *pBuf++ = GetWord32();
+
+  if (lSize != 0) {
+    word32 lRand = GetWord32();
+    memcpy(pBuf, &lRand, lSize);
+  }
 }
 //---------------------------------------------------------------------------
 void SplitMix64::Seed(const void* pData, word32 lNumBytes)
@@ -175,51 +241,5 @@ word64 SplitMix64::GetWord64(void)
   z = (z ^ (z >> 27)) * 0x94d049bb133111ebull;
   return z ^ (z >> 31);
 }
-//---------------------------------------------------------------------------
-#if 0
-Xoshiro256StarStar::~Xoshiro256StarStar()
-{
-  memzero(m_qState, sizeof(m_qState));
-}
-//---------------------------------------------------------------------------
-void Xoshiro256StarStar::Seed(const void* pData, word32 lNumBytes)
-{
-  memzero(m_qState, sizeof(m_qState));
-  memcpy(m_qState, pData, std::min<size_t>(sizeof(m_qState), lNumBytes));
-}
-//---------------------------------------------------------------------------
-static inline uint64_t rotl(const word64 x, int k) {
-	return (x << k) | (x >> (64 - k));
-}
-
-word64 Xoshiro256StarStar::GetWord64(void)
-{
-  word64 result = rotl(m_qState[1] * 5, 7) * 9;
-
-  const word64 t = m_qState[1] << 17;
-
-  m_qState[2] ^= m_qState[0];
-  m_qState[3] ^= m_qState[1];
-  m_qState[1] ^= m_qState[2];
-  m_qState[0] ^= m_qState[3];
-
-  m_qState[2] ^= t;
-
-  m_qState[3] = rotl(m_qState[3], 45);
-
-  return result;
-}
-//---------------------------------------------------------------------------
-void Xoshiro256StarStar::GetData(void* pData, word32 lNumBytes)
-{
-  word64* pBuf = reinterpret_cast<word64*>(pData);
-
-  for ( ; lNumBytes >= 8; lNumBytes -= 8)
-    *pBuf++ = GetWord64();
-
-  if (lNumBytes != 0) {
-    word64 qRand = GetWord64();
-    memcpy(pBuf, &qRand, lNumBytes);
-  }
-}
 #endif
+

@@ -39,6 +39,8 @@ CONFIG_ID = "CreateTrigramFile";
 __fastcall TCreateTrigramFileDlg::TCreateTrigramFileDlg(TComponent* Owner)
   : TForm(Owner)
 {
+  SetFormComponentsAnchors(this);
+
   Constraints->MaxHeight = Height;
   Constraints->MinHeight = Height;
   Constraints->MinWidth = Width;
@@ -126,14 +128,16 @@ void __fastcall TCreateTrigramFileDlg::CreateFileBtnClick(TObject *Sender)
       &lNumOfTris, &dEntropy);
 
     blSuccess = true;
-    sMsg = TRLFormat("Trigram file \"%s\" successfully created.\n\n%d trigrams "
-        "evaluated.\n%1.2f bits of entropy per letter.",
-        ExtractFileName(sDestFileName).c_str(),
-        lNumOfTris, dEntropy);
+    sMsg = TRLFormat("Trigram file \"%1\" successfully created.\n\n%2 trigrams "
+      "evaluated.\n%3 bits of entropy per letter.",
+      { ExtractFileName(sDestFileName),
+        IntToStr(static_cast<__int64>(lNumOfTris)),
+        FormatFloat("%1.2f", dEntropy) });
   }
   catch (Exception& e) {
-    sMsg = TRLFormat("Error while creating file\n\"%s\":\n%s.", sDestFileName.c_str(),
-        e.Message.c_str());
+    sMsg = TRLFormat("Error while creating file\n\"%1\":\n%2.",
+      { sDestFileName,
+        e.Message });
   }
 
   Screen->Cursor = crDefault;

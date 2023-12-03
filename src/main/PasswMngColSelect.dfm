@@ -15,9 +15,6 @@ object PasswMngColDlg: TPasswMngColDlg
   Font.Style = []
   OnShow = FormShow
   PixelsPerInch = 120
-  DesignSize = (
-    325
-    290)
   TextHeight = 17
   object OptionsList: TCheckListBox
     Left = 0
@@ -34,32 +31,34 @@ object PasswMngColDlg: TPasswMngColDlg
     ItemHeight = 23
     Style = lbOwnerDrawFixed
     TabOrder = 0
+    ExplicitWidth = 319
+    ExplicitHeight = 230
   end
   object OKBtn: TButton
-    Left = 113
-    Top = 245
+    Tag = 12
+    Left = 121
+    Top = 244
     Width = 93
     Height = 31
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    Anchors = [akRight, akBottom]
     Caption = 'OK'
     Default = True
     TabOrder = 1
     OnClick = OKBtnClick
   end
   object CancelBtn: TButton
-    Left = 214
-    Top = 245
+    Tag = 12
+    Left = 222
+    Top = 244
     Width = 94
     Height = 31
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    Anchors = [akRight, akBottom]
     Cancel = True
     Caption = 'Cancel'
     ModalResult = 2

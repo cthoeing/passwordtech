@@ -134,9 +134,8 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
       }
     }
     catch (Exception& e) {
-      MsgBox(FormatW("Could not load configuration file\n\"%s\":\n%s",
-        sTryIniFileName.c_str(),
-        e.Message.c_str()), MB_ICONERROR);
+      MsgBox(FormatW("Could not load configuration file\n\"%1\":\n%2",
+        { sTryIniFileName, e.Message }), MB_ICONERROR);
       g_pIni.reset(new TMemIniFile("~pwtech~fake~ini"));
       g_blFakeIniFile = true;
     }
