@@ -868,6 +868,8 @@ void PasswDatabase::Write(const void* pBuf, word32 lNumOfBytes)
   memcpy(&m_cryptBuf[m_lCryptBufPos], pSrcBuf, lNumOfBytes);
   m_lCryptBufPos += lNumOfBytes;
 
+  m_cryptBuf.GrowClearMark(m_lCryptBufPos);
+
   if (m_lCryptBufPos > MAX_FILE_SIZE - 1024)
     throw EPasswDbError("Database size exceeds file size limit");
 }
@@ -1122,6 +1124,9 @@ void PasswDatabase::SaveToFile(const WString& sFileName)
   sha512_hmac_update(hashCtx, m_cryptBuf, lAlignedSize);
 
   cipher->Encrypt(m_cryptBuf, m_cryptBuf, lAlignedSize);
+
+  // buffer contents are encrypted now, so there's no need to zeroize it anymore
+  m_cryptBuf.SetClearMark(0);
 
   // now open file and write data
   m_pFile.reset();
@@ -1437,14 +1442,18 @@ bool PasswDatabase::CheckRecoveryKey(const SecureMem<word8>& recoveryKey)
 //---------------------------------------------------------------------------
 void PasswDatabase::ChangeMasterKey(const SecureMem<word8>& newKey,
   word32 lKdfIterOverride,
-  std::atomic<bool>* pCancelFlag)
+  std::atomic<bool>* pCancelFlag,
+  RandomGenerator* pThreadSafeRandGen)
 {
   CheckDbOpen();
   CheckKeyEmpty(newKey);
   if (lKdfIterOverride == 0)
     lKdfIterOverride = m_lKdfIterations;
   if (m_blRecoveryKey) {
-    RandomPool::GetInstance().GetData(m_pDbRecoveryKeyBlock, DB_SALT_LENGTH);
+    if (pThreadSafeRandGen)
+      pThreadSafeRandGen->GetData(m_pDbRecoveryKeyBlock, DB_SALT_LENGTH);
+    else
+      RandomPool::GetInstance().GetData(m_pDbRecoveryKeyBlock, DB_SALT_LENGTH);
 
     SecureMem<word8> derivedKey(DB_KEY_LENGTH);
     pbkdf2_256bit(newKey, newKey.Size(), m_pDbRecoveryKeyBlock, DB_SALT_LENGTH,

@@ -36,7 +36,7 @@ const WString
 
 const int
   OPTION_INDEX_TO_BIT[PASSWOPTIONS_NUM] =
-    { 0, 1, 13, 10, 2, 3, 4, 15, 12, 14, 5, 6, 7, 8, 9, 11, 16 };
+    { 0, 1, 13, 10, 2, 3, 4, 15, 12, 14, 5, 6, 7, 8, 17, 9, 11, 16 };
 
 template<int N>
 class _bitToOptionIndex {
@@ -60,8 +60,7 @@ const _bitToOptionIndex BIT_TO_OPTION_INDEX = _bitToOptionIndex<PASSWOPTIONS_NUM
 __fastcall TPasswOptionsDlg::TPasswOptionsDlg(TComponent* Owner)
   : TForm(Owner)
 {
-  //for (int i = 0; i < PASSWOPTIONS_NUM; i++)
-  //  BIT_TO_OPTION_INDEX[OPTION_INDEX_TO_BIT[i]] = i;
+  SetFormComponentsAnchors(this);
 
   Constraints->MinHeight = Height;
   Constraints->MinWidth = Width;
@@ -76,8 +75,11 @@ __fastcall TPasswOptionsDlg::TPasswOptionsDlg(TComponent* Owner)
     TRLCaption(this);
     TRLCaption(AmbigCharsLbl);
     TRLCaption(SpecialSymLbl);
-    TRLCaption(MaxWordLenLbl);
+    TRLCaption(MinMaxWordLenLbl);
     TRLCaption(TrigramFileLbl);
+    TRLCaption(SeparatorsLbl);
+    TRLCaption(WordSepLbl);
+    TRLCaption(WordCharSepLbl);
     TRLHint(BrowseBtn);
     TRLCaption(OKBtn);
     TRLCaption(CancelBtn);
@@ -86,31 +88,39 @@ __fastcall TPasswOptionsDlg::TPasswOptionsDlg(TComponent* Owner)
   else
     m_pOptionsList->Assign(pStrList);
 
-  pStrList->Strings[BIT_TO_OPTION_INDEX[0]] += " (B8G6I1l|0OQDS5Z2) [1-3] *";
-  pStrList->Strings[BIT_TO_OPTION_INDEX[1]] += " [1-4] *";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[0]] += " (B8G6I1l|0OQDS5Z2) [1-3]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[1]] += " [1-4]";
   pStrList->Strings[BIT_TO_OPTION_INDEX[2]] += " [2]";
   pStrList->Strings[BIT_TO_OPTION_INDEX[3]] += " [2]";
   pStrList->Strings[BIT_TO_OPTION_INDEX[4]] += " [1,2]";
-  pStrList->Strings[BIT_TO_OPTION_INDEX[5]] += " [1,4] *";
-  pStrList->Strings[BIT_TO_OPTION_INDEX[6]] += " [1,4] *";
-  pStrList->Strings[BIT_TO_OPTION_INDEX[7]] += " [1,4] *";
-  pStrList->Strings[BIT_TO_OPTION_INDEX[8]] += " [1,4] *";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[5]] += " [1,4]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[6]] += " [1,4]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[7]] += " [1,4]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[8]] += " [1,4]";
   pStrList->Strings[BIT_TO_OPTION_INDEX[9]] += " [1]";
-  pStrList->Strings[BIT_TO_OPTION_INDEX[10]] += " [1,3] *";
-  pStrList->Strings[BIT_TO_OPTION_INDEX[11]] += " [1-4] *";
-  pStrList->Strings[BIT_TO_OPTION_INDEX[12]] += " [2,3] *";
-  pStrList->Strings[BIT_TO_OPTION_INDEX[13]] += " [1] *";
-  pStrList->Strings[BIT_TO_OPTION_INDEX[14]] += " [2] *";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[10]] += " [1,3]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[11]] += " [1-4]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[12]] += " [2,3]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[13]] += " [1]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[14]] += " [2]";
   pStrList->Strings[BIT_TO_OPTION_INDEX[15]] += " [2]";
   pStrList->Strings[BIT_TO_OPTION_INDEX[16]] += " [1-4]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[17]] += " [1]";
 
-  InfoLbl->Caption = FormatW("[1] %s [2] %s [3] %s [4] %s\n* %s",
-      TRL("Applies to pass_words_.").c_str(),
-      TRL("Applies to pass_phrases_.").c_str(),
-      TRL("Applies to formatted passwords.").c_str(),
-      TRL("Applies to phonetic passwords.").c_str(),
+  for (int i = 0; i < PASSWOPTIONS_NUM; i++) {
+    if (PASSWOPTIONS_STARRED[i]) {
+      pStrList->Strings[BIT_TO_OPTION_INDEX[i]] += " *";
+    }
+  }
+
+  InfoLbl->Caption = FormatW("[1] %1 [2] %2 [3] %3 [4] %4\n* %5",
+    { TRL("Applies to pass_words_."),
+      TRL("Applies to pass_phrases_."),
+      TRL("Applies to formatted passwords."),
+      TRL("Applies to phonetic passwords."),
       TRL("Selecting one of these options might reduce the security of "
-        "generated passwords.").c_str()
+        "generated passwords.")
+    }
     );
 
   LoadConfig();
@@ -136,7 +146,11 @@ void __fastcall TPasswOptionsDlg::GetOptions(PasswOptions& passwOptions)
       (1 << OPTION_INDEX_TO_BIT[nI]) : 0;
   passwOptions.AmbigChars = AmbigCharsBox->Text;
   passwOptions.SpecialSymbols = SpecialSymBox->Text;
-  passwOptions.MaxWordLen = MaxWordLenSpinBtn->Position;
+  passwOptions.MinWordLen = MinWordLenSpinBtn->Position;
+  passwOptions.MaxWordLen = std::max(passwOptions.MinWordLen,
+    MaxWordLenSpinBtn->Position);
+  passwOptions.WordSeparator = WordSepBox->Text;
+  passwOptions.WordCharSeparator = WordCharSepBox->Text;
   passwOptions.TrigramFileName = TrigramFileBox->Text;
 }
 //---------------------------------------------------------------------------
@@ -146,16 +160,30 @@ void __fastcall TPasswOptionsDlg::SetOptions(const PasswOptions& passwOptions)
     PasswOptionsList->Checked[BIT_TO_OPTION_INDEX[nI]] = passwOptions.Flags & (1 << nI);
   AmbigCharsBox->Text = passwOptions.AmbigChars;
   SpecialSymBox->Text = passwOptions.SpecialSymbols;
-  MaxWordLenSpinBtn->Position = static_cast<short>(passwOptions.MaxWordLen);
+  MinWordLenSpinBtn->Position = passwOptions.MinWordLen;
+  MaxWordLenSpinBtn->Position = passwOptions.MaxWordLen;
+  WordSepBox->Text = passwOptions.WordSeparator;
+  WordCharSepBox->Text = passwOptions.WordCharSeparator;
   TrigramFileBox->Text = passwOptions.TrigramFileName;
 }
 //---------------------------------------------------------------------------
-void __fastcall TPasswOptionsDlg::MaxWordLenBoxExit(TObject *Sender)
+void __fastcall TPasswOptionsDlg::MinMaxWordLenBoxExit(TObject *Sender)
 {
-  int nValue = StrToIntDef(MaxWordLenBox->Text, 0);
+  TEdit* pEditBox;
+  TUpDown* pSpinBtn;
+  if (Sender == MinWordLenBox) {
+    pEditBox = MinWordLenBox;
+    pSpinBtn = MinWordLenSpinBtn;
+  }
+  else {
+    pEditBox = MaxWordLenBox;
+    pSpinBtn = MaxWordLenSpinBtn;
+  }
 
-  if (nValue < MaxWordLenSpinBtn->Min || nValue > MaxWordLenSpinBtn->Max)
-    MaxWordLenBox->Text = WString(MaxWordLenSpinBtn->Position);
+  int nValue = StrToIntDef(pEditBox->Text, 0);
+
+  if (nValue < pSpinBtn->Min || nValue > pSpinBtn->Max)
+    pEditBox->Text = IntToStr(pSpinBtn->Position);
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswOptionsDlg::FormShow(TObject *Sender)

@@ -42,8 +42,8 @@ std::atomic<bool> TUpdateCheckThread::s_blThreadRunning(false);
 TUpdateCheckThread::CheckResult __fastcall TUpdateCheckThread::CheckForUpdates(bool blShowError)
 {
   try {
-    const WString sAltUrl = FormatW("%s?fakeParam=%.8x", PROGRAM_URL_VERSION,
-      time(nullptr));
+    const WString sAltUrl = Format("%s?fakeParam=%.8x", ARRAYOFCONST((
+      PROGRAM_URL_VERSION, time(nullptr))));
 
     //WString(PROGRAM_URL_VERSION) +
     //  WString("?fakeParam=") + WString(IntToHex(int(time(NULL)), 8));
@@ -96,10 +96,11 @@ TUpdateCheckThread::CheckResult __fastcall TUpdateCheckThread::CheckForUpdates(b
         "file format");
 
     if (CompareVersionNumbers(sVersion, PROGRAM_VERSION) > 0) {
-      WString sMsg = TRLFormat("A new version (%s) of %s is available!\nDo you want "
-          "to visit the download page now?", sVersion.c_str(), PROGRAM_NAME);
+      WString sMsg = TRLFormat("A new version (%1) of %2 is available!\nDo you want "
+          "to visit the download page now?",
+          { sVersion, PROGRAM_NAME });
       if (!sNote.IsEmpty())
-        sMsg += WString("\n\n") + TRLFormat("(NOTE: %s)", sNote.c_str());
+        sMsg += WString("\n\n") + TRLFormat("(NOTE: %1)", { sNote });
       TThread::Synchronize(nullptr, [&sMsg,&sUrl]()
         {
           if (MsgBox(sMsg, MB_ICONINFORMATION + MB_YESNO) == IDYES)
@@ -110,8 +111,8 @@ TUpdateCheckThread::CheckResult __fastcall TUpdateCheckThread::CheckForUpdates(b
   }
   catch (Exception& e) {
     if (blShowError)
-      MsgBox(TRLFormat("Error while checking for updates:\n%s.",
-        e.Message.c_str()), MB_ICONERROR);
+      MsgBox(TRLFormat("Error while checking for updates:\n%1.",
+        { e.Message }), MB_ICONERROR);
     return CheckResult::Error;
   }
 

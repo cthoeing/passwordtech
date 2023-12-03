@@ -28,7 +28,7 @@
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 
-const int FORMAT_MAX_LEN = 1500;
+//const int FORMAT_MAX_LEN = 1500;
 
 static void formatError(void)
 {
@@ -46,89 +46,62 @@ static void utf8DecodeError(void)
 }
 
 //---------------------------------------------------------------------------
-WString FormatW(const WString sFormat, ...)
+std::wstring FormatW_(const WString& sFormat,
+  const std::vector<WString>& args)
+{
+  std::wstring sDest;
+  int nBufSize = sFormat.Length();
+  for (const auto& a : args)
+    nBufSize += a.Length();
+  sDest.reserve(nBufSize);
+
+  for (auto it = sFormat.begin(); it != sFormat.end(); it++) {
+    if (*it == '%') {
+      if (it+1 != sFormat.end() && *(it+1) == '%') {
+        sDest.push_back('%');
+        it++;
+      }
+      else if (it+1 != sFormat.end() && *(it+1) >= '0' && *(it+1) <= '9') {
+        it++;
+        int n = *it - '0';
+        if (it+1 != sFormat.end() && *(it+1) >= '0' && *(it+1) <= '9') {
+          it++;
+          n = n * 10 + *it - '0';
+        }
+        if (n >= 1 && n <= args.size()) {
+          sDest.append(args[n - 1].c_str());
+        }
+      }
+      else
+        sDest.push_back(*it);
+    }
+    else
+      sDest.push_back(*it);
+  }
+
+  return sDest;
+}
+//---------------------------------------------------------------------------
+WString FormatW(const WString& sFormat,
+  const std::vector<WString>& args)
 {
   if (sFormat.IsEmpty())
     return WString();
 
-  va_list argptr;
-  int nSize = sFormat.Length() * 2 + 50;
-  WString sResult;
-
-  for (int i = 0; i < 2; i++) {
-    auto buf = std::make_unique<wchar_t[]>(nSize);
-
-    va_start(argptr, sFormat);
-    const int nChars = vsnwprintf_s(buf.get(), nSize, sFormat.c_str(), argptr);
-    va_end(argptr);
-
-    if (nChars < 0)
-      formatError();
-    else if (nChars < nSize) {
-      sResult = WString(buf.get());
-      break;
-    }
-    else
-      nSize = nChars + 1;
-  }
-
-  return sResult;
+  std::wstring sDest = FormatW_(sFormat, args);
+  return WString(sDest.c_str(), sDest.length());
 }
 //---------------------------------------------------------------------------
-SecureWString FormatW_Secure(const WString sFormat, ...)
+SecureWString FormatW_Secure(const WString& sFormat,
+  const std::vector<WString>& args)
 {
   if (sFormat.IsEmpty())
     return SecureWString();
-
-  va_list argptr;
-  int nSize = sFormat.Length() * 2 + 50;
-  SecureWString sResult;
-
-  for (int i = 0; i < 2; i++) {
-    SecureWString buf(nSize);
-
-    va_start(argptr, sFormat);
-    const int nChars = vsnwprintf_s(buf, nSize, sFormat.c_str(), argptr);
-    va_end(argptr);
-
-    if (nChars < 0)
-      formatError();
-    else if (nChars < nSize) {
-      sResult.AssignStr(buf, nChars);
-      break;
-    }
-    else
-      nSize = nChars + 1;
-  }
-
-  return sResult;
-}
-//---------------------------------------------------------------------------
-WString FormatW_ArgList(const WString sFormat, va_list arglist)
-{
-  if (sFormat.IsEmpty())
-    return WString();
-
-  va_list argptr;
-  int nSize = sFormat.Length() * 2 + 50;
-  WString sResult;
-
-  for (int i = 0; i < 2; i++) {
-    auto buf = std::make_unique<wchar_t[]>(nSize);
-
-    const int nChars = vsnwprintf_s(buf.get(), nSize, sFormat.c_str(), arglist);
-
-    if (nChars < 0)
-      formatError();
-    else if (nChars < nSize) {
-      sResult = WString(buf.get());
-      break;
-    }
-    else
-      nSize = nChars + 1;
-  }
-
-  return sResult;
+  std::wstring sTemp(FormatW_(sFormat, args));
+  SecureWString sDest;
+  sDest.AssignStr(sTemp.c_str(), sTemp.length());
+  eraseStlString(sTemp);
+  return sDest;
 }
 //---------------------------------------------------------------------------
 int GetNumOfUnicodeChars(const wchar_t* pwszStr)
@@ -149,7 +122,7 @@ int GetNumOfUtf16Chars(const word32* pStr)
   int nChars = 0;
 
   for (; *pStr != '\0'; pStr++, nChars++) {
-    if (*pStr > 0xFFFF)
+    if (*pStr > 0xffff)
       nChars++;
   }
 
@@ -196,7 +169,7 @@ w32string WStringToW32String(const WString& sSrc)
   if (sSrc.IsEmpty())
     return w32string();
 
-  // WARNING: The following code presumes that the STL string implementation
+  // The following code presumes that the STL string implementation
   // uses a contiguous block of memory which is always null-terminated!
   w32string sDest(GetNumOfUnicodeChars(sSrc.c_str()), 0);
 
@@ -240,11 +213,6 @@ WString W32StringToWString(const w32string& sSrc)
   const word32* pSrc = sSrc.c_str();
   sDest.SetLength(GetNumOfUtf16Chars(pSrc));
 
-  /*for (int nI = 1; *pSrc != '\0'; pSrc++) {
-    sDest[nI++] = *pSrc;
-    if (*pSrc > 0xFFFF)
-      sDest[nI++] = *ptr >> 16;
-  }*/
   for (wchar_t* pwszDest = sDest.FirstChar(); *pSrc != '\0'; pSrc++) {
     *pwszDest++ = *pSrc;
     if (*pSrc > 0xffff)
@@ -334,7 +302,7 @@ WString Utf8ToWString(const AnsiString& asSrc)
   WString sDest;
   sDest.SetLength(nDestLen - 1);
 
-  MultiByteToWideChar(CP_UTF8, 0, asSrc.c_str(), -1, &sDest[1], nDestLen);
+  MultiByteToWideChar(CP_UTF8, 0, asSrc.c_str(), -1, sDest.FirstChar(), nDestLen);
 
   return sDest;
 }

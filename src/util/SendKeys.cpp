@@ -191,7 +191,7 @@ void SendKeys::AddVirtualKey(std::vector<INPUT>& dest, word16 wKey, bool blDown)
 //---------------------------------------------------------------------------
 void SendKeys::SendComplexString(const WString& sStr,
   const PasswDbEntry* pPasswDbEntry,
-  PasswDatabase* pPasswDb,
+  std::shared_ptr<PasswDatabase> pPasswDb,
   const wchar_t* pwszParam,
   const wchar_t* pwszPassw,
   KeySequence* pDest)
@@ -240,7 +240,7 @@ void SendKeys::SendComplexString(const WString& sStr,
             if (it->second <= 0) {
               int nIdx = -it->second;
 
-              if (pPasswDbEntry != nullptr && pPasswDb != nullptr) {
+              if (pPasswDbEntry && pPasswDb) {
                 const SecureWString* psSrc;
                 SecureWString sPassw;
                 if (nIdx == PasswDbEntry::PASSWORD && !pPasswDbEntry->HasPlaintextPassw()) {

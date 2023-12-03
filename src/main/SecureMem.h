@@ -43,6 +43,19 @@ public:
   {}
 };
 
+template<class T>
+word32 _tcslen(const T* pStr)
+{
+  if constexpr(std::is_same<T, char>::value)
+    return strlen(pStr);
+  if constexpr(std::is_same<T, wchar_t>::value)
+    return wcslen(pStr);
+
+  const T* pEnd = pStr;
+  while (*pEnd != '\0') pEnd++;
+  return static_cast<word32>(pEnd - pStr);
+}
+
 
 // class for secure memory operations, fast implementation
 // inspired by secblock.h in the Crypto++ package by Wei Dai
@@ -54,31 +67,31 @@ private:
   // members
   T* m_pData;
   word32 m_lSize;
-
-  static word32 _tcslen(const T* pStr);
+  word32 m_lClearMark;
 
 public:
 
   static const word32 npos = -1;
+  static constexpr word32 MAX_SIZE = 0xfffffffe / sizeof(T);
 
-  static word32 max_size()
+  /*static word32 max_size()
   {
     return 0xfffffffe / sizeof(T);
-  }
+  }*/
 
   // constructor
   SecureMem()
-    : m_pData(nullptr), m_lSize(0)
+    : m_pData(nullptr), m_lSize(0), m_lClearMark(npos)
   {
   }
 
   // constructor
   // -> size of the data array
   SecureMem(word32 lSize)
-    : m_pData(nullptr), m_lSize(lSize)
+    : m_pData(nullptr), m_lSize(lSize), m_lClearMark(npos)
   {
     if (m_lSize != 0) {
-      if (m_lSize > max_size())
+      if (m_lSize > MAX_SIZE)
         throw SecureMemSizeError();
       m_pData = new T[m_lSize];
     }
@@ -89,10 +102,10 @@ public:
   // -> size of this data
   SecureMem(const T* pData,
     word32 lSize)
-    : m_pData(nullptr), m_lSize(lSize)
+    : m_pData(nullptr), m_lSize(lSize), m_lClearMark(npos)
   {
     if (m_lSize != 0) {
-      if (m_lSize > max_size())
+      if (m_lSize > MAX_SIZE)
         throw SecureMemSizeError();
       m_pData = new T[m_lSize];
       memcpy(m_pData, pData, SizeBytes());
@@ -102,7 +115,7 @@ public:
   // copy constructor
   // -> object instance
   SecureMem(const SecureMem& src)
-    : m_pData(nullptr), m_lSize(src.m_lSize)
+    : m_pData(nullptr), m_lSize(src.m_lSize), m_lClearMark(src.m_lClearMark)
   {
     if (m_lSize != 0) {
       m_pData = new T[m_lSize];
@@ -112,10 +125,11 @@ public:
 
   // move constructor
   SecureMem(SecureMem&& src)
-    : m_pData(src.m_pData), m_lSize(src.m_lSize)
+    : m_pData(src.m_pData), m_lSize(src.m_lSize), m_lClearMark(src.m_lClearMark)
   {
     src.m_pData = nullptr;
     src.m_lSize = 0;
+    src.m_lClearMark = npos;
   }
 
   // destructor
@@ -129,10 +143,11 @@ public:
   {
     if (!IsEmpty())
     {
-      Zeroize();
+      memzero(m_pData, std::min(m_lClearMark, m_lSize) * sizeof(T));
       delete [] m_pData;
       m_pData = nullptr;
       m_lSize = 0;
+      m_lClearMark = npos;
     }
   }
 
@@ -172,16 +187,32 @@ public:
     return AssignStr(pSrc, _tcslen(pSrc));
   }
 
+  // swap content with that of another instance
   void Swap(SecureMem& other)
   {
     std::swap(m_pData, other.m_pData);
     std::swap(m_lSize, other.m_lSize);
+    std::swap(m_lClearMark, other.m_lClearMark);
+  }
+
+  // sets mark/position within the array up to which the array is to be zeroized
+  // upon clearing or destruction
+  void SetClearMark(word32 lMark)
+  {
+    m_lClearMark = lMark;
+  }
+
+  // ensures that the clear mark is shifted to higher positions only
+  void GrowClearMark(word32 lMark)
+  {
+    if (m_lClearMark == npos || lMark > m_lClearMark)
+      m_lClearMark = lMark;
   }
 
   // resizes the data array (see below for the implementation)
   // -> new size
   // -> true  : preserve the old data
-  //    false : just create a new array
+  //    false : do not preserve
   void Resize(word32 lNewSize,
     bool blPreserve = true);
 
@@ -191,6 +222,8 @@ public:
   void ResizeStr(word32 lStrLen,
     bool blPreserve = true)
   {
+    if (lStrLen > MAX_SIZE - 1)
+      throw SecureMemSizeError("SecureMem: String length exceeds limit");
     if (lStrLen != 0) {
       Resize(lStrLen + 1, blPreserve);
       back() = '\0';
@@ -226,7 +259,7 @@ public:
   // -> number of elements to add
   void GrowBy(word32 lAddSize)
   {
-    if (lAddSize > 0)
+    if (lAddSize != 0)
       Resize(m_lSize + lAddSize, true);
   }
 
@@ -236,11 +269,11 @@ public:
   void BufferedGrow(word32 lNewSize)
   {
     if (lNewSize > m_lSize) {
-      if (lNewSize > max_size())
+      if (lNewSize > MAX_SIZE)
         throw SecureMemSizeError();
       word32 lNewSizeLog = __builtin_clz(lNewSize) ^ 31;
-      lNewSize = (lNewSizeLog < 31) ? std::min(max_size(),
-        1u << (lNewSizeLog + 1)) : 0xfffffffe;
+      lNewSize = (lNewSizeLog < 31) ? std::min(MAX_SIZE,
+        1u << (lNewSizeLog + 1)) : MAX_SIZE;
       Resize(lNewSize, true);
     }
   }
@@ -357,6 +390,11 @@ public:
     word32& lPos)
   {
     return StrCat(src.m_pData, src.StrLen(), lPos);
+  }
+
+  void StrCat(T ch, word32& lPos)
+  {
+    StrCat(&ch, 1, lPos);
   }
 
   // begin/end functions to enable range-based for loops
@@ -501,10 +539,9 @@ void SecureMem<T>::Resize(word32 lNewSize,
 {
   if (lNewSize == 0)
     Clear();
-  else if (lNewSize != m_lSize)
-  {
-    if (lNewSize > max_size())
-        throw SecureMemSizeError();
+  else if (lNewSize != m_lSize) {
+    if (lNewSize > MAX_SIZE)
+      throw SecureMemSizeError();
 
     T* pNewData = new T[lNewSize];
 
@@ -516,6 +553,7 @@ void SecureMem<T>::Resize(word32 lNewSize,
     m_pData = pNewData;
     m_lSize = lNewSize;
   }
+  m_lClearMark = npos;
 }
 
 template<class T>
@@ -534,19 +572,6 @@ word32 SecureMem<T>::Find(const T& element,
     lStart++;
   }
   return npos;
-}
-
-template<class T>
-word32 SecureMem<T>::_tcslen(const T* pStr)
-{
-  if constexpr(std::is_same<T, char>::value)
-    return strlen(pStr);
-  if constexpr(std::is_same<T, wchar_t>::value)
-    return wcslen(pStr);
-
-  const T* pEnd = pStr;
-  while (*pEnd != '\0') pEnd++;
-  return static_cast<word32>(pEnd - pStr);
 }
 
 template<class T>

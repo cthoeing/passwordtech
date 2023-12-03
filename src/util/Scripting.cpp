@@ -36,7 +36,7 @@ const int MAX_PASSW_CHARS = 16000;
 
 const WString
   E_LUA_ERROR    = "Lua error: ",
-  E_UNKNOWN_FUNC = "Required function \"%s\" not defined in script";
+  E_UNKNOWN_FUNC = "Required function \"%1\" not defined in script";
 
 #define M_RAN_INVM32    2.32830643653869628906e-010
 #define M_RAN_INVM52    2.22044604925031308085e-016
@@ -118,16 +118,19 @@ int script_passphrase(lua_State* L)
 
   const char* pszChars = lua_tostring(L, 2);
   SecureW32String sInputPassw;
+  int nInputPasswLen = 0;
   if (pszChars != nullptr && *pszChars != '\0') {
     SecureWString sUtf16 = Utf8ToWString(pszChars);
-    sInputPassw.NewStr(GetNumOfUnicodeChars(sUtf16));
+    nInputPasswLen = GetNumOfUnicodeChars(sUtf16);
+    sInputPassw.NewStr(nInputPasswLen);
     WCharToW32Char(sUtf16, sInputPassw);
   }
 
   int nFlags = lua_tointeger(L, 3);
 
-  SecureW32String sPassphrase(nWords * (WORDLIST_MAX_WORDLEN + 2) + 1);
-  s_pPasswGen->GetPassphrase(sPassphrase, nWords, sInputPassw, nFlags);
+  SecureW32String sPassphrase(nInputPasswLen + 10 * nWords);
+  s_pPasswGen->GetPassphrase(sPassphrase, nWords, sInputPassw,
+    nInputPasswLen, nFlags);
 
   SecureAnsiString asUtf8 = w32ToUtf8(sPassphrase);
 
@@ -210,8 +213,8 @@ int script_format(lua_State* L)
 
   double dPasswSec;
 
-  int nPasswLen = s_pPasswGen->GetFormatPassw(sPassw, MAX_PASSW_CHARS,
-      sFormat, nFlags, nullptr, nullptr, nullptr, &dPasswSec);
+  int nPasswLen = s_pPasswGen->GetFormatPassw(sPassw,
+    sFormat, nFlags, nullptr, nullptr, nullptr, &dPasswSec);
 
   if (nPasswLen == 0)
     return 0;
@@ -310,7 +313,7 @@ void LuaScript::ThrowLuaError(int nError)
     sMsg = "Error while running message handler";
     break;
   default:
-    sMsg = FormatW("Unknown error (%d)", nError);
+    sMsg = Format("Unknown error (%d)", ARRAYOFCONST((nError)));
   }
   if (lua_gettop(m_L) >= 1) {
     WString sErr = lua_tostring(m_L, -1);
@@ -393,7 +396,7 @@ void LuaScript::CallGenerate(word64 qPasswNum,
 {
   if (lua_getglobal(m_L, "generate") != LUA_TFUNCTION) {
     lua_pop(m_L, 1);
-    throw ELuaError(E_LUA_ERROR + TRLFormat(E_UNKNOWN_FUNC, "generate"));
+    throw ELuaError(E_LUA_ERROR + TRLFormat(E_UNKNOWN_FUNC, { "generate" }));
   }
 
   int nInputArgs = 0;

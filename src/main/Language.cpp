@@ -27,6 +27,7 @@
 #include "Language.h"
 #include "UnicodeUtil.h"
 #include "StringFileStreamW.h"
+#include "Util.h"
 #include "ProgramDef.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
@@ -79,7 +80,7 @@ std::wstring trimStr(const std::wstring& s)
   return s.substr(pos1, pos2 - pos1 + 1);
 }
 
-std::wstring extractFormatSpec(const std::wstring& s)
+/*std::wstring extractFormatSpec(const std::wstring& s)
 {
   static const std::wregex re(L"%[-+ #0]{0,5}(?:\\d{1,4}|\\*)?(?:\\.\\d{1,2}|\\.\\*)?"
     "(h|hh|l|ll|j|z|t|L)?([diuoxXfFeEgGaAcspn])");
@@ -95,6 +96,70 @@ std::wstring extractFormatSpec(const std::wstring& s)
   }
 
   return sFormatSpec;
+}*/
+
+std::wstring convertFormatSpec(const std::wstring& s)
+{
+  const std::wstring fmtSpec(L".012dfs");
+  std::wstring sDest;
+  sDest.reserve(s.length());
+  int nArgIdx = 0;
+
+  for (auto it = s.begin(); it != s.end(); it++) {
+    bool blValidSpec = false;
+    if (*it == '%') {
+      auto nextIt = it + 1;
+      for (int i = 0; i < 4 && nextIt != s.end(); i++, nextIt++) {
+        if (fmtSpec.find(*nextIt) != fmtSpec.npos) {
+          if (*nextIt >= 'a' && *nextIt <= 'z') {
+            blValidSpec = true;
+            it = nextIt;
+            break;
+          }
+        }
+        else
+          break;
+      }
+    }
+    if (blValidSpec) {
+      std::wstring sSpec(L"%");
+      std::string sNum = std::to_string(++nArgIdx);
+      for (auto ch : sNum) {
+        sSpec.push_back(ch);
+      }
+      sDest += sSpec;
+    }
+    else {
+      sDest.push_back(*it);
+    }
+  }
+
+  return sDest;
+
+  /*
+  static const std::wregex re(L"%[-+ #0]{0,5}(?:\\d{1,4}|\\*)?(?:\\.\\d{1,2}|\\.\\*)?"
+    "(?:h|hh|l|ll|j|z|t|L)?(?:[diuoxXfFeEgGaAcspn])");
+  std::wsregex_iterator it(s.begin(), s.end(), re), endIt;
+  std::wstring sResult = s;
+  int nArgIdx = 0;
+  int nOffset = 0;
+
+  for (; it != endIt; it++) {
+    auto match = *it;
+    auto firstPos = match[0].first - s.begin();
+    auto lastPos = match[0].second - s.begin();
+    auto matchLen = lastPos - firstPos;
+    sResult.erase(firstPos + nOffset, matchLen);
+    std::wstring sSpec(L"%");
+    std::string sNum = std::to_string(++nArgIdx);
+    for (auto ch : sNum) {
+      sSpec.push_back(ch);
+    }
+    sResult.insert(firstPos + nOffset, sSpec);
+    nOffset += sSpec.length() - matchLen;
+  }
+
+  return sResult;*/
 }
 
 //---------------------------------------------------------------------------
@@ -128,16 +193,11 @@ LanguageSupport::LanguageSupport(const WString& sFileName,
          throw ELanguageError(Format("Empty field \"msgid\" (parsing line %d)",
            ARRAYOFCONST((nLine))));
 
-      if (extractFormatSpec(sMsgStr) != extractFormatSpec(sMsgId)) {
-        throw ELanguageError(Format("Incompatible format specifiers "
-          "(parsing line %d):\nOriginal: \"%s\"\nTranslation: \"%s\"",
-          ARRAYOFCONST((nLine, WString(sMsgId.c_str()), WString(sMsgStr.c_str())))));
-      }
-
       if (!sMsgCtxt.empty())
         sMsgId += std::wstring(L"||") + sMsgCtxt;
 
-      auto ret = m_transl.emplace(strihash(sMsgId.c_str()), sMsgStr);
+      auto ret = m_transl.emplace(strihash(
+        convertFormatSpec(sMsgId).c_str()), convertFormatSpec(sMsgStr));
 #ifdef _DEBUG
       if (!ret.second) {
         ShowMessage("Collision found:\n" + WString(sMsgId.c_str()));
@@ -439,27 +499,28 @@ void LanguageSupport::SaveToPOFileFormat(const WString& sFileName,
   std::unique_ptr<TStringFileStreamW> pFile(new TStringFileStreamW(sFileName,
     fmCreate, charEnc));
 
-  WString sHeader = Format(
-    "# \"%s\" translation of %s\n"
-    "# Converted by %s %s\n\n"
+  WString sHeader = FormatW(
+    "# \"%1\" translation of %2\n"
+    "# Converted by %3 %4\n\n"
     "# NOTE: You have to provide the appropriate language code in the "
     "\"Language\" section of the following header.\n"
     "# If the language code is missing or invalid, PwTech will derive the "
     "language name from the file name.\n"
-    "%s \"\"\n"
-    "%s \"\"\n"
-    "\"Project-Id-Version: %s %s\\n\"\n"
-    "\"Last-Translator: %s\\n\"\n"
+    "%5 \"\"\n"
+    "%6 \"\"\n"
+    "\"Project-Id-Version: %7 %8\\n\"\n"
+    "\"Last-Translator: %9\\n\"\n"
     "\"Language: \\n\"\n"
     "\"X-PasswordTech-Manual: manual.pdf\\n\"\n\n"
     ,
-    ARRAYOFCONST((
-    m_sLanguageName, PROGRAM_NAME,
-    PROGRAM_NAME, PROGRAM_VERSION,
-    PO_MSG_ID,
-    PO_MSG_STR,
-    PROGRAM_NAME, m_sLanguageVersion,
-    m_sTranslatorName)));
+    {
+      m_sLanguageName, PROGRAM_NAME,
+      PROGRAM_NAME, PROGRAM_VERSION,
+      PO_MSG_ID,
+      PO_MSG_STR,
+      PROGRAM_NAME, m_sLanguageVersion,
+      m_sTranslatorName
+    });
 
   pFile->WriteString(sHeader.c_str(), sHeader.Length());
 
@@ -485,7 +546,7 @@ void LanguageSupport::SaveToPOFileFormat(const WString& sFileName,
         sMsg.push_back('\\');
         sMsg.push_back(esc);
         if (esc == 'n') {
-          sMsg.insert(sMsg.length(), L"\"\n\"");
+          sMsg.append(L"\"\n\"");
           blMultiLine = true;
         }
       }
@@ -532,7 +593,7 @@ WString LanguageSupport::Translate(const AnsiString& asStr) const
 
     auto it = m_transl.find(lHash);
     if (it != m_transl.end())
-      return WString(it->second.c_str());
+      return WString(it->second.c_str(), it->second.length());
   }
 
   return asStr;
@@ -545,7 +606,7 @@ WString LanguageSupport::Translate(const WString& sStr) const
 
     auto it = m_transl.find(lHash);
     if (it != m_transl.end())
-      return WString(it->second.c_str());
+      return WString(it->second.c_str(), it->second.length());
   }
 
   return sStr;
@@ -554,7 +615,8 @@ WString LanguageSupport::Translate(const WString& sStr) const
 WString LanguageSupport::Translate(word32 lHash) const
 {
   auto it = m_transl.find(lHash);
-  return (it != m_transl.end()) ? WString(it->second.c_str()) : WString();
+  return (it != m_transl.end()) ? WString(it->second.c_str(), it->second.length()) :
+    WString();
 }
 //---------------------------------------------------------------------------
 WString LanguageSupport::TranslateDef(const AnsiString& asStr,
@@ -566,11 +628,11 @@ WString LanguageSupport::TranslateDef(const AnsiString& asStr,
   word32 lHash = strihash(asStr.c_str());
 
   auto it = m_transl.find(lHash);
-  return (it != m_transl.end()) ? WString(it->second.c_str()) :
+  return (it != m_transl.end()) ? WString(it->second.c_str(), it->second.length()) :
     WString(asDefault);
 }
 //---------------------------------------------------------------------------
-std::vector<word32> s_faultyTransl;
+/*std::vector<word32> s_faultyTransl;
 
 WString TRLFormat(const WString sFormat, ...)
 {
@@ -621,6 +683,11 @@ WString TRLFormat(const WString sFormat, ...)
   va_end(argptr);
 
   return sResult;
+}*/
+WString TRLFormat(const WString& sFormat,
+  const std::vector<WString>& args)
+{
+  return FormatW(TRL(sFormat), args);
 }
 //---------------------------------------------------------------------------
 
@@ -677,24 +744,8 @@ void TRLS(WString& sStr)
 void TRLMenuItem(TMenuItem* pItem)
 {
   const WString sCaption = pItem->Caption;
-  if (sCaption.IsEmpty() || sCaption == "-")
-    return;
-  const wchar_t* pBuf = sCaption.c_str();
-  std::wstring sConv;
-  sConv.reserve(sCaption.Length());
-  while (*pBuf != '\0') {
-    if (*pBuf == '&') {
-      pBuf++;
-      if (*pBuf == '&') {
-        sConv.push_back('&');
-        sConv.push_back('&');
-        pBuf++;
-      }
-    }
-    else
-      sConv.push_back(*pBuf++);
-  }
-  pItem->Caption = TRL(sConv.c_str());
+  if (!sCaption.IsEmpty() && sCaption != "-")
+    pItem->Caption = TRL(RemoveAccessKeysFromStr(sCaption));
 }
 
 static void TRLMenuItems(TMenuItem* pItems)

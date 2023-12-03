@@ -35,8 +35,8 @@ TAboutForm *AboutForm;
 __fastcall TAboutForm::TAboutForm(TComponent* Owner)
   : TForm(Owner)
 {
-  const WString HTML_LINK = "<a href=\"%s\">%s</a>";
-  Caption = TRLFormat("About %s", PROGRAM_NAME);
+  const WString HTML_LINK = "<a href=\"%1\">%2</a>";
+  Caption = TRLFormat("About %1", { PROGRAM_NAME });
 #ifdef _DEBUG
   ProgramLbl->Caption = PROGRAM_NAME + WString(" (debug)");
 #else
@@ -50,13 +50,13 @@ __fastcall TAboutForm::TAboutForm(TComponent* Owner)
 #endif
   WString sRef = WString("mailto:") + WString(PROGRAM_AUTHOR_EMAIL);
   AuthorLink->Caption = WString(PROGRAM_COPYRIGHT) + " " +
-    FormatW(HTML_LINK, sRef.c_str(), WString(PROGRAM_AUTHOR).c_str());
+    FormatW(HTML_LINK, { sRef, PROGRAM_AUTHOR });
   //AuthorLink->Hint = sRef;
   sRef = PROGRAM_URL_WEBSITE;
-  WWWLink->Caption = FormatW(HTML_LINK, sRef.c_str(), sRef.c_str());
+  WWWLink->Caption = FormatW(HTML_LINK, { sRef, sRef });
   sRef = PROGRAM_LICENSEFILE;
-  LicenseLink->Caption = FormatW(HTML_LINK, (g_sExePath + sRef).c_str(),
-    TRL("View license").c_str());
+  LicenseLink->Caption = FormatW(HTML_LINK, { g_sExePath + sRef,
+    TRL("View license") });
   LicenseLink->Hint = sRef;
   if (g_pLangSupp) {
     TRLCaption(LicenseLbl);
@@ -66,13 +66,13 @@ __fastcall TAboutForm::TAboutForm(TComponent* Owner)
   WString sLangName;
   if (g_pLangSupp)
     sLangName = g_pLangSupp->LanguageName +
-      WString(" (v") + g_pLangSupp->LanguageVersion + WString(")");
+      " (v" + g_pLangSupp->LanguageVersion + ")";
   else
     sLangName = LANGUAGE_DEFAULT_NAME;
   WString sTransl = g_pLangSupp ? g_pLangSupp->TranslatorName :
     "(original language)";
-  LanguageInfoLbl->Caption = TRLFormat("Current language: %s\n"
-      "Translator: %s", sLangName.c_str(), sTransl.c_str());
+  LanguageInfoLbl->Caption = TRLFormat("Current language: %1\n"
+    "Translator: %2", { sLangName, sTransl });
 }
 //---------------------------------------------------------------------------
 void __fastcall TAboutForm::FormShow(TObject *Sender)

@@ -3,8 +3,8 @@
   Top = 0
   BorderIcons = [biSystemMenu, biMaximize]
   Caption = 'Database settings'
-  ClientHeight = 434
-  ClientWidth = 488
+  ClientHeight = 432
+  ClientWidth = 476
   Color = clBtnFace
   Constraints.MinHeight = 349
   Constraints.MinWidth = 405
@@ -17,9 +17,6 @@
   OnClose = FormClose
   OnShow = FormShow
   PixelsPerInch = 120
-  DesignSize = (
-    488
-    434)
   TextHeight = 17
   object Label1: TLabel
     Left = 130
@@ -33,16 +30,16 @@
     Caption = 'Label1'
   end
   object ConfigPages: TPageControl
+    Tag = 15
     Left = 13
     Top = 10
-    Width = 466
-    Height = 364
+    Width = 448
+    Height = 361
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
     ActivePage = GeneralSheet
-    Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
     object GeneralSheet: TTabSheet
       Margins.Left = 4
@@ -51,8 +48,8 @@
       Margins.Bottom = 4
       Caption = 'General'
       DesignSize = (
-        458
-        332)
+        440
+        329)
       object DefUserNameLbl: TLabel
         Left = 10
         Top = 20
@@ -76,7 +73,7 @@
         Caption = 'Generate passwords for new entries using format sequence:'
       end
       object PasswGenTestBtn: TSpeedButton
-        Left = 415
+        Left = 397
         Top = 148
         Width = 28
         Height = 27
@@ -124,7 +121,7 @@
       object PasswFormatSeqBox: TEdit
         Left = 10
         Top = 114
-        Width = 433
+        Width = 415
         Height = 25
         Margins.Left = 4
         Margins.Top = 4
@@ -132,12 +129,12 @@
         Margins.Bottom = 4
         Anchors = [akLeft, akTop, akRight]
         TabOrder = 1
-        ExplicitWidth = 411
+        ExplicitWidth = 397
       end
       object DefUserNameBox: TEdit
         Left = 10
         Top = 44
-        Width = 433
+        Width = 415
         Height = 25
         Margins.Left = 4
         Margins.Top = 4
@@ -145,7 +142,7 @@
         Margins.Bottom = 4
         Anchors = [akLeft, akTop, akRight]
         TabOrder = 0
-        ExplicitWidth = 411
+        ExplicitWidth = 397
       end
       object DefaultÉxpiryBox: TEdit
         Left = 10
@@ -175,7 +172,7 @@
       object PasswGenTestBox: TEdit
         Left = 10
         Top = 148
-        Width = 398
+        Width = 380
         Height = 25
         Margins.Left = 4
         Margins.Top = 4
@@ -185,7 +182,7 @@
         Color = clBtnFace
         ReadOnly = True
         TabOrder = 2
-        ExplicitWidth = 376
+        ExplicitWidth = 362
       end
       object PasswHistoryBox: TEdit
         Left = 10
@@ -270,8 +267,8 @@
       Caption = 'Security'
       ImageIndex = 1
       DesignSize = (
-        458
-        332)
+        440
+        329)
       object EncryptionAlgoLbl: TLabel
         Left = 10
         Top = 20
@@ -295,7 +292,7 @@
         Caption = 'Number of key derivation rounds:'
       end
       object CalcRoundsBtn: TSpeedButton
-        Left = 416
+        Left = 398
         Top = 85
         Width = 29
         Height = 29
@@ -317,7 +314,7 @@
       object EncryptionAlgoList: TComboBox
         Left = 10
         Top = 44
-        Width = 435
+        Width = 417
         Height = 25
         Margins.Left = 4
         Margins.Top = 4
@@ -328,7 +325,7 @@
         TabOrder = 0
       end
       object NumKdfRoundsBox: TEdit
-        Left = 291
+        Left = 273
         Top = 86
         Width = 118
         Height = 25
@@ -342,30 +339,30 @@
     end
   end
   object OKBtn: TButton
-    Left = 283
-    Top = 388
+    Tag = 12
+    Left = 265
+    Top = 385
     Width = 94
     Height = 31
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    Anchors = [akRight, akBottom]
     Caption = 'OK'
     Default = True
     TabOrder = 1
     OnClick = OKBtnClick
   end
   object CancelBtn: TButton
-    Left = 385
-    Top = 388
+    Tag = 12
+    Left = 367
+    Top = 385
     Width = 94
     Height = 31
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    Anchors = [akRight, akBottom]
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 2

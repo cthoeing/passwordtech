@@ -56,19 +56,23 @@ enum CharacterEncoding { ceAnsi, ceUtf16, ceUtf16BigEndian, ceUtf8 };
 // -> format string
 // -> series of arguments
 // <- formatted wide string
-WString FormatW(const WString sFormat, ...);
+//WString FormatW(const WString sFormat, ...);
+WString FormatW(const WString& sFormat,
+  const std::vector<WString>& args);
 
 // format wide string & store result in secure buffer
 // -> format string
 // -> series of arguments
 // <- resulting formatted string
-SecureWString FormatW_Secure(const WString sFormat, ...);
+//SecureWString FormatW_Secure(const WString sFormat, ...);
+SecureWString FormatW_Secure(const WString& sFormat,
+  const std::vector<WString>& args);
 
 // format wide string using argument list
 // -> format string
 // -> argument list
 // <- formatted wide string
-WString FormatW_ArgList(const WString sFormat, va_list arglist);
+//WString FormatW_ArgList(const WString sFormat, va_list arglist);
 
 // count Unicode characters in wide string (16-bit)
 // -> pointer to wide string

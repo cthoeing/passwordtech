@@ -62,7 +62,7 @@ void __fastcall TProgressForm::Init(TForm* pCaller,
       throw Exception(E_USAGE_CONFLICT);
 
     m_pCaller = pCaller;
-    m_sProgressInfo = EnableInt64FormatSpec(sProgressInfo);
+    m_sProgressInfo = sProgressInfo;
     m_qMaxValue = qMaxValue;
     m_qLastValue = -1;
     m_currentProgress = curProgress;
@@ -135,7 +135,7 @@ int __fastcall TProgressForm::ExecuteModal(TForm* pCaller,
       ProgressBar->Max = PROGRESSBAR_MAX_VALUE;
       ProgressBar->Position = 0;
       ProgressBar->Style = pbstNormal;
-      m_sProgressInfo = EnableInt64FormatSpec(sProgressInfo);
+      m_sProgressInfo = sProgressInfo;
     }
     else {
       ProgressLbl->Caption = sProgressInfo;
@@ -171,7 +171,9 @@ void __fastcall TProgressForm::UpdateProgress(word64 qValue)
     m_qLastValue = qValue;
     ProgressBar->Position = static_cast<double>(PROGRESSBAR_MAX_VALUE) *
       qValue / m_qMaxValue;
-    ProgressLbl->Caption = FormatW(m_sProgressInfo, qValue, m_qMaxValue);
+    ProgressLbl->Caption = FormatW(m_sProgressInfo,
+      { IntToStr(static_cast<__int64>(qValue)),
+        IntToStr(static_cast<__int64>(m_qMaxValue)) });
   }
 }
 //---------------------------------------------------------------------------
@@ -226,15 +228,12 @@ void __fastcall TProgressForm::CancelBtnClick(TObject *Sender)
       Close();
     break;
   case MODE_ASYNC_MODAL:
-  {
-    //auto cf = m_cancelFlag.lock();
     if (auto cf = m_cancelFlag.lock())
       *cf = true;
     else
       throw Exception("Cancel token expired before task finished");
     m_waitThreadFun(-1);
     ModalResult = mrCancel;
-  }
   default:
     break;
   }

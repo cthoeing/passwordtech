@@ -2,7 +2,7 @@ object PasswMngForm: TPasswMngForm
   Left = 594
   Top = 119
   ClientHeight = 671
-  ClientWidth = 838
+  ClientWidth = 822
   Color = clBtnFace
   Constraints.MinHeight = 600
   Constraints.MinWidth = 625
@@ -20,21 +20,23 @@ object PasswMngForm: TPasswMngForm
   PixelsPerInch = 120
   TextHeight = 17
   object Splitter2: TSplitter
-    Left = 461
-    Top = 85
+    Left = 469
+    Top = 83
     Width = 4
-    Height = 586
+    Height = 588
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
     Beveled = True
+    ExplicitLeft = 461
+    ExplicitTop = 85
     ExplicitHeight = 591
   end
   object Splitter1: TSplitter
     Left = 0
-    Top = 81
-    Width = 838
+    Top = 79
+    Width = 822
     Height = 4
     Cursor = crVSplit
     Margins.Left = 4
@@ -42,13 +44,14 @@ object PasswMngForm: TPasswMngForm
     Margins.Right = 4
     Margins.Bottom = 4
     Align = alTop
+    ExplicitTop = 81
     ExplicitWidth = 963
   end
   object DbView: TListView
     Left = 0
-    Top = 85
-    Width = 461
-    Height = 586
+    Top = 83
+    Width = 469
+    Height = 588
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -70,13 +73,12 @@ object PasswMngForm: TPasswMngForm
     OnKeyDown = DbViewKeyDown
     OnMouseMove = DbViewMouseMove
     OnSelectItem = DbViewSelectItem
-    ExplicitHeight = 585
   end
   object EditPanel: TPanel
-    Left = 465
-    Top = 85
-    Width = 373
-    Height = 586
+    Left = 473
+    Top = 83
+    Width = 349
+    Height = 588
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -86,11 +88,6 @@ object PasswMngForm: TPasswMngForm
     Enabled = False
     TabOrder = 1
     OnResize = EditPanelResize
-    ExplicitWidth = 367
-    ExplicitHeight = 585
-    DesignSize = (
-      373
-      586)
     object TitleLbl: TLabel
       Left = 10
       Top = 11
@@ -159,7 +156,7 @@ object PasswMngForm: TPasswMngForm
     end
     object NotesLbl: TLabel
       Left = 10
-      Top = 245
+      Top = 246
       Width = 40
       Height = 17
       Margins.Left = 4
@@ -170,6 +167,7 @@ object PasswMngForm: TPasswMngForm
       OnMouseMove = NotesLblMouseMove
     end
     object AddModifyBtn: TSpeedButton
+      Tag = 9
       Left = 188
       Top = 528
       Width = 51
@@ -179,7 +177,6 @@ object PasswMngForm: TPasswMngForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akLeft, akBottom]
       ImageIndex = 3
       ImageName = '003-accept'
       Images = ImageList32
@@ -193,9 +190,9 @@ object PasswMngForm: TPasswMngForm
       ParentShowHint = False
       ShowHint = True
       OnClick = AddModifyBtnClick
-      ExplicitTop = 533
     end
     object PrevBtn: TSpeedButton
+      Tag = 9
       Left = 8
       Top = 528
       Width = 51
@@ -205,7 +202,6 @@ object PasswMngForm: TPasswMngForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akLeft, akBottom]
       ImageIndex = 0
       ImageName = 'up'
       Images = ImageList32
@@ -219,9 +215,9 @@ object PasswMngForm: TPasswMngForm
       ParentShowHint = False
       ShowHint = True
       OnClick = PrevBtnClick
-      ExplicitTop = 533
     end
     object NextBtn: TSpeedButton
+      Tag = 9
       Left = 63
       Top = 528
       Width = 46
@@ -231,7 +227,6 @@ object PasswMngForm: TPasswMngForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akLeft, akBottom]
       ImageIndex = 1
       ImageName = 'down'
       Images = ImageList32
@@ -245,9 +240,9 @@ object PasswMngForm: TPasswMngForm
       ParentShowHint = False
       ShowHint = True
       OnClick = NextBtnClick
-      ExplicitTop = 533
     end
     object CancelBtn: TSpeedButton
+      Tag = 9
       Left = 238
       Top = 528
       Width = 46
@@ -257,7 +252,6 @@ object PasswMngForm: TPasswMngForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akLeft, akBottom]
       ImageIndex = 4
       ImageName = '004-cancel'
       Images = ImageList32
@@ -271,35 +265,33 @@ object PasswMngForm: TPasswMngForm
       ParentShowHint = False
       ShowHint = True
       OnClick = CancelBtnClick
-      ExplicitTop = 533
     end
     object CreationTimeLbl: TLabel
+      Tag = 9
       Left = 10
-      Top = 424
+      Top = 423
       Width = 86
       Height = 17
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akLeft, akBottom]
       Caption = 'Creation time:'
-      ExplicitTop = 429
     end
     object CreationTimeInfo: TLabel
+      Tag = 9
       Left = 140
-      Top = 424
+      Top = 423
       Width = 5
       Height = 17
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akLeft, akBottom]
       Caption = '-'
-      ExplicitTop = 429
     end
     object DeleteBtn: TSpeedButton
+      Tag = 9
       Left = 116
       Top = 528
       Width = 52
@@ -309,7 +301,6 @@ object PasswMngForm: TPasswMngForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akLeft, akBottom]
       ImageIndex = 2
       ImageName = '005-delete'
       Images = ImageList32
@@ -317,37 +308,35 @@ object PasswMngForm: TPasswMngForm
       ParentShowHint = False
       ShowHint = True
       OnClick = DeleteBtnClick
-      ExplicitTop = 533
     end
     object LastModificationLbl: TLabel
+      Tag = 9
       Left = 10
-      Top = 458
+      Top = 457
       Width = 107
       Height = 17
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akLeft, akBottom]
       Caption = 'Last modification:'
-      ExplicitTop = 463
     end
     object LastModificationInfo: TLabel
+      Tag = 9
       Left = 140
-      Top = 458
+      Top = 457
       Width = 5
       Height = 17
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akLeft, akBottom]
       Caption = '-'
-      ExplicitTop = 463
     end
     object TogglePasswBtn: TSpeedButton
-      Left = 328
-      Top = 75
+      Tag = 6
+      Left = 310
+      Top = 72
       Width = 33
       Height = 31
       Hint = 'Left-click: Hide/show password, right-click: Generate password'
@@ -356,7 +345,6 @@ object PasswMngForm: TPasswMngForm
       Margins.Right = 4
       Margins.Bottom = 4
       AllowAllUp = True
-      Anchors = [akTop, akRight]
       GroupIndex = 1
       Caption = #183#183#183
       Flat = True
@@ -370,11 +358,10 @@ object PasswMngForm: TPasswMngForm
       ShowHint = True
       OnClick = TogglePasswBtnClick
       OnMouseUp = TogglePasswBtnMouseUp
-      ExplicitLeft = 334
     end
     object KeyValueListLbl: TLabel
       Left = 10
-      Top = 211
+      Top = 212
       Width = 84
       Height = 17
       Margins.Left = 4
@@ -384,21 +371,21 @@ object PasswMngForm: TPasswMngForm
       Caption = 'Key-value list:'
     end
     object TagsLbl: TLabel
-      Left = 10
-      Top = 356
+      Tag = 9
+      Left = 8
+      Top = 358
       Width = 34
       Height = 17
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akLeft, akBottom]
       Caption = 'Tags:'
-      ExplicitTop = 361
     end
     object AddTagBtn: TSpeedButton
-      Left = 328
-      Top = 353
+      Tag = 12
+      Left = 310
+      Top = 352
       Width = 29
       Height = 28
       Hint = 'Select and add existing tag'
@@ -406,7 +393,6 @@ object PasswMngForm: TPasswMngForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akTop, akRight]
       ImageIndex = 14
       ImageName = '011-add'
       Images = ImageList16
@@ -414,11 +400,11 @@ object PasswMngForm: TPasswMngForm
       ParentShowHint = False
       ShowHint = True
       OnClick = AddTagBtnClick
-      ExplicitLeft = 334
     end
     object EditKeyValBtn: TSpeedButton
-      Left = 328
-      Top = 209
+      Tag = 6
+      Left = 310
+      Top = 207
       Width = 28
       Height = 28
       Hint = 'Edit key-value list'
@@ -426,7 +412,6 @@ object PasswMngForm: TPasswMngForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akTop, akRight]
       ImageIndex = 13
       ImageName = '012-note'
       Images = ImageList16
@@ -434,11 +419,11 @@ object PasswMngForm: TPasswMngForm
       ParentShowHint = False
       ShowHint = True
       OnClick = EditKeyValBtnClick
-      ExplicitLeft = 334
     end
     object ExpiryBtn: TSpeedButton
-      Left = 328
-      Top = 389
+      Tag = 12
+      Left = 310
+      Top = 386
       Width = 29
       Height = 29
       Hint = 'Change expiry date'
@@ -446,7 +431,6 @@ object PasswMngForm: TPasswMngForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akTop, akRight]
       ImageIndex = 15
       ImageName = '013-alarm-clock'
       Images = ImageList16
@@ -454,11 +438,11 @@ object PasswMngForm: TPasswMngForm
       ParentShowHint = False
       ShowHint = True
       OnClick = ExpiryBtnClick
-      ExplicitLeft = 334
     end
     object PasswQualityBtn: TSpeedButton
-      Left = 328
-      Top = 107
+      Tag = 6
+      Left = 310
+      Top = 106
       Width = 28
       Height = 28
       Hint = 'Estimate password quality'
@@ -467,7 +451,6 @@ object PasswMngForm: TPasswMngForm
       Margins.Right = 4
       Margins.Bottom = 4
       AllowAllUp = True
-      Anchors = [akTop, akRight]
       GroupIndex = 2
       Down = True
       ImageIndex = 11
@@ -477,7 +460,6 @@ object PasswMngForm: TPasswMngForm
       ParentShowHint = False
       ShowHint = True
       OnClick = PasswQualityBtnClick
-      ExplicitLeft = 334
     end
     object PasswSecurityLbl: TLabel
       Left = 130
@@ -491,8 +473,9 @@ object PasswMngForm: TPasswMngForm
       Alignment = taRightJustify
     end
     object UrlBtn: TSpeedButton
-      Left = 328
-      Top = 139
+      Tag = 6
+      Left = 310
+      Top = 138
       Width = 28
       Height = 27
       Hint = 'Open URL'
@@ -500,7 +483,6 @@ object PasswMngForm: TPasswMngForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akTop, akRight]
       ImageIndex = 12
       ImageName = '010-right'
       Images = ImageList16
@@ -508,9 +490,9 @@ object PasswMngForm: TPasswMngForm
       ParentShowHint = False
       ShowHint = True
       OnClick = UrlBtnClick
-      ExplicitLeft = 334
     end
     object PasswChangeLbl: TLabel
+      Tag = 9
       Left = 10
       Top = 491
       Width = 120
@@ -519,11 +501,10 @@ object PasswMngForm: TPasswMngForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akLeft, akBottom]
       Caption = 'Password changed:'
-      ExplicitTop = 496
     end
     object PasswChangeInfo: TLabel
+      Tag = 9
       Left = 140
       Top = 491
       Width = 5
@@ -532,11 +513,10 @@ object PasswMngForm: TPasswMngForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akLeft, akBottom]
       Caption = '-'
-      ExplicitTop = 496
     end
     object PasswHistoryBtn: TSpeedButton
+      Tag = 9
       Left = 158
       Top = 486
       Width = 28
@@ -546,7 +526,6 @@ object PasswMngForm: TPasswMngForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akLeft, akBottom]
       ImageIndex = 16
       ImageName = 'clock'
       Images = ImageList16
@@ -554,48 +533,45 @@ object PasswMngForm: TPasswMngForm
       ParentShowHint = False
       ShowHint = True
       OnClick = PasswHistoryBtnClick
-      ExplicitTop = 491
     end
     object TitleBox: TEdit
+      Tag = 7
       Left = 140
       Top = 8
-      Width = 185
+      Width = 165
       Height = 25
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
       OnChange = TitleBoxChange
       OnKeyPress = TitleBoxKeyPress
-      ExplicitWidth = 179
     end
     object UserNameBox: TEdit
+      Tag = 7
       Left = 140
       Top = 41
-      Width = 185
+      Width = 165
       Height = 25
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akLeft, akTop, akRight]
       TabOrder = 1
       OnChange = TitleBoxChange
       OnKeyPress = TitleBoxKeyPress
-      ExplicitWidth = 179
     end
     object PasswBox: TEdit
+      Tag = 7
       Left = 140
       Top = 75
-      Width = 185
+      Width = 165
       Height = 28
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akLeft, akTop, akRight]
       AutoSize = False
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
@@ -606,87 +582,82 @@ object PasswMngForm: TPasswMngForm
       TabOrder = 2
       OnChange = PasswBoxChange
       OnKeyPress = TitleBoxKeyPress
-      ExplicitWidth = 179
     end
     object UrlBox: TEdit
+      Tag = 7
       Left = 140
       Top = 140
-      Width = 185
+      Width = 165
       Height = 25
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akLeft, akTop, akRight]
       TabOrder = 3
       OnChange = TitleBoxChange
       OnKeyPress = TitleBoxKeyPress
-      ExplicitWidth = 179
     end
     object KeywordBox: TEdit
+      Tag = 7
       Left = 140
       Top = 174
-      Width = 185
+      Width = 165
       Height = 25
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akLeft, akTop, akRight]
       TabOrder = 4
       OnChange = TitleBoxChange
       OnKeyPress = TitleBoxKeyPress
-      ExplicitWidth = 179
     end
     object NotesBox: TMemo
+      Tag = 15
       Left = 140
       Top = 241
-      Width = 185
+      Width = 165
       Height = 106
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akLeft, akTop, akRight]
       ScrollBars = ssVertical
       TabOrder = 6
       OnChange = TitleBoxChange
       OnKeyPress = NotesBoxKeyPress
-      ExplicitWidth = 179
     end
     object TagsBox: TEdit
+      Tag = 13
       Left = 140
       Top = 355
-      Width = 185
+      Width = 165
       Height = 25
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akLeft, akTop, akRight]
       TabOrder = 7
       OnChange = TitleBoxChange
       OnKeyPress = TitleBoxKeyPress
-      ExplicitWidth = 179
     end
     object KeyValueListBox: TEdit
+      Tag = 7
       Left = 140
       Top = 208
-      Width = 185
+      Width = 165
       Height = 25
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akLeft, akTop, akRight]
       Color = clBtnFace
       ReadOnly = True
       TabOrder = 5
       OnChange = TitleBoxChange
-      ExplicitWidth = 179
     end
     object ExpiryCheck: TCheckBox
-      Left = 10
+      Tag = 9
+      Left = 8
       Top = 390
       Width = 121
       Height = 21
@@ -694,41 +665,38 @@ object PasswMngForm: TPasswMngForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akLeft, akBottom]
       Caption = 'Expires:'
       TabOrder = 8
       OnClick = ExpiryCheckClick
-      ExplicitTop = 389
     end
     object ExpiryDatePicker: TDateTimePicker
+      Tag = 13
       Left = 140
-      Top = 388
-      Width = 185
+      Top = 389
+      Width = 165
       Height = 25
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akLeft, akTop, akRight]
       Date = 44241.000000000000000000
       Time = 0.634395879627845700
       Enabled = False
       TabOrder = 9
       OnChange = ExpiryDatePickerChange
       OnKeyPress = TitleBoxKeyPress
-      ExplicitWidth = 179
     end
     object PasswSecurityBarPanel: TPanel
+      Tag = 7
       Left = 140
       Top = 109
-      Width = 185
+      Width = 165
       Height = 21
       Hint = 'Hold left mouse button to drag & drop password'
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akLeft, akTop, akRight]
       BevelOuter = bvNone
       Caption = 'Password quality estimation is disabled'
       ParentShowHint = False
@@ -736,7 +704,6 @@ object PasswMngForm: TPasswMngForm
       ShowHint = True
       TabOrder = 10
       OnMouseMove = PasswSecurityBarPanelMouseMove
-      ExplicitWidth = 179
       object PasswSecurityBar: TImage
         Left = 0
         Top = 0
@@ -844,19 +811,18 @@ object PasswMngForm: TPasswMngForm
   object ToolBar: TToolBar
     Left = 0
     Top = 0
-    Width = 838
-    Height = 28
+    Width = 822
+    Height = 26
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
     AutoSize = True
-    ButtonHeight = 28
+    ButtonHeight = 26
     ButtonWidth = 40
     Images = ImageList16
     TabOrder = 2
     Transparent = True
-    ExplicitWidth = 832
     object NewBtn: TToolButton
       Left = 0
       Top = 0
@@ -936,7 +902,7 @@ object PasswMngForm: TPasswMngForm
       Left = 200
       Top = 0
       Width = 29
-      Height = 28
+      Height = 26
       Hint = 'Clear search'
       Margins.Left = 4
       Margins.Top = 4
@@ -956,7 +922,7 @@ object PasswMngForm: TPasswMngForm
     end
     object SearchBox: TComboBox
       Left = 229
-      Top = 1
+      Top = 0
       Width = 181
       Height = 25
       Margins.Left = 4
@@ -990,7 +956,7 @@ object PasswMngForm: TPasswMngForm
       Left = 469
       Top = 0
       Width = 161
-      Height = 28
+      Height = 26
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -1000,11 +966,49 @@ object PasswMngForm: TPasswMngForm
       ParentBackground = False
       TabOrder = 1
     end
+    object FilterInfoPanel: TPanel
+      Left = 630
+      Top = 0
+      Width = 111
+      Height = 26
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+      BevelOuter = bvNone
+      ParentBackground = False
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 2
+      Visible = False
+      object ClearFilterBtn: TSpeedButton
+        Left = 88
+        Top = 0
+        Width = 21
+        Height = 27
+        Hint = 'Remove filter'
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
+        Caption = 'V'
+        Flat = True
+        Font.Charset = SYMBOL_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -20
+        Font.Name = 'Wingdings 2'
+        Font.Style = []
+        ParentFont = False
+        ParentShowHint = False
+        ShowHint = True
+        OnClick = ClearFilterBtnClick
+      end
+    end
   end
   object TagView: TListView
     Left = 0
-    Top = 28
-    Width = 838
+    Top = 26
+    Width = 822
     Height = 53
     Margins.Left = 4
     Margins.Top = 4
@@ -1020,7 +1024,6 @@ object PasswMngForm: TPasswMngForm
     ViewStyle = vsSmallIcon
     OnCompare = TagViewCompare
     OnSelectItem = TagViewSelectItem
-    ExplicitWidth = 832
   end
   object MainMenu: TMainMenu
     Left = 16
@@ -1255,15 +1258,29 @@ object PasswMngForm: TPasswMngForm
       object MainMenu_View_N2: TMenuItem
         Caption = '-'
       end
-      object MainMenu_View_ExpiredEntries: TMenuItem
-        AutoCheck = True
-        Caption = 'Filter Expired Entries'
-        OnClick = MainMenu_View_ExpiredEntriesClick
-      end
-      object MainMenu_View_EntriesExpireSoon: TMenuItem
-        AutoCheck = True
-        Caption = 'Filter Entries that Will Expire Soon'
-        OnClick = MainMenu_View_ExpiredEntriesClick
+      object MainMenu_View_Filter: TMenuItem
+        Caption = 'Filter'
+        object MainMenu_View_Filter_Expired: TMenuItem
+          AutoCheck = True
+          Caption = 'Expired Entries'
+          GroupIndex = 1
+          RadioItem = True
+          OnClick = MainMenu_View_Filter_ExpiredClick
+        end
+        object MainMenu_View_Filter_ExpireSoon: TMenuItem
+          AutoCheck = True
+          Caption = 'Entries that Will Expire Soon'
+          GroupIndex = 1
+          RadioItem = True
+          OnClick = MainMenu_View_Filter_ExpiredClick
+        end
+        object MainMenu_View_Filter_WeakPassw: TMenuItem
+          AutoCheck = True
+          Caption = 'Entries with Weak Passwords'
+          GroupIndex = 1
+          RadioItem = True
+          OnClick = MainMenu_View_Filter_ExpiredClick
+        end
       end
       object MainMenu_View_N3: TMenuItem
         Caption = '-'

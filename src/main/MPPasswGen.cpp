@@ -94,18 +94,20 @@ static word8 memcryptKey[16];
 __fastcall TMPPasswGenForm::TMPPasswGenForm(TComponent* Owner)
   : TForm(Owner)
 {
+  SetFormComponentsAnchors(this);
+
   Constraints->MinHeight = Height;
   Constraints->MinWidth = Width;
 
   PasswLengthSpinBtn->Max = PASSW_MAX_CHARS;
   TStrings* pStrList = CharSetList->Items;
 
-  pStrList->Add(FormatW("1: %s (A-Z, a-z, 0-9)", TRL("Alphanumeric").c_str()));
-  pStrList->Add(FormatW("2: (1) %s", TRL("without ambiguous characters").c_str()));
-  pStrList->Add(FormatW("3: (1) + %s (!\"#$%...)", TRL("special symbols").c_str()));
-  pStrList->Add(FormatW("4: (3) %s", TRL("without ambiguous characters").c_str()));
-  pStrList->Add(FormatW("5: %s (0-9, a-f)", TRL("Hexadecimal").c_str()));
-  pStrList->Add(FormatW("6: %s (0-9, A-F)", TRL("Hexadecimal").c_str()));
+  pStrList->Add(FormatW("1: %1 (A-Z, a-z, 0-9)", { TRL("Alphanumeric") }));
+  pStrList->Add(FormatW("2: (1) %1", { TRL("without ambiguous characters") }));
+  pStrList->Add(FormatW("3: (1) + %1 (!\"#$%...)", { TRL("special symbols") }));
+  pStrList->Add(FormatW("4: (3) %1", { TRL("without ambiguous characters") }));
+  pStrList->Add(FormatW("5: %1 (0-9, a-f)", { TRL("Hexadecimal") }));
+  pStrList->Add(FormatW("6: %1 (0-9, A-F)", { TRL("Hexadecimal") }));
 
   MPPasswGenForm->PasswBox->Font = MainForm->PasswBox->Font;
 
@@ -342,7 +344,8 @@ void __fastcall TMPPasswGenForm::EnterPasswBtnClick(TObject *Sender)
       sHashFmt = "%.8x";
       break;
     }
-    sPasswInfo += " Hash: " + FormatW(sHashFmt, lHashValue);
+    sPasswInfo += " Hash: " + Format(sHashFmt,
+      ARRAYOFCONST((lHashValue))).LowerCase();
   }
 
   PasswStatusBox->Text = sPasswInfo;
@@ -377,7 +380,7 @@ void __fastcall TMPPasswGenForm::GenerateBtnClick(TObject *Sender)
   if (m_key.IsEmpty())
     return;
 
-  int nPasswBits;
+  double dPasswBits;
 
   SecureMem<word8> plainKey(m_key.Size());
   memcrypt(m_key, plainKey, plainKey.Size(), memcryptKey, sizeof(memcryptKey));
@@ -400,17 +403,17 @@ void __fastcall TMPPasswGenForm::GenerateBtnClick(TObject *Sender)
       passwBytes.Data());
 
     SecureAnsiString asPassw(9);
-	size_t outputLen = 9;
+	  size_t outputLen = 9;
 
-	base64_encode(reinterpret_cast<word8*>(asPassw.Data()),
-	  &outputLen, passwBytes.Data(), 6, 0);
+	  base64_encode(reinterpret_cast<word8*>(asPassw.Data()),
+	    &outputLen, passwBytes.Data(), 6, 0);
 
     SecureWString sPassw(9);
     asciiToUnicode(asPassw, sPassw, 9);
 
     SetEditBoxTextBuf(PasswBox, sPassw);
 
-    nPasswBits = 48;
+    dPasswBits = 48;
   }
   else {
     bool addLength = AddPasswLenToParamCheck->Checked;
@@ -442,16 +445,15 @@ void __fastcall TMPPasswGenForm::GenerateBtnClick(TObject *Sender)
 
     SetEditBoxTextBuf(PasswBox, sPassw);
 
-    nPasswBits = FloorEntropyBits(
-      Log2(static_cast<double>(nCharSetSize)) * nPasswLen);
+    dPasswBits = Log2(static_cast<double>(nCharSetSize)) * nPasswLen;
   }
 
   PasswSecurityBarPanel->Visible = true;
   PasswInfoLbl->Visible = true;
-  PasswSecurityBarPanel->Width = std::max<int>((std::min(nPasswBits / 128.0f, 1.0f) *
+  PasswSecurityBarPanel->Width = std::max<int>((std::min(dPasswBits / 128.0, 1.0) *
         PasswSecurityBar->Width), 4);
-  PasswInfoLbl->Caption = TRLFormat("%d bits", std::min(nPasswBits,
-        AESCtrPRNG::KEY_SIZE*8));
+  PasswInfoLbl->Caption = TRLFormat("%1 bits",
+    { FormatFloat("0.0", std::min<double>(dPasswBits, AESCtrPRNG::KEY_SIZE*8)) });
 
   SetKeyExpiry();
 
@@ -546,7 +548,8 @@ void __fastcall TMPPasswGenForm::CharSetListChange(TObject *Sender)
   int nLen = strlen(MPPG_CHARSETS[CharSetList->ItemIndex]);
   double dEntropy = Log2(static_cast<double>(nLen));
 
-  CharSetInfoLbl->Caption = TRLFormat("%d ch. / %.1f bits per ch.", nLen, dEntropy);
+  CharSetInfoLbl->Caption = TRLFormat("%1 ch. / %2 bits per ch.",
+    { IntToStr(nLen), FormatFloat("0.0", dEntropy) });
 }
 //---------------------------------------------------------------------------
 void __fastcall TMPPasswGenForm::PasswBoxMenuPopup(TObject *Sender)
@@ -656,7 +659,7 @@ void __fastcall TMPPasswGenForm::PasswBoxMenu_PerformAutotypeClick(TObject *Send
     g_nAppState |= APPSTATE_AUTOTYPE;
     Application->Minimize();
     SendKeys sk(g_config.AutotypeDelay);
-    sk.SendComplexString(AutotypeBox->Text, NULL, NULL, sParam.c_str(),
+    sk.SendComplexString(AutotypeBox->Text, nullptr, nullptr, sParam.c_str(),
       sPassw.c_str());
     g_nAppState &= ~APPSTATE_AUTOTYPE;
   }
@@ -664,7 +667,7 @@ void __fastcall TMPPasswGenForm::PasswBoxMenu_PerformAutotypeClick(TObject *Send
     TSendKeysThread::TerminateAndWait();
     if (!TSendKeysThread::ThreadRunning())
       new TSendKeysThread(Handle, g_config.AutotypeDelay, AutotypeBox->Text,
-        NULL, NULL, sParam.c_str(), sPassw.c_str());
+        nullptr, nullptr, sParam.c_str(), sPassw.c_str());
   }
 }
 //---------------------------------------------------------------------------

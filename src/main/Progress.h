@@ -55,17 +55,15 @@ __published:	// IDE-managed Components
   void __fastcall FormKeyDown(TObject *Sender, WORD &Key,
     TShiftState Shift);
   void __fastcall FormShow(TObject *Sender);
-    void __fastcall TimerTimer(TObject *Sender);
-    void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
+  void __fastcall TimerTimer(TObject *Sender);
+  void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
 private:	// User declarations
   TForm* m_pCaller;
   WString m_sProgressInfo;
   word64 m_qLastValue;
   word64 m_qMaxValue;
-  //std::atomic<bool>* m_pCancelFlag;
   std::weak_ptr<std::atomic<bool>> m_cancelFlag;
   std::weak_ptr<std::atomic<word64>> m_currentProgress;
-  //const std::atomic<word64>* m_pCurrentProgress;
   WString m_sProgressMsg;
   std::function<bool(unsigned int)> m_waitThreadFun;
   std::mutex m_lock;

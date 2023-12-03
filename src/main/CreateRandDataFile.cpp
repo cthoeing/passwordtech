@@ -46,6 +46,8 @@ CONFIG_ID = "CreateRandDataFile";
 __fastcall TCreateRandDataFileDlg::TCreateRandDataFileDlg(TComponent* Owner)
   : TForm(Owner)
 {
+  SetFormComponentsAnchors(this);
+
   Constraints->MaxHeight = Height;
   Constraints->MinHeight = Height;
   Constraints->MinWidth = Width;
@@ -191,7 +193,7 @@ void __fastcall TCreateRandDataFileDlg::CreateFileBtnClick(TObject *Sender)
     Application->ProcessMessages();
     nTimeout += 100;
     if (nTimeout >= 1000 && !ProgressForm->Visible) {
-      WString sProgressInfo = ReplaceStr(TRL("%d of %d %s written."), "%s", sProgressStep);
+      WString sProgressInfo = ReplaceStr(TRL("%1 of %2 %3 written."), "%3", sProgressStep);
       ProgressForm->ExecuteModal(this,
         TRL("Creating random data file ..."),
         sProgressInfo,
@@ -210,15 +212,16 @@ void __fastcall TCreateRandDataFileDlg::CreateFileBtnClick(TObject *Sender)
     if (cancelToken || !sMsg.IsEmpty()) {
       if (cancelToken)
         sMsg = EUserCancel::UserCancelMsg;
-      sMsg = FormatW(EnableInt64FormatSpec(
-        TRL("Error while creating file\n\"%s\":\n%s.\n\n%d bytes written.")),
-        sFileName.c_str(), sMsg.c_str(), qTotalWritten);
+      sMsg = TRLFormat(
+        "Error while creating file\n\"%1\":\n%2.\n\n%3 bytes written.",
+        { sFileName, sMsg, IntToStr(static_cast<__int64>(qTotalWritten)) });
       MsgBox(sMsg, MB_ICONERROR);
     }
     else {
-      MsgBox(FormatW(EnableInt64FormatSpec(TRL(
-        "File \"%s\" successfully created.\n\n%d bytes written.")),
-        ExtractFileName(sFileName).c_str(), qTotalWritten), MB_ICONINFORMATION);
+      MsgBox(TRLFormat(
+        "File \"%1\" successfully created.\n\n%2 bytes written.",
+        { ExtractFileName(sFileName),
+          IntToStr(static_cast<__int64>(qTotalWritten)) }), MB_ICONINFORMATION);
     }
 
     Screen->Cursor = crDefault;

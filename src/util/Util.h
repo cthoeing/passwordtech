@@ -77,6 +77,8 @@ void SetClipboardTextBufAnsi(const char* pszSrc);
 
 bool StartEditBoxDragDrop(TCustomEdit* pEdit);
 
+void SetFormComponentsAnchors(TForm* pForm);
+
 // executes the specified operation using ShellExecute()
 // -> file name
 // -> show message in case of error?
@@ -124,7 +126,7 @@ int CompareFileTime(FILETIME ft1, FILETIME ft2);
 
 // replace format specifiers "%d" with "%llu" to enable formatting of
 // 64-bit integers
-WString EnableInt64FormatSpec(const WString& sFormatStr);
+//WString EnableInt64FormatSpec(const WString& sFormatStr);
 
 // rounds entropy value downward to nearest integer,
 // unless fractional part is >0.99 (round upward in the latter case)
@@ -138,6 +140,12 @@ int FloorEntropyBits(double val);
 // <- list of substrings
 std::vector<SecureWString> SplitStringBuf(const wchar_t* pwzsSrc,
   const wchar_t* pwszSep);
+
+// remove ampersand ('&') characters (which indicate shortcut keys for a
+// menu or menu option) from string, replace '&&' with '&'
+// -> string to convert
+// <- converted string
+WString RemoveAccessKeysFromStr(const WString& sCaption);
 
 enum {
   DONOR_KEY_VALID = 0,

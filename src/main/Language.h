@@ -130,7 +130,9 @@ template <class T> void TRLHint(T* pControl)
   pControl->Hint = TRL(pControl->Hint);
 }
 
-WString TRLFormat(const WString asFormat, ...);
+//WString TRLFormat(const WString asFormat, ...);
+WString TRLFormat(const WString& sFormat,
+  const std::vector<WString>& args);
 
 
 #endif

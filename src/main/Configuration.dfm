@@ -3,11 +3,11 @@ object ConfigurationDlg: TConfigurationDlg
   Top = 187
   BorderIcons = [biSystemMenu, biMaximize]
   Caption = 'Configuration'
-  ClientHeight = 524
-  ClientWidth = 537
+  ClientHeight = 521
+  ClientWidth = 551
   Color = clBtnFace
-  Constraints.MinHeight = 444
-  Constraints.MinWidth = 451
+  Constraints.MinHeight = 456
+  Constraints.MinWidth = 443
   Font.Charset = ANSI_CHARSET
   Font.Color = clWindowText
   Font.Height = -14
@@ -16,21 +16,19 @@ object ConfigurationDlg: TConfigurationDlg
   PopupMode = pmAuto
   OnShow = FormShow
   PixelsPerInch = 120
-  DesignSize = (
-    537
-    524)
   TextHeight = 17
   object ConfigPages: TPageControl
-    Left = 13
+    Tag = 15
+    Left = 10
     Top = 10
-    Width = 515
-    Height = 455
+    Width = 528
+    Height = 452
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    ActivePage = SecuritySheet
-    Anchors = [akLeft, akTop, akRight, akBottom]
+    ActivePage = GeneralSheet
+    Constraints.MinWidth = 490
     HotTrack = True
     TabOrder = 0
     object GeneralSheet: TTabSheet
@@ -40,8 +38,8 @@ object ConfigurationDlg: TConfigurationDlg
       Margins.Bottom = 4
       Caption = 'General'
       DesignSize = (
-        507
-        423)
+        520
+        420)
       object ChangeFontLbl: TLabel
         Left = 10
         Top = 90
@@ -166,7 +164,7 @@ object ConfigurationDlg: TConfigurationDlg
       object AskBeforeExitCheck: TCheckBox
         Left = 10
         Top = 293
-        Width = 479
+        Width = 492
         Height = 21
         Margins.Left = 4
         Margins.Top = 4
@@ -191,7 +189,7 @@ object ConfigurationDlg: TConfigurationDlg
       object UiStylesList: TComboBox
         Left = 10
         Top = 44
-        Width = 479
+        Width = 492
         Height = 25
         Margins.Left = 4
         Margins.Top = 4
@@ -218,7 +216,7 @@ object ConfigurationDlg: TConfigurationDlg
       object LoadProfileBox: TComboBox
         Left = 326
         Top = 316
-        Width = 163
+        Width = 176
         Height = 25
         Margins.Left = 4
         Margins.Top = 4
@@ -237,8 +235,8 @@ object ConfigurationDlg: TConfigurationDlg
       Caption = 'Security'
       ImageIndex = 6
       DesignSize = (
-        507
-        423)
+        520
+        420)
       object RandomPoolCipherLbl: TLabel
         Left = 10
         Top = 20
@@ -253,7 +251,7 @@ object ConfigurationDlg: TConfigurationDlg
       object AutoClearClipCheck: TCheckBox
         Left = 10
         Top = 186
-        Width = 487
+        Width = 500
         Height = 22
         Margins.Left = 4
         Margins.Top = 4
@@ -265,7 +263,6 @@ object ConfigurationDlg: TConfigurationDlg
           ':'
         TabOrder = 5
         OnClick = AutoClearClipCheckClick
-        ExplicitWidth = 463
       end
       object AutoClearClipTimeBox: TEdit
         Left = 60
@@ -297,7 +294,7 @@ object ConfigurationDlg: TConfigurationDlg
       object TestCommonPasswCheck: TCheckBox
         Left = 10
         Top = 129
-        Width = 487
+        Width = 500
         Height = 21
         Margins.Left = 4
         Margins.Top = 4
@@ -306,12 +303,11 @@ object ConfigurationDlg: TConfigurationDlg
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Test passwords against list of common passwords'
         TabOrder = 3
-        ExplicitWidth = 463
       end
       object RandomPoolCipherList: TComboBox
         Left = 10
         Top = 44
-        Width = 476
+        Width = 488
         Height = 25
         Margins.Left = 4
         Margins.Top = 4
@@ -320,12 +316,11 @@ object ConfigurationDlg: TConfigurationDlg
         Style = csDropDownList
         Anchors = [akLeft, akTop, akRight]
         TabOrder = 0
-        ExplicitWidth = 452
       end
       object AutoClearPasswCheck: TCheckBox
         Left = 10
         Top = 249
-        Width = 487
+        Width = 500
         Height = 21
         Margins.Left = 4
         Margins.Top = 4
@@ -337,7 +332,6 @@ object ConfigurationDlg: TConfigurationDlg
           'ds):'
         TabOrder = 8
         OnClick = AutoClearPasswCheckClick
-        ExplicitWidth = 463
       end
       object AutoClearPasswTimeSpinBtn: TUpDown
         Left = 121
@@ -367,9 +361,9 @@ object ConfigurationDlg: TConfigurationDlg
         Text = '1'
       end
       object BenchmarkBtn: TButton
-        Left = 169
+        Left = 182
         Top = 78
-        Width = 192
+        Width = 191
         Height = 31
         Margins.Left = 4
         Margins.Top = 4
@@ -379,7 +373,6 @@ object ConfigurationDlg: TConfigurationDlg
         Caption = 'Benchmark...'
         TabOrder = 1
         OnClick = BenchmarkBtnClick
-        ExplicitLeft = 145
       end
       object UseAdvancedPasswEst: TCheckBox
         Left = 10
@@ -394,9 +387,9 @@ object ConfigurationDlg: TConfigurationDlg
         TabOrder = 4
       end
       object BenchmarkMemList: TComboBox
-        Left = 368
+        Left = 381
         Top = 78
-        Width = 118
+        Width = 117
         Height = 25
         Hint = 'Data size for benchmark test'
         Margins.Left = 4
@@ -408,7 +401,6 @@ object ConfigurationDlg: TConfigurationDlg
         ParentShowHint = False
         ShowHint = True
         TabOrder = 2
-        ExplicitLeft = 344
       end
     end
     object HotKeySheet: TTabSheet
@@ -418,8 +410,8 @@ object ConfigurationDlg: TConfigurationDlg
       Margins.Bottom = 4
       Caption = 'Hot Keys'
       DesignSize = (
-        507
-        423)
+        520
+        420)
       object HotKeyLbl: TLabel
         Left = 10
         Top = 135
@@ -434,7 +426,7 @@ object ConfigurationDlg: TConfigurationDlg
       object HotKeyActionsGroup: TGroupBox
         Left = 10
         Top = 20
-        Width = 487
+        Width = 500
         Height = 96
         Margins.Left = 4
         Margins.Top = 4
@@ -444,7 +436,7 @@ object ConfigurationDlg: TConfigurationDlg
         Caption = 'Actions'
         TabOrder = 0
         DesignSize = (
-          487
+          500
           96)
         object HotKeyShowMainWinCheck: TCheckBox
           Left = 10
@@ -461,7 +453,7 @@ object ConfigurationDlg: TConfigurationDlg
         object HotKeyActionsList: TComboBox
           Left = 10
           Top = 55
-          Width = 467
+          Width = 480
           Height = 25
           Margins.Left = 4
           Margins.Top = 4
@@ -487,8 +479,8 @@ object ConfigurationDlg: TConfigurationDlg
       object HotKeyView: TListView
         Left = 10
         Top = 170
-        Width = 486
-        Height = 199
+        Width = 498
+        Height = 196
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -513,7 +505,7 @@ object ConfigurationDlg: TConfigurationDlg
       object HotKeyBox: THotKey
         Left = 200
         Top = 130
-        Width = 187
+        Width = 200
         Height = 25
         Margins.Left = 4
         Margins.Top = 4
@@ -527,9 +519,9 @@ object ConfigurationDlg: TConfigurationDlg
         OnChange = HotKeyBoxChange
       end
       object AddBtn: TButton
-        Left = 394
+        Left = 407
         Top = 128
-        Width = 102
+        Width = 101
         Height = 31
         Margins.Left = 4
         Margins.Top = 4
@@ -542,9 +534,9 @@ object ConfigurationDlg: TConfigurationDlg
         OnClick = AddBtnClick
       end
       object RemoveBtn: TButton
-        Left = 394
-        Top = 378
-        Width = 102
+        Left = 407
+        Top = 375
+        Width = 101
         Height = 31
         Margins.Left = 4
         Margins.Top = 4
@@ -564,12 +556,12 @@ object ConfigurationDlg: TConfigurationDlg
       Margins.Bottom = 4
       Caption = 'Files'
       DesignSize = (
-        507
-        423)
+        520
+        420)
       object CharEncodingGroup: TRadioGroup
         Left = 10
         Top = 20
-        Width = 486
+        Width = 498
         Height = 141
         Margins.Left = 4
         Margins.Top = 4
@@ -587,7 +579,7 @@ object ConfigurationDlg: TConfigurationDlg
       object NewlineCharGroup: TRadioGroup
         Left = 10
         Top = 169
-        Width = 486
+        Width = 498
         Height = 85
         Margins.Left = 4
         Margins.Top = 4
@@ -608,12 +600,12 @@ object ConfigurationDlg: TConfigurationDlg
       Margins.Bottom = 4
       Caption = 'Updates'
       DesignSize = (
-        507
-        423)
+        520
+        420)
       object UpdateCheckGroup: TRadioGroup
         Left = 10
         Top = 20
-        Width = 486
+        Width = 498
         Height = 141
         Margins.Left = 4
         Margins.Top = 4
@@ -682,8 +674,8 @@ object ConfigurationDlg: TConfigurationDlg
       Caption = 'Database'
       ImageIndex = 5
       DesignSize = (
-        507
-        423)
+        520
+        420)
       object DefaultAutotypeSeqLbl: TLabel
         Left = 10
         Top = 391
@@ -709,7 +701,7 @@ object ConfigurationDlg: TConfigurationDlg
       object LockMinimizeCheck: TCheckBox
         Left = 10
         Top = 49
-        Width = 476
+        Width = 488
         Height = 21
         Margins.Left = 4
         Margins.Top = 4
@@ -722,7 +714,7 @@ object ConfigurationDlg: TConfigurationDlg
       object LockIdleCheck: TCheckBox
         Left = 10
         Top = 78
-        Width = 476
+        Width = 488
         Height = 21
         Margins.Left = 4
         Margins.Top = 4
@@ -763,7 +755,7 @@ object ConfigurationDlg: TConfigurationDlg
       object CreateBackupCheck: TCheckBox
         Left = 10
         Top = 140
-        Width = 476
+        Width = 488
         Height = 21
         Margins.Left = 4
         Margins.Top = 4
@@ -775,9 +767,9 @@ object ConfigurationDlg: TConfigurationDlg
         OnClick = CreateBackupCheckClick
       end
       object MaxNumBackupsBox: TEdit
-        Left = 361
+        Left = 373
         Top = 169
-        Width = 56
+        Width = 57
         Height = 25
         Margins.Left = 4
         Margins.Top = 4
@@ -789,7 +781,7 @@ object ConfigurationDlg: TConfigurationDlg
         Text = '1'
       end
       object MaxNumBackupsSpinBtn: TUpDown
-        Left = 417
+        Left = 430
         Top = 169
         Width = 20
         Height = 25
@@ -855,7 +847,7 @@ object ConfigurationDlg: TConfigurationDlg
       object DefaultAutotypeSeqBox: TEdit
         Left = 220
         Top = 386
-        Width = 269
+        Width = 282
         Height = 25
         Margins.Left = 4
         Margins.Top = 4
@@ -867,7 +859,7 @@ object ConfigurationDlg: TConfigurationDlg
       object NumberBackupsCheck: TCheckBox
         Left = 71
         Top = 171
-        Width = 282
+        Width = 295
         Height = 22
         Margins.Left = 4
         Margins.Top = 4
@@ -894,7 +886,7 @@ object ConfigurationDlg: TConfigurationDlg
       object AutoSaveList: TComboBox
         Left = 220
         Top = 353
-        Width = 269
+        Width = 282
         Height = 25
         Margins.Left = 4
         Margins.Top = 4
@@ -962,30 +954,30 @@ object ConfigurationDlg: TConfigurationDlg
     end
   end
   object OKBtn: TButton
-    Left = 332
-    Top = 478
-    Width = 94
-    Height = 32
+    Tag = 12
+    Left = 343
+    Top = 475
+    Width = 93
+    Height = 31
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    Anchors = [akRight, akBottom]
     Caption = 'OK'
     Default = True
     TabOrder = 1
     OnClick = OKBtnClick
   end
   object CancelBtn: TButton
-    Left = 434
-    Top = 478
+    Tag = 12
+    Left = 444
+    Top = 475
     Width = 94
-    Height = 32
+    Height = 31
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    Anchors = [akRight, akBottom]
     Cancel = True
     Caption = 'Cancel'
     ModalResult = 2
@@ -1006,8 +998,8 @@ object ConfigurationDlg: TConfigurationDlg
     Top = 452
   end
   object SelectFontMenu: TPopupMenu
-    Left = 481
-    Top = 62
+    Left = 449
+    Top = 142
     object SelectFontMenu_RestoreDefault: TMenuItem
       Caption = 'Restore Default'
       OnClick = SelectFontMenu_RestoreDefaultClick

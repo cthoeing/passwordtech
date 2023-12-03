@@ -149,12 +149,12 @@ void __fastcall TPasswListForm::PasswListMenu_SaveAsFileClick(TObject *Sender)
       OutOfDiskSpaceError();
 
     blSuccess = true;
-    sMsg = TRLFormat("File \"%s\" successfully created.",
-      ExtractFileName(sFileName).c_str());
+    sMsg = TRLFormat("File \"%1\" successfully created.",
+      { ExtractFileName(sFileName) });
   }
   catch (Exception& e) {
-    sMsg = TRLFormat("Error while creating file\n\"%s\":\n%s.", sFileName.c_str(),
-        e.Message.c_str());
+    sMsg = TRLFormat("Error while creating file\n\"%1\":\n%2.",
+      { sFileName, e.Message });
   }
 
   Screen->Cursor = crDefault;

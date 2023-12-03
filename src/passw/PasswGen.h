@@ -31,7 +31,7 @@
 
 const int
 WORDLIST_DEFAULT_SIZE           = 8192,
-WORDLIST_MAX_WORDLEN            = 30,
+WORDLIST_MAX_WORDLEN            = 100,
 WORDLIST_MAX_SIZE               = 1048576,
 
 PASSWGEN_NUMCHARSETCODES        = 11,
@@ -60,8 +60,8 @@ PASSPHR_FLAG_EACHWORDONLYONCE   = 0x0020,
 
 PASSFORMAT_FLAG_EXCLUDEREPCHARS = 1,
 
-PASSFORMAT_PWUSED_NOTUSED       = 0,  // password provided, but no "%P"
-PASSFORMAT_PWUSED_EMPTYPW       = -1; // "%P" specified, but no password available
+PASSFORMAT_PWUSED_NOSPECIFIER   = -1, // password provided, but no "P" specifier
+PASSFORMAT_PWUSED_EMPTYPASSW    = -2; // "%P" specified, but no password available
 
 
 enum CharSetType {
@@ -93,6 +93,8 @@ private:
   w32string m_includeCharSets[PASSWGEN_NUMINCLUDECHARSETS];
   w32string m_customSubsets[PASSWGEN_NUMINCLUDECHARSETS];
   w32string m_formatCharSets[PASSWGEN_NUMFORMATCHARSETS];
+  w32string m_sWordSep;
+  w32string m_sWordCharSep;
   std::vector<std::wstring> m_wordList;
   int m_nWordListSize;
   double m_dWordListEntropy;
@@ -110,6 +112,7 @@ private:
   //    - type of character set
   std::optional<std::pair<w32string,CharSetType>> ParseCharSet(
     w32string sInput,
+    bool blIncludeCharFromEachSubset = false,
     std::optional<CharSetFreq>* pCharSetFreq = nullptr) const;
 
   WString GetCustomCharSetAsWString(void) const
@@ -145,22 +148,25 @@ public:
   // -> desired length
   // -> password flags (PASSW_FLAG_...)
   // <- length of the password
-  int GetPassword(word32* pDest,
+  int GetPassword(SecureW32String& sPassw,
     int nLength,
     int nFlags) const;
 
   // generates a pass"phrase" containing words and possibly characters
-  // -> where to store the passphrase (buffer must be large enough!)
+  // -> where to store the passphrase - buffer is resized automatically
   // -> desired number of words
   // -> characters (e.g., from a password) to combine with the words;
   //    may be an empty buffer
+  // -> length of character sequence (may be 0)
   // -> passphrase flags (PASSPHR_FLAG_...)
   // -> pointer to receive number of characters related to words only
   //    (as opposed to characters from pChars)
   // <- overall length of the passphrase
-  int GetPassphrase(word32* pDest,
+  int GetPassphrase(
+    SecureW32String& sDest,
     int nWords,
     const word32* pChars,
+    int nCharsLen,
     int nFlags,
     int* pnNetWordsLen = nullptr) const;
 
@@ -172,32 +178,39 @@ public:
   // -> pointer to a previously generated password, which may be inserted into
   //    the target buffer if the format string contains '%P' (may be nullptr)
   // -> indicates *how* the password given by pszPassw was actually used
-  //    if <= 0: error, see PASSFORMAT_PWUSED_...
-  //    if  > 0: number of bytes copied to the target buffer, may be less than
+  //    if = 0: not applicable
+  //    if < 0: error, see PASSFORMAT_PWUSED_...
+  //    if > 0: number of bytes copied to the target buffer, may be less than
   //             the password length if the buffer is too small
   //    (may be nullptr)
   // -> indicates the first invalid specifier in the format string (may be nullptr)
   // -> estimated security of the generated password; estimation does not take
   //    into account permutations
   // <- length of the resulting password
-  int GetFormatPassw(word32* pDest,
-    int nMaxDestLen,
+  int GetFormatPassw(SecureW32String& sDest,
     const w32string& sFormat,
     int nFlags,
     const word32* pPassw = nullptr,
     int* pnPasswUsed = nullptr,
-    word32* plInvalidSpec = nullptr,
+    w32string* pInvalidSpec = nullptr,
     double* pdSecurity = nullptr);
 
   // call this function to set up all character sets by providing user-defined
   // ambiguous characters and special symbols
-  // -> custom character set for generating passwords (GetPassword())
+  // -> custom character set for generating passwords (via 'GetPassword()')
   // -> re-defined ambiguous characters
   // -> re-defined special symbols
+  // -> 'true': include at least one character from each subset specified in
+  //    the custom character set
   // -> 'true': remove ambiguous characters from all character sets
-  void SetupCharSets(WString& sCustomCharSet,
+  // -> 'true': determine subsets (such as <AZ>, <symbols>, ...) from custom
+  //    character set and use these subsets for the "include at least one
+  //    letter/digit/..." password options
+  // <- resulting character set derived from 'sCustomChars'
+  WString SetupCharSets(const WString& sCustomChars,
     const WString& sAmbigChars = "",
     const WString& sSpecialSymbols = "",
+    bool blIncludeCharFromEachSubset = false,
     bool blExcludeAmbigChars = false,
     bool blDetermineSubsets = false);
 
@@ -209,6 +222,7 @@ public:
   //    if  < 0: i/o error
   //    if == 0: number of words < 2
   int LoadWordListFile(WString sFileName = "",
+    int nMinWordLen = 0,
     int nMaxWordLen = 0,
     bool blConvertToLC = false);
 
@@ -254,7 +268,7 @@ public:
   //    - PASSW_FLAG_PHONETICUPPERCASE
   //    - PASSW_FLAG_PHONETICMIXEDCASE
   // <- password length
-  int GetPhoneticPassw(word32* pDest,
+  int GetPhoneticPassw(SecureW32String& sDest,
     int nLength,
     int nFlags) const;
 
@@ -272,7 +286,7 @@ public:
   // (code based on PwUtil.cpp from Dominik Reichl's KeePass)
   // -> password (null-terminated string)
   // <- security in bits
-  static int EstimatePasswSecurity(const wchar_t* pwszPassw);
+  static double EstimatePasswSecurity(const wchar_t* pwszPassw);
 
 
   // some properties...
@@ -303,6 +317,12 @@ public:
 
   __property double PhoneticEntropy =
   { read=m_dPhoneticEntropy };
+
+  __property w32string WordSeparator =
+  { read=m_sWordSep, write=m_sWordSep };
+
+  __property w32string WordCharSeparator =
+  { read=m_sWordCharSep, write=m_sWordCharSep };
 };
 
 

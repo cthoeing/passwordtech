@@ -142,7 +142,7 @@ word32 EntropyManager::AddData(const void* pData,
 
   word32 lEntBits;
   if (comprLen >= lNumOfBytes)
-	lEntBits = std::min<double>(lNumOfBytes * fEntBitsIncompr, MAX_TOTALENTBITS);
+	  lEntBits = std::min<double>(lNumOfBytes * fEntBitsIncompr, MAX_TOTALENTBITS);
   else
     lEntBits = std::min<double>(comprLen * fEntBitsCompr, MAX_TOTALENTBITS);
 
