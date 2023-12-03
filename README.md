@@ -29,6 +29,8 @@ Available translations / language files can be found in the *languages/* directo
 
 To convert existing translations from the LNG to the PO format, load the translation in Password Tech, select *Options | Configuration* in the main menu, go to the *Languages* tab in the Configuration window, and press the *Convert to new PO file format* button.
 
+**Note:** As of version 3.5.3, Password Tech uses format specifiers of the form `%N` to format strings, with *N* being the index of the argument (starting at *N*=1) to be inserted into the formatted string. All arguments are provided as strings by the application. The new format was chosen because it provides higher flexibility and security. Password Tech is still compatible with the old format (`%d` for digits, `%f` for floating point numbers, `%s` for strings, etc.), and the original strings are still provided in the old format to avoid merge conflicts when updating existing translations. 
+
 ## License
 
 Password Tech is distributed under the terms and conditions of the GNU General Public License v2. For more details, see the file *license.txt* that comes with every release.
