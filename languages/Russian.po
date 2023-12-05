@@ -1,10 +1,23 @@
-# Translation template for Password Tech 3.5.2
 # Released under the GNU General Public License
-
-#. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
+#
+# !!! NOTE ON FORMAT STRINGS !!!
+# As of version 3.5.3, Password Tech uses format specifiers of the form "%N",
+# with N being the index of the argument (starting at N=1) to be inserted into
+# the formatted string. All arguments are provided as strings by the application.
+# The new format was chosen because it provides higher flexibility and security.
+# Example:
+# Format string:    "%1 characters / %2 bits per character"
+# 1st argument:     "90"
+# 2nd argument:     "6.4"
+# Resulting string: "90 characters / 6.4 bits per character"
+# In the translated string, the arguments can be specified in any order.
+# Password Tech is still compatible with the old format ("%d" for digits, "%f"
+# for floating point numbers, "%s" for strings, etc.), and the original strings
+# are still provided in the old format to avoid merge conflicts when updating
+# existing translations.
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.2\n"
+"Project-Id-Version: Password Tech 3.5.3\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: Dmitry Yerokhin <erodim@mail.ru>\n"
@@ -634,20 +647,20 @@ msgid "%d of %d passwords generated."
 msgstr "%d из %d паролей создано."
 
 #. Formatted password, Include Characters/Words selected, but format specifier "P" not found in format string
-msgid "\"P\" is not specified."
-msgstr "Параметр \"P\" не указан!"
+msgid "\"P\" is not specified"
+msgstr "Параметр \"P\" не указан"
 
 #. Formatted password, format specifier "P" contained in format string, but no password available to insert
-msgid "Password not available."
-msgstr "Пароль недоступен."
+msgid "Password not available"
+msgstr "Пароль недоступен"
 
 #. Formatted password, format specifier "P" contained in format string, but password cannot be fully inserted
-msgid "Password too long."
-msgstr "Пароль слишком длинный."
+msgid "Password too long"
+msgstr "Пароль слишком длинный"
 
 #. Formatted password, format string contains unknown specifier
-msgid "Invalid format specifier \"%s\"."
-msgstr "Неверный формат \"%s\"."
+msgid "%d invalid format specifier(s): %s"
+msgstr "Неверные форматы (%d): %s"
 
 #. Run script, executing Lua script
 msgid "Executing script"
@@ -1171,10 +1184,6 @@ msgstr "Запускать при старте системы (для текущ
 msgid "Load the following profile on startup:"
 msgstr "Загружать этот профиль при запуске:"
 
-#. Configuration window, General
-msgid "Load pr"
-msgstr "Загрузить"
-
 #. Configuration window, Security
 msgid "Benchmark..."
 msgstr "Тест..."
@@ -1526,6 +1535,10 @@ msgid "Include at least one special symbol (!\"#$%...)"
 msgstr "Включать хотя бы один особый символ (!\"#$%...)"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Include at least one character from each subset"
+msgstr "Включать хотя бы один символ из каждого набора"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Only include characters from custom character set"
 msgstr "Включать только символы из пользовательского набора"
 
@@ -1566,8 +1579,20 @@ msgid "Redefine special symbols:"
 msgstr "Переопределить особые символы:"
 
 #. Advanced Password Options window, label
-msgid "Maximum length of words in word lists (except default word list):"
-msgstr "Максимальная длина слов в списках (кроме списка по умолчанию):"
+msgid "Min./Max. length of words in word lists (except default word list):"
+msgstr "Мин./макс. длина слов в списках (кроме списка по умолчанию):"
+
+#. Advanced Password Options window, label
+msgid "Redefine separators in passphrases:"
+msgstr "Переопределение разделителей в парольных фразах:"
+
+#. Advanced Password Options window, label
+msgid "Words:"
+msgstr "Слова:"
+
+#. Advanced Password Options window, label
+msgid "Words/characters:"
+msgstr "Слова/символы:"
 
 #. Advanced Password Options window, label
 msgid "Trigram file for generating phonetic (pronounceable) passwords:"
@@ -2581,12 +2606,20 @@ msgid "Change expiry date"
 msgstr "Изменить срок действия"
 
 #. Password Manager window, main menu, View submenu
-msgid "Filter expired entries"
-msgstr "Показывать только истекшие записи"
+msgid "Filter"
+msgstr "Фильтр"
 
-#. Password Manager window, main menu, View submenu
-msgid "Filter entries that will expire soon"
-msgstr "Показывать только истекающие записи"
+#. Password Manager window, main menu, View submenu, Filter submenu
+msgid "Expired entries"
+msgstr "Истекшие записи"
+
+#. Password Manager window, main menu, View submenu, Filter submenu
+msgid "Entries that will expire soon"
+msgstr "Скоро истекающие записи"
+
+#. Password Manager window, main menu, View submenu, Filter submenu
+msgid "Entries with Weak Passwords"
+msgstr "Записи со слабыми паролями"
 
 #. Password Manager window, Edit panel, context menu of Expiry button, menu items
 msgid "%d days"
@@ -2855,6 +2888,14 @@ msgstr "Запись в базе паролей редактируется."
 #. Password Manager window, shutdown blocker message
 msgid "Password database contains unsaved changes."
 msgstr "База паролей содержит несохранённые изменения."
+
+#. Password Manager window, toolbar, filter info
+msgid "Filtered"
+msgstr "С фильтром"
+
+#. Password Manager window, toolbar, filter info, button tooltip
+msgid "Remove filter"
+msgstr "Убрать фильтр"
 
 #~ msgid "Left-click: Perform search, right-click: Search options"
 #~ msgstr "ЛКМ: найти, ПКМ: параметры поиска"
