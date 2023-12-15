@@ -1,17 +1,33 @@
 # Released under the GNU General Public License
+#
+# !!! NOTE ON FORMAT STRINGS !!!
+# As of version 3.5.3, Password Tech uses format specifiers of the form "%N",
+# with N being the index of the argument (starting at N=1) to be inserted into
+# the formatted string. All arguments are provided as strings by the application.
+# The new format was chosen because it provides higher flexibility and security.
+# Example:
+# Format string:    "%1 characters / %2 bits per character"
+# 1st argument:     "90"
+# 2nd argument:     "6.4"
+# Resulting string: "90 characters / 6.4 bits per character"
+# In the translated string, the arguments can be specified in any order.
+# Password Tech is still compatible with the old format ("%d" for digits, "%f"
+# for floating point numbers, "%s" for strings, etc.), and the original strings
+# are still provided in the old format to avoid merge conflicts when updating
+# existing translations.
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.2\n"
+"Project-Id-Version: Password Tech 3.5.3\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: Thomas Du <thomas_du@outlook.com>\n"
-"Language-Team: 杜宏之 < thomas_du@outlook.com >\n"
+"Language-Team: Thomas Du\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.4\n"
+"X-Generator: Poedit 3.4.1\n"
 
 #. Message box caption
 msgid "Info"
@@ -91,7 +107,7 @@ msgstr "重新載入腳本"
 
 #. Main window, label attached to input box for number of passwords
 msgid "Multiple passwords:"
-msgstr "多種的密碼："
+msgstr "多個密碼："
 
 #. Main window, button to generate password
 msgid "Generate"
@@ -143,7 +159,7 @@ msgstr "檔案"
 
 #. Main menu, File submenu, Profile for password generation
 msgid "Profile"
-msgstr "配置檔"
+msgstr "個人資料"
 
 #. Main menu, File submenu, Profile submenu, Profile Editor
 msgid "Profile Editor..."
@@ -151,7 +167,7 @@ msgstr "配置檔編輯器..."
 
 #. Main menu, File submenu, Exit program
 msgid "Exit"
-msgstr "結束"
+msgstr "退出"
 
 #. Main menu, Tools submenu
 msgid "Tools"
@@ -187,7 +203,7 @@ msgstr "定性隨機產生器"
 
 #. Main menu, Tools submenu, Deterministic Random Generator submenu
 msgid "Reset"
-msgstr "重置"
+msgstr "重設"
 
 #. Main menu, Tools submenu, Deterministic Random Generator submenu
 msgid "Deactivate"
@@ -243,7 +259,7 @@ msgstr "打開手冊"
 
 #. Main menu, Help submenu
 msgid "Visit Website"
-msgstr "訪問官網"
+msgstr "訪問網站"
 
 #. Main window, Help submenu
 msgid "Get Translations..."
@@ -251,7 +267,7 @@ msgstr "獲取翻譯..."
 
 #. Main window, Help submenu
 msgid "Donate..."
-msgstr "贊助..."
+msgstr "捐贈..."
 
 #. Main window, Help submenu
 msgid "Check for Updates"
@@ -271,7 +287,7 @@ msgstr "還原 %s"
 
 #. System tray context menu, Generate Password to clipboard
 msgid "Generate Password"
-msgstr "產生密碼"
+msgstr "生成密碼"
 
 #. System tray context menu, Generate Password and Show in message box
 msgid "Generate and Show Password..."
@@ -303,7 +319,7 @@ msgstr "根據主密碼產生密碼"
 
 #. Main window, Configuration button tooltip
 msgid "Main configuration of the program"
-msgstr "程式的主要配置"
+msgstr "程式的主要設置"
 
 #. Open/Save dialogs, filter for All files (*.*)
 msgid "All files"
@@ -355,7 +371,7 @@ msgstr "刪除"
 
 #. Various context menus, select entire text
 msgid "Select All"
-msgstr "全選"
+msgstr "選取全部"
 
 #. Context menus of Character set, Word list file, Format password, and Run script drop-down lists: Clear history of list entries
 msgid "Clear List"
@@ -628,20 +644,20 @@ msgid "%d of %d passwords generated."
 msgstr "已產生 %d 個密碼（共 %d 個）。"
 
 #. Formatted password, Include Characters/Words selected, but format specifier "P" not found in format string
-msgid "\"P\" is not specified."
-msgstr "“P”未指定。"
+msgid "\"P\" is not specified"
+msgstr "未指定“P”"
 
 #. Formatted password, format specifier "P" contained in format string, but no password available to insert
-msgid "Password not available."
-msgstr "密碼不可用。"
+msgid "Password not available"
+msgstr "密碼不可用"
 
 #. Formatted password, format specifier "P" contained in format string, but password cannot be fully inserted
-msgid "Password too long."
-msgstr "密碼太長。"
+msgid "Password too long"
+msgstr "密碼過長"
 
 #. Formatted password, format string contains unknown specifier
-msgid "Invalid format specifier \"%s\"."
-msgstr "格式說明符“%s”無效。"
+msgid "%d invalid format specifier(s): %s"
+msgstr "%d無效的格式說明符：%s"
 
 #. Run script, executing Lua script
 msgid "Executing script"
@@ -1007,7 +1023,7 @@ msgstr ""
 
 #. Message shown when donor key is invalid
 msgid "Donor key is invalid."
-msgstr "贊助者密鑰無效。"
+msgstr "捐贈者密鑰無效。"
 
 #. Main menu, Help submenu, Enter Donor Key, title of input window
 msgid "Donor Key"
@@ -1093,7 +1109,7 @@ msgstr ""
 
 #. Configuration window, caption
 msgid "Configuration"
-msgstr "配置"
+msgstr "構成"
 
 #. Configuration window, General page
 msgid "General"
@@ -1162,10 +1178,6 @@ msgstr "在系統啟動時啟動應用程序（對於當前用戶）"
 #. Configuration window, General
 msgid "Load the following profile on startup:"
 msgstr "啟動時加載以下配置檔："
-
-#. Configuration window, General
-msgid "Load pr"
-msgstr "負載壓力"
 
 #. Configuration window, Security
 msgid "Benchmark..."
@@ -1285,7 +1297,7 @@ msgstr "捷徑"
 
 #. Configuration window, Hot Keys, list view, column
 msgid "Action"
-msgstr "動作"
+msgstr "執行"
 
 #. Configuration window, Hot Keys, message shown when trying to add a hot key without a corresponding action
 msgid "Please select a hot key action."
@@ -1518,6 +1530,10 @@ msgid "Include at least one special symbol (!\"#$%...)"
 msgstr "至少包含一個特殊符號 (!\"#$%...)"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Include at least one character from each subset"
+msgstr "每個子集至少包含一個字元"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Only include characters from custom character set"
 msgstr "僅包含自定義字符集中的字符"
 
@@ -1558,8 +1574,21 @@ msgid "Redefine special symbols:"
 msgstr "重新定義特殊符號："
 
 #. Advanced Password Options window, label
-msgid "Maximum length of words in word lists (except default word list):"
-msgstr "單詞列表中單詞的最大長度（預設單詞列表除外）："
+msgid "Min./Max. length of words in word lists (except default word list):"
+msgstr "單字清單中單詞的最小/最大長度（預設單詞清單除外）："
+
+#. Advanced Password Options window, label
+msgid "Redefine separators in passphrases:"
+msgstr "重新定義密碼中的分隔符："
+
+#. Advanced Password Options window, label
+msgid "Words:"
+msgstr "字："
+
+#. Advanced Password Options window, label
+#, fuzzy
+msgid "Words/characters:"
+msgstr "單字/字元："
 
 #. Advanced Password Options window, label
 msgid "Trigram file for generating phonetic (pronounceable) passwords:"
@@ -2005,7 +2034,7 @@ msgstr "英數文字"
 
 #. MP Password Generator window, Character set drop-down list
 msgid "Hexadecimal"
-msgstr "十六進制"
+msgstr "Hexadecimal"
 
 #. MP Password Generator window, message when master password has expired
 msgid "Key has expired."
@@ -2234,7 +2263,7 @@ msgstr "複製項目"
 
 #. Password Manager window, main menu, Edit submenu
 msgid "Delete Entry"
-msgstr "刪除項目"
+msgstr "刪除條目"
 
 #. Password Manager window, main menu, View submenu
 msgid "Show Columns"
@@ -2306,11 +2335,11 @@ msgstr "搜尋..."
 
 #. Password Manager window, toolbar, Search button, context menu
 msgid "Clear search"
-msgstr "清除搜索群"
+msgstr "清除搜索"
 
 #. Password Manager window, toolbar, Search button, tooltip
 msgid "Perform search"
-msgstr "執行搜尋"
+msgstr "執行搜索"
 
 #. Password Manager window, toolbar, Search button, context menu
 msgid "Case-sensitive"
@@ -2562,12 +2591,20 @@ msgid "Change expiry date"
 msgstr "更改到期日期"
 
 #. Password Manager window, main menu, View submenu
-msgid "Filter expired entries"
-msgstr "過濾過期項目"
+msgid "Filter"
+msgstr "篩選"
 
-#. Password Manager window, main menu, View submenu
-msgid "Filter entries that will expire soon"
-msgstr "過濾即將過期的項目"
+#. Password Manager window, main menu, View submenu, Filter submenu
+msgid "Expired entries"
+msgstr "過期項目"
+
+#. Password Manager window, main menu, View submenu, Filter submenu
+msgid "Entries that will expire soon"
+msgstr "即將過期的項目"
+
+#. Password Manager window, main menu, View submenu, Filter submenu
+msgid "Entries with Weak Passwords"
+msgstr "密碼較弱的項目"
 
 #. Password Manager window, Edit panel, context menu of Expiry button, menu items
 msgid "%d days"
@@ -2811,11 +2848,11 @@ msgstr "密碼歷史記錄"
 
 #. Password Manager window, field name
 msgid "Password changed"
-msgstr "密碼更改"
+msgstr "密碼已更改"
 
 #. Password Manager window, Edit panel, label
 msgid "Password changed:"
-msgstr "密碼已更改為："
+msgstr "密碼已更改："
 
 #. Password Manager window, Password History dialog, checkbox
 msgid "Keep last passwords - up to:"
@@ -2832,3 +2869,11 @@ msgstr "正在編輯密碼資料庫項目。"
 #. Password Manager window, shutdown blocker message
 msgid "Password database contains unsaved changes."
 msgstr "密碼資料庫包含未保存的更改。"
+
+#. Password Manager window, toolbar, filter info
+msgid "Filtered"
+msgstr "過濾"
+
+#. Password Manager window, toolbar, filter info, button tooltip
+msgid "Remove filter"
+msgstr "移除篩選條件"
