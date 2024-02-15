@@ -17,7 +17,7 @@
 # existing translations.
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.3\n"
+"Project-Id-Version: Password Tech 3.5.4\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: Dmitry Yerokhin <erodim@mail.ru>\n"
@@ -1652,6 +1652,14 @@ msgstr "КБ"
 msgid "Megabytes"
 msgstr "МБ"
 
+#. Create Random Data File dialog, drop-down list of file size units
+msgid "Gigabytes"
+msgstr "ГБ"
+
+#. Create Random Data File dialog, drop-down list of file size units
+msgid "Terabytes"
+msgstr "ТБ"
+
 #. Create Random Data File dialog, Close button
 msgid "Close"
 msgstr "Закрыть"
@@ -2896,6 +2904,54 @@ msgstr "С фильтром"
 #. Password Manager window, toolbar, filter info, button tooltip
 msgid "Remove filter"
 msgstr "Убрать фильтр"
+
+msgid "Build..."
+msgstr "Сборка..."
+
+msgid "Build character set definition"
+msgstr "Создание определения набора символов"
+
+msgid "Character Set Builder"
+msgstr "Конструктор наборов символов"
+
+msgid "Character set selection"
+msgstr "Выбор набора символов"
+
+msgid "Resulting character set definition"
+msgstr "Определение результирующего набора символов"
+
+msgid "Apply"
+msgstr "Применить"
+
+msgid "Lower-case letters (a-z)"
+msgstr "Строчные буквы (a-z)"
+
+msgid "Upper-case letters (A-Z)"
+msgstr "Заглавные буквы (A-Z)"
+
+msgid "Digits (0-9)"
+msgstr "Цифры (0-9)"
+
+msgid "Characters from range:"
+msgstr "Символы из диапазона:"
+
+msgid "Additional characters:"
+msgstr "Дополнительные символы:"
+
+msgid "At least"
+msgstr "Не менее"
+
+msgid "From:"
+msgstr "С:"
+
+msgid "to:"
+msgstr "по:"
+
+msgid "Invalid character range."
+msgstr "Неверный диапазон символов."
+
+msgid "Convert to new PO file format..."
+msgstr "Преобразовать файл в формат PO..."
 
 #~ msgid "Left-click: Perform search, right-click: Search options"
 #~ msgstr "ЛКМ: найти, ПКМ: параметры поиска"

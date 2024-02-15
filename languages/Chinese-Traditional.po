@@ -1,33 +1,17 @@
 # Released under the GNU General Public License
-#
-# !!! NOTE ON FORMAT STRINGS !!!
-# As of version 3.5.3, Password Tech uses format specifiers of the form "%N",
-# with N being the index of the argument (starting at N=1) to be inserted into
-# the formatted string. All arguments are provided as strings by the application.
-# The new format was chosen because it provides higher flexibility and security.
-# Example:
-# Format string:    "%1 characters / %2 bits per character"
-# 1st argument:     "90"
-# 2nd argument:     "6.4"
-# Resulting string: "90 characters / 6.4 bits per character"
-# In the translated string, the arguments can be specified in any order.
-# Password Tech is still compatible with the old format ("%d" for digits, "%f"
-# for floating point numbers, "%s" for strings, etc.), and the original strings
-# are still provided in the old format to avoid merge conflicts when updating
-# existing translations.
+#. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.3\n"
+"Project-Id-Version: Password Tech 3.5.4\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: Thomas Du <thomas_du@outlook.com>\n"
-"Language-Team: Thomas Du\n"
+"Language-Team: Thomas Du<thomas_du@outlook.com>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #. Message box caption
 msgid "Info"
@@ -107,7 +91,7 @@ msgstr "重新載入腳本"
 
 #. Main window, label attached to input box for number of passwords
 msgid "Multiple passwords:"
-msgstr "多個密碼："
+msgstr "多種的密碼："
 
 #. Main window, button to generate password
 msgid "Generate"
@@ -339,7 +323,7 @@ msgstr "Lua腳本"
 
 #. Various context menus, Undo last operation
 msgid "Undo"
-msgstr "復原"
+msgstr "還原"
 
 #. Various context menus, Cut selected text and copy to clipboard
 msgid "Cut"
@@ -371,7 +355,7 @@ msgstr "刪除"
 
 #. Various context menus, select entire text
 msgid "Select All"
-msgstr "選取全部"
+msgstr "全選"
 
 #. Context menus of Character set, Word list file, Format password, and Run script drop-down lists: Clear history of list entries
 msgid "Clear List"
@@ -1586,9 +1570,8 @@ msgid "Words:"
 msgstr "字："
 
 #. Advanced Password Options window, label
-#, fuzzy
 msgid "Words/characters:"
-msgstr "單字/字元："
+msgstr "字/字："
 
 #. Advanced Password Options window, label
 msgid "Trigram file for generating phonetic (pronounceable) passwords:"
@@ -1819,32 +1802,32 @@ msgid "without ambiguous characters"
 msgstr "沒有歧義的字符"
 
 #. Quick help for "Include characters" in main window
-msgid "special symbols"
+msgid "Special symbols"
 msgstr "特殊符號"
 
 #. Quick help for "Include characters" in main window
-msgid "brackets"
-msgstr "包圍曝光"
+msgid "Brackets"
+msgstr "括弧"
 
 #. Quick help for "Include characters" in main window
-msgid "punctuation marks"
+msgid "Punctuation marks"
 msgstr "標點符號"
 
 #. Quick help for "Include characters" in main window
-msgid "higher ANSI characters"
-msgstr "更高的 ANSI 字符"
+msgid "Higher ANSI characters"
+msgstr "ANSI 字元的擴充碼"
 
 #. Quick help for "Include characters" in main window
-msgid "generate phonetic password (lower-case letters)"
+msgid "Generate phonetic password (lower-case letters)"
 msgstr "產生拼音密碼（小寫字母）"
 
 #. Quick help for "Include characters" in main window
-msgid "generate phonetic password (upper-case letters)"
+msgid "Generate phonetic password (upper-case letters)"
 msgstr "產生拼音密碼（大寫字母）"
 
 #. Quick help for "Include characters" in main window
-msgid "generate phonetic password (mixed-case letters)"
-msgstr "產生拼音密碼（大小寫字母混合）"
+msgid "Generate phonetic password (mixed-case letters)"
+msgstr "產生拼音密碼（大小寫混合字母）"
 
 #. Quick help for "Include characters" in main window
 msgid ""
@@ -1889,31 +1872,31 @@ msgid "List of placeholders with optional argument \"N\":"
 msgstr "帶有可選參數“N”的佔位符列表："
 
 #. Quick help for "Format password" in main window
-msgid "custom character set"
-msgstr "自定義字符集"
+msgid "Custom character set"
+msgstr "自訂字元集"
 
 #. Quick help for "Format password" in main window
-msgid "vowels, lower-case"
+msgid "Vowels, lower-case"
 msgstr "元音，小寫"
 
 #. Quick help for "Format password" in main window
-msgid "vowels, mixed-case"
+msgid "Vowels, mixed-case"
 msgstr "元音，混合大小寫"
 
 #. Quick help for "Format password" in main window
-msgid "vowels, upper-case"
+msgid "Vowels, upper-case"
 msgstr "元音，大寫"
 
 #. Quick help for "Format password" in main window
-msgid "consonants, lower-case"
+msgid "Consonants, lower-case"
 msgstr "輔音，小寫"
 
 #. Quick help for "Format password" in main window
-msgid "consonants, mixed-case"
+msgid "Consonants, mixed-case"
 msgstr "輔音，混合大小寫"
 
 #. Quick help for "Format password" in main window
-msgid "consonants, upper-case"
+msgid "Consonants, upper-case"
 msgstr "輔音，大寫"
 
 #. Quick help for "Format password" in main window
@@ -1925,28 +1908,28 @@ msgstr ""
 "（參數“N”的可能用法由“{N}”指示）："
 
 #. Quick help for "Format password" in main window
-msgid "insert password generated via \"Include characters/words\""
-msgstr "插入通過“包含字符/單詞”產生的密碼"
+msgid "Insert password generated via \"Include characters/words\""
+msgstr "插入通過「包含字元/單詞」生成的密碼"
 
 #. Quick help for "Format password" in main window
-msgid "words from word list, multiple words are separated by spaces"
-msgstr "單詞列表中的單詞，多個單詞之間用空格分隔"
+msgid "Words from word list, multiple words are separated by spaces"
+msgstr "單詞清單中的單詞，多個單詞用空格分隔"
 
 #. Quick help for "Format password" in main window
-msgid "words, multiple words are not separated at all"
-msgstr "單詞，多個單詞根本沒有分開"
+msgid "Words, multiple words are not separated at all"
+msgstr "單詞，多個單詞根本不分開"
 
 #. Quick help for "Format password" in main window
-msgid "repeat input sequence in brackets N times"
-msgstr "重複括號中的輸入序列 N 次"
+msgid "Repeat input sequence in brackets N times"
+msgstr "在括弧內重複輸入序列 N 次"
 
 #. Quick help for "Format password" in main window
-msgid "randomly permute formatted sequence in brackets, keep N characters"
-msgstr "隨機排列括號內的格式化序列，保留 N 個字符"
+msgid "Randomly permute formatted sequence in brackets, keep N characters"
+msgstr "在括弧中隨機排列格式化序列，保留 N 個字元"
 
 #. Quick help for "Format password" in main window
-msgid "treat sequence as character set and insert N characters"
-msgstr "將序列視為字符集並插入 N 個字符"
+msgid "Treat sequence as character set and insert N characters"
+msgstr "將序列視為字元集並插入 N 個字元"
 
 #. Quick help for "Format password" in main window
 msgid "Additional notes:"
@@ -2877,3 +2860,48 @@ msgstr "過濾"
 #. Password Manager window, toolbar, filter info, button tooltip
 msgid "Remove filter"
 msgstr "移除篩選條件"
+
+msgid "Build..."
+msgstr "建立。。。"
+
+msgid "Build character set definition"
+msgstr "構建字元集定義"
+
+msgid "Character Set Builder"
+msgstr "字元集生成器"
+
+msgid "Character set selection"
+msgstr "字元集選擇"
+
+msgid "Resulting character set definition"
+msgstr "生成的字元集定義"
+
+msgid "Apply"
+msgstr "套用"
+
+msgid "Lower-case letters (a-z)"
+msgstr "小寫字母 （a-z）"
+
+msgid "Upper-case letters (A-Z)"
+msgstr "大寫字母 （A-Z）"
+
+msgid "Digits (0-9)"
+msgstr "數位 （0-9）"
+
+msgid "Characters from range:"
+msgstr "範圍中的字元："
+
+msgid "Additional characters:"
+msgstr "其他字元："
+
+msgid "At least"
+msgstr "至少"
+
+msgid "From:"
+msgstr "從："
+
+msgid "to:"
+msgstr "致："
+
+msgid "Invalid character range."
+msgstr "字元範圍無效。"

@@ -10,26 +10,27 @@
 //---------------------------------------------------------------------------
 #include <Vcl.Styles.hpp>
 #include <Vcl.Themes.hpp>
-USEFORM("src\main\PasswMngColSelect.cpp", PasswMngColDlg);
 USEFORM("src\main\PasswManager.cpp", PasswMngForm);
-USEFORM("src\main\PasswList.cpp", PasswListForm);
-USEFORM("src\main\PasswEnter.cpp", PasswEnterDlg);
-USEFORM("src\main\MPPasswGen.cpp", MPPasswGenForm);
+USEFORM("src\main\PasswMngColSelect.cpp", PasswMngColDlg);
 USEFORM("src\main\PasswMngDbProp.cpp", PasswMngDbPropDlg);
-USEFORM("src\main\ProfileEditor.cpp", ProfileEditDlg);
+USEFORM("src\main\MPPasswGen.cpp", MPPasswGenForm);
+USEFORM("src\main\PasswEnter.cpp", PasswEnterDlg);
+USEFORM("src\main\PasswList.cpp", PasswListForm);
 USEFORM("src\main\PasswOptions.cpp", PasswOptionsDlg);
-USEFORM("src\main\PasswMngPwHistory.cpp", PasswHistoryDlg);
-USEFORM("src\main\PasswMngKeyValEdit.cpp", PasswMngKeyValDlg);
-USEFORM("src\main\PasswMngDbSettings.cpp", PasswDbSettingsDlg);
-USEFORM("src\main\Main.cpp", MainForm);
-USEFORM("src\main\About.cpp", AboutForm);
-USEFORM("src\main\InfoBox.cpp", InfoBoxForm);
-USEFORM("src\main\CreateTrigramFile.cpp", CreateTrigramFileDlg);
-USEFORM("src\main\CreateRandDataFile.cpp", CreateRandDataFileDlg);
-USEFORM("src\main\Configuration.cpp", ConfigurationDlg);
+USEFORM("src\main\ProfileEditor.cpp", ProfileEditDlg);
 USEFORM("src\main\Progress.cpp", ProgressForm);
-USEFORM("src\main\QuickHelp.cpp", QuickHelpForm);
+USEFORM("src\main\PasswMngDbSettings.cpp", PasswDbSettingsDlg);
+USEFORM("src\main\PasswMngKeyValEdit.cpp", PasswMngKeyValDlg);
+USEFORM("src\main\PasswMngPwHistory.cpp", PasswHistoryDlg);
+USEFORM("src\main\About.cpp", AboutForm);
+USEFORM("src\main\CharSetBuilder.cpp", CharSetBuilderForm);
+USEFORM("src\main\InfoBox.cpp", InfoBoxForm);
+USEFORM("src\main\Main.cpp", MainForm);
+USEFORM("src\main\Configuration.cpp", ConfigurationDlg);
+USEFORM("src\main\CreateRandDataFile.cpp", CreateRandDataFileDlg);
+USEFORM("src\main\CreateTrigramFile.cpp", CreateTrigramFileDlg);
 USEFORM("src\main\ProvideEntropy.cpp", ProvideEntropyDlg);
+USEFORM("src\main\QuickHelp.cpp", QuickHelpForm);
 //---------------------------------------------------------------------------
 HANDLE g_hAppMutex;
 
@@ -145,14 +146,11 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 
     const WString DEFAULT_STYLE_NAME = "Windows";
 
-	g_config.UiStyleName = DEFAULT_STYLE_NAME;
-	WString sStyleName = g_pIni->ReadString("Main", "GUIStyle",
+	  g_config.UiStyleName = DEFAULT_STYLE_NAME;
+    WString sStyleName = g_pIni->ReadString("Main", "GUIStyle",
       DEFAULT_STYLE_NAME);
     if (!sStyleName.IsEmpty() && !SameText(sStyleName, DEFAULT_STYLE_NAME))
     {
-      // TODO: Remove this when C++ Builder fully supports styles for
-      // Windows dialogs
-	  //TStyleManager::SystemHooks >>= TStyleManager::TSystemHook::shDialogs;
       if (TStyleManager::TrySetStyle(sStyleName))
         g_config.UiStyleName = sStyleName;
     }
@@ -177,9 +175,10 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
      Application->CreateForm(__classid(TProvideEntropyDlg), &ProvideEntropyDlg);
      Application->CreateForm(__classid(TQuickHelpForm), &QuickHelpForm);
      Application->CreateForm(__classid(TPasswHistoryDlg), &PasswHistoryDlg);
+     Application->CreateForm(__classid(TCharSetBuilderForm), &CharSetBuilderForm);
      MainForm->StartupAction();
 
-         Application->Run();
+     Application->Run();
   }
   catch (Exception &exception)
   {

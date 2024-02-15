@@ -1,7 +1,7 @@
 // Configuration.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -465,7 +465,7 @@ void __fastcall TConfigurationDlg::BenchmarkBtnClick(TObject *Sender)
   Screen->Cursor = crHourGlass;
   for (int i = 0; i < NUM_RANDOM_POOL_CIPHERS; i++) {
     if (i > 0)
-      rp.ChangeCipher(static_cast<RandomPool::CipherType>(i));
+      rp.SetCipher(static_cast<RandomPool::CipherType>(i));
     Stopwatch clock;
     rp.GetData(buf.get(), lBufSize);
     double rate = lDataSizeMB / clock.ElapsedSeconds();

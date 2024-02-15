@@ -1,7 +1,7 @@
 // PasswMngDbSettings.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -83,7 +83,7 @@ private:	// User declarations
   void __fastcall LoadConfig(void);
 public:		// User declarations
   __fastcall TPasswDbSettingsDlg(TComponent* Owner);
-  void __fastcall GetSettings(PasswDbSettings& settings);
+  PasswDbSettings __fastcall GetSettings(void);
   void __fastcall SetSettings(const PasswDbSettings& settings,
     bool blHasRecoveryPassw);
   void __fastcall SaveConfig(void);

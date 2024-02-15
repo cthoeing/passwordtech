@@ -1,7 +1,7 @@
 // MPPasswGen.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -45,9 +45,9 @@
 #pragma resource "*.dfm"
 TMPPasswGenForm *MPPasswGenForm;
 
-static const char PASSWORD_CHAR = '*';
+const char PASSWORD_CHAR = '*';
 
-static const int
+const int
   MPPG_CHARSETS_NUM = 6,
   PASSW_MAX_CHARS   = 10000,
   PASSW_DEFAULT_LEN = 16,
@@ -57,7 +57,7 @@ static const int
   PASSW_HASH_HEX16BIT = 2,
   PASSW_HASH_HEX32BIT = 3;
 
-static const char* MPPG_CHARSETS[MPPG_CHARSETS_NUM] =
+const char* MPPG_CHARSETS[MPPG_CHARSETS_NUM] =
 { "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
   "ACEFHJKLMNPRTUVWXYabcdefghijkmnopqrstuvwxyz3479",
   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~",
@@ -68,7 +68,7 @@ static const char* MPPG_CHARSETS[MPPG_CHARSETS_NUM] =
 
 
 // functions that provide compatibility with "Hashapass"
-static void unicodeToLSByte(const wchar_t* pwszSrc,
+void unicodeToLSByte(const wchar_t* pwszSrc,
   char* pszDest,
   int nLen)
 {
@@ -76,7 +76,7 @@ static void unicodeToLSByte(const wchar_t* pwszSrc,
     *pszDest++ = static_cast<char>(*pwszSrc++);
 }
 
-static void asciiToUnicode(const char* pszSrc,
+void asciiToUnicode(const char* pszSrc,
   wchar_t* pwszDest,
   int nLen)
 {
@@ -84,8 +84,7 @@ static void asciiToUnicode(const char* pszSrc,
     *pwszDest++ = *pszSrc++;
 }
 
-
-static const WString
+const WString
 CONFIG_ID = "MPPasswGen";
 
 static word8 memcryptKey[16];
@@ -157,15 +156,15 @@ __fastcall TMPPasswGenForm::~TMPPasswGenForm()
 //---------------------------------------------------------------------------
 void __fastcall TMPPasswGenForm::LoadConfig(void)
 {
-  int nTop = g_pIni->ReadInteger(CONFIG_ID, "WindowTop", -1);
-  int nLeft = g_pIni->ReadInteger(CONFIG_ID, "WindowLeft", -1);
+  int nTop = g_pIni->ReadInteger(CONFIG_ID, "WindowTop", INT_MAX);
+  int nLeft = g_pIni->ReadInteger(CONFIG_ID, "WindowLeft", INT_MAX);
 
-  if (nTop >= 0 && nLeft >= 0) {
+  if (nTop == INT_MAX || nLeft == INT_MAX)
+    Position = poScreenCenter;
+  else {
     Top = nTop;
     Left = nLeft;
   }
-  else
-    Position = poScreenCenter;
 
   Height = g_pIni->ReadInteger(CONFIG_ID, "WindowHeight", Height);
   Width = g_pIni->ReadInteger(CONFIG_ID, "WindowWidth", Width);

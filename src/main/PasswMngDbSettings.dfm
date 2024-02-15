@@ -2,9 +2,9 @@
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu, biMaximize]
-  Caption = 'Database settings'
-  ClientHeight = 432
-  ClientWidth = 476
+  Caption = 'Database Settings'
+  ClientHeight = 434
+  ClientWidth = 484
   Color = clBtnFace
   Constraints.MinHeight = 349
   Constraints.MinWidth = 405
@@ -33,8 +33,8 @@
     Tag = 15
     Left = 13
     Top = 10
-    Width = 448
-    Height = 361
+    Width = 458
+    Height = 367
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -48,8 +48,8 @@
       Margins.Bottom = 4
       Caption = 'General'
       DesignSize = (
-        440
-        329)
+        450
+        335)
       object DefUserNameLbl: TLabel
         Left = 10
         Top = 20
@@ -73,8 +73,8 @@
         Caption = 'Generate passwords for new entries using format sequence:'
       end
       object PasswGenTestBtn: TSpeedButton
-        Left = 397
-        Top = 148
+        Left = 408
+        Top = 147
         Width = 28
         Height = 27
         Hint = 'Generate test password using format sequence'
@@ -90,7 +90,6 @@
         ParentShowHint = False
         ShowHint = True
         OnClick = PasswGenTestBtnClick
-        ExplicitLeft = 403
       end
       object DefaultExpiryLbl: TLabel
         Left = 10
@@ -121,7 +120,7 @@
       object PasswFormatSeqBox: TEdit
         Left = 10
         Top = 114
-        Width = 415
+        Width = 426
         Height = 25
         Margins.Left = 4
         Margins.Top = 4
@@ -129,12 +128,11 @@
         Margins.Bottom = 4
         Anchors = [akLeft, akTop, akRight]
         TabOrder = 1
-        ExplicitWidth = 397
       end
       object DefUserNameBox: TEdit
         Left = 10
         Top = 44
-        Width = 415
+        Width = 426
         Height = 25
         Margins.Left = 4
         Margins.Top = 4
@@ -142,7 +140,6 @@
         Margins.Bottom = 4
         Anchors = [akLeft, akTop, akRight]
         TabOrder = 0
-        ExplicitWidth = 397
       end
       object DefaultÉxpiryBox: TEdit
         Left = 10
@@ -172,7 +169,7 @@
       object PasswGenTestBox: TEdit
         Left = 10
         Top = 148
-        Width = 380
+        Width = 390
         Height = 25
         Margins.Left = 4
         Margins.Top = 4
@@ -182,7 +179,6 @@
         Color = clBtnFace
         ReadOnly = True
         TabOrder = 2
-        ExplicitWidth = 362
       end
       object PasswHistoryBox: TEdit
         Left = 10
@@ -267,8 +263,8 @@
       Caption = 'Security'
       ImageIndex = 1
       DesignSize = (
-        440
-        329)
+        450
+        335)
       object EncryptionAlgoLbl: TLabel
         Left = 10
         Top = 20
@@ -292,7 +288,7 @@
         Caption = 'Number of key derivation rounds:'
       end
       object CalcRoundsBtn: TSpeedButton
-        Left = 398
+        Left = 408
         Top = 85
         Width = 29
         Height = 29
@@ -314,7 +310,7 @@
       object EncryptionAlgoList: TComboBox
         Left = 10
         Top = 44
-        Width = 417
+        Width = 427
         Height = 25
         Margins.Left = 4
         Margins.Top = 4
@@ -323,9 +319,10 @@
         Style = csDropDownList
         Anchors = [akLeft, akTop, akRight]
         TabOrder = 0
+        ExplicitWidth = 417
       end
       object NumKdfRoundsBox: TEdit
-        Left = 273
+        Left = 283
         Top = 86
         Width = 118
         Height = 25
@@ -335,13 +332,14 @@
         Margins.Bottom = 4
         Anchors = [akTop, akRight]
         TabOrder = 1
+        ExplicitLeft = 273
       end
     end
   end
   object OKBtn: TButton
     Tag = 12
-    Left = 265
-    Top = 385
+    Left = 275
+    Top = 390
     Width = 94
     Height = 31
     Margins.Left = 4
@@ -355,8 +353,8 @@
   end
   object CancelBtn: TButton
     Tag = 12
-    Left = 367
-    Top = 385
+    Left = 377
+    Top = 390
     Width = 94
     Height = 31
     Margins.Left = 4

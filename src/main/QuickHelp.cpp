@@ -1,7 +1,7 @@
 // QuickHelp.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -31,7 +31,7 @@
 #pragma resource "*.dfm"
 TQuickHelpForm *QuickHelpForm;
 
-static const WString
+const WString
 CONFIG_ID = "QuickHelp";
 
 //---------------------------------------------------------------------------
@@ -85,34 +85,40 @@ WString __fastcall TQuickHelpForm::FormatString(const WString& sSrc)
   // replace tabulators ('\t') by spaces to ensure an even appearance
   int nNumTabLines = 0;
   int nMaxColLen = 0;
-  int nLen = sSrc.Length();
+  //int nLen = sSrc.Length();
   int nLineStart = 0;
-  const wchar_t* pwszSrc = sSrc.c_str();
-  for (int nI = 0; nI < nLen; nI++) {
-    switch (pwszSrc[nI]) {
+  //const wchar_t* pwszSrc = sSrc.c_str();
+  //for (int nI = 0; nI < nLen; nI++) {
+  int i = 0;
+  for (auto ch : sSrc) {
+    switch (ch) {
     case '\t':
       nNumTabLines++;
-      nMaxColLen = std::max(nMaxColLen, nI - nLineStart);
+      nMaxColLen = std::max(nMaxColLen, i - nLineStart);
       break;
     case '\n':
-      nLineStart = nI + 1;
+      nLineStart = i + 1;
     }
+    i++;
   }
 
   if (nNumTabLines >= 2 && nMaxColLen != 0) {
     std::wstring sText;
-    sText.reserve(nLen);
+    sText.reserve(sSrc.Length());
     nLineStart = 0;
-    for (int nI = 0; nI < nLen; nI++) {
-      switch (pwszSrc[nI]) {
+    i = 0;
+    //for (int nI = 0; nI < nLen; nI++) {
+    for (auto ch : sSrc) {
+      switch (ch) {
       case '\t':
-        sText.append(nMaxColLen - (nI - nLineStart) + 4, ' ');
+        sText.append(nMaxColLen - (i - nLineStart) + 4, ' ');
         break;
       case '\n':
-        nLineStart = nI + 1;
+        nLineStart = i + 1;
       default:
-        sText.push_back(pwszSrc[nI]);
+        sText.push_back(ch);
       }
+      i++;
     }
 
     return ConvertCr2Crlf(WString(sText.c_str()));

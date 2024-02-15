@@ -1,7 +1,7 @@
 // PasswGen.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -180,10 +180,7 @@ w32string PasswordGenerator::MakeCharSetUnique(const w32string& sSrc,
   const std::vector<w32string>* pAmbigGroups,
   w32string* psRemovedAmbigChars)
 {
-  std::set<word32> chset;
-
-  // make a first set by inserting all chars in sSrc
-  chset.insert(sSrc.begin(), sSrc.end());
+  std::set<word32> chset(sSrc.begin(), sSrc.end());
 
   if (pAmbigGroups != nullptr && pAmbigGroups->size() >= 2) {
     for (auto g_it = pAmbigGroups->begin(); g_it != pAmbigGroups->end(); g_it++)
@@ -227,20 +224,21 @@ w32string PasswordGenerator::CreateSetOfAmbiguousChars(
     nSepPos <= static_cast<int>(sAmbigChars.length()) - 3)
   {
     w32string sGroup;
-    const word32* p = sAmbigChars.c_str();
+    //const word32* p = sAmbigChars.c_str();
+    auto it = sAmbigChars.begin();
     do {
-      if (*p == ' ' || *p == '\0') {
+      if (it == sAmbigChars.end() || *it == ' ') {
         if (sGroup.length() >= 2)
           groups.push_back(sGroup);
         sGroup.clear();
       }
       else {
-        auto ret = chset.insert(*p);
+        auto ret = chset.insert(*it);
         if (ret.second)
-          sGroup.push_back(*p);
+          sGroup.push_back(*it);
       }
     }
-    while (*p++ != '\0');
+    while (it++ != sAmbigChars.end());
   }
   else
     chset.insert(sAmbigChars.begin(), sAmbigChars.end());
@@ -280,41 +278,174 @@ std::optional<std::pair<w32string,CharSetType>> PasswordGenerator::ParseCharSet(
 
   std::map<w32string,int> charSetFreq;
 
-  int nStartPos = 0;
-  while (!sInput.empty()) {
-    nStartPos = sInput.find('<', nStartPos);
-    if (nStartPos < 0)
-      break;
-    int nEndPos = sInput.find('>', nStartPos + 1);
-    if (nEndPos < 0)
-      break;
-    int nLen = nEndPos - nStartPos + 1;
-    if (nLen < 4) {
-      nStartPos++;
+  int nState = 0;
+  w32string sPotCode, sChars;
+  for (auto it = sInput.begin(); it != sInput.end(); it++) {
+    if (*it == '<' && nState != 2) {
+      if (nState != 0) {
+        sChars += sPotCode;
+        sChars.push_back('<');
+        sPotCode.clear();
+      }
+      if (it+1 != sInput.end() && *(it+1) == '<') {
+        nState = 2;
+        it++;
+      }
+      else
+        nState = 1;
       continue;
     }
-    w32string sSubStr = sInput.substr(nStartPos + 1, nLen - 2);
+
+    if (*it == '>' && nState != 0) {
+      auto mapIt = charSetFreq.end();
+      bool blValidCode = false;
+
+      if (nState == 1 && sPotCode.length() >= 2) {
+        for (int i = 0; i < PASSWGEN_NUMCHARSETCODES_EXT; i++) {
+          if (sPotCode == s_charSetCodes[i]) {
+            mapIt = charSetFreq.emplace(
+              m_charSetDecodes[CHARSET_CODES_MAP[i]], 0).first;
+            blValidCode = true;
+            break;
+          }
+        }
+        if (!blValidCode && sPotCode.length() == 2) {
+          word32 lChar1 = sPotCode[0];
+          word32 lChar2 = sPotCode[1];
+          if (lChar2 > lChar1 && lChar2 < 0xd800 && lChar2 - lChar1 <= 256) {
+            w32string sCustomSet;
+            for (word32 lChar = lChar1; lChar <= lChar2; lChar++)
+              sCustomSet.push_back(lChar);
+            mapIt = charSetFreq.emplace(sCustomSet, 0).first;
+            blValidCode = true;
+          }
+        }
+      }
+      else if (nState == 2 && !sPotCode.empty()) {
+        if (it+1 != sInput.end() && *(it+1) == '>' &&
+            !(it+2 != sInput.end() && *(it+2) == '>')) {
+          w32string chset = MakeCharSetUnique(sPotCode);
+          if (!chset.empty()) {
+            mapIt = charSetFreq.emplace(chset, 0).first;
+            it++;
+            blValidCode = true;
+          }
+        }
+        else {
+          sPotCode.push_back('>');
+          continue;
+        }
+      }
+
+      if (mapIt != charSetFreq.end()) {
+        if (sInput.end() - it >= 3 && *(it+1) == ':' && isdigit(*(it+2))) {
+          std::string sFreq;
+          bool blAtLeast = false;
+          for (auto j = it + 2; j != sInput.end() && sFreq.length() <= 5; j++) {
+            if (isdigit(*j))
+              sFreq.push_back(*j);
+            else if (*j == '+') {
+              blAtLeast = true;
+              break;
+            }
+            else break;
+          }
+          if (!sFreq.empty()) {
+            int nFreq = std::stoi(sFreq);
+            if (blAtLeast) {
+              nFreq *= -1;
+              it++;
+            }
+            mapIt->second = nFreq;
+
+            it += 1 + sFreq.length();
+          }
+        }
+        if (blIncludeCharFromEachSubset && mapIt->second == 0)
+          mapIt->second = -1;
+      }
+      else if (!blValidCode) {
+        sChars += sPotCode;
+        sChars.push_back('<');
+        sChars.push_back('>');
+      }
+
+      nState = 0;
+      sPotCode.clear();
+    }
+    else if (nState != 0)
+      sPotCode.push_back(*it);
+    else
+      sChars.push_back(*it);
+  }
+
+  if (nState != 0) {
+    sChars += sPotCode;
+    sChars.push_back('<');
+  }
+
+  /*w32string sStartSeq, sEndSeq;
+  sStartSeq.push_back('<');
+  sStartSeq.push_back('<');
+  sEndSeq.push_back('>');
+  sEndSeq.push_back('>');
+  int nStartPos = 0, nState = 0, nMinChars = 1;
+  while (sInput.length() > sStartSeq.length() + sEndSeq.length()) {
+    if (nState == 1) {
+      sStartSeq = w32string(1, '<');
+      sEndSeq = w32string(1, '>');
+      nMinChars = 2;
+      nStartPos = 0;
+      nState++;
+    }
+    else if (nState > 2)
+      break;
+    nStartPos = sInput.find(sStartSeq, nStartPos);
+    if (nStartPos < 0) {
+      nState++;
+      continue;
+    }
+    int nEndPos = sInput.find(sEndSeq, nStartPos + sStartSeq.length());
+    if (nEndPos < 0) {
+      nState++;
+      continue;
+    }
+    int nLen = nEndPos - nStartPos + sEndSeq.length();
+    if (nLen < sStartSeq.length() + sEndSeq.length() + nMinChars) {
+      nStartPos += sStartSeq.length();
+      continue;
+    }
+    w32string sSubStr = sInput.substr(nStartPos + sStartSeq.length(),
+      nLen - sStartSeq.length() - sEndSeq.length());
     auto mapIt = charSetFreq.end();
-    for (int nI = 0; nI < PASSWGEN_NUMCHARSETCODES_EXT; nI++) {
-      //w32string sCode = AsciiCharToW32String(CHARSET_CODES[nI]);
-      if (sSubStr == s_charSetCodes[nI]) {
-        //sParsed += m_charSetDecodes[CHARSET_CODES_MAP[nI]];
-        mapIt = charSetFreq.emplace(
-          m_charSetDecodes[CHARSET_CODES_MAP[nI]], 0).first;
-        break;
+    if (sStartSeq.length() == 1) {
+      for (int nI = 0; nI < PASSWGEN_NUMCHARSETCODES_EXT; nI++) {
+        //w32string sCode = AsciiCharToW32String(CHARSET_CODES[nI]);
+        if (sSubStr == s_charSetCodes[nI]) {
+          //sParsed += m_charSetDecodes[CHARSET_CODES_MAP[nI]];
+          mapIt = charSetFreq.emplace(
+            m_charSetDecodes[CHARSET_CODES_MAP[nI]], 0).first;
+          break;
+        }
+      }
+      if (mapIt == charSetFreq.end() && sSubStr.length() == 2) {
+        word32 lChar1 = sSubStr[0];
+        word32 lChar2 = sSubStr[1];
+        if (lChar2 > lChar1 && lChar2 < 0xd800 && lChar2 - lChar1 <= 256) {
+          w32string sCustomSet;
+          for (word32 lChar = lChar1; lChar <= lChar2; lChar++)
+            sCustomSet.push_back(lChar);
+          mapIt = charSetFreq.emplace(sCustomSet, 0).first;
+        }
       }
     }
-    if (mapIt == charSetFreq.end() && sSubStr.length() == 2) {
-      word32 lChar1 = sSubStr[0];
-      word32 lChar2 = sSubStr[1];
-      if (lChar2 > lChar1 && lChar2 < 0xd800 && lChar2 - lChar1 <= 256) {
-        w32string sCustomSet;
-        for (word32 lChar = lChar1; lChar <= lChar2; lChar++)
-          sCustomSet.push_back(lChar);
-        mapIt = charSetFreq.emplace(sCustomSet, 0).first;
-      }
+    else {
+      w32string chset = MakeCharSetUnique(sSubStr);
+      if (!chset.empty())
+        mapIt = charSetFreq.emplace(chset, 0).first;
     }
     if (mapIt != charSetFreq.end()) {
+      nEndPos += sEndSeq.length() - 1;
       if (sInput.length() - 1 - nEndPos >= 2 && sInput[nEndPos+1] == ':' &&
           isdigit(sInput[nEndPos+2])) {
         std::string sFreq;
@@ -346,10 +477,10 @@ std::optional<std::pair<w32string,CharSetType>> PasswordGenerator::ParseCharSet(
       //nStartPos = 0;
     }
     else
-      nStartPos++;
-  }
+      nStartPos += sStartSeq.length();
+  }*/
 
-  w32string sFullCharSet = sInput;
+  w32string sFullCharSet = sChars;
   bool blHasFreq = false;
   for (const auto& kv : charSetFreq) {
     sFullCharSet += kv.first;
@@ -357,7 +488,7 @@ std::optional<std::pair<w32string,CharSetType>> PasswordGenerator::ParseCharSet(
       blHasFreq = true;
   }
   if (blHasFreq)
-    blHasFreq = (charSetFreq.size() + (sInput.length() >= 2 ? 1 : 0)) >= 2;
+    blHasFreq = (charSetFreq.size() + (sChars.length() >= 2 ? 1 : 0)) >= 2;
 
   w32string sRemovedAmbigChars;
   sFullCharSet = MakeCharSetUnique(sFullCharSet, &m_sAmbigCharSet,
@@ -374,12 +505,12 @@ std::optional<std::pair<w32string,CharSetType>> PasswordGenerator::ParseCharSet(
     else {
       for (const auto& kv : charSetFreq) {
         w32string sCurrCharSet = MakeCharSetUnique(kv.first, &sRemovedAmbigChars);
-        if (sCurrCharSet.length() >= 2)
+        if (!sCurrCharSet.empty())
           uniqueCharSetFreq.emplace(sCurrCharSet, kv.second);
       }
     }
-    if (!sInput.empty()) {
-      w32string sInputCharSet = MakeCharSetUnique(sInput, &sRemovedAmbigChars);
+    if (!sChars.empty()) {
+      w32string sInputCharSet = MakeCharSetUnique(sChars, &sRemovedAmbigChars);
       if (!sInputCharSet.empty())
         uniqueCharSetFreq.emplace(sInputCharSet, 0);
     }
@@ -388,7 +519,7 @@ std::optional<std::pair<w32string,CharSetType>> PasswordGenerator::ParseCharSet(
       std::vector<std::pair<w32string,int>> freqList;
       for (const auto& kv : uniqueCharSetFreq) {
         int nNumChars = abs(kv.second);
-        if (nNumChars > 0 && kv.first.length() >= 2)
+        if (nNumChars > 0) // && kv.first.length() >= 2)
           freqList.emplace_back(kv.first, nNumChars);
         if (kv.second <= 0)
           sCommonCharSet += kv.first;

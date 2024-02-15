@@ -1,9 +1,23 @@
 ﻿                            Password Tech
                             =============
-                Copyright (c) 2002-2023 by Christian Thöing
+                Copyright (c) 2002-2024 by Christian Thöing
 
 
-Version 3.5.3
+Version 3.5.4
+
+NEW FEATURES:
+
+- "Include characters" option: New placeholder "<<...>>:N[+]" allows specifying
+  custom character set (enclosed within <<...>>) and assigning a frequency
+  value N to it (e.g., "<<abcd0123>>:1+" ensures that generated passwords
+  contain at least one character from the set "abcd0123")
+- Feature "Character Set Builder": New window for composing custom character
+  set strings, which can be copied to the "Character set" box in the main window
+  (press "Build" button below the "Character set" box)
+
+----------
+
+Version 3.5.3 (2023-12-03)
 
 NEW FEATURES:
 

@@ -2,7 +2,7 @@ object PasswHistoryDlg: TPasswHistoryDlg
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu, biMaximize]
-  Caption = 'Password history'
+  Caption = 'Password History'
   ClientHeight = 239
   ClientWidth = 386
   Color = clBtnFace
@@ -22,7 +22,7 @@ object PasswHistoryDlg: TPasswHistoryDlg
   object EnableHistoryCheck: TCheckBox
     Left = 13
     Top = 11
-    Width = 226
+    Width = 220
     Height = 21
     Margins.Left = 4
     Margins.Top = 4
@@ -32,7 +32,7 @@ object PasswHistoryDlg: TPasswHistoryDlg
     Caption = 'Keep last passwords - up to:'
     TabOrder = 0
     OnClick = EnableHistoryCheckClick
-    ExplicitWidth = 215
+    ExplicitWidth = 214
   end
   object HistorySizeBox: TEdit
     Tag = 6

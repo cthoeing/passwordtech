@@ -1,7 +1,7 @@
 // EntropyManager.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -66,7 +66,8 @@ word32 EntropyManager::AddEvent(const MSG& msg,
   word64 qTimer;
 
   HighResTimer(&qTimer);
-  m_randPool.AddData(&qTimer, sizeof(word64));
+  auto randPool = RandomPool::GetInstance();
+  randPool.AddData(&qTimer, sizeof(word64));
 
   word32 lDelta = static_cast<word32>(
     std::min(0xffffffffull, qTimer - qLastTimer));
@@ -85,7 +86,7 @@ word32 EntropyManager::AddEvent(const MSG& msg,
     m_lastPos[0] = msg.lParam;
   }
 
-  m_randPool.AddData(&msg, sizeof(MSG));
+  randPool.AddData(&msg, sizeof(MSG));
 
   if (g_highResTimer == HighResTimer::None)
     lDelta /= HRT_NONE_ACCURACY_DERATING;
@@ -136,7 +137,7 @@ word32 EntropyManager::AddData(const void* pData,
   lzo1x_1_compress(reinterpret_cast<const word8*>(pData), lNumOfBytes, comprBuf,
     &comprLen, workBuf);
 
-  m_randPool.AddData(comprBuf, comprLen);
+  RandomPool::GetInstance().AddData(comprBuf, comprLen);
 
   comprLen = (comprLen > 4) ? comprLen - 4 : 1;
 

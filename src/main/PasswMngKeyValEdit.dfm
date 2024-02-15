@@ -2,7 +2,7 @@ object PasswMngKeyValDlg: TPasswMngKeyValDlg
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu, biMaximize]
-  Caption = 'Key-value list editor'
+  Caption = 'Key-Value List Editor'
   ClientHeight = 209
   ClientWidth = 473
   Color = clBtnFace

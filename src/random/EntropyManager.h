@@ -1,7 +1,7 @@
 // EntropyManager.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -33,7 +33,6 @@ enum EntropyEventType {
 class EntropyManager
 {
 private:
-  RandomPool& m_randPool;
   word32 m_lEntropyBits;
   word32 m_lTotalEntBits;
   word32 m_lMaxTimerEntBits;
@@ -62,7 +61,7 @@ public:
   // -> 'quality' of the system entropy (see TRandomPool::Randomize())
   EntropyManager(word32 lMaxTimerEntBits = 4,
     word32 lSystemEntBits = 16)
-    : m_randPool(RandomPool::GetInstance()), m_lEntropyBits(0), m_lTotalEntBits(0),
+    : m_lEntropyBits(0), m_lTotalEntBits(0),
       m_lMaxTimerEntBits(lMaxTimerEntBits), m_lSystemEntBits(lSystemEntBits)
   {
     m_lastKeys[0] = m_lastKeys[1] = 0;
@@ -111,7 +110,7 @@ public:
   // just add system entropy to the pool
   void AddSystemEntropy(void)
   {
-    m_randPool.Randomize();
+    RandomPool::GetInstance().Randomize();
     IncreaseEntropyBits(m_lSystemEntBits);
   }
 

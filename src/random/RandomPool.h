@@ -1,7 +1,7 @@
 // RandomPool.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -161,15 +161,16 @@ public:
     MAX_ENTROPY = POOL_SIZE*8, // max. entropy the RNG can provide
   };
 
-  // default constructor
+  // constructor
   // -> encryption algorithm for generating random data
   // -> fast (not necessarily cryptographically secure) PRNG for wiping memory etc.
-  RandomPool(CipherType cipher, RandomGenerator* pFastRandGen = nullptr)
-    : RandomPool(cipher, pFastRandGen, false)
-  {}
+  // -> whether to lock pool into physical memory
+  RandomPool(CipherType cipher = CipherType::ChaCha20,
+    std::unique_ptr<RandomGenerator> pFastRandGen = {},
+    bool blLockPhysMem = false);
 
   // create new random pool from another instance
-  RandomPool(RandomPool& src, RandomGenerator* pFastRandGen = nullptr);
+  RandomPool(RandomPool& src, std::unique_ptr<RandomGenerator> pFastRandGen = {});
 
   // destructor
   ~RandomPool();
@@ -179,7 +180,7 @@ public:
 
   // change encryption algorithm for generating random numbers
   // -> new cipher type
-  void ChangeCipher(CipherType cipher);
+  void SetCipher(CipherType cipher);
 
   CipherType GetCipher(void) const
   {
@@ -267,11 +268,7 @@ private:
   word32 m_lGetBufPos;
   word64 m_qNumOfBlocks;
   bool m_blKeySet;
-  RandomGenerator* m_pFastRandGen;
-
-  // private constructor, allows locking pool into physical memory
-  // (only used by singleton instance)
-  RandomPool(CipherType cipher, RandomGenerator* pFastRandGen, bool blLockPhysMem);
+  std::unique_ptr<RandomGenerator> m_pFastRandGen;
 
   // allocate pool page in virtual address space
   // <- pointer to the page, NULL if allocation failed

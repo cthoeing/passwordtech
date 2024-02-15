@@ -1,7 +1,7 @@
 // Main.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -319,6 +319,7 @@ __published:	// IDE-managed Components
   TPopupMenu *GenerateMenu;
   TMenuItem *GenerateMenu_Clipboard;
   TMenuItem *GenerateMenu_File;
+  TButton *BuildBtn;
   void __fastcall GenerateBtnClick(TObject *Sender);
   void __fastcall IncludeCharsCheckClick(TObject *Sender);
   void __fastcall CharSetInfoBtnClick(TObject *Sender);
@@ -424,6 +425,7 @@ __published:	// IDE-managed Components
     void __fastcall TrayMenu_ResetWindowPosClick(TObject *Sender);
     void __fastcall AdvancedOptionsMenu_DeactivateAllClick(TObject *Sender);
     void __fastcall AdvancedOptionsMenu_DeactivateAllStarredClick(TObject *Sender);
+  void __fastcall BuildBtnClick(TObject *Sender);
 
 private:	// User declarations
   RandomPool& m_randPool;

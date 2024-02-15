@@ -20,7 +20,7 @@
 #. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.3\n"
+"Project-Id-Version: Password Tech 3.5.4\n"
 "Last-Translator: Christian Thöing\n"
 "Language: de\n"
 
@@ -1815,31 +1815,31 @@ msgid "without ambiguous characters"
 msgstr "ohne mehrdeutige Zeichen"
 
 #. Quick help for "Include characters" in main window
-msgid "special symbols"
+msgid "Special symbols"
 msgstr "Sonderzeichen"
 
 #. Quick help for "Include characters" in main window
-msgid "brackets"
+msgid "Brackets"
 msgstr "Klammern"
 
 #. Quick help for "Include characters" in main window
-msgid "punctuation marks"
+msgid "Punctuation marks"
 msgstr "Satzzeichen"
 
 #. Quick help for "Include characters" in main window
-msgid "higher ANSI characters"
+msgid "Higher ANSI characters"
 msgstr "Höhere ANSI-Zeichen"
 
 #. Quick help for "Include characters" in main window
-msgid "generate phonetic password (lower-case letters)"
+msgid "Generate phonetic password (lower-case letters)"
 msgstr "Phonetisches Passwort generieren (Kleinbuchstaben)"
 
 #. Quick help for "Include characters" in main window
-msgid "generate phonetic password (upper-case letters)"
+msgid "Generate phonetic password (upper-case letters)"
 msgstr "Phonetisches Passwort generieren (Großbuchstaben)"
 
 #. Quick help for "Include characters" in main window
-msgid "generate phonetic password (mixed-case letters)"
+msgid "Generate phonetic password (mixed-case letters)"
 msgstr "Phonetisches Passwort generieren (Groß- und Kleinbuchstaben)"
 
 #. Quick help for "Include characters" in main window
@@ -1882,31 +1882,31 @@ msgid "List of placeholders with optional argument \"N\":"
 msgstr "Liste der Platzhalter mit optionalem Argument \"N\":"
 
 #. Quick help for "Format password" in main window
-msgid "custom character set"
+msgid "Custom character set"
 msgstr "benutzerspez. Zeichensatz"
 
 #. Quick help for "Format password" in main window
-msgid "vowels, lower-case"
+msgid "Vowels, lower-case"
 msgstr "Vokale, Kleinbuchstaben"
 
 #. Quick help for "Format password" in main window
-msgid "vowels, mixed-case"
+msgid "Vowels, mixed-case"
 msgstr "Vokale, Groß- und Kleinbuchstaben"
 
 #. Quick help for "Format password" in main window
-msgid "vowels, upper-case"
+msgid "Vowels, upper-case"
 msgstr "Vokale, Großbuchstaben"
 
 #. Quick help for "Format password" in main window
-msgid "consonants, lower-case"
+msgid "Consonants, lower-case"
 msgstr "Konsonanten, Kleinbuchstaben"
 
 #. Quick help for "Format password" in main window
-msgid "consonants, mixed-case"
+msgid "Consonants, mixed-case"
 msgstr "Konsonanten, Groß- und Kleinbuchstaben"
 
 #. Quick help for "Format password" in main window
-msgid "consonants, upper-case"
+msgid "Consonants, upper-case"
 msgstr "Konsonanten, Großbuchstaben"
 
 #. Quick help for "Format password" in main window
@@ -1918,27 +1918,27 @@ msgstr ""
 "(mögliche Verwendung des Arguments \"N\" wird durch \"{N}\" angegeben):"
 
 #. Quick help for "Format password" in main window
-msgid "insert password generated via \"Include characters/words\""
+msgid "Insert password generated via \"Include characters/words\""
 msgstr "Füge Passwort ein, das mit \"Zeichen/Wörter verwenden\" generiert wurde"
 
 #. Quick help for "Format password" in main window
-msgid "words from word list, multiple words are separated by spaces"
+msgid "Words from word list, multiple words are separated by spaces"
 msgstr "Wörter aus Wortliste, mehrere Wörter werden durch Leerzeichen getrennt"
 
 #. Quick help for "Format password" in main window
-msgid "words, multiple words are not separated at all"
+msgid "Words, multiple words are not separated at all"
 msgstr "Wörter, mehrere Wörter werden nicht getrennt"
 
 #. Quick help for "Format password" in main window
-msgid "repeat input sequence in brackets N times"
+msgid "Repeat input sequence in brackets N times"
 msgstr "Wiederhole Eingabesequenz in Klammern N-mal"
 
 #. Quick help for "Format password" in main window
-msgid "randomly permute formatted sequence in brackets, keep N characters"
+msgid "Randomly permute formatted sequence in brackets, keep N characters"
 msgstr "Permutiere formatierte Sequenz in Klammern zufällig, behalte N Zeichen"
 
 #. Quick help for "Format password" in main window
-msgid "treat sequence as character set and insert N characters"
+msgid "Treat sequence as character set and insert N characters"
 msgstr "Behandle Sequenz als Zeichensatz und füge N Zeichen ein"
 
 #. Quick help for "Format password" in main window
@@ -2874,3 +2874,48 @@ msgstr "Gefiltert"
 #. Password Manager window, toolbar, filter info, button tooltip
 msgid "Remove filter"
 msgstr "Filter entfernen"
+
+msgid "Build..."
+msgstr "Erstellen..."
+
+msgid "Build character set definition"
+msgstr "Zeichensatz-Definition erstellen"
+
+msgid "Character Set Builder"
+msgstr "Zeichensatz erstellen"
+
+msgid "Character set selection"
+msgstr "Zeichensatz-Auswahl"
+
+msgid "Resulting character set definition"
+msgstr "Resultierende Zeichensatz-Definition"
+
+msgid "Apply"
+msgstr "Übernehmen"
+
+msgid "Lower-case letters (a-z)"
+msgstr "Kleinbuchstaben (a-z)"
+
+msgid "Upper-case letters (A-Z)"
+msgstr "Großbuchstaben (A-Z)"
+
+msgid "Digits (0-9)"
+msgstr "Zahlen (0-9)"
+
+msgid "Characters from range:"
+msgstr "Zeichen aus Bereich:"
+
+msgid "Additional characters:"
+msgstr "Zusätzliche Zeichen:"
+
+msgid "At least"
+msgstr "Mindestens"
+
+msgid "From:"
+msgstr "Von:"
+
+msgid "to:"
+msgstr "bis:"
+
+msgid "Invalid character range."
+msgstr "Ungültiger Zeichenbereich."
