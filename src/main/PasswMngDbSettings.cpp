@@ -1,7 +1,7 @@
 // PasswMngDbSettings.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -36,19 +36,19 @@
 #pragma resource "*.dfm"
 TPasswDbSettingsDlg *PasswDbSettingsDlg;
 
-static const int NUM_CIPHERS = 2;
-static const wchar_t* CIPHER_NAMES[NUM_CIPHERS] =
+const int NUM_CIPHERS = 2;
+const wchar_t* CIPHER_NAMES[NUM_CIPHERS] =
 {
   L"Advanced Encryption Standard (AES-CBC)",
   L"ChaCha20"
 };
 
-static const int CIPHER_KEY_SIZES[NUM_CIPHERS] =
+const int CIPHER_KEY_SIZES[NUM_CIPHERS] =
 {
   256, 256
 };
 
-static const WString CONFIG_ID = "PasswMngDbSettings";
+const WString CONFIG_ID = "PasswMngDbSettings";
 
 //---------------------------------------------------------------------------
 __fastcall TPasswDbSettingsDlg::TPasswDbSettingsDlg(TComponent* Owner)
@@ -101,8 +101,9 @@ void __fastcall TPasswDbSettingsDlg::SaveConfig(void)
   g_pIni->WriteInteger(CONFIG_ID, "WindowWidth", Width);
 }
 //---------------------------------------------------------------------------
-void __fastcall TPasswDbSettingsDlg::GetSettings(PasswDbSettings& s)
+PasswDbSettings __fastcall TPasswDbSettingsDlg::GetSettings(void)
 {
+  PasswDbSettings s;
   s.DefaultUserName = GetEditBoxTextBuf(DefUserNameBox);
   s.PasswFormatSeq = GetEditBoxTextBuf(PasswFormatSeqBox);
   s.DefaultExpiryDays = DefaultExpirySpinBtn->Position;
@@ -111,6 +112,7 @@ void __fastcall TPasswDbSettingsDlg::GetSettings(PasswDbSettings& s)
   s.NumKdfRounds = StrToUInt(NumKdfRoundsBox->Text);
   s.Compressed = EnableCompressionCheck->Checked;
   s.CompressionLevel = s.Compressed ? CompressionLevelBar->Position : 0;
+  return s;
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswDbSettingsDlg::SetSettings(const PasswDbSettings& s,
@@ -148,9 +150,7 @@ void __fastcall TPasswDbSettingsDlg::OKBtnClick(TObject *Sender)
     MsgBox(TRL("Invalid number of key derivation rounds."), MB_ICONERROR);
     return;
   }
-  PasswDbSettings settings;
-  GetSettings(settings);
-  if (PasswMngForm->ApplyDbSettings(settings))
+  if (PasswMngForm->ApplyDbSettings(GetSettings()))
     ModalResult = mrOk;
 }
 //---------------------------------------------------------------------------

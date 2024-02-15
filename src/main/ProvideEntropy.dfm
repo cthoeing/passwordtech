@@ -3,8 +3,8 @@ object ProvideEntropyDlg: TProvideEntropyDlg
   Top = 250
   BorderIcons = [biSystemMenu, biMaximize]
   Caption = 'Provide Additional Entropy'
-  ClientHeight = 319
-  ClientWidth = 454
+  ClientHeight = 318
+  ClientWidth = 452
   Color = clBtnFace
   Font.Charset = ANSI_CHARSET
   Font.Color = clWindowText

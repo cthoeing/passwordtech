@@ -2,9 +2,9 @@ object PasswMngColDlg: TPasswMngColDlg
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu, biMaximize]
-  Caption = 'Select columns'
-  ClientHeight = 290
-  ClientWidth = 325
+  Caption = 'Select Columns'
+  ClientHeight = 289
+  ClientWidth = 328
   Color = clBtnFace
   Constraints.MinHeight = 250
   Constraints.MinWidth = 235
@@ -19,8 +19,8 @@ object PasswMngColDlg: TPasswMngColDlg
   object OptionsList: TCheckListBox
     Left = 0
     Top = 0
-    Width = 325
-    Height = 231
+    Width = 328
+    Height = 230
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -31,8 +31,8 @@ object PasswMngColDlg: TPasswMngColDlg
     ItemHeight = 23
     Style = lbOwnerDrawFixed
     TabOrder = 0
-    ExplicitWidth = 319
-    ExplicitHeight = 230
+    ExplicitWidth = 313
+    ExplicitHeight = 229
   end
   object OKBtn: TButton
     Tag = 12

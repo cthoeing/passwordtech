@@ -1,7 +1,7 @@
 // CryptClip.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -63,7 +63,7 @@ static void initCrypto(aes_context* pCryptCtx,
     memcpy(derivedKey, pSalt, 16);
 
     // hash the salt and the key together 8192 times
-    for (int nI = 0; nI < 8192; nI++) {
+    for (int i = 0; i < 8192; i++) {
       sha256_starts(pHashCtx, 0);
       sha256_update(pHashCtx, derivedKey, 32);
       sha256_update(pHashCtx, pPassw, nPasswLen);
@@ -129,7 +129,7 @@ int EncryptText(const SecureWString* psText,
     // get a new initialization vector (IV)
     randGen.GetData(buf, 16);
 
-    word8* pCryptBuf = buf + 16ul;
+    word8* pCryptBuf = &buf[16];
 
     // create header and copy it to the buffer
     CryptTextHeader header;
@@ -155,7 +155,7 @@ int EncryptText(const SecureWString* psText,
     buf[15] = (buf[15] & 0xF0) | bLastBlock;
 
     if (bLastBlock != 0) {
-      randGen.GetData(buf + 16ul + lCryptLen, 16 - bLastBlock);
+      randGen.GetData(&buf[16 + lCryptLen], 16 - bLastBlock);
       lCryptLen += 16 - bLastBlock;
     }
 
@@ -231,8 +231,8 @@ int DecryptText(const SecureWString* psText,
         return CRYPTTEXT_ERROR_NOTEXT;
       lTextLen = psText->StrLen();
       asText.New(lTextLen + 1);
-      for (word32 lI = 0; lI <= lTextLen; lI++) // also copy terminating zero
-        asText[lI] = (*psText)[lI];
+      for (word32 i = 0; i <= lTextLen; i++) // also copy terminating zero
+        asText[i] = (*psText)[i];
     }
     else {
       asText = GetClipboardTextBufAnsi();
@@ -257,7 +257,7 @@ int DecryptText(const SecureWString* psText,
     if ((bufSize & 0x0F) != 0)
       return CRYPTTEXT_ERROR_TEXTCORRUPTED;
 
-    word8* pCryptBuf = buf + 16ul;
+    word8* pCryptBuf = &buf[16];
     word32 lHmacLen = (nVersion == 0) ? 16 : HMAC_LENGTH;
     word32 lCryptLen = bufSize - 16;
 

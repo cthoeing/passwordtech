@@ -15,9 +15,10 @@
 # for floating point numbers, "%s" for strings, etc.), and the original strings
 # are still provided in the old format to avoid merge conflicts when updating
 # existing translations.
+
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.3\n"
+"Project-Id-Version: Password Tech 3.5.4\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
@@ -1673,31 +1674,31 @@ msgid "without ambiguous characters"
 msgstr ""
 
 #. Quick help for "Include characters" in main window
-msgid "special symbols"
+msgid "Special symbols"
 msgstr ""
 
 #. Quick help for "Include characters" in main window
-msgid "brackets"
+msgid "Brackets"
 msgstr ""
 
 #. Quick help for "Include characters" in main window
-msgid "punctuation marks"
+msgid "Punctuation marks"
 msgstr ""
 
 #. Quick help for "Include characters" in main window
-msgid "higher ANSI characters"
+msgid "Higher ANSI characters"
 msgstr ""
 
 #. Quick help for "Include characters" in main window
-msgid "generate phonetic password (lower-case letters)"
+msgid "Generate phonetic password (lower-case letters)"
 msgstr ""
 
 #. Quick help for "Include characters" in main window
-msgid "generate phonetic password (upper-case letters)"
+msgid "Generate phonetic password (upper-case letters)"
 msgstr ""
 
 #. Quick help for "Include characters" in main window
-msgid "generate phonetic password (mixed-case letters)"
+msgid "Generate phonetic password (mixed-case letters)"
 msgstr ""
 
 #. Quick help for "Include characters" in main window
@@ -1733,31 +1734,31 @@ msgid "List of placeholders with optional argument \"N\":"
 msgstr ""
 
 #. Quick help for "Format password" in main window
-msgid "custom character set"
+msgid "Custom character set"
 msgstr ""
 
 #. Quick help for "Format password" in main window
-msgid "vowels, lower-case"
+msgid "Vowels, lower-case"
 msgstr ""
 
 #. Quick help for "Format password" in main window
-msgid "vowels, mixed-case"
+msgid "Vowels, mixed-case"
 msgstr ""
 
 #. Quick help for "Format password" in main window
-msgid "vowels, upper-case"
+msgid "Vowels, upper-case"
 msgstr ""
 
 #. Quick help for "Format password" in main window
-msgid "consonants, lower-case"
+msgid "Consonants, lower-case"
 msgstr ""
 
 #. Quick help for "Format password" in main window
-msgid "consonants, mixed-case"
+msgid "Consonants, mixed-case"
 msgstr ""
 
 #. Quick help for "Format password" in main window
-msgid "consonants, upper-case"
+msgid "Consonants, upper-case"
 msgstr ""
 
 #. Quick help for "Format password" in main window
@@ -1767,27 +1768,27 @@ msgid ""
 msgstr ""
 
 #. Quick help for "Format password" in main window
-msgid "insert password generated via \"Include characters/words\""
+msgid "Insert password generated via \"Include characters/words\""
 msgstr ""
 
 #. Quick help for "Format password" in main window
-msgid "words from word list, multiple words are separated by spaces"
+msgid "Words from word list, multiple words are separated by spaces"
 msgstr ""
 
 #. Quick help for "Format password" in main window
-msgid "words, multiple words are not separated at all"
+msgid "Words, multiple words are not separated at all"
 msgstr ""
 
 #. Quick help for "Format password" in main window
-msgid "repeat input sequence in brackets N times"
+msgid "Repeat input sequence in brackets N times"
 msgstr ""
 
 #. Quick help for "Format password" in main window
-msgid "randomly permute formatted sequence in brackets, keep N characters"
+msgid "Randomly permute formatted sequence in brackets, keep N characters"
 msgstr ""
 
 #. Quick help for "Format password" in main window
-msgid "treat sequence as character set and insert N characters"
+msgid "Treat sequence as character set and insert N characters"
 msgstr ""
 
 #. Quick help for "Format password" in main window
@@ -2688,4 +2689,49 @@ msgstr ""
 
 #. Password Manager window, toolbar, filter info, button tooltip
 msgid "Remove filter"
+msgstr ""
+
+msgid "Build..."
+msgstr ""
+
+msgid "Build character set definition"
+msgstr ""
+
+msgid "Character Set Builder"
+msgstr ""
+
+msgid "Character set selection"
+msgstr ""
+
+msgid "Resulting character set definition"
+msgstr ""
+
+msgid "Apply"
+msgstr ""
+
+msgid "Lower-case letters (a-z)"
+msgstr ""
+
+msgid "Upper-case letters (A-Z)"
+msgstr ""
+
+msgid "Digits (0-9)"
+msgstr ""
+
+msgid "Characters from range:"
+msgstr ""
+
+msgid "Additional characters:"
+msgstr ""
+
+msgid "At least"
+msgstr ""
+
+msgid "From:"
+msgstr ""
+
+msgid "to:"
+msgstr ""
+
+msgid "Invalid character range."
 msgstr ""

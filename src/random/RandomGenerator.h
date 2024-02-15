@@ -1,7 +1,7 @@
 // RandomGenerator.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -115,6 +115,7 @@ public:
     return bRand;
   }
 
+  // returns value in the range [0, lNum) (0..lNum-1)
   word32 GetNumRange(word32 lNum) {
     if (lNum == 0)
       throw RandomGeneratorRangeError("RandomGenerator::GetNumRange(): Invalid range");
@@ -146,6 +147,7 @@ public:
     return (lRand < lNum) ? lRand : lRand % lNum;
   }
 
+  // returns value in the range [lBegin, lEnd) (lBegin..lEnd-1)
   word32 GetNumRange(word32 lBegin, word32 lEnd)
   {
     if (lEnd <= lBegin)
@@ -154,6 +156,7 @@ public:
     return lBegin + GetNumRange(lEnd - lBegin);
   }
 
+  // permutes elements in array
   template<class T> void Permute(T* pArray,
     word32 lSize)
   {

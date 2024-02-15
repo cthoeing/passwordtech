@@ -1,7 +1,7 @@
 // Util.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -47,7 +47,7 @@ WString g_msgBoxCaptionList[4] =
 { L"Info", L"Warning", L"Question", L"Error" };
 
 //---------------------------------------------------------------------------
-static SecureWString strCr2Crlf(const SecureWString& sSrc)
+SecureWString strCr2Crlf(const SecureWString& sSrc)
 {
   const wchar_t* pwszBuf = sSrc.c_str();
 
@@ -344,16 +344,15 @@ void SetFormComponentsAnchors(TForm* pForm)
 {
   for (int i = 0; i < pForm->ComponentCount; i++) {
     auto pControl = dynamic_cast<TControl*>(pForm->Components[i]);
-    if (pControl && pControl->Tag != 0) {
+    if (pControl) {
       int nTag = pControl->Tag;
-      if (nTag != 0) {
+      if (nTag > 0 && nTag < 16) {
         TAnchors anc;
         if (nTag & 1) anc << akLeft;
         if (nTag & 2) anc << akTop;
         if (nTag & 4) anc << akRight;
         if (nTag & 8) anc << akBottom;
         pControl->Anchors = anc;
-        pControl->Tag = 0;
       }
     }
   }
@@ -494,33 +493,35 @@ int StringToFont(const WString& sFont,
     for (const auto& sItem : items) {
       switch (i) {
       case 0:
-        pFont->Name = sItem;
+        if (pFont) pFont->Name = sItem;
         break;
       case 1:
         {
           int nSize = StrToInt(sItem);
           if (nSize == 0)
             return i;
-          pFont->Size = nSize;
+          if (pFont) pFont->Size = nSize;
         }
         break;
       case 2:
         {
           int nFlags = StrToInt(sItem);
-          TFontStyles style;
-          if (nFlags & 1)
-            style << fsBold;
-          if (nFlags & 2)
-            style << fsItalic;
-          if (nFlags & 4)
-            style << fsUnderline;
-          if (nFlags & 8)
-            style << fsStrikeOut;
-          pFont->Style = style;
+          if (pFont) {
+            TFontStyles style;
+            if (nFlags & 1)
+              style << fsBold;
+            if (nFlags & 2)
+              style << fsItalic;
+            if (nFlags & 4)
+              style << fsUnderline;
+            if (nFlags & 8)
+              style << fsStrikeOut;
+            pFont->Style = style;
+          }
         }
         break;
       case 3:
-        pFont->Color = StringToColor(sItem);
+        if (pFont) pFont->Color = StringToColor(sItem);
         break;
       }
       if (++i == 4)

@@ -2,8 +2,8 @@ object MPPasswGenForm: TMPPasswGenForm
   Left = 219
   Top = 131
   Caption = 'MP Password Generator'
-  ClientHeight = 635
-  ClientWidth = 474
+  ClientHeight = 633
+  ClientWidth = 480
   Color = clBtnFace
   Font.Charset = ANSI_CHARSET
   Font.Color = clWindowText
@@ -163,7 +163,6 @@ object MPPasswGenForm: TMPPasswGenForm
       Anchors = [akTop, akRight]
       TabOrder = 6
       Text = '1'
-      ExplicitLeft = 303
     end
     object KeyExpiryTimeSpinBtn: TUpDown
       Left = 382
@@ -179,7 +178,6 @@ object MPPasswGenForm: TMPPasswGenForm
       Max = 32767
       Position = 1
       TabOrder = 7
-      ExplicitLeft = 364
     end
     object PasswStatusBox: TEdit
       Left = 11
@@ -194,7 +192,6 @@ object MPPasswGenForm: TMPPasswGenForm
       Color = clBtnFace
       ReadOnly = True
       TabOrder = 2
-      ExplicitWidth = 285
     end
     object ClearKeyBtn: TButton
       Left = 318
@@ -210,7 +207,6 @@ object MPPasswGenForm: TMPPasswGenForm
       Enabled = False
       TabOrder = 1
       OnClick = ClearKeyBtnClick
-      ExplicitLeft = 300
     end
     object HashapassCompatCheck: TCheckBox
       Left = 10
@@ -268,7 +264,6 @@ object MPPasswGenForm: TMPPasswGenForm
       Margins.Bottom = 4
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 11
-      ExplicitWidth = 216
     end
   end
   object PasswGeneratorGroup: TGroupBox
@@ -408,7 +403,6 @@ object MPPasswGenForm: TMPPasswGenForm
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
       OnKeyPress = ParameterBoxKeyPress
-      ExplicitWidth = 284
     end
     object CharSetList: TComboBox
       Left = 10
@@ -436,7 +430,6 @@ object MPPasswGenForm: TMPPasswGenForm
       Anchors = [akTop, akRight]
       TabOrder = 3
       Text = '1'
-      ExplicitLeft = 303
     end
     object PasswLengthSpinBtn: TUpDown
       Left = 422
@@ -452,7 +445,6 @@ object MPPasswGenForm: TMPPasswGenForm
       Min = 1
       Position = 1
       TabOrder = 4
-      ExplicitLeft = 404
     end
     object ClearParameterBtn: TButton
       Left = 320
@@ -467,7 +459,6 @@ object MPPasswGenForm: TMPPasswGenForm
       Caption = 'Clear'
       TabOrder = 1
       OnClick = ClearParameterBtnClick
-      ExplicitLeft = 302
     end
     object PasswBox: TEdit
       Left = 10
@@ -487,7 +478,6 @@ object MPPasswGenForm: TMPPasswGenForm
       ParentFont = False
       PopupMenu = PasswBoxMenu
       TabOrder = 5
-      ExplicitWidth = 254
     end
     object GenerateBtn: TButton
       Left = 321
@@ -510,7 +500,6 @@ object MPPasswGenForm: TMPPasswGenForm
       ParentFont = False
       TabOrder = 6
       OnClick = GenerateBtnClick
-      ExplicitLeft = 303
     end
     object PasswSecurityBarPanel: TPanel
       Left = 10

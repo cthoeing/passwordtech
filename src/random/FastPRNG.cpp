@@ -1,7 +1,7 @@
 // FastPRNG.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -35,17 +35,12 @@ Jsf32RandGen g_fastRandGen;
 
 void Jsf32RandGen::Randomize()
 {
-  m_a = 0xf1ea5eed; // avoid short cycles
-  word64 timer;
-  GetSystemTimeAsFileTime(reinterpret_cast<FILETIME*>(&timer));
-  m_b = WORD64_HI(timer);
-  m_c = WORD64_LO(timer);
-  QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&timer));
-  m_d = WORD64_HI(timer) + WORD64_LO(timer);
-
-  for (int i = 0; i < 20; i++) {
-    (void) GetWord32();
-  }
+  word32 seed[3];
+  GetSystemTimeAsFileTime(reinterpret_cast<FILETIME*>(seed));
+  LARGE_INTEGER timer;
+  QueryPerformanceCounter(&timer);
+  seed[2] = timer.LowPart + timer.HighPart;
+  Seed(seed, sizeof(seed));
 }
 //---------------------------------------------------------------------------
 void Jsf32RandGen::Seed(const void* pSeed, word32 lSize)
@@ -56,6 +51,9 @@ void Jsf32RandGen::Seed(const void* pSeed, word32 lSize)
   m_b = seed[0];
   m_c = seed[1];
   m_d = seed[2];
+  for (int i = 0; i < 20; i++) {
+    (void) GetWord32();
+  }
 }
 //---------------------------------------------------------------------------
 word32 Jsf32RandGen::GetWord32()

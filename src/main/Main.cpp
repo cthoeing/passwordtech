@@ -1,7 +1,7 @@
 // Main.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -69,6 +69,7 @@
 #include "PasswMngDbSettings.h"
 #include "PasswMngDbProp.h"
 #include "PasswMngPwHistory.h"
+#include "CharSetBuilder.h"
 #include "zxcvbn.h"
 #ifdef _WIN64
 #include "../crypto/blake2/blake2.h"
@@ -254,14 +255,13 @@ extern "C" int blake2s_self_test(void);
 
 //---------------------------------------------------------------------------
 __fastcall TMainForm::TMainForm(TComponent* Owner)
-  : TForm(Owner), m_randPool(RandomPool::GetInstance()),
+  : TForm(Owner),
+    m_randPool(RandomPool::GetInstance()),
     m_entropyMng(EntropyManager::GetInstance()),
-    m_blStartup(true), //m_blRestart(false),
-    m_nNumStartupErrors(0), m_passwGen(&RandomPool::GetInstance()),
+    m_blStartup(true), m_nNumStartupErrors(0), m_passwGen(&m_randPool),
     m_nAutoClearClipCnt(0), m_nAutoClearPasswCnt(0), m_pUpdCheckThread(nullptr)
 {
 //  SetSecureMemoryManager();
-
   Application->OnMessage = AppMessage;
   Application->OnException = AppException;
   Application->OnMinimize = AppMinimize;
@@ -295,6 +295,7 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
 
   // set up PRNGs and related stuff
   HighResTimerCheck();
+  //g_pRandPool = &m_randPool;
   g_pRandSrc = &m_randPool;
   m_entropyMng.MaxTimerEntropyBits = ENTROPY_TIMER_MAX;
   m_entropyMng.SystemEntropyBits = ENTROPY_SYSTEM;
@@ -481,6 +482,8 @@ __fastcall TMainForm::~TMainForm()
   OleUninitialize();
 
   CloseHandle(g_hAppMutex);
+
+  //g_pRandPool = nullptr;
 
   // restart the program
   if (g_terminateAction == TerminateAction::RestartProgram)
@@ -763,6 +766,7 @@ bool __fastcall TMainForm::ChangeLanguage(const WString& sLangFileName)
     TRLCaption(PasswGroup);
     TRLCaption(GenerateBtn);
     TRLCaption(PasswInfoLbl);
+    TRLCaption(BuildBtn);
 
     TRLMenu(MainMenu);
     TRLMenu(ListMenu);
@@ -790,6 +794,7 @@ bool __fastcall TMainForm::ChangeLanguage(const WString& sLangFileName)
     TRLHint(AddProfileBtn);
     TRLHint(ReloadScriptBtn);
     TRLHint(BrowseBtn2);
+    TRLHint(BuildBtn);
   }
   catch (Exception& e) {
     DelayStartupError(FormatW("Error while loading language file\n\"%1\":\n%2.",
@@ -828,7 +833,6 @@ void __fastcall TMainForm::SetDonorUI(int nDonorType)
 void __fastcall TMainForm::LoadConfig(void)
 {
   //AnsiString asLastVersion = g_pIni->ReadString(CONFIG_ID, "LastVersion", "");
-
   AnsiString asDonorKey = g_pIni->ReadString(CONFIG_ID, "DonorKey", "");
   if (!asDonorKey.IsEmpty()) {
     AnsiString asDonorId;
@@ -1005,7 +1009,7 @@ void __fastcall TMainForm::LoadConfig(void)
   if (nCipher >= 0 && nCipher <= static_cast<int>(RandomPool::CipherType::ChaCha8))
   {
     g_config.RandomPoolCipher = nCipher;
-    m_randPool.ChangeCipher(static_cast<RandomPool::CipherType>(nCipher));
+    m_randPool.SetCipher(static_cast<RandomPool::CipherType>(nCipher));
   }
 
   g_config.TestCommonPassw = g_pIni->ReadBool(CONFIG_ID, "TestCommonPassw", true);
@@ -1135,15 +1139,14 @@ void __fastcall TMainForm::LoadConfig(void)
   g_config.FileNewlineChar = newline;
   g_sNewline = NewlineCharToString(newline);
 
-  g_config.AutoCheckUpdates = AutoCheckUpdates(
+  g_config.AutoCheckUpdates = static_cast<AutoCheckUpdates>(
     g_pIni->ReadInteger(CONFIG_ID, "AutoCheckUpdates", acuWeekly));
   if (g_config.AutoCheckUpdates < acuDaily ||
       g_config.AutoCheckUpdates > acuDisabled)
     g_config.AutoCheckUpdates = acuWeekly;
 
   WString sGUIFontStr = g_pIni->ReadString(CONFIG_ID, "GUIFont", "");
-  int nPos = sGUIFontStr.Pos(";");
-  if (nPos >= 2) {
+  if (StringToFont(sGUIFontStr, nullptr) >= 2) {
     g_config.GUIFontString = sGUIFontStr;
   }
 
@@ -1315,6 +1318,7 @@ bool __fastcall TMainForm::SaveConfig(void)
     PasswMngKeyValDlg->SaveConfig();
     PasswMngDbPropDlg->SaveConfig();
     PasswHistoryDlg->SaveConfig();
+    CharSetBuilderForm->SaveConfig();
 
     // now save the profiles
     for (auto it = g_profileList.begin(); it != g_profileList.end(); it++) {
@@ -1756,7 +1760,7 @@ bool __fastcall TMainForm::ApplyConfig(const Configuration& config)
     }
   }
 
-  m_randPool.ChangeCipher(static_cast<RandomPool::CipherType>(
+  m_randPool.SetCipher(static_cast<RandomPool::CipherType>(
     config.RandomPoolCipher));
 
   SecureClipboard::GetInstance().AutoClear = config.AutoClearClip;
@@ -2039,6 +2043,7 @@ void __fastcall TMainForm::ChangeGUIFont(const WString& sFontStr)
 
   // Password database settings
   PasswDbSettingsDlg->Font = Font;
+  //SetFormComponentsAnchors(PasswDbSettingsDlg, false);
 
   // Password manager key-value editor
   PasswMngKeyValDlg->Font = Font;
@@ -2048,6 +2053,9 @@ void __fastcall TMainForm::ChangeGUIFont(const WString& sFontStr)
 
   // Password history
   PasswHistoryDlg->Font = Font;
+
+  // Character set builder
+  CharSetBuilderForm->Font = Font;
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::ShowInfoBox(const WString& sInfo)
@@ -2278,7 +2286,7 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
     if (IsRandomPoolActive()) {
       m_entropyMng.AddSystemEntropy();
       //pFastRandGen.reset(new SplitMix64(g_fastRandGen.GetWord64()));
-      pRandPool.reset(new RandomPool(m_randPool));
+      pRandPool.reset(new RandomPool(m_randPool, {}));
       m_passwGen.RandGen = pRandPool.get();
     }
 
@@ -4337,6 +4345,8 @@ void __fastcall TMainForm::TrayMenu_ResetWindowPosClick(TObject *Sender)
   PasswMngForm->Left = x;
   PasswMngKeyValDlg->Top = y;
   PasswMngKeyValDlg->Left = x;
+  CharSetBuilderForm->Top = y;
+  CharSetBuilderForm->Left = x;
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::AdvancedOptionsMenu_DeactivateAllClick(TObject *Sender)
@@ -4395,3 +4405,9 @@ void __fastcall TMainForm::OnEndSession(TWMEndSession& msg)
   msg.Result = 0;
 }
 //---------------------------------------------------------------------------
+void __fastcall TMainForm::BuildBtnClick(TObject *Sender)
+{
+  CharSetBuilderForm->Show();
+}
+//---------------------------------------------------------------------------
+

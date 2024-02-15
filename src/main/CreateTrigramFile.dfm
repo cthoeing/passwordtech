@@ -3,7 +3,7 @@ object CreateTrigramFileDlg: TCreateTrigramFileDlg
   Top = 138
   BorderIcons = [biSystemMenu]
   Caption = 'Create Trigram File'
-  ClientHeight = 183
+  ClientHeight = 182
   ClientWidth = 386
   Color = clBtnFace
   Font.Charset = ANSI_CHARSET

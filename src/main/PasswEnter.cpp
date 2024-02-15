@@ -1,7 +1,7 @@
 // PasswEnter.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -32,10 +32,10 @@
 #pragma resource "*.dfm"
 TPasswEnterDlg *PasswEnterDlg;
 
-static const char
+const char
 PASSWORD_CHAR = '*';
 
-static const WString
+const WString
 CONFIG_ID     = "PasswEnter";
 
 static word8 memcryptKey[16];

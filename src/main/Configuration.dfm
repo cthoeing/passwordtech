@@ -3,7 +3,7 @@ object ConfigurationDlg: TConfigurationDlg
   Top = 187
   BorderIcons = [biSystemMenu, biMaximize]
   Caption = 'Configuration'
-  ClientHeight = 521
+  ClientHeight = 519
   ClientWidth = 551
   Color = clBtnFace
   Constraints.MinHeight = 456
@@ -414,7 +414,7 @@ object ConfigurationDlg: TConfigurationDlg
         420)
       object HotKeyLbl: TLabel
         Left = 10
-        Top = 135
+        Top = 134
         Width = 117
         Height = 17
         Margins.Left = 4
@@ -998,8 +998,8 @@ object ConfigurationDlg: TConfigurationDlg
     Top = 452
   end
   object SelectFontMenu: TPopupMenu
-    Left = 449
-    Top = 142
+    Left = 31
+    Top = 408
     object SelectFontMenu_RestoreDefault: TMenuItem
       Caption = 'Restore Default'
       OnClick = SelectFontMenu_RestoreDefaultClick

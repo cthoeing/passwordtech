@@ -1,7 +1,7 @@
 // Scripting.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -29,7 +29,7 @@
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 
-static RandomGenerator* s_pRandGen = &RandomPool::GetInstance();
+static RandomGenerator* s_pRandGen = nullptr;
 static PasswordGenerator* s_pPasswGen = nullptr;
 
 const int MAX_PASSW_CHARS = 16000;
@@ -289,6 +289,8 @@ LuaScript::LuaScript()
   lua_setglobal(m_L, "pwtech_numwords");
   lua_pushcfunction(m_L, script_format);
   lua_setglobal(m_L, "pwtech_format");
+
+  s_pRandGen = &RandomPool::GetInstance();
 }
 //---------------------------------------------------------------------------
 LuaScript::~LuaScript()
@@ -443,7 +445,7 @@ void LuaScript::CallGenerate(word64 qPasswNum,
 //---------------------------------------------------------------------------
 void LuaScript::SetRandomGenerator(RandomGenerator* pSrc)
 {
-  s_pRandGen = pSrc;
+  s_pRandGen = pSrc ? pSrc : &RandomPool::GetInstance();
 }
 //---------------------------------------------------------------------------
 void LuaScript::SetPasswGenerator(PasswordGenerator* pSrc)

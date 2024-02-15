@@ -1,7 +1,7 @@
 // PasswManager.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -677,7 +677,7 @@ bool __fastcall TPasswMngForm::OpenDatabase(int nOpenFlags,
       PASSWENTER_FLAG_ENABLEKEYFILECREATION;
   }
 
-  auto passwDb = std::make_unique<PasswDatabase>();
+  auto passwDb = std::make_shared<PasswDatabase>();
 
   while (true) {
     try {
@@ -740,8 +740,8 @@ bool __fastcall TPasswMngForm::OpenDatabase(int nOpenFlags,
   Screen->Cursor = crDefault;
   if (m_passwDb)
     CloseDatabase(true);
-  //m_passwDb = std::move(passwDb);
-  m_passwDb.reset(passwDb.release());
+  m_passwDb = passwDb;
+  //m_passwDb.reset(passwDb.release());
   m_pSelectedItem = nullptr;
   m_nSearchMode = SEARCH_MODE_OFF;
   m_blDbChanged = false;

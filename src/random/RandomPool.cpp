@@ -1,7 +1,7 @@
 // RandomPool.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -46,8 +46,6 @@
 #else
 #pragma link "bcrypt.lib"
 #endif
-
-//RandomPool* g_pRandPool = nullptr;
 
 // sizeof(aes_context) = 280 bytes
 // sizeof(chacha_ctx) = 68 bytes
@@ -278,26 +276,29 @@ public:
 
 using namespace RandPoolCipher;
 
+//RandomPool* g_pRandPool = nullptr;
+
 //---------------------------------------------------------------------------
-RandomPool::RandomPool(CipherType cipher, RandomGenerator* pFastRandGen,
+RandomPool::RandomPool(CipherType cipher,
+  std::unique_ptr<RandomGenerator> pFastRandGen,
   bool blLockPhysMem)
   : m_lAddBufPos(0), m_lGetBufPos(0), m_blKeySet(false),
-    m_pFastRandGen(pFastRandGen), m_blLockPhysMem(blLockPhysMem)
+    m_pFastRandGen(std::move(pFastRandGen)), m_blLockPhysMem(blLockPhysMem)
 {
   m_pPoolPage = AllocPoolPage();
   if (m_pPoolPage == nullptr)
     OutOfMemoryError();
 
   // hide the pool contents *somewhere* within the memory page
-  m_lUnusedSize = (m_blLockPhysMem && m_pFastRandGen) ? UNUSED_SIZE_MIN +
-    (m_pFastRandGen->GetWord32() % (UNUSED_SIZE_MAX - UNUSED_SIZE_MIN + 1)) : 0;
+  m_lUnusedSize = (m_blLockPhysMem && m_pFastRandGen) ?
+    m_pFastRandGen->GetNumRange(UNUSED_SIZE_MIN, UNUSED_SIZE_MAX + 1) : 0;
   SetPoolPointers();
 
-  ChangeCipher(cipher);
+  SetCipher(cipher);
 }
 //---------------------------------------------------------------------------
-RandomPool::RandomPool(RandomPool& src, RandomGenerator* pFastRandGen)
-  : RandomPool(src.m_cipherType, pFastRandGen, false)
+RandomPool::RandomPool(RandomPool& src, std::unique_ptr<RandomGenerator> pFastRandGen)
+  : RandomPool(src.m_cipherType, std::move(pFastRandGen), false)
 {
   SecureMem<word8> entropy(POOL_SIZE);
   src.GetData(entropy, POOL_SIZE);
@@ -322,7 +323,8 @@ RandomPool::~RandomPool()
 //---------------------------------------------------------------------------
 RandomPool& RandomPool::GetInstance(void)
 {
-  static RandomPool inst(CipherType::ChaCha20, &g_fastRandGen, true);
+  static RandomPool inst(CipherType::ChaCha20,
+    std::make_unique<Jsf32RandGen>(), true);
   return inst;
 }
 //---------------------------------------------------------------------------
@@ -359,14 +361,15 @@ void RandomPool::FreePoolPage(void)
 //---------------------------------------------------------------------------
 void RandomPool::SetPoolPointers(void)
 {
-  m_pPool      = m_pPoolPage + m_lUnusedSize + POOL_OFFSET;
-  m_pHashCtx   = m_pPoolPage + m_lUnusedSize + HASHCTX_OFFSET;
-  m_pAddBuf    = m_pPoolPage + m_lUnusedSize + ADDBUF_OFFSET;
-  m_pCipherKey = m_pPoolPage + m_lUnusedSize + CIPHERKEY_OFFSET;
-  m_pSecCtr    = m_pPoolPage + m_lUnusedSize + SECCTR_OFFSET;
-  m_pCipherCtx = m_pPoolPage + m_lUnusedSize + CIPHERCTX_OFFSET;
-  m_pGetBuf    = m_pPoolPage + m_lUnusedSize + GETBUF_OFFSET;
-  m_pTempBuf   = m_pPoolPage + m_lUnusedSize + TEMPBUF_OFFSET;
+  word8* pOffset = m_pPoolPage + m_lUnusedSize;
+  m_pPool      = pOffset + POOL_OFFSET;
+  m_pHashCtx   = pOffset + HASHCTX_OFFSET;
+  m_pAddBuf    = pOffset + ADDBUF_OFFSET;
+  m_pCipherKey = pOffset + CIPHERKEY_OFFSET;
+  m_pSecCtr    = pOffset + SECCTR_OFFSET;
+  m_pCipherCtx = pOffset + CIPHERCTX_OFFSET;
+  m_pGetBuf    = pOffset + GETBUF_OFFSET;
+  m_pTempBuf   = pOffset + TEMPBUF_OFFSET;
 }
 //---------------------------------------------------------------------------
 void RandomPool::TouchPool(void)
@@ -387,8 +390,11 @@ bool RandomPool::MovePool(void)
     return false;
 
   // only copy the relevant portion of the pool page
-  memcpy(pNewPoolPage + m_lUnusedSize, m_pPoolPage + m_lUnusedSize,
-    m_blLockPhysMem ? POOLPAGE_SIZE - m_lUnusedSize : POOL_DATA_SIZE);
+  if (m_blLockPhysMem)
+    memcpy(pNewPoolPage + m_lUnusedSize, m_pPoolPage + m_lUnusedSize,
+      POOLPAGE_SIZE - m_lUnusedSize);
+  else
+    memcpy(pNewPoolPage, m_pPoolPage, POOL_DATA_SIZE);
 
   FreePoolPage();
   m_pPoolPage = pNewPoolPage;
@@ -405,7 +411,7 @@ bool RandomPool::MovePool(void)
   return true;
 }
 //---------------------------------------------------------------------------
-void RandomPool::ChangeCipher(CipherType cipher)
+void RandomPool::SetCipher(CipherType cipher)
 {
   if (!m_pCipher || cipher != m_cipherType) {
     switch (cipher) {

@@ -1,7 +1,7 @@
 // Util.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2023 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -106,6 +106,8 @@ WString GetAppDataPath(void);
 WString FontToString(TFont* pFont);
 
 // converts string into font object
+// -> font object to modify according to string specification;
+//    if nullptr, only check validity of string
 // <- number of attributes which could be successfully parsed (max. 4)
 int StringToFont(const WString& sFont,
   TFont* pFont);
