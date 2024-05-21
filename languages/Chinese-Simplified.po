@@ -1,16 +1,17 @@
 # Released under the GNU General Public License
+#. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.1\n"
+"Project-Id-Version: Password Tech 3.5.4\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
-"Language-Team: \n"
+"Language-Team: superwah\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #. Message box caption
 msgid "Info"
@@ -30,7 +31,7 @@ msgstr "错误"
 
 #. Main window, label attached to password profile drop-down list
 msgid "Profile:"
-msgstr "配置:"
+msgstr "配置文件:"
 
 #. Main window, Settings groupbox
 msgid "Settings"
@@ -42,7 +43,7 @@ msgstr "包含字符 (生成字符密码)"
 
 #. Main window, Password length
 msgid "Length:"
-msgstr "长度:"
+msgstr "密码长度:"
 
 #. Main window, user-defined character set
 msgid "Character Set:"
@@ -50,15 +51,15 @@ msgstr "字符集:"
 
 #. Main window, button to show currently loaded character set
 msgid "Show details"
-msgstr "显示细节"
+msgstr "显示详情"
 
 #. Main window, checkbox
 msgid "Include Words (Pass*phrases*)"
-msgstr "包括单词 (生成密码短语)"
+msgstr "包含单词 (生成密码短语)"
 
 #. Main window, number of words from word list to generate
 msgid "Number:"
-msgstr "数字:"
+msgstr "单 词 个 数:"
 
 #. Main window, select word list file
 msgid "Word List File:"
@@ -90,19 +91,27 @@ msgstr "重新加载脚本"
 
 #. Main window, label attached to input box for number of passwords
 msgid "Multiple passwords:"
-msgstr "多种的密码:"
+msgstr "密码个数："
 
 #. Main window, button to generate password
 msgid "Generate"
 msgstr "生成"
 
-#. Main window, button to store generated passwords in a file
-msgid "Generate password list to file"
-msgstr "生成密码列表至文件"
+#. Main window, button to generate multiple passwords
+msgid "Generate to Clipboard"
+msgstr "生成到剪贴板"
+
+#. Main window, button to generate multiple passwords
+msgid "Generate to File..."
+msgstr "生成到文件..."
 
 #. Main window, button to access advanced password options
 msgid "Advanced"
 msgstr "高级"
+
+#. Main window, button to access advanced password options, tooltip
+msgid "%d option(s) active"
+msgstr "%d 选项(s) 激活"
 
 #. Main window, button to access advanced password options, dropdown menu
 msgid "Deactivate All Options"
@@ -124,7 +133,7 @@ msgstr "点击“生成”"
 msgid "Hide/show password"
 msgstr "隐藏/显示密码"
 
-#. Main window, password groupbox, hint of quality bar
+#. Main window, password groupbox, tooltip of quality bar
 msgid "Hold left mouse button to drag & drop password"
 msgstr "按住鼠标左键可以拖拽密码"
 
@@ -134,11 +143,11 @@ msgstr "文件"
 
 #. Main menu, File submenu, Profile for password generation
 msgid "Profile"
-msgstr "配置"
+msgstr "配置文件"
 
 #. Main menu, File submenu, Profile submenu, Profile Editor
 msgid "Profile Editor..."
-msgstr "配置编辑器..."
+msgstr "编辑配置文件..."
 
 #. Main menu, File submenu, Exit program
 msgid "Exit"
@@ -166,7 +175,7 @@ msgstr "创建随机数据文件..."
 
 #. Main menu, Tools submenu
 msgid "Create Trigram File..."
-msgstr "创建三元文件..."
+msgstr "创建三元组文件..."
 
 #. Main menu, Tools submenu
 msgid "MP Password Generator..."
@@ -210,7 +219,7 @@ msgstr "语言"
 
 #. Main menu, Options submenu
 msgid "Always on Top"
-msgstr "总在最上面"
+msgstr "总在最前"
 
 #. Main menu, Options submenu
 msgid "Hide Entropy Progress"
@@ -228,7 +237,7 @@ msgstr "立即保存设置"
 msgid "Help"
 msgstr "帮助"
 
-#. Main window, Help button hint
+#. Main window, Help button tooltip
 msgid "Open Manual"
 msgstr "打开手册"
 
@@ -242,7 +251,7 @@ msgstr "获取翻译..."
 
 #. Main window, Help submenu
 msgid "Donate..."
-msgstr "赞助..."
+msgstr "捐赠..."
 
 #. Main window, Help submenu
 msgid "Check for Updates"
@@ -254,7 +263,7 @@ msgstr "计时器信息..."
 
 #. Main window, Help submenu
 msgid "About %s..."
-msgstr "关于 %s..."
+msgstr "关于%s..."
 
 #. System tray context menu, Restore application
 msgid "Restore %s"
@@ -276,25 +285,25 @@ msgstr "生成并自动输入密码"
 msgid "Open user manual"
 msgstr "打开用户手册"
 
-#. Main window, Clear Clipboard button hint
+#. Main window, Clear Clipboard button tooltip
 msgid "Clear clipboard (text contents only)"
 msgstr "清除剪贴板 (仅文本内容)"
 
-#. Main window, Encrypt/Decrypt Clipboard button hint
+#. Main window, Encrypt/Decrypt Clipboard button tooltip
 msgid "Clipboard text encryption (left-click) or decryption (right-click)"
-msgstr "加密剪贴板 (左键单击) / 解密剪贴板 (右键单击)"
+msgstr "加密剪贴板 (左键) / 解密剪贴板 (右键)"
 
-#. Main window, Profile Editor button hint
+#. Main window, Profile Editor button tooltip
 msgid "Load, create or delete profiles"
-msgstr "加载、创建或删除配置文件"
+msgstr "管理配置文件"
 
-#. Main window, MP Password Generator button hint
+#. Main window, MP Password Generator button tooltip
 msgid "Generate passwords based on a master password"
 msgstr "基于主密码生成密码"
 
-#. Main window, Configuration button hint
+#. Main window, Configuration button tooltip
 msgid "Main configuration of the program"
-msgstr "程序主要设置"
+msgstr "程序主配置"
 
 #. Open/Save dialogs, filter for All files (*.*)
 msgid "All files"
@@ -372,15 +381,15 @@ msgstr "改变字体..."
 msgid "Select high-entropy file"
 msgstr "选择高熵文件"
 
-#. Main window, Password Database button hint
+#. Main window, Password Database button tooltip
 msgid "Manage passwords in encrypted databases"
-msgstr "管理加密数据库中的密码"
+msgstr "管理加密数据库"
 
-#. Main window, Reload Profile button hint
+#. Main window, Reload Profile button tooltip
 msgid "Reload profile"
 msgstr "重新加载配置"
 
-#. Main window, Add Profile button hint
+#. Main window, Add Profile button tooltip
 msgid "Add profile"
 msgstr "添加配置"
 
@@ -394,7 +403,7 @@ msgstr "密码管理器..."
 
 #. Main menu, Help submenu
 msgid "Enter Donor Key..."
-msgstr "输入赞助激活码..."
+msgstr "输入捐赠激活码..."
 
 #. System tray context menu
 msgid "Reset All Window Positions"
@@ -437,7 +446,7 @@ msgid ""
 "Error while loading list of common passwords:\n"
 "%s."
 msgstr ""
-"加载常用密码列表时出错：\n"
+"加载常用密码表时出错：\n"
 "%s。"
 
 #. List of errors that occurred during startup phase of the application
@@ -449,8 +458,8 @@ msgid ""
 "If you like %s, please consider\n"
 "making a donation. Thank you!"
 msgstr ""
-"如果你喜欢 %s，请考虑\n"
-"进行捐赠。感谢你！"
+"如果您喜欢 %s，请\n"
+"考虑进行捐赠。感谢您！"
 
 #. Message shown when selected character set is invalid
 msgid "Character set \"%s\" is invalid."
@@ -466,11 +475,11 @@ msgstr ""
 
 #. Information about selected character set (number N of unique characters and entropy bits (=log2(N)) per character)
 msgid "%d characters / %.1f bits per character"
-msgstr "%d 字符 / 每一字元 %.1f Bits"
+msgstr "%d 字符 / 每字符 %.1f 比特"
 
 #. Information about selected word list file (number N of unique words and entropy bits (=log2(N)) per word)
 msgid "%d words / %.1f bits per word"
-msgstr "%d 单词 / 每一字组 %.1f Bits"
+msgstr "%d 单词 / 每单词 %.1f 比特"
 
 #. Message shown when selected trigram file could not be read
 msgid "Could not open trigram file."
@@ -480,7 +489,7 @@ msgstr "无法打开三元组文件。"
 msgid "Invalid trigram file."
 msgstr "三元组文件无效。"
 
-#. Main window, Generated Password groupbox, label below Password box, hint shown when generated or entered password matches a common password
+#. Main window, Generated Password groupbox, label below Password box, tooltip shown when generated or entered password matches a common password
 msgid "Matches common password!"
 msgstr "匹配常用密码！"
 
@@ -520,7 +529,7 @@ msgstr "解密失败。原因可能如下："
 
 #. Decrypt Clipboard, possible reason for failure
 msgid "- You entered a wrong password."
-msgstr "- 你输入的密码错误。"
+msgstr "- 密码输入错误。"
 
 #. Decrypt Clipboard, possible reason for failure
 msgid ""
@@ -578,7 +587,7 @@ msgstr "密码短语：无效的长度范围。"
 msgid ""
 "If the option \"Each character must occur\n"
 "only once\" is activated, the password length\n"
-"is limited to the size of the character set (%d)."
+"is limited to %d unique characters."
 msgstr ""
 "如果激活“每个字符必须只出现\n"
 "一次”选项，则密码长度受\n"
@@ -608,27 +617,27 @@ msgstr "正在生成密码"
 
 #. Title of Progress window when generating password list
 msgid "Generating password list"
-msgstr "正在生成密码列表"
+msgstr "正在生成密码表"
 
 #. Progress info when generating password list
 msgid "%d of %d passwords generated."
 msgstr "已生成 %d 个密码 (共 %d 个)。"
 
 #. Formatted password, Include Characters/Words selected, but format specifier "P" not found in format string
-msgid "\"P\" is not specified."
-msgstr "\"P\" 未指定。"
+msgid "\"P\" is not specified"
+msgstr "\"P\" 未指定"
 
 #. Formatted password, format specifier "P" contained in format string, but no password available to insert
-msgid "Password not available."
-msgstr "密码不可用。"
+msgid "Password not available"
+msgstr "密码不可用"
 
 #. Formatted password, format specifier "P" contained in format string, but password cannot be fully inserted
-msgid "Password too long."
-msgstr "密码太长。"
+msgid "Password too long"
+msgstr "密码过长"
 
 #. Formatted password, format string contains unknown specifier
-msgid "Invalid format specifier \"%s\"."
-msgstr "无效的格式说明符 \"%s\"。"
+msgid "%d invalid format specifier(s): %s"
+msgstr "%d 无效的格式说明符(s):  \"%s\""
 
 #. Run script, executing Lua script
 msgid "Executing script"
@@ -636,7 +645,7 @@ msgstr "执行脚本"
 
 #. Run script, waiting for response
 msgid "Waiting for script ..."
-msgstr "等待脚本 ..."
+msgstr "等待脚本完成 ..."
 
 #. Run script, message shown when execution was cancelled
 msgid ""
@@ -652,8 +661,7 @@ msgid ""
 "the internal memory limit.\n"
 "Please reduce the number of passwords"
 msgstr ""
-"预计列表大小将超过\n"
-"内存限制。\n"
+"预计密码表大小将超过内存限制。\n"
 "请减少密码数量"
 
 #. Generate password list, message shown when list size has exceeded internal limit
@@ -678,8 +686,8 @@ msgid ""
 "Entropy of the first password: %d bits.\r\n"
 "Maximum entropy of the entire list: %d bits."
 msgstr ""
-"已生成 %d 个密码。\r\n"
-"第一个密码的熵： %d 位。\r\n"
+"已生成 %d 个密码。\n"
+"第一个密码的熵为： %d 位。\n"
 "整个列表的最大熵： %d 位。"
 
 #. Generate password to clipboard
@@ -688,7 +696,11 @@ msgstr "密码已复制到剪贴板。"
 
 #. Generate password list, copy list to UI
 msgid "Copying password list ..."
-msgstr "正在复制密码列表 ..."
+msgstr "正在复制密码表 ..."
+
+#. Generate password list to clipboard
+msgid "Password list copied to clipboard."
+msgstr "密码列表已复制到剪贴板。"
 
 #. Generate password list to file
 msgid ""
@@ -917,7 +929,7 @@ msgstr "(注意：%s)"
 
 #. Check for updates, message shown when there's no new version to download
 msgid "Your version of %s is up-to-date."
-msgstr "您的版本 %s 已是最新版。"
+msgstr "您的 %s 版本已是最新。"
 
 #. Check for updates, general error message
 msgid ""
@@ -951,10 +963,6 @@ msgstr "定性随机生成器已重置。"
 msgid "Deterministic random generator has been DEACTIVATED."
 msgstr "定性随机生成器已停用。"
 
-#. Message shown on command line in case profile specified in command line parameters could not be found
-msgid "ERROR: Profile \"%s\" not found."
-msgstr "错误：未找到配置文件 \"%s\"。"
-
 #. Message shown on command line if profile was specified in command line parameters
 msgid "Selected profile \"%s\"."
 msgstr "已选择配置文件 \"%s\"。"
@@ -976,7 +984,7 @@ msgid ""
 "Your donor key has expired: The maximum\n"
 "number of updates has been reached."
 msgstr ""
-"您的赞助激活码已失效：已达到\n"
+"您的捐赠激活码已失效：已达到\n"
 "支持的最多更新次数。"
 
 #. Message shown when donor key is invalid
@@ -1050,7 +1058,7 @@ msgid ""
 "\n"
 "Do you want to donate now?"
 msgstr ""
-"至少捐赠以下金额之一以获得捐赠密钥：\n"
+"捐赠以下金额可获得捐赠密钥：\n"
 "\n"
 "%d 欧元 / %d 美元：适用于当前版本和 %d 更新。\n"
 "%d 欧元 / %d 美元：在主版本 3 的整个生命周期内有效（无限更新）。\n"
@@ -1095,7 +1103,7 @@ msgstr "数据库"
 
 #. Configuration window, General
 msgid "User interface style:"
-msgstr "用户界面风格："
+msgstr "界面风格："
 
 #. Configuration window, General
 msgid "Change font for the GUI controls:"
@@ -1119,7 +1127,7 @@ msgstr "最小化至系统托盘"
 
 #. Configuration window, General
 msgid "Minimize before performing autotype"
-msgstr "执行自动输入前最小化"
+msgstr "自动输入前最小化"
 
 #. Configuration window, General
 msgid "Autotype delay between characters (ms):"
@@ -1127,19 +1135,15 @@ msgstr "自动输入时各字符间隔时间 (ms)："
 
 #. Configuration window, General
 msgid "Ask before exiting application"
-msgstr "退出应用前询问"
+msgstr "程序退出前确认"
 
 #. Configuration window, General
 msgid "Launch application on system startup (for current user)"
-msgstr "系统启动时打开应用程序 (当前用户)"
+msgstr "开机启动 (当前用户)"
 
 #. Configuration window, General
 msgid "Load the following profile on startup:"
-msgstr "在启动时加载以下配置："
-
-#. Configuration window, General
-msgid "Load pr"
-msgstr "加载配置"
+msgstr "启动时加载配置："
 
 #. Configuration window, Security
 msgid "Benchmark..."
@@ -1151,11 +1155,11 @@ msgstr "基准测试的数据大小"
 
 #. Configuration window, Security
 msgid "Encryption algorithm for generating random data via random pool:"
-msgstr "通过随机池生成随机数据的加密算法:"
+msgstr "随机池生成随机数据的加密算法:"
 
 #. Configuration window, Security
 msgid "Test passwords against list of common passwords"
-msgstr "根据常用密码列表测试密码"
+msgstr "根据常用密码表测试密码"
 
 #. Configuration window, Security
 msgid "Use advanced password strength estimation (%s)"
@@ -1163,11 +1167,11 @@ msgstr "使用高级密码强度评估 (%s)"
 
 #. Configuration window, Security
 msgid "Clear clipboard automatically after the following time (seconds):"
-msgstr "在以下时间后自动清除剪贴板 (秒)："
+msgstr "自动清除剪贴板时间 (秒)："
 
 #. Configuration window, Security
 msgid "Clear password box automatically after the following time (seconds):"
-msgstr "在以下时间后自动清除密码框 (秒)："
+msgstr "自动清除密码框时间 (秒)："
 
 #. Configuration window, Updates
 msgid "Automatic check for updates"
@@ -1195,7 +1199,7 @@ msgstr "动作"
 
 #. Configuration window, Hot Keys, Actions group box
 msgid "Show/restore main window"
-msgstr "显示/恢复 主界面"
+msgstr "显示/恢复主界面"
 
 #. Configuration window, Hot Keys, Actions group box, list with available actions
 msgid "No further action"
@@ -1287,7 +1291,7 @@ msgstr "最小化程序或数据库窗口时锁定数据库"
 
 #. Configuration window, Database
 msgid "Lock database after the following idle time (seconds):"
-msgstr "在以下空闲时间后锁定数据库 (秒)："
+msgstr "空闲后锁定数据库 (秒)："
 
 #. Configuration window, Database, save database automatically when database is being locked due to idle time
 msgid "Save automatically"
@@ -1295,11 +1299,11 @@ msgstr "自动保存"
 
 #. Configuration window, Database
 msgid "Create backup of database before saving"
-msgstr "保存前创建数据库备份"
+msgstr "保存时自动备份数据库"
 
 #. Configuration window, Database
 msgid "Number backups consecutively - up to:"
-msgstr "连续备份数量 - 最多:"
+msgstr "最多备份份数:"
 
 #. Configuration window, Database
 msgid "Open window on startup"
@@ -1311,11 +1315,11 @@ msgstr "启动时打开最后使用过的数据库"
 
 #. Configuration window, Database
 msgid "Warn if database contains expired entries"
-msgstr "如果数据库包含过期条目时提醒"
+msgstr "数据库包含过期条目时提醒"
 
 #. Configuration window, Database
 msgid "Warn if database contains entries that will expire soon"
-msgstr "如果数据库包含即将过期条目时提醒"
+msgstr "数据库包含即将过期条目时提醒"
 
 #. Configuration window, Database, entries that will expire soon, define number of days before expiry date
 msgid "Number of days:"
@@ -1371,7 +1375,7 @@ msgstr "取消"
 
 #. Enter password window, message shown when passwords are not identical
 msgid "Passwords are not identical."
-msgstr "密码不相同。"
+msgstr "密码不一致。"
 
 #. Enter password window, caption for encryption
 msgid "Encrypt"
@@ -1387,7 +1391,7 @@ msgstr "记住密码 (秒)："
 
 #. Enter password window
 msgid "Key file for password database:"
-msgstr "密码数据库的密钥文件："
+msgstr "数据库密钥文件："
 
 #. Enter password window, Key file, None selected
 msgid "(None)"
@@ -1419,13 +1423,13 @@ msgstr "创建密钥文件时出错: %s。"
 msgid "Key files"
 msgstr "密钥文件"
 
-#. Enter password window, Create Key File button, hint
+#. Enter password window, Create Key File button, tooltip
 msgid "Create key file"
 msgstr "创建密钥文件"
 
 #. Password List window, title
 msgid "Password List"
-msgstr "密码列表"
+msgstr "密码表"
 
 #. Password List window, context menu
 msgid "Save As File..."
@@ -1433,7 +1437,7 @@ msgstr "另存为文件..."
 
 #. Password List window, Save as file, Save file dialog, title
 msgid "Save password list"
-msgstr "保存密码列表"
+msgstr "保存密码表"
 
 #. Password List window, Save as file, error message
 msgid ""
@@ -1463,11 +1467,11 @@ msgstr "第一个字符不能是小写字母"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Don't separate words by a space"
-msgstr "不要用空格分隔单词"
+msgstr "不使用空格分隔单词"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Don't separate words and characters by a '-' character"
-msgstr "不要用 “-” 字符分隔单词和字符"
+msgstr "不使用 “-” 字符分隔单词和字符"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Reverse default order of character/word combinations"
@@ -1487,7 +1491,11 @@ msgstr "至少包含一个数字 (0-9)"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Include at least one special symbol (!\"#$%...)"
-msgstr "至少包含一个特殊符号 (!\"#$%...)"
+msgstr "至少包含一个特殊字符 (!\"#$%...)"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Include at least one character from each subset"
+msgstr "至少包含每个子集中的一个字符"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Only include characters from custom character set"
@@ -1499,11 +1507,11 @@ msgstr "排除重复的连续字符 (例如: aa, 11)"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Exclude duplicate entries in password lists"
-msgstr "排除密码列表中重复条目"
+msgstr "排除密码表中重复条目"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Assign entropy value to each password in password lists"
-msgstr "为密码列表中的每个密码分配熵值"
+msgstr "为密码表中的每个密码分配熵值"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Capitalize first letter of each word"
@@ -1523,15 +1531,27 @@ msgstr "每个单词只能出现一次"
 
 #. Advanced Password Options window, label
 msgid "Redefine ambiguous characters:"
-msgstr "重新定义易混淆的字符:"
+msgstr "重定义易混淆的字符:"
 
 #. Advanced Password Options window, label
 msgid "Redefine special symbols:"
-msgstr "重新定义特殊字符:"
+msgstr "重定义特殊字符:"
 
 #. Advanced Password Options window, label
-msgid "Maximum length of words in word lists (except default word list):"
+msgid "Min./Max. length of words in word lists (except default word list):"
 msgstr "单词列表中单词的最大长度（默认单词列表除外）："
+
+#. Advanced Password Options window, label
+msgid "Redefine separators in passphrases:"
+msgstr "重定义密码短语中的分隔符："
+
+#. Advanced Password Options window, label
+msgid "Words:"
+msgstr "单词："
+
+#. Advanced Password Options window, label
+msgid "Words/characters:"
+msgstr "单词/字符："
 
 #. Advanced Password Options window, label
 msgid "Trigram file for generating phonetic (pronounceable) passwords:"
@@ -1656,11 +1676,11 @@ msgstr "确认"
 msgid "Profile name:"
 msgstr "配置文件名："
 
-#. Profile Editor dialog, Move Up button, hint
+#. Profile Editor dialog, Move Up button, tooltip
 msgid "Move up"
 msgstr "向上移动"
 
-#. Profile Editor dialog, Move Down button, hint
+#. Profile Editor dialog, Move Down button, tooltip
 msgid "Move down"
 msgstr "向下移动"
 
@@ -1763,31 +1783,31 @@ msgid "without ambiguous characters"
 msgstr "无易混淆的字符"
 
 #. Quick help for "Include characters" in main window
-msgid "special symbols"
+msgid "Special symbols"
 msgstr "特殊符号"
 
 #. Quick help for "Include characters" in main window
-msgid "brackets"
+msgid "Brackets"
 msgstr "括号"
 
 #. Quick help for "Include characters" in main window
-msgid "punctuation marks"
+msgid "Punctuation marks"
 msgstr "标点符号"
 
 #. Quick help for "Include characters" in main window
-msgid "higher ANSI characters"
+msgid "Higher ANSI characters"
 msgstr "高级ANSI字符"
 
 #. Quick help for "Include characters" in main window
-msgid "generate phonetic password (lower-case letters)"
+msgid "Generate phonetic password (lower-case letters)"
 msgstr "生成拼音密码 (小写字母)"
 
 #. Quick help for "Include characters" in main window
-msgid "generate phonetic password (upper-case letters)"
+msgid "Generate phonetic password (upper-case letters)"
 msgstr "生成拼音密码 (大写字母)"
 
 #. Quick help for "Include characters" in main window
-msgid "generate phonetic password (mixed-case letters)"
+msgid "Generate phonetic password (mixed-case letters)"
 msgstr "生成拼音密码 (大小写混合字母)"
 
 #. Quick help for "Include characters" in main window
@@ -1829,31 +1849,31 @@ msgid "List of placeholders with optional argument \"N\":"
 msgstr "带有可选参数 “N” 的占位符列表："
 
 #. Quick help for "Format password" in main window
-msgid "custom character set"
+msgid "Custom character set"
 msgstr "自定义字符集"
 
 #. Quick help for "Format password" in main window
-msgid "vowels, lower-case"
+msgid "Vowels, lower-case"
 msgstr "元音，小写"
 
 #. Quick help for "Format password" in main window
-msgid "vowels, mixed-case"
+msgid "Vowels, mixed-case"
 msgstr "元音，混合大小写"
 
 #. Quick help for "Format password" in main window
-msgid "vowels, upper-case"
+msgid "Vowels, upper-case"
 msgstr "元音，大写"
 
 #. Quick help for "Format password" in main window
-msgid "consonants, lower-case"
+msgid "Consonants, lower-case"
 msgstr "辅音，小写"
 
 #. Quick help for "Format password" in main window
-msgid "consonants, mixed-case"
+msgid "Consonants, mixed-case"
 msgstr "辅音，混合大小写"
 
 #. Quick help for "Format password" in main window
-msgid "consonants, upper-case"
+msgid "Consonants, upper-case"
 msgstr "辅音，大写"
 
 #. Quick help for "Format password" in main window
@@ -1865,27 +1885,27 @@ msgstr ""
 "(参数 \"N\" 的可能用法由 \"{N}\" 指定)："
 
 #. Quick help for "Format password" in main window
-msgid "insert password generated via \"Include characters/words\""
+msgid "Insert password generated via \"Include characters/words\""
 msgstr "插入通过 “包含字符 / 单词” 产生的密码"
 
 #. Quick help for "Format password" in main window
-msgid "words from word list, multiple words are separated by spaces"
+msgid "Words from word list, multiple words are separated by spaces"
 msgstr "单词表中的单词，多个单词之间用空格分隔"
 
 #. Quick help for "Format password" in main window
-msgid "words, multiple words are not separated at all"
+msgid "Words, multiple words are not separated at all"
 msgstr "单词，多个单词不分隔"
 
 #. Quick help for "Format password" in main window
-msgid "repeat input sequence in brackets N times"
+msgid "Repeat input sequence in brackets N times"
 msgstr "重复输入括号内的序列 N 次"
 
 #. Quick help for "Format password" in main window
-msgid "randomly permute formatted sequence in brackets, keep N characters"
+msgid "Randomly permute formatted sequence in brackets, keep N characters"
 msgstr "随机排列括号中的格式化序列，保留 N 个字符"
 
 #. Quick help for "Format password" in main window
-msgid "treat sequence as character set and insert N characters"
+msgid "Treat sequence as character set and insert N characters"
 msgstr "把序列作为字符集并插入 N 个字符"
 
 #. Quick help for "Format password" in main window
@@ -1924,7 +1944,7 @@ msgstr "过期倒计时："
 
 #. MP Password Generator window, checkbox
 msgid "Ask for password confirmation"
-msgstr "要求确认密码"
+msgstr "请确认密码"
 
 #. MP Password Generator window, checkbox
 msgid "Show checksum of password:"
@@ -1932,7 +1952,7 @@ msgstr "显示密码校验和："
 
 #. MP Password Generator window, checkbox
 msgid "Key expires after the following time (seconds):"
-msgstr "密钥在以下时间后过期 (秒)："
+msgstr "密钥过期时间 (秒)："
 
 #. MP Password Generator window, checkbox
 msgid "Provide compatibility with \"Hashapass\""
@@ -2010,11 +2030,11 @@ msgstr "文件内容已修改，或密钥无效"
 
 #. Password Manager window, Open database, error message
 msgid "Unknown file format"
-msgstr "文件格式未知"
+msgstr "未知的文件格式"
 
 #. Password Manager window, Open database, error message
 msgid "Invalid file format"
-msgstr "文件格式无效"
+msgstr "无效的文件格式"
 
 #. Password Manager window, field name
 msgid "Title"
@@ -2022,7 +2042,7 @@ msgstr "标题"
 
 #. Password Manager window, field name
 msgid "Title:"
-msgstr "标题："
+msgstr "标   题："
 
 #. Password Manager window, field name
 msgid "User name"
@@ -2038,7 +2058,7 @@ msgstr "密码"
 
 #. Password Manager window, field name
 msgid "Password:"
-msgstr "密码："
+msgstr "密   码："
 
 #. Password Manager window, field name
 msgid "URL"
@@ -2046,7 +2066,7 @@ msgstr "网址"
 
 #. Password Manager window, field name
 msgid "URL:"
-msgstr "网址："
+msgstr "网   址："
 
 #. Password Manager window, field name
 msgid "Keyword"
@@ -2062,7 +2082,7 @@ msgstr "说明"
 
 #. Password Manager window, field name
 msgid "Notes:"
-msgstr "说明："
+msgstr "说   明："
 
 #. Password Manager window, field name
 msgid "Key-value list"
@@ -2094,7 +2114,7 @@ msgstr "标签"
 
 #. Password Manager window, field name
 msgid "Tags:"
-msgstr "标签："
+msgstr "标   签："
 
 #. Password Manager window, field name
 msgid "Select and add existing tag"
@@ -2253,23 +2273,23 @@ msgstr "重置列表字体"
 msgid "Change Password Font..."
 msgstr "修改密码字体..."
 
-#. Password Manager window, Edit panel, Arrow Up button, hint
+#. Password Manager window, Edit panel, Arrow Up button, tooltip
 msgid "Previous entry"
 msgstr "上一个条目"
 
-#. Password Manager window, Edit panel, Arrow Down button, hint
+#. Password Manager window, Edit panel, Arrow Down button, tooltip
 msgid "Next entry"
 msgstr "下一个条目"
 
-#. Password Manager window, Edit panel, Accept button, hint
+#. Password Manager window, Edit panel, Accept button, tooltip
 msgid "Accept changes"
 msgstr "接受修改"
 
-#. Password Manager window, Edit panel, Undo button, hint
+#. Password Manager window, Edit panel, Undo button, tooltip
 msgid "Undo changes"
 msgstr "撤销修改"
 
-#. Password Manager window, toolbar, Search box, text hint
+#. Password Manager window, toolbar, Search box, text tooltip
 msgid "Search..."
 msgstr "搜索..."
 
@@ -2277,7 +2297,7 @@ msgstr "搜索..."
 msgid "Clear search"
 msgstr "清空搜索"
 
-#. Password Manager window, toolbar, Search button, hint
+#. Password Manager window, toolbar, Search button, tooltip
 msgid "Perform search"
 msgstr "执行搜索"
 
@@ -2293,11 +2313,11 @@ msgstr "模糊搜索"
 msgid "Select fields..."
 msgstr "选择字段..."
 
-#. Password Manager window, toolbar, Lock/unlock button, hint
+#. Password Manager window, toolbar, Lock/unlock button, tooltip
 msgid "Lock/unlock database"
 msgstr "锁定/解锁 数据库"
 
-#. Password Manager window, Edit panel, Toggle password button, hint
+#. Password Manager window, Edit panel, Toggle password button, tooltip
 msgid "Left-click: Hide/show password, right-click: Generate password"
 msgstr "左键：隐藏/显示 密码，右键：生成密码"
 
@@ -2311,7 +2331,7 @@ msgstr "打开 %s"
 
 #. Password Manager window, title of password entry dialog when creating new database
 msgid "Create new database"
-msgstr "创建新数据库"
+msgstr "创建数据库"
 
 #. Password Manager window, error message when opening database
 msgid ""
@@ -2474,7 +2494,7 @@ msgstr "重新排列条目"
 
 #. Password Manager window, main menu, Edit submenu, Rearrange Entry submenu
 msgid "Move to Top"
-msgstr "移至顶部"
+msgstr "至顶"
 
 #. Password Manager window, main menu, Edit submenu, Rearrange Entry submenu
 msgid "Move up by one"
@@ -2486,7 +2506,7 @@ msgstr "向下移动一行"
 
 #. Password Manager window, main menu, Edit submenu, Rearrange Entry submenu
 msgid "Move to Bottom"
-msgstr "移至尾部"
+msgstr "Move to Bottom"
 
 #. Password Manager window, Edit panel, message shown when one or more tags of the selected entry are too long
 msgid ""
@@ -2508,7 +2528,7 @@ msgstr "再次输入主密码"
 msgid "Master password is invalid."
 msgstr "主密码无效。"
 
-#. Password Manager window, Edit panel, Key-value list button, hint
+#. Password Manager window, Edit panel, Key-value list button, tooltip
 msgid "Edit key-value list"
 msgstr "编辑键值列表"
 
@@ -2522,19 +2542,27 @@ msgstr "密码过期"
 
 #. Password Manager window, Edit panel, checkbox
 msgid "Expires:"
-msgstr "过期时间："
+msgstr "过期时间:"
 
-#. Password Manager window, Edit panel, Expiry button, hint
+#. Password Manager window, Edit panel, Expiry button, tooltip
 msgid "Change expiry date"
 msgstr "修改过期时间"
 
 #. Password Manager window, main menu, View submenu
-msgid "Filter expired entries"
-msgstr "过滤过期条目"
+msgid "Filter"
+msgstr "过滤器"
 
-#. Password Manager window, main menu, View submenu
-msgid "Filter entries that will expire soon"
-msgstr "显示即将过期的条目"
+#. Password Manager window, main menu, View submenu, Filter submenu
+msgid "Expired entries"
+msgstr "已过期的条目"
+
+#. Password Manager window, main menu, View submenu, Filter submenu
+msgid "Entries that will expire soon"
+msgstr "即将过期的条目"
+
+#. Password Manager window, main menu, View submenu, Filter submenu
+msgid "Entries with Weak Passwords"
+msgstr "弱密码条目"
 
 #. Password Manager window, Edit panel, context menu of Expiry button, menu items
 msgid "%d days"
@@ -2574,7 +2602,7 @@ msgstr "输入恢复密码"
 
 #. Password Manager window, main menu, File submenu, Set Recovery Password, message shown when procedure was successful
 msgid "Recovery password successfully set."
-msgstr "已成功设置恢复密码。"
+msgstr "恢复密码设置成功。"
 
 #. Password Manager window, main menu, File submenu, Remove Recovery Password, error message
 msgid "Recovery password is invalid."
@@ -2582,11 +2610,11 @@ msgstr "恢复密码无效。"
 
 #. Password Manager window, main menu, File submenu, Remove Recovery Password, message shown when procedure was successful
 msgid "Recovery password successfully removed."
-msgstr "成功删除恢复密码。"
+msgstr "恢复密码删除成功。"
 
 #. Password Manager window, main menu, File submenu, Database Properties, entry in left column
 msgid "Recovery password set"
-msgstr "恢复密码设置"
+msgstr "设置恢复密码"
 
 #. Indicates whether option is set
 msgid "Yes"
@@ -2672,13 +2700,13 @@ msgstr "新条目的默认用户名："
 msgid "Generate passwords for new entries using format sequence:"
 msgstr "使用格式化序列为新条目生成密码："
 
-#. Password Manager window, Database Settings dialog, Generate Password button, hint
+#. Password Manager window, Database Settings dialog, Generate Password button, tooltip
 msgid "Generate test password using format sequence"
 msgstr "使用格式化序列生成测试密码"
 
 #. Password Manager window, Database Settings dialog, label
 msgid "Encryption algorithm:"
-msgstr "加密算法："
+msgstr "加密算法:"
 
 #. Password Manager window, Database Settings dialog, items in list of encryption algorithms
 msgid "%s with %d-bit key"
@@ -2686,9 +2714,9 @@ msgstr "%s 具有 %d 位密钥"
 
 #. Password Manager window, Database Settings dialog, label
 msgid "Number of key derivation rounds:"
-msgstr "密钥派生轮数："
+msgstr "密钥派生轮数:"
 
-#. Password Manager window, Database Settings dialog, Calculate KDF Rounds button, hint
+#. Password Manager window, Database Settings dialog, Calculate KDF Rounds button, tooltip
 msgid "Calculate number of rounds for a 1 second delay"
 msgstr "计算延迟一秒的轮次数"
 
@@ -2698,7 +2726,7 @@ msgstr "密钥派生轮数无效。"
 
 #. Password Manager window, Database Settings dialog, label
 msgid "By default, new entries expire after the following number of days:"
-msgstr "新条目默认在以下天数后过期："
+msgstr "新条目默认过期天数:"
 
 #. Password Manager window, Database Settings dialog, label
 msgid "For new entries, save the following number of previous passwords:"
@@ -2758,7 +2786,7 @@ msgstr "启用数据压缩 (Deflate)"
 
 #. Password Manager window, Database Settings dialog, compression, label
 msgid "<- Low compression, fast | High compression, slow ->"
-msgstr "<- 低比例压缩, 快速 | 高比例压缩, 慢 ->"
+msgstr "<- 低压缩, 快速 | 高压缩, 慢 ->"
 
 #. Password Manager window, Edit panel, title of password entry dialog when password has been changed and needs to be confirmed
 msgid "Confirm password"
@@ -2768,7 +2796,7 @@ msgstr "确认密码"
 msgid "Password quality estimation is disabled"
 msgstr "密码质量评估已禁用"
 
-#. Password Manager window, Password Quality button, hint
+#. Password Manager window, Password Quality button, tooltip
 msgid "Estimate password quality"
 msgstr "评估密码质量"
 
@@ -2791,3 +2819,64 @@ msgstr "保留最后的密码 - 到："
 #. Password Manager window, Password History dialog, list view, column
 msgid "Set Date/Time"
 msgstr "设置 日期/时间"
+
+#. Password Manager window, shutdown blocker message
+msgid "Password database entry is being edited."
+msgstr "密码数据库条目正在编辑。"
+
+#. Password Manager window, shutdown blocker message
+msgid "Password database contains unsaved changes."
+msgstr "密码数据库包含未保存的更改。"
+
+#. Password Manager window, toolbar, filter info
+msgid "Filtered"
+msgstr "已过滤"
+
+#. Password Manager window, toolbar, filter info, button tooltip
+msgid "Remove filter"
+msgstr "移除过滤器"
+
+msgid "Build..."
+msgstr "创建..."
+
+msgid "Build character set definition"
+msgstr "创建字符集定义"
+
+msgid "Character Set Builder"
+msgstr "字符集生成器"
+
+msgid "Character set selection"
+msgstr "字符集选择"
+
+msgid "Resulting character set definition"
+msgstr "生成的字符集定义"
+
+msgid "Apply"
+msgstr "应用"
+
+msgid "Lower-case letters (a-z)"
+msgstr "小写字母 (a-z)"
+
+msgid "Upper-case letters (A-Z)"
+msgstr "大写字母 (A-Z)"
+
+msgid "Digits (0-9)"
+msgstr "数字 (0-9)"
+
+msgid "Characters from range:"
+msgstr "范围内的字符:"
+
+msgid "Additional characters:"
+msgstr "附加字符:"
+
+msgid "At least"
+msgstr "至少"
+
+msgid "From:"
+msgstr "从:"
+
+msgid "to:"
+msgstr "至:"
+
+msgid "Invalid character range."
+msgstr "无效的字符范围。"
