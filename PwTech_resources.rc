@@ -1,0 +1,6 @@
+A ICON "graphics\\pwtech_default.ico"
+Icon_Blue ICON "graphics\\pwtech_icon_blue.ico"
+Icon_Colors ICON "graphics\\pwtech_icon_colored.ico"
+Icon_Green ICON "graphics\\pwtech_icon_green.ico"
+Icon_Orange ICON "graphics\\pwtech_icon_orange.ico"
+Icon_Red ICON "graphics\\pwtech_icon_red.ico"

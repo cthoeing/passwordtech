@@ -173,7 +173,7 @@ LanguageSupport::LanguageSupport(const WString& sFileName,
   wchar_t wszParsed[MSG_BUF_SIZE];
   int nMsgLen, nState = 0;
 
-  const char* pszUnknown = "(Unknown)";
+  const char UNKNOWN[] = "(Unknown)";
 
   if (SameText(ExtractFileExt(sFileName), ".po")) {
     m_format = FileFormat::PO;
@@ -238,7 +238,7 @@ LanguageSupport::LanguageSupport(const WString& sFileName,
             break;
 
           // prepare regex search
-          std::wregex re(L"([a-zA-Z-]+)\\s*:\\s*(.+)");
+          std::wregex re(L"([a-zA-Z-]+) *: *(.*)$");
           std::wsregex_iterator keyValIt(sMsgStr.begin(),
             sMsgStr.end(), re),
             keyValEnd;
@@ -306,7 +306,7 @@ LanguageSupport::LanguageSupport(const WString& sFileName,
           if (it != keyVal.end())
             m_sTranslatorName = WString(it->second.c_str());
           else
-            m_sTranslatorName = pszUnknown;
+            m_sTranslatorName = UNKNOWN;
 
           // help file name
           it = keyVal.find(L"X-PasswordTech-Manual");
@@ -481,7 +481,7 @@ LanguageSupport::LanguageSupport(const WString& sFileName,
     }
 
     if (m_sTranslatorName.IsEmpty())
-      m_sTranslatorName = pszUnknown;
+      m_sTranslatorName = UNKNOWN;
   }
 
   if (!blLoadHeaderOnly && m_transl.empty())

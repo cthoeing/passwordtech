@@ -60,7 +60,8 @@ static void initCrypto(aes_context* pCryptCtx,
 
   if (nVersion == 0) {
     derivedKey.Zeroize();
-    memcpy(derivedKey, pSalt, 16);
+    //memcpy(derivedKey, pSalt, 16);
+    derivedKey.Copy(0, pSalt, 16);
 
     // hash the salt and the key together 8192 times
     for (int i = 0; i < 8192; i++) {
@@ -119,9 +120,9 @@ int EncryptText(const SecureWString* psText,
     word32 lBufSize = HEADER_SIZE + lTextLen + lTextLen / 16 + 64 + 3 + HMAC_LENGTH;
     //                ^^^^^^^^^^^   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     //                  header      security margins for compression
-    lBufSize = 16 + 16 * ((lBufSize + 15) / 16);
-    //         ^^   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    //         IV   adjust to blocklength
+    lBufSize = 16 + alignToBlockSize(lBufSize, 16);
+    //         ^^
+    //         IV
 
     // allocate some memory for the output buffer and the work buffer
     SecureMem<word8> buf(lBufSize), workBuf(LZO1X_1_MEM_COMPRESS);
@@ -129,19 +130,24 @@ int EncryptText(const SecureWString* psText,
     // get a new initialization vector (IV)
     randGen.GetData(buf, 16);
 
-    word8* pCryptBuf = &buf[16];
+    //word8* pCryptBuf = &buf[16];
+    word32 lBufPos = 16;
 
     // create header and copy it to the buffer
     CryptTextHeader header;
     memcpy(header.Magic, CRYPTTEXT_MAGIC, sizeof(CRYPTTEXT_MAGIC));
     header.Version = static_cast<word8>(CRYPTTEXT_VERSION);
     header.TextBytes = lTextLen;
-    memcpy(pCryptBuf, &header, HEADER_SIZE);
+    //memcpy(pCryptBuf, &header, HEADER_SIZE);
+    buf.Copy(lBufPos, reinterpret_cast<word8*>(&header), HEADER_SIZE);
+    lBufPos += HEADER_SIZE;
 
     // compress the text
     lzo_uint comprLen;
-    lzo1x_1_compress(asTextUtf8.Bytes(), lTextLen, pCryptBuf + HEADER_SIZE,
+    lzo1x_1_compress(asTextUtf8.Bytes(), lTextLen, &buf[lBufPos],
       &comprLen, workBuf);
+
+    lBufPos += comprLen;
 
     // destroy the text buffer and the work memory
     asTextUtf8.Clear();
@@ -170,16 +176,17 @@ int EncryptText(const SecureWString* psText,
 
     // compute the HMAC of the compressed message
     word8 hmac[32];
-    sha256_hmac_update(hashCtx, pCryptBuf, HEADER_SIZE + comprLen);
+    sha256_hmac_update(hashCtx, &buf[16], HEADER_SIZE + comprLen);
     sha256_hmac_finish(hashCtx, hmac);
 
     hashCtx.Clear();
 
     // copy the HMAC to the buffer
-    memcpy(pCryptBuf + HEADER_SIZE + comprLen, hmac, HMAC_LENGTH);
+    //memcpy(pCryptBuf + HEADER_SIZE + comprLen, hmac, HMAC_LENGTH);
+    buf.Copy(lBufPos, hmac, HMAC_LENGTH);
 
     // now encrypt the buffer (*with* HMAC)
-    aes_crypt_cbc(cryptCtx, AES_ENCRYPT, lCryptLen, iv, pCryptBuf, pCryptBuf);
+    aes_crypt_cbc(cryptCtx, AES_ENCRYPT, lCryptLen, iv, &buf[16], &buf[16]);
 
     cryptCtx.Clear();
 
@@ -190,10 +197,10 @@ int EncryptText(const SecureWString* psText,
     base64_encode(nullptr, &outBufSize, nullptr, lConvertLen, BASE64_LINE_LENGTH);
 
     // create a new buffer for base64
-    SecureMem<word8> outBuf(outBufSize + 1);
+    SecureMem<word8> outBuf(outBufSize);
     base64_encode(outBuf, &outBufSize, buf, lConvertLen, BASE64_LINE_LENGTH);
 
-    outBuf.back() = '\0';
+    //outBuf.back() = '\0';
 
     // copy the output buffer to the clipboard
     SetClipboardTextBufAnsi(reinterpret_cast<const char*>(outBuf.c_str()));
@@ -230,8 +237,8 @@ int DecryptText(const SecureWString* psText,
       if (psText->IsStrEmpty())
         return CRYPTTEXT_ERROR_NOTEXT;
       lTextLen = psText->StrLen();
-      asText.New(lTextLen + 1);
-      for (word32 i = 0; i <= lTextLen; i++) // also copy terminating zero
+      asText.NewStr(lTextLen);
+      for (word32 i = 0; i < lTextLen; i++)
         asText[i] = (*psText)[i];
     }
     else {
@@ -249,7 +256,7 @@ int DecryptText(const SecureWString* psText,
       return CRYPTTEXT_ERROR_TEXTCORRUPTED;
 
     SecureMem<word8> buf(bufSize);
-    base64_decode(buf, &bufSize, reinterpret_cast<word8*>(asText.Data()), lTextLen);
+    base64_decode(buf, &bufSize, asText.Bytes(), lTextLen);
 
     asText.Clear();
 
@@ -257,7 +264,7 @@ int DecryptText(const SecureWString* psText,
     if ((bufSize & 0x0F) != 0)
       return CRYPTTEXT_ERROR_TEXTCORRUPTED;
 
-    word8* pCryptBuf = &buf[16];
+    //word8* pCryptBuf = &buf[16];
     word32 lHmacLen = (nVersion == 0) ? 16 : HMAC_LENGTH;
     word32 lCryptLen = bufSize - 16;
 
@@ -292,20 +299,20 @@ int DecryptText(const SecureWString* psText,
       hashCtx.Clear();
 
       // verify the HMAC
-      if (memcmp(pCryptBuf + lCryptLen, hmac, lHmacLen) != 0)
+      if (memcmp(&buf[16 + lCryptLen], hmac, lHmacLen) != 0)
         return CRYPTTEXT_ERROR_BADKEY;
 
       // decrypt the buffer
-      aes_crypt_cbc(cryptCtx, AES_DECRYPT, lCryptLen, iv, pCryptBuf, pCryptBuf);
+      aes_crypt_cbc(cryptCtx, AES_DECRYPT, lCryptLen, iv, &buf[16], &buf[16]);
 
       // get the text length
-      memcpy(&header.TextBytes, pCryptBuf, lHeaderSize);
+      memcpy(&header.TextBytes, &buf[16], lHeaderSize);
     }
     else {
       // decrypt the first block and check the magic string
-      aes_crypt_cbc(cryptCtx, AES_DECRYPT, 16, iv, pCryptBuf, pCryptBuf);
+      aes_crypt_cbc(cryptCtx, AES_DECRYPT, 16, iv, &buf[16], &buf[16]);
 
-      memcpy(&header, pCryptBuf, HEADER_SIZE);
+      memcpy(&header, &buf[16], HEADER_SIZE);
 
       if (memcmp(header.Magic, CRYPTTEXT_MAGIC, sizeof(CRYPTTEXT_MAGIC)) != 0)
         return CRYPTTEXT_ERROR_BADKEY;
@@ -320,21 +327,21 @@ int DecryptText(const SecureWString* psText,
       // now decrypt the rest
       if (lCryptLen > 16)
         aes_crypt_cbc(cryptCtx, AES_DECRYPT, lCryptLen - 16, iv,
-          pCryptBuf + 16, pCryptBuf + 16);
+          &buf[32], &buf[32]);
 
       if (encHmac)
         lCryptLen -= 16 - bLastBlock;
 
       // compute the HMAC of the plaintext
-      sha256_hmac_update(hashCtx, pCryptBuf, (encHmac) ?
+      sha256_hmac_update(hashCtx, &buf[16], encHmac ?
         lCryptLen - lHmacLen : lCryptLen);
       sha256_hmac_finish(hashCtx, hmac);
 
       hashCtx.Clear();
 
       // verify the HMAC
-      if (memcmp((encHmac) ? pCryptBuf + lCryptLen - lHmacLen :
-          pCryptBuf + lCryptLen, hmac, lHmacLen) != 0)
+      if (memcmp(encHmac ? &buf[16 + lCryptLen - lHmacLen] :
+          &buf[16 + lCryptLen], hmac, lHmacLen) != 0)
         return CRYPTTEXT_ERROR_BADKEY;
     }
 
@@ -354,7 +361,7 @@ int DecryptText(const SecureWString* psText,
 
     // decompress this buffer
     lzo_uint decomprLen = header.TextBytes;
-    if (lzo1x_decompress_safe(pCryptBuf + lHeaderSize, lToDecompr,
+    if (lzo1x_decompress_safe(&buf[16 + lHeaderSize], lToDecompr,
          reinterpret_cast<word8*>(asOutBuf.Data()), &decomprLen, nullptr) != LZO_E_OK)
       return CRYPTTEXT_ERROR_DECOMPRFAILED;
 

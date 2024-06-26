@@ -464,7 +464,7 @@ object MPPasswGenForm: TMPPasswGenForm
       Left = 10
       Top = 170
       Width = 272
-      Height = 25
+      Height = 23
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -472,8 +472,8 @@ object MPPasswGenForm: TMPPasswGenForm
       Anchors = [akLeft, akTop, akRight]
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
-      Font.Height = -14
-      Font.Name = 'Tahoma'
+      Font.Height = -13
+      Font.Name = 'Consolas'
       Font.Style = []
       ParentFont = False
       PopupMenu = PasswBoxMenu

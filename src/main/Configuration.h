@@ -30,6 +30,8 @@
 #include <Dialogs.hpp>
 #include <Vcl.ExtCtrls.hpp>
 #include <Vcl.Menus.hpp>
+#include <System.ImageList.hpp>
+#include <Vcl.ImgList.hpp>
 #include <map>
 #include <vector>
 //---------------------------------------------------------------------------
@@ -81,6 +83,8 @@ enum NewlineChar
   nlcUnix
 };
 
+extern const std::vector<std::pair<WString, WString>> AppIconNames;
+
 inline WString NewlineCharToString(NewlineChar c)
 {
   return (c == nlcWindows) ? "\r\n" : "\n";
@@ -98,10 +102,19 @@ struct LanguageEntry {
   WString Name;
   WString Version;
   WString FileName;
+
+  LanguageEntry() {}
+  LanguageEntry(const WString& sCode) : Code(sCode) {}
+
+  bool operator== (const LanguageEntry& other) const
+  {
+    return Code == other.Code;
+  }
 };
 
 struct Configuration {
   WString UiStyleName;
+  WString AppIconName;
   WString GUIFontString;
   bool AutoClearClip = true;
   int AutoClearClipTime = AUTOCLEARCLIPTIME_DEFAULT;
@@ -122,7 +135,8 @@ struct Configuration {
   CharacterEncoding FileEncoding = ceUtf8;
   NewlineChar FileNewlineChar = nlcWindows;
   HotKeyList HotKeys;
-  int LanguageIndex = 0;
+  LanguageEntry Language;
+  //int LanguageIndex = 0;
   struct {
     //bool ClearClipMinimize = true;
     bool ClearClipCloseLock = true;
@@ -224,6 +238,12 @@ __published:	// IDE-managed Components
     TMenuItem *SelectFontMenu_RestoreDefault;
     TCheckBox *LoadProfileStartupCheck;
     TComboBox *LoadProfileBox;
+  TComboBoxEx *AppIconList;
+  TLabel *AppIconLbl;
+  TImageList *AppIconImageList;
+  TButton *InstallLanguageBtn;
+  TOpenDialog *OpenDlg;
+  TButton *RemoveLanguageBtn;
   void __fastcall SelectFontBtnClick(TObject *Sender);
   void __fastcall AutoClearClipCheckClick(TObject *Sender);
   void __fastcall FormShow(TObject *Sender);
@@ -243,9 +263,11 @@ __published:	// IDE-managed Components
     void __fastcall LanguageListSelect(TObject *Sender);
     void __fastcall SelectFontMenu_RestoreDefaultClick(TObject *Sender);
     void __fastcall LoadProfileStartupCheckClick(TObject *Sender);
+  void __fastcall InstallLanguageBtnClick(TObject *Sender);
+  void __fastcall RemoveLanguageBtnClick(TObject *Sender);
 private:	// User declarations
   HotKeyList m_hotKeys;
-  std::vector<LanguageEntry> m_langList;
+  //std::vector<LanguageEntry> m_langList;
   void __fastcall ShowFontSample(TFont* pFont);
   void __fastcall UpdateHotKeyList(void);
   void __fastcall UpdateProfileList(void);
@@ -255,7 +277,8 @@ public:		// User declarations
   void __fastcall SaveConfig(void);
   void __fastcall GetOptions(Configuration& config);
   void __fastcall SetOptions(const Configuration& config);
-  void __fastcall SetLanguageList(const std::vector<LanguageEntry>& languages);
+  void __fastcall LoadLanguages(void);
+  void __fastcall SetDonorUI(void);
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TConfigurationDlg *ConfigurationDlg;

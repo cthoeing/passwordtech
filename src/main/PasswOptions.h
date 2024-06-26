@@ -34,7 +34,7 @@
 #include "UnicodeUtil.h"
 
 const int
-PASSWOPTIONS_NUM              = 18,
+PASSWOPTIONS_NUM              = 19,
 
 PASSWOPTION_EXCLUDEAMBIG      = 0x00001,
 PASSWOPTION_FIRSTCHARNOTLC    = 0x00002,
@@ -53,11 +53,12 @@ PASSWOPTION_EACHCHARONLYONCE  = 0x02000,
 PASSWOPTION_EACHWORDONLYONCE  = 0x04000,
 PASSWOPTION_CAPITALIZEWORDS   = 0x08000,
 PASSWOPTION_CHECKEACHPASSW    = 0x10000,
-PASSWOPTION_INCLUDE_CHAR_FROM_EACH_SUBSET = 0x20000;
+PASSWOPTION_INCLUDE_CHAR_FROM_EACH_SUBSET = 0x20000,
+PASSWOPTION_REMOVEWHITESPACE  = 0x40000;
 
 const bool PASSWOPTIONS_STARRED[PASSWOPTIONS_NUM] =
 { true, true, false, false, false, false, false, false, false, false, true,
-  true, true, true, true, false, false
+  true, true, true, true, false, false, false
 };
 
 template<int N>

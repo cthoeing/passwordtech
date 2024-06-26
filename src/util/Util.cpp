@@ -44,7 +44,7 @@
 #pragma package(smart_init)
 
 WString g_msgBoxCaptionList[4] =
-{ L"Info", L"Warning", L"Question", L"Error" };
+{ "Info", "Warning", "Question", "Error" };
 
 //---------------------------------------------------------------------------
 SecureWString strCr2Crlf(const SecureWString& sSrc)
@@ -745,17 +745,18 @@ const word8 CUSTOM_BASE64_DEC_MAP[128] =
   49,  50,  51, 127, 127, 127, 127, 127
 };
 
-int CheckDonorKey(const AnsiString& asInput,
-  AnsiString* pasId,
-  int* pnType)
+std::tuple<int, int, AnsiString> CheckDonorKey(const AnsiString& asInput)
 {
+  int nType = DONOR_TYPE_STD;
+  AnsiString asDonorId;
+
   if (asInput.Length() < 16)
-    return DONOR_KEY_INVALID;
+    return { DONOR_KEY_INVALID, nType, asDonorId };
 
   AnsiString asKey = asInput.Trim();
 
   if (asKey.Length() != 16)
-    return DONOR_KEY_INVALID;
+    return { DONOR_KEY_INVALID, nType, asDonorId };
 
   word8 buf[13];
   buf[12] = '\0';
@@ -764,42 +765,37 @@ int CheckDonorKey(const AnsiString& asInput,
   base64_decode(buf, &destLen, reinterpret_cast<const word8*>(asKey.c_str()), 16);
 
   if (destLen != 12)
-    return DONOR_KEY_INVALID;
+    return { DONOR_KEY_INVALID, nType, asDonorId };
 
   const word32 param[4] =  { 0x77adb64b, 0x959561b7, 0x8799de93, 0x22ef89dd };
 
   if (!decode_96bit(reinterpret_cast<word32*>(buf), param))
-    return DONOR_KEY_INVALID;
+    return { DONOR_KEY_INVALID, nType, asDonorId };
 
   if (buf[0] != 'P' || buf[1] != '3')
-    return DONOR_KEY_INVALID;
+    return { DONOR_KEY_INVALID, nType, asDonorId };
 
   for (int nI = 2; nI < 10; nI++) {
     if (buf[nI] < ' ' || buf[nI] > '~')
-      return DONOR_KEY_INVALID;
+      return { DONOR_KEY_INVALID, nType, asDonorId };
   }
 
   int n1 = CUSTOM_BASE64_DEC_MAP[buf[5]];
   int n2 = CUSTOM_BASE64_DEC_MAP[buf[6]];
 
   if (n1 == 127 || n2 == 127)
-    return DONOR_KEY_INVALID;
+    return { DONOR_KEY_INVALID, nType, asDonorId };
 
   int nVersion = ((n2 & 15) << 6) | n1;
-  int nType = n2 >> 4;
+  nType = n2 >> 4;
 
   if (nType != DONOR_TYPE_PRO &&
       PROGRAM_MAINVER_UPDATE_NUM - nVersion > DONOR_STD_NUM_UPDATES)
-    return DONOR_KEY_EXPIRED;
+    return { DONOR_KEY_EXPIRED, nType, asDonorId };
 
-  if (pasId != nullptr) {
-    buf[10] = '\0';
-    *pasId = AnsiString(reinterpret_cast<char*>(buf) + 2);
-  }
+  buf[10] = '\0';
+  asDonorId = AnsiString(reinterpret_cast<char*>(buf) + 2);
 
-  if (pnType != nullptr)
-    *pnType = nType;
-
-  return DONOR_KEY_VALID;
+  return { DONOR_KEY_VALID, nType, asDonorId };
 }
 //---------------------------------------------------------------------------

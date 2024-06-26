@@ -1,8 +1,8 @@
 object PasswMngForm: TPasswMngForm
   Left = 594
   Top = 119
-  ClientHeight = 669
-  ClientWidth = 826
+  ClientHeight = 668
+  ClientWidth = 830
   Color = clBtnFace
   Constraints.MinHeight = 600
   Constraints.MinWidth = 625
@@ -23,7 +23,7 @@ object PasswMngForm: TPasswMngForm
     Left = 469
     Top = 83
     Width = 4
-    Height = 586
+    Height = 585
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -36,7 +36,7 @@ object PasswMngForm: TPasswMngForm
   object Splitter1: TSplitter
     Left = 0
     Top = 79
-    Width = 826
+    Width = 830
     Height = 4
     Cursor = crVSplit
     Margins.Left = 4
@@ -51,7 +51,7 @@ object PasswMngForm: TPasswMngForm
     Left = 0
     Top = 83
     Width = 469
-    Height = 586
+    Height = 585
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -73,13 +73,13 @@ object PasswMngForm: TPasswMngForm
     OnKeyDown = DbViewKeyDown
     OnMouseMove = DbViewMouseMove
     OnSelectItem = DbViewSelectItem
-    ExplicitHeight = 585
+    ExplicitHeight = 584
   end
   object EditPanel: TPanel
     Left = 473
     Top = 83
-    Width = 353
-    Height = 586
+    Width = 357
+    Height = 585
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -89,8 +89,8 @@ object PasswMngForm: TPasswMngForm
     Enabled = False
     TabOrder = 1
     OnResize = EditPanelResize
-    ExplicitWidth = 341
-    ExplicitHeight = 585
+    ExplicitWidth = 351
+    ExplicitHeight = 584
     object TitleLbl: TLabel
       Left = 10
       Top = 11
@@ -578,8 +578,8 @@ object PasswMngForm: TPasswMngForm
       AutoSize = False
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
-      Font.Height = -14
-      Font.Name = 'Courier New'
+      Font.Height = -13
+      Font.Name = 'Consolas'
       Font.Style = []
       ParentFont = False
       TabOrder = 2
@@ -814,7 +814,7 @@ object PasswMngForm: TPasswMngForm
   object ToolBar: TToolBar
     Left = 0
     Top = 0
-    Width = 826
+    Width = 830
     Height = 26
     Margins.Left = 4
     Margins.Top = 4
@@ -826,7 +826,7 @@ object PasswMngForm: TPasswMngForm
     Images = ImageList16
     TabOrder = 2
     Transparent = True
-    ExplicitWidth = 814
+    ExplicitWidth = 824
     object NewBtn: TToolButton
       Left = 0
       Top = 0
@@ -1012,7 +1012,7 @@ object PasswMngForm: TPasswMngForm
   object TagView: TListView
     Left = 0
     Top = 26
-    Width = 826
+    Width = 830
     Height = 53
     Margins.Left = 4
     Margins.Top = 4
@@ -1028,7 +1028,7 @@ object PasswMngForm: TPasswMngForm
     ViewStyle = vsSmallIcon
     OnCompare = TagViewCompare
     OnSelectItem = TagViewSelectItem
-    ExplicitWidth = 814
+    ExplicitWidth = 824
   end
   object MainMenu: TMainMenu
     Left = 16

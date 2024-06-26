@@ -22,6 +22,7 @@
 #define UtilH
 //---------------------------------------------------------------------------
 #include <vcl.h>
+#include <tuple>
 #include "SecureMem.h"
 #include "UnicodeUtil.h"
 
@@ -160,8 +161,6 @@ enum {
   DONOR_STD_NUM_UPDATES = 3
 };
 
-int CheckDonorKey(const AnsiString& asInput,
-  AnsiString* pasId = NULL,
-  int* pnType = NULL);
+std::tuple<int, int, AnsiString> CheckDonorKey(const AnsiString& asInput);
 
 #endif

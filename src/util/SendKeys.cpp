@@ -28,9 +28,9 @@
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 
-static std::unordered_map<std::string, int> keyPlaceholders;
+static std::unordered_map<std::string, int> s_keyPlaceholders;
 
-static const int
+const int
   VIRTUAL_KEY_DELAY = 200,
   INIT_DELAY        = 250;
 
@@ -44,42 +44,42 @@ SendKeys::KeySequence::~KeySequence()
 SendKeys::SendKeys(int nDelay)
   : m_nDelay(nDelay)
 {
-  if (keyPlaceholders.empty()) {
-    for (int nI = 0; nI < PasswDbEntry::NUM_STRING_FIELDS; nI++) {
+  if (s_keyPlaceholders.empty()) {
+    for (int i = 0; i < PasswDbEntry::NUM_STRING_FIELDS; i++) {
       AnsiString sFieldName = AnsiString(PasswDbEntry::GetFieldName(
-        static_cast<PasswDbEntry::FieldType>(nI))).LowerCase();
-      keyPlaceholders[std::string(sFieldName.c_str())] = -nI;
+        static_cast<PasswDbEntry::FieldType>(i))).LowerCase();
+      s_keyPlaceholders[std::string(sFieldName.c_str())] = -i;
     }
 
-    keyPlaceholders["parameter"] = -PasswDbEntry::USERNAME;
+    s_keyPlaceholders["parameter"] = -PasswDbEntry::USERNAME;
 
-    keyPlaceholders["tab"] = VK_TAB;
-    keyPlaceholders["return"] = VK_RETURN;
-    keyPlaceholders["enter"] = VK_RETURN;
-    keyPlaceholders["ctrl"] = VK_CONTROL;
-    keyPlaceholders["backspace"] = VK_BACK;
-    keyPlaceholders["clear"] = VK_CLEAR;
-    keyPlaceholders["shift"] = VK_SHIFT;
-    keyPlaceholders["alt"] = VK_MENU;
-    keyPlaceholders["pause"] = VK_PAUSE;
-    keyPlaceholders["capslock"] = VK_CAPITAL;
-    keyPlaceholders["escape"] = VK_ESCAPE;
-    keyPlaceholders["space"] = VK_SPACE;
-    keyPlaceholders["pageup"] = VK_PRIOR;
-    keyPlaceholders["pagedown"] = VK_NEXT;
-    keyPlaceholders["end"] = VK_END;
-    keyPlaceholders["home"] = VK_HOME;
-    keyPlaceholders["left"] = VK_LEFT;
-    keyPlaceholders["right"] = VK_RIGHT;
-    keyPlaceholders["down"] = VK_DOWN;
-    keyPlaceholders["up"] = VK_UP;
-    keyPlaceholders["select"] = VK_SELECT;
-    keyPlaceholders["print"] = VK_PRINT;
-    keyPlaceholders["execute"] = VK_EXECUTE;
-    keyPlaceholders["snapshot"] = VK_SNAPSHOT;
-    keyPlaceholders["insert"] = VK_INSERT;
-    keyPlaceholders["delete"] = VK_DELETE;
-    keyPlaceholders["help"] = VK_HELP;
+    s_keyPlaceholders["tab"] = VK_TAB;
+    s_keyPlaceholders["return"] = VK_RETURN;
+    s_keyPlaceholders["enter"] = VK_RETURN;
+    s_keyPlaceholders["ctrl"] = VK_CONTROL;
+    s_keyPlaceholders["backspace"] = VK_BACK;
+    s_keyPlaceholders["clear"] = VK_CLEAR;
+    s_keyPlaceholders["shift"] = VK_SHIFT;
+    s_keyPlaceholders["alt"] = VK_MENU;
+    s_keyPlaceholders["pause"] = VK_PAUSE;
+    s_keyPlaceholders["capslock"] = VK_CAPITAL;
+    s_keyPlaceholders["escape"] = VK_ESCAPE;
+    s_keyPlaceholders["space"] = VK_SPACE;
+    s_keyPlaceholders["pageup"] = VK_PRIOR;
+    s_keyPlaceholders["pagedown"] = VK_NEXT;
+    s_keyPlaceholders["end"] = VK_END;
+    s_keyPlaceholders["home"] = VK_HOME;
+    s_keyPlaceholders["left"] = VK_LEFT;
+    s_keyPlaceholders["right"] = VK_RIGHT;
+    s_keyPlaceholders["down"] = VK_DOWN;
+    s_keyPlaceholders["up"] = VK_UP;
+    s_keyPlaceholders["select"] = VK_SELECT;
+    s_keyPlaceholders["print"] = VK_PRINT;
+    s_keyPlaceholders["execute"] = VK_EXECUTE;
+    s_keyPlaceholders["snapshot"] = VK_SNAPSHOT;
+    s_keyPlaceholders["insert"] = VK_INSERT;
+    s_keyPlaceholders["delete"] = VK_DELETE;
+    s_keyPlaceholders["help"] = VK_HELP;
   }
 }
 //---------------------------------------------------------------------------
@@ -231,8 +231,8 @@ void SendKeys::SendComplexString(const WString& sStr,
           {}
         }
         else {
-          auto it = keyPlaceholders.find(sPlaceholder);
-          if (it != keyPlaceholders.end()) {
+          auto it = s_keyPlaceholders.find(sPlaceholder);
+          if (it != s_keyPlaceholders.end()) {
             blFound = true;
             pwszStr += it->first.length() + 2; // including brackets
 
@@ -336,10 +336,10 @@ void SendKeys::SendComplexString(const WString& sStr,
 void SendKeys::SendKeySequence(KeySequence& input)
 {
   Sleep(INIT_DELAY);
-  for (int nI = 0; nI < input.keys.size(); nI++) {
-    if (!input.keys[nI].empty())
-      SendInput(input.keys[nI].size(), input.keys[nI].data(), sizeof(INPUT));
-    Sleep(input.delays[nI]);
+  for (word32 i = 0; i < input.keys.size(); i++) {
+    if (!input.keys[i].empty())
+      SendInput(input.keys[i].size(), input.keys[i].data(), sizeof(INPUT));
+    Sleep(input.delays[i]);
   }
 }
 //---------------------------------------------------------------------------

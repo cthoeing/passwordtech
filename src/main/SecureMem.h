@@ -56,6 +56,18 @@ word32 _tcslen(const T* pStr)
   return static_cast<word32>(pEnd - pStr);
 }
 
+inline word32 roundUpNextPowerOf2(word32 v)
+{
+  v--;
+  v |= v >> 1;
+  v |= v >> 2;
+  v |= v >> 4;
+  v |= v >> 8;
+  v |= v >> 16;
+  v++;
+  return v;
+}
+
 
 // class for secure memory operations, fast implementation
 // inspired by secblock.h in the Crypto++ package by Wei Dai
@@ -69,15 +81,16 @@ private:
   word32 m_lSize;
   word32 m_lClearMark;
 
+  void CheckBounds(word32 lIndex)
+  {
+    if (lIndex >= m_lSize)
+      throw SecureMemError("SecureMem: Index ouf of bounds");
+  }
+
 public:
 
   static const word32 npos = -1;
   static constexpr word32 MAX_SIZE = 0xfffffffe / sizeof(T);
-
-  /*static word32 max_size()
-  {
-    return 0xfffffffe / sizeof(T);
-  }*/
 
   // constructor
   SecureMem()
@@ -195,6 +208,44 @@ public:
     std::swap(m_lClearMark, other.m_lClearMark);
   }
 
+  // copy elements to data array at specified position
+  // -> position at which first byte is copied
+  // -> pointer to source array
+  // -> number of elements to copy
+  void Copy(word32 lOffset,
+    const T* pSrc,
+    word32 lSrcSize)
+  {
+    if (lOffset + lSrcSize > m_lSize)
+      throw SecureMemError("SecureMem::Copy() overflow");
+
+    memcpy(m_pData + lOffset, pSrc, lSrcSize * sizeof(T));
+  }
+
+  // append content from another object
+  void Append(const SecureMem& item)
+  {
+    if (item.IsEmpty())
+      return;
+
+    const word32 lOldSize = m_lSize;
+    GrowBy(item.m_lSize);
+    memcpy(m_pData + lOldSize, item.m_pData, item.SizeBytes());
+  }
+
+  // append content from another data array
+  // -> pointer to data array
+  // -> number of elements contained in array
+  void Append(const T* pSrc, word32 lSrcSize)
+  {
+    if (lSrcSize == 0)
+      return;
+
+    const word32 lOldSize = m_lSize;
+    GrowBy(lSrcSize);
+    memcpy(m_pData + lOldSize, pSrc, lSrcSize);
+  }
+
   // sets mark/position within the array up to which the array is to be zeroized
   // upon clearing or destruction
   void SetClearMark(word32 lMark)
@@ -259,8 +310,11 @@ public:
   // -> number of elements to add
   void GrowBy(word32 lAddSize)
   {
-    if (lAddSize != 0)
+    if (lAddSize != 0) {
+      if (MAX_SIZE - m_lSize < lAddSize)
+        throw SecureMemSizeError();
       Resize(m_lSize + lAddSize, true);
+    }
   }
 
   // expands the array to a size corresponding to the next higher power of 2
@@ -271,9 +325,10 @@ public:
     if (lNewSize > m_lSize) {
       if (lNewSize > MAX_SIZE)
         throw SecureMemSizeError();
-      word32 lNewSizeLog = __builtin_clz(lNewSize) ^ 31;
-      lNewSize = (lNewSizeLog < 31) ? std::min(MAX_SIZE,
-        1u << (lNewSizeLog + 1)) : MAX_SIZE;
+      //word32 lNewSizeLog = __builtin_clz(lNewSize) ^ 31;
+      //lNewSize = (lNewSizeLog < 31) ? std::min(MAX_SIZE,
+      //  1u << (lNewSizeLog + 1)) : MAX_SIZE;
+      lNewSize = std::min(MAX_SIZE, roundUpNextPowerOf2(lNewSize));
       Resize(lNewSize, true);
     }
   }
@@ -422,32 +477,39 @@ public:
   // front/back: Access first/last element as a reference
   T& front(void)
   {
-    if (IsEmpty())
-      throw SecureMemError("SecureMem::front(): Array is empty");
+    CheckBounds(0);
     return m_pData[0];
   }
 
   const T& front(void) const
   {
-    if (IsEmpty())
-      throw SecureMemError("SecureMem::front(): Array is empty");
+    CheckBounds(0);
     return m_pData[0];
   }
 
   T& back(void)
   {
-    if (IsEmpty())
-      throw SecureMemError("SecureMem::back(): Array is empty");
+    CheckBounds(0);
     return m_pData[m_lSize - 1];
   }
 
   const T& back(void) const
   {
-    if (IsEmpty())
-      throw SecureMemError("SecureMem::back(): Array is empty");
+    CheckBounds(0);
     return m_pData[m_lSize - 1];
   }
 
+  T& at(word32 lIndex)
+  {
+    CheckBounds(lIndex);
+    return m_pData[lIndex];
+  }
+
+  const T& at(word32 lIndex) const
+  {
+    CheckBounds(lIndex);
+    return m_pData[lIndex];
+  }
 
   // operators
 
@@ -505,7 +567,7 @@ public:
   {
     if (this != &src) {
       Assign(src.m_pData, src.m_lSize);
-	}
+    }
     return *this;
   }
 
@@ -519,17 +581,52 @@ public:
 
   SecureMem& operator+= (const SecureMem& src)
   {
-    if (!src.IsEmpty()) {
-      word32 lOldSize = m_lSize;
-      Grow(m_lSize + src.m_lSize);
-      memcpy(m_pData + lOldSize, src.m_pData, src.SizeBytes());
-    }
+    Append(src);
     return *this;
   }
 
-  friend SecureMem operator+ (SecureMem& a, const SecureMem& b)
+  SecureMem operator+ (const SecureMem& src) const
   {
-    return a += b;
+    if (src.IsEmpty())
+      return *this;
+
+    if (MAX_SIZE - m_lSize < src.m_lSize)
+      throw SecureMemSizeError();
+
+    SecureMem result(m_lSize + src.m_lSize);
+    if (!IsEmpty())
+      memcpy(result.m_pData, m_pData, SizeBytes());
+    memcpy(result.m_pData + m_lSize, src.m_pData, src.SizeBytes());
+
+    return result;
+  }
+
+  bool operator== (const SecureMem& other) const
+  {
+    if (this == &other)
+      return true;
+    // avoid applying memcmp() to null pointers
+    if (IsEmpty() && other.IsEmpty())
+      return true;
+    return m_lSize == other.m_lSize &&
+      memcmp(m_pData, other.m_pData, SizeBytes()) == 0;
+  }
+
+  bool operator!= (const SecureMem& other) const
+  {
+    return !operator==(other);
+  }
+
+  bool operator< (const SecureMem& other) const
+  {
+    // only call memcmp() if both data pointers are valid
+    return (!IsEmpty() && m_lSize == other.m_lSize) ?
+      memcmp(m_pData, other.m_pData, SizeBytes()) < 0 : m_lSize < other.m_lSize;
+  }
+
+  bool operator> (const SecureMem& other) const
+  {
+    return other.operator<(*this);
   }
 };
 
@@ -606,13 +703,15 @@ void SecureMem<T>::StrCat(const T* pStr, word32 lLen, word32& lPos)
     throw SecureMemError("SecureMem::StrCat(): Invalid position");
   if (lLen == 0)
     return;
+  if (MAX_SIZE - lPos < lLen + 1)
+    throw SecureMemSizeError();
   BufferedGrow(lPos + lLen + 1);
   memcpy(m_pData + lPos, pStr, lLen * sizeof(T));
   lPos += lLen;
   m_pData[lPos] = '\0';
 }
 
-template<class T> inline bool operator== (const SecureMem<T>& a,
+/*template<class T> inline bool operator== (const SecureMem<T>& a,
   const SecureMem<T>& b)
 {
   // avoid applying memcmp() to null pointers
@@ -640,7 +739,7 @@ template<class T> inline bool operator> (const SecureMem<T>& a,
   const SecureMem<T>& b)
 {
   return b < a;
-}
+}*/
 
 
 typedef SecureMem<char> SecureAnsiString;

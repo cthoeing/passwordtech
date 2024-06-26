@@ -151,6 +151,28 @@ template<class T> inline int strchpos(const T* pStr, int nLen, T c)
   return -1;
 }
 
+template<class T> int removeWhitespace(T* pStr, int nLen)
+{
+  if (nLen < 2)
+    return nLen;
+
+  auto isWhitespace = [](T ch)
+  {
+    return ch == ' ' || ch == '\t';
+  };
+
+  int nStart, nEnd;
+  for (nStart = 0; nStart < nLen - 1 && isWhitespace(pStr[nStart]); nStart++);
+  for (nEnd = nLen - 1; nEnd > nStart && isWhitespace(pStr[nEnd]); nEnd--);
+
+  nLen = nEnd - nStart + 1;
+  if (nStart > 0)
+    memmove(pStr, &pStr[nStart], nLen * sizeof(T));
+
+  pStr[nLen] = '\0';
+  return nLen;
+}
+
 
 static w32string s_charSetCodes[PASSWGEN_NUMCHARSETCODES_EXT];
 
@@ -792,7 +814,7 @@ int PasswordGenerator::GetPassword(SecureW32String& sDest,
   int nLength,
   int nFlags) const
 {
-  if (nLength <= 0)
+  if (nLength < 1)
     return 0;
 
   word32 lChar;
@@ -969,6 +991,9 @@ int PasswordGenerator::GetPassword(SecureW32String& sDest,
   }
 #endif
 
+  if (nFlags & PASSW_FLAG_REMOVEWHITESPACE)
+    nLength = removeWhitespace(sDest.begin(), nLength);
+
   return nLength;
 }
 //---------------------------------------------------------------------------
@@ -979,7 +1004,7 @@ int PasswordGenerator::GetPassphrase(SecureW32String& sDest,
   int nFlags,
   int* pnNetWordsLen) const
 {
-  if (nWords <= 0)
+  if (nWords < 1)
     return 0;
 
   //int nCharsLen = (pChars != nullptr) ? w32strlen(pChars) : 0;
@@ -1464,6 +1489,9 @@ int PasswordGenerator::GetFormatPassw(SecureW32String& sDest,
 
   pDest[nDestIdx] = '\0';
 
+  if (nFlags & PASSFORMAT_FLAG_REMOVEWHITESPACE)
+    nDestIdx = removeWhitespace(pDest, nDestIdx);
+
   lRand = 0;
 
   return nDestIdx;
@@ -1594,7 +1622,7 @@ int PasswordGenerator::GetPhoneticPassw(SecureW32String& sDest,
   int nLength,
   int nFlags) const
 {
-  if (nLength <= 0)
+  if (nLength < 1)
     return 0;
 
 //  word32* pTris = (m_pPhoneticTris == nullptr) ? (word32*) PHONETIC_TRIS : m_pPhoneticTris;
