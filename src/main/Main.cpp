@@ -82,6 +82,7 @@
 TMainForm *MainForm;
 
 CmdLineOptions g_cmdLineOptions;
+DonorInfo g_donorInfo;
 std::unique_ptr<TMemIniFile> g_pIni;
 bool g_blFakeIniFile = false;
 std::vector<std::unique_ptr<PWGenProfile>> g_profileList;
@@ -96,6 +97,7 @@ Configuration g_config;
 AnsiString g_asDonorInfo;
 WString g_sNewline;
 TerminateAction g_terminateAction = TerminateAction::None;
+std::vector<LanguageEntry> g_languages;
 
 extern HANDLE g_hAppMutex;
 
@@ -464,6 +466,22 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
 
   SaveDlg->Filter = OpenDlg->Filter;
 
+  switch (g_donorInfo.Valid) {
+  case DONOR_KEY_VALID:
+    break;
+  case DONOR_KEY_EXPIRED:
+    DelayStartupError(TRL("Your donor key has expired: The maximum\n"
+        "number of updates has been reached."));
+    break;
+  case DONOR_KEY_INVALID:
+    DelayStartupError(TRL("Donor key is invalid."));
+    break;
+  default: // empty key (-1)
+    break;
+  }
+
+  SetDonorUI();
+
   // load configuration from INI file
   LoadConfig();
 }
@@ -562,10 +580,11 @@ void __fastcall TMainForm::StartupAction(void)
     PasswOptionsDlg->SetOptions(m_passwOptions);
     SetAdvancedBtnCaption();
 
-    ConfigurationDlg->SetLanguageList(m_languages);
+    ConfigurationDlg->LoadLanguages();
     ConfigurationDlg->SetOptions(g_config);
 
     AboutForm->SetDonorUI();
+    ConfigurationDlg->SetDonorUI();
   }
 }
 //---------------------------------------------------------------------------
@@ -586,7 +605,7 @@ void __fastcall TMainForm::FormActivate(TObject *Sender)
       m_sStartupErrors = WString();
     }
 
-    if (m_asDonorKey.IsEmpty() &&
+    if (g_donorInfo.Valid != DONOR_KEY_VALID &&
         (g_pIni->ReadString(CONFIG_ID, "LastVersion", "") != PROGRAM_VERSION ||
         fprng_rand(15) == 0))
       MsgBox(TRLFormat("If you like %1, please consider\nmaking a donation. Thank you!",
@@ -660,76 +679,68 @@ void __fastcall TMainForm::DelayStartupError(const WString& sMsg)
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::LoadLangConfig(void)
 {
-  // which language do we have to set?
-  WString sLangStr = g_pIni->ReadString(CONFIG_ID, "Language", "");
-  if (sLangStr.IsEmpty())
-    sLangStr = LANGUAGE_DEFAULT_CODE;
+  LanguageEntry defaultLang;
+  defaultLang.Code = LANGUAGE_DEFAULT_CODE;
+  defaultLang.Name = LANGUAGE_DEFAULT_NAME;
+  defaultLang.Version = PROGRAM_VERSION;
+  g_languages.push_back(defaultLang);
 
-  bool blDefaultLang = sLangStr == LANGUAGE_DEFAULT_CODE ||
-    SameText(sLangStr, WString(LANGUAGE_DEFAULT_NAME));
+  // look for language files in the program folder and in the "app data" folder
+  const auto searchFolders = { g_sExePath, g_sAppDataPath };
+  for (const auto& sFolder : searchFolders) {
+    if (sFolder.IsEmpty()) continue;
 
-  LanguageEntry e;
-  e.Code = LANGUAGE_DEFAULT_CODE;
-  e.Name = LANGUAGE_DEFAULT_NAME;
-  e.Version = PROGRAM_VERSION;
-  m_languages.push_back(e);
+    TSearchRec srw;
 
-  // look for language files in the program directory
-  WString sFindFile = g_sExePath + "*.*";
-  TSearchRec srw;
-
-  WString sLangFileName;
-  int nLangIndex = 0;
-
-  if (FindFirst(sFindFile, faAnyFile, srw) == 0) {
-    do {
-      WString sExt = ExtractFileExt(srw.Name);
-      if (!SameText(sExt, ".lng") && !SameText(sExt, ".po"))
-        continue;
-
-      WString sFileName = g_sExePath + ExtractFileName(srw.Name);
-
-      try {
-        LanguageSupport ls(sFileName, true);
-
-        if (std::find_if(m_languages.begin(), m_languages.end(),
-              [&ls](const LanguageEntry& e) { return e.Code == ls.LanguageCode; })
-              != m_languages.end())
+    if (FindFirst(sFolder + "*", faAnyFile, srw) == 0) {
+      do {
+        WString sExt = ExtractFileExt(srw.Name);
+        if (!SameText(sExt, ".lng") && !SameText(sExt, ".po"))
           continue;
 
-        LanguageEntry e;
-        e.FileName = sFileName;
-        e.Code = ls.LanguageCode;
-        e.Name = ls.LanguageName;
-        e.Version = ls.LanguageVersion;
+        WString sFileName = sFolder + ExtractFileName(srw.Name);
 
-        m_languages.push_back(e);
+        try {
+          LanguageSupport ls(sFileName, true);
 
-        if (!blDefaultLang && nLangIndex == 0 && e.Code == sLangStr)
-        {
-          sLangFileName = sFileName;
-          nLangIndex = m_languages.size() - 1;
+          if (std::find(g_languages.begin(), g_languages.end(), ls.LanguageCode)
+                != g_languages.end())
+            continue;
+
+          LanguageEntry e;
+          e.FileName = sFileName;
+          e.Code = ls.LanguageCode;
+          e.Name = ls.LanguageName;
+          e.Version = ls.LanguageVersion;
+
+          g_languages.push_back(e);
+        }
+        catch (ELanguageError& e) {
+          DelayStartupError(srw.Name + ": " + e.Message + ".");
+        }
+        catch (...) {
         }
       }
-      catch (ELanguageError& e) {
-        DelayStartupError(srw.Name + ": " + e.Message + ".");
-      }
-      catch (...) {
-      }
-    }
-    while (FindNext(srw) == 0 && m_languages.size() < LANGUAGE_MAX_ITEMS);
+      while (FindNext(srw) == 0 && g_languages.size() < LANGUAGE_MAX_ITEMS);
 
-    FindClose(srw);
+      FindClose(srw);
+    }
   }
 
-  // nothing found?
-  if (!blDefaultLang && nLangIndex == 0)
-    DelayStartupError(FormatW("Could not find language \"%1\".",
-    { sLangStr }));
+  // which language do we have to set?
+  WString sSetLang = g_pIni->ReadString(CONFIG_ID, "Language", "");
+  if (sSetLang.IsEmpty())
+    sSetLang = LANGUAGE_DEFAULT_CODE;
+
+  auto langIt = std::find(g_languages.begin(), g_languages.end(), sSetLang);
+  if (langIt == g_languages.end()) {
+    DelayStartupError(FormatW("Could not find language \"%1\".", { sSetLang }));
+    langIt = g_languages.begin();
+  }
 
   // change language if necessary
-  if (nLangIndex != 0 && !ChangeLanguage(sLangFileName))
-    nLangIndex = 0;
+  if (langIt != g_languages.begin() && !ChangeLanguage(langIt->FileName))
+    langIt = g_languages.begin();
 
   m_sHelpFileName = g_sExePath;
   if (g_pLangSupp && !g_pLangSupp->HelpFileName.IsEmpty())
@@ -737,7 +748,7 @@ void __fastcall TMainForm::LoadLangConfig(void)
   else
     m_sHelpFileName += PROGRAM_HELPFILE;
 
-  g_config.LanguageIndex = nLangIndex;
+  g_config.Language = *langIt;
   //MainMenu_Options_Language->Items[nLangIndex]->Checked = true;
 }
 //---------------------------------------------------------------------------
@@ -820,40 +831,20 @@ void __fastcall TMainForm::WriteRandSeedFile(bool blShowError)
   }
 }
 //---------------------------------------------------------------------------
-void __fastcall TMainForm::SetDonorUI(int nDonorType)
+void __fastcall TMainForm::SetDonorUI(void)
 {
   WString sInfo = WString(PROGRAM_NAME) + " " + WString(PROGRAM_VERSION);
-  if (nDonorType < 0)
+  if (g_donorInfo.Type < 0)
     sInfo += " (Community)";
   else
-    sInfo += ((nDonorType == DONOR_TYPE_PRO) ? " (DONOR PRO)" : " (DONOR)");
+    sInfo += ((g_donorInfo.Type == DONOR_TYPE_PRO) ? " (DONOR PRO)" : " (DONOR)");
   StatusBar->Panels->Items[0]->Text = sInfo;
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::LoadConfig(void)
 {
   //AnsiString asLastVersion = g_pIni->ReadString(CONFIG_ID, "LastVersion", "");
-  AnsiString asDonorKey = g_pIni->ReadString(CONFIG_ID, "DonorKey", "");
-  if (!asDonorKey.IsEmpty()) {
-    AnsiString asDonorId;
-    int nDonorType;
-    switch (CheckDonorKey(asDonorKey, &asDonorId, &nDonorType)) {
-    case DONOR_KEY_VALID:
-      m_asDonorKey = asDonorKey.Trim();
-      g_asDonorInfo = asDonorId;
-      SetDonorUI(nDonorType);
-      break;
-    case DONOR_KEY_EXPIRED:
-      DelayStartupError(TRL("Your donor key has expired: The maximum\n"
-          "number of updates has been reached."));
-      break;
-    default:
-      DelayStartupError(TRL("Donor key is invalid."));
-    }
-  }
-
-  if (m_asDonorKey.IsEmpty())
-    SetDonorUI(-1);
+  //AnsiString asDonorKey = g_pIni->ReadString(CONFIG_ID, "DonorKey", "");
 
   int nTop = g_pIni->ReadInteger(CONFIG_ID, "WindowTop", INT_MAX);
   int nLeft = g_pIni->ReadInteger(CONFIG_ID, "WindowLeft", INT_MAX);
@@ -1221,12 +1212,13 @@ bool __fastcall TMainForm::SaveConfig(void)
 
     g_pIni->WriteString(CONFIG_ID, "LastVersion", PROGRAM_VERSION);
     g_pIni->WriteString(CONFIG_ID, "Language",
-      m_languages[g_config.LanguageIndex].Code);
+      g_config.Language.Code);
     if (m_lastUpdateCheck != TDateTime())
       g_pIni->WriteDate(CONFIG_ID, "LastUpdateCheck", m_lastUpdateCheck);
-    g_pIni->WriteString(CONFIG_ID, "DonorKey", m_asDonorKey);
+    g_pIni->WriteString(CONFIG_ID, "DonorKey", g_donorInfo.Key);
     g_pIni->WriteString(CONFIG_ID, "GUIStyle", g_config.UiStyleName);
     g_pIni->WriteString(CONFIG_ID, "GUIFont", g_config.GUIFontString);
+    g_pIni->WriteString(CONFIG_ID, "AppIcon", g_config.AppIconName);
     g_pIni->WriteInteger(CONFIG_ID, "WindowTop", Top);
     g_pIni->WriteInteger(CONFIG_ID, "WindowLeft", Left);
     g_pIni->WriteInteger(CONFIG_ID, "WindowHeight", Height);
@@ -1683,8 +1675,8 @@ void __fastcall TMainForm::ShowPasswInfo(int nPasswLen,
 bool __fastcall TMainForm::ApplyConfig(const Configuration& config)
 {
   bool blLangChanged = false;
-  if (config.LanguageIndex != g_config.LanguageIndex) {
-    const WString& sLangVersion = m_languages[config.LanguageIndex].Version;
+  if (config.Language.Code != g_config.Language.Code) {
+    const WString& sLangVersion = config.Language.Version;
 
     if (CompareVersionNumbers(sLangVersion, PROGRAM_LANGVER_MIN) < 0) {
       if (MsgBox(TRLFormat("The version of this language (%1) is not\ncompatible "
@@ -1766,6 +1758,16 @@ bool __fastcall TMainForm::ApplyConfig(const Configuration& config)
   SecureClipboard::GetInstance().AutoClear = config.AutoClearClip;
   if (!config.AutoClearClip)
     m_nAutoClearClipCnt = 0;
+
+  if (!SameText(config.AppIconName, g_config.AppIconName)) {
+    auto it = std::find_if(AppIconNames.begin(), AppIconNames.end(),
+      [&config](const std::pair<WString,WString>& p) { return p.first == config.AppIconName; });
+    if (it != AppIconNames.end()) {
+      Application->Icon->LoadFromResourceName(reinterpret_cast<NativeUInt>(
+        HInstance), it->second);
+      TrayIcon->Icon = Application->Icon;
+    }
+  }
 
   /*if (!blLangChanged && !TStyleManager::TrySetStyle(config.UiStyleName, false)) {
     MsgBox(TRLFormat("Could not apply user interface style\n\"%s\".",
@@ -2326,6 +2328,8 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
           nPasswFlags |= PASSW_FLAG_EACHCHARONLYONCE;
         if (nCharSetSize >= 128 && nCharsLen >= 128)
           nPasswFlags |= PASSW_FLAG_CHECKDUPLICATESBYSET;
+        if (nFlags & PASSWOPTION_REMOVEWHITESPACE)
+          nPasswFlags |= PASSW_FLAG_REMOVEWHITESPACE;
         for (int nI = 0; nI < PASSWGEN_NUMINCLUDECHARSETS; nI++) {
           if (nFlags & (PASSWOPTION_INCLUDEUPPERCASE << nI))
             nPasswFlags |= PASSW_FLAG_INCLUDEUPPERCASE << nI;
@@ -2369,6 +2373,8 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
       if (!sFormatPassw.empty()) {
         if (nFlags & PASSWOPTION_EXCLUDEREPCHARS)
           nFormatFlags |= PASSFORMAT_FLAG_EXCLUDEREPCHARS;
+        if (nFlags & PASSWOPTION_REMOVEWHITESPACE)
+          nFormatFlags |= PASSFORMAT_FLAG_REMOVEWHITESPACE;
 
         sFormatted.New(PASSWFORMAT_MAX_CHARS + 1);
         sFormatted.SetClearMark(0);
@@ -2419,6 +2425,12 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
       bool blKeepPrevPassw = false;
       bool blCheckEachPassw = qNumOfPassw > 1 &&
         (nFlags & PASSWOPTION_CHECKEACHPASSW);
+      bool blVariablePasswLen = nCharsLen != 0 &&
+        (nPasswFlags & PASSW_FLAG_REMOVEWHITESPACE) &&
+        (m_passwGen.CustomCharSetType == cstStandard ||
+        m_passwGen.CustomCharSetType == cstStandardWithFreq) &&
+        m_passwGen.CustomCharSetW32.find_first_of(
+          WCharToW32String(L" \t")) != w32string::npos;
       std::unordered_set<SecureWString,SecureStringHashFunction>
         uniquePasswList;
       std::unique_ptr<TStringFileStreamW> pFile;
@@ -2446,7 +2458,7 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
             nGenCharsLen = m_passwGen.GetPhoneticPassw(sChars, nCharsLen,
                 nPasswFlags);
           }
-          if (blFirstGen) {
+          if (blFirstGen || blVariablePasswLen) {
             if ((m_passwGen.CustomCharSetType == cstStandard ||
                 m_passwGen.CustomCharSetType == cstStandardWithFreq) &&
                 m_passwOptions.Flags & PASSWOPTION_EACHCHARONLYONCE)
@@ -2478,7 +2490,7 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
             }
           }
 
-          if (blFirstGen) {
+          if (blFirstGen || blVariablePasswLen) {
             if (m_passwOptions.Flags & PASSWOPTION_EACHWORDONLYONCE)
               dBasePasswSec += m_passwGen.CalcPermSetEntropy(
                 m_passwGen.WordListSize, nNumOfWords);
@@ -2727,12 +2739,8 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
 
         case gpdFileList:
 
-          if (!pFile->WriteString(pwszPassw, nPasswLenWChars))
-            OutOfDiskSpaceError();
-
-          if (!pFile->WriteString(sPasswAppendix.c_str(), sPasswAppendix.Length()))
-            OutOfDiskSpaceError();
-
+          pFile->WriteString(pwszPassw, nPasswLenWChars);
+          pFile->WriteString(sPasswAppendix.c_str(), sPasswAppendix.Length());
           break;
 
         case gpdMsgBox:
@@ -4091,8 +4099,7 @@ void __fastcall TMainForm::PasswBoxMenu_SaveAsFileClick(TObject *Sender)
     std::unique_ptr<TStringFileStreamW> pFile(new TStringFileStreamW(
        sFileName, fmCreate, g_config.FileEncoding, true, PASSW_MAX_BYTES));
 
-    if (!pFile->WriteString(sPassw, sPassw.StrLen()))
-      OutOfDiskSpaceError();
+    pFile->WriteString(sPassw, sPassw.StrLen());
 
     blSuccess = true;
     sMsg = TRLFormat("File \"%1\" successfully created.",
@@ -4135,32 +4142,37 @@ void __fastcall TMainForm::MainMenu_Options_ClearPasswCacheClick(TObject *Sender
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::MainMenu_Help_EnterDonorKeyClick(TObject *Sender)
 {
-  WString sInput = m_asDonorKey;
+  WString sInput = g_donorInfo.Key;
   BeforeDisplayDlg();
   if (InputQuery(TRL("Donor Key"), TRL("Enter donor key:"), sInput)) {
-    AnsiString asId;
-    int nType;
-    switch (CheckDonorKey(sInput, &asId, &nType)) {
+    int nStatus, nType;
+    AnsiString asDonorId;
+    std::tie(nStatus, nType, asDonorId) = CheckDonorKey(sInput);
+    switch (nStatus) {
     case DONOR_KEY_VALID:
     {
-      m_asDonorKey = sInput.Trim();
-      g_asDonorInfo = asId.Trim();
+      g_donorInfo.Key = sInput.Trim();
+      g_donorInfo.Id = asDonorId;
+      g_donorInfo.Valid = nStatus;
+      g_donorInfo.Type = nType;
       WString sMsg = TRLFormat("Your Donor ID is: %1\n"
           "Supported number of updates: %2",
-          { WString(asId),
+          { WString(asDonorId),
             nType == DONOR_TYPE_STD ? IntToStr(DONOR_STD_NUM_UPDATES) :
               TRL("Unlimited") });
       if (MsgBox(TRL("Thank you for your support!") + "\n\n" + sMsg + "\n\n" +
           TRL("Copy this information to the clipboard?"),
           MB_ICONQUESTION + MB_YESNO) == IDYES)
         Clipboard()->AsText = sMsg;
-      SetDonorUI(nType);
+      SetDonorUI();
       AboutForm->SetDonorUI();
+      ConfigurationDlg->SetDonorUI();
       break;
     }
     case DONOR_KEY_EXPIRED:
       MsgBox(TRL("Donor key has expired."), MB_ICONERROR);
       break;
+    case DONOR_KEY_INVALID:
     default:
       MsgBox(TRL("Donor key is invalid."), MB_ICONERROR);
     }

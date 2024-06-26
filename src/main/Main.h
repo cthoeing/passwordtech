@@ -70,6 +70,13 @@ struct CmdLineOptions {
   bool ConfigReadOnly = false;
 };
 
+struct DonorInfo {
+  AnsiString Key;
+  AnsiString Id;
+  int Valid = -1;
+  int Type = -1;
+};
+
 struct PWGenProfile {
   WString ProfileName;
   bool IncludeChars;
@@ -102,6 +109,7 @@ const int
   APPSTATE_AUTOTYPE   = 0x04;
 
 extern CmdLineOptions g_cmdLineOptions;
+extern DonorInfo g_donorInfo;
 extern std::unique_ptr<TMemIniFile> g_pIni;
 extern bool g_blFakeIniFile;
 extern std::vector<std::unique_ptr<PWGenProfile>> g_profileList;
@@ -115,6 +123,7 @@ extern int g_nDisplayDlg;
 extern Configuration g_config;
 extern AnsiString g_asDonorInfo;
 extern WString g_sNewline;
+extern std::vector<LanguageEntry> g_languages;
 
 enum class TerminateAction {
   None, RestartProgram, SystemShutdown
@@ -452,13 +461,13 @@ private:	// User declarations
   IDropTarget* m_pPasswBoxDropTarget;
   TUpdateCheckThread* m_pUpdCheckThread;
   //std::atomic<bool> m_blUpdCheckThreadRunning;
-  std::vector<LanguageEntry> m_languages;
+  //std::vector<LanguageEntry> m_languages;
   std::vector<HotKeyEntry> m_hotKeys;
   std::unordered_set<std::wstring> m_commonPassw;
   double m_dCommonPasswEntropy;
   std::unique_ptr<LuaScript> m_pScript;
   TDateTime m_lastUpdateCheck;
-  AnsiString m_asDonorKey;
+  //AnsiString m_asDonorKey;
 
   void __fastcall DelayStartupError(const WString& sMsg);
   void __fastcall LoadLangConfig(void);
@@ -489,7 +498,7 @@ private:	// User declarations
   void __fastcall ShowInfoBox(const WString& sInfo);
   void __fastcall SetAdvancedBtnCaption(void);
   void __fastcall OnUpdCheckThreadTerminate(TObject* Sender);
-  void __fastcall SetDonorUI(int nDonorType);
+  void __fastcall SetDonorUI(void);
   void __fastcall RestoreAction(void);
   void __fastcall OnSetSensitiveClipboardData(void);
   void __fastcall OnQueryEndSession(TWMQueryEndSession& msg);

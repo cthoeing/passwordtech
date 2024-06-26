@@ -3,7 +3,32 @@
                 Copyright (c) 2002-2024 by Christian Thöing
 
 
-Version 3.5.4
+Version 3.5.5
+
+NEW FEATURES:
+
+- Advanced Password Options: New option "Remove leading and trailing whitespace
+  characters" to remove space and tab characters at the beginning and end of
+  passwords
+- Configuration | General: New option "Application icon" to change PwTech's
+  icon displayed on the task bar, system tray, etc. during runtime
+- Configuration | Language: New "Install" and "Remove" buttons to add or
+  remove language files to/from the current PwTech installation
+  
+CHANGES & IMPROVEMENTS:
+
+- Language files can also be copied to the "AppData" folder (usually
+  "C:\Users\{user}\AppData\Roaming\Password Tech"), which makes it easier
+  to install new languages if PwTech has been installed to the "Program Files"
+  folder (which usually requires admin privileges for write access)
+
+FIXES:
+
+- PO language files with empty fields in header not loaded properly
+
+----------
+
+Version 3.5.4 (2024-02-14)
 
 NEW FEATURES:
 

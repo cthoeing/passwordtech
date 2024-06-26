@@ -32,8 +32,8 @@ object QuickHelpForm: TQuickHelpForm
     BevelOuter = bvNone
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Courier New'
+    Font.Height = -13
+    Font.Name = 'Consolas'
     Font.Style = []
     ParentFont = False
     PopupMenu = QuickHelpBoxMenu
@@ -41,6 +41,8 @@ object QuickHelpForm: TQuickHelpForm
     ScrollBars = ssBoth
     TabOrder = 0
     WordWrap = False
+    ExplicitWidth = 564
+    ExplicitHeight = 99
   end
   object QuickHelpBoxMenu: TPopupMenu
     Left = 8

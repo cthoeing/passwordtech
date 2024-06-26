@@ -53,6 +53,15 @@ const int RANDOM_POOL_CIPHER_INFO[NUM_RANDOM_POOL_CIPHERS][2] =
   //{ 256, 128 }
 };
 
+const std::vector<std::pair<WString, WString>> AppIconNames = {
+  { "Default (dark)", "A" },
+  { "Blue", "Icon_Blue" },
+  { "Red", "Icon_Red" },
+  { "Orange", "Icon_Orange" },
+  { "Green", "Icon_Green" },
+  { "Colors", "Icon_Colors" }
+};
+
 //---------------------------------------------------------------------------
 __fastcall TConfigurationDlg::TConfigurationDlg(TComponent* Owner)
   : TForm(Owner) //, m_pLangList(nullptr)
@@ -70,7 +79,15 @@ __fastcall TConfigurationDlg::TConfigurationDlg(TComponent* Owner)
     UiStylesList->Items->Add(sName);
   }
 
-  for (int i = 0; i < NUM_RANDOM_POOL_CIPHERS; i++) {
+  auto icon = std::make_unique<TIcon>();
+  int i = 0;
+  for (const auto& p : AppIconNames) {
+    icon->LoadFromResourceName(reinterpret_cast<NativeUInt>(HInstance), p.second);
+    AppIconImageList->AddIcon(icon.get());
+    AppIconList->ItemsEx->AddItem(p.first, i++, -1, -1, -1, nullptr);
+  }
+
+  for (i = 0; i < NUM_RANDOM_POOL_CIPHERS; i++) {
     WString sCipher = TRLFormat("%1 (%2-bit key, operates on %3-bit blocks)",
       { RANDOM_POOL_CIPHER_NAMES[i],
         IntToStr(RANDOM_POOL_CIPHER_INFO[i][0]),
@@ -78,7 +95,7 @@ __fastcall TConfigurationDlg::TConfigurationDlg(TComponent* Owner)
     RandomPoolCipherList->Items->Add(sCipher);
   }
 
-  for (int i = 0; i <= 10; i++)
+  for (i = 0; i <= 10; i++)
     BenchmarkMemList->Items->Add(IntToStr(1 << i) + " MB");
   BenchmarkMemList->ItemIndex = 6;
 
@@ -86,6 +103,7 @@ __fastcall TConfigurationDlg::TConfigurationDlg(TComponent* Owner)
     TRLCaption(this);
     TRLCaption(GeneralSheet);
     TRLCaption(UiStyleLbl);
+    TRLCaption(AppIconLbl);
     TRLCaption(ChangeFontLbl);
     TRLCaption(SelectFontBtn);
     TRLCaption(ShowSysTrayIconConstCheck);
@@ -113,7 +131,6 @@ __fastcall TConfigurationDlg::TConfigurationDlg(TComponent* Owner)
     TRLCaption(HotKeyView->Columns->Items[0]);
     TRLCaption(HotKeyView->Columns->Items[1]);
 
-    int i;
     for (i = 0; i < HotKeyActionsList->Items->Count; i++)
       HotKeyActionsList->Items->Strings[i] =
         TRL(HotKeyActionsList->Items->Strings[i]);
@@ -130,6 +147,8 @@ __fastcall TConfigurationDlg::TConfigurationDlg(TComponent* Owner)
 
     TRLCaption(LanguageSheet);
     TRLCaption(SelectLanguageLbl);
+    TRLCaption(InstallLanguageBtn);
+    TRLCaption(RemoveLanguageBtn);
 
     TRLCaption(DatabaseSheet);
     TRLCaption(ClearClipCloseLockCheck);
@@ -177,6 +196,7 @@ void __fastcall TConfigurationDlg::SaveConfig(void)
 void __fastcall TConfigurationDlg::GetOptions(Configuration& config)
 {
   config.UiStyleName = UiStylesList->Text;
+  config.AppIconName = AppIconList->Text;
   config.GUIFontString = FontToString(FontDlg->Font);
   config.AutoClearClip = AutoClearClipCheck->Checked;
   config.AutoClearClipTime = AutoClearClipTimeSpinBtn->Position;
@@ -197,7 +217,7 @@ void __fastcall TConfigurationDlg::GetOptions(Configuration& config)
   config.FileEncoding = CharacterEncoding(CharEncodingGroup->ItemIndex);
   config.FileNewlineChar = NewlineChar(NewlineCharGroup->ItemIndex);
   config.HotKeys = m_hotKeys;
-  config.LanguageIndex = LanguageList->ItemIndex;
+  config.Language = g_languages.at(LanguageList->ItemIndex);
   //config.Database.ClearClipMinimize = ClearClipMinimizeCheck->Checked;
   config.Database.ClearClipCloseLock = ClearClipCloseLockCheck->Checked;
   config.Database.LockMinimize = LockMinimizeCheck->Checked;
@@ -229,6 +249,7 @@ void __fastcall TConfigurationDlg::SetOptions(const Configuration& config)
   if (nIndex < 0)
     nIndex = UiStylesList->Items->IndexOf("Windows");
   UiStylesList->ItemIndex = nIndex;
+  AppIconList->ItemIndex = std::max(0, AppIconList->Items->IndexOf(config.AppIconName));
   StringToFont(config.GUIFontString, FontDlg->Font);
   ShowFontSample(FontDlg->Font);
   RandomPoolCipherList->ItemIndex = config.RandomPoolCipher;
@@ -252,7 +273,8 @@ void __fastcall TConfigurationDlg::SetOptions(const Configuration& config)
   UpdateCheckGroup->ItemIndex = config.AutoCheckUpdates;
   CharEncodingGroup->ItemIndex = static_cast<int>(config.FileEncoding);
   NewlineCharGroup->ItemIndex = static_cast<int>(config.FileNewlineChar);
-  LanguageList->ItemIndex = config.LanguageIndex;
+  auto it = std::find(g_languages.begin(), g_languages.end(), config.Language.Code);
+  LanguageList->ItemIndex = it != g_languages.end() ? it - g_languages.begin() : 0;
   LanguageListSelect(this);
   m_hotKeys = config.HotKeys;
   UpdateHotKeyList();
@@ -279,11 +301,10 @@ void __fastcall TConfigurationDlg::SetOptions(const Configuration& config)
   DefaultAutotypeSeqBox->Text = config.Database.DefaultAutotypeSequence;
 }
 //---------------------------------------------------------------------------
-void __fastcall TConfigurationDlg::SetLanguageList(
-  const std::vector<LanguageEntry>& languages)
+void __fastcall TConfigurationDlg::LoadLanguages(void)
 {
-  m_langList = languages;
-  for (const auto& entry : m_langList)
+  LanguageList->Clear();
+  for (const auto& entry : g_languages)
   {
     LanguageList->Items->Add(FormatW("%1 (v%2)", { entry.Name,
       entry.Version }));
@@ -468,9 +489,9 @@ void __fastcall TConfigurationDlg::BenchmarkBtnClick(TObject *Sender)
       rp.SetCipher(static_cast<RandomPool::CipherType>(i));
     Stopwatch clock;
     rp.GetData(buf.get(), lBufSize);
-    double rate = lDataSizeMB / clock.ElapsedSeconds();
-    sResult += "\n" + FormatW("%1: %2 MB/s", { RANDOM_POOL_CIPHER_NAMES[i],
-      FormatFloat("0.00", rate) });
+    long double rate = lDataSizeMB / clock.ElapsedSeconds();
+    sResult += "\n" + Format("%s: %.2f MB/s", ARRAYOFCONST((
+      RANDOM_POOL_CIPHER_NAMES[i], rate)));
   }
   Screen->Cursor = crDefault;
   MsgBox(TRLFormat("Benchmark results (data size: %1 MB):",
@@ -480,8 +501,8 @@ void __fastcall TConfigurationDlg::BenchmarkBtnClick(TObject *Sender)
 void __fastcall TConfigurationDlg::ConvertLangFileBtnClick(TObject *Sender)
 {
   int nIndex = LanguageList->ItemIndex;
-  if (nIndex > 0 && nIndex < m_langList.size()) {
-    const auto& entry = m_langList[nIndex];
+  if (nIndex > 0 && nIndex < g_languages.size()) {
+    const auto& entry = g_languages[nIndex];
     //if (SameText(ExtractFileExt(entry.FileName), ".lng")) {
     TopMostManager::GetInstance().NormalizeTopMosts(this);
     bool blSuccess = SaveDlg->Execute();
@@ -505,11 +526,12 @@ void __fastcall TConfigurationDlg::LanguageListSelect(TObject *Sender)
 {
   bool blEnabled = false;
   int nIndex = LanguageList->ItemIndex;
-  if (nIndex > 0 && nIndex < m_langList.size()) {
-    const auto& entry = m_langList[nIndex];
+  if (nIndex > 0 && nIndex < g_languages.size()) {
+    const auto& entry = g_languages[nIndex];
     blEnabled = SameText(ExtractFileExt(entry.FileName), ".lng");
   }
   ConvertLangFileBtn->Enabled = blEnabled;
+  RemoveLanguageBtn->Enabled = nIndex > 0;
 }
 //---------------------------------------------------------------------------
 void __fastcall TConfigurationDlg::SelectFontMenu_RestoreDefaultClick(TObject *Sender)
@@ -527,4 +549,84 @@ void __fastcall TConfigurationDlg::LoadProfileStartupCheckClick(TObject *Sender)
   LoadProfileBox->Enabled = LoadProfileStartupCheck->Checked;
 }
 //---------------------------------------------------------------------------
+void __fastcall TConfigurationDlg::InstallLanguageBtnClick(TObject *Sender)
+{
+  TopMostManager::GetInstance().NormalizeTopMosts(this);
+  bool blSuccess = OpenDlg->Execute();
+  TopMostManager::GetInstance().RestoreTopMosts(this);
 
+  if (!blSuccess) return;
+
+  WString sMsg;
+  try {
+    WString sSrc = OpenDlg->FileName;
+    LanguageSupport ls(sSrc, true);
+    if (std::find(g_languages.begin(), g_languages.end(), ls.LanguageCode)
+          != g_languages.end())
+    {
+      throw Exception(TRL("Language already installed"));
+    }
+
+    const auto destinations = { g_sAppDataPath, g_sExePath };
+    WString sDest;
+    for (const auto& sPath : destinations) {
+      if (sPath.IsEmpty()) continue;
+      sDest = sPath + ExtractFileName(sSrc);
+      if (FileExists(sDest)) {
+        throw Exception(TRLFormat("Language file already exists:\n\"%1\"", { sDest }));
+      }
+      if (CopyFile(sSrc.c_str(), sDest.c_str(), true)) {
+        LanguageEntry e;
+        e.FileName = sSrc;
+        e.Code = ls.LanguageCode;
+        e.Name = ls.LanguageName;
+        e.Version = ls.LanguageVersion;
+        g_languages.push_back(e);
+        int nIndex = LanguageList->ItemIndex;
+        LoadLanguages();
+        LanguageList->ItemIndex = nIndex;
+        MsgBox(TRLFormat("Language \"%1\" installed successfully.", { ls.LanguageName }),
+          MB_ICONINFORMATION);
+        return;
+      }
+      break;
+    }
+
+    sMsg = TRLFormat("Could not copy file \"%1\" to\n\"%2\"", { sSrc, sDest });
+  }
+  catch (Exception& e) {
+    sMsg = e.Message;
+  }
+
+  MsgBox(TRLFormat("Could not install language:\n%1.", { sMsg }), MB_ICONERROR);
+}
+//---------------------------------------------------------------------------
+void __fastcall TConfigurationDlg::RemoveLanguageBtnClick(TObject *Sender)
+{
+  int nIndex = LanguageList->ItemIndex;
+  if (nIndex > 0 && nIndex < g_languages.size()) {
+    auto e = g_languages[nIndex];
+    if (MsgBox(TRLFormat("Are you sure you want to remove\n\"%1\"?", { e.Name }),
+        MB_ICONQUESTION + MB_YESNO + MB_DEFBUTTON2) == IDYES)
+    {
+      if (DeleteFile(e.FileName.c_str())) {
+        g_languages.erase(g_languages.begin() + nIndex);
+        LoadLanguages();
+        LanguageList->ItemIndex = 0;
+        MsgBox(TRLFormat("Language \"%1\" successfully removed.", { e.Name }),
+          MB_ICONINFORMATION);
+      }
+      else {
+        MsgBox(TRLFormat("Could not delete file\n\"%1\".", { e.FileName }),
+          MB_ICONERROR);
+      }
+    }
+  }
+}
+//---------------------------------------------------------------------------
+void __fastcall TConfigurationDlg::SetDonorUI(void)
+{
+  AppIconLbl->Enabled = g_donorInfo.Valid == DONOR_KEY_VALID;
+  AppIconList->Enabled = g_donorInfo.Valid == DONOR_KEY_VALID;
+}
+//---------------------------------------------------------------------------

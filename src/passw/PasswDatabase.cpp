@@ -311,7 +311,7 @@ SecureWString PasswDbEntry::GetTagsAsString(wchar_t sep) const
   word32 lPos = 0;
   for (const auto& tag : m_tags) {
     if (lPos != 0)
-      sDest.StrCat(&sep, 1, lPos);
+      sDest.StrCat(sep, lPos);
     sDest.StrCat(tag, lPos);
   }
 
@@ -865,7 +865,8 @@ void PasswDatabase::Write(const void* pBuf, word32 lNumOfBytes)
   //    std::max(lNumOfBytes, m_cryptBuf.Size()), DEFAULT_BUF_SIZE));
   //}
 
-  memcpy(&m_cryptBuf[m_lCryptBufPos], pSrcBuf, lNumOfBytes);
+  //memcpy(&m_cryptBuf[m_lCryptBufPos], pSrcBuf, lNumOfBytes);
+  m_cryptBuf.Copy(m_lCryptBufPos, pSrcBuf, lNumOfBytes);
   m_lCryptBufPos += lNumOfBytes;
 
   m_cryptBuf.GrowClearMark(m_lCryptBufPos);
@@ -1094,7 +1095,8 @@ void PasswDatabase::SaveToFile(const WString& sFileName)
         comprBuf.BufferedGrow(lComprBufPos + lChunkSize);
         //if (lComprBufPos + lChunkSize > comprBuf.Size())
         //  comprBuf.GrowBy(comprBuf.Size());
-        memcpy(comprBuf + lComprBufPos, workBuf, lChunkSize);
+        //memcpy(comprBuf + lComprBufPos, workBuf, lChunkSize);
+        comprBuf.Copy(lComprBufPos, workBuf, lChunkSize);
         lComprBufPos += lChunkSize;
       }
       lToCompress = 0;
@@ -1189,8 +1191,6 @@ int PasswDatabase::ReadFieldIndex(void)
 {
   if (m_lCryptBufPos + 1 > m_cryptBuf.Size())
     throw EPasswDbInvalidFormat(E_INVALID_FORMAT);
-  //word8 bIndex;
-  //memcpy(&bIndex, &m_cryptBuf[m_lCryptBufPos++], 1);
   return m_cryptBuf[m_lCryptBufPos++];
 }
 //---------------------------------------------------------------------------
@@ -1201,9 +1201,10 @@ SecureAnsiString PasswDatabase::ReadAnsiString(void)
   if (lSize != 0) {
     if (m_lCryptBufPos + lSize > m_cryptBuf.Size())
       throw EPasswDbInvalidFormat(E_INVALID_FORMAT);
-    asDest.New(lSize + 1);
-    memcpy(asDest, &m_cryptBuf[m_lCryptBufPos], lSize);
-    asDest[lSize] = '\0';
+    //asDest.New(lSize + 1);
+    //memcpy(asDest, &m_cryptBuf[m_lCryptBufPos], lSize);
+    asDest.AssignStr(reinterpret_cast<char*>(&m_cryptBuf[m_lCryptBufPos]), lSize);
+    //asDest[lSize] = '\0';
     m_lCryptBufPos += lSize;
   }
   return asDest;

@@ -3,8 +3,8 @@ object ConfigurationDlg: TConfigurationDlg
   Top = 187
   BorderIcons = [biSystemMenu, biMaximize]
   Caption = 'Configuration'
-  ClientHeight = 519
-  ClientWidth = 551
+  ClientHeight = 517
+  ClientWidth = 552
   Color = clBtnFace
   Constraints.MinHeight = 456
   Constraints.MinWidth = 443
@@ -84,6 +84,17 @@ object ConfigurationDlg: TConfigurationDlg
         Margins.Bottom = 4
         Caption = 'User interface style:'
       end
+      object AppIconLbl: TLabel
+        Left = 280
+        Top = 20
+        Width = 99
+        Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
+        Caption = 'Application icon:'
+      end
       object SelectFontBtn: TButton
         Left = 10
         Top = 114
@@ -96,7 +107,7 @@ object ConfigurationDlg: TConfigurationDlg
         Caption = 'Select font'
         DropDownMenu = SelectFontMenu
         Style = bsSplitButton
-        TabOrder = 1
+        TabOrder = 2
         OnClick = SelectFontBtnClick
       end
       object ShowSysTrayIconConstCheck: TCheckBox
@@ -109,7 +120,7 @@ object ConfigurationDlg: TConfigurationDlg
         Margins.Right = 4
         Margins.Bottom = 4
         Caption = 'Show system tray icon constantly'
-        TabOrder = 2
+        TabOrder = 3
       end
       object MinimizeToSysTrayCheck: TCheckBox
         Left = 10
@@ -121,7 +132,7 @@ object ConfigurationDlg: TConfigurationDlg
         Margins.Right = 4
         Margins.Bottom = 4
         Caption = 'Minimize program to system tray'
-        TabOrder = 3
+        TabOrder = 4
       end
       object AutotypeDelayBox: TEdit
         Left = 326
@@ -133,7 +144,7 @@ object ConfigurationDlg: TConfigurationDlg
         Margins.Right = 4
         Margins.Bottom = 4
         AutoSelect = False
-        TabOrder = 5
+        TabOrder = 6
         Text = '0'
       end
       object AutotypeDelaySpinBtn: TUpDown
@@ -147,7 +158,7 @@ object ConfigurationDlg: TConfigurationDlg
         Margins.Bottom = 4
         Associate = AutotypeDelayBox
         Max = 1000
-        TabOrder = 6
+        TabOrder = 7
       end
       object MinimizeAutotypeCheck: TCheckBox
         Left = 10
@@ -159,7 +170,7 @@ object ConfigurationDlg: TConfigurationDlg
         Margins.Right = 4
         Margins.Bottom = 4
         Caption = 'Minimize before performing autotype'
-        TabOrder = 4
+        TabOrder = 5
       end
       object AskBeforeExitCheck: TCheckBox
         Left = 10
@@ -172,7 +183,7 @@ object ConfigurationDlg: TConfigurationDlg
         Margins.Bottom = 4
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Ask before exiting application'
-        TabOrder = 7
+        TabOrder = 8
       end
       object LaunchSystemStartupCheck: TCheckBox
         Left = 10
@@ -184,19 +195,18 @@ object ConfigurationDlg: TConfigurationDlg
         Margins.Right = 4
         Margins.Bottom = 4
         Caption = 'Launch application on system startup (for current user)'
-        TabOrder = 8
+        TabOrder = 11
       end
       object UiStylesList: TComboBox
         Left = 10
         Top = 44
-        Width = 492
+        Width = 241
         Height = 25
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
         Margins.Bottom = 4
         Style = csDropDownList
-        Anchors = [akLeft, akTop, akRight]
         Sorted = True
         TabOrder = 0
       end
@@ -225,6 +235,20 @@ object ConfigurationDlg: TConfigurationDlg
         Style = csDropDownList
         Anchors = [akLeft, akTop, akRight]
         TabOrder = 10
+      end
+      object AppIconList: TComboBoxEx
+        Left = 280
+        Top = 44
+        Width = 222
+        Height = 26
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
+        ItemsEx = <>
+        Style = csExDropDownList
+        TabOrder = 1
+        Images = AppIconImageList
       end
     end
     object SecuritySheet: TTabSheet
@@ -652,8 +676,8 @@ object ConfigurationDlg: TConfigurationDlg
         OnSelect = LanguageListSelect
       end
       object ConvertLangFileBtn: TButton
-        Left = 10
-        Top = 78
+        Left = 220
+        Top = 77
         Width = 248
         Height = 31
         Margins.Left = 4
@@ -662,8 +686,34 @@ object ConfigurationDlg: TConfigurationDlg
         Margins.Bottom = 4
         Caption = 'Convert to new PO file format...'
         Enabled = False
-        TabOrder = 1
+        TabOrder = 3
         OnClick = ConvertLangFileBtnClick
+      end
+      object InstallLanguageBtn: TButton
+        Left = 10
+        Top = 77
+        Width = 100
+        Height = 31
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
+        Caption = 'Install...'
+        TabOrder = 1
+        OnClick = InstallLanguageBtnClick
+      end
+      object RemoveLanguageBtn: TButton
+        Left = 118
+        Top = 77
+        Width = 94
+        Height = 31
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
+        Caption = 'Remove'
+        TabOrder = 2
+        OnClick = RemoveLanguageBtnClick
       end
     end
     object DatabaseSheet: TTabSheet
@@ -998,11 +1048,21 @@ object ConfigurationDlg: TConfigurationDlg
     Top = 452
   end
   object SelectFontMenu: TPopupMenu
-    Left = 31
-    Top = 408
+    Left = 29
+    Top = 470
     object SelectFontMenu_RestoreDefault: TMenuItem
       Caption = 'Restore Default'
       OnClick = SelectFontMenu_RestoreDefaultClick
     end
+  end
+  object AppIconImageList: TImageList
+    Left = 489
+    Top = 405
+  end
+  object OpenDlg: TOpenDialog
+    Filter = 'Language files|*.po|All files|*.*'
+    Title = 'Select language file to install'
+    Left = 31
+    Top = 163
   end
 end

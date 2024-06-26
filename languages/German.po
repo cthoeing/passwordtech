@@ -1,4 +1,4 @@
-﻿# German translation of Password Tech 3.5.3
+﻿# German translation of Password Tech 3.5.5
 # Released under the GNU General Public License
 #
 # !!! NOTE ON FORMAT STRINGS !!!
@@ -20,7 +20,7 @@
 #. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.4\n"
+"Project-Id-Version: Password Tech 3.5.5\n"
 "Last-Translator: Christian Thöing\n"
 "Language: de\n"
 
@@ -1137,6 +1137,10 @@ msgid "User interface style:"
 msgstr "Stil der Benutzeroberfläche:"
 
 #. Configuration window, General
+msgid "Application icon:"
+msgstr "Programm-Symbol:"
+
+#. Configuration window, General
 msgid "Change font for the GUI controls:"
 msgstr "Schriftart für GUI-Steuerelemente ändern:"
 
@@ -1311,6 +1315,42 @@ msgstr "Zeichensequenz für Zeilenumbruch (\"newline\")"
 #. Configuration window, Language
 msgid "Select language:"
 msgstr "Sprache auswählen:"
+
+#. Configuration window, Language
+msgid "Install..."
+msgstr "Installieren..."
+
+#. Configuration window, Language, Install
+msgid "Language already installed"
+msgstr "Sprache bereits installiert"
+
+#. Configuration window, Language, Install
+msgid "Language file already exists:\n\"%1\""
+msgstr "Sprachdatei existiert bereits:\n"%1\""
+
+#. Configuration window, Language, Install
+msgid "Language \"%1\" installed successfully."
+msgstr "Sprache \"%1\" erfolgreich installiert."
+
+#. Configuration window, Language, Install
+msgid "Could not copy file \"%1\" to\n\"%2\""
+msgstr "Konnte Datei \"%1\" nicht kopieren nach\n\"%2\""
+
+#. Configuration window, Language, Install
+msgid "Could not install language:\n%1."
+msgstr "Konnte Sprache nicht installieren:\n%1."
+
+#. Configuration window, Language, Remove
+msgid "Are you sure you want to remove\n\"%1\"?"
+msgstr "Sind Sie sicher, dass Sie\n\"%1\" entfernen möchten?"
+
+#. Configuration window, Language, Remove
+msgid "Language \"%1\" successfully removed."
+msgstr "Sprache \"%1\" erfolgreich entfernt."
+
+#. Configuration window, Language, Remove
+msgid "Could not delete file\n\"%1\"."
+msgstr "Konnte Datei nicht löschen:\n\"%1\"."
 
 #. Configuration window, Database
 msgid "Clear clipboard when closing/locking database"
@@ -1537,6 +1577,10 @@ msgstr "Nur Zeichen aus benutzerdefiniertem Zeichensatz verwenden"
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Exclude repeating consecutive characters (e.g. aa, 11)"
 msgstr "Folge desselben Zeichens ausschließen (z.B. aa, 11)"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Remove leading and trailing whitespace characters"
+msgstr "Leerraum- (whitespace) Zeichen am Anfang und Ende entfernen"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Exclude duplicate entries in password lists"

@@ -10,25 +10,25 @@
 //---------------------------------------------------------------------------
 #include <Vcl.Styles.hpp>
 #include <Vcl.Themes.hpp>
-USEFORM("src\main\PasswManager.cpp", PasswMngForm);
-USEFORM("src\main\PasswMngColSelect.cpp", PasswMngColDlg);
-USEFORM("src\main\PasswMngDbProp.cpp", PasswMngDbPropDlg);
-USEFORM("src\main\MPPasswGen.cpp", MPPasswGenForm);
 USEFORM("src\main\PasswEnter.cpp", PasswEnterDlg);
 USEFORM("src\main\PasswList.cpp", PasswListForm);
-USEFORM("src\main\PasswOptions.cpp", PasswOptionsDlg);
-USEFORM("src\main\ProfileEditor.cpp", ProfileEditDlg);
-USEFORM("src\main\Progress.cpp", ProgressForm);
-USEFORM("src\main\PasswMngDbSettings.cpp", PasswDbSettingsDlg);
+USEFORM("src\main\PasswManager.cpp", PasswMngForm);
+USEFORM("src\main\Main.cpp", MainForm);
+USEFORM("src\main\MPPasswGen.cpp", MPPasswGenForm);
 USEFORM("src\main\PasswMngKeyValEdit.cpp", PasswMngKeyValDlg);
 USEFORM("src\main\PasswMngPwHistory.cpp", PasswHistoryDlg);
-USEFORM("src\main\About.cpp", AboutForm);
-USEFORM("src\main\CharSetBuilder.cpp", CharSetBuilderForm);
+USEFORM("src\main\PasswOptions.cpp", PasswOptionsDlg);
+USEFORM("src\main\PasswMngColSelect.cpp", PasswMngColDlg);
+USEFORM("src\main\PasswMngDbProp.cpp", PasswMngDbPropDlg);
+USEFORM("src\main\PasswMngDbSettings.cpp", PasswDbSettingsDlg);
 USEFORM("src\main\InfoBox.cpp", InfoBoxForm);
-USEFORM("src\main\Main.cpp", MainForm);
 USEFORM("src\main\Configuration.cpp", ConfigurationDlg);
 USEFORM("src\main\CreateRandDataFile.cpp", CreateRandDataFileDlg);
 USEFORM("src\main\CreateTrigramFile.cpp", CreateTrigramFileDlg);
+USEFORM("src\main\About.cpp", AboutForm);
+USEFORM("src\main\CharSetBuilder.cpp", CharSetBuilderForm);
+USEFORM("src\main\ProfileEditor.cpp", ProfileEditDlg);
+USEFORM("src\main\Progress.cpp", ProgressForm);
 USEFORM("src\main\ProvideEntropy.cpp", ProvideEntropyDlg);
 USEFORM("src\main\QuickHelp.cpp", QuickHelpForm);
 //---------------------------------------------------------------------------
@@ -144,6 +144,18 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
     if (g_sAppDataPath.IsEmpty())
       g_sAppDataPath = g_sExePath;
 
+    AnsiString asDonorKey = g_pIni->ReadString("Main", "DonorKey", "");
+    if (!asDonorKey.IsEmpty()) {
+      auto result = CheckDonorKey(asDonorKey);
+
+      g_donorInfo.Valid = std::get<0>(result);
+      if (g_donorInfo.Valid == DONOR_KEY_VALID) {
+        g_donorInfo.Key = asDonorKey.Trim();
+        g_donorInfo.Id = std::get<2>(result);
+        g_donorInfo.Type = std::get<1>(result);
+      }
+    }
+
     const WString DEFAULT_STYLE_NAME = "Windows";
 
 	  g_config.UiStyleName = DEFAULT_STYLE_NAME;
@@ -153,6 +165,19 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
     {
       if (TStyleManager::TrySetStyle(sStyleName))
         g_config.UiStyleName = sStyleName;
+    }
+
+    WString sAppIconName = g_pIni->ReadString("Main", "AppIcon", WString());
+    if (!sAppIconName.IsEmpty() && g_donorInfo.Valid == DONOR_KEY_VALID) {
+      auto it = std::find_if(AppIconNames.begin(), AppIconNames.end(),
+        [&sAppIconName](const std::pair<WString,WString>& p)
+        { return p.first == sAppIconName; });
+      if (it != AppIconNames.end()) {
+        g_config.AppIconName = sAppIconName;
+        if (it != AppIconNames.begin())
+          Application->Icon->LoadFromResourceName(reinterpret_cast<NativeUInt>(
+            HInstance), it->second);
+      }
     }
 
     Application->CreateForm(__classid(TMainForm), &MainForm);

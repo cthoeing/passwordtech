@@ -15,10 +15,9 @@
 # for floating point numbers, "%s" for strings, etc.), and the original strings
 # are still provided in the old format to avoid merge conflicts when updating
 # existing translations.
-
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.4\n"
+"Project-Id-Version: Password Tech 3.5.5\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
@@ -1017,6 +1016,10 @@ msgid "User interface style:"
 msgstr ""
 
 #. Configuration window, General
+msgid "Application icon:"
+msgstr ""
+
+#. Configuration window, General
 msgid "Change font for the GUI controls:"
 msgstr ""
 
@@ -1190,6 +1193,52 @@ msgstr ""
 
 #. Configuration window, Language
 msgid "Select language:"
+msgstr ""
+
+#. Configuration window, Language
+msgid "Install..."
+msgstr ""
+
+#. Configuration window, Language, Install
+msgid "Language already installed"
+msgstr ""
+
+#. Configuration window, Language, Install
+msgid ""
+"Language file already exists:\n"
+"\"%1\""
+msgstr ""
+
+#. Configuration window, Language, Install
+msgid "Language \"%1\" installed successfully."
+msgstr ""
+
+#. Configuration window, Language, Install
+msgid ""
+"Could not copy file \"%1\" to\n"
+"\"%2\""
+msgstr ""
+
+#. Configuration window, Language, Install
+msgid ""
+"Could not install language:\n"
+"%1."
+msgstr ""
+
+#. Configuration window, Language, Remove
+msgid ""
+"Are you sure you want to remove\n"
+"\"%1\"?"
+msgstr ""
+
+#. Configuration window, Language, Remove
+msgid "Language \"%1\" successfully removed."
+msgstr ""
+
+#. Configuration window, Language, Remove
+msgid ""
+"Could not delete file\n"
+"\"%1\"."
 msgstr ""
 
 #. Configuration window, Database
@@ -1411,6 +1460,10 @@ msgstr ""
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Exclude repeating consecutive characters (e.g. aa, 11)"
+msgstr ""
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Remove leading and trailing whitespace characters"
 msgstr ""
 
 #. Advanced Password Options window, list of boolean options (checkboxes)

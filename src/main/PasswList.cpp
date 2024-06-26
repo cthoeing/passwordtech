@@ -145,8 +145,7 @@ void __fastcall TPasswListForm::PasswListMenu_SaveAsFileClick(TObject *Sender)
     std::unique_ptr<TStringFileStreamW> pFile(new TStringFileStreamW(
         sFileName, fmCreate, g_config.FileEncoding, true, PASSW_MAX_BYTES));
 
-    if (!pFile->WriteString(sPasswList, sPasswList.StrLen()))
-      OutOfDiskSpaceError();
+    pFile->WriteString(sPasswList, sPasswList.StrLen());
 
     blSuccess = true;
     sMsg = TRLFormat("File \"%1\" successfully created.",

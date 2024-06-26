@@ -50,6 +50,7 @@ PASSW_FLAG_PHONETICUPPERCASE    = 0x0080,
 PASSW_FLAG_PHONETICMIXEDCASE    = 0x0100, // mixed-case characters in phonetic passwords
 PASSW_FLAG_EACHCHARONLYONCE     = 0x0200, // each character must occur only once
 PASSW_FLAG_CHECKDUPLICATESBYSET = 0x0400,
+PASSW_FLAG_REMOVEWHITESPACE     = 0x0800,
 
 PASSPHR_FLAG_COMBINEWCH         = 0x0001,  // combine words & chars
 PASSPHR_FLAG_CAPITALIZEWORDS    = 0x0002,  // capitalize first letter of word
@@ -58,7 +59,8 @@ PASSPHR_FLAG_DONTSEPWCH         = 0x0008,  // don't separate words & chars by '-
 PASSPHR_FLAG_REVERSEWCHORDER    = 0x0010,
 PASSPHR_FLAG_EACHWORDONLYONCE   = 0x0020,
 
-PASSFORMAT_FLAG_EXCLUDEREPCHARS = 1,
+PASSFORMAT_FLAG_EXCLUDEREPCHARS = 0x0001,
+PASSFORMAT_FLAG_REMOVEWHITESPACE= 0x0002,
 
 PASSFORMAT_PWUSED_NOSPECIFIER   = -1, // password provided, but no "P" specifier
 PASSFORMAT_PWUSED_EMPTYPASSW    = -2; // "%P" specified, but no password available

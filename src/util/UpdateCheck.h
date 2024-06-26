@@ -36,7 +36,7 @@ public:
   };
 
   __fastcall TUpdateCheckThread(std::function<void(TObject*)> terminateFunc)
-    : TThread(false), m_nResult(CheckResult::NotAvailable),
+    : TThread(false), m_result(CheckResult::NotAvailable),
       m_terminateFunc(terminateFunc)
   {
     FreeOnTerminate = true;
@@ -46,7 +46,7 @@ public:
   }
 
   __property CheckResult Result =
-  { read=m_nResult };
+  { read=m_result };
 
   static CheckResult __fastcall CheckForUpdates(bool blShowError);
 
@@ -56,14 +56,14 @@ public:
   }
 
 private:
-  CheckResult m_nResult;
+  CheckResult m_result;
   std::function<void(TObject*)> m_terminateFunc;
   static std::atomic<bool> s_blThreadRunning;
 
   virtual void __fastcall Execute(void) override
   {
-    m_nResult = CheckForUpdates(false);
-    ReturnValue = static_cast<int>(m_nResult);
+    m_result = CheckForUpdates(false);
+    ReturnValue = static_cast<int>(m_result);
   }
 
   void __fastcall ThreadTerminate(TObject* Sender)

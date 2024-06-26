@@ -36,7 +36,7 @@ const WString
 
 const int
   OPTION_INDEX_TO_BIT[PASSWOPTIONS_NUM] =
-    { 0, 1, 13, 10, 2, 3, 4, 15, 12, 14, 5, 6, 7, 8, 17, 9, 11, 16 };
+    { 0, 1, 13, 10, 18, 2, 3, 4, 15, 12, 14, 5, 6, 7, 8, 17, 9, 11, 16 };
 
 template<int N>
 class _bitToOptionIndex {
@@ -88,26 +88,28 @@ __fastcall TPasswOptionsDlg::TPasswOptionsDlg(TComponent* Owner)
   else
     m_pOptionsList->Assign(pStrList);
 
-  pStrList->Strings[BIT_TO_OPTION_INDEX[0]] += " (B8G6I1l|0OQDS5Z2) [1-3]";
-  pStrList->Strings[BIT_TO_OPTION_INDEX[1]] += " [1-4]";
-  pStrList->Strings[BIT_TO_OPTION_INDEX[2]] += " [2]";
-  pStrList->Strings[BIT_TO_OPTION_INDEX[3]] += " [2]";
-  pStrList->Strings[BIT_TO_OPTION_INDEX[4]] += " [1,2]";
-  pStrList->Strings[BIT_TO_OPTION_INDEX[5]] += " [1,4]";
-  pStrList->Strings[BIT_TO_OPTION_INDEX[6]] += " [1,4]";
-  pStrList->Strings[BIT_TO_OPTION_INDEX[7]] += " [1,4]";
-  pStrList->Strings[BIT_TO_OPTION_INDEX[8]] += " [1,4]";
-  pStrList->Strings[BIT_TO_OPTION_INDEX[9]] += " [1]";
-  pStrList->Strings[BIT_TO_OPTION_INDEX[10]] += " [1,3]";
-  pStrList->Strings[BIT_TO_OPTION_INDEX[11]] += " [1-4]";
-  pStrList->Strings[BIT_TO_OPTION_INDEX[12]] += " [2,3]";
-  pStrList->Strings[BIT_TO_OPTION_INDEX[13]] += " [1]";
-  pStrList->Strings[BIT_TO_OPTION_INDEX[14]] += " [2]";
-  pStrList->Strings[BIT_TO_OPTION_INDEX[15]] += " [2]";
-  pStrList->Strings[BIT_TO_OPTION_INDEX[16]] += " [1-4]";
-  pStrList->Strings[BIT_TO_OPTION_INDEX[17]] += " [1]";
+  int i = 0;
+  pStrList->Strings[BIT_TO_OPTION_INDEX[i++]] += " (B8G6I1l|0OQDS5Z2) [1-3]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[i++]] += " [1-4]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[i++]] += " [2]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[i++]] += " [2]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[i++]] += " [1,2]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[i++]] += " [1,4]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[i++]] += " [1,4]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[i++]] += " [1,4]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[i++]] += " [1,4]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[i++]] += " [1]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[i++]] += " [1,3]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[i++]] += " [1-4]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[i++]] += " [2,3]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[i++]] += " [1]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[i++]] += " [2]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[i++]] += " [2]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[i++]] += " [1-4]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[i++]] += " [1]";
+  pStrList->Strings[BIT_TO_OPTION_INDEX[i++]] += " [1,3]";
 
-  for (int i = 0; i < PASSWOPTIONS_NUM; i++) {
+  for (i = 0; i < PASSWOPTIONS_NUM; i++) {
     if (PASSWOPTIONS_STARRED[i]) {
       pStrList->Strings[BIT_TO_OPTION_INDEX[i]] += " *";
     }

@@ -92,9 +92,9 @@ void __fastcall TAboutForm::LinkClick(TObject *Sender, const UnicodeString Link,
 //---------------------------------------------------------------------------
 void __fastcall TAboutForm::SetDonorUI(void)
 {
-  if (g_asDonorInfo.IsEmpty())
-    AboutForm->DonorLbl->Caption = "Community";
+  if (g_donorInfo.Valid == DONOR_KEY_VALID)
+    AboutForm->DonorLbl->Caption = TRL("Donor ID:") + " " + g_donorInfo.Id;
   else
-    AboutForm->DonorLbl->Caption = TRL("Donor ID:") + " " + g_asDonorInfo;
+    AboutForm->DonorLbl->Caption = "Community";
 }
 //---------------------------------------------------------------------------

@@ -52,7 +52,8 @@ class TStringFileStreamW : public TFileStream
 {
 private:
   CharacterEncoding m_enc;
-  SecureMem<char> m_buf;
+  SecureMem<char> m_cbuf;
+  SecureMem<wchar_t> m_wbuf;
   int m_nBufLen;
   int m_nBufPos;
   AnsiString m_asSepChars;
@@ -92,14 +93,11 @@ public:
     int nDestBufSize);
 
   // write string to file
+  // throws exception if string encoding is invalid or write error occurred
   // -> pointer to the source buffer (wide string)
   // -> string length (no. of characters)
-  // -> variable which obtains the number of bytes written to the file
-  // <- 'true':  write operation was successful
-  //    'false': write error
-  bool __fastcall WriteString(const wchar_t* pwszSrc,
-    int nStrLen,
-    int* pnBytesWritten = nullptr);
+  void __fastcall WriteString(const wchar_t* pwszSrc,
+    int nStrLen);
 
   // set file pointer to beginning of file
   void __fastcall FileBeginning(void)

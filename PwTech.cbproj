@@ -161,13 +161,13 @@
         <Icon_MainIcon>graphics\pwtech.ico</Icon_MainIcon>
         <Defines>LUA_INT_TYPE=1;$(Defines)</Defines>
         <VerInfo_MajorVer>3</VerInfo_MajorVer>
-        <VerInfo_Keys>CompanyName=;FileDescription=Password Tech executable;FileVersion=3.5.4.0;InternalName=;LegalCopyright=Copyright 2002-2023 by Christian Thöing;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=Password Tech;ProductVersion=3.5.4;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileDescription=Password Tech executable;FileVersion=3.5.5.0;InternalName=;LegalCopyright=Copyright 2002-2023 by Christian Thöing;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=Password Tech;ProductVersion=3.5.5;Comments=</VerInfo_Keys>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <BCC_UseClassicCompiler>false</BCC_UseClassicCompiler>
         <VerInfo_MinorVer>5</VerInfo_MinorVer>
         <BT_BuildType>Debug</BT_BuildType>
         <BCC_OptimizeMaximum>true</BCC_OptimizeMaximum>
-        <VerInfo_Release>4</VerInfo_Release>
+        <VerInfo_Release>5</VerInfo_Release>
         <BCC_OptimizeForSpeed>false</BCC_OptimizeForSpeed>
         <BCC_StackFrames>true</BCC_StackFrames>
     </PropertyGroup>
@@ -176,7 +176,7 @@
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <Icon_MainIcon>pwtech.ico</Icon_MainIcon>
+        <Icon_MainIcon>PwTech_Icon.ico</Icon_MainIcon>
         <VerInfo_MajorVer>3</VerInfo_MajorVer>
         <VerInfo_MinorVer>5</VerInfo_MinorVer>
         <UsePackages>false</UsePackages>
@@ -184,10 +184,34 @@
         <BT_BuildType>Debug</BT_BuildType>
         <BCC_OptimizeMaximum>true</BCC_OptimizeMaximum>
         <BCC_OptimizeForSpeed>false</BCC_OptimizeForSpeed>
-        <VerInfo_Release>4</VerInfo_Release>
-        <VerInfo_Keys>CompanyName=;FileDescription=Password Tech executable;FileVersion=3.5.4.0;InternalName=;LegalCopyright=Copyright (c) 2002-2024 Christian Thöing;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=3.5.4;Comments=</VerInfo_Keys>
+        <VerInfo_Release>5</VerInfo_Release>
+        <VerInfo_Keys>CompanyName=;FileDescription=Password Tech executable;FileVersion=3.5.5.0;InternalName=;LegalCopyright=Copyright (c) 2002-2024 Christian Thöing;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=3.5.5;Comments=</VerInfo_Keys>
     </PropertyGroup>
     <ItemGroup>
+        <RcItem Include="graphics\pwtech_default.ico">
+            <ResourceType>ICON</ResourceType>
+            <ResourceId>A</ResourceId>
+        </RcItem>
+        <RcItem Include="graphics\pwtech_icon_blue.ico">
+            <ResourceType>ICON</ResourceType>
+            <ResourceId>Icon_Blue</ResourceId>
+        </RcItem>
+        <RcItem Include="graphics\pwtech_icon_colored.ico">
+            <ResourceType>ICON</ResourceType>
+            <ResourceId>Icon_Colors</ResourceId>
+        </RcItem>
+        <RcItem Include="graphics\pwtech_icon_green.ico">
+            <ResourceType>ICON</ResourceType>
+            <ResourceId>Icon_Green</ResourceId>
+        </RcItem>
+        <RcItem Include="graphics\pwtech_icon_orange.ico">
+            <ResourceType>ICON</ResourceType>
+            <ResourceId>Icon_Orange</ResourceId>
+        </RcItem>
+        <RcItem Include="graphics\pwtech_icon_red.ico">
+            <ResourceType>ICON</ResourceType>
+            <ResourceId>Icon_Red</ResourceId>
+        </RcItem>
         <CppCompile Include="PwTech.cpp">
             <BuildOrder>0</BuildOrder>
         </CppCompile>
@@ -564,25 +588,25 @@
         <CppCompile Include="src\zxcvbn\zxcvbn.cpp">
             <BuildOrder>90</BuildOrder>
         </CppCompile>
-        <FormResources Include="src\main\PasswManager.dfm"/>
-        <FormResources Include="src\main\PasswMngColSelect.dfm"/>
-        <FormResources Include="src\main\PasswMngDbProp.dfm"/>
-        <FormResources Include="src\main\MPPasswGen.dfm"/>
         <FormResources Include="src\main\PasswEnter.dfm"/>
         <FormResources Include="src\main\PasswList.dfm"/>
-        <FormResources Include="src\main\PasswOptions.dfm"/>
-        <FormResources Include="src\main\ProfileEditor.dfm"/>
-        <FormResources Include="src\main\Progress.dfm"/>
-        <FormResources Include="src\main\PasswMngDbSettings.dfm"/>
+        <FormResources Include="src\main\PasswManager.dfm"/>
+        <FormResources Include="src\main\Main.dfm"/>
+        <FormResources Include="src\main\MPPasswGen.dfm"/>
         <FormResources Include="src\main\PasswMngKeyValEdit.dfm"/>
         <FormResources Include="src\main\PasswMngPwHistory.dfm"/>
-        <FormResources Include="src\main\About.dfm"/>
-        <FormResources Include="src\main\CharSetBuilder.dfm"/>
+        <FormResources Include="src\main\PasswOptions.dfm"/>
+        <FormResources Include="src\main\PasswMngColSelect.dfm"/>
+        <FormResources Include="src\main\PasswMngDbProp.dfm"/>
+        <FormResources Include="src\main\PasswMngDbSettings.dfm"/>
         <FormResources Include="src\main\InfoBox.dfm"/>
-        <FormResources Include="src\main\Main.dfm"/>
         <FormResources Include="src\main\Configuration.dfm"/>
         <FormResources Include="src\main\CreateRandDataFile.dfm"/>
         <FormResources Include="src\main\CreateTrigramFile.dfm"/>
+        <FormResources Include="src\main\About.dfm"/>
+        <FormResources Include="src\main\CharSetBuilder.dfm"/>
+        <FormResources Include="src\main\ProfileEditor.dfm"/>
+        <FormResources Include="src\main\Progress.dfm"/>
         <FormResources Include="src\main\ProvideEntropy.dfm"/>
         <FormResources Include="src\main\QuickHelp.dfm"/>
         <BuildConfiguration Include="Base">
@@ -700,8 +724,50 @@
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName=".\Win64\Release\PwTech.exe" Configuration="Release" Class="ProjectOutput"/>
+                <DeployFile LocalName=".\Win64\Release\PwTech.exe" Configuration="Release" Class="ProjectOutput">
+                    <Platform Name="Win64">
+                        <RemoteName>PwTech.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="chacha.c" Configuration="Release" Class="ProjectFile"/>
                 <DeployFile LocalName="diceware8k.c" Configuration="Release" Class="ProjectFile"/>
+                <DeployFile LocalName="graphics\pwtech_default.ico" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="Win64">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="graphics\pwtech_icon_blue.ico" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="Win64">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="graphics\pwtech_icon_colored.ico" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="Win64">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="graphics\pwtech_icon_green.ico" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="Win64">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="graphics\pwtech_icon_orange.ico" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="Win64">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="graphics\pwtech_icon_red.ico" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="Win64">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="lua\lapi.c" Configuration="Release" Class="ProjectFile"/>
                 <DeployFile LocalName="lua\lauxlib.c" Configuration="Release" Class="ProjectFile"/>
                 <DeployFile LocalName="lua\lbaselib.c" Configuration="Release" Class="ProjectFile"/>

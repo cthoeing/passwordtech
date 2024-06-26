@@ -39,7 +39,8 @@
 std::atomic<bool> TUpdateCheckThread::s_blThreadRunning(false);
 
 //---------------------------------------------------------------------------
-TUpdateCheckThread::CheckResult __fastcall TUpdateCheckThread::CheckForUpdates(bool blShowError)
+TUpdateCheckThread::CheckResult __fastcall TUpdateCheckThread::CheckForUpdates(
+  bool blShowError)
 {
   try {
     const WString sAltUrl = Format("%s?fakeParam=%.8x", ARRAYOFCONST((
@@ -52,14 +53,14 @@ TUpdateCheckThread::CheckResult __fastcall TUpdateCheckThread::CheckForUpdates(b
     wszFileName[0] = '\0';
 
     //const wchar_t* pwszUrl = L"http://pwgen-win.sourceforge.net/manual.pdf";
-	const wchar_t* pwszUrl = PROGRAM_URL_VERSION;
+	  const wchar_t* pwszUrl = PROGRAM_URL_VERSION;
 
     // first try to delete a cache entry of the file before downloading it
     // to ensure that we get the latest version from the server
     if (!DeleteUrlCacheEntry(pwszUrl) && GetLastError() == ERROR_ACCESS_DENIED)
       pwszUrl = sAltUrl.c_str();
 
-	HRESULT hResult = URLDownloadToCacheFile(nullptr, pwszUrl, wszFileName,
+	  HRESULT hResult = URLDownloadToCacheFile(nullptr, pwszUrl, wszFileName,
         MAX_PATH, 0, NULL);
 
     WString sFileName(wszFileName);
@@ -110,9 +111,13 @@ TUpdateCheckThread::CheckResult __fastcall TUpdateCheckThread::CheckForUpdates(b
     }
   }
   catch (Exception& e) {
-    if (blShowError)
-      MsgBox(TRLFormat("Error while checking for updates:\n%1.",
-        { e.Message }), MB_ICONERROR);
+    if (blShowError) {
+      TThread::Synchronize(nullptr, [&e]()
+      {
+        MsgBox(TRLFormat("Error while checking for updates:\n%1.",
+          { e.Message }), MB_ICONERROR);
+      });
+    }
     return CheckResult::Error;
   }
 
