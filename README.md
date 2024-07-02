@@ -1,5 +1,5 @@
 # Password Tech
-Password Tech is a powerful password generator for Windows, capable of generating large amounts of cryptographically-secure passwords, pronounceable passwords, pattern-based passwords, passphrases composed of words, and scripted passwords. Passwords can be stored in encrypted databases along with user names, URLs, notes, etc. Password Tech provides lots of options to customize passwords to the users' various needs, and individual scripting with Lua gives full control over the process of password generation. Text encryption is also supported.
+Password Tech is a powerful password generator and password manager for Windows, capable of generating large amounts of cryptographically-secure passwords, pronounceable passwords, pattern-based passwords, passphrases composed of words, and scripted passwords. Passwords can be stored in encrypted databases along with user names, URLs, notes, etc. Password Tech provides lots of options to customize passwords to the users' various needs, and individual scripting with Lua gives full control over the process of password generation. Text encryption is also supported.
 
 Password Tech runs on Windows 10 and later.
 
