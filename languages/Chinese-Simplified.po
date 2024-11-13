@@ -1,17 +1,32 @@
 # Released under the GNU General Public License
-#. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
+#
+# !!! NOTE ON FORMAT STRINGS !!!
+# As of version 3.5.3, Password Tech uses format specifiers of the form "%N",
+# with N being the index of the argument (starting at N=1) to be inserted into
+# the formatted string. All arguments are provided as strings by the application.
+# The new format was chosen because it provides higher flexibility and security.
+# Example:
+# Format string:    "%1 characters / %2 bits per character"
+# 1st argument:     "90"
+# 2nd argument:     "6.4"
+# Resulting string: "90 characters / 6.4 bits per character"
+# In the translated string, the arguments can be specified in any order.
+# Password Tech is still compatible with the old format ("%d" for digits, "%f"
+# for floating point numbers, "%s" for strings, etc.), and the original strings
+# are still provided in the old format to avoid merge conflicts when updating
+# existing translations.
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.4\n"
+"Project-Id-Version: Password Tech 3.5.5\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: superwah\n"
+"Last-Translator: NUIST-DanielSong\n"
+"Language-Team: \n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5.5\n"
 
 #. Message box caption
 msgid "Info"
@@ -1053,8 +1068,7 @@ msgid ""
 "to receive a Donor Key:\n"
 "\n"
 "%d EUR / %d USD: Valid for current version and %d updates.\n"
-"%d EUR / %d USD: Valid for the entire lifetime of main version 3 (unlimited "
-"updates).\n"
+"%d EUR / %d USD: Valid for the entire lifetime of main version 3 (unlimited updates).\n"
 "\n"
 "Do you want to donate now?"
 msgstr ""
@@ -1104,6 +1118,10 @@ msgstr "数据库"
 #. Configuration window, General
 msgid "User interface style:"
 msgstr "界面风格："
+
+#. Configuration window, General
+msgid "Application icon:"
+msgstr "应用程序图标"
 
 #. Configuration window, General
 msgid "Change font for the GUI controls:"
@@ -1280,6 +1298,63 @@ msgstr "换行符序列"
 #. Configuration window, Language
 msgid "Select language:"
 msgstr "选择语言:"
+
+#. Configuration window, Language
+msgid "Install..."
+msgstr "安装..."
+
+#. Configuration window, Language, Install
+msgid "Language already installed"
+msgstr "语言已经安装"
+
+#. Configuration window, Language, Install
+msgid ""
+"Language file already exists:\n"
+"\"%1\""
+msgstr ""
+"语言文件已存在：\n"
+"\"%1\""
+
+#. Configuration window, Language, Install
+msgid "Language \"%1\" installed successfully."
+msgstr "语言 \"%1\" 安装成功。"
+
+#. Configuration window, Language, Install
+msgid ""
+"Could not copy file \"%1\" to\n"
+"\"%2\""
+msgstr ""
+"无法将文件 \"%1\" 复制到\n"
+"\"%2\""
+
+#. Configuration window, Language, Install
+msgid ""
+"Could not install language:\n"
+"%1."
+msgstr ""
+"无法安装语言：\n"
+"%1。"
+
+#. Configuration window, Language, Remove
+msgid ""
+"Are you sure you want to remove\n"
+"\"%1\"?"
+msgstr ""
+"您确定要移除\n"
+"\"%1\" 吗？"
+
+#. Configuration window, Language, Remove
+msgid "Language \"%1\" successfully removed."
+msgstr "语言 \"%1\" 已成功移除。"
+
+#. Configuration window, Language, Remove
+msgid ""
+"Could not delete file\n"
+"\"%1\"."
+msgstr ""
+"无法删除文件\n"
+"\"%1\"。"
+
 
 #. Configuration window, Database
 msgid "Clear clipboard when closing/locking database"
@@ -1506,6 +1581,10 @@ msgid "Exclude repeating consecutive characters (e.g. aa, 11)"
 msgstr "排除重复的连续字符 (例如: aa, 11)"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Remove leading and trailing whitespace characters"
+msgstr "删除前导和尾随空白字符"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Exclude duplicate entries in password lists"
 msgstr "排除密码表中重复条目"
 
@@ -1574,9 +1653,7 @@ msgid "Applies to phonetic passwords."
 msgstr "适用于拼音密码。"
 
 #. Advanced Password Options window, footnotes of checkbox list
-msgid ""
-"Selecting one of these options might reduce the security of generated "
-"passwords."
+msgid "Selecting one of these options might reduce the security of generated passwords."
 msgstr "选择其中一个选项可能会降低生成密码的安全性。"
 
 #. Advanced Password Options window, checkbox list, context menu
@@ -1753,9 +1830,7 @@ msgstr ""
 "翻译者：%s"
 
 #. About window, license info
-msgid ""
-"This program is distributed under the terms and conditions of the GNU "
-"General Public License (GPL)."
+msgid "This program is distributed under the terms and conditions of the GNU General Public License (GPL)."
 msgstr "本程序根据GNU通用公共许可证(GPL)的条款和条件发布。"
 
 #. About window, button
@@ -1812,8 +1887,7 @@ msgstr "生成拼音密码 (大小写混合字母)"
 
 #. Quick help for "Include characters" in main window
 msgid ""
-"You can use the following syntax to specify a (minimum) number N of "
-"characters\n"
+"You can use the following syntax to specify a (minimum) number N of characters\n"
 "for a character set:"
 msgstr "您可以使用以下语法为字符集指定（最小）N 个字符："
 
@@ -2011,9 +2085,7 @@ msgid "%d bits"
 msgstr "%d 比特"
 
 #. Provide Additional Entropy window, label
-msgid ""
-"Enter or paste some text into the box below, press mouse buttons, or move "
-"your mouse within the window."
+msgid "Enter or paste some text into the box below, press mouse buttons, or move your mouse within the window."
 msgstr "在输入框中输入或粘贴一些文本，点击鼠标按键或在窗口内移动鼠标。"
 
 #. Provide Additional Entropy window, message shown when entropy has been added
@@ -2119,11 +2191,6 @@ msgstr "标   签："
 #. Password Manager window, field name
 msgid "Select and add existing tag"
 msgstr "选择并添加已有标签"
-
-#. Password Manager window, Tag view, first item "All (tags)" (plural)
-msgctxt "tags"
-msgid "All"
-msgstr "全部"
 
 #. Password Manager window, Tag view when searching
 msgid "All search results"
@@ -2454,11 +2521,6 @@ msgstr "旧的主密码无效。"
 #. Password Manager window, New database, default name
 msgid "Untitled"
 msgstr "无标题"
-
-#. Password Manager window, text added to title when creating a duplicate of an existing entry
-msgctxt "noun"
-msgid "Copy"
-msgstr "复制"
 
 #. Password Manager window, Export database to CSV, success message
 msgid "Database successfully exported to CSV file."
