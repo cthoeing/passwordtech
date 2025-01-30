@@ -1,7 +1,7 @@
 // Util.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -150,6 +150,8 @@ std::vector<SecureWString> SplitStringBuf(const wchar_t* pwzsSrc,
 // <- converted string
 WString RemoveAccessKeysFromStr(const WString& sCaption);
 
+WString ShortenFileName(const WString& sFileName, int nMaxLen);
+
 enum {
   DONOR_KEY_VALID = 0,
   DONOR_KEY_EXPIRED = 1,
@@ -162,5 +164,23 @@ enum {
 };
 
 std::tuple<int, int, AnsiString> CheckDonorKey(const AnsiString& asInput);
+
+class ControlTagOverrider {
+public:
+  ControlTagOverrider(TControl* pControl, int nOverride)
+    : m_pControl(pControl), m_nTag(pControl->Tag)
+  {
+    m_pControl->Tag = nOverride;
+  }
+
+  ~ControlTagOverrider()
+  {
+    m_pControl->Tag = m_nTag;
+  }
+
+private:
+  TControl* m_pControl;
+  int m_nTag;
+};
 
 #endif

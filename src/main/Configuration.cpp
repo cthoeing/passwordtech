@@ -1,7 +1,7 @@
 // Configuration.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -164,6 +164,7 @@ __fastcall TConfigurationDlg::TConfigurationDlg(TComponent* Owner)
     TRLCaption(WarnExpiredEntriesCheck);
     TRLCaption(WarnEntriesExpireSoonCheck);
     TRLCaption(WarnExpireNumDaysLbl);
+    TRLCaption(KeepRecentFilesCheck);
 
     for (i = 0; i < AutoSaveList->Items->Count; i++)
       AutoSaveList->Items->Strings[i] =
@@ -173,10 +174,17 @@ __fastcall TConfigurationDlg::TConfigurationDlg(TComponent* Owner)
     TRLCaption(CancelBtn);
 
     TRLMenu(SelectFontMenu);
+
+    OpenDlg->Title = TRL(OpenDlg->Title);
   }
 
   UseAdvancedPasswEst->Caption = TRLFormat("Use advanced password strength "
     "estimation (%1)", { "zxcvbn" });
+
+  OpenDlg->Filter = FormatW("%1 (*.po)|*.po|%2 (*.*)|*.*|",
+    { TRL("Language files"),
+      TRL("All files") }
+  );
 
   LoadConfig();
 }
@@ -236,6 +244,7 @@ void __fastcall TConfigurationDlg::GetOptions(Configuration& config)
   config.Database.AutoSaveOption = static_cast<AutoSaveDatabase>(
     AutoSaveList->ItemIndex);
   config.Database.DefaultAutotypeSequence = DefaultAutotypeSeqBox->Text;
+  config.Database.KeepRecentFiles = KeepRecentFilesCheck->Checked;
 }
 //---------------------------------------------------------------------------
 void __fastcall TConfigurationDlg::SetOptions(const Configuration& config)
@@ -292,6 +301,7 @@ void __fastcall TConfigurationDlg::SetOptions(const Configuration& config)
   MaxNumBackupsSpinBtn->Position = config.Database.MaxNumBackups;
   OpenWindowOnStartupCheck->Checked = config.Database.OpenWindowOnStartup;
   OpenDbOnStartupCheck->Checked = config.Database.OpenLastDbOnStartup;
+  KeepRecentFilesCheck->Checked = config.Database.KeepRecentFiles;
   WarnExpiredEntriesCheck->Checked = config.Database.WarnExpiredEntries;
   WarnEntriesExpireSoonCheck->Checked = config.Database.WarnEntriesExpireSoon;
   WarnExpireNumDaysSpinBtn->Position = config.Database.WarnExpireNumDays;
@@ -477,25 +487,33 @@ void __fastcall TConfigurationDlg::AutoSaveCheckClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TConfigurationDlg::BenchmarkBtnClick(TObject *Sender)
 {
-  RandomPool rp(static_cast<RandomPool::CipherType>(0));
-  rp.Randomize();
-  word32 lDataSizeMB = 1 << std::max(0, BenchmarkMemList->ItemIndex);
-  word32 lBufSize = lDataSizeMB << 20;
-  auto buf = std::make_unique<word8[]>(lBufSize);
-  WString sResult;
-  Screen->Cursor = crHourGlass;
-  for (int i = 0; i < NUM_RANDOM_POOL_CIPHERS; i++) {
-    if (i > 0)
-      rp.SetCipher(static_cast<RandomPool::CipherType>(i));
-    Stopwatch clock;
-    rp.GetData(buf.get(), lBufSize);
-    long double rate = lDataSizeMB / clock.ElapsedSeconds();
-    sResult += "\n" + Format("%s: %.2f MB/s", ARRAYOFCONST((
-      RANDOM_POOL_CIPHER_NAMES[i], rate)));
+  try {
+    RandomPool rp(static_cast<RandomPool::CipherType>(0));
+    rp.Randomize();
+    word32 lDataSizeMB = 1 << std::max(0, BenchmarkMemList->ItemIndex);
+    word32 lBufSize = lDataSizeMB << 20;
+    auto buf = std::make_unique<word8[]>(lBufSize);
+    WString sResult;
+    Screen->Cursor = crHourGlass;
+    for (int i = 0; i < NUM_RANDOM_POOL_CIPHERS; i++) {
+      if (i > 0)
+        rp.SetCipher(static_cast<RandomPool::CipherType>(i));
+      Stopwatch clock;
+      rp.GetData(buf.get(), lBufSize);
+      double rate = lDataSizeMB / clock.ElapsedSeconds();
+      sResult += "\n" + Format("%s: %.2f MB/s", ARRAYOFCONST((
+        RANDOM_POOL_CIPHER_NAMES[i], static_cast<TVARREC_DOUBLE>(rate))));
+    }
+    Screen->Cursor = crDefault;
+    MsgBox(TRLFormat("Benchmark results (data size: %1 MB):",
+      { IntToStr(static_cast<int>(lDataSizeMB)) }) + sResult, MB_ICONINFORMATION);
   }
-  Screen->Cursor = crDefault;
-  MsgBox(TRLFormat("Benchmark results (data size: %1 MB):",
-    { IntToStr(static_cast<int>(lDataSizeMB)) }) + sResult, MB_ICONINFORMATION);
+  catch (const Exception& e) {
+    MsgBox(e.Message, MB_ICONERROR);
+  }
+  catch (const std::exception& e) {
+    MsgBox(e.what(), MB_ICONERROR);
+  }
 }
 //---------------------------------------------------------------------------
 void __fastcall TConfigurationDlg::ConvertLangFileBtnClick(TObject *Sender)

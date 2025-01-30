@@ -1,7 +1,7 @@
 // CharSetBuilder.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -66,6 +66,8 @@ __published:	// IDE-managed Components
   TUpDown *NumSpinBtn6;
   TCheckBox *AtLeastCheck6;
   TButton *ResetBtn;
+  TGroupBox *TagGroup;
+  TEdit *TagBox;
   void __fastcall LowerCaseCheckClick(TObject *Sender);
   void __fastcall UpperCaseCheckClick(TObject *Sender);
   void __fastcall DigitsCheckClick(TObject *Sender);

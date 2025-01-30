@@ -1,7 +1,7 @@
 // Main.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de> <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -234,24 +234,6 @@ WString LimitStringLen(const WString& sStr, int nMaxLen)
   return sStr.Length() > nMaxLen ? sStr.SubString(1, nMaxLen) : sStr;
 }
 
-class TagOverrider {
-public:
-  TagOverrider(TControl* pControl, int nOverride)
-    : m_pControl(pControl), m_nTag(pControl->Tag)
-  {
-    m_pControl->Tag = nOverride;
-  }
-
-  ~TagOverrider()
-  {
-    m_pControl->Tag = m_nTag;
-  }
-
-private:
-  TControl* m_pControl;
-  int m_nTag;
-};
-
 
 extern "C" int blake2s_self_test(void);
 
@@ -331,7 +313,7 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
   m_sRandSeedFileName = g_sAppDataPath + WString(PROGRAM_RANDSEEDFILE);
   if (FileExists(m_sRandSeedFileName)) {
     if (!m_randPool.ReadSeedFile(m_sRandSeedFileName))
-      MsgBox(TRLFormat("Could not read random seed file\n\"%1\".",
+	  MsgBox(TRLFormat("Could not read random seed file\n\"%1\".",
         { m_sRandSeedFileName }), MB_ICONERROR);
   }
 
@@ -348,7 +330,18 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
   MainMenu_Help_About->Caption = TRLFormat("About %1...", { PROGRAM_NAME });
   TrayMenu_About->Caption = MainMenu_Help_About->Caption;
   TrayMenu_Restore->Caption = TRLFormat("Restore %1", { PROGRAM_NAME });
-  //m_sEntropyBitsLbl = TRL("Entropy bits:");
+
+  m_sCmdLineInfo += TRL("Usage:");
+  m_sCmdLineInfo += "\nPwTech [-help] [-readonly] [-profile {profilename}] "
+    "[-gen [number]] [-silent] [-opendb {filename}]\n";
+  m_sCmdLineInfo += "\n-help - " + TRL("Display this help message.");
+  m_sCmdLineInfo += "\n-readonly - " + TRL("Do not write to disk unless explicitly requested.");
+  m_sCmdLineInfo += "\n-profile - " + TRL("Load profile named 'profilename' on start-up.");
+  m_sCmdLineInfo += "\n-gen - " + TRL("Generate 'number' of passwords and display "
+    "on the console, then close application.");
+  m_sCmdLineInfo += "\n-silent - " + TRL("Launch application in the background.");
+  m_sCmdLineInfo += "\n-opendb - " + TRL("Open database named 'filename' on start-up "
+    "and show password manager window.");
 
   m_sCharSetHelp = TQuickHelpForm::FormatString(FormatW(
         "%1\n"
@@ -522,6 +515,12 @@ void __fastcall TMainForm::StartupAction(void)
   if (m_blStartup) {
     m_blStartup = false;
 
+    if (g_cmdLineOptions.ShowHelp && g_blConsole) {
+      std::wcout << WStringToUtf8(m_sCmdLineInfo) << std::endl;
+      Close();
+      return;
+    }
+
     // load profile specified by command line parameter or program configuration
     if (!g_cmdLineOptions.ProfileName.IsEmpty() ||
         (g_config.LoadProfileStartup && !g_config.LoadProfileName.IsEmpty())) {
@@ -585,6 +584,10 @@ void __fastcall TMainForm::StartupAction(void)
 
     AboutForm->SetDonorUI();
     ConfigurationDlg->SetDonorUI();
+
+    if (g_cmdLineOptions.ShowHelp) {
+      MainMenu_Help_CmdLineArgsClick(this);
+    }
   }
 }
 //---------------------------------------------------------------------------
@@ -837,7 +840,7 @@ void __fastcall TMainForm::SetDonorUI(void)
   if (g_donorInfo.Type < 0)
     sInfo += " (Community)";
   else
-    sInfo += ((g_donorInfo.Type == DONOR_TYPE_PRO) ? " (DONOR PRO)" : " (DONOR)");
+    sInfo += (g_donorInfo.Type == DONOR_TYPE_PRO) ? " (DONOR PRO)" : " (DONOR)";
   StatusBar->Panels->Items[0]->Text = sInfo;
 }
 //---------------------------------------------------------------------------
@@ -1033,7 +1036,7 @@ void __fastcall TMainForm::LoadConfig(void)
     "SystemTrayIconShowConst", true);
 
   if ((!g_blConsole || g_cmdLineOptions.GenNumPassw == 0) &&
-      (!Application->ShowMainForm || g_config.ShowSysTrayIconConst)) {
+	  (!Application->ShowMainForm || g_config.ShowSysTrayIconConst)) {
     TrayIcon->Visible = true;
   }
 
@@ -2911,7 +2914,7 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
           case gpdGuiSingle:
             if (pEditBox == nullptr) {
               {
-                TagOverrider ovr(PasswBox, 0);
+                ControlTagOverrider ovr(PasswBox, 0);
                 ClearEditBoxTextBuf(PasswBox);
                 SetEditBoxTextBuf(PasswBox, pwszPassw);
               }
@@ -3329,10 +3332,11 @@ void __fastcall TMainForm::TimerTick(TObject *Sender)
     //Clipboard()->Clear();
 
   if (m_nAutoClearPasswCnt > 0 && --m_nAutoClearPasswCnt == 0) {
-    TagOverrider ovr(PasswBox, 0);
+    ControlTagOverrider ovr(PasswBox, 0);
     ClearEditBoxTextBuf(PasswBox);
     PasswInfoLbl->Caption = TRL("Click on \"Generate\"");
-    PasswSecurityBar->Width = 0;
+    PasswInfoLbl->Hint = WString();
+    PasswSecurityBarPanel->Width = 0;
   }
 }
 //---------------------------------------------------------------------------
@@ -3432,41 +3436,42 @@ void __fastcall TMainForm::ListMenuPopup(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::ListMenu_UndoClick(TObject *Sender)
 {
-  SendMessage(GetWindow(((TComboBox*) ListMenu->PopupComponent)->Handle,
+  SendMessage(GetWindow(reinterpret_cast<TComboBox*>(ListMenu->PopupComponent)->Handle,
       GW_CHILD), WM_UNDO, 0, 0);
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::ListMenu_CutClick(TObject *Sender)
 {
-  SendMessage(((TComboBox*) ListMenu->PopupComponent)->Handle, WM_CUT, 0, 0);
+  SendMessage(reinterpret_cast<TComboBox*>(ListMenu->PopupComponent)->Handle, WM_CUT, 0, 0);
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::ListMenu_CopyClick(TObject *Sender)
 {
-  SendMessage(((TComboBox*) ListMenu->PopupComponent)->Handle, WM_COPY, 0, 0);
+  SendMessage(reinterpret_cast<TComboBox*>(ListMenu->PopupComponent)->Handle, WM_COPY, 0, 0);
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::ListMenu_PasteClick(TObject *Sender)
 {
-  SendMessage(((TComboBox*) ListMenu->PopupComponent)->Handle, WM_PASTE, 0, 0);
+  SendMessage(reinterpret_cast<TComboBox*>(ListMenu->PopupComponent)->Handle, WM_PASTE, 0, 0);
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::ListMenu_DeleteClick(TObject *Sender)
 {
-  ((TComboBox*) ListMenu->PopupComponent)->SelText = WString();
+  reinterpret_cast<TComboBox*>(ListMenu->PopupComponent)->SelText = WString();
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::ListMenu_SelectAllClick(TObject *Sender)
 {
-  ((TComboBox*) ListMenu->PopupComponent)->SelectAll();
+  reinterpret_cast<TComboBox*>(ListMenu->PopupComponent)->SelectAll();
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::ListMenu_ClearListClick(TObject *Sender)
 {
-  if (((TComboBox*) ListMenu->PopupComponent)->Items->Count > 0) {
+  auto pComboBox = reinterpret_cast<TComboBox*>(ListMenu->PopupComponent);
+  if (pComboBox->Items->Count > 0) {
     if (MsgBox(TRL("All entries will be removed from the list.\nAre you sure?"),
         MB_ICONWARNING + MB_YESNO + MB_DEFBUTTON2) == IDYES)
-      ((TComboBox*) ListMenu->PopupComponent)->Clear();
+      pComboBox->Clear();
   }
 }
 //---------------------------------------------------------------------------
@@ -3540,7 +3545,7 @@ void __fastcall TMainForm::PasswBoxMenu_ChangeFontClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::TogglePasswBtnClick(TObject *Sender)
 {
-  TagOverrider ovr(PasswBox, 0);
+  ControlTagOverrider ovr(PasswBox, 0);
   PasswBox->PasswordChar = TogglePasswBtn->Down ? PASSWORD_CHAR : '\0';
 }
 //---------------------------------------------------------------------------
@@ -4117,9 +4122,10 @@ void __fastcall TMainForm::PasswBoxMenu_SaveAsFileClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::ListMenu_RemoveEntryClick(TObject *Sender)
 {
-  int nItemIdx = ((TComboBox*) ListMenu->PopupComponent)->ItemIndex;
+  auto pComboBox = reinterpret_cast<TComboBox*>(ListMenu->PopupComponent);
+  int nItemIdx = pComboBox->ItemIndex;
   if (nItemIdx >= 0)
-    ((TComboBox*) ListMenu->PopupComponent)->Items->Delete(nItemIdx);
+    pComboBox->Items->Delete(nItemIdx);
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::MainMenu_OptionsClick(TObject *Sender)
@@ -4313,7 +4319,7 @@ void __fastcall TMainForm::FormCloseQuery(TObject *Sender, bool &CanClose)
 
         auto pTask = TTask::Create([&cancelFlag]()
         {
-          while (CheckThreadRunning() && !cancelFlag)
+          while (CheckThreadRunning() && !cancelFlag->load())
             TThread::Sleep(10);
         });
 
@@ -4420,6 +4426,11 @@ void __fastcall TMainForm::OnEndSession(TWMEndSession& msg)
 void __fastcall TMainForm::BuildBtnClick(TObject *Sender)
 {
   CharSetBuilderForm->Show();
+}
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::MainMenu_Help_CmdLineArgsClick(TObject *Sender)
+{
+  ShowMessage(m_sCmdLineInfo);
 }
 //---------------------------------------------------------------------------
 

@@ -1,7 +1,7 @@
 // PasswManager.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -41,6 +41,7 @@
 #include <Vcl.VirtualImageList.hpp>
 #include <map>
 #include <list>
+#include <optional>
 //---------------------------------------------------------------------------
 #include <ComCtrls.hpp>
 #include <Buttons.hpp>
@@ -239,6 +240,9 @@ __published:	// IDE-managed Components
   TMenuItem *MainMenu_View_Filter_WeakPassw;
   TPanel *FilterInfoPanel;
   TSpeedButton *ClearFilterBtn;
+  TMenuItem *MainMenu_File_ClearRecentFiles;
+  TMenuItem *MainMenu_File_N6;
+  TSpeedButton *ToggleNotesBtn;
   void __fastcall MainMenu_File_NewClick(TObject *Sender);
   void __fastcall DbViewSelectItem(TObject *Sender,
     TListItem *Item, bool Selected);
@@ -338,6 +342,11 @@ __published:	// IDE-managed Components
     void __fastcall NotesBoxKeyPress(TObject *Sender, System::WideChar &Key);
   void __fastcall MainMenu_View_Filter_ExpiredClick(TObject *Sender);
   void __fastcall ClearFilterBtnClick(TObject *Sender);
+  void __fastcall MainMenu_File_ClearRecentFilesClick(TObject *Sender);
+  void __fastcall NotesBoxEnter(TObject *Sender);
+  void __fastcall NotesBoxExit(TObject *Sender);
+  void __fastcall ToggleNotesBtnClick(TObject *Sender);
+  void __fastcall NotesBoxChange(TObject *Sender);
 
 
 private:	// User declarations
@@ -345,6 +354,7 @@ private:	// User declarations
   std::unique_ptr<TSelectItemThread> m_dbViewSelItemThread;
   std::unique_ptr<TSelectItemThread> m_tagViewSelItemThread;
   WString m_sDbFileName;
+  std::unique_ptr<TStringList> m_recentFiles;
   bool m_blDbReadOnly;
   TListItem* m_pSelectedItem;
   int m_nShowColMask;
@@ -361,20 +371,19 @@ private:	// User declarations
   bool m_blDbChanged;
   bool m_blLocked;
   bool m_blUnlockTried;
-  //word32 m_lLastUserActionTime;
   TDateTime m_lastUserActionTime;
   int m_nSearchFlags;
-  //int m_nNumSearchResults;
   TColor m_defaultListColor;
   std::vector<int> m_listColWidths;
   WString m_uiFieldNames[PasswDbEntry::NUM_FIELDS];
   std::map<std::wstring, std::wstring> m_keyValNames;
-  //std::map<SecureWString,word32> m_globalTags, m_searchResultTags;
   std::list<std::pair<SecureWString,word32>> m_tags;
   std::map<SecureWString,SecureWString> m_globalCaseiTags;
   std::set<SecureWString> m_tagFilter;
-  std::unique_ptr<PasswDbEntry::KeyValueList> m_tempKeyVal;
-  std::unique_ptr<PasswDbEntry::PasswHistory> m_tempPasswHistory;
+  std::optional<PasswDbEntry::KeyValueList> m_tempKeyVal;
+  std::optional<PasswDbEntry::PasswHistory> m_tempPasswHistory;
+  std::optional<SecureWString> m_tempNotes;
+  WString m_sNotesHiddenText;
   IDropTarget* m_pPasswBoxDropTarget;
 
   void __fastcall LoadConfig(void);
@@ -416,6 +425,9 @@ private:	// User declarations
   void __fastcall SetListViewSortFlag(void);
   void __fastcall OnQueryEndSession(TWMQueryEndSession& msg);
   void __fastcall ToggleShutdownBlocker(const WString& sMsg = WString());
+  void __fastcall UpdateRecentFiles(void);
+  void __fastcall UpdateRecentFilesMenu(void);
+  void __fastcall OnOpenRecentFileClick(TObject* Sender);
 public:		// User declarations
   __fastcall TPasswMngForm(TComponent* Owner);
   __fastcall ~TPasswMngForm();

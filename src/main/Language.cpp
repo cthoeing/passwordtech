@@ -1,7 +1,7 @@
 // Language.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -43,6 +43,12 @@ const wchar_t
  PO_MSG_ID[]              = L"msgid",
  PO_MSG_CTXT[]            = L"msgctxt",
  PO_MSG_STR[]             = L"msgstr";
+
+template<size_t N>
+constexpr size_t wlength( wchar_t const (&)[N] )
+{
+  return N-1;
+}
 
 
 // calculate hash of a string without case sensitivity
@@ -217,17 +223,17 @@ LanguageSupport::LanguageSupport(const WString& sFileName,
 
       int i = 0;
       const auto* psPrev = psDest;
-      if (wcsncmp(wszMsg, PO_MSG_ID, sizeof(PO_MSG_ID)/2-1) == 0) {
+      if (wcsncmp(wszMsg, PO_MSG_ID, wlength(PO_MSG_ID)) == 0) {
         psDest = &sMsgId;
-        i += 5;
+        i += wlength(PO_MSG_ID);
       }
-      else if (wcsncmp(wszMsg, PO_MSG_STR, sizeof(PO_MSG_STR)/2-1) == 0) {
+      else if (wcsncmp(wszMsg, PO_MSG_STR, wlength(PO_MSG_STR)) == 0) {
         psDest = &sMsgStr;
-        i += 6;
+        i += wlength(PO_MSG_STR);
       }
-      else if (wcsncmp(wszMsg, PO_MSG_CTXT, sizeof(PO_MSG_CTXT)/2-1) == 0) {
+      else if (wcsncmp(wszMsg, PO_MSG_CTXT, wlength(PO_MSG_CTXT)) == 0) {
         psDest = &sMsgCtxt;
-        i += 7;
+        i += wlength(PO_MSG_CTXT);
       }
       else if (wszMsg[0] != '"')
         psDest = nullptr;

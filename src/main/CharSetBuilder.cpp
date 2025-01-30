@@ -1,7 +1,7 @@
 // CharSetBuilder.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -72,6 +72,7 @@ __fastcall TCharSetBuilderForm::TCharSetBuilderForm(TComponent* Owner)
     TRLCaption(this);
     TRLCaption(CharSetSelGroup);
     TRLCaption(ResultGroup);
+    TRLCaption(TagGroup);
 
     for (int i = 0; i < NUM_PARAM; i++) {
       TRLCaption(s_charSetUsed[i]);
@@ -236,7 +237,12 @@ void __fastcall TCharSetBuilderForm::CharSetParamChange(TObject *Sender)
     return;
   }*/
 
-  if (!blValid)
+  if (blValid) {
+    if (!TagBox->Text.IsEmpty()) {
+      sResult = "[" + TagBox->Text + "]" + sResult;
+    }
+  }
+  else
     sResult = WString();
 
   ResultBox->Text = sResult;
@@ -264,6 +270,8 @@ void __fastcall TCharSetBuilderForm::ResetBtnClick(TObject *Sender)
 void __fastcall TCharSetBuilderForm::FormShow(TObject *Sender)
 {
   TopMostManager::GetInstance().SetForm(this);
+  TagBox->Text = WString();
+  CharSetSelGroup->SetFocus();
 }
 //---------------------------------------------------------------------------
 

@@ -1,4 +1,4 @@
-﻿# German translation of Password Tech 3.5.5
+﻿# German translation of Password Tech 3.5.6
 # Released under the GNU General Public License
 #
 # !!! NOTE ON FORMAT STRINGS !!!
@@ -20,7 +20,7 @@
 #. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.5\n"
+"Project-Id-Version: Password Tech 3.5.6\n"
 "Last-Translator: Christian Thöing\n"
 "Language: de\n"
 
@@ -142,7 +142,7 @@ msgstr "Auf \"Generieren\" klicken"
 
 #. Main window, button to toggle password display (either display as-is or hide behind symbols)
 msgid "Hide/show password"
-msgstr "Passwort verstecken/anzeigen"
+msgstr "Passwort verbergen/anzeigen"
 
 #. Main window, password groupbox, tooltip of quality bar
 msgid "Hold left mouse button to drag & drop password"
@@ -234,7 +234,7 @@ msgstr "Fenster immer oben"
 
 #. Main menu, Options submenu
 msgid "Hide Entropy Progress"
-msgstr "Entropie-Fortschritt verstecken"
+msgstr "Entropie-Fortschritt ausblenden"
 
 #. Main menu, Options submenu
 msgid "Save Settings on Exit"
@@ -251,6 +251,9 @@ msgstr "Hilfe"
 #. Main window, Help button tooltip
 msgid "Open Manual"
 msgstr "Benutzerhandbuch öffnen"
+
+msgid "Command Line Arguments..."
+msgstr "Kommandozeilen-Argumente..."
 
 #. Main menu, Help submenu
 msgid "Visit Website"
@@ -295,6 +298,34 @@ msgstr "Passwort generieren und Autotype"
 #. System tray context menu
 msgid "Open user manual"
 msgstr "Benutzerhandbuch öffnen"
+
+#. Command line arguments
+msgid "Usage:"
+msgstr "Benutzung:"
+
+#. Command line arguments
+msgid "Display this help message."
+msgstr "Diesen Hilfetext anzeigen."
+
+#. Command line arguments
+msgid "Do not write to disk unless explicitly requested."
+msgstr "Nicht auf die Festplatte schreiben, wenn nicht explizit verlangt."
+
+#. Command line arguments
+msgid "Load profile named 'profilename' on start-up."
+msgstr "Profil mit Namen 'profilename' beim Starten laden."
+
+#. Command line arguments
+msgid "Generate 'number' of passwords and display on the console, then close application."
+msgstr "Anzahl 'number' an Passwörtern generieren und auf der Konsole anzeigen, dann Programm schließen."
+
+#. Command line arguments
+msgid "Launch application in the background."
+msgstr "Programm im Hintergrund starten."
+
+#. Command line arguments
+msgid "Open database named 'filename' on start-up and show password manager window."
+msgstr "Datenbank mit Namen 'filename' beim Starten öffnen und Passwort-Manager-Fenster anzeigen."
 
 #. Main window, Clear Clipboard button tooltip
 msgid "Clear clipboard (text contents only)"
@@ -1320,6 +1351,14 @@ msgstr "Sprache auswählen:"
 msgid "Install..."
 msgstr "Installieren..."
 
+#. Configuration window, Language, Open dialog title
+msgid "Select language file to install"
+msgstr "Zu installierende Sprache auswählen"
+
+#. Configuration window, Language, Open dialog filter
+msgid "Language files"
+msgstr "Sprachdateien"
+
 #. Configuration window, Language, Install
 msgid "Language already installed"
 msgstr "Sprache bereits installiert"
@@ -1383,6 +1422,9 @@ msgstr "Fenster bei Programmstart öffnen"
 #. Configuration window, Database
 msgid "Open last used database on startup"
 msgstr "Zuletzt verwendete Datenbank beim Start öffnen"
+
+msgid "Keep list of recently opened files"
+msgstr "Liste kürzlich geöffneter Dateien beibehalten"
 
 #. Configuration window, Database
 msgid "Warn if database contains expired entries"
@@ -2249,6 +2291,10 @@ msgid "Lock"
 msgstr "Sperren"
 
 #. Password Manager window, main menu, File submenu
+msgid "Clear Recently Opened List"
+msgstr "Liste kürzlich geöffneter Dateien löschen"
+
+#. Password Manager window, main menu, File submenu
 msgid "Unlock"
 msgstr "Entsperren"
 
@@ -2394,7 +2440,15 @@ msgstr "Datenbank sperren/entsperren"
 
 #. Password Manager window, Edit panel, Toggle password button, tooltip
 msgid "Left-click: Hide/show password, right-click: Generate password"
-msgstr "Linksklick: Passwort verstecken/anzeigen, Rechtsklick: Passwort generieren"
+msgstr "Linksklick: Passwort verbergen/anzeigen, Rechtsklick: Passwort generieren"
+
+#. Password Manager window, Edit panel, Toggle notes button, tooltip
+msgid "Hide/show notes"
+msgstr "Notizen anzeigen/verbergen"
+
+#. Password Manager window, Edit Panel, text displayed when notes are hidden
+msgid "Notes hidden - click here to display"
+msgstr "Notizen verborgen - zum Anzeigen hier klicken"
 
 #. Password Manager window, title of password entry dialog when unlocking database
 msgid "Unlock %s"
@@ -2919,47 +2973,66 @@ msgstr "Gefiltert"
 msgid "Remove filter"
 msgstr "Filter entfernen"
 
+#. Main window, button to build character set definition
 msgid "Build..."
 msgstr "Erstellen..."
 
+#. Main window, button to build character set definition, hint
 msgid "Build character set definition"
 msgstr "Zeichensatz-Definition erstellen"
 
+#. Character set builder, window title
 msgid "Character Set Builder"
 msgstr "Zeichensatz erstellen"
 
+#. Character set builder, group box with character sets
 msgid "Character set selection"
 msgstr "Zeichensatz-Auswahl"
 
+#. Character set builder, group box with tag/comment
+msgid "Tag/comment"
+msgstr "Kennzeichnung/Kommentar"
+
+#. Character set builder, group box with resulting definition
 msgid "Resulting character set definition"
 msgstr "Resultierende Zeichensatz-Definition"
 
+#. Character set builder, button
 msgid "Apply"
 msgstr "Übernehmen"
 
+#. Character set builder, check box
 msgid "Lower-case letters (a-z)"
 msgstr "Kleinbuchstaben (a-z)"
 
+#. Character set builder, check box
 msgid "Upper-case letters (A-Z)"
 msgstr "Großbuchstaben (A-Z)"
 
+#. Character set builder, check box
 msgid "Digits (0-9)"
 msgstr "Zahlen (0-9)"
 
+#. Character set builder, check box
 msgid "Characters from range:"
 msgstr "Zeichen aus Bereich:"
 
+#. Character set builder, check box
 msgid "Additional characters:"
 msgstr "Zusätzliche Zeichen:"
 
+#. Character set builder, check box
 msgid "At least"
 msgstr "Mindestens"
 
+#. Character set builder, edit box
 msgid "From:"
 msgstr "Von:"
 
+#. Character set builder, edit box
 msgid "to:"
 msgstr "bis:"
 
+#. Character set builder, error message
 msgid "Invalid character range."
 msgstr "Ungültiger Zeichenbereich."

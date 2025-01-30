@@ -1,7 +1,7 @@
 // SendKeys.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -29,6 +29,8 @@
 #pragma package(smart_init)
 
 static std::unordered_map<std::string, int> s_keyPlaceholders;
+
+std::atomic<int> TSendKeysThread::s_nThreadState(TSendKeysThread::INACTIVE);
 
 const int
   VIRTUAL_KEY_DELAY = 200,
@@ -134,7 +136,7 @@ const wchar_t* SendKeys::SendUnicodeChar(const wchar_t* pwszKeyPair,
 void SendKeys::SendString(const wchar_t* pwszStr)
 {
   Sleep(INIT_DELAY);
-  while (*pwszStr != '\0') {
+  while (*pwszStr != '\0' && !TSendKeysThread::ThreadAborted()) {
     pwszStr = SendUnicodeChar(pwszStr);
     Sleep(m_nDelay);
   }
@@ -336,14 +338,13 @@ void SendKeys::SendComplexString(const WString& sStr,
 void SendKeys::SendKeySequence(KeySequence& input)
 {
   Sleep(INIT_DELAY);
-  for (word32 i = 0; i < input.keys.size(); i++) {
+  for (word32 i = 0; i < input.keys.size() && !TSendKeysThread::ThreadAborted(); i++) {
     if (!input.keys[i].empty())
       SendInput(input.keys[i].size(), input.keys[i].data(), sizeof(INPUT));
     Sleep(input.delays[i]);
   }
 }
 //---------------------------------------------------------------------------
-std::atomic<int> TSendKeysThread::s_nThreadState(TSendKeysThread::INACTIVE);
 
 void __fastcall TSendKeysThread::Execute(void)
 {

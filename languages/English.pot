@@ -17,7 +17,7 @@
 # existing translations.
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.5\n"
+"Project-Id-Version: Password Tech 3.5.6\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
@@ -255,6 +255,9 @@ msgstr ""
 msgid "Open Manual"
 msgstr ""
 
+msgid "Command Line Arguments..."
+msgstr ""
+
 #. Main menu, Help submenu
 msgid "Visit Website"
 msgstr ""
@@ -297,6 +300,37 @@ msgstr ""
 
 #. System tray context menu
 msgid "Open user manual"
+msgstr ""
+
+#. Command line arguments
+msgid "Usage:"
+msgstr ""
+
+#. Command line arguments
+msgid "Display this help message."
+msgstr ""
+
+#. Command line arguments
+msgid "Do not write to disk unless explicitly requested."
+msgstr ""
+
+#. Command line arguments
+msgid "Load profile named 'profilename' on start-up."
+msgstr ""
+
+#. Command line arguments
+msgid ""
+"Generate 'number' of passwords and display on the console, then close "
+"application."
+msgstr ""
+
+#. Command line arguments
+msgid "Launch application in the background."
+msgstr ""
+
+#. Command line arguments
+msgid ""
+"Open database named 'filename' on start-up and show password manager window."
 msgstr ""
 
 #. Main window, Clear Clipboard button tooltip
@@ -1199,6 +1233,14 @@ msgstr ""
 msgid "Install..."
 msgstr ""
 
+#. Configuration window, Language, Open dialog title
+msgid "Select language file to install"
+msgstr ""
+
+#. Configuration window, Language, Open dialog filter
+msgid "Language files"
+msgstr ""
+
 #. Configuration window, Language, Install
 msgid "Language already installed"
 msgstr ""
@@ -1271,6 +1313,9 @@ msgstr ""
 
 #. Configuration window, Database
 msgid "Open last used database on startup"
+msgstr ""
+
+msgid "Keep list of recently opened files"
 msgstr ""
 
 #. Configuration window, Database
@@ -2110,6 +2155,10 @@ msgid "Lock"
 msgstr ""
 
 #. Password Manager window, main menu, File submenu
+msgid "Clear Recently Opened List"
+msgstr ""
+
+#. Password Manager window, main menu, File submenu
 msgid "Unlock"
 msgstr ""
 
@@ -2255,6 +2304,14 @@ msgstr ""
 
 #. Password Manager window, Edit panel, Toggle password button, tooltip
 msgid "Left-click: Hide/show password, right-click: Generate password"
+msgstr ""
+
+#. Password Manager window, Edit panel, Toggle notes button, tooltip
+msgid "Hide/show notes"
+msgstr ""
+
+#. Password Manager window, Edit Panel, text displayed when notes are hidden
+msgid "Notes hidden - click here to display"
 msgstr ""
 
 #. Password Manager window, title of password entry dialog when unlocking database
@@ -2744,47 +2801,66 @@ msgstr ""
 msgid "Remove filter"
 msgstr ""
 
+#. Main window, button to build character set definition
 msgid "Build..."
 msgstr ""
 
+#. Main window, button to build character set definition, hint
 msgid "Build character set definition"
 msgstr ""
 
+#. Character set builder, window title
 msgid "Character Set Builder"
 msgstr ""
 
+#. Character set builder, group box with character sets
 msgid "Character set selection"
 msgstr ""
 
+#. Character set builder, group box with tag/comment
+msgid "Tag/comment"
+msgstr ""
+
+#. Character set builder, group box with resulting definition
 msgid "Resulting character set definition"
 msgstr ""
 
+#. Character set builder, button
 msgid "Apply"
 msgstr ""
 
+#. Character set builder, check box
 msgid "Lower-case letters (a-z)"
 msgstr ""
 
+#. Character set builder, check box
 msgid "Upper-case letters (A-Z)"
 msgstr ""
 
+#. Character set builder, check box
 msgid "Digits (0-9)"
 msgstr ""
 
+#. Character set builder, check box
 msgid "Characters from range:"
 msgstr ""
 
+#. Character set builder, check box
 msgid "Additional characters:"
 msgstr ""
 
+#. Character set builder, check box
 msgid "At least"
 msgstr ""
 
+#. Character set builder, edit box
 msgid "From:"
 msgstr ""
 
+#. Character set builder, edit box
 msgid "to:"
 msgstr ""
 
+#. Character set builder, error message
 msgid "Invalid character range."
 msgstr ""

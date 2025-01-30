@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Password Tech"
-#define MyAppVersion "3.5.5"
+#define MyAppVersion "3.5.6"
 #define MyAppPublisher "Christian Thöing"
 #define MyAppURL "http://pwgen-win.sourceforge.net"
 #define MyAppExeName "PwTech.exe"
@@ -96,6 +96,6 @@ begin
     Result := 'de';
   end
   else begin
-    Result := Param;
+    Result := '';
   end;
 end;

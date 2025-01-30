@@ -1,4 +1,4 @@
-﻿Password Tech: Copyright (c) 2002-2024 by Christian Thöing <c.thoeing@web.de>
+﻿Password Tech: Copyright (c) 2002-2025 by Christian Thöing <c.thoeing@web.de>
 
 The software is distributed under the terms and conditions of the GNU
 General Public License version 2 or later.
