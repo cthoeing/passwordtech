@@ -3,7 +3,7 @@ object ConfigurationDlg: TConfigurationDlg
   Top = 187
   BorderIcons = [biSystemMenu, biMaximize]
   Caption = 'Configuration'
-  ClientHeight = 517
+  ClientHeight = 555
   ClientWidth = 552
   Color = clBtnFace
   Constraints.MinHeight = 456
@@ -22,12 +22,12 @@ object ConfigurationDlg: TConfigurationDlg
     Left = 10
     Top = 10
     Width = 528
-    Height = 452
+    Height = 487
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    ActivePage = GeneralSheet
+    ActivePage = DatabaseSheet
     Constraints.MinWidth = 490
     HotTrack = True
     TabOrder = 0
@@ -39,7 +39,7 @@ object ConfigurationDlg: TConfigurationDlg
       Caption = 'General'
       DesignSize = (
         520
-        420)
+        455)
       object ChangeFontLbl: TLabel
         Left = 10
         Top = 90
@@ -260,7 +260,7 @@ object ConfigurationDlg: TConfigurationDlg
       ImageIndex = 6
       DesignSize = (
         520
-        420)
+        455)
       object RandomPoolCipherLbl: TLabel
         Left = 10
         Top = 20
@@ -435,7 +435,7 @@ object ConfigurationDlg: TConfigurationDlg
       Caption = 'Hot Keys'
       DesignSize = (
         520
-        420)
+        455)
       object HotKeyLbl: TLabel
         Left = 10
         Top = 134
@@ -504,7 +504,7 @@ object ConfigurationDlg: TConfigurationDlg
         Left = 10
         Top = 170
         Width = 498
-        Height = 196
+        Height = 231
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -559,7 +559,7 @@ object ConfigurationDlg: TConfigurationDlg
       end
       object RemoveBtn: TButton
         Left = 407
-        Top = 375
+        Top = 410
         Width = 101
         Height = 31
         Margins.Left = 4
@@ -581,7 +581,7 @@ object ConfigurationDlg: TConfigurationDlg
       Caption = 'Files'
       DesignSize = (
         520
-        420)
+        455)
       object CharEncodingGroup: TRadioGroup
         Left = 10
         Top = 20
@@ -625,7 +625,7 @@ object ConfigurationDlg: TConfigurationDlg
       Caption = 'Updates'
       DesignSize = (
         520
-        420)
+        455)
       object UpdateCheckGroup: TRadioGroup
         Left = 10
         Top = 20
@@ -678,13 +678,13 @@ object ConfigurationDlg: TConfigurationDlg
       object ConvertLangFileBtn: TButton
         Left = 220
         Top = 77
-        Width = 248
+        Width = 271
         Height = 31
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
         Margins.Bottom = 4
-        Caption = 'Convert to new PO file format...'
+        Caption = 'For translators: Convert to PO format...'
         Enabled = False
         TabOrder = 3
         OnClick = ConvertLangFileBtnClick
@@ -725,10 +725,10 @@ object ConfigurationDlg: TConfigurationDlg
       ImageIndex = 5
       DesignSize = (
         520
-        420)
+        455)
       object DefaultAutotypeSeqLbl: TLabel
         Left = 10
-        Top = 391
+        Top = 420
         Width = 170
         Height = 17
         Margins.Left = 4
@@ -739,7 +739,7 @@ object ConfigurationDlg: TConfigurationDlg
       end
       object WarnExpireNumDaysLbl: TLabel
         Left = 73
-        Top = 324
+        Top = 352
         Width = 103
         Height = 17
         Margins.Left = 4
@@ -895,8 +895,8 @@ object ConfigurationDlg: TConfigurationDlg
         TabOrder = 5
       end
       object DefaultAutotypeSeqBox: TEdit
-        Left = 220
-        Top = 386
+        Left = 225
+        Top = 415
         Width = 282
         Height = 25
         Margins.Left = 4
@@ -922,7 +922,7 @@ object ConfigurationDlg: TConfigurationDlg
       end
       object AutoSaveCheck: TCheckBox
         Left = 10
-        Top = 353
+        Top = 382
         Width = 203
         Height = 26
         Margins.Left = 4
@@ -934,8 +934,8 @@ object ConfigurationDlg: TConfigurationDlg
         OnClick = AutoSaveCheckClick
       end
       object AutoSaveList: TComboBox
-        Left = 220
-        Top = 353
+        Left = 225
+        Top = 382
         Width = 282
         Height = 25
         Margins.Left = 4
@@ -953,7 +953,7 @@ object ConfigurationDlg: TConfigurationDlg
       end
       object WarnExpiredEntriesCheck: TCheckBox
         Left = 10
-        Top = 263
+        Top = 291
         Width = 471
         Height = 21
         Margins.Left = 4
@@ -965,7 +965,7 @@ object ConfigurationDlg: TConfigurationDlg
       end
       object WarnEntriesExpireSoonCheck: TCheckBox
         Left = 10
-        Top = 291
+        Top = 320
         Width = 471
         Height = 22
         Margins.Left = 4
@@ -976,8 +976,8 @@ object ConfigurationDlg: TConfigurationDlg
         TabOrder = 16
       end
       object WarnExpireNumDaysBox: TEdit
-        Left = 220
-        Top = 319
+        Left = 225
+        Top = 348
         Width = 61
         Height = 25
         Margins.Left = 4
@@ -988,8 +988,8 @@ object ConfigurationDlg: TConfigurationDlg
         Text = '1'
       end
       object WarnExpireNumDaysSpinBtn: TUpDown
-        Left = 281
-        Top = 319
+        Left = 286
+        Top = 348
         Width = 20
         Height = 25
         Margins.Left = 4
@@ -1001,12 +1001,24 @@ object ConfigurationDlg: TConfigurationDlg
         Position = 1
         TabOrder = 18
       end
+      object KeepRecentFilesCheck: TCheckBox
+        Left = 10
+        Top = 262
+        Width = 475
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
+        Caption = 'Keep list of recently opened files'
+        TabOrder = 19
+      end
     end
   end
   object OKBtn: TButton
     Tag = 12
     Left = 343
-    Top = 475
+    Top = 510
     Width = 93
     Height = 31
     Margins.Left = 4
@@ -1021,7 +1033,7 @@ object ConfigurationDlg: TConfigurationDlg
   object CancelBtn: TButton
     Tag = 12
     Left = 444
-    Top = 475
+    Top = 510
     Width = 94
     Height = 31
     Margins.Left = 4
@@ -1039,30 +1051,30 @@ object ConfigurationDlg: TConfigurationDlg
     Font.Height = -11
     Font.Name = 'MS Sans Serif'
     Font.Style = []
-    Left = 69
-    Top = 451
+    Left = 151
+    Top = 504
   end
   object SaveDlg: TSaveDialog
     Filter = 'Gettext PO files (*.po)|*.po'
-    Left = 19
-    Top = 452
+    Title = 'Save converted language file'
+    Left = 64
+    Top = 505
   end
   object SelectFontMenu: TPopupMenu
-    Left = 29
-    Top = 470
+    Left = 21
+    Top = 503
     object SelectFontMenu_RestoreDefault: TMenuItem
       Caption = 'Restore Default'
       OnClick = SelectFontMenu_RestoreDefaultClick
     end
   end
   object AppIconImageList: TImageList
-    Left = 489
-    Top = 405
+    Left = 199
+    Top = 500
   end
   object OpenDlg: TOpenDialog
-    Filter = 'Language files|*.po|All files|*.*'
     Title = 'Select language file to install'
-    Left = 31
-    Top = 163
+    Left = 109
+    Top = 504
   end
 end

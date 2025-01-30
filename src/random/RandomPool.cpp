@@ -1,7 +1,7 @@
 // RandomPool.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -282,7 +282,8 @@ using namespace RandPoolCipher;
 RandomPool::RandomPool(CipherType cipher,
   std::unique_ptr<RandomGenerator> pFastRandGen,
   bool blLockPhysMem)
-  : m_lAddBufPos(0), m_lGetBufPos(0), m_blKeySet(false),
+  : m_lAddBufPos(0), m_lGetBufPos(0), m_lTouchPoolIndex(0), m_blKeySet(false),
+    m_blRandomizeFixedItemsAdded(false),
     m_pFastRandGen(std::move(pFastRandGen)), m_blLockPhysMem(blLockPhysMem)
 {
   m_pPoolPage = AllocPoolPage();
@@ -375,11 +376,9 @@ void RandomPool::SetPoolPointers(void)
 void RandomPool::TouchPool(void)
 {
   if (m_blLockPhysMem) {
-    static word32 lIndex = 0;
-
-    if (lIndex == m_lUnusedSize)
-      lIndex = 0;
-    m_pPoolPage[lIndex++]--;
+    if (m_lTouchPoolIndex >= m_lUnusedSize)
+      m_lTouchPoolIndex = 0;
+    m_pPoolPage[m_lTouchPoolIndex++]--;
   }
 }
 //---------------------------------------------------------------------------
@@ -672,8 +671,6 @@ void RandomPool::Randomize(void)
 {
   // the following code is based on Random.cpp from Sami Tolvanen's "Eraser"
   // and rndw32.c from "libgcrypt"
-  static bool blFixedItemsAdded = false;
-
   word64 qTimer;
   HighResTimer(&qTimer);
   AddData(qTimer);
@@ -744,7 +741,7 @@ void RandomPool::Randomize(void)
     AddData(maxWorkSetSize);
   }
 
-  if (!blFixedItemsAdded) {
+  if (!m_blRandomizeFixedItemsAdded) {
     STARTUPINFO startupInfo;
     TIME_ZONE_INFORMATION tzi;
     SYSTEM_INFO systemInfo;
@@ -801,7 +798,7 @@ void RandomPool::Randomize(void)
     memzero(&systemInfo,  sizeof(SYSTEM_INFO));
     //memzero(&versionInfo, sizeof(OSVERSIONINFO));
 
-    blFixedItemsAdded = true;
+    m_blRandomizeFixedItemsAdded = true;
   }
 
   // get some random data from the Windows API...
@@ -846,7 +843,7 @@ bool RandomPool::WriteSeedFile(const WString& sFileName)
     GetData(buf, buf.Size());
     Flush();
 
-    if (pFile->Write(buf, buf.Size()) != buf.Size())
+  if (pFile->Write(buf, static_cast<int>(buf.Size())) != buf.Size())
       return false;
   }
   catch (...) {
@@ -864,7 +861,7 @@ bool RandomPool::ReadSeedFile(const WString& sFileName)
     auto pFile = std::make_unique<TFileStream>(sFileName, fmOpenRead);
 
     SecureMem<word8> buf(2 * POOL_SIZE);
-    nBytesRead = pFile->Read(buf, buf.Size());
+    nBytesRead = pFile->Read(buf, static_cast<int>(buf.Size()));
 
     AddData(buf, nBytesRead);
   }

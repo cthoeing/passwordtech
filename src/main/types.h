@@ -1,7 +1,7 @@
 // types.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -29,6 +29,13 @@ typedef unsigned __int64 word64; // prefix "q"
 
 #define WORD64_HI(v) ((v >> 32) & 0xffffffff)
 #define WORD64_LO(v) (v & 0xffffffff)
+
+#ifdef _WIN64
+typedef double TVARREC_DOUBLE;
+#else
+// in 32-bit mode, we need to use 'long double' for System::TVarRec to avoid ambiguity
+typedef long double TVARREC_DOUBLE;
+#endif
 
 
 #endif

@@ -1,7 +1,7 @@
 // PasswDatabase.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -42,6 +42,8 @@ public:
 
   class PasswHistory {
   public:
+    PasswHistory() : m_lMaxSize(1), m_blActive(false) {}
+
     PasswHistory(word32 lMaxSize, bool blActive)
       : m_lMaxSize(std::max(1u, lMaxSize)), m_blActive(blActive)
     {}
@@ -345,7 +347,7 @@ private:
 };
 
 
-typedef std::vector<PasswDbEntry*> PasswDbList;
+typedef std::vector<std::unique_ptr<PasswDbEntry>> PasswDbList;
 
 
 // base class for exceptions related to password databases
@@ -723,12 +725,12 @@ public:
   // operator with range check for random access to database entries
   const PasswDbEntry* operator[](word32 lIndex) const
   {
-    return m_db.at(lIndex);
+    return m_db.at(lIndex).get();
   }
 
   PasswDbEntry* operator[](word32 lIndex)
   {
-    return m_db.at(lIndex);
+    return m_db.at(lIndex).get();
   }
 
   // properties

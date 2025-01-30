@@ -77,7 +77,12 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 
       sParam.Delete(1, nPrefixLen);
 
-      if (SameText(sParam, CMDLINE_INI)) {
+      if (SameText(sParam, CMDLINE_HELP)) {
+        g_cmdLineOptions.ShowHelp = true;
+        if (g_blConsole)
+          Application->ShowMainForm = false;
+      }
+      else if (SameText(sParam, CMDLINE_INI)) {
         if (nI < nParamCount) {
           WString sIniFileName = ParamStr(++nI);
           if (ExtractFilePath(sIniFileName).IsEmpty())
@@ -158,7 +163,7 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 
     const WString DEFAULT_STYLE_NAME = "Windows";
 
-	  g_config.UiStyleName = DEFAULT_STYLE_NAME;
+    g_config.UiStyleName = DEFAULT_STYLE_NAME;
     WString sStyleName = g_pIni->ReadString("Main", "GUIStyle",
       DEFAULT_STYLE_NAME);
     if (!sStyleName.IsEmpty() && !SameText(sStyleName, DEFAULT_STYLE_NAME))

@@ -1,7 +1,7 @@
 // SecureMem.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -81,7 +81,7 @@ private:
   word32 m_lSize;
   word32 m_lClearMark;
 
-  void CheckBounds(word32 lIndex)
+  void CheckBounds(word32 lIndex) const
   {
     if (lIndex >= m_lSize)
       throw SecureMemError("SecureMem: Index ouf of bounds");

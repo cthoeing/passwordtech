@@ -1,7 +1,7 @@
 // RandomPool.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -252,6 +252,7 @@ public:
 
 private:
   bool m_blLockPhysMem;
+  bool m_blRandomizeFixedItemsAdded;
   word8* m_pPoolPage;
   word8* m_pPool;
   word8* m_pAddBuf;
@@ -266,6 +267,7 @@ private:
   word32 m_lUnusedSize;
   word32 m_lAddBufPos;
   word32 m_lGetBufPos;
+  word32 m_lTouchPoolIndex;
   word64 m_qNumOfBlocks;
   bool m_blKeySet;
   std::unique_ptr<RandomGenerator> m_pFastRandGen;

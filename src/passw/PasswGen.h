@@ -1,7 +1,7 @@
 // PasswGen.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -239,13 +239,11 @@ public:
   //                      must be in the range 1.0 < entropy < log_2(26)
   //    bytes 13..70316 : frequencies of all possible trigrams stored as
   //                      17,576 32-bit numbers (i.e., 4 bytes each)
-  // -> number of evaluated trigrams (nullptr -> don't receive anything)
-  // -> bits of entropy per letter (may be nullptr); min. entropy is 1.0!
+  // <- number of evaluated trigrams and bits of entropy per letter;
+  //    min. entropy is 1.0!
   // function throws an exception in case of errors
-  static void CreateTrigramFile(const WString& sSrcFileName,
-    const WString& sDestFileName,
-    word32* plNumOfTris,
-    double* pdEntropy);
+  static std::pair<word32,double> CreateTrigramFile(const WString& sSrcFileName,
+    const WString& sDestFileName);
 
   // load a trigram file created with CreateTrigramFile()
   // -> name of the trigram file; if empty, use default trigrams in

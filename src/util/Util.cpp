@@ -1,7 +1,7 @@
 // Util.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -665,6 +665,30 @@ int FloorEntropyBits(double val)
   if (frac > 0.99)
     intpart += 1;
   return static_cast<int>(intpart);
+}
+//---------------------------------------------------------------------------
+WString ShortenFileName(const WString& sFileName, int nMaxLen)
+{
+  int nLen = sFileName.Length();
+  if (nLen > std::max(10, nMaxLen)) {
+    int nStartChars = std::min(10, (nMaxLen - 4) / 2),
+      nEndChars = nMaxLen - nStartChars - 3;
+    WString sResult = sFileName.SubString(1, nStartChars) + "..." +
+      sFileName.SubString(nLen - nEndChars + 1, nEndChars);
+    nLen = sResult.Length();
+    nStartChars += 4;
+    int nDelPos = 0;
+    for (int i = nStartChars; i <= nLen - 10; i++) {
+      if (sResult[i] == '\\') {
+        nDelPos = i;
+        break;
+      }
+    }
+    if (nDelPos > nStartChars)
+      sResult.Delete(nStartChars, nDelPos - nStartChars);
+    return sResult;
+  }
+  return sFileName;
 }
 //---------------------------------------------------------------------------
 #define MX (((z >> 5) ^ (y << 2)) + ((y >> 3) ^ (z << 4))) ^ ((sum ^ y) + (key[(p & 3) ^ e] ^ z))

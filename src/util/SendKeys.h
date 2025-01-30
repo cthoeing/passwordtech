@@ -1,7 +1,7 @@
 // SendKeys.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -96,6 +96,11 @@ public:
   static bool __fastcall ThreadRunning(void)
   {
     return s_nThreadState != INACTIVE;
+  }
+
+  static bool __fastcall ThreadAborted(void)
+  {
+    return s_nThreadState == ABORTED;
   }
 
   static void __fastcall TerminateActiveThread(void)

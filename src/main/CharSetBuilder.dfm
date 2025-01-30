@@ -3,7 +3,7 @@ object CharSetBuilderForm: TCharSetBuilderForm
   Top = 0
   BorderIcons = [biSystemMenu]
   Caption = 'Character Set Builder'
-  ClientHeight = 415
+  ClientHeight = 492
   ClientWidth = 503
   Color = clBtnFace
   Font.Charset = ANSI_CHARSET
@@ -459,8 +459,8 @@ object CharSetBuilderForm: TCharSetBuilderForm
   end
   object ResultGroup: TGroupBox
     Tag = 7
-    Left = 10
-    Top = 334
+    Left = 9
+    Top = 409
     Width = 481
     Height = 72
     Margins.Left = 4
@@ -468,7 +468,7 @@ object CharSetBuilderForm: TCharSetBuilderForm
     Margins.Right = 4
     Margins.Bottom = 4
     Caption = 'Resulting character set definition'
-    TabOrder = 1
+    TabOrder = 2
     DesignSize = (
       481
       72)
@@ -499,6 +499,30 @@ object CharSetBuilderForm: TCharSetBuilderForm
       Caption = 'Apply'
       TabOrder = 1
       OnClick = ApplyBtnClick
+    end
+  end
+  object TagGroup: TGroupBox
+    Left = 10
+    Top = 330
+    Width = 481
+    Height = 71
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
+    Caption = 'Tag/comment'
+    TabOrder = 1
+    object TagBox: TEdit
+      Left = 10
+      Top = 30
+      Width = 458
+      Height = 26
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+      TabOrder = 0
+      OnChange = CharSetParamChange
     end
   end
 end

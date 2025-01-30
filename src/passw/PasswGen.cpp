@@ -1,7 +1,7 @@
 // PasswGen.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -1506,10 +1506,8 @@ WString PasswordGenerator::GetWord(int nIndex) const
   return WString(sWord.c_str(), sWord.length());
 }
 //---------------------------------------------------------------------------
-void PasswordGenerator::CreateTrigramFile(const WString& sSrcFileName,
-  const WString& sDestFileName,
-  word32* plNumOfTris,
-  double* pdEntropy)
+std::pair<word32,double> PasswordGenerator::CreateTrigramFile(const WString& sSrcFileName,
+  const WString& sDestFileName)
 {
   auto pSrcFile = std::make_unique<TStringFileStreamW>(
     sSrcFileName, fmOpenRead, ceAnsi, true, 65536, "\n\t ");
@@ -1555,20 +1553,17 @@ void PasswordGenerator::CreateTrigramFile(const WString& sSrcFileName,
     dEntropy = -dEntropy / 3;
   }
 
-  if (plNumOfTris != nullptr)
-    *plNumOfTris = lSigma;
-
-  if (pdEntropy != nullptr)
-    *pdEntropy = dEntropy;
-
   if (lSigma == 0 || dEntropy < 1.0)
     throw Exception("Source file does not contain enough trigrams");
 
   auto pDestFile = std::make_unique<TFileStream>(sDestFileName, fmCreate);
 
-  pDestFile->Write(&lSigma, sizeof(word32));
-  pDestFile->Write(&dEntropy, sizeof(double));
-  pDestFile->Write(&tris[0], tris.size() * sizeof(word32));
+  pDestFile->Write(&lSigma, static_cast<int>(sizeof(word32)));
+  pDestFile->Write(&dEntropy, static_cast<int>(sizeof(double)));
+  pDestFile->Write(&tris[0], static_cast<int>(
+    tris.size() * static_cast<int>(sizeof(word32))));
+
+  return std::make_pair(lSigma, dEntropy);
 }
 //---------------------------------------------------------------------------
 int PasswordGenerator::LoadTrigramFile(WString sFileName)
@@ -1590,9 +1585,9 @@ int PasswordGenerator::LoadTrigramFile(WString sFileName)
 
       tris.resize(PHONETIC_TRIS_NUM);
 
-      pFile->Read(&lSigma, sizeof(word32));
-      pFile->Read(&dEntropy, sizeof(double));
-      pFile->Read(&tris[0], PHONETIC_TRIS_NUM * sizeof(word32));
+      pFile->Read(&lSigma, static_cast<int>(sizeof(word32)));
+      pFile->Read(&dEntropy, static_cast<int>(sizeof(double)));
+      pFile->Read(&tris[0], static_cast<int>(PHONETIC_TRIS_NUM * sizeof(word32)));
 
       pFile.reset(); // delete object and set ptr to nullptr
 

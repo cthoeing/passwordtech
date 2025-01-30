@@ -1,7 +1,7 @@
 // PasswDatabase.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -393,8 +393,8 @@ void PasswDatabase::Close(void)
   m_lDefaultPasswExpiryDays = 0;
   m_cryptBuf.Clear();
 
-  for (auto pEntry : m_db)
-	  delete pEntry;
+  //for (auto pEntry : m_db)
+  //  delete pEntry;
 
   m_db.clear();
   m_pFile.reset();
@@ -518,7 +518,7 @@ void PasswDatabase::Open(const SecureMem<word8>& key,
 
   // read file header (plaintext)
   FileHeader fh;
-  pFile->Read(&fh, sizeof(fh));
+  pFile->Read(&fh, static_cast<int>(sizeof(fh)));
 
   if (memcmp(fh.Magic, PASSW_DB_MAGIC, sizeof(PASSW_DB_MAGIC)) != 0)
     throw EPasswDbInvalidFormat("Unknown file format");
@@ -557,7 +557,7 @@ void PasswDatabase::Open(const SecureMem<word8>& key,
   for (int nKeyNum = 0; nKeyNum < 2; nKeyNum++) {
     // read entire file contents without header
     pFile->Seek(fh.HeaderSize, soFromBeginning);
-    pFile->Read(m_cryptBuf, lFileSize);
+    pFile->Read(m_cryptBuf, static_cast<int>(lFileSize));
 
     SecureMem<word8> derivedKey(DB_KEY_LENGTH);
 
@@ -1018,9 +1018,9 @@ void PasswDatabase::SaveToFile(const WString& sFileName)
 
   const word8 bEndOfEntry = PasswDbEntry::END;
 
-  for (auto pEntry : m_db)
+  for (auto& pEntry : m_db)
   {
-	for (int nI = 0; nI < PasswDbEntry::NUM_STRING_FIELDS; nI++) {
+    for (int nI = 0; nI < PasswDbEntry::NUM_STRING_FIELDS; nI++) {
       //SecureWString sField;
       switch (nI) {
       case PasswDbEntry::PASSWORD:
@@ -1136,7 +1136,7 @@ void PasswDatabase::SaveToFile(const WString& sFileName)
 
   try {
     // file header
-    m_pFile->Write(&fh, sizeof(fh));
+    m_pFile->Write(&fh, static_cast<int>(sizeof(fh)));
 
     // recovery key block or salt
     if (m_blRecoveryKey)
@@ -1145,10 +1145,10 @@ void PasswDatabase::SaveToFile(const WString& sFileName)
       m_pFile->Write(m_pDbSalt, DB_SALT_LENGTH);
 
     // initialization vector
-    m_pFile->Write(iv, lIVLen);
+    m_pFile->Write(iv, static_cast<int>(lIVLen));
 
     // encrypted database contents
-    m_pFile->Write(m_cryptBuf, lAlignedSize);
+    m_pFile->Write(m_cryptBuf, static_cast<int>(lAlignedSize));
 
   #if defined(_DEBUG) && defined(TEST_DECRYPTION)
     {
@@ -1165,7 +1165,7 @@ void PasswDatabase::SaveToFile(const WString& sFileName)
     SecureMem<word8> hmac(SHA512_HMAC_LENGTH);
     sha512_hmac_finish(hashCtx, hmac);
 
-    m_pFile->Write(hmac, hmac.Size());
+    m_pFile->Write(hmac, static_cast<int>(hmac.Size()));
   }
   __finally {
     m_cryptBuf.Clear();
@@ -1225,20 +1225,18 @@ void PasswDatabase::SkipField(void)
 //---------------------------------------------------------------------------
 PasswDbEntry* PasswDatabase::AddDbEntry(void)
 {
-  PasswDbEntry* pEntry = new PasswDbEntry(m_lDbEntryId++, m_db.size(),
-    false, 1, false);
-  m_db.push_back(pEntry);
-  return pEntry;
+  m_db.emplace_back(new PasswDbEntry(m_lDbEntryId++, m_db.size(),
+    false, 1, false));
+  return m_db.back().get();
 }
 //---------------------------------------------------------------------------
 PasswDbEntry* PasswDatabase::NewDbEntry(void)
 {
-  PasswDbEntry* pEntry = new PasswDbEntry(m_lDbEntryId++, m_db.size(),
+  m_db.emplace_back(new PasswDbEntry(m_lDbEntryId++, m_db.size(),
     true, m_lDefaultMaxPasswHistorySize,
-    m_lDefaultMaxPasswHistorySize > 0);
-  m_db.push_back(pEntry);
-  pEntry->Strings[PasswDbEntry::USERNAME] = m_sDefaultUserName;
-  return pEntry;
+    m_lDefaultMaxPasswHistorySize > 0));
+  m_db.back()->Strings[PasswDbEntry::USERNAME] = m_sDefaultUserName;
+  return m_db.back().get();
 }
 //---------------------------------------------------------------------------
 PasswDbEntry* PasswDatabase::DuplicateDbEntry(const PasswDbEntry& original,
@@ -1246,7 +1244,7 @@ PasswDbEntry* PasswDatabase::DuplicateDbEntry(const PasswDbEntry& original,
 {
   PasswDbEntry* pDuplicate = new PasswDbEntry(m_lDbEntryId++, m_db.size(),
     true, 1, false);
-  m_db.push_back(pDuplicate);
+  m_db.emplace_back(pDuplicate);
 
   pDuplicate->Strings[PasswDbEntry::TITLE] = sTitle;
   pDuplicate->Strings[PasswDbEntry::USERNAME] =
@@ -1273,8 +1271,8 @@ void PasswDatabase::DeleteDbEntry(PasswDbEntry& entry)
 {
   word32 lIndex = entry.m_lIndex;
   if (lIndex < m_db.size()) {
-	PasswDbList::iterator it = m_db.begin() + lIndex;
-    delete &entry;
+    PasswDbList::iterator it = m_db.begin() + lIndex;
+    //delete &entry;
     it = m_db.erase(it);
 
     for (; it != m_db.end(); it++)
@@ -1300,7 +1298,7 @@ void PasswDatabase::MoveDbEntry(word32 lCurrPos, word32 lNewPos)
     std::rotate(first, dest, last);
 
     word32 lIndex = 0;
-    for (auto pEntry : m_db)
+    for (auto& pEntry : m_db)
       pEntry->m_lIndex = lIndex++;
 
     /*
@@ -1395,7 +1393,7 @@ void PasswDatabase::SetPlaintextPassw(bool blPlaintextPassw)
     return;
 
   m_blPlaintextPassw = blPlaintextPassw;
-  for (auto pEntry : m_db)
+  for (auto& pEntry : m_db)
   {
     if (blPlaintextPassw)
       pEntry->Strings[PasswDbEntry::PASSWORD] = GetDbEntryPassw(*pEntry);
@@ -1551,9 +1549,9 @@ void PasswDatabase::ExportToCsv(const WString& sFileName, int nColMask,
 
   pFile->WriteString(sHeader.c_str(), sHeader.Length());
 
-  for (auto pEntry : m_db)
+  for (auto& pEntry : m_db)
   {
-	for (int nI = 0, nJ = 0; nI < PasswDbEntry::NUM_FIELDS; nI++) {
+    for (int nI = 0, nJ = 0; nI < PasswDbEntry::NUM_FIELDS; nI++) {
       if (nColMask & (1 << nI)) {
         WString sField;
         switch (nI) {
@@ -1624,7 +1622,7 @@ void PasswDatabase::CreateKeyFile(const WString& sFileName)
     hexKey[2*i+1] = HEX_TABLE[key[i] & 0x0f];
   }
 
-  pFile->Write(hexKey, hexKey.Size());
+  pFile->Write(hexKey, static_cast<int>(hexKey.Size()));
 }
 //---------------------------------------------------------------------------
 SecureMem<word8> PasswDatabase::GetKeyFromKeyFile(const WString& sFileName)
@@ -1637,14 +1635,14 @@ SecureMem<word8> PasswDatabase::GetKeyFromKeyFile(const WString& sFileName)
 
   // read contents as-is if file size equals key size
   if (pFile->Size == DB_KEY_LENGTH) {
-    pFile->Read(key, key.Size());
+    pFile->Read(key, static_cast<int>(key.Size()));
     return key;
   }
 
   // check if file contains key in hexadecimal format
   if (pFile->Size == 2 * DB_KEY_LENGTH) {
     SecureMem<word8> hexKey(2 * DB_KEY_LENGTH);
-    pFile->Read(hexKey, hexKey.Size());
+    pFile->Read(hexKey, static_cast<int>(hexKey.Size()));
 
     word32 i;
     word8 hiPart, c;
@@ -1677,7 +1675,7 @@ SecureMem<word8> PasswDatabase::GetKeyFromKeyFile(const WString& sFileName)
   sha256_starts(hashCtx, 0);
   SecureMem<word8> buf(1024);
   int nBytesRead;
-  while ((nBytesRead = pFile->Read(buf, buf.Size())) != 0) {
+  while ((nBytesRead = pFile->Read(buf, static_cast<int>(buf.Size()))) != 0) {
     sha256_update(hashCtx, buf, nBytesRead);
   }
   sha256_finish(hashCtx, key);

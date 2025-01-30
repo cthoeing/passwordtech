@@ -1,7 +1,7 @@
 // Main.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -54,6 +54,7 @@
 #include "EntropyManager.h"
 
 const wchar_t
+CMDLINE_HELP[]     = L"help",
 CMDLINE_INI[]      = L"ini",
 CMDLINE_READONLY[] = L"readonly",
 CMDLINE_PROFILE[]  = L"profile",
@@ -68,6 +69,7 @@ struct CmdLineOptions {
   WString PasswDbFileName;
   int GenNumPassw = 0;
   bool ConfigReadOnly = false;
+  bool ShowHelp = false;
 };
 
 struct DonorInfo {
@@ -329,6 +331,7 @@ __published:	// IDE-managed Components
   TMenuItem *GenerateMenu_Clipboard;
   TMenuItem *GenerateMenu_File;
   TButton *BuildBtn;
+	TMenuItem *MainMenu_Help_CmdLineArgs;
   void __fastcall GenerateBtnClick(TObject *Sender);
   void __fastcall IncludeCharsCheckClick(TObject *Sender);
   void __fastcall CharSetInfoBtnClick(TObject *Sender);
@@ -435,11 +438,13 @@ __published:	// IDE-managed Components
     void __fastcall AdvancedOptionsMenu_DeactivateAllClick(TObject *Sender);
     void __fastcall AdvancedOptionsMenu_DeactivateAllStarredClick(TObject *Sender);
   void __fastcall BuildBtnClick(TObject *Sender);
+	void __fastcall MainMenu_Help_CmdLineArgsClick(TObject *Sender);
 
 private:	// User declarations
   RandomPool& m_randPool;
   EntropyManager& m_entropyMng;
   PasswordGenerator m_passwGen;
+  WString m_sCmdLineInfo;
   WString m_sCharSetInput;
   WString m_sCharSetInfo;
   WString m_sWLFileName;

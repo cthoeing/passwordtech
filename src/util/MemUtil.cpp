@@ -1,7 +1,7 @@
 // MemUtil.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -49,16 +49,6 @@ void memcrypt(const word8* pSrc,
 
   memzero(&cryptCtx, sizeof(chacha_ctx));
 }
-//---------------------------------------------------------------------------
-/*[[clang::optnone]] void eraseVclString(AnsiString& s)
-{
-  if (!s.IsEmpty()) {
-    int nLen = s.Length();
-    for (int i = 1; i <= nLen; i++)
-      s[i] = 'x';
-    s = AnsiString();
-  }
-}*/
 //---------------------------------------------------------------------------
 [[clang::optnone]] void eraseVclString(UnicodeString& s)
 {

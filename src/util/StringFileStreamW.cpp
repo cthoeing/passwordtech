@@ -1,7 +1,7 @@
 // StringFileStreamW.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -144,7 +144,8 @@ int __fastcall TStringFileStreamW::ReadString(wchar_t* pwszDest,
     Seek((m_nBufPos - m_nBufLen) * m_nCodeUnitSize, soFromCurrent);
 
     const int nBytesRead = (m_nCodeUnitSize == 1) ?
-      Read(m_cbuf, m_cbuf.Size() - 1) : Read(m_wbuf, (m_wbuf.Size() - 1) * 2);
+	  Read(m_cbuf, static_cast<int>(m_cbuf.Size() - 1)) :
+	  Read(m_wbuf, static_cast<int>((m_wbuf.Size() - 1) * 2));
 
     if (nBytesRead == 0)
       return 0;
@@ -204,7 +205,7 @@ void __fastcall TStringFileStreamW::WriteString(const wchar_t* pwszSrc,
     {
       SecureWString sEncBuf(pwszSrc, nStrLen);
       swapUtf16ByteOrder(sEncBuf, nStrLen);
-      if (Write(sEncBuf, sEncBuf.SizeBytes()) != sEncBuf.SizeBytes())
+      if (Write(sEncBuf, static_cast<int>(sEncBuf.SizeBytes())) != sEncBuf.SizeBytes())
         OutOfDiskSpaceError();
       break;
     }

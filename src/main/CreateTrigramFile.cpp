@@ -1,7 +1,7 @@
 // CreateTrigramFile.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2024 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -122,17 +122,14 @@ void __fastcall TCreateTrigramFileDlg::CreateFileBtnClick(TObject *Sender)
   WString sMsg;
 
   try {
-    word32 lNumOfTris;
-    double dEntropy;
-    PasswordGenerator::CreateTrigramFile(sSrcFileName, sDestFileName,
-      &lNumOfTris, &dEntropy);
+    auto result = PasswordGenerator::CreateTrigramFile(sSrcFileName, sDestFileName);
 
     blSuccess = true;
     sMsg = TRLFormat("Trigram file \"%1\" successfully created.\n\n%2 trigrams "
       "evaluated.\n%3 bits of entropy per letter.",
       { ExtractFileName(sDestFileName),
-        IntToStr(static_cast<__int64>(lNumOfTris)),
-        FormatFloat("%1.2f", dEntropy) });
+        IntToStr(static_cast<__int32>(result.first)),
+        FormatFloat("%1.2f", result.second) });
   }
   catch (Exception& e) {
     sMsg = TRLFormat("Error while creating file\n\"%1\":\n%2.",
