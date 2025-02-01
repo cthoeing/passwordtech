@@ -18,7 +18,7 @@
 #. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.5\n"
+"Project-Id-Version: Password Tech 3.5.6\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: Thomas Du <thomas_du@outlook.com>\n"
@@ -27,11 +27,11 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 #. Message box caption
 msgid "Info"
-msgstr "清除剪貼簿"
+msgstr "資訊"
 
 #. Message box caption
 msgid "Warning"
@@ -107,7 +107,7 @@ msgstr "重新載入腳本"
 
 #. Main window, label attached to input box for number of passwords
 msgid "Multiple passwords:"
-msgstr "多組的密碼："
+msgstr "多種的密碼："
 
 #. Main window, button to generate password
 msgid "Generate"
@@ -191,7 +191,7 @@ msgstr "建立隨機資料檔案..."
 
 #. Main menu, Tools submenu
 msgid "Create Trigram File..."
-msgstr "建立三個字元組檔案..."
+msgstr "建立三元組檔案..."
 
 #. Main menu, Tools submenu
 msgid "MP Password Generator..."
@@ -227,7 +227,7 @@ msgstr "選項"
 
 #. Main menu, Options submenu
 msgid "Configuration..."
-msgstr "主要設置..."
+msgstr "配置..."
 
 #. Configuration window, Language tab
 msgid "Language"
@@ -256,6 +256,9 @@ msgstr "說明"
 #. Main window, Help button tooltip
 msgid "Open Manual"
 msgstr "打開手冊"
+
+msgid "Command Line Arguments..."
+msgstr "命令列參數..."
 
 #. Main menu, Help submenu
 msgid "Visit Website"
@@ -301,6 +304,34 @@ msgstr "產生並自動輸入密碼"
 msgid "Open user manual"
 msgstr "開啟用戶手冊"
 
+#. Command line arguments
+msgid "Usage:"
+msgstr "用途："
+
+#. Command line arguments
+msgid "Display this help message."
+msgstr "顯示此説明消息。"
+
+#. Command line arguments
+msgid "Do not write to disk unless explicitly requested."
+msgstr "除非明確請求，否則不要寫入磁碟。"
+
+#. Command line arguments
+msgid "Load profile named 'profilename' on start-up."
+msgstr "啟動時載入名為 『profilename』 的設定檔。"
+
+#. Command line arguments
+msgid "Generate 'number' of passwords and display on the console, then close application."
+msgstr "生成「數量」的密碼並顯示在控制臺上，然後關閉應用程式。"
+
+#. Command line arguments
+msgid "Launch application in the background."
+msgstr "在後台啟動應用程式。"
+
+#. Command line arguments
+msgid "Open database named 'filename' on start-up and show password manager window."
+msgstr "在啟動時打開名為 『filename』 的資料庫並顯示密碼管理器視窗。"
+
 #. Main window, Clear Clipboard button tooltip
 msgid "Clear clipboard (text contents only)"
 msgstr "清除剪貼簿（僅文本內容）"
@@ -331,7 +362,7 @@ msgstr "文本檔案"
 
 #. Open/Save dialogs, filter for Trigram files (*.tgm)
 msgid "Trigram files"
-msgstr "三個字元組檔"
+msgstr "三元組檔"
 
 #. Open/Save dialogs, filter for Lua script files (*.lua)
 msgid "Lua scripts"
@@ -371,7 +402,7 @@ msgstr "刪除"
 
 #. Various context menus, select entire text
 msgid "Select All"
-msgstr "全部選取"
+msgstr "全選"
 
 #. Context menus of Character set, Word list file, Format password, and Run script drop-down lists: Clear history of list entries
 msgid "Clear List"
@@ -499,11 +530,11 @@ msgstr "%d 個字/每個字 %.1f 位"
 
 #. Message shown when selected trigram file could not be read
 msgid "Could not open trigram file."
-msgstr "無法打開 三個字元組 文件。"
+msgstr "無法打開 三元組 文件。"
 
 #. Message shown when selected trigram file has an invalid format
 msgid "Invalid trigram file."
-msgstr "三個字元組檔無效。"
+msgstr "三元組檔無效。"
 
 #. Main window, Generated Password groupbox, label below Password box, tooltip shown when generated or entered password matches a common password
 msgid "Matches common password!"
@@ -653,7 +684,7 @@ msgstr "密碼不可用"
 
 #. Formatted password, format specifier "P" contained in format string, but password cannot be fully inserted
 msgid "Password too long"
-msgstr "密碼過長"
+msgstr "密碼太長"
 
 #. Formatted password, format string contains unknown specifier
 msgid "%d invalid format specifier(s): %s"
@@ -767,7 +798,7 @@ msgstr "字符集無效。"
 
 #. Include characters, phonetic passwords, info about trigrams
 msgid "default (English) trigrams"
-msgstr "預設（英語）三個字元組"
+msgstr "預設（英語）三元組"
 
 #. Include characters, info about character set where a particular number of characters is desired for certain subsets
 msgid "(with different frequencies)"
@@ -783,7 +814,7 @@ msgid ""
 "from the following source:\n"
 "<%s>)"
 msgstr ""
-"（語音，基於三個字元組頻率\n"
+"（語音，基於三元組頻率\n"
 "來自以下來源：\n"
 "<%s>)"
 
@@ -1109,7 +1140,7 @@ msgstr ""
 
 #. Configuration window, caption
 msgid "Configuration"
-msgstr "主要設置"
+msgstr "構成"
 
 #. Configuration window, General page
 msgid "General"
@@ -1301,7 +1332,7 @@ msgstr "捷徑"
 
 #. Configuration window, Hot Keys, list view, column
 msgid "Action"
-msgstr "執行"
+msgstr "操作"
 
 #. Configuration window, Hot Keys, message shown when trying to add a hot key without a corresponding action
 msgid "Please select a hot key action."
@@ -1323,6 +1354,14 @@ msgstr "選擇語言："
 msgid "Install..."
 msgstr "安裝..."
 
+#. Configuration window, Language, Open dialog title
+msgid "Select language file to install"
+msgstr "選擇要安裝的語言檔"
+
+#. Configuration window, Language, Open dialog filter
+msgid "Language files"
+msgstr "語言檔"
+
 #. Configuration window, Language, Install
 msgid "Language already installed"
 msgstr "已安裝的語言"
@@ -1337,14 +1376,14 @@ msgstr ""
 
 #. Configuration window, Language, Install
 msgid "Language \"%1\" installed successfully."
-msgstr "語言%1已成功安裝。"
+msgstr "語言\"%1\" 安裝成功。"
 
 #. Configuration window, Language, Install
 msgid ""
 "Could not copy file \"%1\" to\n"
 "\"%2\""
 msgstr ""
-"無法將檔案%1 複製到\n"
+"無法將檔案\"%1\" 複製到\n"
 "\"%2\""
 
 #. Configuration window, Language, Install
@@ -1352,20 +1391,20 @@ msgid ""
 "Could not install language:\n"
 "%1."
 msgstr ""
-"無法安裝語言：\n"
-"%1."
+"無法安裝語言\n"
+"\"%1\"."
 
 #. Configuration window, Language, Remove
 msgid ""
 "Are you sure you want to remove\n"
 "\"%1\"?"
 msgstr ""
-"是否確實要刪除\n"
+"您確定要刪除嗎\n"
 "\"%1\"?"
 
 #. Configuration window, Language, Remove
 msgid "Language \"%1\" successfully removed."
-msgstr "語言「%1」 已成功刪除。"
+msgstr "已成功刪除語言\"%1\"。"
 
 #. Configuration window, Language, Remove
 msgid ""
@@ -1407,6 +1446,9 @@ msgstr "啟動時打開窗口"
 msgid "Open last used database on startup"
 msgstr "啟動時打開上次使用的資料庫"
 
+msgid "Keep list of recently opened files"
+msgstr "保留最近打開的檔案清單"
+
 #. Configuration window, Database
 msgid "Warn if database contains expired entries"
 msgstr "如果數據庫包含過期項目則發出警告"
@@ -1417,7 +1459,7 @@ msgstr "如果數據庫包含即將過期的項目，則發出警告"
 
 #. Configuration window, Database, entries that will expire soon, define number of days before expiry date
 msgid "Number of days:"
-msgstr "金鑰剩餘有效天數通知:"
+msgstr "購買後許可證密鑰的有效天數。如果許可證密鑰未過期，請留空。不能與“到期於”字段同時使用。"
 
 #. Configuration window, Database, Save database automatically after certain actions
 msgid "Save automatically:"
@@ -1473,11 +1515,11 @@ msgstr "密碼不相同。"
 
 #. Enter password window, caption for encryption
 msgid "Encrypt"
-msgstr "加密剪貼簿"
+msgstr "加密"
 
 #. Enter password window, caption for decryption
 msgid "Decrypt"
-msgstr "解密剪貼簿"
+msgstr "解密"
 
 #. Enter password window
 msgid "Remember password (seconds):"
@@ -1687,7 +1729,7 @@ msgstr "反向選擇"
 
 #. Create Random Data File dialog, title
 msgid "Create Random Data File"
-msgstr "建立隨機資料檔案"
+msgstr "建立隨機數據文件"
 
 #. Create Random Data File dialog, label
 msgid "File name:"
@@ -1763,7 +1805,7 @@ msgstr ""
 
 #. Profile Editor dialog, title
 msgid "Profile Editor"
-msgstr "配置檔編輯器"
+msgstr "個人資料編輯器"
 
 #. Profile Editor dialog, Load Profile button
 msgid "Load"
@@ -2097,7 +2139,7 @@ msgstr "英數文字"
 
 #. MP Password Generator window, Character set drop-down list
 msgid "Hexadecimal"
-msgstr "Hexadecimal"
+msgstr "十六進制"
 
 #. MP Password Generator window, message when master password has expired
 msgid "Key has expired."
@@ -2277,6 +2319,10 @@ msgid "Lock"
 msgstr "鎖定"
 
 #. Password Manager window, main menu, File submenu
+msgid "Clear Recently Opened List"
+msgstr "清除最近打開的清單"
+
+#. Password Manager window, main menu, File submenu
 msgid "Unlock"
 msgstr "解鎖"
 
@@ -2326,7 +2372,7 @@ msgstr "複製項目"
 
 #. Password Manager window, main menu, Edit submenu
 msgid "Delete Entry"
-msgstr "刪除條目"
+msgstr "刪除項目"
 
 #. Password Manager window, main menu, View submenu
 msgid "Show Columns"
@@ -2346,11 +2392,11 @@ msgstr "未分類"
 
 #. Password Manager window, main menu, View submenu, Sort submenu
 msgid "Ascending"
-msgstr "升序"
+msgstr "升冪"
 
 #. Password Manager window, main menu, View submenu, Sort submenu
 msgid "Descending"
-msgstr "降序"
+msgstr "降冪"
 
 #. Password Manager window, main menu, View submenu
 msgid "Sort Tags By"
@@ -2423,6 +2469,14 @@ msgstr "鎖定/解鎖資料庫"
 #. Password Manager window, Edit panel, Toggle password button, tooltip
 msgid "Left-click: Hide/show password, right-click: Generate password"
 msgstr "左鍵單擊：隱藏/顯示密碼，右鍵單擊：產生密碼"
+
+#. Password Manager window, Edit panel, Toggle notes button, tooltip
+msgid "Hide/show notes"
+msgstr "隱藏/顯示註釋"
+
+#. Password Manager window, Edit Panel, text displayed when notes are hidden
+msgid "Notes hidden - click here to display"
+msgstr "隱藏的註釋 - 按兩下此處顯示"
 
 #. Password Manager window, title of password entry dialog when unlocking database
 msgid "Unlock %s"
@@ -2935,53 +2989,72 @@ msgstr "密碼資料庫包含未保存的更改。"
 
 #. Password Manager window, toolbar, filter info
 msgid "Filtered"
-msgstr "過濾"
+msgstr "過濾的"
 
 #. Password Manager window, toolbar, filter info, button tooltip
 msgid "Remove filter"
 msgstr "移除篩選條件"
 
+#. Main window, button to build character set definition
 msgid "Build..."
 msgstr "建立字元..."
 
+#. Main window, button to build character set definition, hint
 msgid "Build character set definition"
-msgstr "建立字元集定義"
+msgstr "構建字元集定義"
 
+#. Character set builder, window title
 msgid "Character Set Builder"
 msgstr "字元集生成器"
 
+#. Character set builder, group box with character sets
 msgid "Character set selection"
 msgstr "字元集選擇"
 
+#. Character set builder, group box with tag/comment
+msgid "Tag/comment"
+msgstr "標籤/評論"
+
+#. Character set builder, group box with resulting definition
 msgid "Resulting character set definition"
 msgstr "生成的字元集定義"
 
+#. Character set builder, button
 msgid "Apply"
 msgstr "套用"
 
+#. Character set builder, check box
 msgid "Lower-case letters (a-z)"
 msgstr "小寫字母 （a-z）"
 
+#. Character set builder, check box
 msgid "Upper-case letters (A-Z)"
 msgstr "大寫字母 （A-Z）"
 
+#. Character set builder, check box
 msgid "Digits (0-9)"
 msgstr "數位 （0-9）"
 
+#. Character set builder, check box
 msgid "Characters from range:"
 msgstr "範圍中的字元："
 
+#. Character set builder, check box
 msgid "Additional characters:"
 msgstr "其他字元："
 
+#. Character set builder, check box
 msgid "At least"
 msgstr "至少"
 
+#. Character set builder, edit box
 msgid "From:"
 msgstr "從："
 
+#. Character set builder, edit box
 msgid "to:"
 msgstr "致："
 
+#. Character set builder, error message
 msgid "Invalid character range."
 msgstr "字元範圍無效。"
