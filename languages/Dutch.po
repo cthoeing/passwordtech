@@ -1,0 +1,3034 @@
+﻿# !!! NOTE ON FORMAT STRINGS !!!
+# As of version 3.5.3, Password Tech uses format specifiers of the form "%N",
+# with N being the index of the argument (starting at N=1) to be inserted into
+# the formatted string. All arguments are provided as strings by the application.
+# The new format was chosen because it provides higher flexibility and security.
+# Example:
+# Format string:    "%1 characters / %2 bits per character"
+# 1st argument:     "90"
+# 2nd argument:     "6.4"
+# Resulting string: "90 characters / 6.4 bits per character"
+# In the translated string, the arguments can be specified in any order.
+# Password Tech is still compatible with the old format ("%d" for digits, "%f"
+# for floating point numbers, "%s" for strings, etc.), and the original strings
+# are still provided in the old format to avoid merge conflicts when updating
+# existing translations. 
+
+#. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
+msgid ""
+msgstr ""
+"Project-Id-Version: Password Tech 3.5.6\n"
+"Last-Translator: Atze\n"
+"Language: nl\n"
+
+#. Message box caption
+msgid "Info"
+msgstr "Info"
+
+#. Message box caption
+msgid "Warning"
+msgstr "Waaschuwing"
+
+#. Message box caption
+msgid "Question"
+msgstr "Vraag"
+
+#. Message box caption
+msgid "Error"
+msgstr "Fout"
+
+#. Main window, label attached to password profile drop-down list
+msgid "Profile:"
+msgstr "Profiel:"
+
+#. Main window, Settings groupbox
+msgid "Settings"
+msgstr "Instellingen"
+
+#. Main window, checkbox
+msgid "Include Characters (Pass*words*)"
+msgstr "Gebruik tekens (Wacht*woorden*)"
+
+#. Main window, Password length
+msgid "Length:"
+msgstr "Lengte:"
+
+#. Main window, user-defined character set
+msgid "Character Set:"
+msgstr "Tekenset:"
+
+#. Main window, button to show currently loaded character set
+msgid "Show details"
+msgstr "Details weergeven"
+
+#. Main window, checkbox
+msgid "Include Words (Pass*phrases*)"
+msgstr "Woorden toevoegen (Wachtwoord*zinnen*)"
+
+#. Main window, number of words from word list to generate
+msgid "Number:"
+msgstr "Nummer:"
+
+#. Main window, select word list file
+msgid "Word List File:"
+msgstr "Bestand met woordenlijst:"
+
+#. Main window, button to browse for word list file
+msgid "Browse"
+msgstr "Bladeren"
+
+#. Main window, specify length of passphrase (composed of words)
+msgid "Specify length*:"
+msgstr "Geef lengte op*:"
+
+#. Main window, checkbox
+msgid "Combine Words with Characters"
+msgstr "Combineer woorden met tekens"
+
+#. Main window, checkbox
+msgid "Format password:"
+msgstr "Wachtwoord formaat:"
+
+#. Main window, checkbox, execute custom Lua script for password generation
+msgid "Run script:"
+msgstr "Script uitvoeren:"
+
+#. Main window, button to reload script file
+msgid "Reload script"
+msgstr "Script opnieuw laden"
+
+#. Main window, label attached to input box for number of passwords
+msgid "Multiple passwords:"
+msgstr "Meerdere wachtwoorden"
+
+#. Main window, button to generate password
+msgid "Generate"
+msgstr "Genereren"
+
+#. Main window, button to generate multiple passwords
+msgid "Generate to Clipboard"
+msgstr "Genereren naar Klembord"
+
+#. Main window, button to generate multiple passwords
+msgid "Generate to File..."
+msgstr "Genereren naar Bestand..."
+
+#. Main window, button to access advanced password options
+msgid "Advanced"
+msgstr "Geavanceerd"
+
+#. Main window, button to access advanced password options, tooltip
+msgid "%d option(s) active"
+msgstr "%d Optie(s) actief"
+
+#. Main window, button to access advanced password options, dropdown menu
+msgid "Deactivate All Options"
+msgstr "Alle Opties Uitschakelen"
+
+#. Main window, button to access advanced password options, dropdown menu
+msgid "Deactivate All Starred (*) Options"
+msgstr "Alle Optiie met Ster (*) deactiveren"
+
+#. Main window, Generated Password groupbox
+msgid "Generated Password"
+msgstr "Gegenereerd wachtwoord"
+
+#. Main window, label below password box
+msgid "Click on \"Generate\""
+msgstr "Klik op \"Genereren\""
+
+#. Main window, button to toggle password display (either display as-is or hide behind symbols)
+msgid "Hide/show password"
+msgstr "Wachtwoord verbergen/tonen"
+
+#. Main window, password groupbox, tooltip of quality bar
+msgid "Hold left mouse button to drag & drop password"
+msgstr "Houd de linkermuisknop ingedrukt om het wachtwoord te slepen en neer te zetten"
+
+#. Main menu, File submenu
+msgid "File"
+msgstr "Bestand"
+
+#. Main menu, File submenu, Profile for password generation
+msgid "Profile"
+msgstr "Profiel"
+
+#. Main menu, File submenu, Profile submenu, Profile Editor
+msgid "Profile Editor..."
+msgstr "Profiel-editor..."
+
+#. Main menu, File submenu, Exit program
+msgid "Exit"
+msgstr "Stoppen"
+
+#. Main menu, Tools submenu 
+msgid "Tools"
+msgstr "Hulpmiddelen"
+
+#. Main window, Clear Clipboard button and menu item
+msgid "Clear Clipboard"
+msgstr "Klembord leegmaken"
+
+#. Main window, Encrypt Clipboard button and menu item
+msgid "Encrypt Clipboard..."
+msgstr "Klembord versleutelen..."
+
+#. Main window, Decrypt Clipboard button and menu item
+msgid "Decrypt Clipboard..."
+msgstr "Klembord decoderen..."
+
+#. Main menu, Tools submenu
+msgid "Create Random Data File..."
+msgstr "Een bestand met willekeurige gegevens maken..."
+
+#. Main menu, Tools submenu
+msgid "Create Trigram File..."
+msgstr "Trigrambestand maken..."
+
+#. Main menu, Tools submenu
+msgid "MP Password Generator..."
+msgstr "MP-wachtwoordgenerator..."
+
+#. Main menu, Tools submenu
+msgid "Deterministic Random Generator"
+msgstr "Deterministische willekeurige generator"
+
+#. Main menu, Tools submenu, Deterministic Random Generator submenu
+msgid "Reset"
+msgstr "Opnieuw instellen"
+
+#. Main menu, Tools submenu, Deterministic Random Generator submenu
+msgid "Deactivate"
+msgstr "Deactiveren"
+
+#. Main menu, Tools submenu
+msgid "Provide Additional Entropy"
+msgstr "Zorg voor extra Entropie"
+
+#. Main menu, Tools submenu, Provide Additional Entropy submenu
+msgid "As Text..."
+msgstr "Als Tekst..."
+
+#. Main menu, Tools submenu, Provide Additional Entropy submenu
+msgid "From File..."
+msgstr "Van bestand..."
+
+#. Main menu, Options submenu
+msgid "Options"
+msgstr "Opties"
+
+#. Main menu, Options submenu
+msgid "Configuration..."
+msgstr "Configuratie..."
+
+#. Configuration window, Language tab
+msgid "Language"
+msgstr "Taal"
+
+#. Main menu, Options submenu
+msgid "Always on Top"
+msgstr "Venster altijd bovenop"
+
+#. Main menu, Options submenu
+msgid "Hide Entropy Progress"
+msgstr "Verberg entropievoortgang"
+
+#. Main menu, Options submenu
+msgid "Save Settings on Exit"
+msgstr "Instellingen opslaan bij afsluiten"
+
+#. Main menu, Options submenu
+msgid "Save Settings Now"
+msgstr "Instellingen nu opslaan"
+
+#. Main menu, Help submenu
+msgid "Help"
+msgstr "Hulp"
+
+#. Main window, Help button tooltip
+msgid "Open Manual"
+msgstr "Gebruikershandleiding Openen"
+
+msgid "Command Line Arguments..."
+msgstr "Opdrachtregel argumenten..."
+
+#. Main menu, Help submenu
+msgid "Visit Website"
+msgstr "Website Bezoeken"
+
+#. Main window, Help submenu
+msgid "Get Translations..."
+msgstr "Vertalingen downloaden..."
+
+#. Main window, Help submenu
+msgid "Donate..."
+msgstr "Doneren..."
+
+#. Main window, Help submenu
+msgid "Check for Updates"
+msgstr "Controleer op updates"
+
+#. Main window, Help submenu
+msgid "Timer Info..."
+msgstr "Informatie over Timers..."
+
+#. Main window, Help submenu
+msgid "About %s..."
+msgstr "Over %s..."
+
+#. System tray context menu, Restore application
+msgid "Restore %s"
+msgstr "%s Herstellen"
+
+#. System tray context menu, Generate Password to clipboard
+msgid "Generate Password"
+msgstr "Wachtwoord Genereren"
+
+#. System tray context menu, Generate Password and Show in message box
+msgid "Generate and Show Password..."
+msgstr "Wachtwoord Genereren en Weergeven..."
+
+#. System tray context menu, Generate Password and Autotype into other windows
+msgid "Generate and Autotype Password"
+msgstr "Genereer en Autotype Wachtwoord"
+
+#. System tray context menu
+msgid "Open user manual"
+msgstr "Open de Gebruikershandleiding"
+
+#. Command line arguments
+msgid "Usage:"
+msgstr "Gebruik:"
+
+#. Command line arguments
+msgid "Display this help message."
+msgstr "Toon deze helptekst."
+
+#. Command line arguments
+msgid "Do not write to disk unless explicitly requested."
+msgstr "Schrijf niet naar schijf tenzij expliciet aangevraagd."
+
+#. Command line arguments
+msgid "Load profile named 'profilename' on start-up."
+msgstr "Laad profiel met naam 'profielnaam' bij opstarten."
+
+#. Command line arguments
+msgid "Generate 'number' of passwords and display on the console, then close application."
+msgstr "Genereer 'aantal' wachtwoorden en geef ze weer op de console, sluit vervolgens het programma."
+
+#. Command line arguments
+msgid "Launch application in the background."
+msgstr "Start programma op de achtergrond."
+
+#. Command line arguments
+msgid "Open database named 'filename' on start-up and show password manager window."
+msgstr "Open de database met de naam 'bestandsnaam' bij het opstarten en geef het wachtwoordbeheervenster weer."
+
+#. Main window, Clear Clipboard button tooltip
+msgid "Clear clipboard (text contents only)"
+msgstr "Klembord leegmaken (alleen tekstinhoud)"
+
+#. Main window, Encrypt/Decrypt Clipboard button tooltip
+msgid "Clipboard text encryption (left-click) or decryption (right-click)"
+msgstr "Versleuteling (linkermuisklik) of ontsleuteling (rechtermuisklik) van de tekst in het klembord"
+
+#. Main window, Profile Editor button tooltip
+msgid "Load, create or delete profiles"
+msgstr "Profielen laden, maken of verwijderen"
+
+#. Main window, MP Password Generator button tooltip
+msgid "Generate passwords based on a master password"
+msgstr "Genereer wachtwoorden op basis van een hoofdwachtwoord"
+
+#. Main window, Configuration button tooltip
+msgid "Main configuration of the program"
+msgstr "Hoofdconfiguratie van het programma"
+
+#. Open/Save dialogs, filter for All files (*.*)
+msgid "All files"
+msgstr "Alle Bestanden"
+
+#. Open/Save dialogs, filter for Text files (*.txt)
+msgid "Text files"
+msgstr "Tekstbestanden"
+
+#. Open/Save dialogs, filter for Trigram files (*.tgm)
+msgid "Trigram files"
+msgstr "Trigram bestanden"
+
+#. Open/Save dialogs, filter for Lua script files (*.lua)
+msgid "Lua scripts"
+msgstr "Lua scripts"
+
+#. Various context menus, Undo last operation
+msgid "Undo"
+msgstr "Ongedaan maken"
+
+#. Various context menus, Cut selected text and copy to clipboard
+msgid "Cut"
+msgstr "Knippen"
+
+#. Various context menus, Copy selected text to clipboard
+msgid "Copy"
+msgstr "Kopiëren"
+
+#. Main window, Password box, context menu
+msgid "Encrypt && Copy"
+msgstr "Versleutelen en Kopiëren"
+
+#. Variuos context menus, paste text from clipboard
+msgid "Paste"
+msgstr "Plakken"
+
+#. Main window, Password box, context menu 
+msgid "Perform Autotype"
+msgstr "Autotype Uitvoeren"
+
+#. Main window, Password box, context menu
+msgid "Add to Database"
+msgstr "Toevoegen aan Database"
+
+#. Various context menus, Delete selected text
+msgid "Delete"
+msgstr "Verwijderen"
+
+#. Various context menus, select entire text
+msgid "Select All"
+msgstr "Alles Selecteren"
+
+#. Context menus of Character set, Word list file, Format password, and Run script drop-down lists: Clear history of list entries 
+msgid "Clear List"
+msgstr "Lijst verwijderen"
+
+#. Main window, context menus of Character set, Word list file, Format password, and Run script drop-down lists: Clear currently selected entry
+msgid "Remove Entry"
+msgstr "Verwijder Item"
+
+#. Main window, Passowrd box, context menu, make box editable
+msgid "Editable"
+msgstr "Bewerkbaar"
+
+#. Main window, Password box, context menu, enable automatic estimation of password quality when entering text
+msgid "Enable Password Testing"
+msgstr "Wachtwoordtesten Inschakelen"
+
+#. Main window, Password box, context menu
+msgid "Change Font..."
+msgstr "Lettertype Wijzigen..."
+
+#. Title of open dialog when selecting Main menu | Tools | Provide Additional Entropy | From File
+msgid "Select high-entropy file"
+msgstr "Selecteer bestand met hoge Entropie"
+
+#. Main window, Password Database button tooltip
+msgid "Manage passwords in encrypted databases"
+msgstr "Wachtwoordbeheerder met gecodeerde databases"
+
+#. Main window, Reload Profile button tooltip
+msgid "Reload profile"
+msgstr "Profiel opnieuw laden"
+
+#. Main window, Add Profile button tooltip
+msgid "Add profile"
+msgstr "Profiel toevoegen"
+
+#. Main menu, Tools submenu, Deterministic Random Generator submenu
+msgid "Set up..."
+msgstr "Instellen..."
+
+#. Main menu, File submenu
+msgid "Password Manager..."
+msgstr "Wachtwoordbeheerder..."
+
+#. Main menu, Help submenu
+msgid "Enter Donor Key..."
+msgstr "Voer Donorsleutel in..."
+
+#. System tray context menu
+msgid "Reset All Window Positions"
+msgstr "Alle vensters opnieuw rangschikken"
+
+#. Message shown when randseed.dat could not be read
+msgid ""
+"Could not read random seed file\n"
+"\"%s\"."
+msgstr ""
+"Fout bij het lezen van het willekeurige seed-bestand\n"
+"\"%s\"."
+
+#. Message shown when writing randseed.dat failed
+msgid ""
+"Could not write to random seed file\n"
+"\"%s\"."
+msgstr ""
+"Fout bij het schrijven van willekeurig seed-bestand\n"
+"\"%s\"."
+
+#. List of unknown command line parameters (when the application is run from the command line)
+msgid ""
+"Unknown command line switch(es):\n"
+"%s"
+msgstr ""
+"Onbekende opdrachtregel-schakelaar(s):\n"
+"%s"
+
+#. Message shown when word list could not be loaded
+msgid ""
+"Error while loading word list file\n"
+"\"%s\"."
+msgstr ""
+"Fout bij het laden van het woordenlijstbestand\n"
+"\"%s\"."
+
+#. Message shown when passwords from common_passwords.txt could not be loaded
+msgid ""
+"Error while loading list of common passwords:\n"
+"%s."
+msgstr ""
+"Fout bij het laden van de lijst met veelvoorkomende wachtwoorden:\n"
+"%s."
+
+#. List of errors that occurred during startup phase of the application
+msgid "%s encountered %d error(s) during startup:"
+msgstr "%d fout(en) zijn opgetreden tijdens het starten van %s:"
+
+#. Reminder to make a donation, shown with a certain frequency on startup
+msgid ""
+"If you like %s, please consider\n"
+"making a donation. Thank you!"
+msgstr ""
+"Als je %s leuk vindt, overweeg dan een\n"
+"Donatie. Dank u wel"
+
+#. Message shown when selected character set is invalid
+msgid "Character set \"%s\" is invalid."
+msgstr "Tekenset \"%s\" is ongeldig."
+
+#. Message shown when configuration file could not be written
+msgid ""
+"Error while writing to configuration file:\n"
+"%s."
+msgstr ""
+"Fout bij het schrijven van het configuratiebestand:\n"
+"%s."
+
+#. Information about selected character set (number N of unique characters and entropy bits (=log2(N)) per character)
+msgid "%d characters / %.1f bits per character"
+msgstr "%d tekens / %.1f bits per teken"
+
+#. Information about selected word list file (number N of unique words and entropy bits (=log2(N)) per word) 
+msgid "%d words / %.1f bits per word"
+msgstr "%d woorden / %.1f bits per woord"
+
+#. Message shown when selected trigram file could not be read
+msgid "Could not open trigram file."
+msgstr "Kan trigrambestand niet openen."
+
+#. Message shown when selected trigram file has an invalid format
+msgid "Invalid trigram file."
+msgstr "Ongeldig trigrambestand."
+
+#. Main window, Generated Password groupbox, label below Password box, tooltip shown when generated or entered password matches a common password
+msgid "Matches common password!"
+msgstr "Komt overeen met een algemeen Wachtwoord!"
+
+#. Encrypt Clipboard, message shown when text has been encrypted successfully 
+msgid "Text successfully encrypted."
+msgstr "Tekst succesvol versleuteld."
+
+#. Decrypt Clipboard, message shown when text has been decrypted successfully 
+msgid "Text successfully decrypted."
+msgstr "Tekst succesvol gedecodeerd."
+
+#. Encrypt/Decrypt Clipboard, message shown when clipboard could not be opened
+msgid "Could not open clipboard."
+msgstr "Kon klembord niet openen."
+
+#. Encrypt/Decrypt Clipboard, message shown when contained text is too long
+msgid "The text to be encrypted is too long."
+msgstr "De te versleutelen tekst is te lang."
+
+#. Encrypt/Decrypt Clipboard, message shown when clipboard is empty
+msgid "No text available to process."
+msgstr "Geen tekst beschikbaar voor verwerking."
+
+#. Encrypt/Decrypt Clipboard, message shown when out of memory
+msgid ""
+"Not enough memory available to perform\n"
+"the operation. Try to use a shorter text."
+msgstr ""
+"Niet genoeg geheugen beschikbaar om de\n"
+"te ondersteunenuit te voeren. Probeer het\n"
+"met een kortere tekst."
+
+#. Decrypt Clipboard, message shown when decryption failed
+msgid ""
+"Decryption failed. This may be attributed\n"
+"to the following reasons:"
+msgstr ""
+"Decodering mislukt. Mogelijke\n"
+"redenen hiervoor zijn:"
+
+#. Decrypt Clipboard, possible reason for failure
+msgid "- You entered a wrong password."
+msgstr "- U hebt een onjuist wachtwoord ingevoerd."
+
+#. Decrypt Clipboard, possible reason for failure
+msgid ""
+"- The text is corrupted.\n"
+"- The text is not encrypted."
+msgstr ""
+"- De tekst is onjuist.\n"
+"- De tekst is niet gecodeerd."
+
+#. Decrypt Clipboard, message shown when decompression failed
+msgid ""
+"This should not have happened:\n"
+"Decryption successful, but decompression\n"
+"failed."
+msgstr ""
+"Dit had niet mogen gebeuren:\n"
+"Decodering succesvol, maar\n"
+"Decompressie mislukt."
+
+#. Message shown when certain hot key(s) could not be registered
+msgid "Could not register the following hot keys:"
+msgstr "De volgende sneltoetsen konden niet worden geregistreerd:"
+
+#. Main window, Generate password list, message shown when specified number of passwords is invalid
+msgid ""
+"Invalid number of passwords.\n"
+"Allowed range is %d-%d."
+msgstr ""
+"Ongeldig aantal wachtwoorden.\n"
+"Toegestane bereik van waarden is %d-%d."
+
+#. Main window, Generate password list to file, message shown when selected file already exists
+msgid ""
+"The selected file already exists. Do you\n"
+"want to append passwords to this file\n"
+"(existing passwords will be preserved),\n"
+"or do you want to completely overwrite it?\n"
+"\n"
+"Yes -> append passwords,\n"
+"No -> overwrite file,\n"
+"Cancel -> cancel process."
+msgstr ""
+"Het geselecteerde bestand bestaat al.\n"
+"Wilt u wachtwoorden toevoegen aan het bestand\n"
+"(bestaande wachtwoorden blijven intact),\n"
+"of wilt u het bestand volledig overschrijven?\n"
+"\n"
+"Ja -> Wachtwoorden toevoegen,\n"
+"Nee -> bestand overschrijven,\n"
+"Annuleren -> Proces Annuleren."
+
+#. Main window, Include Passphrase, Specify Length, message shown when specified length range is invalid
+msgid "Passphrase: Invalid length range."
+msgstr "Wachtwoordzin: Ongeldig lengtebereik."
+
+#. Message shown for a certain configuration of password settings
+msgid ""
+"If the option \"Each character must occur\n"
+"only once\" is activated, the password length\n"
+"is limited to %d unique characters."
+msgstr ""
+"Als de optie \"Elk teken mag slechts één keer\"\n"
+"voorkomen is geactiveerd, is de lengte van het wachtwoord\n"
+"beperkt tot %d unieke tekens."
+
+#. Message shown for a certain configuration of passphrase settings
+msgid ""
+"If the option \"Each word must occur only\n"
+"once\" is activated, the number of words\n"
+"is limited to the size of the word list (%d)."
+msgstr ""
+"Als de optie \"Elk woord mag maar één keer\"\n"
+"voorkomen is geactiveerd, is het aantal woorden\n"
+"beperkt tot de grootte van de woordenlijst (%d)."
+
+#. Message shown when selected script file could not be loaded
+msgid ""
+"Error while loading script:\n"
+"%s."
+msgstr ""
+"Fout bij het laden van script:\n"
+"%s."
+
+#. Title of Progress window when generating a single password
+msgid "Generating password"
+msgstr "Wachtwoord genereren"
+
+#. Title of Progress window when generating password list
+msgid "Generating password list"
+msgstr "Wachtwoordlijst genereren"
+
+#. Progress info when generating password list
+msgid "%d of %d passwords generated."
+msgstr "%d van %d Wachtwoorden gegenereerd."
+
+#. Formatted password, Include Characters/Words selected, but format specifier "P" not found in format string
+msgid "\"P\" is not specified"
+msgstr "\"P\" is niet gespecificeerd"
+
+#. Formatted password, format specifier "P" contained in format string, but no password available to insert
+msgid "Password not available"
+msgstr "Wachtwoord niet beschikbaar"
+
+#. Formatted password, format specifier "P" contained in format string, but password cannot be fully inserted
+msgid "Password too long"
+msgstr "Wachtwoord te lang"
+
+#. Formatted password, format string contains unknown specifier
+msgid "%d invalid format specifier(s): %s"
+msgstr "%d ongeldige opmaakspecificatie(s): %s"
+
+#. Run script, executing Lua script
+msgid "Executing script"
+msgstr "Script uitvoeren"
+
+#. Run script, waiting for response
+msgid "Waiting for script ..."
+msgstr "Wachten op script ..."
+
+#. Run script, message shown when execution was cancelled
+msgid ""
+"Script thread was terminated forcibly.\n"
+"Please check script for infinite loops."
+msgstr ""
+"Beëindiging van scriptthread is geforceerd.\n"
+"Controleer het script voor\n"
+"Eindeloze lussen."
+
+#. Generate password list, message shown when list size is about to exceed internal limit
+msgid ""
+"The estimated list size will probably exceed\n"
+"the internal memory limit.\n"
+"Please reduce the number of passwords"
+msgstr ""
+"De geschatte grootte van de lijst zal waarschijnlijk\n"
+"de interne geheugenlimiet overschrijden.\n"
+"Verminder het aantal wachtwoorden"
+
+#. Generate password list, message shown when list size has exceeded internal limit
+msgid ""
+"The memory limit of the password list has\n"
+"been reached.\n"
+"\n"
+"The number of passwords has been\n"
+"reduced to %d."
+msgstr ""
+"De opslaglimiet voor de wachtwoordlijst is\n"
+"overschreden.\n"
+"\n"
+"Het aantal wachtwoorden is teruggebracht tot %d."
+
+#. Generate password list, number of generated passwords
+msgid "%d passwords generated."
+msgstr "%d wachtwoorden gegenereerd."
+
+#. Generate password list, info about passwords
+msgid ""
+"%d passwords generated.\r\n"
+"Entropy of the first password: %d bits.\r\n"
+"Maximum entropy of the entire list: %d bits."
+msgstr ""
+"%d wachtwoorden gegenereerd.\r\n"
+"Entropie van het eerste wachtwoord: %d bits.\r\n"
+"Maximale entropie van de gehele lijst: %d bits."
+
+#. Generate password to clipboard
+msgid "Password copied to clipboard."
+msgstr "Wachtwoord naar klembord gekopieerd."
+
+#. Generate password list, copy list to UI
+msgid "Copying password list ..."
+msgstr "Kopieer wachtwoordlijst ..."
+
+#. Generate password list to clipboard
+msgid "Password list copied to clipboard."
+msgstr "Wachtwoordlijst gekopieerd naar klembord."
+
+#. Generate password list to file
+msgid ""
+"File \"%s\" successfully created.\n"
+"\n"
+"%d passwords written."
+msgstr ""
+"Bestand \"%s\" succesvol aangemaakt.\n"
+"\n"
+"%d wachtwoorden geschreven."
+
+#. Generate password, error message
+msgid ""
+"An error has occurred during password generation:\n"
+"%s."
+msgstr ""
+"Er is een fout opgetreden tijdens het genereren\n"
+"van het wachtwoord:\n"
+"%s."
+
+#. Generate password, error message
+msgid ""
+"An error has occurred while trying to send/\n"
+"process the password data:\n"
+"%s."
+msgstr ""
+"Bij het proberen om wachtwoordgegevens te verzenden\n"
+"is er een fout opgetreden:\n"
+"%s."
+
+#. Generate password, error message, additional info when generating passwords to file
+msgid "%d passwords written to file \"%s\"."
+msgstr "%d Wachtwoorden naar bestand \"%s\ geschreven"."
+
+#. Include characters, info about character set
+msgid "%d bits / %d characters"
+msgstr "%d Bits / %d Tekens"
+
+#. Include characters, error message shown when character set is invalid
+msgid "Invalid character set."
+msgstr "Ongeldige karakterset."
+
+#. Include characters, phonetic passwords, info about trigrams
+msgid "default (English) trigrams"
+msgstr "Standaard-Trigram (Engels)"
+
+#. Include characters, info about character set where a particular number of characters is desired for certain subsets
+msgid "(with different frequencies)"
+msgstr "(met verschillende frequenties)"
+
+#. Data loaded from file
+msgid "File \"%s\""
+msgstr "Bestand \"%s\""
+
+#. Include characters, info about phonetic passwords
+msgid ""
+"(phonetic, based on trigram frequencies\n"
+"from the following source:\n"
+"<%s>)"
+msgstr ""
+"(fonetisch, gebaseerd op trigram frequenties\n"
+"uit de volgende bron:\n"
+"<%s>)"
+
+#. Include characters, more detailed error message
+msgid ""
+"The character set you entered is invalid.\n"
+"It must contain at least 2 different characters."
+msgstr ""
+"De door u ingevoerde tekenset is ongeldig.\n"
+"Het moet minimaal 2 verschillende tekens bevatten."
+
+#. Include characters, info about currently loaded character set
+msgid "Currently loaded character set:"
+msgstr "Momenteel geladen karakterset:"
+
+#. Include words, error message shown when word list file could not be opened
+msgid "Could not open file."
+msgstr "Kan bestand niet openen."
+
+#. Include words, error message shown when word list does not contain enough words
+msgid "Not enough valid words."
+msgstr "Niet genoeg geldige woorden."
+
+#. Include words, title of file selection dialog
+msgid "Select word list file"
+msgstr "Selecteer bestand met woordenlijst"
+
+#. Include words, more detailed error message
+msgid ""
+"Error while loading the file\n"
+"\"%s\":\n"
+"%s"
+msgstr ""
+"Fout bij het laden van bestand\n"
+"\"%s\":\n"
+"%s"
+
+#. Include words, info about default word list
+msgid "default (English) word list"
+msgstr "Standaardwoordenlijst (Engels)"
+
+#. Include words, info about currently loaded word list
+msgid "Currently loaded word list:"
+msgstr "Momenteel geladen woordenlijst:"
+
+#. Include words, info about currently loaded word list
+msgid "First word:"
+msgstr "Eerste woord:"
+
+#. Include words, info about currently loaded word list
+msgid "Random word:"
+msgstr "Willekeurig woord:"
+
+#. Include words, info about currently loaded word list
+msgid "Last word:"
+msgstr "Laatste woord:"
+
+#. Configuration, warning message shown when version of selected language is not compatible (lower) with program version
+msgid ""
+"The version of this language (%s) is not\n"
+"compatible with this program version.\n"
+"This version of %s requires a language\n"
+"version of at least %s.\n"
+"\n"
+"Do you want to use it anyway?"
+msgstr ""
+"De versie van deze taal (%s) is niet\n"
+"compatibel met deze programmaversie.\n"
+"Deze versie van %s vereist een\n"
+"Taalversie van ten minste. %s.\n"
+"\n"
+"Wil je het nog steeds gebruiken??"
+
+#. Configuration, warning message shown when version of selected language is not compatible (higher) with program version
+msgid ""
+"The version of this language (%s) is higher\n"
+"than the version of this program (%s).\n"
+"Therefore, version incompatibilities may occur.\n"
+"\n"
+"Do you want to use it anyway?"
+msgstr ""
+"De versie van deze taal (%s) is hoger\n"
+"dan de versie van dit programma (%s).\n"
+"Daarom kunnen er versie-incompatibiliteiten optreden.\n"
+"\n"
+"Wil je het nog steeds gebruiken??"
+
+#. Configuration, message shown when selecting language
+msgid ""
+"The program has to be restarted in order\n"
+"for the changes to take effect.\n"
+"\n"
+"Do you want to restart now?"
+msgstr ""
+"Het programma moet opnieuw worden gestart,\n"
+"zodat de veranderingen effect hebben.\n"
+"\n"
+"Wilt u nu opnieuw opstarten?"
+
+#. Generate password and show it in a message box, message shown when password is too long
+msgid ""
+"Password is too long to show it in a\n"
+"message box like this.\n"
+"\n"
+"It has been copied to the clipboard."
+msgstr ""
+"Wachtwoord is te lang om te tonen in een\n"
+"berichtvak zoals dit.\n"
+"\n"
+"Het is gekopieerd naar het klembord."
+
+#. Generate password and show it in a message box
+msgid ""
+"The generated password is:\n"
+"\n"
+"%s\n"
+"\n"
+"The estimated security is %d bits.\n"
+"\n"
+"Yes -> copy password to clipboard,\n"
+"No -> generate new password,\n"
+"Cancel -> cancel process."
+msgstr ""
+"Het gegenereerde wachtwoord is:\n"
+"\n"
+"%s\n"
+"\n"
+"De geschatte veiligheid is %d Bits.\n"
+"\n"
+"Ja -> Wachtwoord naar klembord kopiëren,\n"
+"Nee -> nieuw wachtwoord genereren,\n"
+"Annuleren -> Het Proces annuleren."
+
+#. Context menu of drop-down lists in main window, menu item "Clear List"
+msgid ""
+"All entries will be removed from the list.\n"
+"Are you sure?"
+msgstr ""
+"Alle vermeldingen worden uit de lijst verwijderd.\n"
+"Weet je het zeker?"
+
+#. Main menu, Help submenu
+msgid "Total Entropy Bits: %d"
+msgstr "Totaal aantal entropiebits: %d"
+
+#. Main menu, Help submenu, info about high-resolution timer
+msgid ""
+"High-resolution timer used:\n"
+"%s.\n"
+"\n"
+"Current value: %s."
+msgstr ""
+"Hoge-resolutie timer gebruikt:\n"
+"%s\n"
+"\n"
+"Huidige waarde: %s."
+
+#. Check for updates, message shown when version file could not be downloaded
+msgid "Could not download version file"
+msgstr "Kon versiebestand niet downloaden"
+
+#. Check for updates, message shown when version file cannot be parsed due to missing information or unknown format
+msgid "Version or URL not specified in version file, or unknown file format"
+msgstr "Versie of URL niet gespecificeerd in versiebestand, of onbekende indeling van versiebestand"
+
+#. Check for updates, message shown when a new version is available
+msgid ""
+"A new version (%s) of %s is available!\n"
+"Do you want to visit the download page now?"
+msgstr ""
+"Er is een nieuwe versie (%s) van %s beschikbaar!\n"
+"Wilt u nu naar de downloadpagina gaan??"
+
+#. Check for updates, additional info about new version
+msgid "(NOTE: %s)"
+msgstr "(KENNISGEVING: %s)"
+
+#. Check for updates, message shown when there's no new version to download
+msgid "Your version of %s is up-to-date."
+msgstr "Uw versie van %s is up-to-date."
+
+#. Check for updates, general error message
+msgid ""
+"Error while checking for updates:\n"
+"%s."
+msgstr ""
+"Fout bij het controleren op updates:\n"
+"%s."
+
+#. Main window, info shown in window title when using deterministic random generator
+msgid "WARNING: Random generator is deterministic (press F7 to deactivate)!"
+msgstr "WAARSCHUWING: De willekeurige generator is deterministisch (F7 om uit te schakelen)!"
+
+#. Message shown after clearing clipboard
+msgid "Clipboard cleared."
+msgstr "Klembord gewist."
+
+#. Message shown after loading profile
+msgid "Profile \"%s\" activated."
+msgstr "Profiel \"%s\" geactiveerd."
+
+#. Message shown after activating deterministic random generator
+msgid "Deterministic random generator has been ACTIVATED."
+msgstr "Deterministische willekeurige getallengenerator INGESCHAKELD."
+
+#. Message shown after resetting deterministic random generator
+msgid "Deterministic random generator has been RESET."
+msgstr "Deterministische willekeurige generator is GERESET."
+
+#. Message shown after deactivating deterministic random generator
+msgid "Deterministic random generator has been DEACTIVATED."
+msgstr "Deterministische willekeurige getallengenerator UITGESCHAKELD."
+
+#. Message shown on command line if profile was specified in command line parameters
+msgid "Selected profile \"%s\"."
+msgstr "Profiel \"%s\" geselecteerd."
+
+#. Message shown on command line if password generation was requested
+msgid "Generating %d password(s) ..."
+msgstr "Genereer van %d wachtwoorden ..."
+
+#. Message shown during startup if password generation was requested but program is not run from console
+msgid ""
+"Command line function \"gen\" is only effective\n"
+"when %s is run from the console."
+msgstr ""
+"De opdrachtregelfunctie \"gen\" is alleen effectief,\n"
+"wanneer %s wordt gestart vanaf de console."
+
+#. Message shown when donor key has expired
+msgid ""
+"Your donor key has expired: The maximum\n"
+"number of updates has been reached."
+msgstr ""
+"Uw donorsleutel is verlopen:\n"
+"Het maximale aantal updates is bereikt."
+
+#. Message shown when donor key is invalid
+msgid "Donor key is invalid."
+msgstr "Donor sleutel is ongeldig."
+
+#. Main menu, Help submenu, Enter Donor Key, title of input window
+msgid "Donor Key"
+msgstr "Donor Sleutel"
+
+#. Main menu, Help submenu, Enter Donor Key, caption of input box
+msgid "Enter donor key:"
+msgstr "Voer donorsleutel in:"
+
+#. Message shown after entering valid donor key
+msgid ""
+"Your Donor ID is: %s\n"
+"Supported number of updates: %s"
+msgstr ""
+"Uw donor-ID is: %s\n"
+"Ondersteund aantal updates: %s"
+
+#. Donor key, unlimited number of updates ("Donor Pro")
+msgid "Unlimited"
+msgstr "Onbeperkt"
+
+#. Message shown after entering valid donor key
+msgid "Thank you for your support!"
+msgstr "Bedankt voor uw steun!"
+
+#. Message shown after entering valid donor key
+msgid "Copy this information to the clipboard?"
+msgstr "Deze informatie naar het klembord kopiëren?"
+
+#. Message shown after entering donor key that has expired
+msgid "Donor key has expired."
+msgstr "Donorsleutel is verlopen."
+
+#. Main menu, Options submenu, Save Settings Now, message shown after saving settings
+msgid "Settings saved."
+msgstr "Instellingen opgeslagen."
+
+#. Main window, password box, context menu, Save As File, title of save dialog
+msgid "Save password"
+msgstr "Wachtwoord opslaan"
+
+#. Main menu, Options submenu, Clear Password Cache, only enabled if "Remember password" functionality has been activated in "Enter password" dialog
+msgid "Clear Password Cache"
+msgstr "Wachtwoordcache wissen"
+
+#. Message shown after clearing password cache
+msgid "Password cache cleared."
+msgstr "Wachtwoordcache gewist."
+
+#. Main window, Run script, browse button, title of open dialog
+msgid "Select Lua script file"
+msgstr "Selecteer Lua-scriptbestand"
+
+#. Main window, exit program, title of progress window that is shown when threads besides main thread are still running
+msgid "Waiting for active threads to finish ..."
+msgstr "Wacht tot de actieve threads klaar zijn ..."
+
+#. Main menu, Help submenu, Donate
+msgid ""
+"Donate at least one of the following amounts\nto receive a Donor Key:\n"
+"\n"
+"%d EUR / %d USD: Valid for current version and %d updates.\n"
+"%d EUR / %d USD: Valid for the entire lifetime of main version 3 (unlimited updates).\n"
+"\n"
+"Do you want to donate now?"
+msgstr ""
+"Doneer minstens één van de volgende\n"
+"bedragen om een ​​donor sleutel te ontvangen:\n"
+"\n"
+"%d EUR / %d USD: Ggeldig voor de huidige versie en %d updates.\n"
+"%d EUR / %d USD: Geldig voor de gehele levensduur van versie 3 (onbeperkt aantal updates).\n"
+"\n"
+"Wilt u nu doneren?"
+
+#. Main window, error message shown when access to registry failed
+msgid ""
+"Could not access registry key\n"
+"%s."
+msgstr ""
+"Toegang tot registersleutel geweigerd:\n"
+"%s."
+
+#. Configuration window, caption
+msgid "Configuration"
+msgstr "Configuratie"
+
+#. Configuration window, General page
+msgid "General"
+msgstr "Algemeen"
+
+#. Configuration window, Security page
+msgid "Security"
+msgstr "Beveiliging"
+
+#. Configuration window, Hot Keys page
+msgid "Hot Keys"
+msgstr "Sneltoetsen"
+
+#. Configuration window, Files page
+msgid "Files"
+msgstr "Bestanden"
+
+#. Configuration window, Updates page
+msgid "Updates"
+msgstr "Updates"
+
+#. Configuration window, Database page
+msgid "Database"
+msgstr "Databank"
+
+#. Configuration window, General
+msgid "User interface style:"
+msgstr "Gebruikersinterface stijl:"
+
+#. Configuration window, General
+msgid "Application icon:"
+msgstr "Toepassingspictogram:"
+
+#. Configuration window, General
+msgid "Change font for the GUI controls:"
+msgstr "Lettertype voor GUI-besturingselementen wijzigen:"
+
+#. Configuration window, General
+msgid "Select font"
+msgstr "Selecteer lettertype"
+
+#. Configuration window, General, dropdown menu of "Select font" button
+msgid "Restore Default"
+msgstr "Herstel Standaardinstellingen"
+
+#. Configuration window, General
+msgid "Show system tray icon constantly"
+msgstr "Systeemvakpictogram constant weergeven"
+
+#. Configuration window, General
+msgid "Minimize program to system tray"
+msgstr "Minimaliseer het programma naar het systeemvak"
+
+#. Configuration window, General
+msgid "Minimize before performing autotype"
+msgstr "Minimaliseren voordat u autotype uitvoert"
+
+#. Configuration window, General
+msgid "Autotype delay between characters (ms):"
+msgstr "Autotypevertraging tussen tekens (ms):"
+
+#. Configuration window, General
+msgid "Ask before exiting application"
+msgstr "Vraag voordat u de applicatie verlaat"
+
+#. Configuration window, General
+msgid "Launch application on system startup (for current user)"
+msgstr "Toepassing uitvoeren bij opstarten van systeem (voor huidige gebruiker)"
+
+#. Configuration window, General
+msgid "Load the following profile on startup:"
+msgstr "Laad het volgende profiel bij het opstarten:"
+
+#. Configuration window, Security
+msgid "Benchmark..."
+msgstr "Snelheidstest..."
+
+#. Configuration window, Security
+msgid "Data size for benchmark test"
+msgstr "datavolume voor snelheidstest"
+
+#. Configuration window, Security
+msgid "Encryption algorithm for generating random data via random pool:"
+msgstr "encryptiealgoritme voor het genereren van willekeurige gegevens:"
+
+#. Configuration window, Security
+msgid "Test passwords against list of common passwords"
+msgstr "Test wachtwoorden met een lijst met veelvoorkomende wachtwoorden"
+
+#. Configuration window, Security
+msgid "Use advanced password strength estimation (%s)"
+msgstr "Wachtwoordkwaliteit met uitgebreid algoritme (%s) inschatten"
+
+#. Configuration window, Security
+msgid "Clear clipboard automatically after the following time (seconds):"
+msgstr "Klembord automatisch wissen na de volgende tijd (seconden):"
+
+#. Configuration window, Security
+msgid "Clear password box automatically after the following time (seconds):"
+msgstr "Wachtwoordvak automatisch wissen na de volgende tijd (seconden):"
+
+#. Configuration window, Updates
+msgid "Automatic check for updates"
+msgstr "Automatisch zoeken naar updates"
+
+#. Configuration window, Updates, options
+msgid "Daily"
+msgstr "Dagelijks"
+
+#. Configuration window, Updates, options
+msgid "Weekly"
+msgstr "Wekelijks"
+
+#. Configuration window, Updates, options
+msgid "Monthly"
+msgstr "Maandelijks"
+
+#. Configuration window, Updates, options
+msgid "Disabled"
+msgstr "Uitgeschakeld"
+
+#. Configuration window, Hot Keys, Actions group box
+msgid "Actions"
+msgstr "Acties"
+
+#. Configuration window, Hot Keys, Actions group box
+msgid "Show/restore main window"
+msgstr "Hoofdvenster weergeven/herstellen"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "No further action"
+msgstr "Geen verdere actie"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Generate single password in main window"
+msgstr "Genereer één wachtwoord in het hoofdvenster"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Generate multiple passwords"
+msgstr "Meerdere wachtwoorden genereren"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Generate password and copy it to the clipboard"
+msgstr "Wachtwoord genereren en naar klembord kopiëren"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Generate password and show it in a message box"
+msgstr "Wachtwoord genereren en weergeven in tekstvak"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Generate password and perform autotype"
+msgstr "Genereer wachtwoord en voer autotype uit"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Open MP password generator"
+msgstr "Open MP wachtwoordgenerator"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Show password manager"
+msgstr "Wachtwoordbeheerder weergeven"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Show MP password generator"
+msgstr "MP Wachtwoordbgenerator weergeven"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Search database for keyword in window title"
+msgstr "Zoek in de database naar trefwoord in de titel van het venster"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Search database for keyword and perform autotype"
+msgstr "Doorzoek de database en voer Autotype uit"
+
+#. Configuration window, Hot Keys
+msgid "Shortcut to assign:"
+msgstr "Sneltoetsen toewijzen:"
+
+#. Configuration window, Hot Keys, button
+msgid "Add"
+msgstr "Toevoegen"
+
+#. Configuration window, Hot Keys, button
+msgid "Remove"
+msgstr "Verwijderen"
+
+#. Configuration window, Hot Keys, list view, column
+msgid "Shortcut"
+msgstr "Sneltoets"
+
+#. Configuration window, Hot Keys, list view, column
+msgid "Action"
+msgstr "Actie"
+
+#. Configuration window, Hot Keys, message shown when trying to add a hot key without a corresponding action
+msgid "Please select a hot key action."
+msgstr "Selecteer een sneltoetsactie."
+
+#. Configuration window, Files
+msgid "Character encoding of text files"
+msgstr "Teken codering van tekstbestanden"
+
+#. Configuration window, Files
+msgid "Newline character sequence"
+msgstr "Tekenreeks voor regelafbrekingen (\"newline\")"
+
+#. Configuration window, Language
+msgid "Select language:"
+msgstr "Selecteer taal:"
+
+#. Configuration window, Language
+msgid "Install..."
+msgstr "Installeren..."
+
+#. Configuration window, Language, Open dialog title
+msgid "Select language file to install"
+msgstr "Selecteer de taal om te installeren"
+
+#. Configuration window, Language, Open dialog filter
+msgid "Language files"
+msgstr "Taalbestanden"
+
+#. Configuration window, Language, Install
+msgid "Language already installed"
+msgstr "Taal reeds geïnstalleerd"
+
+#. Configuration window, Language, Install
+msgid "Language file already exists:\n\"%1\""
+msgstr "Taalbestand bestaat al:\n"%1\""
+
+#. Configuration window, Language, Install
+msgid "Language \"%1\" installed successfully."
+msgstr "Taal \"%1\" succesvol geïnstalleerd."
+
+#. Configuration window, Language, Install
+msgid "Could not copy file \"%1\" to\n\"%2\""
+msgstr "Kon bestand \"%1\" niet kopiëren naar\n\"%2\""
+
+#. Configuration window, Language, Install
+msgid "Could not install language:\n%1."
+msgstr "Kon taal niet installeren:\n%1."
+
+#. Configuration window, Language, Remove
+msgid "Are you sure you want to remove\n\"%1\"?"
+msgstr "Weet u zeker dat u \n\"%1\" wilt verwijderen??"
+
+#. Configuration window, Language, Remove
+msgid "Language \"%1\" successfully removed."
+msgstr "Taal \"%1\" succesvol verwijderd."
+
+#. Configuration window, Language, Remove
+msgid "Could not delete file\n\"%1\"."
+msgstr "Kan bestand niet verwijderen:\n\"%1\"."
+
+#. Configuration window, Database
+msgid "Clear clipboard when closing/locking database"
+msgstr "Klembord wissen wanneer database gesloten/vergrendeld is"
+
+#. Configuration window, Database
+msgid "Lock database when minimizing application or database window"
+msgstr "Database vergrendelen wanneer de toepassing of het databasevenster geminimaliseerd is"
+
+#. Configuration window, Database
+msgid "Lock database after the following idle time (seconds):"
+msgstr "Database vergrendelen na de volgende tijd van inactiviteit (seconden):"
+
+#. Configuration window, Database, save database automatically when database is being locked due to idle time
+msgid "Save automatically"
+msgstr "Automatisch opslaan"
+
+#. Configuration window, Database
+msgid "Create backup of database before saving"
+msgstr "Maak een back-up van de database voordat u deze opslaat"
+
+#. Configuration window, Database
+msgid "Number backups consecutively - up to:"
+msgstr "Nummer back-ups opeenvolgend - tot:"
+
+#. Configuration window, Database
+msgid "Open window on startup"
+msgstr "Open venster wanneer programma start"
+
+#. Configuration window, Database
+msgid "Open last used database on startup"
+msgstr "Open de laatst gebruikte database bij het opstarten"
+
+msgid "Keep list of recently opened files"
+msgstr "Lijst met recent geopende bestanden bijhouden"
+
+#. Configuration window, Database
+msgid "Warn if database contains expired entries"
+msgstr "Waarschuwen wanneer de database verlopen vermeldingen bevat"
+
+#. Configuration window, Database
+msgid "Warn if database contains entries that will expire soon"
+msgstr "Waarschuwen wanneer de database vermeldingen bevat die bijna verlopen"
+
+#. Configuration window, Database, entries that will expire soon, define number of days before expiry date
+msgid "Number of days:"
+msgstr "Aantal dagen:"
+
+#. Configuration window, Database, Save database automatically after certain actions
+msgid "Save automatically:"
+msgstr "Automatisch opslaan:"
+
+#. Configuration window, Database, Save automatically, options
+msgid "After adding/modifying an entry"
+msgstr "Na het toevoegen/wijzigen van een item"
+
+#. Configuration window, Database, Save automatically, options
+msgid "After every change"
+msgstr "Na elke verandering"
+
+#. Configuration window, Database
+msgid "Default autotype sequence:"
+msgstr "Standaard autotype-reeks:"
+
+#. Configuration window, Hot Keys, message shown when max. number of hot keys has been exhausted
+msgid "Maximum number of hot keys (%d) reached."
+msgstr "Maximaal aantal sneltoetsen (%d) bereikt."
+
+#. Configuration window, Hot Keys, message shown when hot key has already been assigned
+msgid "This hot key has already been assigned."
+msgstr "Deze sneltoets is al toegewezen."
+
+#. Configuration window, Security, Random pool cipher
+msgid "%s (%d-bit key, operates on %d-bit blocks)"
+msgstr "%s (%d-bitsleutel, verwerkt %d bitblokken)"
+
+#. Configuration window, Security, Random pool cipher, Benchmark results
+msgid "Benchmark results (data size: %d MB):"
+msgstr "testresultaten (data grootte: %d MB):"
+
+#. Enter password window, label
+msgid "Enter password:"
+msgstr "Voer wachtwoord in:"
+
+#. Enter password window, label
+msgid "Confirm password:"
+msgstr "Bevestig wachtwoord:"
+
+#. Generic dialog window, button
+msgid "OK"
+msgstr "OK"
+
+#. Generic dialog window, button
+msgid "Cancel"
+msgstr "Annuleren"
+
+#. Enter password window, message shown when passwords are not identical
+msgid "Passwords are not identical."
+msgstr "Wachtwoorden komen niet overeen."
+
+#. Enter password window, caption for encryption
+msgid "Encrypt"
+msgstr "Versleutelen"
+
+#. Enter password window, caption for decryption
+msgid "Decrypt"
+msgstr "Decodering"
+
+#. Enter password window
+msgid "Remember password (seconds):"
+msgstr "Wachtwoord onthouden (seconden):"
+
+#. Enter password window
+msgid "Key file for password database:"
+msgstr "Sleutelbestand voor wachtwoorddatabase:"
+
+#. Enter password window, Key file, None selected
+msgid "(None)"
+msgstr "(Geen)"
+
+#. Enter password window, message shown when neither password nor key file entered/selected
+msgid "Enter a password and/or select a key file."
+msgstr "Voer wachtwoord in en/of selecteer sleutelbestand."
+
+#. Enter password window, message shown when selected key file could not be found
+msgid "The selected key file does not exist."
+msgstr "Het geselecteerde sleutelbestand bestaat niet."
+
+#. Enter password window, message shown when password is empty
+msgid "Password is empty."
+msgstr "Wachtwoord is leeg."
+
+#. Enter password window, Create key file, message shown when creation was successful
+msgid "Key file successfully created."
+msgstr "Sleutelbestand succesvol aangemaakt."
+
+#. Enter password window, Create key file, message shown when key file could not be created
+msgid ""
+"Error while creating key file:\n"
+"%s."
+msgstr ""
+"Fout bij aanmaken van het sleutelbestand:\n"
+"%s."
+
+#. Enter password window, Open file dialog, filter for *.key files
+msgid "Key files"
+msgstr "Sleutelbestanden"
+
+#. Enter password window, Create Key File button, tooltip
+msgid "Create key file"
+msgstr "Genereer sleutelbestand"
+
+#. Password List window, title
+msgid "Password List"
+msgstr "Wachtwoordlijst"
+
+#. Password List window, context menu
+msgid "Save As File..."
+msgstr "Opslaan als bestand..."
+
+#. Password List window, Save as file, Save file dialog, title
+msgid "Save password list"
+msgstr "Wachtwoordlijst opslaan"
+
+#. Password List window, Save as file, error message
+msgid ""
+"Error while creating file\n"
+"\"%s\":\n"
+"%s."
+msgstr ""
+"Fout bij het aanmaken van bestand\n"
+"\"%s\":\n"
+"%s."
+
+#. Password List window, Save as file, success message
+msgid "File \"%s\" successfully created."
+msgstr "Bestand \"%s\" succesvol aangemaakt."
+
+#. Advanced Password Options window, title
+msgid "Advanced Password Options"
+msgstr "Geavanceerde wachtwoordopties"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Exclude ambiguous characters"
+msgstr "Dubbelzinnige tekens uitsluiten"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "First character must not be a lower-case letter"
+msgstr "Het eerste teken mag geen kleine letter zijn"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Don't separate words by a space"
+msgstr "Scheid woorden niet met een spatie"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Don't separate words and characters by a '-' character"
+msgstr "Scheid woorden en tekens niet met '-' tekens"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Reverse default order of character/word combinations"
+msgstr "Draai de standaardvolgorde van teken-/woordcombinaties om"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Include at least one upper-case letter (A-Z)"
+msgstr "Wachtwoord moet minimaal één hoofdletter (A-Z) bevatten"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Include at least one lower-case letter (a-z)"
+msgstr "Wachtwoord moet minimaal één kleine letter (a-z) bevatten"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Include at least one digit (0-9)"
+msgstr "Wachtwoord moet minimaal één cijfer (0-9) bevatten"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Include at least one special symbol (!\"#$%...)"
+msgstr "Het wachtwoord moet minimaal één speciaal teken bevatten (!\"#$%...)"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Include at least one character from each subset"
+msgstr "Het wachtwoord moet minimaal één teken uit elke subtekenset bevatten"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Only include characters from custom character set"
+msgstr "Gebruik alleen tekens uit de aangepaste tekenset"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Exclude repeating consecutive characters (e.g. aa, 11)"
+msgstr "Sluit een reeks van hetzelfde teken uit (bijv. aa, 11)"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Remove leading and trailing whitespace characters"
+msgstr "Verwijder spaties aan het begin en einde"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Exclude duplicate entries in password lists"
+msgstr "Dubbele vermeldingen in wachtwoordlijsten uitsluiten"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Assign entropy value to each password in password lists"
+msgstr "Wijs een entropiewaarde toe aan elk wachtwoord in wachtwoordlijsten"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Capitalize first letter of each word"
+msgstr "Elk woord begint met een hoofdletter"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Convert all words in word lists to lower-case"
+msgstr "Converteer alle woorden in woordenlijsten naar kleine letters"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Each character must occur only once"
+msgstr "Elk teken mag slechts één keer voorkomen"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Each word must occur only once"
+msgstr "Elk woord mag slechts één keer voorkomen"
+
+#. Advanced Password Options window, label
+msgid "Redefine ambiguous characters:"
+msgstr "Het herdefiniëren van dubbelzinnige karakters:"
+
+#. Advanced Password Options window, label
+msgid "Redefine special symbols:"
+msgstr "Speciale tekens opnieuw definiëren:"
+
+#. Advanced Password Options window, label
+msgid "Min./Max. length of words in word lists (except default word list):"
+msgstr "Minimale/maximale Lengte van woorden in woordenlijsten (behalve standaardwoordenlijst):"
+
+#. Advanced Password Options window, label
+msgid "Redefine separators in passphrases:"
+msgstr "Scheidingstekens in wachtwoordzinnen opnieuw definiëren:"
+
+#. Advanced Password Options window, label
+msgid "Words:"
+msgstr "Woorden:"
+
+#. Advanced Password Options window, label
+msgid "Words/characters:"
+msgstr "Woorden/tekens:"
+
+#. Advanced Password Options window, label
+msgid "Trigram file for generating phonetic (pronounceable) passwords:"
+msgstr "Trigrambestand voor het genereren van fonetische (uitspreekbare) wachtwoorden:"
+
+#. Advanced Password Options window, footnotes of checkbox list
+msgid "Applies to pass_words_."
+msgstr "Geldt voor wachtwoorden_."
+
+#. Advanced Password Options window, footnotes of checkbox list
+msgid "Applies to pass_phrases_."
+msgstr "Geldt voor wachtwoordzinnen_."
+
+#. Advanced Password Options window, footnotes of checkbox list
+msgid "Applies to formatted passwords."
+msgstr "Geldt voor wachtwoorden opmaak."
+
+#. Advanced Password Options window, footnotes of checkbox list
+msgid "Applies to phonetic passwords."
+msgstr "Geldt voor fonetische wachtwoorden."
+
+#. Advanced Password Options window, footnotes of checkbox list
+msgid "Selecting one of these options might reduce the security of generated passwords."
+msgstr "Als u een van deze opties kiest, kan de wachtwoordbeveiliging afnemen."
+
+#. Advanced Password Options window, checkbox list, context menu
+msgid "Deselect All"
+msgstr "Alles deselecteren"
+
+#. Advanced Password Options window, checkbox list, context menu
+msgid "Invert Selection"
+msgstr "Selectie omkeren"
+
+#. Create Random Data File dialog, title
+msgid "Create Random Data File"
+msgstr "Een bestand met willekeurige gegevens maken"
+
+#. Create Random Data File dialog, label
+msgid "File name:"
+msgstr "Bestandsnaam:"
+
+#. Create Random Data File dialog, label
+msgid "File size:"
+msgstr "Bestandsgrootte:"
+
+#. Create Random Data File dialog, drop-down list of file size units
+msgid "Bytes"
+msgstr "Bytes"
+
+#. Create Random Data File dialog, drop-down list of file size units
+msgid "Kilobytes"
+msgstr "Kilobytes"
+
+#. Create Random Data File dialog, drop-down list of file size units
+msgid "Megabytes"
+msgstr "Megabytes"
+
+#. Create Random Data File dialog, Close button
+msgid "Close"
+msgstr "Afsluiten"
+
+#. Create Random Data File dialog, Create file button
+msgid "Create file"
+msgstr "Bestand aanmaken"
+
+#. Create Random Data File dialog, message shown when specified file size is invalid
+msgid "Invalid file size."
+msgstr "Ongeldige bestandsgrootte."
+
+#. Create Random Data File dialog, message shown when there's not enough free disk space to create the file
+msgid ""
+"Not enough free disk space available\n"
+"to create the file."
+msgstr ""
+"niet genoeg vrije schijfruimte beschikbaar\n"
+"om het bestand te maken."
+
+#. Create Random Data File dialog, title of progress window
+msgid "Creating random data file ..."
+msgstr "Willekeurig gegevensbestand maken ..."
+
+#. Create Random Data File dialog, Progress window, progress message
+msgid "%d of %d %s written."
+msgstr "%d van %d %s geschreven."
+
+#. Create Random Data File dialog, success message
+msgid ""
+"File \"%s\" successfully created.\n"
+"\n"
+"%d bytes written."
+msgstr ""
+"Bestand \"%s\" succesvol aangemaakt.\n"
+"\n"
+"%d Bytes geschreven."
+
+#. Create Random Data File dialog, error message
+msgid ""
+"Error while creating file\n"
+"\"%s\":\n"
+"%s.\n"
+"\n"
+"%d bytes written."
+msgstr ""
+"Fout bij het aanmaken van bestand\n"
+"\"%s\":\n"
+"%s.\n"
+"\n"
+"%d Bytes geschreven."
+
+#. Profile Editor dialog, title
+msgid "Profile Editor"
+msgstr "Profiel-editor"
+
+#. Profile Editor dialog, Load Profile button
+msgid "Load"
+msgstr "Laden"
+
+#. Profile Editor dialog, Confirm checkbox
+msgid "Confirm"
+msgstr "Bevestigen"
+
+#. Profile Editor dialog, label
+msgid "Profile name:"
+msgstr "Profiel naam:"
+
+#. Profile Editor dialog, Move Up button, tooltip
+msgid "Move up"
+msgstr "Naar boven bewegen"
+
+#. Profile Editor dialog, Move Down button, tooltip
+msgid "Move down"
+msgstr "Naar beneden bewegen"
+
+#. Profile Editor dialog, checkbox
+msgid "Save \"advanced password options\" for this profile"
+msgstr "\"Geavanceerde wachtwoordopties opslaan\" voor dit profiel"
+
+#. Profile Editor dialog, message shown before deleting a single profile
+msgid "Delete profile \"%s\"?"
+msgstr "Profiel \"%s\" verwijderen?"
+
+#. Profile Editor dialog, message shown before deleting multiple profiles
+msgid "Delete %d profiles?"
+msgstr "Verwijder %d profielen?"
+
+#. Profile Editor dialog, message shown when max. number of profiles has been reached
+msgid ""
+"Maximum number of profiles (%d) reached.\n"
+"Please delete or overwrite profiles."
+msgstr ""
+"Maximaal aantal profielen (%d) bereikt.\n"
+"Verwijder of overschrijf profielen."
+
+#. Profile Editor dialog, message shown when a profile already exists
+msgid ""
+"A profile with the name \"%s\" already exists.\n"
+"Do you want to overwrite it?"
+msgstr ""
+"Er bestaat al een profiel met de naam \"%s\".\n"
+"Wil je het overschrijven??"
+
+#. Create Trigram File dialog, title
+msgid "Create Trigram File"
+msgstr "Trigrambestand maken"
+
+#. Create Trigram File dialog, label
+msgid "Source file (e.g., dictionary, word list):"
+msgstr "Bronbestand (bijv. woordenboek, woordenlijst):"
+
+#. Create Trigram File dialog, label
+msgid "Destination file (trigram file):"
+msgstr "Doelbestand (trigram bestand):"
+
+#. Create Trigram File dialog, success message
+msgid ""
+"Trigram file \"%s\" successfully created.\n"
+"\n"
+"%d trigrams evaluated.\n"
+"%1.2f bits of entropy per letter."
+msgstr ""
+"Trigram bestand \"%s\" succesvol aangemaakt.\n"
+"\n"
+"%d trigrammen geëvalueerd.\n"
+"%1.2f Entropie bits per letter."
+
+#. Create Trigram File dialog, message shown when process was cancelled
+msgid "Process was cancelled by the user"
+msgstr "Proces is geannuleerd door de gebruiker"
+
+#. Main menu, Help submenu
+msgid "About %s"
+msgstr "Over %s"
+
+#. About window, info about translation
+msgid ""
+"Current language: %s\n"
+"Translator: %s"
+msgstr ""
+"Huidige taal: %s\n"
+"Vertaler: %s"
+
+#. About window, license info
+msgid "This program is distributed under the terms and conditions of the GNU General Public License (GPL)."
+msgstr "Dit programma wordt gedistribueerd onder de voorwaarden van de GNU General Public License (GPL)."
+
+#. About window, button
+msgid "View license"
+msgstr "Bekijk licentie"
+
+#. About window, info about Donor ID extracted from Donor Key
+msgid "Donor ID:"
+msgstr "Donateur-ID:"
+
+#. Quick Help window, title
+msgid "Quick help"
+msgstr "Snelle hulp"
+
+#. Quick Help window, context menu
+msgid "Position Automatically"
+msgstr "Automatisch positioneren"
+
+#. Quick help for "Include characters" in main window
+msgid "You can use the following placeholders:"
+msgstr "U kunt de volgende tijdelijke aanduidingen gebruiken:"
+
+#. Quick help for "Include characters" in main window
+msgid "without ambiguous characters"
+msgstr "zonder dubbelzinnige karakters"
+
+#. Quick help for "Include characters" in main window
+msgid "Special symbols"
+msgstr "Speciale symbolen"
+
+#. Quick help for "Include characters" in main window
+msgid "Brackets"
+msgstr "Haakjes"
+
+#. Quick help for "Include characters" in main window
+msgid "Punctuation marks"
+msgstr "Leestekens"
+
+#. Quick help for "Include characters" in main window
+msgid "Higher ANSI characters"
+msgstr "Hogere ANSI-tekens"
+
+#. Quick help for "Include characters" in main window
+msgid "Generate phonetic password (lower-case letters)"
+msgstr "Genereer fonetisch wachtwoord (kleine letters)"
+
+#. Quick help for "Include characters" in main window
+msgid "Generate phonetic password (upper-case letters)"
+msgstr "Genereer fonetisch wachtwoord (hoofdletters)"
+
+#. Quick help for "Include characters" in main window
+msgid "Generate phonetic password (mixed-case letters)"
+msgstr "Genereer fonetisch wachtwoord (hoofd- en kleine letters)"
+
+#. Quick help for "Include characters" in main window
+msgid "You can use the following syntax to specify a (minimum) number N of characters\n"
+"for a character set:"
+msgstr "De volgende zinsbouw kan worden gebruikt om een ​​(minimum) aantal N tekens op te geven:"
+
+#. Quick help for "Include characters" in main window
+msgid "N = Include exactly N characters. N+ = Include at least N characters."
+msgstr "N = Gebruik precies N tekens. N+ = Gebruik minimaal N tekens."
+
+#. Quick help for "Include characters" in main window
+msgid ""
+"Comments may be provided in square brackets \"[...]\"\n"
+"at the beginning of the sequence."
+msgstr ""
+"Opmerkingen kunnen aan het begin tussen vierkante haken worden geplaatst \"[...]\"
+"de volgorde moet worden gespecificeerd."
+
+#. Quick help for "Format password" in main window
+msgid ""
+"Format specifiers have the form \"[*][N]x\" or \"[*][M-N]x\", where the\n"
+"optional argument \"N\" specifies the number of repetitions (between 1 and\n"
+"99999), \"M-N\" specifies a random number of repetitions in the range\n"
+"from M to N, and \"x\" is the actual format specifier/placeholder. The\n"
+"optional asterisk (*) means that each character must occur only once in\n"
+"the sequence. Example: \"16u\" means \"Insert 16 random upper-case letters\n"
+"into the password\"."
+msgstr ""
+"Formaat specificaties hebben de vorm \"[*][N]x\" of \"[*][M-N]x\", waarbij\n"
+"het optionele argument \"N\" het aantal herhalingen (tussen 1 en\n"
+"99999) aangeeft, \"M-N\" een willekeurig aantal herhalingen in\n"
+"bereik M tot N, en \"x\" is de werkelijke formaatspecificatie/\n"
+"tijdelijke aanduiding. De optionele asterisk (*) betekent dat elk\n"
+"karakter slechts één keer in de reeks mag voorkomen. Voorbeeld: \"16u\"\n"
+"betekent \"Voeg 16 willekeurige hoofdletters in het wachtwoord in\"."
+
+#. Quick help for "Format password" in main window
+msgid "List of placeholders with optional argument \"N\":"
+msgstr "Lijst met tijdelijke aanduidingen met optioneel argument \"N\":"
+
+#. Quick help for "Format password" in main window
+msgid "Custom character set"
+msgstr "Aangepaste tekenset"
+
+#. Quick help for "Format password" in main window
+msgid "Vowels, lower-case"
+msgstr "Klinkers, kleine letters"
+
+#. Quick help for "Format password" in main window
+msgid "Vowels, mixed-case"
+msgstr "Klinkers, hoofdletters en kleine letters"
+
+#. Quick help for "Format password" in main window
+msgid "Vowels, upper-case"
+msgstr "Klinkers, hoofdletters"
+
+#. Quick help for "Format password" in main window
+msgid "Consonants, lower-case"
+msgstr "Medeklinkers, kleine letters"
+
+#. Quick help for "Format password" in main window
+msgid "Consonants, mixed-case"
+msgstr "Medeklinkers, hoofdletters en kleine letters"
+
+#. Quick help for "Format password" in main window
+msgid "Consonants, upper-case"
+msgstr "Medeklinkers, hoofdletters"
+
+#. Quick help for "Format password" in main window
+msgid ""
+"List of special format specifiers\n"
+"(possible usage of argument \"N\" is indicated by \"{N}\"):"
+msgstr ""
+"Lijst met speciale formaatspecificaties\n"
+"(mogelijk gebruik van argument \"N\" wordt aangegeven door \"{N}\"):"
+
+#. Quick help for "Format password" in main window
+msgid "Insert password generated via \"Include characters/words\""
+msgstr "Voer het wachtwoord in dat is gegenereerd via \"Inclusief tekens/woorden\"
+
+#. Quick help for "Format password" in main window
+msgid "Words from word list, multiple words are separated by spaces"
+msgstr "Woorden uit woordenlijst, meerdere woorden worden gescheiden door spaties"
+
+#. Quick help for "Format password" in main window
+msgid "Words, multiple words are not separated at all"
+msgstr "Woorden, meerdere woorden worden niet gescheiden"
+
+#. Quick help for "Format password" in main window
+msgid "Repeat input sequence in brackets N times"
+msgstr "Herhaal de invoerreeks tussen haakjes N keer"
+
+#. Quick help for "Format password" in main window
+msgid "Randomly permute formatted sequence in brackets, keep N characters"
+msgstr "Zet willekeurig de geformatteerde reeks tussen haakjes om, behoud N tekens"
+
+#. Quick help for "Format password" in main window
+msgid "Treat sequence as character set and insert N characters"
+msgstr "Behandel de reeks als een tekenset en voeg N tekens in"
+
+#. Quick help for "Format password" in main window
+msgid "Additional notes:"
+msgstr "Aanvullende opmerkingen:"
+
+#. Quick help for "Format password" in main window
+msgid ""
+"Text enclosed with quotation marks \"...\" is copied verbatim\n"
+"to the password."
+msgstr "Tekst tussen aanhalingstekens \"...\" is letterlijk gekopieerd\n"
+"naar het wachtwoord."
+
+#. Master-Password based Password Generator window, title
+msgid "MP Password Generator"
+msgstr "MP Wachtwoord generator"
+
+#. MP Password Generator window, group box
+msgid "Master password"
+msgstr "Hoofdwachtwoord"
+
+#. MP Password Generator window, button
+msgid "Enter password..."
+msgstr "Voer wachtwoord in..."
+
+#. MP Password Generator window, button to clear master password cache
+msgid "Clear"
+msgstr "Verwijderen"
+
+#. MP Password Generator window, label for status of master password cache
+msgid "Status:"
+msgstr "Status:"
+
+#. MP Password Generator window, countdown for master password expiry
+msgid "Expiry countdown:"
+msgstr "Aftellen tot vervaldatum:"
+
+#. MP Password Generator window, checkbox
+msgid "Ask for password confirmation"
+msgstr "Vraag om wachtwoordbevestiging"
+
+#. MP Password Generator window, checkbox
+msgid "Show checksum of password:"
+msgstr "Toon controlegetal van wachtwoord:"
+
+#. MP Password Generator window, checkbox
+msgid "Key expires after the following time (seconds):"
+msgstr "De sleutel verloopt na de volgende tijd (seconden):"
+
+#. MP Password Generator window, checkbox
+msgid "Provide compatibility with \"Hashapass\""
+msgstr "Zorg voor compatibiliteit met \"Hashapass\""
+
+#. MP Password Generator window, checkbox
+msgid "Add password length to parameter"
+msgstr "Wachtwoordlengte toevoegen aan parameter"
+
+#. MP Password Generator window, checkbox
+msgid "Autotype sequence:"
+msgstr "Autotype reeks:"
+
+#. MP Password Generator window, group box
+msgid "Password generator"
+msgstr "wachtwoord generator"
+
+#. MP Password Generator window, label
+msgid "Parameter:"
+msgstr "Parameter:"
+
+#. MP Password Generator window, label
+msgid "%d ch. / %.1f bits per ch."
+msgstr "%d tekens / %.1f bits per teken"
+
+#. MP Password Generator window, label
+msgid "Resulting password:"
+msgstr "Resulterend wachtwoord:"
+
+#. MP Password Generator window, button
+msgid "Use as default random generator"
+msgstr "Gebruik als standaard willekeurige generator"
+
+#. MP Password Generator window, Character set drop-down list
+msgid "Alphanumeric"
+msgstr "Alfanumeriek"
+
+#. MP Password Generator window, Character set drop-down list
+msgid "Hexadecimal"
+msgstr "Hexadecimaal"
+
+#. MP Password Generator window, message when master password has expired
+msgid "Key has expired."
+msgstr "Sleutel is verlopen."
+
+#. MP Password Generator window, message when master password has been cleared by the user
+msgid "Key has been cleared."
+msgstr "Sleutel is gewist."
+
+#. MP Password Generator window, message when new master password has been set
+msgid "New key generated."
+msgstr "Nieuwe sleutel gegenereerd."
+
+#. MP Password Generator Window, label next to password quality bar
+msgid "%d bits"
+msgstr "%d Bits"
+
+#. Provide Additional Entropy window, label
+msgid "Enter or paste some text into the box below, press mouse buttons, or move your mouse within the window."
+msgstr "Voer of plak wat tekst in het onderstaande vak, druk op de muisknoppen of beweeg uw muis binnen het venster."
+
+#. Provide Additional Entropy window, message shown when entropy has been added
+msgid "%d bits of entropy have been added to the random pool."
+msgstr "%d Entropiebits werden toegevoegd aan de willekeurige pool."
+
+#. Password Manager window, Open database, error message
+msgid "Database not encrypted, or invalid key"
+msgstr "Database niet gecodeerd of ongeldige sleutel"
+
+#. Password Manager window, Open database, error message
+msgid "File contents modified, or invalid key"
+msgstr "Bestandsinhoud gewijzigd of ongeldige sleutel"
+
+#. Password Manager window, Open database, error message
+msgid "Unknown file format"
+msgstr "Onbekend bestandsformaat"
+
+#. Password Manager window, Open database, error message
+msgid "Invalid file format"
+msgstr "Ongeldig bestandsformaat"
+
+#. Password Manager window, field name
+msgid "Title"
+msgstr "Titel"
+
+#. Password Manager window, field name
+msgid "Title:"
+msgstr "Titel:"
+
+#. Password Manager window, field name
+msgid "User name"
+msgstr "Gebruikersnaam"
+
+#. Password Manager window, field name
+msgid "User name:"
+msgstr "Gebruikersnaam:"
+
+#. Password Manager window, field name
+msgid "Password"
+msgstr "Wachtwoord"
+
+#. Password Manager window, field name
+msgid "Password:"
+msgstr "Wachtwoord:"
+
+#. Password Manager window, field name
+msgid "URL"
+msgstr "URL"
+
+#. Password Manager window, field name
+msgid "URL:"
+msgstr "URL:"
+
+#. Password Manager window, field name
+msgid "Keyword"
+msgstr "Trefwoord"
+
+#. Password Manager window, field name
+msgid "Keyword:"
+msgstr "Trefwoord:"
+
+#. Password Manager window, field name
+msgid "Notes"
+msgstr "Notities"
+
+#. Password Manager window, field name
+msgid "Notes:"
+msgstr "Notities:"
+
+#. Password Manager window, field name
+msgid "Key-value list"
+msgstr "Lijst met sleutelwaarden"
+
+#. Password Manager window, field name
+msgid "Key-value list:"
+msgstr "Lijst met sleutelwaarden:"
+
+#. Password Manager window, field name
+msgid "Creation time"
+msgstr "Gemaakt"
+
+#. Password Manager window, field name
+msgid "Creation time:"
+msgstr "Gemaakt:"
+
+#. Password Manager window, field name
+msgid "Last modification"
+msgstr "Laatste wijziging"
+
+#. Password Manager window, field name
+msgid "Last modification:"
+msgstr "Laatste wijziging:"
+
+#. Password Manager window, field name
+msgid "Tags"
+msgstr "Labels"
+
+#. Password Manager window, field name
+msgid "Tags:"
+msgstr "Labels:"
+
+#. Password Manager window, field name
+msgid "Select and add existing tag"
+msgstr "Selecteer en voeg een bestaand label toe"
+
+#. Password Manager window, Tag view, first item "All (tags)" (plural)
+msgctxt "tags"
+msgid "All"
+msgstr "Alle"
+
+#. Password Manager window, Tag view when searching
+msgid "All search results"
+msgstr "Alle zoekresultaten"
+
+#. Password Manager window, Tag view
+msgid "Untagged"
+msgstr "Zonder label"
+
+#. Password Manager window, Key/value field
+msgid "Key"
+msgstr "Sleutel"
+
+#. Password Manager window, Key/value field
+msgid "Value"
+msgstr "Waarde"
+
+#. Password Manager window, main menu, Edit submenu
+msgid "Edit"
+msgstr "Bewerken"
+
+#. Password Manager window, main menu, View submenu
+msgid "View"
+msgstr "Weergave"
+
+#. Password Manager window, main menu, File submenu
+msgid "New..."
+msgstr "Nieuw..."
+
+#. Password Manager window, main menu, File submenu
+msgid "Open..."
+msgstr "Openen..."
+
+#. Password Manager window, main menu, File submenu
+msgid "Open as Read-only..."
+msgstr "Openen als alleen-lezen..."
+
+#. Password Manager window, main menu, File submenu
+msgid "Save"
+msgstr "Opslaan"
+
+#. Password Manager window, main menu, File submenu
+msgid "Save As..."
+msgstr "Opslaan als..."
+
+#. Password Manager window, main menu, File submenu
+msgid "Lock"
+msgstr "Vergrendelen"
+
+#. Password Manager window, main menu, File submenu
+msgid "Clear Recently Opened List"
+msgstr "Lijst met recent geopende bestanden wissen"
+
+#. Password Manager window, main menu, File submenu
+msgid "Unlock"
+msgstr "Ontgrendelen"
+
+#. Password Manager window, main menu, File submenu
+msgid "Export to"
+msgstr "Exporteren naar"
+
+#. Password Manager window, main menu, File submenu, Export To submenu
+msgid "CSV File..."
+msgstr "CSV Bestand..."
+
+#. Password Manager window, main menu, File submenu
+msgid "Database Settings..."
+msgstr "Database Instellingen..."
+
+#. Password Manager window, main menu, File submenu
+msgid "Properties..."
+msgstr "Eigenschappen..."
+
+#. Password Manager window, main menu, File submenu
+msgid "Change Master Password..."
+msgstr "Hoofdwachtwoord wijzigen..."
+
+#. Password Manager window, main menu, Edit submenu
+msgid "Copy User Name"
+msgstr "Kopieer Gebruikersnaam"
+
+#. Password Manager window, main menu, Edit submenu
+msgid "Copy Password"
+msgstr "Kopieer wachtwoord"
+
+#. Password Manager window, main menu, Edit submenu
+msgid "Open URL"
+msgstr "URL openen"
+
+#. Password Manager window, main menu, Edit submenu
+msgid "Run"
+msgstr "Uitvoeren"
+
+#. Password Manager window, main menu, Edit submenu
+msgid "Add Entry"
+msgstr "Item toevoegen"
+
+#. Password Manager window, main menu, Edit submenu
+msgid "Duplicate Entry"
+msgstr "Item verdubbelen"
+
+#. Password Manager window, main menu, Edit submenu
+msgid "Delete Entry"
+msgstr "Item verwijderen"
+
+#. Password Manager window, main menu, View submenu
+msgid "Show Columns"
+msgstr "Kolommen weergeven"
+
+#. Password Manager window, main menu, View submenu
+msgid "Show Passwords in List"
+msgstr "Wachtwoorden in lijst weergeven"
+
+#. Password Manager window, main menu, View submenu
+msgid "Sort Entries By"
+msgstr "Sorteer items op"
+
+#. Password Manager window, main menu, View submenu, Sort submenu
+msgid "Unsorted"
+msgstr "Ongesorteerd"
+
+#. Password Manager window, main menu, View submenu, Sort submenu
+msgid "Ascending"
+msgstr "Oplopend"
+
+#. Password Manager window, main menu, View submenu, Sort submenu
+msgid "Descending"
+msgstr "Aflopend"
+
+#. Password Manager window, main menu, View submenu
+msgid "Sort Tags By"
+msgstr "Labels sorteren op"
+
+#. Password Manager window, main menu, View submenu, Sort Tags submenu
+msgid "Name"
+msgstr "Naam"
+
+#. Password Manager window, main menu, View submenu, Sort Tags submenu
+msgid "Frequency"
+msgstr "Frequentie"
+
+#. Password Manager window, main menu, View submenu
+msgid "Change List Font..."
+msgstr "Lettertype voor lijst wijzigen..."
+
+#. Password Manager window, main menu, View submenu
+msgid "Reset List Font"
+msgstr "Lijstlettertype resetten"
+
+#. Password Manager window, main menu, View submenu
+msgid "Change Password Font..."
+msgstr "Wachtwoordlettertype wijzigen..."
+
+#. Password Manager window, Edit panel, Arrow Up button, tooltip
+msgid "Previous entry"
+msgstr "Vorige invoer"
+
+#. Password Manager window, Edit panel, Arrow Down button, tooltip
+msgid "Next entry"
+msgstr "Volgende invoer"
+
+#. Password Manager window, Edit panel, Accept button, tooltip
+msgid "Accept changes"
+msgstr "Wijzigingen accepteren"
+
+#. Password Manager window, Edit panel, Undo button, tooltip
+msgid "Undo changes"
+msgstr "Wijzigingen ongedaan maken"
+
+#. Password Manager window, toolbar, Search box, text tooltip
+msgid "Search..."
+msgstr "Zoeken..."
+
+#. Password Manager window, toolbar, Search button, context menu
+msgid "Clear search"
+msgstr "Zoekopdracht wissen"
+
+#. Password Manager window, toolbar, Search button, tooltip
+msgid "Perform search"
+msgstr "Zoekopdracht uitvoeren"
+
+#. Password Manager window, toolbar, Search button, context menu
+msgid "Case-sensitive"
+msgstr "Hoofdlettergevoelig"
+
+#. Password Manager window, toolbar, Search button, context menu
+msgid "Fuzzy search"
+msgstr "Vage zoekopdracht (\"fuzzy\")"
+
+#. Password Manager window, toolbar, Search button, context menu
+msgid "Select fields..."
+msgstr "Selecteer velden..."
+
+#. Password Manager window, toolbar, Lock/unlock button, tooltip
+msgid "Lock/unlock database"
+msgstr "Database vergrendelen/ontgrendelen"
+
+#. Password Manager window, Edit panel, Toggle password button, tooltip
+msgid "Left-click: Hide/show password, right-click: Generate password"
+msgstr "Linkermuisknop: wachtwoord verbergen/tonen, rechtermuisknop: wachtwoord genereren"
+
+#. Password Manager window, Edit panel, Toggle notes button, tooltip
+msgid "Hide/show notes"
+msgstr "Notities weergeven/verbergen"
+
+#. Password Manager window, Edit Panel, text displayed when notes are hidden
+msgid "Notes hidden - click here to display"
+msgstr "Notities verborgen - klik hier om te bekijken"
+
+#. Password Manager window, title of password entry dialog when unlocking database
+msgid "Unlock %s"
+msgstr "%s ontgrendelen"
+
+#. Password Manager window, title of password entry dialog when opening database
+msgid "Open %s"
+msgstr "%s openen"
+
+#. Password Manager window, title of password entry dialog when creating new database
+msgid "Create new database"
+msgstr "Nieuwe database aanmaken"
+
+#. Password Manager window, error message when opening database
+msgid ""
+"Could not find database file:\n"
+"\"%s\"."
+msgstr ""
+"Kan databasebestand niet vinden:\n"
+"\"%s\"."
+
+#. Password Manager window, error message when opening database
+msgid ""
+"Error while opening database file:\n"
+"%s."
+msgstr ""
+"Fout bij het openen van het databasebestand:\n"
+"%s."
+
+#. Password Manager window, warning message when opening database
+msgid "The selected file is already opened."
+msgstr "Het geselecteerde bestand is al geopend."
+
+#. Password Manager window, message when currently selected entry has been changed
+msgid ""
+"The currently selected entry has been changed.\n"
+"Do you want to save the changes?"
+msgstr ""
+"Het geselecteerde item is gewijzigd.\n"
+"Wilt u de wijzigingen opslaan?"
+
+#. Password Manager window, message when database has been changed
+msgid ""
+"The database has been changed.\n"
+"Do you want to save the changes?"
+msgstr ""
+"De database is gewijzigd.\n"
+"Wilt u de wijzigingen opslaan?"
+
+#. Password Manager window, message when trying to lock an untitled database
+msgid "An untitled database cannot be locked."
+msgstr ""
+"Een naamloze database kan niet\n"
+"worden geblokkeerd."
+
+#. Password Manager window, error message when trying to save backup file
+msgid ""
+"Could not save backup file\n"
+"\"%s\"."
+msgstr ""
+"Kan back-upbestand niet opslaan:\n"
+"\"%s\"."
+
+#. Password Manager window, error message
+msgid ""
+"Error while saving database file:\n"
+"%s."
+msgstr ""
+"Fout bij het opslaan van het databasebestand:\n"
+"%s."
+
+#. Password Manager window, message when editing an entry and trying to add new entries
+msgid ""
+"Please finish editing the current entry\n"
+"before adding new entries."
+msgstr ""
+"Maak het bewerken van de huidige invoer\n"
+"af voordat er nieuwe worden toegevoegd\n"
+"Voeg items toe."
+
+#. Password Manager window, message when new entries have been added
+msgid "%d entries with passwords have been added."
+msgstr "%d vermeldingen met wachtwoorden zijn toegevoegd."
+
+#. Password Manager window, Search result
+msgid "1 entry found."
+msgstr "1 vermelding gevonden."
+
+#. Password Manager window, Search result
+msgid "%d entries found."
+msgstr "%d vermeldingen gevonden."
+
+#. Password Manager window, Search result (via hot key)
+msgid "Search via hot key."
+msgstr "Zoeken via sneltoets."
+
+#. Password Manager window, Search via hot key, no match found
+msgid ""
+"No matching keyword found for window text\n"
+"\"%s\"."
+msgstr ""
+"Geen overeenkomend trefwoord gevonden voor venstertekst\n"
+"\"%s\"."
+
+#. Password Manager window, placeholder for New Entry in list view
+msgid "New Entry"
+msgstr "Nieuwe Vermelding"
+
+#. Password Manager window, message when trying to add new entry without title and password
+msgid "Please specify at least a title or password."
+msgstr ""
+"Geef minimaal een titel of wachtwoord op."
+
+#. Password Manager window, confirm deletion of entry
+msgid "Delete 1 entry?"
+msgstr "Verwijder 1 item?"
+
+#. Password Manager window, confirm deletion of entries
+msgid "Delete %d entries?"
+msgstr "%d itemsVerwijderen?"
+
+#. Password Manager window, Change master password, query old password
+msgid "Enter OLD master password"
+msgstr "Voer het OUDE hoofdwachtwoord in"
+
+#. Password Manager window, Change master password, query new password
+msgid "Enter NEW master password"
+msgstr "Voer NIEUW hoofdwachtwoord in"
+
+#. Password Manager window, Change master password, success message
+msgid "Master password successfully changed."
+msgstr "Hoofdwachtwoord succesvol gewijzigd."
+
+#. Password Manager window, Change master password, error message
+msgid "Old master password is invalid."
+msgstr "Oud hoofdwachtwoord is ongeldig."
+
+#. Password Manager window, New database, default name
+msgid "Untitled"
+msgstr "Naamloos"
+
+#. Password Manager window, text added to title when creating a duplicate of an existing entry
+msgctxt "noun"
+msgid "Copy"
+msgstr "Kopiëren"
+
+#. Password Manager window, Export database to CSV, success message
+msgid "Database successfully exported to CSV file."
+msgstr "Database succesvol geëxporteerd naar CSV-bestand."
+
+#. Password Manager window, Export database to CSV, error message
+msgid ""
+"Error while creating CSV file:\n"
+"%s."
+msgstr ""
+"Fout bij het maken van CSV-bestand:\n"
+"%s."
+
+#. Password Manager window, Open/Save dialog, filter for .pwdb files
+msgid "Password databases"
+msgstr "Wachtwoord databases"
+
+#. Password Manager window, Open/Save dialog, filter for .csv files
+msgid "CSV files"
+msgstr "CSV-bestanden"
+
+#. Password Manager window, Key-Value field, Autotype key
+msgid "Autotype"
+msgstr "Autotype"
+
+#. Password Manager window, Key-Value field, Format Password key
+msgid "Format password"
+msgstr "Wachtwoord formatteren"
+
+#. Password Manager window, main menu, Edit submenu
+msgid "Rearrange Entry"
+msgstr "Item opnieuw ordenen"
+
+#. Password Manager window, main menu, Edit submenu, Rearrange Entry submenu
+msgid "Move to Top"
+msgstr "Naar bovenkant verplaatsen"
+
+#. Password Manager window, main menu, Edit submenu, Rearrange Entry submenu
+msgid "Move up by one"
+msgstr "Ga één stap omhoog"
+
+#. Password Manager window, main menu, Edit submenu, Rearrange Entry submenu
+msgid "Move down by one"
+msgstr "Ga één stap omlaag"
+
+#. Password Manager window, main menu, Edit submenu, Rearrange Entry submenu
+msgid "Move to Bottom"
+msgstr "Naar onderkant verplaatsen"
+
+#. Password Manager window, Edit panel, message shown when one or more tags of the selected entry are too long
+msgid ""
+"The maximum tag length is %d characters.\n"
+"Longer tags have been shortened."
+msgstr ""
+"De maximale lengte van een tag is\n"
+"%d tekens. Langere tags zijn ingekort."
+
+#. Password Manager window, main menu, File submenu, Set Recovery Password, title of password entry dialog
+msgid "Enter master password"
+msgstr "Voer het hoofdwachtwoord in"
+
+#. Password Manager window, main menu, File submenu, Database settings, when applying certain settings, title of password entry dialog
+msgid "Enter master password again"
+msgstr "Voer het hoofdwachtwoord opnieuw in"
+
+#. Password Manager window, main menu, File submenu, Database settings, when applying certain settings, message shown when master password is invalid
+msgid "Master password is invalid."
+msgstr "Hoofdwachtwoord is ongeldig."
+
+#. Password Manager window, Edit panel, Key-value list button, tooltip
+msgid "Edit key-value list"
+msgstr "Bewerk sleutel-waardelijst"
+
+#. Password Manager window, Edit panel, password box, generate password, message shown when profile specified by corresponding key-value pair could not be found
+msgid "Profile \"%s\" not found."
+msgstr "Profiel \"%s\" niet gevonden."
+
+#. Password Manager window, field name
+msgid "Password expiry"
+msgstr "Wachtwoord vervaldatum"
+
+#. Password Manager window, Edit panel, checkbox
+msgid "Expires:"
+msgstr "Verloopt:"
+
+#. Password Manager window, Edit panel, Expiry button, tooltip
+msgid "Change expiry date"
+msgstr "Vervaldatum wijzigen"
+
+#. Password Manager window, main menu, View submenu
+msgid "Filter"
+msgstr "Filter"
+
+#. Password Manager window, main menu, View submenu, Filter submenu
+msgid "Expired entries"
+msgstr "Verlopen vermeldingen"
+
+#. Password Manager window, main menu, View submenu, Filter submenu
+msgid "Entries that will expire soon"
+msgstr "Vermeldingen die binnenkort verlopen"
+
+#. Password Manager window, main menu, View submenu, Filter submenu
+msgid "Entries with Weak Passwords"
+msgstr "Vermeldingen met zwakke wachtwoorden"
+
+#. Password Manager window, Edit panel, context menu of Expiry button, menu items
+msgid "%d days"
+msgstr "%d Dagen"
+
+#. Password Manager window, when opening database, message shown if database contains expired entries
+msgid ""
+"The database contains expired entries.\n"
+"Do you want to filter these entries now?"
+msgstr ""
+"De database bevat verlopen vermeldingen.\n"
+"Wilt u deze nu filteren?"
+
+#. Password Manager window, when opening database, message shown if database contains expired entries that will expire soon
+msgid ""
+"The database contains entries that will expire soon.\n"
+"Do you want to filter these entries now?"
+msgstr ""
+"De database bevat vermeldingen die binnenkort verlopen.\n"
+"Wilt u deze nu filteren?"
+
+#. Password Manager window, text added to window title when database is locked
+msgid "Locked"
+msgstr "Geblokkeerd"
+
+#. Password Manager window, main menu, File submenu
+msgid "Set Recovery Password..."
+msgstr "Herstelwachtwoord instellen..."
+
+#. Password Manager window, main menu, File submenu
+msgid "Remove Recovery Password..."
+msgstr "Herstelwachtwoord verwijderen..."
+
+#. Password Manager window, main menu, File submenu, Set Recovery Password, title of password entry dialog
+msgid "Enter recovery password"
+msgstr "Voer het herstelwachtwoord in"
+
+#. Password Manager window, main menu, File submenu, Set Recovery Password, message shown when procedure was successful
+msgid "Recovery password successfully set."
+msgstr "Herstelwachtwoord succesvol ingesteld."
+
+#. Password Manager window, main menu, File submenu, Remove Recovery Password, error message
+msgid "Recovery password is invalid."
+msgstr "Herstelwachtwoord is ongeldig."
+
+#. Password Manager window, main menu, File submenu, Remove Recovery Password, message shown when procedure was successful
+msgid "Recovery password successfully removed."
+msgstr "Herstelwachtwoord succesvol verwijderd."
+
+#. Password Manager window, main menu, File submenu, Database Properties, entry in left column
+msgid "Recovery password set"
+msgstr "Herstel wachtwoord ingesteld"
+
+#. Indicates whether option is set
+msgid "Yes"
+msgstr "Ja"
+
+#. Indicates whether option is set
+msgid "No"
+msgstr "Nee"
+
+#. Password Manager window, Opening database, message shown in case of version incompatibility
+msgid ""
+"Database format error:\n"
+"%s.\n"
+"Database version: %d.%d\n"
+"Highest supported version: %d.%d"
+msgstr ""
+"Database formaat fout:\n"
+"%s.\n"
+"Database versie: %d.%d\n"
+"Hoogst ondersteunde versie: %d.%d"
+
+#. Password Manager window, Select Columns dialog, window title
+msgid "Select columns"
+msgstr "Kolommen selecteren"
+
+#. Password Manager window, Select Columns dialog, message shown if no column selected
+msgid "Select at least one column."
+msgstr "Selecteer minimaal één kolom."
+
+#. Generic string formatting error message
+msgid "Error while formatting string"
+msgstr "Fout bij het formatteren van de tekenreeks"
+
+#. Unicode error message
+msgid "Invalid UTF-16 character encoding"
+msgstr "Ongeldige UTF-16 teken codering"
+
+#. Unicode error message
+msgid "Error while converting string to UTF-8"
+msgstr "Fout bij het converteren van reeks naar UTF-8"
+
+#. Unicode error message
+msgid "Error while decoding UTF-8 string"
+msgstr "Fout bij het decoderen van UTF-8 tekenreeks"
+
+#. Unicode error message
+msgid "Unicode string too long"
+msgstr "Unicode tekenreeks te lang"
+
+#. Unicode error message
+msgid "Invalid ANSI or UTF-8 character encoding, or Unicode string too long"
+msgstr "Ongeldige ANSI- of UTF-8-tekencodering, of Unicode tekenreeks te lang"
+
+#. Unicode error message
+msgid "Error while encoding Unicode string"
+msgstr "Fout bij het coderen van Unicode-tekenreeks"
+
+#. Error message
+msgid "Out of disk space"
+msgstr "Er is niet voldoende opslagruimte beschikbaar"
+
+#. Error message when trying to open a file or execute a command
+msgid ""
+"Could not open file/execute operation\n"
+"\"%s\"."
+msgstr ""
+"Kon bestand/bewerking\n"
+"\"%s\"\n"
+"niet openen/uitvoeren."
+
+#. Main menu, Tools submenu, Create Trigram File, message shown when source file does not contain enough 3-letter combinations (trigrams) to create the trigram file
+msgid "Source file does not contain enough trigrams"
+msgstr "Bronbestand bevat niet genoeg trigrammen"
+
+#. Password Manager window, Database Settings dialog, window title
+msgid "Database settings"
+msgstr "Database instellingen"
+
+#. Password Manager window, Database Settings dialog, label
+msgid "Default user name for new entries:"
+msgstr "Standaard gebruikersnaam voor nieuwe vermeldingen:"
+
+#. Password Manager window, Database Settings dialog, label
+msgid "Generate passwords for new entries using format sequence:"
+msgstr "Genereer wachtwoorden voor nieuwe vermeldingen met behulp van een opmaakvolgorde:"
+
+#. Password Manager window, Database Settings dialog, Generate Password button, tooltip
+msgid "Generate test password using format sequence"
+msgstr "Genereer een testwachtwoord met behulp van de opmaakvolgorde"
+
+#. Password Manager window, Database Settings dialog, label
+msgid "Encryption algorithm:"
+msgstr "Encryptie-algoritme:"
+
+#. Password Manager window, Database Settings dialog, items in list of encryption algorithms
+msgid "%s with %d-bit key"
+msgstr "%s met %d-bit sleutel"
+
+#. Password Manager window, Database Settings dialog, label
+msgid "Number of key derivation rounds:"
+msgstr "Aantal sleutelafleidingsrondes:"
+
+#. Password Manager window, Database Settings dialog, Calculate KDF Rounds button, tooltip
+msgid "Calculate number of rounds for a 1 second delay"
+msgstr "Bereken het aantal ronden voor een vertraging van 1 seconde"
+
+#. Password Manager window, Database Settings dialog, message shown when number of KDF rounds is invalid
+msgid "Invalid number of key derivation rounds."
+msgstr "Ongeldig aantal rondes voor sleutelafleiding."
+
+#. Password Manager window, Database Settings dialog, label
+msgid "By default, new entries expire after the following number of days:"
+msgstr "Standaard vervallen nieuwe vermeldingen na het volgende aantal dagen:"
+
+#. Password Manager window, Database Settings dialog, label
+msgid "For new entries, save the following number of previous passwords:"
+msgstr "Voor nieuwe vermeldingen, sla het volgende aantal laatste wachtwoorden op:"
+
+#. Password Manager window, Database Settings dialog, title of progress dialog when changing number of KDF iterations
+msgid "Changing number of KDF iterations"
+msgstr "Het aantal KDF-herhalingen wijzigen"
+
+#. Password Manager window, Database Settings dialog, title of progress dialog when changing number of KDF iterations
+msgid "Computing derived key ..."
+msgstr "Berekenen van afgeleide sleutel ..."
+
+#. Password Manager window, Key-Value List Editor dialog, window title
+msgid "Key-value list editor"
+msgstr "Sleutel-waardelijsten bewerken"
+
+#. Password Manager window, Database Properties dialog, window title
+msgid "Properties"
+msgstr "Eigenschappen"
+
+#. Password Manager window, Database Properties dialog, title of left column
+msgid "Property"
+msgstr "Eigenschap"
+
+#. Password Manager window, Database Properties dialog, entry in left column
+msgid "Location"
+msgstr "Locatie"
+
+#. Password Manager window, Database Properties dialog, entry in left column
+msgid "Size"
+msgstr "Grootte"
+
+#. Password Manager window, Database Properties dialog, entry in left column
+msgid "Format version"
+msgstr "Formaat versie"
+
+#. Password Manager window, Database Properties dialog, entry in left column
+msgid "Number of entries"
+msgstr "Aantal vermeldingen"
+
+#. Password Manager window, Database Properties dialog, entry in left column
+msgid "Number of expired entries"
+msgstr "Aantal verlopen vermeldingen"
+
+#. Password Manager window, Database Properties dialog, entry in left column
+msgid "Number of tags"
+msgstr "Aantal labels"
+
+#. Password Manager window, Database Settings dialog, title of Compression tab
+msgid "Compression"
+msgstr "Compressie"
+
+#. Password Manager window, Database Settings dialog, Compression, checkbox
+msgid "Enable data compression (Deflate)"
+msgstr "Gebruik datacompressie (Leeglopen)"
+
+#. Password Manager window, Database Settings dialog, compression, label
+msgid "<- Low compression, fast | High compression, slow ->"
+msgstr "<- Lage compressie, snel | Hoge compressie, langzaam ->"
+
+#. Password Manager window, Edit panel, title of password entry dialog when password has been changed and needs to be confirmed
+msgid "Confirm password"
+msgstr "Wachtwoord bevestigen"
+
+#. Password Manager window, Password quality bar, caption when quality estimation is disabled
+msgid "Password quality estimation is disabled"
+msgstr "Wachtwoordkwaliteit inschatting uitgeschakeld"
+
+#. Password Manager window, Password Quality button, tooltip
+msgid "Estimate password quality"
+msgstr "Schat de wachtwoordkwaliteit in"
+
+#. Password Manager window, field name
+msgid "Password history"
+msgstr "Wachtwoord geschiedenis"
+
+#. Password Manager window, field name
+msgid "Password changed"
+msgstr "Wachtwoord gewijzigd"
+
+#. Password Manager window, Edit panel, label
+msgid "Password changed:"
+msgstr "Wachtwoord gewijzigd:"
+
+#. Password Manager window, Password History dialog, checkbox
+msgid "Keep last passwords - up to:"
+msgstr "Bewaar de laatste wachtwoorden - tot:"
+
+#. Password Manager window, Password History dialog, list view, column
+msgid "Set Date/Time"
+msgstr "Datum/Tijd instellen"
+
+#. Password Manager window, shutdown blocker message
+msgid "Password database entry is being edited."
+msgstr "Wachtwoorddatabase invoer wordt bewerkt."
+
+#. Password Manager window, shutdown blocker message
+msgid "Password database contains unsaved changes."
+msgstr "Wachtwoorddatabase bevat niet-opgeslagen wijzigingen."
+
+#. Password Manager window, toolbar, filter info
+msgid "Filtered"
+msgstr "Gefilterd"
+
+#. Password Manager window, toolbar, filter info, button tooltip
+msgid "Remove filter"
+msgstr "Filter verwijderen"
+
+#. Main window, button to build character set definition
+msgid "Build..."
+msgstr "Maken..."
+
+#. Main window, button to build character set definition, hint
+msgid "Build character set definition"
+msgstr "Maak een tekenset definitie"
+
+#. Character set builder, window title
+msgid "Character Set Builder"
+msgstr "Tekenset maken"
+
+#. Character set builder, group box with character sets
+msgid "Character set selection"
+msgstr "Selectie van tekenset"
+
+#. Character set builder, group box with tag/comment
+msgid "Tag/comment"
+msgstr "Label/opmerking"
+
+#. Character set builder, group box with resulting definition
+msgid "Resulting character set definition"
+msgstr "Resulterende karakterset definitie"
+
+#. Character set builder, button
+msgid "Apply"
+msgstr "Toepassen"
+
+#. Character set builder, check box
+msgid "Lower-case letters (a-z)"
+msgstr "Kleine letters (a-z)"
+
+#. Character set builder, check box
+msgid "Upper-case letters (A-Z)"
+msgstr "Hoofdletters (A-Z)"
+
+#. Character set builder, check box
+msgid "Digits (0-9)"
+msgstr "Cijfers (0-9)"
+
+#. Character set builder, check box
+msgid "Characters from range:"
+msgstr "Tekens uit het bereik:"
+
+#. Character set builder, check box
+msgid "Additional characters:"
+msgstr "Extra tekens:"
+
+#. Character set builder, check box
+msgid "At least"
+msgstr "Minstens"
+
+#. Character set builder, edit box
+msgid "From:"
+msgstr "Van:"
+
+#. Character set builder, edit box
+msgid "to:"
+msgstr "tot:"
+
+#. Character set builder, error message
+msgid "Invalid character range."
+msgstr "Ongeldig tekenbereik."
