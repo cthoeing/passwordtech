@@ -3,7 +3,7 @@
 # If the language code is missing or invalid, PwTech will derive the language name from the file name.
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.5\n"
+"Project-Id-Version: Password Tech 3.5.6\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: Midori.Ayanokouji <ayano.midori@gmail.com>\n"
@@ -168,7 +168,7 @@ msgstr "クリップボードの内容を暗号化..."
 
 #. Main window, Decrypt Clipboard button and menu item
 msgid "Decrypt Clipboard..."
-msgstr "クリップボードの内容を複合化..."
+msgstr "クリップボードの内容を復号化..."
 
 #. Main menu, Tools submenu
 msgid "Create Random Data File..."
@@ -280,7 +280,7 @@ msgstr "パスワードを生成し表示..."
 
 #. System tray context menu, Generate Password and Autotype into other windows
 msgid "Generate and Autotype Password"
-msgstr "パスワードを生成し自動入力..."
+msgstr "パスワードを生成し自動入力"
 
 #. System tray context menu
 msgid "Open user manual"
@@ -292,7 +292,7 @@ msgstr "クリップボードの内容を消去 (文字列のみ)"
 
 #. Main window, Encrypt/Decrypt Clipboard button tooltip
 msgid "Clipboard text encryption (left-click) or decryption (right-click)"
-msgstr "クリップボードの文字列を暗号化 (左クリック) 複合化(右クリック)"
+msgstr "クリップボードの文字列を暗号化 (左クリック) 復号化(右クリック)"
 
 #. Main window, Profile Editor button tooltip
 msgid "Load, create or delete profiles"
@@ -500,7 +500,7 @@ msgstr "文字列は正常に暗号化されました。"
 
 #. Decrypt Clipboard, message shown when text has been decrypted successfully
 msgid "Text successfully decrypted."
-msgstr "文字列は正常に複合化されました。"
+msgstr "文字列は正常に復号化されました。"
 
 #. Encrypt/Decrypt Clipboard, message shown when clipboard could not be opened
 msgid "Could not open clipboard."
@@ -527,7 +527,7 @@ msgid ""
 "Decryption failed. This may be attributed\n"
 "to the following reasons:"
 msgstr ""
-"複合化に失敗。\n"
+"復号化に失敗。\n"
 "以下が原因になっている可能性があります:"
 
 #. Decrypt Clipboard, possible reason for failure
@@ -549,7 +549,7 @@ msgid ""
 "failed."
 msgstr ""
 "よくないことが起こりました:\n"
-"複合化に成功したが\n"
+"復号化に成功したが\n"
 "展開に失敗しました。"
 
 #. Message shown when certain hot key(s) could not be registered
@@ -582,7 +582,7 @@ msgstr ""
 "\n"
 "はい\t-> パスワード追加\n"
 "いいえ\t-> ファイル上書き\n"
-"キャンセル\t-> 処理を取り消す"
+"キャンセル\t-> 処理を取り消す."
 
 #. Main window, Include Passphrase, Specify Length, message shown when specified length range is invalid
 msgid "Passphrase: Invalid length range."
@@ -594,8 +594,9 @@ msgid ""
 "only once\" is activated, the password length\n"
 "is limited to %d unique characters."
 msgstr ""
-"オプション「Each character must occurnonly once」が有効なら\n"
-"パスワードの長さが、文字数の組み合わせの"
+"「各文字は1回だけ出現」オプションが有効になっている場合、\n"
+"パスワードの長さは、\n"
+"一意の文字数 %d 文字に制限される。"
 
 #. Message shown for a certain configuration of passphrase settings
 msgid ""
@@ -603,7 +604,7 @@ msgid ""
 "once\" is activated, the number of words\n"
 "is limited to the size of the word list (%d)."
 msgstr ""
-"オプション「Each character must occurnonly once」が有効なら、\n"
+"「各単語は1回だけ出現」オプションがが有効なら、\n"
 "単語の数は単語リストの大きさ (%d) に制限されます。"
 
 #. Message shown when selected script file could not be loaded
@@ -624,7 +625,7 @@ msgstr "パスワードのリストの生成中 ..."
 
 #. Progress info when generating password list
 msgid "%d of %d passwords generated."
-msgstr "%d 個 / %d 個中のパスワード生成済み"
+msgstr "%d 個 / %d 個中のパスワード生成済み。"
 
 #. Formatted password, Include Characters/Words selected, but format specifier "P" not found in format string
 msgid "\"P\" is not specified"
@@ -640,7 +641,7 @@ msgstr "パスワードが長すぎます"
 
 #. Formatted password, format string contains unknown specifier
 msgid "%d invalid format specifier(s): %s"
-msgstr "次の書式指定子が無効「%s」。"
+msgstr "次の書式指定子が無効「%s」"
 
 #. Run script, executing Lua script
 msgid "Executing script"
@@ -666,7 +667,7 @@ msgid ""
 msgstr ""
 "一覧のサイズの推定が、内部メモリの制限を\n"
 "超えるようです。パスワードの数を\n"
-"減らしてください。"
+"減らしてください"
 
 #. Generate password list, message shown when list size has exceeded internal limit
 msgid ""
@@ -692,7 +693,7 @@ msgid ""
 msgstr ""
 "%d 個のパスワードを生成。\r\n"
 "各パスワードの安全性: %d ビット\r\n"
-"一覧全体の安全性の最大: %d ビット"
+"一覧全体の安全性の最大: %d ビット."
 
 #. Generate password to clipboard
 msgid "Password copied to clipboard."
@@ -894,7 +895,7 @@ msgstr ""
 "\n"
 "はい\t-> クリップボードにパスワードをコピー\n"
 "いいえ\t-> 新規パスワードを生成\n"
-"取消\t- > 処理を取り消す"
+"取消\t- > 処理を取り消す。"
 
 #. Context menu of drop-down lists in main window, menu item "Clear List"
 msgid ""
@@ -918,7 +919,7 @@ msgstr ""
 "高分解能の時計を使用: \n"
 "%s \n"
 "\n"
-"現在の値: %s"
+"現在の値: %s。"
 
 #. Check for updates, message shown when version file could not be downloaded
 msgid "Could not download version file"
@@ -951,7 +952,7 @@ msgid ""
 "%s."
 msgstr ""
 "更新確認中にエラー: \n"
-"%s"
+"%s。"
 
 #. Main window, info shown in window title when using deterministic random generator
 msgid "WARNING: Random generator is deterministic (press F7 to deactivate)!"
@@ -1194,7 +1195,7 @@ msgstr "パスワード欄を時間経過後に自動で消去 (秒):"
 
 #. Configuration window, Updates
 msgid "Automatic check for updates"
-msgstr "自動で更新確認する間隔:"
+msgstr "自動で更新確認する間隔"
 
 #. Configuration window, Updates, options
 msgid "Daily"
@@ -1290,11 +1291,11 @@ msgstr "このホットキー用の動作を選択してください。"
 
 #. Configuration window, Files
 msgid "Character encoding of text files"
-msgstr "テキストファイルの文字コード:"
+msgstr "テキストファイルの文字コード"
 
 #. Configuration window, Files
 msgid "Newline character sequence"
-msgstr "改行文字:"
+msgstr "改行文字"
 
 #. Configuration window, Language
 msgid "Select language:"
@@ -1302,7 +1303,7 @@ msgstr "言語を選択:"
 
 #. Configuration window, Language
 msgid "Install..."
-msgstr "インストール"
+msgstr "インストール..."
 
 #. Configuration window, Language, Install
 msgid "Language already installed"
@@ -1458,7 +1459,7 @@ msgstr "暗号化"
 
 #. Enter password window, caption for decryption
 msgid "Decrypt"
-msgstr "複合化"
+msgstr "復号化"
 
 #. Enter password window
 msgid "Remember password (seconds):"
@@ -1632,7 +1633,7 @@ msgstr "単語:"
 
 #. Advanced Password Options window, label
 msgid "Words/characters:"
-msgstr "単語/文字"
+msgstr "単語/文字:"
 
 #. Advanced Password Options window, label
 msgid "Trigram file for generating phonetic (pronounceable) passwords:"
@@ -1640,19 +1641,19 @@ msgstr "音声的な (発音可能) なパスワード生成用のトライグ�
 
 #. Advanced Password Options window, footnotes of checkbox list
 msgid "Applies to pass_words_."
-msgstr "パスワードに適用"
+msgstr "パスワードに適用_."
 
 #. Advanced Password Options window, footnotes of checkbox list
 msgid "Applies to pass_phrases_."
-msgstr "パスフレーズに適用"
+msgstr "パスフレーズに適用_."
 
 #. Advanced Password Options window, footnotes of checkbox list
 msgid "Applies to formatted passwords."
-msgstr "書式型パスワードに適用"
+msgstr "書式型パスワードに適用."
 
 #. Advanced Password Options window, footnotes of checkbox list
 msgid "Applies to phonetic passwords."
-msgstr "音声的パスワードに適用"
+msgstr "音声的パスワードに適用."
 
 #. Advanced Password Options window, footnotes of checkbox list
 msgid ""
@@ -1820,7 +1821,7 @@ msgstr ""
 "トライグラムファイル「%s」は正常に作成されました。\n"
 "\n"
 "%d 個の渡来グラムを評価。\n"
-"%1.2f ビットの情報量/1文字あたり"
+"%1.2f ビットの情報量/1文字あたり。"
 
 #. Create Trigram File dialog, message shown when process was cancelled
 msgid "Process was cancelled by the user"
@@ -2825,7 +2826,7 @@ msgstr "新規項目を期限切れにする標準の日数:"
 
 #. Password Manager window, Database Settings dialog, label
 msgid "For new entries, save the following number of previous passwords:"
-msgstr "For new entries, save the following number of previous passwords:"
+msgstr "新しいエントリーの場合、以下の数の以前のパスワードを保存する："
 
 #. Password Manager window, Database Settings dialog, title of progress dialog when changing number of KDF iterations
 msgid "Changing number of KDF iterations"
@@ -2909,7 +2910,7 @@ msgstr "パスワード変更:"
 
 #. Password Manager window, Password History dialog, checkbox
 msgid "Keep last passwords - up to:"
-msgstr "Keep last passwords - up to:"
+msgstr "最後のパスワードを保持する:"
 
 #. Password Manager window, Password History dialog, list view, column
 msgid "Set Date/Time"
@@ -2944,7 +2945,7 @@ msgid "Character set selection"
 msgstr "文字セットの選択"
 
 msgid "Resulting character set definition"
-msgstr "Resulting character set definition"
+msgstr "文字セット定義の結果"
 
 msgid "Apply"
 msgstr "適用"
