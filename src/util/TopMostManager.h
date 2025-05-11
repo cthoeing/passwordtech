@@ -48,10 +48,10 @@ public:
 
   TopMostManager()
     : m_blAlwaysOnTop(false)//, m_blMainFormOnTopNorm(false)
-  {};
+  {}
 
   virtual ~TopMostManager()
-  {};
+  {}
 
   // get singleton access
   static TopMostManager& GetInstance(void);

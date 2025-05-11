@@ -1316,15 +1316,15 @@ object PasswMngForm: TPasswMngForm
         GroupIndex = 1
         OnClick = MainMenu_View_ChangeListFontClick
       end
-      object MainMenu_View_ResetListFont: TMenuItem
-        Caption = 'Reset List Font'
-        GroupIndex = 1
-        OnClick = MainMenu_View_ResetListFontClick
-      end
       object MainMenu_View_ChangePasswFont: TMenuItem
         Caption = 'Change Password Font...'
         GroupIndex = 1
         OnClick = MainMenu_View_ChangePasswFontClick
+      end
+      object MainMenu_View_ResetFonts: TMenuItem
+        Caption = 'Reset Fonts'
+        GroupIndex = 1
+        OnClick = MainMenu_View_ResetFontsClick
       end
     end
   end

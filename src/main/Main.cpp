@@ -1015,8 +1015,7 @@ void __fastcall TMainForm::LoadConfig(void)
       wchar_t buf[BUF_SIZE];
       while (pFile->ReadString(buf, BUF_SIZE) != 0 &&
              m_commonPassw.size() < 1000000) {
-        WString sPassw = Trim(buf);
-        m_commonPassw.insert(sPassw.c_str());
+        m_commonPassw.insert(TrimWString(buf));
       }
       if (!m_commonPassw.empty())
         m_dCommonPasswEntropy = Log2(
@@ -1068,7 +1067,14 @@ void __fastcall TMainForm::LoadConfig(void)
   PasswBoxMenu_EditableClick(this);
   PasswBoxMenu_EnablePasswTestClick(this);
 
-  StringToFont(g_pIni->ReadString(CONFIG_ID, "PasswBoxFont", ""), PasswBox->Font);
+  std::unique_ptr<TFont> pPasswFont(new TFont);
+  if (StringToFont(g_pIni->ReadString(
+        CONFIG_ID, "PasswBoxFont", ""), pPasswFont.get()) > 0)
+  {
+    m_pDefaultPasswFont.reset(new TFont);
+    m_pDefaultPasswFont->Assign(PasswBox->Font);
+    PasswBox->Font = pPasswFont.get();
+  }
   FontDlg->Font = PasswBox->Font;
 
   IncludeCharsCheckClick(this);
@@ -1280,7 +1286,8 @@ bool __fastcall TMainForm::SaveConfig(void)
     g_pIni->WriteBool(CONFIG_ID, "EnablePasswTest",
       PasswBoxMenu_EnablePasswTest->Checked);
 
-    g_pIni->WriteString(CONFIG_ID, "PasswBoxFont", FontToString(PasswBox->Font));
+    g_pIni->WriteString(CONFIG_ID, "PasswBoxFont",
+      m_pDefaultPasswFont ? FontToString(PasswBox->Font) : WString());
 
     WString sHotKeys;
     for (const auto& kv : g_config.HotKeys)
@@ -1838,7 +1845,7 @@ int __fastcall TMainForm::ActivateHotKeys(const HotKeyList& hotKeys)
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::DeactivateHotKeys(void)
 {
-  for (int nI = 0; nI < m_hotKeys.size(); nI++) {
+  for (int nI = 0; nI < static_cast<int>(m_hotKeys.size()); nI++) {
     UnregisterHotKey(Handle, nI);
   }
   m_hotKeys.clear();
@@ -1849,11 +1856,10 @@ void __fastcall TMainForm::CreateProfile(const WString& sProfileName,
   int nCreateIdx)
 {
   PWGenProfile* pProfile;
-  std::unique_ptr<PWGenProfile> newProfile;
 
   if (nCreateIdx < 0) {
-    pProfile = new PWGenProfile;
-    newProfile.reset(pProfile);
+    g_profileList.emplace_back(new PWGenProfile);
+    pProfile = g_profileList.back().get();
   }
   else
     pProfile = g_profileList[nCreateIdx].get();
@@ -1879,9 +1885,6 @@ void __fastcall TMainForm::CreateProfile(const WString& sProfileName,
     pProfile->AdvancedPasswOptions = m_passwOptions;
   else
     pProfile->AdvancedPasswOptions.reset();
-
-  if (newProfile)
-    g_profileList.push_back(std::move(newProfile));
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::LoadProfile(int nIndex)
@@ -1933,7 +1936,7 @@ bool __fastcall TMainForm::LoadProfile(const WString& sName)
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::DeleteProfile(int nIndex)
 {
-  if (nIndex >= 0 && nIndex < g_profileList.size()) {
+  if (nIndex >= 0 && nIndex < static_cast<int>(g_profileList.size())) {
     //delete g_profileList[nIndex];
     g_profileList.erase(g_profileList.begin() + nIndex);
   }
@@ -1948,30 +1951,30 @@ void __fastcall TMainForm::UpdateProfileControls(void)
 
   ProfileList->Clear();
 
-  for (int nI = 0; nI < g_profileList.size(); nI++) {
+  for (word32 i = 0; i < g_profileList.size(); i++) {
     TMenuItem* pMenuItem1 = new TMenuItem(MainMenu_File_Profile);
     WString sCaption;
-    if (nI < sizeof(PROFILES_MENU_SHORTCUTS) - 1) {
-      sCaption = "&" + WString(PROFILES_MENU_SHORTCUTS[nI]) + " ";
-      pMenuItem1->ShortCut = ShortCut(PROFILES_MENU_SHORTCUTS[nI],
+    if (i < sizeof(PROFILES_MENU_SHORTCUTS) - 1) {
+      sCaption = "&" + WString(PROFILES_MENU_SHORTCUTS[i]) + " ";
+      pMenuItem1->ShortCut = ShortCut(PROFILES_MENU_SHORTCUTS[i],
           TShiftState() << ssAlt << ssShift);
     }
-    sCaption += g_profileList[nI]->ProfileName;
+    sCaption += g_profileList[i]->ProfileName;
     pMenuItem1->Caption = sCaption;
     pMenuItem1->OnClick = MainMenu_File_ProfileClick;
-    pMenuItem1->Tag = nI;
+    pMenuItem1->Tag = i;
 
-    MainMenu_File_Profile->Insert(nI, pMenuItem1);
+    MainMenu_File_Profile->Insert(i, pMenuItem1);
 
     TMenuItem* pMenuItem2 = new TMenuItem(TrayMenu_Profile);
     pMenuItem2->Caption = pMenuItem1->Caption;
 //    pMenuItem2->RadioItem = true;
     pMenuItem2->OnClick = MainMenu_File_ProfileClick;
-    pMenuItem2->Tag = nI;
+    pMenuItem2->Tag = i;
 
-    TrayMenu_Profile->Insert(nI, pMenuItem2);
+    TrayMenu_Profile->Insert(i, pMenuItem2);
 
-    ProfileList->Items->Add(g_profileList[nI]->ProfileName);
+    ProfileList->Items->Add(g_profileList[i]->ProfileName);
   }
 }
 //---------------------------------------------------------------------------
@@ -2286,11 +2289,9 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
   auto& qPasswCnt = *progressPtr;
 
   std::unique_ptr<RandomPool> pRandPool;
-  //std::unique_ptr<SplitMix64> pFastRandGen;
   if (dest != gpdConsole) {
     if (IsRandomPoolActive()) {
       m_entropyMng.AddSystemEntropy();
-      //pFastRandGen.reset(new SplitMix64(g_fastRandGen.GetWord64()));
       pRandPool.reset(new RandomPool(m_randPool, {}));
       m_passwGen.RandGen = pRandPool.get();
     }
@@ -2449,26 +2450,32 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
         int nGenCharsLen = 0;
         word32* pPassw = nullptr;
 
-        if (nCharsLen != 0 && !blKeepPrevPassw) {
-          switch (m_passwGen.CustomCharSetType) {
-          case cstStandard:
-          case cstStandardWithFreq:
-            nGenCharsLen = m_passwGen.GetPassword(sChars, nCharsLen, nPasswFlags);
-            break;
-          case cstPhonetic:
-          case cstPhoneticUpperCase:
-          case cstPhoneticMixedCase:
-            nGenCharsLen = m_passwGen.GetPhoneticPassw(sChars, nCharsLen,
-                nPasswFlags);
+        if (nCharsLen != 0) {
+          if (blKeepPrevPassw) {
+            nGenCharsLen = sChars.StrLen();
           }
-          if (blFirstGen || blVariablePasswLen) {
-            if ((m_passwGen.CustomCharSetType == cstStandard ||
-                m_passwGen.CustomCharSetType == cstStandardWithFreq) &&
-                m_passwOptions.Flags & PASSWOPTION_EACHCHARONLYONCE)
-              dBasePasswSec = m_passwGen.CalcPermSetEntropy(
-                nCharSetSize, nGenCharsLen);
-            else
-              dBasePasswSec = m_passwGen.CustomCharSetEntropy * nGenCharsLen;
+          else {
+            switch (m_passwGen.CustomCharSetType) {
+            case cstStandard:
+            case cstStandardWithFreq:
+            default:
+              nGenCharsLen = m_passwGen.GetPassword(sChars, nCharsLen, nPasswFlags);
+              break;
+            case cstPhonetic:
+            case cstPhoneticUpperCase:
+            case cstPhoneticMixedCase:
+              nGenCharsLen = m_passwGen.GetPhoneticPassw(sChars, nCharsLen,
+                  nPasswFlags);
+            }
+            if (blFirstGen || blVariablePasswLen) {
+              if ((m_passwGen.CustomCharSetType == cstStandard ||
+                  m_passwGen.CustomCharSetType == cstStandardWithFreq) &&
+                  m_passwOptions.Flags & PASSWOPTION_EACHCHARONLYONCE)
+                dBasePasswSec = m_passwGen.CalcPermSetEntropy(
+                  nCharSetSize, nGenCharsLen);
+              else
+                dBasePasswSec = m_passwGen.CustomCharSetEntropy * nGenCharsLen;
+            }
           }
 
           nPasswLen = nGenCharsLen;
@@ -2762,7 +2769,7 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
                   ch = pwszPassw[i++];
                 }
                 fmtArgs[1] = FormatFloat("0.0", dPasswSec); //IntToStr(nPasswSec);
-                SecureWString sPasswMsg = FormatW_Secure(
+                SecureWString sPasswMsg = FormatW_s(
                   TRL("The generated password is:\n\n%1\n\nThe estimated "
                     "security is %2 bits.\n\nYes -> copy password to clipboard,\n"
                     "No -> generate new password,\nCancel -> cancel process."),
@@ -3534,9 +3541,12 @@ void __fastcall TMainForm::PasswBoxMenu_SelectAllClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::PasswBoxMenu_ChangeFontClick(TObject *Sender)
 {
-  //FontDlg->Font = PasswBox->Font;
   BeforeDisplayDlg();
   if (FontDlg->Execute()) {
+    if (!m_pDefaultPasswFont) {
+      m_pDefaultPasswFont.reset(new TFont);
+      m_pDefaultPasswFont->Assign(PasswBox->Font);
+    }
     PasswBox->Font = FontDlg->Font;
     MPPasswGenForm->PasswBox->Font = FontDlg->Font;
   }
@@ -3688,7 +3698,7 @@ void __fastcall TMainForm::PasswBoxChange(TObject *Sender)
       if (!blCommonPasswMatch) {
         if (g_config.UseAdvancedPasswEst)
           dPasswBits = ZxcvbnMatch(
-            WStringToUtf8(sPassw).c_str(), nullptr, nullptr);
+            WStringToUtf8_s(sPassw).c_str(), nullptr, nullptr);
         else
           dPasswBits = m_passwGen.EstimatePasswSecurity(sPassw);
       }
@@ -4431,6 +4441,16 @@ void __fastcall TMainForm::BuildBtnClick(TObject *Sender)
 void __fastcall TMainForm::MainMenu_Help_CmdLineArgsClick(TObject *Sender)
 {
   ShowMessage(m_sCmdLineInfo);
+}
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::PasswBoxMenu_ResetFontClick(TObject *Sender)
+{
+  if (m_pDefaultPasswFont) {
+    PasswBox->Font = m_pDefaultPasswFont.get();
+    FontDlg->Font = PasswBox->Font;
+    MPPasswGenForm->PasswBox->Font = PasswBox->Font;
+    m_pDefaultPasswFont.reset();
+  }
 }
 //---------------------------------------------------------------------------
 

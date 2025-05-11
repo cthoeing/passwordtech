@@ -235,7 +235,7 @@ __published:	// IDE-managed Components
     TLabel *PasswChangeLbl;
     TLabel *PasswChangeInfo;
     TSpeedButton *PasswHistoryBtn;
-    TMenuItem *MainMenu_View_ResetListFont;
+  TMenuItem *MainMenu_View_ResetFonts;
   TMenuItem *MainMenu_View_Filter;
   TMenuItem *MainMenu_View_Filter_WeakPassw;
   TPanel *FilterInfoPanel;
@@ -338,7 +338,7 @@ __published:	// IDE-managed Components
           int X, int Y);
     void __fastcall UrlBtnClick(TObject *Sender);
     void __fastcall PasswHistoryBtnClick(TObject *Sender);
-    void __fastcall MainMenu_View_ResetListFontClick(TObject *Sender);
+    void __fastcall MainMenu_View_ResetFontsClick(TObject *Sender);
     void __fastcall NotesBoxKeyPress(TObject *Sender, System::WideChar &Key);
   void __fastcall MainMenu_View_Filter_ExpiredClick(TObject *Sender);
   void __fastcall ClearFilterBtnClick(TObject *Sender);
@@ -385,6 +385,7 @@ private:	// User declarations
   std::optional<SecureWString> m_tempNotes;
   WString m_sNotesHiddenText;
   IDropTarget* m_pPasswBoxDropTarget;
+  std::unique_ptr<TFont> m_pDefaultPasswFont;
 
   void __fastcall LoadConfig(void);
   bool __fastcall OpenDatabase(int nOpenFlags = 0, WString sFileName = WString());

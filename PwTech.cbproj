@@ -7,10 +7,9 @@
         <MainSource>PwTech.cpp</MainSource>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Release</Config>
-        <Platform Condition="'$(Platform)'==''">Win32</Platform>
+        <Platform Condition="'$(Platform)'==''">Win64</Platform>
         <TargetedPlatforms>3</TargetedPlatforms>
         <ProjectName Condition="'$(ProjectName)'==''">PwTech</ProjectName>
-        <CC_Suffix Condition="'$(CC_Suffix)'==''">c</CC_Suffix>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
         <Base>true</Base>
@@ -190,13 +189,13 @@
         <Icon_MainIcon>graphics\pwtech.ico</Icon_MainIcon>
         <Defines>LUA_INT_TYPE=1;$(Defines)</Defines>
         <VerInfo_MajorVer>3</VerInfo_MajorVer>
-        <VerInfo_Keys>CompanyName=;FileDescription=Password Tech executable;FileVersion=3.5.6.0;InternalName=;LegalCopyright=Copyright 2002-2025 by Christian Thöing;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=Password Tech;ProductVersion=3.5.6;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileDescription=Password Tech executable;FileVersion=3.5.7.0;InternalName=;LegalCopyright=Copyright 2002-2025 by Christian Thöing;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=Password Tech;ProductVersion=3.5.7;Comments=</VerInfo_Keys>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <BCC_UseClassicCompiler>false</BCC_UseClassicCompiler>
         <VerInfo_MinorVer>5</VerInfo_MinorVer>
         <BT_BuildType>Debug</BT_BuildType>
         <BCC_OptimizeMaximum>true</BCC_OptimizeMaximum>
-        <VerInfo_Release>6</VerInfo_Release>
+        <VerInfo_Release>7</VerInfo_Release>
         <BCC_OptimizeForSpeed>false</BCC_OptimizeForSpeed>
         <BCC_StackFrames>true</BCC_StackFrames>
     </PropertyGroup>
@@ -213,8 +212,8 @@
         <BT_BuildType>Debug</BT_BuildType>
         <BCC_OptimizeMaximum>true</BCC_OptimizeMaximum>
         <BCC_OptimizeForSpeed>false</BCC_OptimizeForSpeed>
-        <VerInfo_Release>6</VerInfo_Release>
-        <VerInfo_Keys>CompanyName=;FileDescription=Password Tech executable;FileVersion=3.5.6.0;InternalName=;LegalCopyright=Copyright (c) 2002-2025 Christian Thöing;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=3.5.6;Comments=</VerInfo_Keys>
+        <VerInfo_Release>7</VerInfo_Release>
+        <VerInfo_Keys>CompanyName=;FileDescription=Password Tech executable;FileVersion=3.5.7.0;InternalName=;LegalCopyright=Copyright (c) 2002-2025 Christian Thöing;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=3.5.7;Comments=</VerInfo_Keys>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win64x)'!=''">
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>

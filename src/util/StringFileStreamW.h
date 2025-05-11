@@ -42,9 +42,8 @@ class EStringFileStreamError : public EStreamError
 public:
 
   __fastcall EStringFileStreamError(const WString& sMsg)
-	: EStreamError(sMsg)
-  {
-  }
+    : EStreamError(sMsg)
+  {}
 };
 
 
@@ -58,7 +57,6 @@ private:
   int m_nBufPos;
   AnsiString m_asSepChars;
   WString m_sSepChars;
-  int m_nCodeUnitSize;
   int m_nBOMLen;
 
 public:

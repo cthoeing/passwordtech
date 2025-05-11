@@ -3,7 +3,30 @@
                 Copyright (c) 2002-2025 by Christian Thöing
 
 
-Version 3.5.6
+Version 3.5.7
+
+NEW FEATURES:
+
+- Character Set Builder: New "Exclude characters" box to exclude custom
+  characters from resulting character set
+- Password font can be reset to default in main window, password list window,
+  and password manager to avoid scaling issues with high-DPI system settings
+  
+CHANGES & IMPROVEMENTS:
+
+- Configuration | Files | Character encoding: Setting now refers to both
+  writing and reading files; when reading files (such as word lists) and byte-
+  order mark is not specified, encoding may default to either ANSI or UTF-8
+
+FIXES:
+
+- When combining passwords with passphrases and "Length" requirement enabled,
+  passwords are sometimes empty
+- Fixed clipping issues of some labels
+
+----------
+
+Version 3.5.6 (2025-01-29)
 
 NEW FEATURES:
 

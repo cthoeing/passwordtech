@@ -3,7 +3,7 @@ object CharSetBuilderForm: TCharSetBuilderForm
   Top = 0
   BorderIcons = [biSystemMenu]
   Caption = 'Character Set Builder'
-  ClientHeight = 492
+  ClientHeight = 570
   ClientWidth = 503
   Color = clBtnFace
   Font.Charset = ANSI_CHARSET
@@ -187,7 +187,6 @@ object CharSetBuilderForm: TCharSetBuilderForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akTop, akRight]
       Enabled = False
       TabOrder = 1
       Text = '0'
@@ -202,7 +201,6 @@ object CharSetBuilderForm: TCharSetBuilderForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akTop, akRight]
       Associate = NumBox1
       Enabled = False
       TabOrder = 2
@@ -216,7 +214,6 @@ object CharSetBuilderForm: TCharSetBuilderForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akTop, akRight]
       Caption = 'At least'
       Enabled = False
       TabOrder = 3
@@ -231,7 +228,6 @@ object CharSetBuilderForm: TCharSetBuilderForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akTop, akRight]
       Enabled = False
       TabOrder = 5
       Text = '0'
@@ -246,7 +242,6 @@ object CharSetBuilderForm: TCharSetBuilderForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akTop, akRight]
       Associate = NumBox2
       Enabled = False
       TabOrder = 6
@@ -260,7 +255,6 @@ object CharSetBuilderForm: TCharSetBuilderForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akTop, akRight]
       Caption = 'At least'
       Enabled = False
       TabOrder = 7
@@ -275,7 +269,6 @@ object CharSetBuilderForm: TCharSetBuilderForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akTop, akRight]
       Enabled = False
       TabOrder = 9
       Text = '0'
@@ -290,7 +283,6 @@ object CharSetBuilderForm: TCharSetBuilderForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akTop, akRight]
       Associate = NumBox3
       Enabled = False
       TabOrder = 10
@@ -304,7 +296,6 @@ object CharSetBuilderForm: TCharSetBuilderForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akTop, akRight]
       Caption = 'At least'
       Enabled = False
       TabOrder = 11
@@ -319,7 +310,6 @@ object CharSetBuilderForm: TCharSetBuilderForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akTop, akRight]
       Enabled = False
       TabOrder = 13
       Text = '0'
@@ -334,7 +324,6 @@ object CharSetBuilderForm: TCharSetBuilderForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akTop, akRight]
       Associate = NumBox4
       Enabled = False
       TabOrder = 14
@@ -348,7 +337,6 @@ object CharSetBuilderForm: TCharSetBuilderForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akTop, akRight]
       Caption = 'At least'
       Enabled = False
       TabOrder = 15
@@ -363,7 +351,6 @@ object CharSetBuilderForm: TCharSetBuilderForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akTop, akRight]
       Enabled = False
       TabOrder = 17
       Text = '0'
@@ -378,7 +365,6 @@ object CharSetBuilderForm: TCharSetBuilderForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akTop, akRight]
       Associate = NumBox5
       Enabled = False
       TabOrder = 18
@@ -392,7 +378,6 @@ object CharSetBuilderForm: TCharSetBuilderForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akTop, akRight]
       Caption = 'At least'
       Enabled = False
       TabOrder = 19
@@ -407,7 +392,6 @@ object CharSetBuilderForm: TCharSetBuilderForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akTop, akRight]
       Enabled = False
       TabOrder = 23
       Text = '0'
@@ -422,7 +406,6 @@ object CharSetBuilderForm: TCharSetBuilderForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akTop, akRight]
       Associate = NumBox6
       Enabled = False
       TabOrder = 24
@@ -436,7 +419,6 @@ object CharSetBuilderForm: TCharSetBuilderForm
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akTop, akRight]
       Caption = 'At least'
       Enabled = False
       TabOrder = 25
@@ -459,8 +441,8 @@ object CharSetBuilderForm: TCharSetBuilderForm
   end
   object ResultGroup: TGroupBox
     Tag = 7
-    Left = 9
-    Top = 409
+    Left = 10
+    Top = 488
     Width = 481
     Height = 72
     Margins.Left = 4
@@ -468,7 +450,7 @@ object CharSetBuilderForm: TCharSetBuilderForm
     Margins.Right = 4
     Margins.Bottom = 4
     Caption = 'Resulting character set definition'
-    TabOrder = 2
+    TabOrder = 1
     DesignSize = (
       481
       72)
@@ -502,6 +484,33 @@ object CharSetBuilderForm: TCharSetBuilderForm
     end
   end
   object TagGroup: TGroupBox
+    Tag = 7
+    Left = 10
+    Top = 409
+    Width = 481
+    Height = 71
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
+    Caption = 'Tag/comment'
+    TabOrder = 3
+    object TagBox: TEdit
+      Tag = 7
+      Left = 10
+      Top = 30
+      Width = 458
+      Height = 26
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+      TabOrder = 0
+      OnChange = CharSetParamChange
+    end
+  end
+  object ExcludeCharsGroup: TGroupBox
+    Tag = 7
     Left = 10
     Top = 330
     Width = 481
@@ -510,12 +519,13 @@ object CharSetBuilderForm: TCharSetBuilderForm
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    Caption = 'Tag/comment'
-    TabOrder = 1
-    object TagBox: TEdit
+    Caption = 'Exclude characters'
+    TabOrder = 2
+    object ExcludeCharsBox: TEdit
+      Tag = 7
       Left = 10
       Top = 30
-      Width = 458
+      Width = 457
       Height = 26
       Margins.Left = 4
       Margins.Top = 4

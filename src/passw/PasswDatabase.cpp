@@ -771,13 +771,14 @@ void PasswDatabase::Open(const SecureMem<word8>& key,
   // now read the fields...
   // max. number is NumOfFields + "end of entry" mark
   //int nMaxNumFields = header.NumOfFields + 1;
-  for (int nI = 0; nI < header.NumOfEntries; nI++) {
+  for (word32 i = 0; i < header.NumOfEntries; i++) {
     PasswDbEntry* pEntry = AddDbEntry();
-    for (int nJ = 0; nJ <= header.NumOfFields; nJ++) {
+    for (word32 j = 0; j <= header.NumOfFields; j++) {
       int nFieldIndex = ReadFieldIndex();
       if (nFieldIndex == PasswDbEntry::END)
         break;
-      if (nFieldIndex < idxConv.size() && idxConv[nFieldIndex] >= 0) {
+      if (nFieldIndex < static_cast<int>(idxConv.size()) &&
+           idxConv[nFieldIndex] >= 0) {
         SecureWString sField;
         int nIdx = idxConv[nFieldIndex];
         switch (nIdx) {
@@ -819,7 +820,7 @@ void PasswDatabase::Open(const SecureMem<word8>& key,
             auto& history = pEntry->GetPasswHistory();
             history.SetActive(pwh.Flags & 1);
             history.SetMaxSize(pwh.MaxHistorySize);
-            for (word32 i = 0; i < pwh.HistorySize; i++) {
+            for (word32 h = 0; h < pwh.HistorySize; h++) {
               FILETIME ft = ReadType<FILETIME>();
               sField = ReadString();
               history.AddEntry({ ft, sField }, false);
@@ -905,7 +906,7 @@ void PasswDatabase::WriteString(const SecureWString& sStr, int nIndex)
 #ifdef _DEBUG
     sStr.StrLen();
 #endif
-    SecureAnsiString asUtf8 = WStringToUtf8(sStr);
+    SecureAnsiString asUtf8 = WStringToUtf8_s(sStr);
     WriteString(asUtf8.c_str(), asUtf8.StrLen(), nIndex);
   }
   else if (nIndex < 0)
@@ -1213,7 +1214,7 @@ SecureAnsiString PasswDatabase::ReadAnsiString(void)
 SecureWString PasswDatabase::ReadString(void)
 {
   SecureAnsiString asUtf8 = ReadAnsiString();
-  return Utf8ToWString(asUtf8);
+  return Utf8ToWString_s(asUtf8);
 }
 //---------------------------------------------------------------------------
 void PasswDatabase::SkipField(void)

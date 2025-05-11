@@ -81,7 +81,7 @@ void __fastcall TProvideEntropyDlg::OKBtnClick(TObject *Sender)
 
   SecureWString sText = GetEditBoxTextBuf(TextBox);
 
-  SecureAnsiString sTextUtf8 = WStringToUtf8(sText.c_str());
+  SecureAnsiString sTextUtf8 = WStringToUtf8_s(sText.c_str());
 
   if (!sTextUtf8.IsEmpty()) {
     sText.Clear();

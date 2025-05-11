@@ -332,6 +332,7 @@ __published:	// IDE-managed Components
   TMenuItem *GenerateMenu_File;
   TButton *BuildBtn;
 	TMenuItem *MainMenu_Help_CmdLineArgs;
+  TMenuItem *PasswBoxMenu_ResetFont;
   void __fastcall GenerateBtnClick(TObject *Sender);
   void __fastcall IncludeCharsCheckClick(TObject *Sender);
   void __fastcall CharSetInfoBtnClick(TObject *Sender);
@@ -439,6 +440,7 @@ __published:	// IDE-managed Components
     void __fastcall AdvancedOptionsMenu_DeactivateAllStarredClick(TObject *Sender);
   void __fastcall BuildBtnClick(TObject *Sender);
 	void __fastcall MainMenu_Help_CmdLineArgsClick(TObject *Sender);
+  void __fastcall PasswBoxMenu_ResetFontClick(TObject *Sender);
 
 private:	// User declarations
   RandomPool& m_randPool;
@@ -461,18 +463,15 @@ private:	// User declarations
   bool m_blStartup;
   bool m_blCharSetError;
   bool m_blShowEntProgress;
-  //bool m_blRestart;
   PasswOptions m_passwOptions;
   IDropTarget* m_pPasswBoxDropTarget;
   TUpdateCheckThread* m_pUpdCheckThread;
-  //std::atomic<bool> m_blUpdCheckThreadRunning;
-  //std::vector<LanguageEntry> m_languages;
   std::vector<HotKeyEntry> m_hotKeys;
   std::unordered_set<std::wstring> m_commonPassw;
   double m_dCommonPasswEntropy;
   std::unique_ptr<LuaScript> m_pScript;
   TDateTime m_lastUpdateCheck;
-  //AnsiString m_asDonorKey;
+  std::unique_ptr<TFont> m_pDefaultPasswFont;
 
   void __fastcall DelayStartupError(const WString& sMsg);
   void __fastcall LoadLangConfig(void);
@@ -526,7 +525,7 @@ public:		// User declarations
     const SecureWString* psText = nullptr,
     TForm* pParentForm = nullptr);
   void __fastcall GeneratePassw(GeneratePasswDest dest,
-    TCustomEdit* pEditBox = NULL);
+    TCustomEdit* pEditBox = nullptr);
   void __fastcall ShowTrayInfo(const WString& sInfo,
     TBalloonFlags flags = bfNone);
   void __fastcall OnEndSession(TWMEndSession& msg);

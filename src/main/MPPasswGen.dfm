@@ -153,7 +153,7 @@ object MPPasswGenForm: TMPPasswGenForm
     end
     object KeyExpiryTimeBox: TEdit
       Left = 321
-      Top = 194
+      Top = 198
       Width = 61
       Height = 25
       Margins.Left = 4
@@ -166,7 +166,7 @@ object MPPasswGenForm: TMPPasswGenForm
     end
     object KeyExpiryTimeSpinBtn: TUpDown
       Left = 382
-      Top = 194
+      Top = 198
       Width = 20
       Height = 25
       Margins.Left = 4
@@ -235,7 +235,7 @@ object MPPasswGenForm: TMPPasswGenForm
     end
     object PasswHashList: TComboBox
       Left = 322
-      Top = 160
+      Top = 165
       Width = 112
       Height = 25
       Margins.Left = 4
@@ -337,7 +337,7 @@ object MPPasswGenForm: TMPPasswGenForm
     end
     object TogglePasswBtn: TSpeedButton
       Left = 284
-      Top = 166
+      Top = 168
       Width = 33
       Height = 31
       Hint = 'Hide/show password'
@@ -359,7 +359,6 @@ object MPPasswGenForm: TMPPasswGenForm
       ParentShowHint = False
       ShowHint = True
       OnClick = TogglePasswBtnClick
-      ExplicitLeft = 286
     end
     object PasswInfoLbl: TLabel
       Left = 310
@@ -654,8 +653,8 @@ object MPPasswGenForm: TMPPasswGenForm
   end
   object PasswBoxMenu: TPopupMenu
     OnPopup = PasswBoxMenuPopup
-    Left = 216
-    Top = 372
+    Left = 25
+    Top = 455
     object PasswBoxMenu_Undo: TMenuItem
       Caption = 'Undo'
       ShortCut = 16474

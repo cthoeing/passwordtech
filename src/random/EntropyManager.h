@@ -67,7 +67,7 @@ public:
     m_lastKeys[0] = m_lastKeys[1] = 0;
     m_lastPos[0] = m_lastPos[1] = 0;
     m_lastDeltas[0] = m_lastDeltas[1] = 0;
-  };
+  }
 
   // class destructor
   ~EntropyManager()
@@ -76,7 +76,7 @@ public:
     m_lastKeys[0] = m_lastKeys[1] = 0;
     m_lastPos[0] = m_lastPos[1] = 0;
     m_lastDeltas[0] = m_lastDeltas[1] = 0;
-  };
+  }
 
   static EntropyManager& GetInstance(void)
   {

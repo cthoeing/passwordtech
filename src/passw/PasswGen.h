@@ -65,6 +65,8 @@ PASSFORMAT_FLAG_REMOVEWHITESPACE= 0x0002,
 PASSFORMAT_PWUSED_NOSPECIFIER   = -1, // password provided, but no "P" specifier
 PASSFORMAT_PWUSED_EMPTYPASSW    = -2; // "%P" specified, but no password available
 
+const char CHARSET_SYMBOLS[] =
+  "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 
 enum CharSetType {
   cstStandard,

@@ -68,6 +68,8 @@ __published:	// IDE-managed Components
   TButton *ResetBtn;
   TGroupBox *TagGroup;
   TEdit *TagBox;
+  TGroupBox *ExcludeCharsGroup;
+  TEdit *ExcludeCharsBox;
   void __fastcall LowerCaseCheckClick(TObject *Sender);
   void __fastcall UpperCaseCheckClick(TObject *Sender);
   void __fastcall DigitsCheckClick(TObject *Sender);

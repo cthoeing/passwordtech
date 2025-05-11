@@ -519,7 +519,7 @@ void __fastcall TConfigurationDlg::BenchmarkBtnClick(TObject *Sender)
 void __fastcall TConfigurationDlg::ConvertLangFileBtnClick(TObject *Sender)
 {
   int nIndex = LanguageList->ItemIndex;
-  if (nIndex > 0 && nIndex < g_languages.size()) {
+  if (nIndex > 0 && nIndex < static_cast<int>(g_languages.size())) {
     const auto& entry = g_languages[nIndex];
     //if (SameText(ExtractFileExt(entry.FileName), ".lng")) {
     TopMostManager::GetInstance().NormalizeTopMosts(this);
@@ -544,7 +544,7 @@ void __fastcall TConfigurationDlg::LanguageListSelect(TObject *Sender)
 {
   bool blEnabled = false;
   int nIndex = LanguageList->ItemIndex;
-  if (nIndex > 0 && nIndex < g_languages.size()) {
+  if (nIndex > 0 && nIndex < static_cast<int>(g_languages.size())) {
     const auto& entry = g_languages[nIndex];
     blEnabled = SameText(ExtractFileExt(entry.FileName), ".lng");
   }

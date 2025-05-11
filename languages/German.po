@@ -1,4 +1,4 @@
-﻿# German translation of Password Tech 3.5.6
+﻿# German translation of Password Tech 3.5.7
 # Released under the GNU General Public License
 #
 # !!! NOTE ON FORMAT STRINGS !!!
@@ -20,7 +20,7 @@
 #. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.6\n"
+"Project-Id-Version: Password Tech 3.5.7\n"
 "Last-Translator: Christian Thöing\n"
 "Language: de\n"
 
@@ -418,6 +418,10 @@ msgstr "Passwort-Test ermöglichen"
 #. Main window, Password box, context menu
 msgid "Change Font..."
 msgstr "Schriftart ändern..."
+
+#. Main window, Password box, context menu
+msgid "Reset Font"
+msgstr "Schriftart zurücksetzen"
 
 #. Title of open dialog when selecting Main menu | Tools | Provide Additional Entropy | From File
 msgid "Select high-entropy file"
@@ -1365,7 +1369,7 @@ msgstr "Sprache bereits installiert"
 
 #. Configuration window, Language, Install
 msgid "Language file already exists:\n\"%1\""
-msgstr "Sprachdatei existiert bereits:\n"%1\""
+msgstr "Sprachdatei existiert bereits:\n\"%1\""
 
 #. Configuration window, Language, Install
 msgid "Language \"%1\" installed successfully."
@@ -2387,8 +2391,8 @@ msgid "Change List Font..."
 msgstr "Schriftart für Liste ändern..."
 
 #. Password Manager window, main menu, View submenu
-msgid "Reset List Font"
-msgstr "Schriftart für Liste zurücksetzen"
+msgid "Reset Fonts"
+msgstr "Schriftarten zurücksetzen"
 
 #. Password Manager window, main menu, View submenu
 msgid "Change Password Font..."
@@ -2988,6 +2992,10 @@ msgstr "Zeichensatz erstellen"
 #. Character set builder, group box with character sets
 msgid "Character set selection"
 msgstr "Zeichensatz-Auswahl"
+
+#. Character set builder, group box with exclude characters
+msgid "Exclude characters"
+msgstr "Zeichen ausschließen"
 
 #. Character set builder, group box with tag/comment
 msgid "Tag/comment"
