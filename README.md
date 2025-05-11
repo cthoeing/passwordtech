@@ -39,7 +39,7 @@ Password Tech is distributed under the terms and conditions of the GNU General P
 
 To build the software, you need:
 
-- Embarcadero C++Builder 11 or a later version ("Community" edition is sufficient)
+- Embarcadero C++Builder 12 or a later version ("Community" edition is sufficient)
 - (optional) [Inno Setup](https://jrsoftware.org/isinfo.php) to create the setup of Password Tech (you should use the file *setup/PwTech.iss* for this purpose)
 
 ## Credits
