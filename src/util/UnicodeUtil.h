@@ -65,7 +65,7 @@ WString FormatW(const WString& sFormat,
 // -> series of arguments
 // <- resulting formatted string
 //SecureWString FormatW_Secure(const WString sFormat, ...);
-SecureWString FormatW_Secure(const WString& sFormat,
+SecureWString FormatW_s(const WString& sFormat,
   const std::vector<WString>& args);
 
 // format wide string using argument list
@@ -129,8 +129,7 @@ w32string AsciiCharToW32String(const char* pszStr);
 AnsiString WStringToUtf8(const WString& sSrc);
 
 // version for storing result in SecureString
-SecureAnsiString WStringToUtf8(const wchar_t* pwszSrc);
-//SecureAnsiString WStringToUtf8(const SecureWString& sSrc);
+SecureAnsiString WStringToUtf8_s(const wchar_t* pwszSrc);
 
 // convert UTF-8 encoded string to wide string (16-bit)
 // -> source UTF-8-encoded string
@@ -138,7 +137,10 @@ SecureAnsiString WStringToUtf8(const wchar_t* pwszSrc);
 WString Utf8ToWString(const AnsiString& asSrc);
 
 // version for storing result in SecureString
-SecureWString Utf8ToWString(const char* pszSrc);
+SecureWString Utf8ToWString_s(const char* pszSrc);
+
+// trim (remove whitespace) STL wide string on both sides
+std::wstring TrimWString(const std::wstring& s);
 
 
 #endif

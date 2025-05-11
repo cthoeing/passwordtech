@@ -115,7 +115,8 @@ void __fastcall TCreateRandDataFileDlg::CreateFileBtnClick(TObject *Sender)
 
   word8 bDriveLetter = UpCase(sFileName[1]);
   if (bDriveLetter >= 'A' && bDriveLetter <= 'Z' &&
-      DiskFree(static_cast<word8>(bDriveLetter - 'A' + 1)) < qFileSize) {
+      static_cast<word64>(DiskFree(
+        static_cast<word8>(bDriveLetter - 'A' + 1))) < qFileSize) {
     MsgBox(TRL("Not enough free disk space available\nto create the file."),
       MB_ICONERROR);
     return;

@@ -472,7 +472,14 @@ void __fastcall TPasswMngForm::LoadConfig(void)
   if (nListHeight > 1)
     TagView->Width = nListHeight;
 
-  StringToFont(g_pIni->ReadString(CONFIG_ID, "PasswFont", ""), PasswBox->Font);
+  std::unique_ptr<TFont> pPasswFont(new TFont);
+  if (StringToFont(g_pIni->ReadString(
+        CONFIG_ID, "PasswBoxFont", ""), pPasswFont.get()) > 0)
+  {
+    m_pDefaultPasswFont.reset(new TFont);
+    m_pDefaultPasswFont->Assign(PasswBox->Font);
+    PasswBox->Font = pPasswFont.get();
+  }
 
   m_nShowColMask = g_pIni->ReadInteger(CONFIG_ID, "ShowColMask", 7);
   for (int nI = 0; nI < PasswDbEntry::NUM_FIELDS; nI++) {
@@ -601,7 +608,8 @@ void __fastcall TPasswMngForm::SaveConfig(void)
       DbView->Font->Style != Font->Style || DbView->Font->Color != Font->Color)
     g_pIni->WriteString(CONFIG_ID, "ListFont", FontToString(DbView->Font));
   g_pIni->WriteString(CONFIG_ID, "TagListHeight", TagView->Height);
-  g_pIni->WriteString(CONFIG_ID, "PasswFont", FontToString(PasswBox->Font));
+  g_pIni->WriteString(CONFIG_ID, "PasswFont",
+    m_pDefaultPasswFont ? FontToString(PasswBox->Font) : WString());
   g_pIni->WriteInteger(CONFIG_ID, "ShowColMask", m_nShowColMask);
   g_pIni->WriteBool(CONFIG_ID, "ShowPasswInList",
     MainMenu_View_ShowPasswInList->Checked);
@@ -623,8 +631,6 @@ void __fastcall TPasswMngForm::SaveConfig(void)
   g_pIni->WriteInteger(CONFIG_ID, "SortOrder", m_nSortOrderFactor);
   g_pIni->WriteInteger(CONFIG_ID, "TagsSortByIdx", m_nTagsSortByIdx);
   g_pIni->WriteInteger(CONFIG_ID, "TagsSortOrder", m_nTagsSortOrderFactor);
-  //g_pIni->WriteBool(CONFIG_ID, "ClearClipMinimize",
-  //  g_config.Database.ClearClipMinimize);
   g_pIni->WriteBool(CONFIG_ID, "ClearClipCloseLock",
     g_config.Database.ClearClipCloseLock);
   g_pIni->WriteBool(CONFIG_ID, "LockMinimize", g_config.Database.LockMinimize);
@@ -1584,7 +1590,7 @@ void __fastcall TPasswMngForm::ResetListView(int nFlags)
         TListColumn* pCol = pCols->Add();
         pCol->Caption = m_uiFieldNames[nI];
         pCol->Tag = nI;
-        if (nJ < colWidths.size())
+        if (nJ < static_cast<int>(colWidths.size()))
           pCol->Width = colWidths[nJ++];
       }
     }
@@ -1756,7 +1762,7 @@ void __fastcall TPasswMngForm::ResetListView(int nFlags)
           int nEntropyBits;
           if (g_config.UseAdvancedPasswEst)
             nEntropyBits = FloorEntropyBits(ZxcvbnMatch(
-              WStringToUtf8(sPassw).c_str(), nullptr, nullptr));
+              WStringToUtf8_s(sPassw).c_str(), nullptr, nullptr));
           else
             nEntropyBits = PasswordGenerator::EstimatePasswSecurity(sPassw.c_str());
           if (nEntropyBits >= WEAK_PASSW_THRESHOLD)
@@ -1878,7 +1884,7 @@ void __fastcall TPasswMngForm::MoveDbEntries(int nDir)
 {
   const word32 lDbSize = m_passwDb->Size;
   bool blChanged = false;
-  for (word32 i = 0, j = 0; i < DbView->Items->Count; i++) {
+  for (word32 i = 0, j = 0; i < static_cast<word32>(DbView->Items->Count); i++) {
     if (DbView->Items->Item[i]->Selected) {
       PasswDbEntry* pEntry = reinterpret_cast<PasswDbEntry*>(
         DbView->Items->Item[i]->Data);
@@ -2645,7 +2651,7 @@ void __fastcall TPasswMngForm::DbViewMenuPopup(TObject *Sender)
   DbViewMenu_DuplicateEntry->Enabled = blExtEnabled;
   DbViewMenu_DeleteEntry->Enabled = blExtEnabled;
   DbViewMenu_Rearrange->Enabled = blExtEnabled && m_nSortByIdx < 0 &&
-    DbView->SelCount < m_passwDb->Size;
+    DbView->SelCount < static_cast<int>(m_passwDb->Size);
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswMngForm::SearchBoxKeyPress(TObject *Sender,
@@ -2857,9 +2863,6 @@ void __fastcall TPasswMngForm::FormActivate(TObject *Sender)
     // inform column selection dialog about field names
     PasswMngColDlg->SetColNames(m_uiFieldNames);
 
-    // set font for password test box in password settings dialog
-    //PasswDbSettingsDlg->PasswGenTestBox->Font = PasswBox->Font;
-
     // set up string grid in key-value dialog
     TStringGrid* pKeyValGrid = PasswMngKeyValDlg->KeyValueGrid;
     pKeyValGrid->RowCount = DB_NUM_KEYVAL_KEYS + 1;
@@ -3030,7 +3033,7 @@ void __fastcall TPasswMngForm::MainMenu_EditClick(TObject *Sender)
   MainMenu_Edit_DuplicateEntry->Enabled = blExtEnabled;
   MainMenu_Edit_DeleteEntry->Enabled = blExtEnabled;
   MainMenu_Edit_Rearrange->Enabled = blExtEnabled && m_nSortByIdx < 0 &&
-    DbView->SelCount < m_passwDb->Size;
+    DbView->SelCount < static_cast<int>(m_passwDb->Size);
   //AddEntryBtn->Enabled = m_nSearchMode == SEARCH_MODE_OFF;
   MainMenu_Edit_AddEntry->Enabled = m_nSearchMode == SEARCH_MODE_OFF &&
     !FilterInfoPanel->Visible;
@@ -3243,8 +3246,11 @@ void __fastcall TPasswMngForm::MainMenu_View_ChangePasswFontClick(TObject *Sende
   TopMostManager::GetInstance().NormalizeTopMosts(this);
   FontDlg->Font = PasswBox->Font;
   if (FontDlg->Execute()) {
+    if (!m_pDefaultPasswFont) {
+      m_pDefaultPasswFont.reset(new TFont);
+      m_pDefaultPasswFont->Assign(PasswBox->Font);
+    }
     PasswBox->Font = FontDlg->Font;
-    //PasswDbSettingsDlg->PasswGenTestBox->Font = FontDlg->Font;
   }
   TopMostManager::GetInstance().RestoreTopMosts(this);
   AfterDisplayDlg();
@@ -3321,7 +3327,7 @@ void __fastcall TPasswMngForm::OnTagMenuItemClick(TObject* Sender)
 {
   NotifyUserAction();
   TMenuItem* pItem = dynamic_cast<TMenuItem*>(Sender);
-  if (pItem && pItem->MenuIndex < m_tags.size()) {
+  if (pItem && pItem->MenuIndex < static_cast<int>(m_tags.size())) {
     SecureWString sTags;
     //WString sNewTag = pItem->Caption;
     const SecureWString& sNewTag =
@@ -3865,13 +3871,17 @@ void __fastcall TPasswMngForm::PasswHistoryBtnClick(TObject *Sender)
   }
 }
 //---------------------------------------------------------------------------
-void __fastcall TPasswMngForm::MainMenu_View_ResetListFontClick(TObject *Sender)
+void __fastcall TPasswMngForm::MainMenu_View_ResetFontsClick(TObject *Sender)
 {
   NotifyUserAction();
   DbView->Font = Font;
   if (m_nSearchMode != SEARCH_MODE_OFF)
     DbView->Font->Color = DBVIEW_SEARCH_COLOR;
   m_defaultListColor = Font->Color;
+  if (m_pDefaultPasswFont) {
+    PasswBox->Font = m_pDefaultPasswFont.get();
+    m_pDefaultPasswFont.reset();
+  }
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswMngForm::NotesBoxKeyPress(TObject *Sender, System::WideChar &Key)

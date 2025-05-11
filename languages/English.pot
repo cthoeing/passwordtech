@@ -17,7 +17,7 @@
 # existing translations.
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.6\n"
+"Project-Id-Version: Password Tech 3.5.7\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
@@ -423,6 +423,10 @@ msgstr ""
 
 #. Main window, Password box, context menu
 msgid "Change Font..."
+msgstr ""
+
+#. Main window, Password box, context menu
+msgid "Reset Font"
 msgstr ""
 
 #. Title of open dialog when selecting Main menu | Tools | Provide Additional Entropy | From File
@@ -2251,7 +2255,7 @@ msgid "Change List Font..."
 msgstr ""
 
 #. Password Manager window, main menu, View submenu
-msgid "Reset List Font"
+msgid "Reset Fonts"
 msgstr ""
 
 #. Password Manager window, main menu, View submenu
@@ -2815,6 +2819,10 @@ msgstr ""
 
 #. Character set builder, group box with character sets
 msgid "Character set selection"
+msgstr ""
+
+#. Character set builder, group box with exclude characters
+msgid "Exclude characters"
 msgstr ""
 
 #. Character set builder, group box with tag/comment

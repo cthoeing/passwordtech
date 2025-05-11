@@ -28,6 +28,7 @@
 #include "Util.h"
 #include "Main.h"
 #include "TopMostManager.h"
+#include "PasswGen.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
@@ -71,6 +72,7 @@ __fastcall TCharSetBuilderForm::TCharSetBuilderForm(TComponent* Owner)
   if (g_pLangSupp) {
     TRLCaption(this);
     TRLCaption(CharSetSelGroup);
+    TRLCaption(ExcludeCharsGroup);
     TRLCaption(ResultGroup);
     TRLCaption(TagGroup);
 
@@ -177,52 +179,104 @@ void __fastcall TCharSetBuilderForm::AdditionalCharsCheckClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TCharSetBuilderForm::CharSetParamChange(TObject *Sender)
 {
-  static const WString CODES[NUM_PARAM-2] = {
+  static const WString CODES[4] = {
     "<az>",
     "<AZ>",
     "<09>",
     "<symbols>"
   };
+  static std::set<word32> charsets[4];
+
+  if (charsets[0].empty()) {
+    for (int i = 0; i < 26; i++) {
+      charsets[0].insert('a' + i);
+      charsets[1].insert('A' + i);
+      if (i < 10) charsets[2].insert('0' + i);
+    }
+    charsets[3].insert(std::begin(CHARSET_SYMBOLS), std::end(CHARSET_SYMBOLS)-1);
+  }
 
   WString sResult;
-  bool blValid = false;
+  int nSize = 0;
+
+  w32string sExcludeChars(WStringToW32String(ExcludeCharsBox->Text));
+  std::set<word32> exCharset(sExcludeChars.begin(), sExcludeChars.end());
+  bool blExclude = !exCharset.empty();
 
   for (int i = 0; i < NUM_PARAM; i++) {
     if (s_charSetUsed[i]->Checked) {
       switch (i) {
-      case 4:
-      {
-        if (FromBox->Text.IsEmpty() || ToBox->Text.IsEmpty())
-          continue;
-        wchar_t first = FromBox->Text[1];
-        wchar_t last = ToBox->Text[1];
-        if (last <= first) {
-          MsgBox(TRL("Invalid character range."), MB_ICONERROR);
-          return;
+        case 4:
+        {
+          w32string sFrom = WStringToW32String(FromBox->Text);
+          w32string sTo = WStringToW32String(ToBox->Text);
+          if (sFrom.length() != 1 || sTo.length() != 1) {
+            continue;
+          }
+          word32 first = sFrom[0];
+          word32 last = sTo[0];
+          if (last <= first) {
+            MsgBox(TRL("Invalid character range."), MB_ICONERROR);
+            return;
+          }
+          if (blExclude) {
+            bool blMatch = false;
+            for (auto ch = first; ch <= last; ch++) {
+              if (exCharset.count(ch)) {
+                blMatch = true;
+                break;
+              }
+            }
+            if (blMatch) continue;
+          }
+          sResult += "<" + W32StringToWString(sFrom + sTo) + ">";
+          nSize += last - first + 1;
+          break;
         }
-        sResult += "<" + WString(first) + WString(last) + ">";
-        blValid = true;
-        break;
-      }
-      case 5:
-      {
-        WString sAddChars = AdditionalCharsBox->Text;
-        if (sAddChars.IsEmpty())
-          continue;
-        std::set<wchar_t> chset(sAddChars.begin(), sAddChars.end());
-        if (chset.size() >= 2)
-          blValid = true;
-        sResult += "<<" + WString(std::wstring(
-          chset.begin(), chset.end()).c_str()) + ">>";
-        break;
-      }
-      default:
-        sResult += CODES[i];
-        blValid = true;
+        case 5:
+        {
+          w32string sAddChars = WStringToW32String(AdditionalCharsBox->Text);
+          if (sAddChars.empty())
+            continue;
+          std::set<word32> chset(sAddChars.begin(), sAddChars.end());
+          if (blExclude) {
+            for (auto ch : exCharset) {
+              chset.erase(ch);
+            }
+            if (chset.empty())
+              continue;
+          }
+          nSize += chset.size();
+          sResult += "<<" + W32StringToWString(w32string(
+            chset.begin(), chset.end())) + ">>";
+          break;
+        }
+        default:
+        {
+          bool blDefault = true;
+          if (blExclude) {
+            std::set<word32> chset(charsets[i]);
+            for (auto ch : exCharset) {
+              chset.erase(ch);
+            }
+            if (chset.empty())
+              continue;
+            if (chset.size() < charsets[i].size()) {
+              sResult += "<<" + W32StringToWString(w32string(
+                chset.begin(), chset.end())) + ">>";
+              nSize += chset.size();
+              blDefault = false;
+            }
+          }
+          if (blDefault) {
+            sResult += CODES[i];
+            nSize += charsets[i].size();
+          }
+        }
       }
 
       int nChars = s_numChars[i]->Position;
-      if (nChars != 0) {
+      if (nChars > 0) {
         sResult += ":" + IntToStr(nChars);
         if (s_atLeast[i]->Checked) {
           sResult += "+";
@@ -231,15 +285,10 @@ void __fastcall TCharSetBuilderForm::CharSetParamChange(TObject *Sender)
     }
   }
 
-  /*if (!sResult.IsEmpty() && !blValid) {
-    MsgBox(TRL("Invalid character set.") + "\n" +
-      TRL("Set must contain at least 2 unique characters."), MB_ICONERROR);
-    return;
-  }*/
-
-  if (blValid) {
-    if (!TagBox->Text.IsEmpty()) {
-      sResult = "[" + TagBox->Text + "]" + sResult;
+  if (nSize >= 2) {
+    WString sTag = TagBox->Text;
+    if (!sTag.IsEmpty()) {
+      sResult = "[" + sTag + "]" + sResult;
     }
   }
   else

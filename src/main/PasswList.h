@@ -45,6 +45,7 @@ __published:	// IDE-managed Components
   TRichEdit *PasswList;
   TMenuItem *PasswListMenu_EncryptCopy;
   TMenuItem *PasswListMenu_AddToDb;
+  TMenuItem *PasswListMenu_ResetFont;
   void __fastcall PasswListMenu_CopyClick(TObject *Sender);
   void __fastcall PasswListMenu_SelectAllClick(TObject *Sender);
   void __fastcall PasswListMenu_SaveAsFileClick(TObject *Sender);
@@ -57,7 +58,9 @@ __published:	// IDE-managed Components
   void __fastcall PasswListStartDrag(TObject *Sender,
     TDragObject *&DragObject);
   void __fastcall PasswListMenu_AddToDbClick(TObject *Sender);
+  void __fastcall PasswListMenu_ResetFontClick(TObject *Sender);
 private:	// User declarations
+  std::unique_ptr<TFont> m_pDefaultPasswFont;
 public:		// User declarations
   __fastcall TPasswListForm(TComponent* Owner);
   __fastcall ~TPasswListForm();

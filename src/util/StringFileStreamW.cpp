@@ -87,8 +87,7 @@ __fastcall TStringFileStreamW::TStringFileStreamW(const WString& sFileName,
       }
     }
   }
-  m_nCodeUnitSize = (m_enc == ceAnsi || m_enc == ceUtf8) ? 1 : 2;
-  if (m_nCodeUnitSize == 1)
+  if (m_enc == ceAnsi || m_enc == ceUtf8)
     m_cbuf.New(nBufSize);
   else
     m_wbuf.New(nBufSize);
@@ -97,14 +96,14 @@ __fastcall TStringFileStreamW::TStringFileStreamW(const WString& sFileName,
 int __fastcall TStringFileStreamW::ReadString(wchar_t* pwszDest,
   int nDestBufSize)
 {
-  //wchar_t* pwszBuf = reinterpret_cast<wchar_t*>(m_buf.Data());
   if (nDestBufSize < 1)
     return 0;
 
+  const int nCodeUnitSize = (m_enc == ceAnsi || m_enc == ceUtf8) ? 1 : 2;
   while (true) {
     if (m_nBufPos < m_nBufLen) {
       int nStrLen;
-      if (m_nCodeUnitSize == 1)
+      if (nCodeUnitSize == 1)
         nStrLen = strcspn(&m_cbuf[m_nBufPos], m_asSepChars.c_str());
       else
         nStrLen = wcscspn(&m_wbuf[m_nBufPos], m_sSepChars.c_str());
@@ -141,24 +140,24 @@ int __fastcall TStringFileStreamW::ReadString(wchar_t* pwszDest,
     if (m_nBufPos == 0 && m_nBufLen != 0)
       throw EStringFileStreamError(TRL("Unicode string too long"));
 
-    Seek((m_nBufPos - m_nBufLen) * m_nCodeUnitSize, soFromCurrent);
+    Seek((m_nBufPos - m_nBufLen) * nCodeUnitSize, soFromCurrent);
 
-    const int nBytesRead = (m_nCodeUnitSize == 1) ?
-	  Read(m_cbuf, static_cast<int>(m_cbuf.Size() - 1)) :
-	  Read(m_wbuf, static_cast<int>((m_wbuf.Size() - 1) * 2));
+    const int nBytesRead = (nCodeUnitSize == 1) ?
+      Read(m_cbuf, static_cast<int>(m_cbuf.Size() - 1)) :
+      Read(m_wbuf, static_cast<int>((m_wbuf.Size() - 1) * 2));
 
     if (nBytesRead == 0)
       return 0;
 
-    if (m_nCodeUnitSize == 2 && nBytesRead % 2 != 0)
+    if (nCodeUnitSize == 2 && nBytesRead % 2 != 0)
       throw EStringFileStreamError(TRL("Invalid UTF-16 character encoding"));
 
-    m_nBufLen = (m_nCodeUnitSize == 1) ? nBytesRead : nBytesRead / 2;
+    m_nBufLen = (nCodeUnitSize == 1) ? nBytesRead : nBytesRead / 2;
 
     if (m_enc == ceUtf16BigEndian)
       swapUtf16ByteOrder(m_wbuf, m_nBufLen);
 
-    if (m_nCodeUnitSize == 1)
+    if (nCodeUnitSize == 1)
       m_cbuf[m_nBufLen] = '\0';
     else
       m_wbuf[m_nBufLen] = '\0';

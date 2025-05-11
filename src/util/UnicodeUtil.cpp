@@ -63,7 +63,7 @@ std::wstring FormatW_(const WString& sFormat,
       }
       else if (it+1 != sFormat.end() && *(it+1) >= '0' && *(it+1) <= '9') {
         it++;
-        int n = *it - '0';
+        word32 n = *it - '0';
         if (it+1 != sFormat.end() && *(it+1) >= '0' && *(it+1) <= '9') {
           it++;
           n = n * 10 + *it - '0';
@@ -92,7 +92,7 @@ WString FormatW(const WString& sFormat,
   return WString(sDest.c_str(), sDest.length());
 }
 //---------------------------------------------------------------------------
-SecureWString FormatW_Secure(const WString& sFormat,
+SecureWString FormatW_s(const WString& sFormat,
   const std::vector<WString>& args)
 {
   if (sFormat.IsEmpty())
@@ -197,7 +197,7 @@ void W32CharToWCharInternal(void* pBuf)
 
   for (; *pBuf32 != '\0'; pBuf32++) {
     *pBuf16++ = *pBuf32;
-    if (*pBuf32 > 0xFFFF)
+    if (*pBuf32 > 0xffff)
       *pBuf16++ = *pBuf32 >> 16;
   }
 
@@ -256,7 +256,7 @@ AnsiString WStringToUtf8(const WString& sSrc)
   return asDest;
 }
 //---------------------------------------------------------------------------
-SecureAnsiString WStringToUtf8(const wchar_t* pwszSrc)
+SecureAnsiString WStringToUtf8_s(const wchar_t* pwszSrc)
 {
   if (pwszSrc == nullptr || *pwszSrc == '\0')
     return SecureAnsiString();
@@ -271,24 +271,6 @@ SecureAnsiString WStringToUtf8(const wchar_t* pwszSrc)
   WideCharToMultiByte(CP_UTF8, 0, pwszSrc, -1, asDest, nLen, nullptr, nullptr);
   return asDest;
 }
-//---------------------------------------------------------------------------
-/*SecureAnsiString WStringToUtf8(const SecureWString& sSrc)
-{
-  if (sSrc.IsStrEmpty())
-    return SecureAnsiString();
-
-  int nSrcLen = sSrc.StrLen() + 1;
-  int nDestLen = WideCharToMultiByte(CP_UTF8, 0, sSrc.c_str(), nSrcLen,
-    nullptr, 0, nullptr, nullptr);
-  if (nDestLen == 0)
-    utf8EncodeError();
-
-  SecureAnsiString asDest(nDestLen);
-
-  WideCharToMultiByte(CP_UTF8, 0, sSrc.c_str(), nSrcLen, asDest, nDestLen,
-    nullptr, nullptr);
-  return asDest;
-}*/
 //---------------------------------------------------------------------------
 WString Utf8ToWString(const AnsiString& asSrc)
 {
@@ -307,7 +289,7 @@ WString Utf8ToWString(const AnsiString& asSrc)
   return sDest;
 }
 //---------------------------------------------------------------------------
-SecureWString Utf8ToWString(const char* pszSrc)
+SecureWString Utf8ToWString_s(const char* pszSrc)
 {
   if (pszSrc == nullptr || *pszSrc == '\0')
     return SecureWString();
@@ -329,3 +311,20 @@ size_t w32strlen(const word32* pStr)
   return static_cast<size_t>(pStr - pStart);
 }
 //---------------------------------------------------------------------------
+const wchar_t WHITESPACE_CHARS[] = L" \n\r\t";
+
+std::wstring TrimWString(const std::wstring& s)
+{
+  if (s.empty())
+    return s;
+
+  auto pos1 = s.find_first_not_of(WHITESPACE_CHARS);
+  if (pos1 == s.npos)
+    return std::wstring();
+
+  auto pos2 = s.find_last_not_of(WHITESPACE_CHARS);
+
+  return s.substr(pos1, pos2 - pos1 + 1);
+}
+//---------------------------------------------------------------------------
+

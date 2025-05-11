@@ -27,7 +27,7 @@ object ConfigurationDlg: TConfigurationDlg
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    ActivePage = DatabaseSheet
+    ActivePage = FilesSheet
     Constraints.MinWidth = 490
     HotTrack = True
     TabOrder = 0
@@ -595,8 +595,8 @@ object ConfigurationDlg: TConfigurationDlg
         Caption = 'Character encoding of text files'
         Items.Strings = (
           'ANSI'
-          'UTF-16'
-          'UTF-16 Big Endian'
+          'UTF-16 LE'
+          'UTF-16 BE'
           'UTF-8')
         TabOrder = 0
       end

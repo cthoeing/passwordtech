@@ -67,7 +67,14 @@ void __fastcall TPasswListForm::LoadConfig(void)
   Height = g_pIni->ReadInteger(CONFIG_ID, "WindowHeight", Height);
   Width = g_pIni->ReadInteger(CONFIG_ID, "WindowWidth", Width);
 
-  StringToFont(g_pIni->ReadString(CONFIG_ID, "Font", ""), PasswList->Font);
+  std::unique_ptr<TFont> pFont(new TFont);
+  if (StringToFont(g_pIni->ReadString(
+        CONFIG_ID, "Font", ""), pFont.get()) > 0)
+  {
+    m_pDefaultPasswFont.reset(new TFont);
+    m_pDefaultPasswFont->Assign(PasswList->Font);
+    PasswList->Font = pFont.get();
+  }
   FontDlg->Font = PasswList->Font;
 }
 //---------------------------------------------------------------------------
@@ -77,7 +84,8 @@ void __fastcall TPasswListForm::SaveConfig(void)
   g_pIni->WriteInteger(CONFIG_ID, "WindowLeft", Left);
   g_pIni->WriteInteger(CONFIG_ID, "WindowHeight", Height);
   g_pIni->WriteInteger(CONFIG_ID, "WindowWidth", Width);
-  g_pIni->WriteString(CONFIG_ID, "Font", FontToString(PasswList->Font));
+  g_pIni->WriteString(CONFIG_ID, "Font",
+    m_pDefaultPasswFont ? FontToString(PasswList->Font) : WString());
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswListForm::Execute(void)
@@ -174,8 +182,13 @@ void __fastcall TPasswListForm::PasswListMenu_ChangeFontClick(TObject *Sender)
 {
   BeforeDisplayDlg();
   TopMostManager::GetInstance().NormalizeTopMosts(this);
-  if (FontDlg->Execute())
+  if (FontDlg->Execute()) {
+    if (!m_pDefaultPasswFont) {
+      m_pDefaultPasswFont.reset(new TFont);
+      m_pDefaultPasswFont->Assign(PasswList->Font);
+    }
     PasswList->Font = FontDlg->Font;
+  }
   TopMostManager::GetInstance().RestoreTopMosts(this);
   AfterDisplayDlg();
 }
@@ -214,6 +227,15 @@ void __fastcall TPasswListForm::PasswListMenu_AddToDbClick(TObject *Sender)
 {
   SecureWString sPasswList = GetRichEditSelTextBuf(PasswList);
   PasswMngForm->AddPassw(sPasswList, true);
+}
+//---------------------------------------------------------------------------
+void __fastcall TPasswListForm::PasswListMenu_ResetFontClick(TObject *Sender)
+{
+  if (m_pDefaultPasswFont) {
+    PasswList->Font = m_pDefaultPasswFont.get();
+    m_pDefaultPasswFont.reset();
+    FontDlg->Font = PasswList->Font;
+  }
 }
 //---------------------------------------------------------------------------
 

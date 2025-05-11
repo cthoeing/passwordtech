@@ -31,6 +31,7 @@
 #include "PhoneticTrigram.h"
 #include "Language.h"
 #include "StringFileStreamW.h"
+#include "Configuration.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 
@@ -88,9 +89,6 @@ CHARSET_INCLUDE_SPECIAL = 3;
 
 const char CHARSET_AMBIGUOUS[] =
   "B8G6I1l|0OQDS5Z2";
-
-const char CHARSET_SYMBOLS[] =
-  "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 
 const char FORMAT_PLACEHOLDERS[] =
   "xaAUEdhHlLuvVZcCzpbsSy";
@@ -406,102 +404,6 @@ std::optional<std::pair<w32string,CharSetType>> PasswordGenerator::ParseCharSet(
     sChars.push_back('<');
   }
 
-  /*w32string sStartSeq, sEndSeq;
-  sStartSeq.push_back('<');
-  sStartSeq.push_back('<');
-  sEndSeq.push_back('>');
-  sEndSeq.push_back('>');
-  int nStartPos = 0, nState = 0, nMinChars = 1;
-  while (sInput.length() > sStartSeq.length() + sEndSeq.length()) {
-    if (nState == 1) {
-      sStartSeq = w32string(1, '<');
-      sEndSeq = w32string(1, '>');
-      nMinChars = 2;
-      nStartPos = 0;
-      nState++;
-    }
-    else if (nState > 2)
-      break;
-    nStartPos = sInput.find(sStartSeq, nStartPos);
-    if (nStartPos < 0) {
-      nState++;
-      continue;
-    }
-    int nEndPos = sInput.find(sEndSeq, nStartPos + sStartSeq.length());
-    if (nEndPos < 0) {
-      nState++;
-      continue;
-    }
-    int nLen = nEndPos - nStartPos + sEndSeq.length();
-    if (nLen < sStartSeq.length() + sEndSeq.length() + nMinChars) {
-      nStartPos += sStartSeq.length();
-      continue;
-    }
-    w32string sSubStr = sInput.substr(nStartPos + sStartSeq.length(),
-      nLen - sStartSeq.length() - sEndSeq.length());
-    auto mapIt = charSetFreq.end();
-    if (sStartSeq.length() == 1) {
-      for (int nI = 0; nI < PASSWGEN_NUMCHARSETCODES_EXT; nI++) {
-        //w32string sCode = AsciiCharToW32String(CHARSET_CODES[nI]);
-        if (sSubStr == s_charSetCodes[nI]) {
-          //sParsed += m_charSetDecodes[CHARSET_CODES_MAP[nI]];
-          mapIt = charSetFreq.emplace(
-            m_charSetDecodes[CHARSET_CODES_MAP[nI]], 0).first;
-          break;
-        }
-      }
-      if (mapIt == charSetFreq.end() && sSubStr.length() == 2) {
-        word32 lChar1 = sSubStr[0];
-        word32 lChar2 = sSubStr[1];
-        if (lChar2 > lChar1 && lChar2 < 0xd800 && lChar2 - lChar1 <= 256) {
-          w32string sCustomSet;
-          for (word32 lChar = lChar1; lChar <= lChar2; lChar++)
-            sCustomSet.push_back(lChar);
-          mapIt = charSetFreq.emplace(sCustomSet, 0).first;
-        }
-      }
-    }
-    else {
-      w32string chset = MakeCharSetUnique(sSubStr);
-      if (!chset.empty())
-        mapIt = charSetFreq.emplace(chset, 0).first;
-    }
-    if (mapIt != charSetFreq.end()) {
-      nEndPos += sEndSeq.length() - 1;
-      if (sInput.length() - 1 - nEndPos >= 2 && sInput[nEndPos+1] == ':' &&
-          isdigit(sInput[nEndPos+2])) {
-        std::string sFreq;
-        bool blAtLeast = false;
-        for (auto it = sInput.begin()+nEndPos+2; it != sInput.end() &&
-             sFreq.length() <= 5; it++) {
-          if (isdigit(*it))
-            sFreq.push_back(*it);
-          else if (*it == '+') {
-            blAtLeast = true;
-            break;
-          }
-          else break;
-        }
-        if (!sFreq.empty()) {
-          int nFreq = std::stoi(sFreq);
-          if (blAtLeast)
-            nFreq *= -1;
-          mapIt->second = nFreq;
-
-          nLen += sFreq.length() + 1;
-          if (blAtLeast)
-            nLen++;
-        }
-      }
-      if (blIncludeCharFromEachSubset && mapIt->second == 0)
-        mapIt->second = -1;
-      sInput.erase(nStartPos, nLen);
-      //nStartPos = 0;
-    }
-    else
-      nStartPos += sStartSeq.length();
-  }*/
-
   w32string sFullCharSet = sChars;
   bool blHasFreq = false;
   for (const auto& kv : charSetFreq) {
@@ -509,8 +411,8 @@ std::optional<std::pair<w32string,CharSetType>> PasswordGenerator::ParseCharSet(
     if (pCharSetFreq && kv.second != 0)
       blHasFreq = true;
   }
-  if (blHasFreq)
-    blHasFreq = (charSetFreq.size() + (sChars.length() >= 2 ? 1 : 0)) >= 2;
+  blHasFreq = blHasFreq &&
+    (charSetFreq.size() + (sChars.length() >= 2 ? 1 : 0)) >= 2;
 
   w32string sRemovedAmbigChars;
   sFullCharSet = MakeCharSetUnique(sFullCharSet, &m_sAmbigCharSet,
@@ -747,13 +649,12 @@ int PasswordGenerator::LoadWordListFile(WString sFileName,
     if (ExtractFilePath(sFileName).IsEmpty())
       sFileName = g_sExePath + sFileName;
 
-    //TStringFileStreamW* pFile = nullptr;
     std::unordered_set<std::wstring> wordListSet;
     std::vector<std::wstring> wordListVec;
 
     try {
       auto pFile = std::make_unique<TStringFileStreamW>(
-          sFileName, fmOpenRead, ceAnsi, true, 65536, "\n\t ");
+          sFileName, fmOpenRead, g_config.FileEncoding, true, 65536, "\n\t ");
 
       const int WORDBUF_SIZE = 1024;
       wchar_t wszWord[WORDBUF_SIZE];
@@ -829,22 +730,12 @@ int PasswordGenerator::GetPassword(SecureW32String& sDest,
     int nPos = 0;
     int nItemIdx = 0;
 
-    /*auto removeChar = [](w32string& sCharSet, word32 lChar)
-    {
-      // characters are sorted since std::set was used for creating the set
-      // hence, we may perform a binary search
-      auto it = std::lower_bound(sCharSet.begin(), sCharSet.end(), lChar);
-      if (it != sCharSet.end() && *it == lChar)
-        sCharSet.erase(it);
-    };*/
-
     for (auto& p : charSetFreq) {
       for (int i = 0; i < p.second && !p.first.empty() && nPos < nLength; i++) {
         lChar = p.first[m_pRandGen->GetNumRange(p.first.length())];
         sDest[nPos++] = lChar;
         if ((nFlags & PASSW_FLAG_EACHCHARONLYONCE) && nPos < nLength) {
-          for (int j = nItemIdx; j < charSetFreq.size(); j++) {
-            //removeChar(charSetFreq[j].first, lChar);
+          for (int j = nItemIdx; j < static_cast<int>(charSetFreq.size()); j++) {
             // characters are sorted since std::set was used for creating the set
             // hence, we may perform a binary search
             auto& sCharSet = charSetFreq[j].first;
@@ -858,14 +749,6 @@ int PasswordGenerator::GetPassword(SecureW32String& sDest,
         break;
       nItemIdx++;
     }
-
-    /*auto& sCommonCharSet = charSetFreq.sCommonCharSet;
-    while (!sCommonCharSet.empty() && nPos < nLength) {
-      lChar = sCommonCharSet[m_pRandGen->GetNumRange(sCommonCharSet.length())];
-      pDest[nPos++] = lChar;
-      if (nFlags & PASSW_FLAG_EACHCHARONLYONCE)
-        removeChar(sCommonCharSet, lChar);
-    }*/
 
     nLength = nPos;
     if (nLength >= 2)
@@ -1510,7 +1393,7 @@ std::pair<word32,double> PasswordGenerator::CreateTrigramFile(const WString& sSr
   const WString& sDestFileName)
 {
   auto pSrcFile = std::make_unique<TStringFileStreamW>(
-    sSrcFileName, fmOpenRead, ceAnsi, true, 65536, "\n\t ");
+    sSrcFileName, fmOpenRead, g_config.FileEncoding, true, 65536, "\n\t ");
 
   const int WORDBUF_SIZE = 1024;
   wchar_t wszWord[WORDBUF_SIZE];
@@ -1545,8 +1428,8 @@ std::pair<word32,double> PasswordGenerator::CreateTrigramFile(const WString& sSr
   double dEntropy = 0;
   if (lSigma != 0) {
     double dProb;
-    for (int nI = 0; nI < PHONETIC_TRIS_NUM; nI++) {
-      dProb = static_cast<double>(tris[nI]) / lSigma;
+    for (word32 i = 0; i < PHONETIC_TRIS_NUM; i++) {
+      dProb = static_cast<double>(tris[i]) / lSigma;
       if (dProb > 0)
         dEntropy += dProb * Log2(dProb);
     }
@@ -1595,8 +1478,8 @@ int PasswordGenerator::LoadTrigramFile(WString sFileName)
         return 0;
 
       word32 lCheck = 0;
-      for (int nI = 0; nI < PHONETIC_TRIS_NUM; nI++)
-        lCheck += tris[nI];
+      for (word32 i = 0; i < PHONETIC_TRIS_NUM; i++)
+        lCheck += tris[i];
 
       if (lCheck != lSigma)
         return 0;
@@ -1640,15 +1523,15 @@ int PasswordGenerator::GetPhoneticPassw(SecureW32String& sDest,
   else
     getLetter = [base](char c) { return c + base; };
 
-  for (nI = 0; nI < PHONETIC_TRIS_NUM; nI++) {
+  for (word32 i = 0; i < PHONETIC_TRIS_NUM; i++) {
     if (blDefaultTris)
-      lSum += PHONETIC_TRIS[nI];
+      lSum += PHONETIC_TRIS[i];
     else
-      lSum += m_phoneticTris[nI];
+      lSum += m_phoneticTris[i];
     if (lSum > lRand) {
-      ch1 = nI / 676;
-      ch2 = (nI / 26) % 26;
-      ch3 = nI % 26;
+      ch1 = i / 676;
+      ch2 = (i / 26) % 26;
+      ch3 = i % 26;
       break;
     }
   }

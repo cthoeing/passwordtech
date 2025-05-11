@@ -70,22 +70,6 @@ static word32 strihash(const T* pStr)
   return lHash;
 }
 
-const wchar_t WHITESPACE_CHARS[] = L" \n\r\t";
-
-std::wstring trimStr(const std::wstring& s)
-{
-  if (s.empty())
-    return s;
-
-  auto pos1 = s.find_first_not_of(WHITESPACE_CHARS);
-  if (pos1 == s.npos)
-    return std::wstring();
-
-  auto pos2 = s.find_last_not_of(WHITESPACE_CHARS);
-
-  return s.substr(pos1, pos2 - pos1 + 1);
-}
-
 /*std::wstring extractFormatSpec(const std::wstring& s)
 {
   static const std::wregex re(L"%[-+ #0]{0,5}(?:\\d{1,4}|\\*)?(?:\\.\\d{1,2}|\\.\\*)?"
@@ -254,7 +238,7 @@ LanguageSupport::LanguageSupport(const WString& sFileName,
           for (; keyValIt != keyValEnd; keyValIt++) {
             auto m = *keyValIt;
             if (m.size() >= 3) {
-              auto sVal = trimStr(m[2]);
+              auto sVal = TrimWString(m[2]);
               if (!sVal.empty())
                 keyVal.emplace(m[1], sVal);
             }
@@ -434,7 +418,7 @@ LanguageSupport::LanguageSupport(const WString& sFileName,
       std::wstring sMsg;
       if (nParsedLen > 0) {
         wszParsed[nParsedLen] = '\0';
-        sMsg = trimStr(std::wstring(wszParsed));
+        sMsg = TrimWString(wszParsed);
       }
       if (sMsg.empty()) {
         if (nNumMsg == 0)
@@ -582,7 +566,7 @@ void LanguageSupport::SaveToPOFileFormat(const WString& sFileName,
             L"\n";
           pFile->WriteString(sMsgCtxt.c_str(), sMsgCtxt.length());
         }
-        sMsgId = trimStr(sMsgId.substr(0, pos1));
+        sMsgId = TrimWString(sMsgId.substr(0, pos1));
       }
     }
 

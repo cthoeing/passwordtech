@@ -82,7 +82,7 @@ int script_random(lua_State* L)
 SecureAnsiString w32ToUtf8(word32* pSrc)
 {
   W32CharToWCharInternal(pSrc);
-  return WStringToUtf8(reinterpret_cast<wchar_t*>(pSrc));
+  return WStringToUtf8_s(reinterpret_cast<wchar_t*>(pSrc));
 }
 
 int script_password(lua_State* L)
@@ -120,7 +120,7 @@ int script_passphrase(lua_State* L)
   SecureW32String sInputPassw;
   int nInputPasswLen = 0;
   if (pszChars != nullptr && *pszChars != '\0') {
-    SecureWString sUtf16 = Utf8ToWString(pszChars);
+    SecureWString sUtf16 = Utf8ToWString_s(pszChars);
     nInputPasswLen = GetNumOfUnicodeChars(sUtf16);
     sInputPassw.NewStr(nInputPasswLen);
     WCharToW32Char(sUtf16, sInputPassw);
@@ -407,7 +407,7 @@ void LuaScript::CallGenerate(word64 qPasswNum,
   nInputArgs++;
 
   if (pwszSrcPassw != nullptr && *pwszSrcPassw != '\0') {
-    SecureAnsiString srcPasswUtf8 = WStringToUtf8(pwszSrcPassw);
+    SecureAnsiString srcPasswUtf8 = WStringToUtf8_s(pwszSrcPassw);
     lua_pushstring(m_L, srcPasswUtf8.c_str());
     nInputArgs++;
 
@@ -422,7 +422,7 @@ void LuaScript::CallGenerate(word64 qPasswNum,
   //stackDump(m_L);
 
   const char* luaStr = lua_tostring(m_L, -2);
-  sDestPassw = Utf8ToWString(luaStr);
+  sDestPassw = Utf8ToWString_s(luaStr);
 
   if (sDestPassw.Size() > MAX_PASSW_CHARS + 1 &&
       GetNumOfUnicodeChars(sDestPassw) > MAX_PASSW_CHARS)
