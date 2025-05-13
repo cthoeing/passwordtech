@@ -3,7 +3,7 @@
 # If the language code is missing or invalid, PwTech will derive the language name from the file name.
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.6\n"
+"Project-Id-Version: Password Tech 3.5.7\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: Midori.Ayanokouji <ayano.midori@gmail.com>\n"
@@ -184,7 +184,7 @@ msgstr "マスターパスワードによる生成ツール..."
 
 #. Main menu, Tools submenu
 msgid "Deterministic Random Generator"
-msgstr "決定性ランダム生成器"
+msgstr "決定論的乱数生成器"
 
 #. Main menu, Tools submenu, Deterministic Random Generator submenu
 msgid "Reset"
@@ -242,9 +242,12 @@ msgstr "ヘルプ"
 msgid "Open Manual"
 msgstr "説明書を開く"
 
+msgid "Command Line Arguments..."
+msgstr "コマンドライン引数..."
+
 #. Main menu, Help submenu
 msgid "Visit Website"
-msgstr "ウェブサイト"
+msgstr "ウェブサイトへ"
 
 #. Main window, Help submenu
 msgid "Get Translations..."
@@ -285,6 +288,41 @@ msgstr "パスワードを生成し自動入力"
 #. System tray context menu
 msgid "Open user manual"
 msgstr "説明書を開く"
+
+#. Command line arguments
+msgid "Usage:"
+msgstr "使い方："
+
+#. Command line arguments
+msgid "Display this help message."
+msgstr "このヘルプメッセージを表示する。"
+
+#. Command line arguments
+msgid "Do not write to disk unless explicitly requested."
+msgstr "明示的に要求されない限り、ディスクに書き込ません。"
+
+#. Command line arguments
+msgid "Load profile named 'profilename' on start-up."
+msgstr "起動時に次のプロファイルを読み込み:"
+
+#. Command line arguments
+msgid ""
+"Generate 'number' of passwords and display on the console, then close "
+"application."
+msgstr ""
+"パスワードの「number」を生成してコンソールに表示し、アプリケーションを閉じ"
+"る。"
+
+#. Command line arguments
+msgid "Launch application in the background."
+msgstr "バックグラウンドでアプリケーションを起動"
+
+#. Command line arguments
+msgid ""
+"Open database named 'filename' on start-up and show password manager window."
+msgstr ""
+"起動時に'filename'という名前の Data base を開き、Password manager を表示す"
+"る。"
 
 #. Main window, Clear Clipboard button tooltip
 msgid "Clear clipboard (text contents only)"
@@ -377,6 +415,10 @@ msgstr "パスワードのテストを有効化"
 #. Main window, Password box, context menu
 msgid "Change Font..."
 msgstr "フォントの変更..."
+
+#. Main window, Password box, context menu
+msgid "Reset Font"
+msgstr "フォントを初期化"
 
 #. Title of open dialog when selecting Main menu | Tools | Provide Additional Entropy | From File
 msgid "Select high-entropy file"
@@ -621,7 +663,7 @@ msgstr "パスワードの生成"
 
 #. Title of Progress window when generating password list
 msgid "Generating password list"
-msgstr "パスワードのリストの生成中 ..."
+msgstr "パスワードのリストの生成"
 
 #. Progress info when generating password list
 msgid "%d of %d passwords generated."
@@ -715,7 +757,7 @@ msgid ""
 msgstr ""
 "ファイル「%s」の作成に成功。\n"
 "\n"
-"%d個のパスワードが書き込まれました。"
+"%d 個のパスワードが書き込まれました。"
 
 #. Generate password, error message
 msgid ""
@@ -731,12 +773,13 @@ msgid ""
 "process the password data:\n"
 "%s."
 msgstr ""
-"パスワード生成中にエラーが発生:\n"
+"パスワードデータの送信処理中に\n"
+"エラーが発生しました。:\n"
 "%s。"
 
 #. Generate password, error message, additional info when generating passwords to file
 msgid "%d passwords written to file \"%s\"."
-msgstr "次のファイルに％d個のパスワードが書き込まれました「％s」。"
+msgstr "「%s」に %d 個のパスワードが書き込まれました。"
 
 #. Include characters, info about character set
 msgid "%d bits / %d characters"
@@ -956,7 +999,7 @@ msgstr ""
 
 #. Main window, info shown in window title when using deterministic random generator
 msgid "WARNING: Random generator is deterministic (press F7 to deactivate)!"
-msgstr "警告: ランダム生成器は決定性です (F7 で無効化)！"
+msgstr "警告: 乱数生成器は決定論的です (F7 で無効化)！"
 
 #. Message shown after clearing clipboard
 msgid "Clipboard cleared."
@@ -964,19 +1007,19 @@ msgstr "クリップボードを消去しました。"
 
 #. Message shown after loading profile
 msgid "Profile \"%s\" activated."
-msgstr "「プロファイル%s」を有効化しました。"
+msgstr "プロファイル「%s」を有効化しました。"
 
 #. Message shown after activating deterministic random generator
 msgid "Deterministic random generator has been ACTIVATED."
-msgstr "決定性ランダム生成器が有効になりました。"
+msgstr "決定論的乱数生成器が有効になりました。"
 
 #. Message shown after resetting deterministic random generator
 msgid "Deterministic random generator has been RESET."
-msgstr "決定性ランダム生成器は初期化されました。"
+msgstr "決定論的乱数生成器は初期化されました。"
 
 #. Message shown after deactivating deterministic random generator
 msgid "Deterministic random generator has been DEACTIVATED."
-msgstr "決定性ランダム生成器は無効化されました。"
+msgstr "決定論的乱数生成器は無効化されました。"
 
 #. Message shown on command line if profile was specified in command line parameters
 msgid "Selected profile \"%s\"."
@@ -984,7 +1027,7 @@ msgstr "選択されたプロファイル「%s」"
 
 #. Message shown on command line if password generation was requested
 msgid "Generating %d password(s) ..."
-msgstr "%d個のパスワードを生成中 ..."
+msgstr "%d 個のパスワードを生成中 ..."
 
 #. Message shown during startup if password generation was requested but program is not run from console
 msgid ""
@@ -1076,8 +1119,8 @@ msgstr ""
 "下記のいずれかの金額以上の寄付で\n"
 "ドナーキーが付与されます:\n"
 "\n"
-"%d ユーロ / %d ドル:\t現在以降%dバージョンの更新で有効\n"
-"%d ユーロ / %d ドル:\tバージョン3全体で有効\n"
+"%d ユーロ / %d ドル:\t現在の Version と %d の更新に対して有効です\n"
+"%d ユーロ / %d ドル:\tVersion 3 の有効期間中（アップデートは無制限）\n"
 "\n"
 "今すぐ寄付しますか？"
 
@@ -1167,7 +1210,7 @@ msgstr "起動時に次のプロファイルを読み込み:"
 
 #. Configuration window, Security
 msgid "Benchmark..."
-msgstr "計測..."
+msgstr "ベンチマーク..."
 
 #. Configuration window, Security
 msgid "Data size for benchmark test"
@@ -1303,7 +1346,15 @@ msgstr "言語を選択:"
 
 #. Configuration window, Language
 msgid "Install..."
-msgstr "インストール..."
+msgstr "インストール"
+
+#. Configuration window, Language, Open dialog title
+msgid "Select language file to install"
+msgstr "インストールする言語ファイルを選択"
+
+#. Configuration window, Language, Open dialog filter
+msgid "Language files"
+msgstr "言語ファイル"
 
 #. Configuration window, Language, Install
 msgid "Language already installed"
@@ -1389,6 +1440,9 @@ msgstr "起動時にウィンドウを開く"
 msgid "Open last used database on startup"
 msgstr "起動時に最後に使ったデータベースを開く"
 
+msgid "Keep list of recently opened files"
+msgstr "最近開いたファイルのリストを保持"
+
 #. Configuration window, Database
 msgid "Warn if database contains expired entries"
 msgstr "データベースに期限切れの項目があれば警告する"
@@ -1447,11 +1501,11 @@ msgstr "OK"
 
 #. Generic dialog window, button
 msgid "Cancel"
-msgstr "キャンセル"
+msgstr "Cancel"
 
 #. Enter password window, message shown when passwords are not identical
 msgid "Passwords are not identical."
-msgstr "2つのパスワードが一致しません。"
+msgstr "パスワードが一致しません。"
 
 #. Enter password window, caption for encryption
 msgid "Encrypt"
@@ -1593,7 +1647,7 @@ msgstr "パスワード一覧中の重複項目を含めない"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Assign entropy value to each password in password lists"
-msgstr "Assign entropy value to each password in password lists"
+msgstr "パスワード一覧の各パスワードにエントロピー値を割り当てる"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Capitalize first letter of each word"
@@ -1621,7 +1675,7 @@ msgstr "記号を指定:"
 
 #. Advanced Password Options window, label
 msgid "Min./Max. length of words in word lists (except default word list):"
-msgstr "単語リストの単語の最大文字数を指定 (標準の単語リスト以外):"
+msgstr "単語リストの単語の最小／最大文字数を指定 (標準の単語リスト以外):"
 
 #. Advanced Password Options window, label
 msgid "Redefine separators in passphrases:"
@@ -1641,19 +1695,19 @@ msgstr "音声的な (発音可能) なパスワード生成用のトライグ�
 
 #. Advanced Password Options window, footnotes of checkbox list
 msgid "Applies to pass_words_."
-msgstr "パスワードに適用_."
+msgstr "パスワードに適用"
 
 #. Advanced Password Options window, footnotes of checkbox list
 msgid "Applies to pass_phrases_."
-msgstr "パスフレーズに適用_."
+msgstr "パスフレーズに適用"
 
 #. Advanced Password Options window, footnotes of checkbox list
 msgid "Applies to formatted passwords."
-msgstr "書式型パスワードに適用."
+msgstr "書式型パスワードに適用"
 
 #. Advanced Password Options window, footnotes of checkbox list
 msgid "Applies to phonetic passwords."
-msgstr "音声的パスワードに適用."
+msgstr "音声的パスワードに適用"
 
 #. Advanced Password Options window, footnotes of checkbox list
 msgid ""
@@ -1685,7 +1739,7 @@ msgstr "ファイルサイズ:"
 
 #. Create Random Data File dialog, drop-down list of file size units
 msgid "Bytes"
-msgstr "バイト"
+msgstr "B"
 
 #. Create Random Data File dialog, drop-down list of file size units
 msgid "Kilobytes"
@@ -2269,6 +2323,10 @@ msgid "Lock"
 msgstr "ロック"
 
 #. Password Manager window, main menu, File submenu
+msgid "Clear Recently Opened List"
+msgstr "最近開いたリストの消去"
+
+#. Password Manager window, main menu, File submenu
 msgid "Unlock"
 msgstr "ロック解除"
 
@@ -2361,8 +2419,8 @@ msgid "Change List Font..."
 msgstr "一覧のフォントを変更..."
 
 #. Password Manager window, main menu, View submenu
-msgid "Reset List Font"
-msgstr "一覧のフォントを初期化"
+msgid "Reset Fonts"
+msgstr "フォントを初期化"
 
 #. Password Manager window, main menu, View submenu
 msgid "Change Password Font..."
@@ -2415,6 +2473,14 @@ msgstr "データベースのロック/アンロック"
 #. Password Manager window, Edit panel, Toggle password button, tooltip
 msgid "Left-click: Hide/show password, right-click: Generate password"
 msgstr "左クリック: パスワードを隠す/表示、右クリック: パスワード生成"
+
+#. Password Manager window, Edit panel, Toggle notes button, tooltip
+msgid "Hide/show notes"
+msgstr "表示／非表示切替"
+
+#. Password Manager window, Edit Panel, text displayed when notes are hidden
+msgid "Notes hidden - click here to display"
+msgstr "注釈は非表示 - 表示するにはここをクリック"
 
 #. Password Manager window, title of password entry dialog when unlocking database
 msgid "Unlock %s"
@@ -2910,7 +2976,7 @@ msgstr "パスワード変更:"
 
 #. Password Manager window, Password History dialog, checkbox
 msgid "Keep last passwords - up to:"
-msgstr "最後のパスワードを保持する:"
+msgstr "最後のパスワードを保持する - 最大："
 
 #. Password Manager window, Password History dialog, list view, column
 msgid "Set Date/Time"
@@ -2918,76 +2984,84 @@ msgstr "日付/時間 設定"
 
 #. Password Manager window, shutdown blocker message
 msgid "Password database entry is being edited."
-msgstr "Password database を編集中です。"
+msgstr "パスワードデータベースエントリーを編集中です。"
 
 #. Password Manager window, shutdown blocker message
 msgid "Password database contains unsaved changes."
-msgstr "Password database には保存されていない変更が含まれています。"
+msgstr "パスワードデータベースに未保存の変更が含まれています。"
 
 #. Password Manager window, toolbar, filter info
 msgid "Filtered"
-msgstr "フィルター済み"
+msgstr "フィルタリング"
 
 #. Password Manager window, toolbar, filter info, button tooltip
 msgid "Remove filter"
-msgstr "フィルターを解除"
+msgstr "フィルタを削除する"
 
+#. Main window, button to build character set definition
 msgid "Build..."
-msgstr "詳細設定.."
+msgstr "詳細設定"
 
+#. Main window, button to build character set definition, hint
 msgid "Build character set definition"
 msgstr "文字セット定義の構築"
 
+#. Character set builder, window title
 msgid "Character Set Builder"
-msgstr "文字セットの構築"
+msgstr "文字組合の構築:"
 
+#. Character set builder, group box with character sets
 msgid "Character set selection"
-msgstr "文字セットの選択"
+msgstr "文字セット選択"
 
+#. Character set builder, group box with exclude characters
+msgid "Exclude characters"
+msgstr "文字を含めない"
+
+#. Character set builder, group box with tag/comment
+msgid "Tag/comment"
+msgstr "タグ／コメント"
+
+#. Character set builder, group box with resulting definition
 msgid "Resulting character set definition"
 msgstr "文字セット定義の結果"
 
+#. Character set builder, button
 msgid "Apply"
 msgstr "適用"
 
+#. Character set builder, check box
 msgid "Lower-case letters (a-z)"
-msgstr "1つ以上の小文字を含める (a-z)"
+msgstr "小文字を含める (a-z)"
 
+#. Character set builder, check box
 msgid "Upper-case letters (A-Z)"
-msgstr "1つ以上の大文字を含める (A-Z)"
+msgstr "大文字を含める (A-Z)"
 
+#. Character set builder, check box
 msgid "Digits (0-9)"
 msgstr "数字を含める (0-9)"
 
+#. Character set builder, check box
 msgid "Characters from range:"
-msgstr "文字の組み合わせ:"
+msgstr "文字の範囲:"
 
+#. Character set builder, check box
 msgid "Additional characters:"
-msgstr "追加:"
+msgstr "追加キャラクター:"
 
+#. Character set builder, check box
 msgid "At least"
 msgstr "少なくとも"
 
+#. Character set builder, edit box
 msgid "From:"
 msgstr "From:"
 
+#. Character set builder, edit box
 msgid "to:"
 msgstr "to:"
 
+#. Character set builder, error message
 msgid "Invalid character range."
-msgstr "文字の組み合わせが正しくありません。"
-
-#~ msgid "Generate password list to file"
-#~ msgstr "パスワード一覧のファイルを生成"
-
-#~ msgid "ERROR: Profile \"%s\" not found."
-#~ msgstr "エラー: プロファイル「%s」が見つかりません。"
-
-#~ msgid "Gigabytes"
-#~ msgstr "GB"
-
-#~ msgid "Terabytes"
-#~ msgstr "TB"
-
-#~ msgid "Left-click: Perform search, right-click: Search options"
-#~ msgstr "左クリック: 検索実行、右クリック: 検索オプション"
+msgstr "無効な文字範囲です。"

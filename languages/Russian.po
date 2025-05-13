@@ -313,33 +313,33 @@ msgstr "Использование:"
 
 #. Command line arguments
 msgid "Display this help message."
-msgstr "Показать этот справочный текст"
+msgstr "показать этот справочный текст"
 
 #. Command line arguments
 msgid "Do not write to disk unless explicitly requested."
-msgstr "Не записывать на диск, если не запрошено явно"
+msgstr "не записывать на диск, если не запрошено явно"
 
 #. Command line arguments
 msgid "Load profile named 'profilename' on start-up."
-msgstr "Загрузить профиль 'profilename' при запуске"
+msgstr "загрузить профиль 'profilename' при запуске"
 
 #. Command line arguments
 msgid ""
 "Generate 'number' of passwords and display on the console, then close "
 "application."
 msgstr ""
-"Сгенерировать 'number' паролей и показать в консоли, а затем закрыть "
+"сгенерировать 'number' паролей и показать в консоли, а затем закрыть "
 "программу"
 
 #. Command line arguments
 msgid "Launch application in the background."
-msgstr "Запустить программу в фоне"
+msgstr "запустить программу в фоне"
 
 #. Command line arguments
 msgid ""
 "Open database named 'filename' on start-up and show password manager window."
 msgstr ""
-"Открыть базу данных 'filename' при запуске и показать окно диспетчера паролей"
+"открыть базу данных 'filename' при запуске и показать окно диспетчера паролей"
 
 #. Main window, Clear Clipboard button tooltip
 msgid "Clear clipboard (text contents only)"
@@ -434,6 +434,10 @@ msgstr "Разрешить проверку паролей"
 #. Main window, Password box, context menu
 msgid "Change Font..."
 msgstr "Изменить шрифт..."
+
+#. Main window, Password box, context menu
+msgid "Reset Font"
+msgstr "Сбросить шрифт"
 
 #. Title of open dialog when selecting Main menu | Tools | Provide Additional Entropy | From File
 msgid "Select high-entropy file"
@@ -1498,7 +1502,7 @@ msgstr "Эта горячая клавиша уже занята."
 
 #. Configuration window, Security, Random pool cipher
 msgid "%s (%d-bit key, operates on %d-bit blocks)"
-msgstr "%s (ключ %d бит, блоки по %d бит)"
+msgstr "%s (%d-бит ключ, %d-бит блоки)"
 
 #. Configuration window, Security, Random pool cipher, Benchmark results
 msgid "Benchmark results (data size: %d MB):"
@@ -2437,8 +2441,8 @@ msgid "Change List Font..."
 msgstr "Изменить шрифт списка..."
 
 #. Password Manager window, main menu, View submenu
-msgid "Reset List Font"
-msgstr "Сбросить список шрифтов"
+msgid "Reset Fonts"
+msgstr "Сбросить шрифты"
 
 #. Password Manager window, main menu, View submenu
 msgid "Change Password Font..."
@@ -3037,6 +3041,10 @@ msgstr "Конструктор наборов символов"
 msgid "Character set selection"
 msgstr "Выбор набора символов"
 
+#. Character set builder, group box with exclude characters
+msgid "Exclude characters"
+msgstr "Исключаемые символы"
+
 #. Character set builder, group box with tag/comment
 msgid "Tag/comment"
 msgstr "Тег/комментарий"
@@ -3096,9 +3104,6 @@ msgstr "Неверный диапазон символов."
 
 #~ msgid "Left-click: Perform search, right-click: Search options"
 #~ msgstr "ЛКМ: найти, ПКМ: параметры поиска"
-
-#~ msgid "Reset Counters"
-#~ msgstr "Сброс счётчиков"
 
 #~ msgid "Generating passphrase ..."
 #~ msgstr "Создание парольной фразы..."
