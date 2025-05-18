@@ -1,4 +1,3 @@
-﻿# German translation of Password Tech 3.5.6
 # Released under the GNU General Public License
 #
 # !!! NOTE ON FORMAT STRINGS !!!
@@ -15,452 +14,458 @@
 # Password Tech is still compatible with the old format ("%d" for digits, "%f"
 # for floating point numbers, "%s" for strings, etc.), and the original strings
 # are still provided in the old format to avoid merge conflicts when updating
-# existing translations. 
-
-#. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
+# existing translations.
 msgid ""
 msgstr ""
 "Project-Id-Version: Password Tech 3.5.7\n"
-"Last-Translator: Atze\n"
-"Language: nl\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.6\n"
 
 #. Message box caption
 msgid "Info"
-msgstr "Info"
+msgstr "Bilgi"
 
 #. Message box caption
 msgid "Warning"
-msgstr "Waaschuwing"
+msgstr "Uyarı"
 
 #. Message box caption
 msgid "Question"
-msgstr "Vraag"
+msgstr "Soru"
 
 #. Message box caption
 msgid "Error"
-msgstr "Fout"
+msgstr "Hata"
 
 #. Main window, label attached to password profile drop-down list
 msgid "Profile:"
-msgstr "Profiel:"
+msgstr "Profil:"
 
 #. Main window, Settings groupbox
 msgid "Settings"
-msgstr "Instellingen"
+msgstr "Ayarlar"
 
 #. Main window, checkbox
 msgid "Include Characters (Pass*words*)"
-msgstr "Gebruik tekens (Wacht*woorden*)"
+msgstr "Karakterleri Dahil Et (Pass*words*)"
 
 #. Main window, Password length
 msgid "Length:"
-msgstr "Lengte:"
+msgstr "Uzunluk:"
 
 #. Main window, user-defined character set
 msgid "Character Set:"
-msgstr "Tekenset:"
+msgstr "Karakter Seti:"
 
 #. Main window, button to show currently loaded character set
 msgid "Show details"
-msgstr "Details weergeven"
+msgstr "Detayları göster"
 
 #. Main window, checkbox
 msgid "Include Words (Pass*phrases*)"
-msgstr "Woorden toevoegen (Wachtwoord*zinnen*)"
+msgstr "Kelimeleri Dahil Et (Pass*phrases*)"
 
 #. Main window, number of words from word list to generate
 msgid "Number:"
-msgstr "Nummer:"
+msgstr "Numara:"
 
 #. Main window, select word list file
 msgid "Word List File:"
-msgstr "Bestand met woordenlijst:"
+msgstr "Kelime Listesi Dosyası:"
 
 #. Main window, button to browse for word list file
 msgid "Browse"
-msgstr "Bladeren"
+msgstr "Gözat"
 
 #. Main window, specify length of passphrase (composed of words)
 msgid "Specify length*:"
-msgstr "Geef lengte op*:"
+msgstr "Uzunluğu belirtin*:"
 
 #. Main window, checkbox
 msgid "Combine Words with Characters"
-msgstr "Combineer woorden met tekens"
+msgstr "Kelimeleri Karakterlerle Birleştirme"
 
 #. Main window, checkbox
 msgid "Format password:"
-msgstr "Wachtwoord formaat:"
+msgstr "Şifreyi biçimlendirin:"
 
 #. Main window, checkbox, execute custom Lua script for password generation
 msgid "Run script:"
-msgstr "Script uitvoeren:"
+msgstr "Betiği çalıştır:"
 
 #. Main window, button to reload script file
 msgid "Reload script"
-msgstr "Script opnieuw laden"
+msgstr "Betiği yeniden yükle"
 
 #. Main window, label attached to input box for number of passwords
 msgid "Multiple passwords:"
-msgstr "Meerdere wachtwoorden"
+msgstr "Çoklu şifreler:"
 
 #. Main window, button to generate password
 msgid "Generate"
-msgstr "Genereren"
+msgstr "Oluştur"
 
 #. Main window, button to generate multiple passwords
 msgid "Generate to Clipboard"
-msgstr "Genereren naar Klembord"
+msgstr "Panoya Oluştur"
 
 #. Main window, button to generate multiple passwords
 msgid "Generate to File..."
-msgstr "Genereren naar Bestand..."
+msgstr "Dosyaya Oluştur..."
 
 #. Main window, button to access advanced password options
 msgid "Advanced"
-msgstr "Geavanceerd"
+msgstr "Gelişmiş"
 
 #. Main window, button to access advanced password options, tooltip
 msgid "%d option(s) active"
-msgstr "%d Optie(s) actief"
+msgstr "%d seçenek(ler) etkin"
 
 #. Main window, button to access advanced password options, dropdown menu
 msgid "Deactivate All Options"
-msgstr "Alle Opties Uitschakelen"
+msgstr "Tüm Seçenekleri Devre Dışı Bırak"
 
 #. Main window, button to access advanced password options, dropdown menu
 msgid "Deactivate All Starred (*) Options"
-msgstr "Alle Optiie met Ster (*) deactiveren"
+msgstr "Tüm Yıldızlı (*) Seçenekleri Devre Dışı Bırak"
 
 #. Main window, Generated Password groupbox
 msgid "Generated Password"
-msgstr "Gegenereerd wachtwoord"
+msgstr "Oluşturulan Şifre"
 
 #. Main window, label below password box
 msgid "Click on \"Generate\""
-msgstr "Klik op \"Genereren\""
+msgstr "\"Oluştur\" üzerine tıklayın"
 
 #. Main window, button to toggle password display (either display as-is or hide behind symbols)
 msgid "Hide/show password"
-msgstr "Wachtwoord verbergen/tonen"
+msgstr "Parolayı gizle/göster"
 
 #. Main window, password groupbox, tooltip of quality bar
 msgid "Hold left mouse button to drag & drop password"
-msgstr "Houd de linkermuisknop ingedrukt om het wachtwoord te slepen en neer te zetten"
+msgstr "Parolayı sürükleyip bırakmak için farenin sol tuşunu basılı tutun"
 
 #. Main menu, File submenu
 msgid "File"
-msgstr "Bestand"
+msgstr "Dosya"
 
 #. Main menu, File submenu, Profile for password generation
 msgid "Profile"
-msgstr "Profiel"
+msgstr "Profil"
 
 #. Main menu, File submenu, Profile submenu, Profile Editor
 msgid "Profile Editor..."
-msgstr "Profiel-editor..."
+msgstr "Profil Düzenleyici..."
 
 #. Main menu, File submenu, Exit program
 msgid "Exit"
-msgstr "Stoppen"
+msgstr "Çıkış"
 
-#. Main menu, Tools submenu 
+#. Main menu, Tools submenu
 msgid "Tools"
-msgstr "Hulpmiddelen"
+msgstr "Araçlar"
 
 #. Main window, Clear Clipboard button and menu item
 msgid "Clear Clipboard"
-msgstr "Klembord leegmaken"
+msgstr "Panoyu Temizle"
 
 #. Main window, Encrypt Clipboard button and menu item
 msgid "Encrypt Clipboard..."
-msgstr "Klembord versleutelen..."
+msgstr "Panoyu Şifrele..."
 
 #. Main window, Decrypt Clipboard button and menu item
 msgid "Decrypt Clipboard..."
-msgstr "Klembord decoderen..."
+msgstr "Pano Şifresini Çöz..."
 
 #. Main menu, Tools submenu
 msgid "Create Random Data File..."
-msgstr "Een bestand met willekeurige gegevens maken..."
+msgstr "Rastgele Veri Dosyası Oluştur..."
 
 #. Main menu, Tools submenu
 msgid "Create Trigram File..."
-msgstr "Trigrambestand maken..."
+msgstr "Trigram Dosyası Oluştur..."
 
 #. Main menu, Tools submenu
 msgid "MP Password Generator..."
-msgstr "MP-wachtwoordgenerator..."
+msgstr "MP Şifre Oluşturucu..."
 
 #. Main menu, Tools submenu
 msgid "Deterministic Random Generator"
-msgstr "Deterministische willekeurige generator"
+msgstr "Deterministik Rastgele Üreteç"
 
 #. Main menu, Tools submenu, Deterministic Random Generator submenu
 msgid "Reset"
-msgstr "Opnieuw instellen"
+msgstr "Sıfırla"
 
 #. Main menu, Tools submenu, Deterministic Random Generator submenu
 msgid "Deactivate"
-msgstr "Deactiveren"
+msgstr "Devre dışı bırak"
 
 #. Main menu, Tools submenu
 msgid "Provide Additional Entropy"
-msgstr "Zorg voor extra Entropie"
+msgstr "Ek Entropi Sağla"
 
 #. Main menu, Tools submenu, Provide Additional Entropy submenu
 msgid "As Text..."
-msgstr "Als Tekst..."
+msgstr "Metin olarak..."
 
 #. Main menu, Tools submenu, Provide Additional Entropy submenu
 msgid "From File..."
-msgstr "Van bestand..."
+msgstr "Dosyadan..."
 
 #. Main menu, Options submenu
 msgid "Options"
-msgstr "Opties"
+msgstr "Seçenekler"
 
 #. Main menu, Options submenu
 msgid "Configuration..."
-msgstr "Configuratie..."
+msgstr "Yapılandırma..."
 
 #. Configuration window, Language tab
 msgid "Language"
-msgstr "Taal"
+msgstr "Dil"
 
 #. Main menu, Options submenu
 msgid "Always on Top"
-msgstr "Venster altijd bovenop"
+msgstr "Her Zaman Üstte"
 
 #. Main menu, Options submenu
 msgid "Hide Entropy Progress"
-msgstr "Verberg entropievoortgang"
+msgstr "Entropi İlerlemesini Gizle"
 
 #. Main menu, Options submenu
 msgid "Save Settings on Exit"
-msgstr "Instellingen opslaan bij afsluiten"
+msgstr "Çıkışta Ayarları Kaydet"
 
 #. Main menu, Options submenu
 msgid "Save Settings Now"
-msgstr "Instellingen nu opslaan"
+msgstr "Ayarları Şimdi Kaydet"
 
 #. Main menu, Help submenu
 msgid "Help"
-msgstr "Hulp"
+msgstr "Yardım"
 
 #. Main window, Help button tooltip
 msgid "Open Manual"
-msgstr "Gebruikershandleiding Openen"
+msgstr "Kılavuzu Aç"
 
 msgid "Command Line Arguments..."
-msgstr "Opdrachtregel argumenten..."
+msgstr "Komut Satırı Argümanları..."
 
 #. Main menu, Help submenu
 msgid "Visit Website"
-msgstr "Website Bezoeken"
+msgstr "Web sitesini ziyaret edin"
 
 #. Main window, Help submenu
 msgid "Get Translations..."
-msgstr "Vertalingen downloaden..."
+msgstr "Çevirileri Alın..."
 
 #. Main window, Help submenu
 msgid "Donate..."
-msgstr "Doneren..."
+msgstr "Bağış..."
 
 #. Main window, Help submenu
 msgid "Check for Updates"
-msgstr "Controleer op updates"
+msgstr "Güncellemeleri Kontrol Edin"
 
 #. Main window, Help submenu
 msgid "Timer Info..."
-msgstr "Informatie over Timers..."
+msgstr "Zamanlayıcı Bilgisi..."
 
 #. Main window, Help submenu
 msgid "About %s..."
-msgstr "Over %s..."
+msgstr "%s Hakkında..."
 
 #. System tray context menu, Restore application
 msgid "Restore %s"
-msgstr "%s Herstellen"
+msgstr "%s'yi Geri Yükle"
 
 #. System tray context menu, Generate Password to clipboard
 msgid "Generate Password"
-msgstr "Wachtwoord Genereren"
+msgstr "Şifre Oluştur"
 
 #. System tray context menu, Generate Password and Show in message box
 msgid "Generate and Show Password..."
-msgstr "Wachtwoord Genereren en Weergeven..."
+msgstr "Parolayı Oluştur ve Göster..."
 
 #. System tray context menu, Generate Password and Autotype into other windows
 msgid "Generate and Autotype Password"
-msgstr "Genereer en Autotype Wachtwoord"
+msgstr "Parolayı Oluştur ve Otomatik Yaz"
 
 #. System tray context menu
 msgid "Open user manual"
-msgstr "Open de Gebruikershandleiding"
+msgstr "Kullanım kılavuzunu açın"
 
 #. Command line arguments
 msgid "Usage:"
-msgstr "Gebruik:"
+msgstr "Kullanım:"
 
 #. Command line arguments
 msgid "Display this help message."
-msgstr "Toon deze helptekst."
+msgstr "Bu yardım mesajını görüntüleyin."
 
 #. Command line arguments
 msgid "Do not write to disk unless explicitly requested."
-msgstr "Schrijf niet naar schijf tenzij expliciet aangevraagd."
+msgstr "Açıkça talep edilmedikçe diske yazmayın."
 
 #. Command line arguments
 msgid "Load profile named 'profilename' on start-up."
-msgstr "Laad profiel met naam 'profielnaam' bij opstarten."
+msgstr "Başlangıçta 'profilename' adlı profili yükleyin."
 
 #. Command line arguments
 msgid "Generate 'number' of passwords and display on the console, then close application."
-msgstr "Genereer 'aantal' wachtwoorden en geef ze weer op de console, sluit vervolgens het programma."
+msgstr "Parolaların 'sayısını' oluşturun ve konsolda görüntüleyin, ardından uygulamayı kapatın."
 
 #. Command line arguments
 msgid "Launch application in the background."
-msgstr "Start programma op de achtergrond."
+msgstr "Uygulamayı arka planda başlatın."
 
 #. Command line arguments
 msgid "Open database named 'filename' on start-up and show password manager window."
-msgstr "Open de database met de naam 'bestandsnaam' bij het opstarten en geef het wachtwoordbeheervenster weer."
+msgstr "Başlangıçta 'dosya adı' adlı veritabanını açın ve şifre yöneticisi penceresini gösterin."
 
 #. Main window, Clear Clipboard button tooltip
 msgid "Clear clipboard (text contents only)"
-msgstr "Klembord leegmaken (alleen tekstinhoud)"
+msgstr "Panoyu temizle (yalnızca metin içeriği)"
 
 #. Main window, Encrypt/Decrypt Clipboard button tooltip
 msgid "Clipboard text encryption (left-click) or decryption (right-click)"
-msgstr "Versleuteling (linkermuisklik) of ontsleuteling (rechtermuisklik) van de tekst in het klembord"
+msgstr "Pano metni şifreleme (sol tıklama) veya şifre çözme (sağ tıklama)"
 
 #. Main window, Profile Editor button tooltip
 msgid "Load, create or delete profiles"
-msgstr "Profielen laden, maken of verwijderen"
+msgstr "Profil yükleme, oluşturma veya silme"
 
 #. Main window, MP Password Generator button tooltip
 msgid "Generate passwords based on a master password"
-msgstr "Genereer wachtwoorden op basis van een hoofdwachtwoord"
+msgstr "Temel parolaya dayalı parolalar oluşturma"
 
 #. Main window, Configuration button tooltip
 msgid "Main configuration of the program"
-msgstr "Hoofdconfiguratie van het programma"
+msgstr "Programın ana yapılandırması"
 
 #. Open/Save dialogs, filter for All files (*.*)
 msgid "All files"
-msgstr "Alle Bestanden"
+msgstr "Tüm dosyalar"
 
 #. Open/Save dialogs, filter for Text files (*.txt)
 msgid "Text files"
-msgstr "Tekstbestanden"
+msgstr "Metin dosyaları"
 
 #. Open/Save dialogs, filter for Trigram files (*.tgm)
 msgid "Trigram files"
-msgstr "Trigram bestanden"
+msgstr "Trigram dosyaları"
 
 #. Open/Save dialogs, filter for Lua script files (*.lua)
 msgid "Lua scripts"
-msgstr "Lua scripts"
+msgstr "Lua betikleri"
 
 #. Various context menus, Undo last operation
 msgid "Undo"
-msgstr "Ongedaan maken"
+msgstr "Geri al"
 
 #. Various context menus, Cut selected text and copy to clipboard
 msgid "Cut"
-msgstr "Knippen"
+msgstr "Kes"
 
 #. Various context menus, Copy selected text to clipboard
 msgid "Copy"
-msgstr "Kopiëren"
+msgstr "Kopyala"
 
 #. Main window, Password box, context menu
 msgid "Encrypt && Copy"
-msgstr "Versleutelen en Kopiëren"
+msgstr "Şifrele && Kopyala"
 
 #. Variuos context menus, paste text from clipboard
 msgid "Paste"
-msgstr "Plakken"
+msgstr "Yapıştır"
 
-#. Main window, Password box, context menu 
+#. Main window, Password box, context menu
 msgid "Perform Autotype"
-msgstr "Autotype Uitvoeren"
+msgstr "Otoyazmayı gerçekleştirin"
 
 #. Main window, Password box, context menu
 msgid "Add to Database"
-msgstr "Toevoegen aan Database"
+msgstr "Veritabanına Ekle"
 
 #. Various context menus, Delete selected text
 msgid "Delete"
-msgstr "Verwijderen"
+msgstr "Sil"
 
 #. Various context menus, select entire text
 msgid "Select All"
-msgstr "Alles Selecteren"
+msgstr "Tümünü Seçin"
 
-#. Context menus of Character set, Word list file, Format password, and Run script drop-down lists: Clear history of list entries 
+#. Context menus of Character set, Word list file, Format password, and Run script drop-down lists: Clear history of list entries
 msgid "Clear List"
-msgstr "Lijst verwijderen"
+msgstr "Listeyi Temizle"
 
 #. Main window, context menus of Character set, Word list file, Format password, and Run script drop-down lists: Clear currently selected entry
 msgid "Remove Entry"
-msgstr "Verwijder Item"
+msgstr "Girişi Kaldır"
 
 #. Main window, Passowrd box, context menu, make box editable
 msgid "Editable"
-msgstr "Bewerkbaar"
+msgstr "Düzenlenebilir"
 
 #. Main window, Password box, context menu, enable automatic estimation of password quality when entering text
 msgid "Enable Password Testing"
-msgstr "Wachtwoordtesten Inschakelen"
+msgstr "Parola Testini Etkinleştir"
 
 #. Main window, Password box, context menu
 msgid "Change Font..."
-msgstr "Lettertype Wijzigen..."
+msgstr "Yazı Tipini Değiştir..."
 
 #. Main window, Password box, context menu
 msgid "Reset Font"
-msgstr "Lettertype resetten"
+msgstr "Yazı Tipini Sıfırla"
 
 #. Title of open dialog when selecting Main menu | Tools | Provide Additional Entropy | From File
 msgid "Select high-entropy file"
-msgstr "Selecteer bestand met hoge Entropie"
+msgstr "Yüksek entropili dosya seçin"
 
 #. Main window, Password Database button tooltip
 msgid "Manage passwords in encrypted databases"
-msgstr "Wachtwoordbeheerder met gecodeerde databases"
+msgstr "Şifreli veritabanlarda parolaları yönetin"
 
 #. Main window, Reload Profile button tooltip
 msgid "Reload profile"
-msgstr "Profiel opnieuw laden"
+msgstr "Profili yeniden yükle"
 
 #. Main window, Add Profile button tooltip
 msgid "Add profile"
-msgstr "Profiel toevoegen"
+msgstr "Profil ekle"
 
 #. Main menu, Tools submenu, Deterministic Random Generator submenu
 msgid "Set up..."
-msgstr "Instellen..."
+msgstr "Kurulum..."
 
 #. Main menu, File submenu
 msgid "Password Manager..."
-msgstr "Wachtwoordbeheerder..."
+msgstr "Şifre Yöneticisi..."
 
 #. Main menu, Help submenu
 msgid "Enter Donor Key..."
-msgstr "Voer Donorsleutel in..."
+msgstr "Bağışçı Anahtarını Girin..."
 
 #. System tray context menu
 msgid "Reset All Window Positions"
-msgstr "Alle vensters opnieuw rangschikken"
+msgstr "Tüm Pencere Konumlarını Sıfırla"
 
 #. Message shown when randseed.dat could not be read
 msgid ""
 "Could not read random seed file\n"
 "\"%s\"."
 msgstr ""
-"Fout bij het lezen van het willekeurige seed-bestand\n"
+"Rastgele çekirdek dosyası okunamadı\n"
 "\"%s\"."
 
 #. Message shown when writing randseed.dat failed
@@ -468,7 +473,7 @@ msgid ""
 "Could not write to random seed file\n"
 "\"%s\"."
 msgstr ""
-"Fout bij het schrijven van willekeurig seed-bestand\n"
+"Rastgele tohum dosyasına yazılamadı.\n"
 "\"%s\"."
 
 #. List of unknown command line parameters (when the application is run from the command line)
@@ -476,7 +481,7 @@ msgid ""
 "Unknown command line switch(es):\n"
 "%s"
 msgstr ""
-"Onbekende opdrachtregel-schakelaar(s):\n"
+"Bilinmeyen komut satırı anahtarı(ları):\n"
 "%s"
 
 #. Message shown when word list could not be loaded
@@ -484,109 +489,108 @@ msgid ""
 "Error while loading word list file\n"
 "\"%s\"."
 msgstr ""
-"Fout bij het laden van het woordenlijstbestand\n"
-"\"%s\"."
+"Kelime listesi dosyası yüklenirken hata oluştu. \n"
+"%s."
 
 #. Message shown when passwords from common_passwords.txt could not be loaded
 msgid ""
 "Error while loading list of common passwords:\n"
 "%s."
 msgstr ""
-"Fout bij het laden van de lijst met veelvoorkomende wachtwoorden:\n"
+"Error while loading list of common passwords:\n"
 "%s."
 
 #. List of errors that occurred during startup phase of the application
 msgid "%s encountered %d error(s) during startup:"
-msgstr "%d fout(en) zijn opgetreden tijdens het starten van %s:"
+msgstr "%s, başlatma sırasında %d hata ile karşılaştı:"
 
 #. Reminder to make a donation, shown with a certain frequency on startup
 msgid ""
 "If you like %s, please consider\n"
 "making a donation. Thank you!"
 msgstr ""
-"Als je %s leuk vindt, overweeg dan een\n"
-"Donatie. Dank u wel"
+"Eğer %s'yi beğendiyseniz, lütfen bir bağış \n"
+" yapmayı düşünün. Teşekkür ederiz!"
 
 #. Message shown when selected character set is invalid
 msgid "Character set \"%s\" is invalid."
-msgstr "Tekenset \"%s\" is ongeldig."
+msgstr "\"%s\" karakter seti geçersizdir."
 
 #. Message shown when configuration file could not be written
 msgid ""
 "Error while writing to configuration file:\n"
 "%s."
 msgstr ""
-"Fout bij het schrijven van het configuratiebestand:\n"
+"Yapılandırma dosyasına yazarken hata oluştu:\n"
 "%s."
 
 #. Information about selected character set (number N of unique characters and entropy bits (=log2(N)) per character)
 msgid "%d characters / %.1f bits per character"
-msgstr "%d tekens / %.1f bits per teken"
+msgstr "%d karakter / %.1f bit her karakter başına"
 
-#. Information about selected word list file (number N of unique words and entropy bits (=log2(N)) per word) 
+#. Information about selected word list file (number N of unique words and entropy bits (=log2(N)) per word)
 msgid "%d words / %.1f bits per word"
-msgstr "%d woorden / %.1f bits per woord"
+msgstr "%d words / %.1f bits per word"
 
 #. Message shown when selected trigram file could not be read
 msgid "Could not open trigram file."
-msgstr "Kan trigrambestand niet openen."
+msgstr "Trigram dosyası açılamadı."
 
 #. Message shown when selected trigram file has an invalid format
 msgid "Invalid trigram file."
-msgstr "Ongeldig trigrambestand."
+msgstr "Geçersiz trigram dosyası."
 
 #. Main window, Generated Password groupbox, label below Password box, tooltip shown when generated or entered password matches a common password
 msgid "Matches common password!"
-msgstr "Komt overeen met een algemeen Wachtwoord!"
+msgstr "Yaygın parola ile eşleşiyor!"
 
-#. Encrypt Clipboard, message shown when text has been encrypted successfully 
+#. Encrypt Clipboard, message shown when text has been encrypted successfully
 msgid "Text successfully encrypted."
-msgstr "Tekst succesvol versleuteld."
+msgstr "Metin başarıyla şifrelendi."
 
-#. Decrypt Clipboard, message shown when text has been decrypted successfully 
+#. Decrypt Clipboard, message shown when text has been decrypted successfully
 msgid "Text successfully decrypted."
-msgstr "Tekst succesvol gedecodeerd."
+msgstr "Metnin başarıyla şifresi çözüldü."
 
 #. Encrypt/Decrypt Clipboard, message shown when clipboard could not be opened
 msgid "Could not open clipboard."
-msgstr "Kon klembord niet openen."
+msgstr "Pano açılamadı."
 
 #. Encrypt/Decrypt Clipboard, message shown when contained text is too long
 msgid "The text to be encrypted is too long."
-msgstr "De te versleutelen tekst is te lang."
+msgstr "Şifrelenecek metin çok uzun."
 
 #. Encrypt/Decrypt Clipboard, message shown when clipboard is empty
 msgid "No text available to process."
-msgstr "Geen tekst beschikbaar voor verwerking."
+msgstr "İşlenecek metin mevcut değil."
 
 #. Encrypt/Decrypt Clipboard, message shown when out of memory
 msgid ""
 "Not enough memory available to perform\n"
 "the operation. Try to use a shorter text."
 msgstr ""
-"Niet genoeg geheugen beschikbaar om de\n"
-"te ondersteunenuit te voeren. Probeer het\n"
-"met een kortere tekst."
+"İşlemi gerçekleştirecek yeterli bellek mevcut değil. \n"
+"Daha kısa bir metin kullanmayı deneyin."
 
 #. Decrypt Clipboard, message shown when decryption failed
 msgid ""
 "Decryption failed. This may be attributed\n"
 "to the following reasons:"
 msgstr ""
-"Decodering mislukt. Mogelijke\n"
-"redenen hiervoor zijn:"
+"Şifre çözme başarısız oldu. Bu, aşağıdaki \n"
+"nedenlerden kaynaklanıyor olabilir:"
 
 #. Decrypt Clipboard, possible reason for failure
 msgid "- You entered a wrong password."
-msgstr "- U hebt een onjuist wachtwoord ingevoerd."
+msgstr "- Yanlış parola girdiniz."
 
 #. Decrypt Clipboard, possible reason for failure
 msgid ""
 "- The text is corrupted.\n"
 "- The text is not encrypted."
 msgstr ""
-"- De tekst is onjuist.\n"
-"- De tekst is niet gecodeerd."
+"Metin bozulmuş. \n"
+"Metin şifrelenmemiş."
 
 #. Decrypt Clipboard, message shown when decompression failed
 msgid ""
@@ -594,21 +598,21 @@ msgid ""
 "Decryption successful, but decompression\n"
 "failed."
 msgstr ""
-"Dit had niet mogen gebeuren:\n"
-"Decodering succesvol, maar\n"
-"Decompressie mislukt."
+"Bu olmamalıydı:\n"
+"Şifre çözme başarılı, ancak sıkıştırma açma\n"
+" başarısız oldu."
 
 #. Message shown when certain hot key(s) could not be registered
 msgid "Could not register the following hot keys:"
-msgstr "De volgende sneltoetsen konden niet worden geregistreerd:"
+msgstr "Aşağıdaki kısayol tuşları kaydedilemedi:"
 
 #. Main window, Generate password list, message shown when specified number of passwords is invalid
 msgid ""
 "Invalid number of passwords.\n"
 "Allowed range is %d-%d."
 msgstr ""
-"Ongeldig aantal wachtwoorden.\n"
-"Toegestane bereik van waarden is %d-%d."
+"Geçersiz parola sayısı.\n"
+"İzin verilen aralık %d-%d."
 
 #. Main window, Generate password list to file, message shown when selected file already exists
 msgid ""
@@ -621,18 +625,18 @@ msgid ""
 "No -> overwrite file,\n"
 "Cancel -> cancel process."
 msgstr ""
-"Het geselecteerde bestand bestaat al.\n"
-"Wilt u wachtwoorden toevoegen aan het bestand\n"
-"(bestaande wachtwoorden blijven intact),\n"
-"of wilt u het bestand volledig overschrijven?\n"
+"Seçilen dosya zaten mevcut. Bu dosyaya\n"
+"parolaları eklemek ister misiniz?\n"
+"(mevcut parolalar korunacaktır),\n"
+"yoksa tamamen üzerine mi yazmak istersiniz?\n"
 "\n"
-"Ja -> Wachtwoorden toevoegen,\n"
-"Nee -> bestand overschrijven,\n"
-"Annuleren -> Proces Annuleren."
+"Evet -> parolaları ekle,\n"
+"Hayır -> dosyayı üzerine yaz,\n"
+"İptal -> işlemi iptal et."
 
 #. Main window, Include Passphrase, Specify Length, message shown when specified length range is invalid
 msgid "Passphrase: Invalid length range."
-msgstr "Wachtwoordzin: Ongeldig lengtebereik."
+msgstr "Parola: Geçersiz uzunluk aralığı."
 
 #. Message shown for a certain configuration of password settings
 msgid ""
@@ -640,9 +644,9 @@ msgid ""
 "only once\" is activated, the password length\n"
 "is limited to %d unique characters."
 msgstr ""
-"Als de optie \"Elk teken mag slechts één keer\"\n"
-"voorkomen is geactiveerd, is de lengte van het wachtwoord\n"
-"beperkt tot %d unieke tekens."
+"\"Eğer 'Her karakter yalnızca bir kez yer almalı' \n"
+"seçeneği etkinleştirilmişse, parola uzunluğu\n"
+" %d benzersiz karakterle sınırlıdır.\"."
 
 #. Message shown for a certain configuration of passphrase settings
 msgid ""
@@ -650,62 +654,61 @@ msgid ""
 "once\" is activated, the number of words\n"
 "is limited to the size of the word list (%d)."
 msgstr ""
-"Als de optie \"Elk woord mag maar één keer\"\n"
-"voorkomen is geactiveerd, is het aantal woorden\n"
-"beperkt tot de grootte van de woordenlijst (%d)."
+"\"'Her kelime yalnızca bir kez yer almalı' seçeneği \n"
+"etkinleştirilmişse, kelime sayısı kelime listesinin \n"
+"boyutuyla (%d) sınırlıdır.\"."
 
 #. Message shown when selected script file could not be loaded
 msgid ""
 "Error while loading script:\n"
 "%s."
 msgstr ""
-"Fout bij het laden van script:\n"
+"Betik yüklenirken hata oluştu:\n"
 "%s."
 
 #. Title of Progress window when generating a single password
 msgid "Generating password"
-msgstr "Wachtwoord genereren"
+msgstr "Parola oluşturuluyor"
 
 #. Title of Progress window when generating password list
 msgid "Generating password list"
-msgstr "Wachtwoordlijst genereren"
+msgstr "Parola listesi oluşturuluyor"
 
 #. Progress info when generating password list
 msgid "%d of %d passwords generated."
-msgstr "%d van %d Wachtwoorden gegenereerd."
+msgstr "%d / %d parolası oluşturuldu."
 
 #. Formatted password, Include Characters/Words selected, but format specifier "P" not found in format string
 msgid "\"P\" is not specified"
-msgstr "\"P\" is niet gespecificeerd"
+msgstr "\"P\" belirtilmemiş"
 
 #. Formatted password, format specifier "P" contained in format string, but no password available to insert
 msgid "Password not available"
-msgstr "Wachtwoord niet beschikbaar"
+msgstr "Parola mevcut değil"
 
 #. Formatted password, format specifier "P" contained in format string, but password cannot be fully inserted
 msgid "Password too long"
-msgstr "Wachtwoord te lang"
+msgstr "Parola çok uzun"
 
 #. Formatted password, format string contains unknown specifier
 msgid "%d invalid format specifier(s): %s"
-msgstr "%d ongeldige opmaakspecificatie(s): %s"
+msgstr "%d geçersiz biçim belirleyicisi: %s"
 
 #. Run script, executing Lua script
 msgid "Executing script"
-msgstr "Script uitvoeren"
+msgstr "Betik çalıştırılıyor"
 
 #. Run script, waiting for response
 msgid "Waiting for script ..."
-msgstr "Wachten op script ..."
+msgstr "Betik bekleniyor..."
 
 #. Run script, message shown when execution was cancelled
 msgid ""
 "Script thread was terminated forcibly.\n"
 "Please check script for infinite loops."
 msgstr ""
-"Beëindiging van scriptthread is geforceerd.\n"
-"Controleer het script voor\n"
-"Eindeloze lussen."
+"Komut dosyası iş parçacığı zorla sonlandırıldı.\n"
+"Komut dosyasında sonsuz döngü olup olmadığını kontrol edin."
 
 #. Generate password list, message shown when list size is about to exceed internal limit
 msgid ""
@@ -713,9 +716,9 @@ msgid ""
 "the internal memory limit.\n"
 "Please reduce the number of passwords"
 msgstr ""
-"De geschatte grootte van de lijst zal waarschijnlijk\n"
-"de interne geheugenlimiet overschrijden.\n"
-"Verminder het aantal wachtwoorden"
+"Tahmini liste boyutu muhtemelen\n"
+"dahili bellek sınırını aşacaktır.\n"
+"Lütfen şifre sayısını azaltın"
 
 #. Generate password list, message shown when list size has exceeded internal limit
 msgid ""
@@ -725,14 +728,15 @@ msgid ""
 "The number of passwords has been\n"
 "reduced to %d."
 msgstr ""
-"De opslaglimiet voor de wachtwoordlijst is\n"
-"overschreden.\n"
+"Şifre listesinin bellek sınırı\n"
+"dolu.\n"
 "\n"
-"Het aantal wachtwoorden is teruggebracht tot %d."
+"Şifre sayısı\n"
+"%d'ye indirildi."
 
 #. Generate password list, number of generated passwords
 msgid "%d passwords generated."
-msgstr "%d wachtwoorden gegenereerd."
+msgstr "%d şifre oluşturuldu."
 
 #. Generate password list, info about passwords
 msgid ""
@@ -740,21 +744,21 @@ msgid ""
 "Entropy of the first password: %d bits.\r\n"
 "Maximum entropy of the entire list: %d bits."
 msgstr ""
-"%d wachtwoorden gegenereerd.\r\n"
-"Entropie van het eerste wachtwoord: %d bits.\r\n"
-"Maximale entropie van de gehele lijst: %d bits."
+"%d şifre oluşturuldu.\r\n"
+"İlk şifrenin entropisi: %d bit.\r\n"
+"Tüm listenin maksimum entropisi: %d bit."
 
 #. Generate password to clipboard
 msgid "Password copied to clipboard."
-msgstr "Wachtwoord naar klembord gekopieerd."
+msgstr "Şifre panoya kopyalandı."
 
 #. Generate password list, copy list to UI
 msgid "Copying password list ..."
-msgstr "Kopieer wachtwoordlijst ..."
+msgstr "Şifre listesi kopyalanıyor..."
 
 #. Generate password list to clipboard
 msgid "Password list copied to clipboard."
-msgstr "Wachtwoordlijst gekopieerd naar klembord."
+msgstr "Şifre listesi panoya kopyalandı."
 
 #. Generate password list to file
 msgid ""
@@ -762,17 +766,16 @@ msgid ""
 "\n"
 "%d passwords written."
 msgstr ""
-"Bestand \"%s\" succesvol aangemaakt.\n"
+"“%s” dosyası başarıyla oluşturuldu.\n"
 "\n"
-"%d wachtwoorden geschreven."
+"%d şifre yazıldı."
 
 #. Generate password, error message
 msgid ""
 "An error has occurred during password generation:\n"
 "%s."
 msgstr ""
-"Er is een fout opgetreden tijdens het genereren\n"
-"van het wachtwoord:\n"
+"Şifre oluşturulurken bir hata oluştu:\n"
 "%s."
 
 #. Generate password, error message
@@ -781,33 +784,33 @@ msgid ""
 "process the password data:\n"
 "%s."
 msgstr ""
-"Bij het proberen om wachtwoordgegevens te verzenden\n"
-"is er een fout opgetreden:\n"
-"%s."
+"Şifre verilerini göndermeye/işlemeye çalışırken bir hata oluştu:\n"
+"%s.\n"
+"."
 
 #. Generate password, error message, additional info when generating passwords to file
 msgid "%d passwords written to file \"%s\"."
-msgstr "%d Wachtwoorden naar bestand \"%s\ geschreven"."
+msgstr "%d şifre “%s” dosyasına yazıldı."
 
 #. Include characters, info about character set
 msgid "%d bits / %d characters"
-msgstr "%d Bits / %d Tekens"
+msgstr "%d bit / %d karakter"
 
 #. Include characters, error message shown when character set is invalid
 msgid "Invalid character set."
-msgstr "Ongeldige karakterset."
+msgstr "Geçersiz karakter kümesi."
 
 #. Include characters, phonetic passwords, info about trigrams
 msgid "default (English) trigrams"
-msgstr "Standaard-Trigram (Engels)"
+msgstr "varsayılan (İngilizce) üçlü gruplar"
 
 #. Include characters, info about character set where a particular number of characters is desired for certain subsets
 msgid "(with different frequencies)"
-msgstr "(met verschillende frequenties)"
+msgstr "(farklı sıklıklarla)"
 
 #. Data loaded from file
 msgid "File \"%s\""
-msgstr "Bestand \"%s\""
+msgstr "Dosya “%s”"
 
 #. Include characters, info about phonetic passwords
 msgid ""
@@ -815,8 +818,8 @@ msgid ""
 "from the following source:\n"
 "<%s>)"
 msgstr ""
-"(fonetisch, gebaseerd op trigram frequenties\n"
-"uit de volgende bron:\n"
+"(fonetik, aşağıdaki kaynaktan alınan trigram sıklıklarına göre\n"
+":\n"
 "<%s>)"
 
 #. Include characters, more detailed error message
@@ -824,24 +827,24 @@ msgid ""
 "The character set you entered is invalid.\n"
 "It must contain at least 2 different characters."
 msgstr ""
-"De door u ingevoerde tekenset is ongeldig.\n"
-"Het moet minimaal 2 verschillende tekens bevatten."
+"Girdiğiniz karakter kümesi geçersiz.\n"
+"En az 2 farklı karakter içermelidir."
 
 #. Include characters, info about currently loaded character set
 msgid "Currently loaded character set:"
-msgstr "Momenteel geladen karakterset:"
+msgstr "Şu anda yüklü karakter kümesi:"
 
 #. Include words, error message shown when word list file could not be opened
 msgid "Could not open file."
-msgstr "Kan bestand niet openen."
+msgstr "Dosya açılamadı."
 
 #. Include words, error message shown when word list does not contain enough words
 msgid "Not enough valid words."
-msgstr "Niet genoeg geldige woorden."
+msgstr "Yeterli geçerli kelime yok."
 
 #. Include words, title of file selection dialog
 msgid "Select word list file"
-msgstr "Selecteer bestand met woordenlijst"
+msgstr "Kelime listesi dosyasını seçin"
 
 #. Include words, more detailed error message
 msgid ""
@@ -849,29 +852,29 @@ msgid ""
 "\"%s\":\n"
 "%s"
 msgstr ""
-"Fout bij het laden van bestand\n"
-"\"%s\":\n"
+"Dosya yüklenirken hata oluştu.\n"
+"“%s”:\n"
 "%s"
 
 #. Include words, info about default word list
 msgid "default (English) word list"
-msgstr "Standaardwoordenlijst (Engels)"
+msgstr "varsayılan (İngilizce) kelime listesi"
 
 #. Include words, info about currently loaded word list
 msgid "Currently loaded word list:"
-msgstr "Momenteel geladen woordenlijst:"
+msgstr "Şu anda yüklü kelime listesi:"
 
 #. Include words, info about currently loaded word list
 msgid "First word:"
-msgstr "Eerste woord:"
+msgstr "İlk kelime:"
 
 #. Include words, info about currently loaded word list
 msgid "Random word:"
-msgstr "Willekeurig woord:"
+msgstr "Rastgele kelime:"
 
 #. Include words, info about currently loaded word list
 msgid "Last word:"
-msgstr "Laatste woord:"
+msgstr "Son kelime:"
 
 #. Configuration, warning message shown when version of selected language is not compatible (lower) with program version
 msgid ""
@@ -882,12 +885,12 @@ msgid ""
 "\n"
 "Do you want to use it anyway?"
 msgstr ""
-"De versie van deze taal (%s) is niet\n"
-"compatibel met deze programmaversie.\n"
-"Deze versie van %s vereist een\n"
-"Taalversie van ten minste. %s.\n"
+"Bu dilin sürümü (%s) bu program sürümüyle\n"
+"uyumlu değildir.\n"
+"Bu %s sürümü için en az %s sürümüne sahip bir dil\n"
+"sürümü gereklidir.\n"
 "\n"
-"Wil je het nog steeds gebruiken??"
+"Yine de kullanmak istiyor musunuz?"
 
 #. Configuration, warning message shown when version of selected language is not compatible (higher) with program version
 msgid ""
@@ -897,11 +900,11 @@ msgid ""
 "\n"
 "Do you want to use it anyway?"
 msgstr ""
-"De versie van deze taal (%s) is hoger\n"
-"dan de versie van dit programma (%s).\n"
-"Daarom kunnen er versie-incompatibiliteiten optreden.\n"
+"Bu dilin sürümü (%s),\n"
+"bu programın sürümünden (%s) daha yenidir.\n"
+"Bu nedenle, sürüm uyumsuzlukları yaşanabilir.\n"
 "\n"
-"Wil je het nog steeds gebruiken??"
+"Yine de kullanmak ister misiniz?"
 
 #. Configuration, message shown when selecting language
 msgid ""
@@ -910,10 +913,10 @@ msgid ""
 "\n"
 "Do you want to restart now?"
 msgstr ""
-"Het programma moet opnieuw worden gestart,\n"
-"zodat de veranderingen effect hebben.\n"
+"Değişikliklerin etkili olması için programın yeniden başlatılması gerekiyor.\n"
 "\n"
-"Wilt u nu opnieuw opstarten?"
+"\n"
+"Şimdi yeniden başlatmak istiyor musunuz?"
 
 #. Generate password and show it in a message box, message shown when password is too long
 msgid ""
@@ -922,10 +925,10 @@ msgid ""
 "\n"
 "It has been copied to the clipboard."
 msgstr ""
-"Wachtwoord is te lang om te tonen in een\n"
-"berichtvak zoals dit.\n"
+"Şifre, bu tür bir mesaj kutusunda gösterilemeyecek kadar uzundur.\n"
 "\n"
-"Het is gekopieerd naar het klembord."
+"\n"
+"Klip panosuna kopyalandı."
 
 #. Generate password and show it in a message box
 msgid ""
@@ -939,27 +942,27 @@ msgid ""
 "No -> generate new password,\n"
 "Cancel -> cancel process."
 msgstr ""
-"Het gegenereerde wachtwoord is:\n"
+"Oluşturulan şifre:\n"
 "\n"
 "%s\n"
 "\n"
-"De geschatte veiligheid is %d Bits.\n"
+"Tahmini güvenlik %d bit.\n"
 "\n"
-"Ja -> Wachtwoord naar klembord kopiëren,\n"
-"Nee -> nieuw wachtwoord genereren,\n"
-"Annuleren -> Het Proces annuleren."
+"Evet -> şifreyi panoya kopyala,\n"
+"Hayır -> yeni şifre oluştur,\n"
+"İptal -> işlemi iptal et."
 
 #. Context menu of drop-down lists in main window, menu item "Clear List"
 msgid ""
 "All entries will be removed from the list.\n"
 "Are you sure?"
 msgstr ""
-"Alle vermeldingen worden uit de lijst verwijderd.\n"
-"Weet je het zeker?"
+"Tüm girişler listeden silinecektir.\n"
+"Emin misiniz?"
 
 #. Main menu, Help submenu
 msgid "Total Entropy Bits: %d"
-msgstr "Totaal aantal entropiebits: %d"
+msgstr "Toplam Entropi Bitleri: %d"
 
 #. Main menu, Help submenu, info about high-resolution timer
 msgid ""
@@ -968,594 +971,615 @@ msgid ""
 "\n"
 "Current value: %s."
 msgstr ""
-"Hoge-resolutie timer gebruikt:\n"
-"%s\n"
+"Kullanılan yüksek çözünürlüklü zamanlayıcı:\n"
+"%s.\n"
 "\n"
-"Huidige waarde: %s."
+"Mevcut değer: %s."
 
 #. Check for updates, message shown when version file could not be downloaded
 msgid "Could not download version file"
-msgstr "Kon versiebestand niet downloaden"
+msgstr "Sürüm dosyası indirilemedi"
 
 #. Check for updates, message shown when version file cannot be parsed due to missing information or unknown format
 msgid "Version or URL not specified in version file, or unknown file format"
-msgstr "Versie of URL niet gespecificeerd in versiebestand, of onbekende indeling van versiebestand"
+msgstr "Sürüm dosyasında sürüm veya URL belirtilmemiş veya dosya biçimi bilinmiyor"
 
 #. Check for updates, message shown when a new version is available
 msgid ""
 "A new version (%s) of %s is available!\n"
 "Do you want to visit the download page now?"
 msgstr ""
-"Er is een nieuwe versie (%s) van %s beschikbaar!\n"
-"Wilt u nu naar de downloadpagina gaan??"
+"%s'nin yeni bir sürümü (%s) mevcut!\n"
+"Şimdi indirme sayfasına gitmek ister misiniz?"
 
 #. Check for updates, additional info about new version
 msgid "(NOTE: %s)"
-msgstr "(KENNISGEVING: %s)"
+msgstr "(NOT: %s)"
 
 #. Check for updates, message shown when there's no new version to download
 msgid "Your version of %s is up-to-date."
-msgstr "Uw versie van %s is up-to-date."
+msgstr "%s sürümünüz günceldir."
 
 #. Check for updates, general error message
 msgid ""
 "Error while checking for updates:\n"
 "%s."
 msgstr ""
-"Fout bij het controleren op updates:\n"
+"Güncellemeleri kontrol ederken hata oluştu:\n"
 "%s."
 
 #. Main window, info shown in window title when using deterministic random generator
 msgid "WARNING: Random generator is deterministic (press F7 to deactivate)!"
-msgstr "WAARSCHUWING: De willekeurige generator is deterministisch (F7 om uit te schakelen)!"
+msgstr "UYARI: Rastgele üreteci belirleyicidir (devre dışı bırakmak için F7 tuşuna basın)!"
 
 #. Message shown after clearing clipboard
 msgid "Clipboard cleared."
-msgstr "Klembord gewist."
+msgstr "Pano temizlendi."
 
 #. Message shown after loading profile
 msgid "Profile \"%s\" activated."
-msgstr "Profiel \"%s\" geactiveerd."
+msgstr "“%s” profili etkinleştirildi."
 
 #. Message shown after activating deterministic random generator
 msgid "Deterministic random generator has been ACTIVATED."
-msgstr "Deterministische willekeurige getallengenerator INGESCHAKELD."
+msgstr "Deterministik rastgele üreteci ETKİNLEŞTİRİLDİ."
 
 #. Message shown after resetting deterministic random generator
 msgid "Deterministic random generator has been RESET."
-msgstr "Deterministische willekeurige generator is GERESET."
+msgstr "Deterministik rastgele üreteci SIFIRLANDI."
 
 #. Message shown after deactivating deterministic random generator
 msgid "Deterministic random generator has been DEACTIVATED."
-msgstr "Deterministische willekeurige getallengenerator UITGESCHAKELD."
+msgstr "Deterministik rastgele üreteci DEVRE DIŞI BIRAKILDI."
 
 #. Message shown on command line if profile was specified in command line parameters
 msgid "Selected profile \"%s\"."
-msgstr "Profiel \"%s\" geselecteerd."
+msgstr "Seçilen profil “%s”."
 
 #. Message shown on command line if password generation was requested
 msgid "Generating %d password(s) ..."
-msgstr "Genereer van %d wachtwoorden ..."
+msgstr "%d şifre oluşturuluyor..."
 
 #. Message shown during startup if password generation was requested but program is not run from console
 msgid ""
 "Command line function \"gen\" is only effective\n"
 "when %s is run from the console."
 msgstr ""
-"De opdrachtregelfunctie \"gen\" is alleen effectief,\n"
-"wanneer %s wordt gestart vanaf de console."
+"Komut satırı işlevi “gen” yalnızca\n"
+"%s konsoldan çalıştırıldığında etkilidir."
 
 #. Message shown when donor key has expired
 msgid ""
 "Your donor key has expired: The maximum\n"
 "number of updates has been reached."
 msgstr ""
-"Uw donorsleutel is verlopen:\n"
-"Het maximale aantal updates is bereikt."
+"Bağış anahtarınızın süresi doldu: Maksimum\n"
+"güncelleme sayısına ulaşıldı."
 
 #. Message shown when donor key is invalid
 msgid "Donor key is invalid."
-msgstr "Donor sleutel is ongeldig."
+msgstr "Bağış anahtarı geçersiz."
 
 #. Main menu, Help submenu, Enter Donor Key, title of input window
 msgid "Donor Key"
-msgstr "Donor Sleutel"
+msgstr "Bağış Anahtarı"
 
 #. Main menu, Help submenu, Enter Donor Key, caption of input box
 msgid "Enter donor key:"
-msgstr "Voer donorsleutel in:"
+msgstr "Bağış anahtarını girin:"
 
 #. Message shown after entering valid donor key
 msgid ""
 "Your Donor ID is: %s\n"
 "Supported number of updates: %s"
 msgstr ""
-"Uw donor-ID is: %s\n"
-"Ondersteund aantal updates: %s"
+"Bağışçı kimlik numaranız: %s\n"
+"Desteklenen güncelleme sayısı: %s"
 
 #. Donor key, unlimited number of updates ("Donor Pro")
 msgid "Unlimited"
-msgstr "Onbeperkt"
+msgstr "Sınırsız"
 
 #. Message shown after entering valid donor key
 msgid "Thank you for your support!"
-msgstr "Bedankt voor uw steun!"
+msgstr "Desteğiniz için teşekkür ederiz!"
 
 #. Message shown after entering valid donor key
 msgid "Copy this information to the clipboard?"
-msgstr "Deze informatie naar het klembord kopiëren?"
+msgstr "Bu bilgileri panoya kopyalamak ister misiniz?"
 
 #. Message shown after entering donor key that has expired
 msgid "Donor key has expired."
-msgstr "Donorsleutel is verlopen."
+msgstr "Bağış anahtarı süresi doldu."
 
 #. Main menu, Options submenu, Save Settings Now, message shown after saving settings
 msgid "Settings saved."
-msgstr "Instellingen opgeslagen."
+msgstr "Ayarlar kaydedildi."
 
 #. Main window, password box, context menu, Save As File, title of save dialog
 msgid "Save password"
-msgstr "Wachtwoord opslaan"
+msgstr "Şifreyi kaydet"
 
 #. Main menu, Options submenu, Clear Password Cache, only enabled if "Remember password" functionality has been activated in "Enter password" dialog
 msgid "Clear Password Cache"
-msgstr "Wachtwoordcache wissen"
+msgstr "Şifre önbelleğini temizle"
 
 #. Message shown after clearing password cache
 msgid "Password cache cleared."
-msgstr "Wachtwoordcache gewist."
+msgstr "Şifre önbelleği temizlendi."
 
 #. Main window, Run script, browse button, title of open dialog
 msgid "Select Lua script file"
-msgstr "Selecteer Lua-scriptbestand"
+msgstr "Lua komut dosyasını seçin"
 
 #. Main window, exit program, title of progress window that is shown when threads besides main thread are still running
 msgid "Waiting for active threads to finish ..."
-msgstr "Wacht tot de actieve threads klaar zijn ..."
+msgstr "Etkin iş parçacıklarının bitmesini bekleniyor ..."
 
 #. Main menu, Help submenu, Donate
 msgid ""
-"Donate at least one of the following amounts\nto receive a Donor Key:\n"
+"Donate at least one of the following amounts\n"
+"to receive a Donor Key:\n"
 "\n"
 "%d EUR / %d USD: Valid for current version and %d updates.\n"
 "%d EUR / %d USD: Valid for the entire lifetime of main version 3 (unlimited updates).\n"
 "\n"
 "Do you want to donate now?"
 msgstr ""
-"Doneer minstens één van de volgende\n"
-"bedragen om een donor sleutel te ontvangen:\n"
+"Aşağıdaki tutarlardan en az birini bağışlayarak\n"
+"Bağışçı Anahtarı'nı alın:\n"
 "\n"
-"%d EUR / %d USD: Ggeldig voor de huidige versie en %d updates.\n"
-"%d EUR / %d USD: Geldig voor de gehele levensduur van versie 3 (onbeperkt aantal updates).\n"
+"%d EUR / %d USD: Mevcut sürüm ve %d güncelleme için geçerlidir.\n"
+"%d EUR / %d USD: Ana sürüm 3'ün tüm ömrü boyunca geçerlidir (sınırsız güncelleme).\n"
 "\n"
-"Wilt u nu doneren?"
+"Şimdi bağış yapmak ister misiniz?"
 
 #. Main window, error message shown when access to registry failed
 msgid ""
 "Could not access registry key\n"
 "%s."
 msgstr ""
-"Toegang tot registersleutel geweigerd:\n"
+"Kayıt defteri anahtarına erişilemedi\n"
 "%s."
 
 #. Configuration window, caption
 msgid "Configuration"
-msgstr "Configuratie"
+msgstr "Yapılandırma"
 
 #. Configuration window, General page
 msgid "General"
-msgstr "Algemeen"
+msgstr "Genel"
 
 #. Configuration window, Security page
 msgid "Security"
-msgstr "Beveiliging"
+msgstr "Güvenlik"
 
 #. Configuration window, Hot Keys page
 msgid "Hot Keys"
-msgstr "Sneltoetsen"
+msgstr "Kısayol Tuşları"
 
 #. Configuration window, Files page
 msgid "Files"
-msgstr "Bestanden"
+msgstr "Dosyalar"
 
 #. Configuration window, Updates page
 msgid "Updates"
-msgstr "Updates"
+msgstr "Güncellemeler"
 
 #. Configuration window, Database page
 msgid "Database"
-msgstr "Databank"
+msgstr "Veritabanı"
 
 #. Configuration window, General
 msgid "User interface style:"
-msgstr "Gebruikersinterface stijl:"
+msgstr "Kullanıcı arayüzü stili:"
 
 #. Configuration window, General
 msgid "Application icon:"
-msgstr "Toepassingspictogram:"
+msgstr "Uygulama simgesi:"
 
 #. Configuration window, General
 msgid "Change font for the GUI controls:"
-msgstr "Lettertype voor GUI-besturingselementen wijzigen:"
+msgstr "GUI denetimleri için yazı tipini değiştir:"
 
 #. Configuration window, General
 msgid "Select font"
-msgstr "Selecteer lettertype"
+msgstr "Yazı tipini seç"
 
 #. Configuration window, General, dropdown menu of "Select font" button
 msgid "Restore Default"
-msgstr "Herstel Standaardinstellingen"
+msgstr "Varsayılana geri yükle"
 
 #. Configuration window, General
 msgid "Show system tray icon constantly"
-msgstr "Systeemvakpictogram constant weergeven"
+msgstr "Sistem tepsisi simgesini sürekli göster"
 
 #. Configuration window, General
 msgid "Minimize program to system tray"
-msgstr "Minimaliseer het programma naar het systeemvak"
+msgstr "Programı sistem tepsisine simgeye küçült"
 
 #. Configuration window, General
 msgid "Minimize before performing autotype"
-msgstr "Minimaliseren voordat u autotype uitvoert"
+msgstr "Otomatik yazma işlemini gerçekleştirmeden önce simgeye küçült"
 
 #. Configuration window, General
 msgid "Autotype delay between characters (ms):"
-msgstr "Autotypevertraging tussen tekens (ms):"
+msgstr "Karakterler arasındaki otomatik yazma gecikmesi (ms):"
 
 #. Configuration window, General
 msgid "Ask before exiting application"
-msgstr "Vraag voordat u de applicatie verlaat"
+msgstr "Uygulamadan çıkmadan önce sor"
 
 #. Configuration window, General
 msgid "Launch application on system startup (for current user)"
-msgstr "Toepassing uitvoeren bij opstarten van systeem (voor huidige gebruiker)"
+msgstr "Sistem başlangıcında uygulamayı başlat (mevcut kullanıcı için)"
 
 #. Configuration window, General
 msgid "Load the following profile on startup:"
-msgstr "Laad het volgende profiel bij het opstarten:"
+msgstr "Başlangıçta aşağıdaki profili yükleyin:"
 
 #. Configuration window, Security
 msgid "Benchmark..."
-msgstr "Snelheidstest..."
+msgstr "Karşılaştırma..."
 
 #. Configuration window, Security
 msgid "Data size for benchmark test"
-msgstr "datavolume voor snelheidstest"
+msgstr "Karşılaştırma testi için veri boyutu"
 
 #. Configuration window, Security
 msgid "Encryption algorithm for generating random data via random pool:"
-msgstr "encryptiealgoritme voor het genereren van willekeurige gegevens:"
+msgstr "Rastgele havuz aracılığıyla rastgele veri oluşturmak için şifreleme algoritması:"
 
 #. Configuration window, Security
 msgid "Test passwords against list of common passwords"
-msgstr "Test wachtwoorden met een lijst met veelvoorkomende wachtwoorden"
+msgstr "Yaygın şifreler listesine karşı şifreleri test edin"
 
 #. Configuration window, Security
 msgid "Use advanced password strength estimation (%s)"
-msgstr "Wachtwoordkwaliteit met uitgebreid algoritme (%s) inschatten"
+msgstr "Gelişmiş parola gücü tahmini kullanın (%s)"
 
 #. Configuration window, Security
 msgid "Clear clipboard automatically after the following time (seconds):"
-msgstr "Klembord automatisch wissen na de volgende tijd (seconden):"
+msgstr "Aşağıdaki süre (saniye) geçtikten sonra panoyu otomatik olarak temizle:"
 
 #. Configuration window, Security
 msgid "Clear password box automatically after the following time (seconds):"
-msgstr "Wachtwoordvak automatisch wissen na de volgende tijd (seconden):"
+msgstr "Aşağıdaki süre (saniye) geçtikten sonra şifre kutusunu otomatik olarak temizle:"
 
 #. Configuration window, Updates
 msgid "Automatic check for updates"
-msgstr "Automatisch zoeken naar updates"
+msgstr "Güncellemeleri otomatik olarak kontrol et"
 
 #. Configuration window, Updates, options
 msgid "Daily"
-msgstr "Dagelijks"
+msgstr "Günlük"
 
 #. Configuration window, Updates, options
 msgid "Weekly"
-msgstr "Wekelijks"
+msgstr "Haftalık"
 
 #. Configuration window, Updates, options
 msgid "Monthly"
-msgstr "Maandelijks"
+msgstr "Aylık"
 
 #. Configuration window, Updates, options
 msgid "Disabled"
-msgstr "Uitgeschakeld"
+msgstr "Devre dışı"
 
 #. Configuration window, Hot Keys, Actions group box
 msgid "Actions"
-msgstr "Acties"
+msgstr "Eylemler"
 
 #. Configuration window, Hot Keys, Actions group box
 msgid "Show/restore main window"
-msgstr "Hoofdvenster weergeven/herstellen"
+msgstr "Ana pencereyi göster/geri yükle"
 
 #. Configuration window, Hot Keys, Actions group box, list with available actions
 msgid "No further action"
-msgstr "Geen verdere actie"
+msgstr "Başka eylem yapma"
 
 #. Configuration window, Hot Keys, Actions group box, list with available actions
 msgid "Generate single password in main window"
-msgstr "Genereer één wachtwoord in het hoofdvenster"
+msgstr "Ana pencerede tek şifre oluştur"
 
 #. Configuration window, Hot Keys, Actions group box, list with available actions
 msgid "Generate multiple passwords"
-msgstr "Meerdere wachtwoorden genereren"
+msgstr "Birden fazla şifre oluştur"
 
 #. Configuration window, Hot Keys, Actions group box, list with available actions
 msgid "Generate password and copy it to the clipboard"
-msgstr "Wachtwoord genereren en naar klembord kopiëren"
+msgstr "Şifre oluştur ve panoya kopyala"
 
 #. Configuration window, Hot Keys, Actions group box, list with available actions
 msgid "Generate password and show it in a message box"
-msgstr "Wachtwoord genereren en weergeven in tekstvak"
+msgstr "Şifre oluştur ve mesaj kutusunda göster"
 
 #. Configuration window, Hot Keys, Actions group box, list with available actions
 msgid "Generate password and perform autotype"
-msgstr "Genereer wachtwoord en voer autotype uit"
+msgstr "Şifre oluştur ve otomatik yazma işlemini gerçekleştir"
 
 #. Configuration window, Hot Keys, Actions group box, list with available actions
 msgid "Open MP password generator"
-msgstr "Open MP wachtwoordgenerator"
+msgstr "MP şifre oluşturucuyu aç"
 
 #. Configuration window, Hot Keys, Actions group box, list with available actions
 msgid "Show password manager"
-msgstr "Wachtwoordbeheerder weergeven"
+msgstr "Şifre yöneticisini göster"
 
 #. Configuration window, Hot Keys, Actions group box, list with available actions
 msgid "Show MP password generator"
-msgstr "MP Wachtwoordbgenerator weergeven"
+msgstr "MP şifre oluşturucuyu göster"
 
 #. Configuration window, Hot Keys, Actions group box, list with available actions
 msgid "Search database for keyword in window title"
-msgstr "Zoek in de database naar trefwoord in de titel van het venster"
+msgstr "Pencere başlığında anahtar kelime için veritabanında ara"
 
 #. Configuration window, Hot Keys, Actions group box, list with available actions
 msgid "Search database for keyword and perform autotype"
-msgstr "Doorzoek de database en voer Autotype uit"
+msgstr "Anahtar kelime için veritabanında ara ve otomatik yazma işlemini gerçekleştir"
 
 #. Configuration window, Hot Keys
 msgid "Shortcut to assign:"
-msgstr "Sneltoetsen toewijzen:"
+msgstr "Atanacak kısayol:"
 
 #. Configuration window, Hot Keys, button
 msgid "Add"
-msgstr "Toevoegen"
+msgstr "Ekle"
 
 #. Configuration window, Hot Keys, button
 msgid "Remove"
-msgstr "Verwijderen"
+msgstr "Kaldır"
 
 #. Configuration window, Hot Keys, list view, column
 msgid "Shortcut"
-msgstr "Sneltoets"
+msgstr "Kısayol"
 
 #. Configuration window, Hot Keys, list view, column
 msgid "Action"
-msgstr "Actie"
+msgstr "Eylem"
 
 #. Configuration window, Hot Keys, message shown when trying to add a hot key without a corresponding action
 msgid "Please select a hot key action."
-msgstr "Selecteer een sneltoetsactie."
+msgstr "Lütfen bir kısayol tuşu eylemi seçin."
 
 #. Configuration window, Files
 msgid "Character encoding of text files"
-msgstr "Teken codering van tekstbestanden"
+msgstr "Metin dosyalarının karakter kodlaması"
 
 #. Configuration window, Files
 msgid "Newline character sequence"
-msgstr "Tekenreeks voor regelafbrekingen (\"newline\")"
+msgstr "Satır sonu karakter dizisi"
 
 #. Configuration window, Language
 msgid "Select language:"
-msgstr "Selecteer taal:"
+msgstr "Dil seçin:"
 
 #. Configuration window, Language
 msgid "Install..."
-msgstr "Installeren..."
+msgstr "Yükle..."
 
 #. Configuration window, Language, Open dialog title
 msgid "Select language file to install"
-msgstr "Selecteer de taal om te installeren"
+msgstr "Yüklemek için dil dosyasını seçin"
 
 #. Configuration window, Language, Open dialog filter
 msgid "Language files"
-msgstr "Taalbestanden"
+msgstr "Dil dosyaları"
 
 #. Configuration window, Language, Install
 msgid "Language already installed"
-msgstr "Taal reeds geïnstalleerd"
+msgstr "Dil zaten yüklü"
 
 #. Configuration window, Language, Install
-msgid "Language file already exists:\n\"%1\""
-msgstr "Taalbestand bestaat al:\n"%1\""
+msgid ""
+"Language file already exists:\n"
+"\"%1\""
+msgstr ""
+"Dil dosyası zaten mevcut:\n"
+"\"%1”"
 
 #. Configuration window, Language, Install
 msgid "Language \"%1\" installed successfully."
-msgstr "Taal \"%1\" succesvol geïnstalleerd."
+msgstr "“%1” dili başarıyla yüklendi."
 
 #. Configuration window, Language, Install
-msgid "Could not copy file \"%1\" to\n\"%2\""
-msgstr "Kon bestand \"%1\" niet kopiëren naar\n\"%2\""
+msgid ""
+"Could not copy file \"%1\" to\n"
+"\"%2\""
+msgstr ""
+"“%1“ dosyası ‘%2’ konumuna kopyalanamadı.\n"
+"”%2”"
 
 #. Configuration window, Language, Install
-msgid "Could not install language:\n%1."
-msgstr "Kon taal niet installeren:\n%1."
+msgid ""
+"Could not install language:\n"
+"%1."
+msgstr ""
+"Dil yüklenemedi:\n"
+"%1."
 
 #. Configuration window, Language, Remove
-msgid "Are you sure you want to remove\n\"%1\"?"
-msgstr "Weet u zeker dat u \n\"%1\" wilt verwijderen??"
+msgid ""
+"Are you sure you want to remove\n"
+"\"%1\"?"
+msgstr ""
+"“%1” \n"
+"öğesini silmek istediğinizden emin misiniz?"
 
 #. Configuration window, Language, Remove
 msgid "Language \"%1\" successfully removed."
-msgstr "Taal \"%1\" succesvol verwijderd."
+msgstr "“%1” dili başarıyla kaldırıldı."
 
 #. Configuration window, Language, Remove
-msgid "Could not delete file\n\"%1\"."
-msgstr "Kan bestand niet verwijderen:\n\"%1\"."
+msgid ""
+"Could not delete file\n"
+"\"%1\"."
+msgstr ""
+"“%1”\n"
+" dosyası silinemedi."
 
 #. Configuration window, Database
 msgid "Clear clipboard when closing/locking database"
-msgstr "Klembord wissen wanneer database gesloten/vergrendeld is"
+msgstr "Veritabanını kapatırken/kilitlerken panoyu temizle"
 
 #. Configuration window, Database
 msgid "Lock database when minimizing application or database window"
-msgstr "Database vergrendelen wanneer de toepassing of het databasevenster geminimaliseerd is"
+msgstr "Uygulamayı veya veritabanı penceresini simge durumuna küçültürken veritabanını kilitle"
 
 #. Configuration window, Database
 msgid "Lock database after the following idle time (seconds):"
-msgstr "Database vergrendelen na de volgende tijd van inactiviteit (seconden):"
+msgstr "Aşağıdaki bekleme süresinden sonra veritabanını kilitle (saniye):"
 
 #. Configuration window, Database, save database automatically when database is being locked due to idle time
 msgid "Save automatically"
-msgstr "Automatisch opslaan"
+msgstr "Otomatik olarak kaydet"
 
 #. Configuration window, Database
 msgid "Create backup of database before saving"
-msgstr "Maak een back-up van de database voordat u deze opslaat"
+msgstr "Kaydetmeden önce veritabanının yedeğini al"
 
 #. Configuration window, Database
 msgid "Number backups consecutively - up to:"
-msgstr "Nummer back-ups opeenvolgend - tot:"
+msgstr "Yedekleri ardışık olarak numaralandır - en fazla:"
 
 #. Configuration window, Database
 msgid "Open window on startup"
-msgstr "Open venster wanneer programma start"
+msgstr "Başlangıçta pencereyi aç"
 
 #. Configuration window, Database
 msgid "Open last used database on startup"
-msgstr "Open de laatst gebruikte database bij het opstarten"
+msgstr "Başlangıçta en son kullanılan veritabanını aç"
 
 msgid "Keep list of recently opened files"
-msgstr "Lijst met recent geopende bestanden bijhouden"
+msgstr "Son açılan dosyaların listesini sakla"
 
 #. Configuration window, Database
 msgid "Warn if database contains expired entries"
-msgstr "Waarschuwen wanneer de database verlopen vermeldingen bevat"
+msgstr "Veritabanında süresi dolmuş girişler varsa uyar"
 
 #. Configuration window, Database
 msgid "Warn if database contains entries that will expire soon"
-msgstr "Waarschuwen wanneer de database vermeldingen bevat die bijna verlopen"
+msgstr "Veritabanında süresi yakında dolacak girişler varsa uyar"
 
 #. Configuration window, Database, entries that will expire soon, define number of days before expiry date
 msgid "Number of days:"
-msgstr "Aantal dagen:"
+msgstr "Gün sayısı:"
 
 #. Configuration window, Database, Save database automatically after certain actions
 msgid "Save automatically:"
-msgstr "Automatisch opslaan:"
+msgstr "Otomatik olarak kaydet:"
 
 #. Configuration window, Database, Save automatically, options
 msgid "After adding/modifying an entry"
-msgstr "Na het toevoegen/wijzigen van een item"
+msgstr "Bir giriş ekledikten/değiştirdikten sonra"
 
 #. Configuration window, Database, Save automatically, options
 msgid "After every change"
-msgstr "Na elke verandering"
+msgstr "Her değişiklikten sonra"
 
 #. Configuration window, Database
 msgid "Default autotype sequence:"
-msgstr "Standaard autotype-reeks:"
+msgstr "Varsayılan otomatik yazma sırası:"
 
 #. Configuration window, Hot Keys, message shown when max. number of hot keys has been exhausted
 msgid "Maximum number of hot keys (%d) reached."
-msgstr "Maximaal aantal sneltoetsen (%d) bereikt."
+msgstr "Maksimum kısayol tuşu sayısı (%d) ulaşıldı."
 
 #. Configuration window, Hot Keys, message shown when hot key has already been assigned
 msgid "This hot key has already been assigned."
-msgstr "Deze sneltoets is al toegewezen."
+msgstr "Bu kısayol tuşu zaten atanmış."
 
 #. Configuration window, Security, Random pool cipher
 msgid "%s (%d-bit key, operates on %d-bit blocks)"
-msgstr "%s (%d-bitsleutel, verwerkt %d bitblokken)"
+msgstr "%s (%d-bit tuşu, %d-bit bloklarda çalışır)"
 
 #. Configuration window, Security, Random pool cipher, Benchmark results
 msgid "Benchmark results (data size: %d MB):"
-msgstr "testresultaten (data grootte: %d MB):"
+msgstr "Karşılaştırma sonuçları (veri boyutu: %d MB):"
 
 #. Enter password window, label
 msgid "Enter password:"
-msgstr "Voer wachtwoord in:"
+msgstr "Şifre girin:"
 
 #. Enter password window, label
 msgid "Confirm password:"
-msgstr "Bevestig wachtwoord:"
+msgstr "Şifreyi onaylayın:"
 
 #. Generic dialog window, button
 msgid "OK"
-msgstr "OK"
+msgstr "Tamam"
 
 #. Generic dialog window, button
 msgid "Cancel"
-msgstr "Annuleren"
+msgstr "İptal"
 
 #. Enter password window, message shown when passwords are not identical
 msgid "Passwords are not identical."
-msgstr "Wachtwoorden komen niet overeen."
+msgstr "Şifreler aynı değil."
 
 #. Enter password window, caption for encryption
 msgid "Encrypt"
-msgstr "Versleutelen"
+msgstr "Şifrele"
 
 #. Enter password window, caption for decryption
 msgid "Decrypt"
-msgstr "Decodering"
+msgstr "Şifreyi çöz"
 
 #. Enter password window
 msgid "Remember password (seconds):"
-msgstr "Wachtwoord onthouden (seconden):"
+msgstr "Şifreyi hatırla (saniye):"
 
 #. Enter password window
 msgid "Key file for password database:"
-msgstr "Sleutelbestand voor wachtwoorddatabase:"
+msgstr "Şifre veritabanı için anahtar dosyası:"
 
 #. Enter password window, Key file, None selected
 msgid "(None)"
-msgstr "(Geen)"
+msgstr "(Yok)"
 
 #. Enter password window, message shown when neither password nor key file entered/selected
 msgid "Enter a password and/or select a key file."
-msgstr "Voer wachtwoord in en/of selecteer sleutelbestand."
+msgstr "Bir şifre girin ve/veya bir anahtar dosyası seçin."
 
 #. Enter password window, message shown when selected key file could not be found
 msgid "The selected key file does not exist."
-msgstr "Het geselecteerde sleutelbestand bestaat niet."
+msgstr "Seçilen anahtar dosyası mevcut değil."
 
 #. Enter password window, message shown when password is empty
 msgid "Password is empty."
-msgstr "Wachtwoord is leeg."
+msgstr "Şifre boş."
 
 #. Enter password window, Create key file, message shown when creation was successful
 msgid "Key file successfully created."
-msgstr "Sleutelbestand succesvol aangemaakt."
+msgstr "Anahtar dosyası başarıyla oluşturuldu."
 
 #. Enter password window, Create key file, message shown when key file could not be created
 msgid ""
 "Error while creating key file:\n"
 "%s."
 msgstr ""
-"Fout bij aanmaken van het sleutelbestand:\n"
+"Anahtar dosyası oluşturulurken hata oluştu:\n"
 "%s."
 
 #. Enter password window, Open file dialog, filter for *.key files
 msgid "Key files"
-msgstr "Sleutelbestanden"
+msgstr "Anahtar dosyaları"
 
 #. Enter password window, Create Key File button, tooltip
 msgid "Create key file"
-msgstr "Genereer sleutelbestand"
+msgstr "Anahtar dosyası oluştur"
 
 #. Password List window, title
 msgid "Password List"
-msgstr "Wachtwoordlijst"
+msgstr "Şifre Listesi"
 
 #. Password List window, context menu
 msgid "Save As File..."
-msgstr "Opslaan als bestand..."
+msgstr "Farklı Dosya Olarak Kaydet..."
 
 #. Password List window, Save as file, Save file dialog, title
 msgid "Save password list"
-msgstr "Wachtwoordlijst opslaan"
+msgstr "Şifre listesini kaydet"
 
 #. Password List window, Save as file, error message
 msgid ""
@@ -1563,201 +1587,201 @@ msgid ""
 "\"%s\":\n"
 "%s."
 msgstr ""
-"Fout bij het aanmaken van bestand\n"
-"\"%s\":\n"
+"Dosya oluşturulurken hata oluştu.\n"
+"“%s”:\n"
 "%s."
 
 #. Password List window, Save as file, success message
 msgid "File \"%s\" successfully created."
-msgstr "Bestand \"%s\" succesvol aangemaakt."
+msgstr "“%s” dosyası başarıyla oluşturuldu."
 
 #. Advanced Password Options window, title
 msgid "Advanced Password Options"
-msgstr "Geavanceerde wachtwoordopties"
+msgstr "Gelişmiş Parola Seçenekleri"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Exclude ambiguous characters"
-msgstr "Dubbelzinnige tekens uitsluiten"
+msgstr "Belirsiz karakterleri hariç tut"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "First character must not be a lower-case letter"
-msgstr "Het eerste teken mag geen kleine letter zijn"
+msgstr "İlk karakter küçük harf olmamalı"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Don't separate words by a space"
-msgstr "Scheid woorden niet met een spatie"
+msgstr "Kelimeleri boşlukla ayırma"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Don't separate words and characters by a '-' character"
-msgstr "Scheid woorden en tekens niet met '-' tekens"
+msgstr "Kelimeleri ve karakterleri ‘-’ karakteriyle ayırma"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Reverse default order of character/word combinations"
-msgstr "Draai de standaardvolgorde van teken-/woordcombinaties om"
+msgstr "Karakter/kelime kombinasyonlarının varsayılan sırasını ters çevir"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Include at least one upper-case letter (A-Z)"
-msgstr "Wachtwoord moet minimaal één hoofdletter (A-Z) bevatten"
+msgstr "En az bir büyük harf (A-Z) içermeli"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Include at least one lower-case letter (a-z)"
-msgstr "Wachtwoord moet minimaal één kleine letter (a-z) bevatten"
+msgstr "En az bir küçük harf (a-z) içermeli"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Include at least one digit (0-9)"
-msgstr "Wachtwoord moet minimaal één cijfer (0-9) bevatten"
+msgstr "En az bir rakam (0-9) içermeli"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Include at least one special symbol (!\"#$%...)"
-msgstr "Het wachtwoord moet minimaal één speciaal teken bevatten (!\"#$%...)"
+msgstr "En az bir özel sembol (!\"#$%...) içermeli"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Include at least one character from each subset"
-msgstr "Het wachtwoord moet minimaal één teken uit elke subtekenset bevatten"
+msgstr "Her alt kümeden en az bir karakter içermeli"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Only include characters from custom character set"
-msgstr "Gebruik alleen tekens uit de aangepaste tekenset"
+msgstr "Yalnızca özel karakter kümesinden karakterler içermeli"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Exclude repeating consecutive characters (e.g. aa, 11)"
-msgstr "Sluit een reeks van hetzelfde teken uit (bijv. aa, 11)"
+msgstr "Arka arkaya tekrarlanan karakterleri hariç tut (ör. aa, 11)"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Remove leading and trailing whitespace characters"
-msgstr "Verwijder spaties aan het begin en einde"
+msgstr "Baştaki ve sondaki boşluk karakterlerini kaldır"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Exclude duplicate entries in password lists"
-msgstr "Dubbele vermeldingen in wachtwoordlijsten uitsluiten"
+msgstr "Şifre listelerindeki yinelenen girişleri hariç tut"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Assign entropy value to each password in password lists"
-msgstr "Wijs een entropiewaarde toe aan elk wachtwoord in wachtwoordlijsten"
+msgstr "Şifre listelerindeki her şifreye entropi değeri atayın"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Capitalize first letter of each word"
-msgstr "Elk woord begint met een hoofdletter"
+msgstr "Her kelimenin ilk harfini büyük harfe çevirin"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Convert all words in word lists to lower-case"
-msgstr "Converteer alle woorden in woordenlijsten naar kleine letters"
+msgstr "Kelime listelerindeki tüm kelimeleri küçük harfe çevirin"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Each character must occur only once"
-msgstr "Elk teken mag slechts één keer voorkomen"
+msgstr "Her karakter yalnızca bir kez geçmelidir"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Each word must occur only once"
-msgstr "Elk woord mag slechts één keer voorkomen"
+msgstr "Her kelime yalnızca bir kez geçmelidir"
 
 #. Advanced Password Options window, label
 msgid "Redefine ambiguous characters:"
-msgstr "Het herdefiniëren van dubbelzinnige karakters:"
+msgstr "Belirsiz karakterleri yeniden tanımlayın:"
 
 #. Advanced Password Options window, label
 msgid "Redefine special symbols:"
-msgstr "Speciale tekens opnieuw definiëren:"
+msgstr "Özel sembolleri yeniden tanımlayın:"
 
 #. Advanced Password Options window, label
 msgid "Min./Max. length of words in word lists (except default word list):"
-msgstr "Minimale/maximale Lengte van woorden in woordenlijsten (behalve standaardwoordenlijst):"
+msgstr "Kelime listelerindeki kelimelerin minimum/maksimum uzunluğu (varsayılan kelime listesi hariç):"
 
 #. Advanced Password Options window, label
 msgid "Redefine separators in passphrases:"
-msgstr "Scheidingstekens in wachtwoordzinnen opnieuw definiëren:"
+msgstr "Parola cümlelerindeki ayırıcıları yeniden tanımlayın:"
 
 #. Advanced Password Options window, label
 msgid "Words:"
-msgstr "Woorden:"
+msgstr "Kelimeler:"
 
 #. Advanced Password Options window, label
 msgid "Words/characters:"
-msgstr "Woorden/tekens:"
+msgstr "Kelimeler/karakterler:"
 
 #. Advanced Password Options window, label
 msgid "Trigram file for generating phonetic (pronounceable) passwords:"
-msgstr "Trigrambestand voor het genereren van fonetische (uitspreekbare) wachtwoorden:"
+msgstr "Fonetik (telaffuz edilebilir) parolalar oluşturmak için üçlü karakter dosyası:"
 
 #. Advanced Password Options window, footnotes of checkbox list
 msgid "Applies to pass_words_."
-msgstr "Geldt voor wachtwoorden_."
+msgstr "pass_words_ için geçerlidir."
 
 #. Advanced Password Options window, footnotes of checkbox list
 msgid "Applies to pass_phrases_."
-msgstr "Geldt voor wachtwoordzinnen_."
+msgstr "pass_phrases_ için geçerlidir."
 
 #. Advanced Password Options window, footnotes of checkbox list
 msgid "Applies to formatted passwords."
-msgstr "Geldt voor wachtwoorden opmaak."
+msgstr "Biçimlendirilmiş parolalar için geçerlidir."
 
 #. Advanced Password Options window, footnotes of checkbox list
 msgid "Applies to phonetic passwords."
-msgstr "Geldt voor fonetische wachtwoorden."
+msgstr "Fonetik parolalar için geçerlidir."
 
 #. Advanced Password Options window, footnotes of checkbox list
 msgid "Selecting one of these options might reduce the security of generated passwords."
-msgstr "Als u een van deze opties kiest, kan de wachtwoordbeveiliging afnemen."
+msgstr "Bu seçeneklerden birini seçmek, oluşturulan parolaların güvenliğini azaltabilir."
 
 #. Advanced Password Options window, checkbox list, context menu
 msgid "Deselect All"
-msgstr "Alles deselecteren"
+msgstr "Tümünü seç"
 
 #. Advanced Password Options window, checkbox list, context menu
 msgid "Invert Selection"
-msgstr "Selectie omkeren"
+msgstr "Seçimi ters çevir"
 
 #. Create Random Data File dialog, title
 msgid "Create Random Data File"
-msgstr "Een bestand met willekeurige gegevens maken"
+msgstr "Rastgele veri dosyası oluştur"
 
 #. Create Random Data File dialog, label
 msgid "File name:"
-msgstr "Bestandsnaam:"
+msgstr "Dosya adı:"
 
 #. Create Random Data File dialog, label
 msgid "File size:"
-msgstr "Bestandsgrootte:"
+msgstr "Dosya boyutu:"
 
 #. Create Random Data File dialog, drop-down list of file size units
 msgid "Bytes"
-msgstr "Bytes"
+msgstr "Bayt"
 
 #. Create Random Data File dialog, drop-down list of file size units
 msgid "Kilobytes"
-msgstr "Kilobytes"
+msgstr "Kilobayt"
 
 #. Create Random Data File dialog, drop-down list of file size units
 msgid "Megabytes"
-msgstr "Megabytes"
+msgstr "Megabayt"
 
 #. Create Random Data File dialog, Close button
 msgid "Close"
-msgstr "Afsluiten"
+msgstr "Kapat"
 
 #. Create Random Data File dialog, Create file button
 msgid "Create file"
-msgstr "Bestand aanmaken"
+msgstr "Dosya oluştur"
 
 #. Create Random Data File dialog, message shown when specified file size is invalid
 msgid "Invalid file size."
-msgstr "Ongeldige bestandsgrootte."
+msgstr "Geçersiz dosya boyutu."
 
 #. Create Random Data File dialog, message shown when there's not enough free disk space to create the file
 msgid ""
 "Not enough free disk space available\n"
 "to create the file."
 msgstr ""
-"niet genoeg vrije schijfruimte beschikbaar\n"
-"om het bestand te maken."
+"Dosyayı oluşturmak için\n"
+" yeterli boş disk alanı yok."
 
 #. Create Random Data File dialog, title of progress window
 msgid "Creating random data file ..."
-msgstr "Willekeurig gegevensbestand maken ..."
+msgstr "Rastgele veri dosyası oluşturuluyor ..."
 
 #. Create Random Data File dialog, Progress window, progress message
 msgid "%d of %d %s written."
-msgstr "%d van %d %s geschreven."
+msgstr "%d %d %s yazıldı."
 
 #. Create Random Data File dialog, success message
 msgid ""
@@ -1765,9 +1789,9 @@ msgid ""
 "\n"
 "%d bytes written."
 msgstr ""
-"Bestand \"%s\" succesvol aangemaakt.\n"
+"“%s” dosyası başarıyla oluşturuldu.\n"
 "\n"
-"%d Bytes geschreven."
+"%d bayt yazıldı."
 
 #. Create Random Data File dialog, error message
 msgid ""
@@ -1777,75 +1801,75 @@ msgid ""
 "\n"
 "%d bytes written."
 msgstr ""
-"Fout bij het aanmaken van bestand\n"
-"\"%s\":\n"
+"Dosya oluşturulurken hata oluştu.\n"
+"“%s”:\n"
 "%s.\n"
 "\n"
-"%d Bytes geschreven."
+"%d bayt yazıldı."
 
 #. Profile Editor dialog, title
 msgid "Profile Editor"
-msgstr "Profiel-editor"
+msgstr "Profil Düzenleyici"
 
 #. Profile Editor dialog, Load Profile button
 msgid "Load"
-msgstr "Laden"
+msgstr "Yükle"
 
 #. Profile Editor dialog, Confirm checkbox
 msgid "Confirm"
-msgstr "Bevestigen"
+msgstr "Onayla"
 
 #. Profile Editor dialog, label
 msgid "Profile name:"
-msgstr "Profiel naam:"
+msgstr "Profil adı:"
 
 #. Profile Editor dialog, Move Up button, tooltip
 msgid "Move up"
-msgstr "Naar boven bewegen"
+msgstr "Yukarı taşı"
 
 #. Profile Editor dialog, Move Down button, tooltip
 msgid "Move down"
-msgstr "Naar beneden bewegen"
+msgstr "Aşağı taşı"
 
 #. Profile Editor dialog, checkbox
 msgid "Save \"advanced password options\" for this profile"
-msgstr "\"Geavanceerde wachtwoordopties opslaan\" voor dit profiel"
+msgstr "Bu profil için “gelişmiş şifre seçeneklerini” kaydet"
 
 #. Profile Editor dialog, message shown before deleting a single profile
 msgid "Delete profile \"%s\"?"
-msgstr "Profiel \"%s\" verwijderen?"
+msgstr "“%s” profilini silmek istiyor musunuz?"
 
 #. Profile Editor dialog, message shown before deleting multiple profiles
 msgid "Delete %d profiles?"
-msgstr "Verwijder %d profielen?"
+msgstr "%d profilini silmek istiyor musunuz?"
 
 #. Profile Editor dialog, message shown when max. number of profiles has been reached
 msgid ""
 "Maximum number of profiles (%d) reached.\n"
 "Please delete or overwrite profiles."
 msgstr ""
-"Maximaal aantal profielen (%d) bereikt.\n"
-"Verwijder of overschrijf profielen."
+"Maksimum profil sayısı (%d) ulaşıldı.\n"
+"Lütfen profilleri silin veya üzerine yazın."
 
 #. Profile Editor dialog, message shown when a profile already exists
 msgid ""
 "A profile with the name \"%s\" already exists.\n"
 "Do you want to overwrite it?"
 msgstr ""
-"Er bestaat al een profiel met de naam \"%s\".\n"
-"Wil je het overschrijven??"
+"“%s” adlı bir profil zaten var.\n"
+"Üzerine yazmak istiyor musunuz?"
 
 #. Create Trigram File dialog, title
 msgid "Create Trigram File"
-msgstr "Trigrambestand maken"
+msgstr "Trigram Dosyası Oluştur"
 
 #. Create Trigram File dialog, label
 msgid "Source file (e.g., dictionary, word list):"
-msgstr "Bronbestand (bijv. woordenboek, woordenlijst):"
+msgstr "Kaynak dosya (örneğin, sözlük, kelime listesi):"
 
 #. Create Trigram File dialog, label
 msgid "Destination file (trigram file):"
-msgstr "Doelbestand (trigram bestand):"
+msgstr "Hedef dosya (trigram dosyası):"
 
 #. Create Trigram File dialog, success message
 msgid ""
@@ -1854,99 +1878,102 @@ msgid ""
 "%d trigrams evaluated.\n"
 "%1.2f bits of entropy per letter."
 msgstr ""
-"Trigram bestand \"%s\" succesvol aangemaakt.\n"
+"\"%s\" trigram dosyası başarıyla oluşturuldu.\n"
 "\n"
-"%d trigrammen geëvalueerd.\n"
-"%1.2f Entropie bits per letter."
+"%d trigram değerlendirildi.\n"
+"Her harf için %1.2f bit entropi sağlandı."
 
 #. Create Trigram File dialog, message shown when process was cancelled
 msgid "Process was cancelled by the user"
-msgstr "Proces is geannuleerd door de gebruiker"
+msgstr "İşlem kullanıcı tarafından iptal edildi"
 
 #. Main menu, Help submenu
 msgid "About %s"
-msgstr "Over %s"
+msgstr "%s hakkında"
 
 #. About window, info about translation
 msgid ""
 "Current language: %s\n"
 "Translator: %s"
 msgstr ""
-"Huidige taal: %s\n"
-"Vertaler: %s"
+"Mevcut dil: %s\n"
+"Çevirmen: %s"
 
 #. About window, license info
 msgid "This program is distributed under the terms and conditions of the GNU General Public License (GPL)."
-msgstr "Dit programma wordt gedistribueerd onder de voorwaarden van de GNU General Public License (GPL)."
+msgstr "Bu program, GNU Genel Kamu Lisansı (GPL) hüküm ve koşulları altında dağıtılmaktadır."
 
 #. About window, button
 msgid "View license"
-msgstr "Bekijk licentie"
+msgstr "Lisansı görüntüle"
 
 #. About window, info about Donor ID extracted from Donor Key
 msgid "Donor ID:"
-msgstr "Donateur-ID:"
+msgstr "Bağışçı kimliği:"
 
 #. Quick Help window, title
 msgid "Quick help"
-msgstr "Snelle hulp"
+msgstr "Hızlı yardım"
 
 #. Quick Help window, context menu
 msgid "Position Automatically"
-msgstr "Automatisch positioneren"
+msgstr "Konumu otomatik olarak belirle"
 
 #. Quick help for "Include characters" in main window
 msgid "You can use the following placeholders:"
-msgstr "U kunt de volgende tijdelijke aanduidingen gebruiken:"
+msgstr "Aşağıdaki yer tutucuları kullanabilirsiniz:"
 
 #. Quick help for "Include characters" in main window
 msgid "without ambiguous characters"
-msgstr "zonder dubbelzinnige karakters"
+msgstr "belirsiz karakterler olmadan"
 
 #. Quick help for "Include characters" in main window
 msgid "Special symbols"
-msgstr "Speciale symbolen"
+msgstr "Özel semboller"
 
 #. Quick help for "Include characters" in main window
 msgid "Brackets"
-msgstr "Haakjes"
+msgstr "Köşeli parantezler"
 
 #. Quick help for "Include characters" in main window
 msgid "Punctuation marks"
-msgstr "Leestekens"
+msgstr "Noktalama işaretleri"
 
 #. Quick help for "Include characters" in main window
 msgid "Higher ANSI characters"
-msgstr "Hogere ANSI-tekens"
+msgstr "Daha yüksek ANSI karakterleri"
 
 #. Quick help for "Include characters" in main window
 msgid "Generate phonetic password (lower-case letters)"
-msgstr "Genereer fonetisch wachtwoord (kleine letters)"
+msgstr "Fonetik şifre oluştur (küçük harfler)"
 
 #. Quick help for "Include characters" in main window
 msgid "Generate phonetic password (upper-case letters)"
-msgstr "Genereer fonetisch wachtwoord (hoofdletters)"
+msgstr "Fonetik şifre oluştur (büyük harfler)"
 
 #. Quick help for "Include characters" in main window
 msgid "Generate phonetic password (mixed-case letters)"
-msgstr "Genereer fonetisch wachtwoord (hoofd- en kleine letters)"
+msgstr "Fonetik şifre oluştur (karışık harfler)"
 
 #. Quick help for "Include characters" in main window
-msgid "You can use the following syntax to specify a (minimum) number N of characters\n"
+msgid ""
+"You can use the following syntax to specify a (minimum) number N of characters\n"
 "for a character set:"
-msgstr "De volgende zinsbouw kan worden gebruikt om een ​​(minimum) aantal N tekens op te geven:"
+msgstr ""
+"Bir karakter kümesi için (minimum) karakter sayısı N'yi belirtmek için aşağıdaki sözdizimini kullanabilirsiniz\n"
+":"
 
 #. Quick help for "Include characters" in main window
 msgid "N = Include exactly N characters. N+ = Include at least N characters."
-msgstr "N = Gebruik precies N tekens. N+ = Gebruik minimaal N tekens."
+msgstr "N = Tam olarak N karakteri dahil edin. N+ = En az N karakteri dahil edin."
 
 #. Quick help for "Include characters" in main window
 msgid ""
 "Comments may be provided in square brackets \"[...]\"\n"
 "at the beginning of the sequence."
 msgstr ""
-"Opmerkingen kunnen aan het begin tussen vierkante haken worden geplaatst \"[...]\"
-"de volgorde moet worden gespecificeerd."
+"Yorumlar, dizinin başında köşeli parantezler “[...]” içinde\n"
+"belirtilebilir."
 
 #. Quick help for "Format password" in main window
 msgid ""
@@ -1958,228 +1985,229 @@ msgid ""
 "the sequence. Example: \"16u\" means \"Insert 16 random upper-case letters\n"
 "into the password\"."
 msgstr ""
-"Formaat specificaties hebben de vorm \"[*][N]x\" of \"[*][M-N]x\", waarbij\n"
-"het optionele argument \"N\" het aantal herhalingen (tussen 1 en\n"
-"99999) aangeeft, \"M-N\" een willekeurig aantal herhalingen in\n"
-"bereik M tot N, en \"x\" is de werkelijke formaatspecificatie/\n"
-"tijdelijke aanduiding. De optionele asterisk (*) betekent dat elk\n"
-"karakter slechts één keer in de reeks mag voorkomen. Voorbeeld: \"16u\"\n"
-"betekent \"Voeg 16 willekeurige hoofdletters in het wachtwoord in\"."
+"Format belirticileri şu biçimdedir: \"[][N]x\" veya \"[][M-N]x\".\n"
+"Burada, isteğe bağlı \"N\" argümanı tekrarlama sayısını (1 ile 99999 arasında),\n"
+"\"M-N\" ise M ile N arasında rastgele bir tekrar sayısını belirtir.\n"
+"\"x\" ise gerçek format belirticisi/yer tutucudur.\n"
+"İsteğe bağlı yıldız işareti (*) ise her karakterin dizide yalnızca bir kez yer alması gerektiğini ifade eder.\n"
+"\n"
+"Örnek: \"16u\" ifadesi, \"Parolaya 16 adet rastgele büyük harf ekle\" anlamına gelir."
 
 #. Quick help for "Format password" in main window
 msgid "List of placeholders with optional argument \"N\":"
-msgstr "Lijst met tijdelijke aanduidingen met optioneel argument \"N\":"
+msgstr "İsteğe bağlı “N” argümanına sahip yer tutucuların listesi:"
 
 #. Quick help for "Format password" in main window
 msgid "Custom character set"
-msgstr "Aangepaste tekenset"
+msgstr "Özel karakter kümesi"
 
 #. Quick help for "Format password" in main window
 msgid "Vowels, lower-case"
-msgstr "Klinkers, kleine letters"
+msgstr "Ünlüler, küçük harf"
 
 #. Quick help for "Format password" in main window
 msgid "Vowels, mixed-case"
-msgstr "Klinkers, hoofdletters en kleine letters"
+msgstr "Ünlüler, büyük ve küçük harf karışık"
 
 #. Quick help for "Format password" in main window
 msgid "Vowels, upper-case"
-msgstr "Klinkers, hoofdletters"
+msgstr "Ünlüler, büyük harf"
 
 #. Quick help for "Format password" in main window
 msgid "Consonants, lower-case"
-msgstr "Medeklinkers, kleine letters"
+msgstr "Ünsüzler, küçük harf"
 
 #. Quick help for "Format password" in main window
 msgid "Consonants, mixed-case"
-msgstr "Medeklinkers, hoofdletters en kleine letters"
+msgstr "Ünsüzler, büyük ve küçük harf karışık"
 
 #. Quick help for "Format password" in main window
 msgid "Consonants, upper-case"
-msgstr "Medeklinkers, hoofdletters"
+msgstr "Ünsüzler, büyük harf"
 
 #. Quick help for "Format password" in main window
 msgid ""
 "List of special format specifiers\n"
 "(possible usage of argument \"N\" is indicated by \"{N}\"):"
 msgstr ""
-"Lijst met speciale formaatspecificaties\n"
-"(mogelijk gebruik van argument \"N\" wordt aangegeven door \"{N}\"):"
+"Özel biçim belirteçlerinin listesi\n"
+"(argüman “N” kullanımının mümkün olduğu durumlar “{N}” ile gösterilmiştir):"
 
 #. Quick help for "Format password" in main window
 msgid "Insert password generated via \"Include characters/words\""
-msgstr "Voer het wachtwoord in dat is gegenereerd via \"Inclusief tekens/woorden\"
+msgstr "“Karakterleri/kelimeleri dahil et” ile oluşturulan şifreyi girin"
 
 #. Quick help for "Format password" in main window
 msgid "Words from word list, multiple words are separated by spaces"
-msgstr "Woorden uit woordenlijst, meerdere woorden worden gescheiden door spaties"
+msgstr "Kelime listesinden kelimeler, birden fazla kelime boşluklarla ayrılır"
 
 #. Quick help for "Format password" in main window
 msgid "Words, multiple words are not separated at all"
-msgstr "Woorden, meerdere woorden worden niet gescheiden"
+msgstr "Kelimeler, birden fazla kelime hiç ayrılmaz"
 
 #. Quick help for "Format password" in main window
 msgid "Repeat input sequence in brackets N times"
-msgstr "Herhaal de invoerreeks tussen haakjes N keer"
+msgstr "Parantez içindeki giriş dizisini N kez tekrarlayın"
 
 #. Quick help for "Format password" in main window
 msgid "Randomly permute formatted sequence in brackets, keep N characters"
-msgstr "Zet willekeurig de geformatteerde reeks tussen haakjes om, behoud N tekens"
+msgstr "Parantez içindeki biçimlendirilmiş diziyi rastgele değiştirin, N karakteri koruyun"
 
 #. Quick help for "Format password" in main window
 msgid "Treat sequence as character set and insert N characters"
-msgstr "Behandel de reeks als een tekenset en voeg N tekens in"
+msgstr "Diziyi karakter kümesi olarak ele alın ve N karakteri ekleyin"
 
 #. Quick help for "Format password" in main window
 msgid "Additional notes:"
-msgstr "Aanvullende opmerkingen:"
+msgstr "Ek notlar:"
 
 #. Quick help for "Format password" in main window
 msgid ""
 "Text enclosed with quotation marks \"...\" is copied verbatim\n"
 "to the password."
-msgstr "Tekst tussen aanhalingstekens \"...\" is letterlijk gekopieerd\n"
-"naar het wachtwoord."
+msgstr ""
+"Tırnak işaretleri \"...\" arasına alınan metin, parola içine birebir kopyalanır.\n"
+"."
 
 #. Master-Password based Password Generator window, title
 msgid "MP Password Generator"
-msgstr "MP Wachtwoord generator"
+msgstr "MP Şifre Oluşturucu"
 
 #. MP Password Generator window, group box
 msgid "Master password"
-msgstr "Hoofdwachtwoord"
+msgstr "Ana şifre"
 
 #. MP Password Generator window, button
 msgid "Enter password..."
-msgstr "Voer wachtwoord in..."
+msgstr "Şifre girin..."
 
 #. MP Password Generator window, button to clear master password cache
 msgid "Clear"
-msgstr "Verwijderen"
+msgstr "Temizle"
 
 #. MP Password Generator window, label for status of master password cache
 msgid "Status:"
-msgstr "Status:"
+msgstr "Durum:"
 
 #. MP Password Generator window, countdown for master password expiry
 msgid "Expiry countdown:"
-msgstr "Aftellen tot vervaldatum:"
+msgstr "Süre dolduktan sonra:"
 
 #. MP Password Generator window, checkbox
 msgid "Ask for password confirmation"
-msgstr "Vraag om wachtwoordbevestiging"
+msgstr "Şifre onayı iste"
 
 #. MP Password Generator window, checkbox
 msgid "Show checksum of password:"
-msgstr "Toon controlegetal van wachtwoord:"
+msgstr "Şifrenin sağlama toplamını göster:"
 
 #. MP Password Generator window, checkbox
 msgid "Key expires after the following time (seconds):"
-msgstr "De sleutel verloopt na de volgende tijd (seconden):"
+msgstr "Anahtar aşağıdaki süre sonunda geçerliliğini yitirir (saniye):"
 
 #. MP Password Generator window, checkbox
 msgid "Provide compatibility with \"Hashapass\""
-msgstr "Zorg voor compatibiliteit met \"Hashapass\""
+msgstr "“Hashapass” ile uyumluluk sağlayın"
 
 #. MP Password Generator window, checkbox
 msgid "Add password length to parameter"
-msgstr "Wachtwoordlengte toevoegen aan parameter"
+msgstr "Parametreye şifre uzunluğu ekleyin"
 
 #. MP Password Generator window, checkbox
 msgid "Autotype sequence:"
-msgstr "Autotype reeks:"
+msgstr "Otomatik yazma dizisi:"
 
 #. MP Password Generator window, group box
 msgid "Password generator"
-msgstr "wachtwoord generator"
+msgstr "Şifre oluşturucu"
 
 #. MP Password Generator window, label
 msgid "Parameter:"
-msgstr "Parameter:"
+msgstr "Parametre:"
 
 #. MP Password Generator window, label
 msgid "%d ch. / %.1f bits per ch."
-msgstr "%d tekens / %.1f bits per teken"
+msgstr "%d kanal / %.1f bit/kanal."
 
 #. MP Password Generator window, label
 msgid "Resulting password:"
-msgstr "Resulterend wachtwoord:"
+msgstr "Sonuç şifre:"
 
 #. MP Password Generator window, button
 msgid "Use as default random generator"
-msgstr "Gebruik als standaard willekeurige generator"
+msgstr "Varsayılan rastgele oluşturucu olarak kullan"
 
 #. MP Password Generator window, Character set drop-down list
 msgid "Alphanumeric"
-msgstr "Alfanumeriek"
+msgstr "Alfanümerik"
 
 #. MP Password Generator window, Character set drop-down list
 msgid "Hexadecimal"
-msgstr "Hexadecimaal"
+msgstr "Onaltılık"
 
 #. MP Password Generator window, message when master password has expired
 msgid "Key has expired."
-msgstr "Sleutel is verlopen."
+msgstr "Anahtar süresi doldu."
 
 #. MP Password Generator window, message when master password has been cleared by the user
 msgid "Key has been cleared."
-msgstr "Sleutel is gewist."
+msgstr "Anahtar silindi."
 
 #. MP Password Generator window, message when new master password has been set
 msgid "New key generated."
-msgstr "Nieuwe sleutel gegenereerd."
+msgstr "Yeni anahtar oluşturuldu."
 
 #. MP Password Generator Window, label next to password quality bar
 msgid "%d bits"
-msgstr "%d Bits"
+msgstr "%d bit"
 
 #. Provide Additional Entropy window, label
 msgid "Enter or paste some text into the box below, press mouse buttons, or move your mouse within the window."
-msgstr "Voer of plak wat tekst in het onderstaande vak, druk op de muisknoppen of beweeg uw muis binnen het venster."
+msgstr "Aşağıdaki kutuya metin girin veya yapıştırın, fare düğmelerine basın veya fareyi pencere içinde hareket ettirin."
 
 #. Provide Additional Entropy window, message shown when entropy has been added
 msgid "%d bits of entropy have been added to the random pool."
-msgstr "%d Entropiebits werden toegevoegd aan de willekeurige pool."
+msgstr "Rastgele havuza %d bit entropi eklendi."
 
 #. Password Manager window, Open database, error message
 msgid "Database not encrypted, or invalid key"
-msgstr "Database niet gecodeerd of ongeldige sleutel"
+msgstr "Veritabanı şifrelenmemiş veya anahtar geçersiz"
 
 #. Password Manager window, Open database, error message
 msgid "File contents modified, or invalid key"
-msgstr "Bestandsinhoud gewijzigd of ongeldige sleutel"
+msgstr "Dosya içeriği değiştirildi veya anahtar geçersiz"
 
 #. Password Manager window, Open database, error message
 msgid "Unknown file format"
-msgstr "Onbekend bestandsformaat"
+msgstr "Bilinmeyen dosya biçimi"
 
 #. Password Manager window, Open database, error message
 msgid "Invalid file format"
-msgstr "Ongeldig bestandsformaat"
+msgstr "Geçersiz dosya biçimi"
 
 #. Password Manager window, field name
 msgid "Title"
-msgstr "Titel"
+msgstr "Başlık"
 
 #. Password Manager window, field name
 msgid "Title:"
-msgstr "Titel:"
+msgstr "Başlık:"
 
 #. Password Manager window, field name
 msgid "User name"
-msgstr "Gebruikersnaam"
+msgstr "Kullanıcı adı"
 
 #. Password Manager window, field name
 msgid "User name:"
-msgstr "Gebruikersnaam:"
+msgstr "Kullanıcı adı:"
 
 #. Password Manager window, field name
 msgid "Password"
-msgstr "Wachtwoord"
+msgstr "Şifre"
 
 #. Password Manager window, field name
 msgid "Password:"
-msgstr "Wachtwoord:"
+msgstr "Şifre:"
 
 #. Password Manager window, field name
 msgid "URL"
@@ -2191,337 +2219,335 @@ msgstr "URL:"
 
 #. Password Manager window, field name
 msgid "Keyword"
-msgstr "Trefwoord"
+msgstr "Anahtar kelime"
 
 #. Password Manager window, field name
 msgid "Keyword:"
-msgstr "Trefwoord:"
+msgstr "Anahtar kelime:"
 
 #. Password Manager window, field name
 msgid "Notes"
-msgstr "Notities"
+msgstr "Notlar"
 
 #. Password Manager window, field name
 msgid "Notes:"
-msgstr "Notities:"
+msgstr "Notlar:"
 
 #. Password Manager window, field name
 msgid "Key-value list"
-msgstr "Lijst met sleutelwaarden"
+msgstr "Anahtar-değer listesi"
 
 #. Password Manager window, field name
 msgid "Key-value list:"
-msgstr "Lijst met sleutelwaarden:"
+msgstr "Anahtar-değer listesi:"
 
 #. Password Manager window, field name
 msgid "Creation time"
-msgstr "Gemaakt"
+msgstr "Oluşturulma zamanı"
 
 #. Password Manager window, field name
 msgid "Creation time:"
-msgstr "Gemaakt:"
+msgstr "Oluşturulma zamanı:"
 
 #. Password Manager window, field name
 msgid "Last modification"
-msgstr "Laatste wijziging"
+msgstr "Son değişiklik"
 
 #. Password Manager window, field name
 msgid "Last modification:"
-msgstr "Laatste wijziging:"
+msgstr "Son değişiklik:"
 
 #. Password Manager window, field name
 msgid "Tags"
-msgstr "Labels"
+msgstr "Etiketler"
 
 #. Password Manager window, field name
 msgid "Tags:"
-msgstr "Labels:"
+msgstr "Etiketler:"
 
 #. Password Manager window, field name
 msgid "Select and add existing tag"
-msgstr "Selecteer en voeg een bestaand label toe"
+msgstr "Mevcut etiketi seç ve ekle"
 
 #. Password Manager window, Tag view, first item "All (tags)" (plural)
 msgctxt "tags"
 msgid "All"
-msgstr "Alle"
+msgstr "Tüm"
 
 #. Password Manager window, Tag view when searching
 msgid "All search results"
-msgstr "Alle zoekresultaten"
+msgstr "Tüm arama sonuçları"
 
 #. Password Manager window, Tag view
 msgid "Untagged"
-msgstr "Zonder label"
+msgstr "Etiketsiz"
 
 #. Password Manager window, Key/value field
 msgid "Key"
-msgstr "Sleutel"
+msgstr "Anahtar"
 
 #. Password Manager window, Key/value field
 msgid "Value"
-msgstr "Waarde"
+msgstr "Değer"
 
 #. Password Manager window, main menu, Edit submenu
 msgid "Edit"
-msgstr "Bewerken"
+msgstr "Düzenle"
 
 #. Password Manager window, main menu, View submenu
 msgid "View"
-msgstr "Weergave"
+msgstr "Görüntüle"
 
 #. Password Manager window, main menu, File submenu
 msgid "New..."
-msgstr "Nieuw..."
+msgstr "Yeni..."
 
 #. Password Manager window, main menu, File submenu
 msgid "Open..."
-msgstr "Openen..."
+msgstr "Aç..."
 
 #. Password Manager window, main menu, File submenu
 msgid "Open as Read-only..."
-msgstr "Openen als alleen-lezen..."
+msgstr "Salt okunur olarak aç..."
 
 #. Password Manager window, main menu, File submenu
 msgid "Save"
-msgstr "Opslaan"
+msgstr "Kaydet"
 
 #. Password Manager window, main menu, File submenu
 msgid "Save As..."
-msgstr "Opslaan als..."
+msgstr "Farklı kaydet..."
 
 #. Password Manager window, main menu, File submenu
 msgid "Lock"
-msgstr "Vergrendelen"
+msgstr "Kilit"
 
 #. Password Manager window, main menu, File submenu
 msgid "Clear Recently Opened List"
-msgstr "Lijst met recent geopende bestanden wissen"
+msgstr "Son Açılanları Temizle"
 
 #. Password Manager window, main menu, File submenu
 msgid "Unlock"
-msgstr "Ontgrendelen"
+msgstr "Kilidi Aç"
 
 #. Password Manager window, main menu, File submenu
 msgid "Export to"
-msgstr "Exporteren naar"
+msgstr "Dışa Aktar"
 
 #. Password Manager window, main menu, File submenu, Export To submenu
 msgid "CSV File..."
-msgstr "CSV Bestand..."
+msgstr "CSV Dosyası..."
 
 #. Password Manager window, main menu, File submenu
 msgid "Database Settings..."
-msgstr "Database Instellingen..."
+msgstr "Veritabanı Ayarları..."
 
 #. Password Manager window, main menu, File submenu
 msgid "Properties..."
-msgstr "Eigenschappen..."
+msgstr "Özellikler..."
 
 #. Password Manager window, main menu, File submenu
 msgid "Change Master Password..."
-msgstr "Hoofdwachtwoord wijzigen..."
+msgstr "Ana Şifreyi Değiştir..."
 
 #. Password Manager window, main menu, Edit submenu
 msgid "Copy User Name"
-msgstr "Kopieer Gebruikersnaam"
+msgstr "Kullanıcı Adını Kopyala"
 
 #. Password Manager window, main menu, Edit submenu
 msgid "Copy Password"
-msgstr "Kopieer wachtwoord"
+msgstr "Şifreyi Kopyala"
 
 #. Password Manager window, main menu, Edit submenu
 msgid "Open URL"
-msgstr "URL openen"
+msgstr "URL'yi Aç"
 
 #. Password Manager window, main menu, Edit submenu
 msgid "Run"
-msgstr "Uitvoeren"
+msgstr "Çalıştır"
 
 #. Password Manager window, main menu, Edit submenu
 msgid "Add Entry"
-msgstr "Item toevoegen"
+msgstr "Giriş Ekle"
 
 #. Password Manager window, main menu, Edit submenu
 msgid "Duplicate Entry"
-msgstr "Item verdubbelen"
+msgstr "Girişi Çoğalt"
 
 #. Password Manager window, main menu, Edit submenu
 msgid "Delete Entry"
-msgstr "Item verwijderen"
+msgstr "Girişi Sil"
 
 #. Password Manager window, main menu, View submenu
 msgid "Show Columns"
-msgstr "Kolommen weergeven"
+msgstr "Sütunları Göster"
 
 #. Password Manager window, main menu, View submenu
 msgid "Show Passwords in List"
-msgstr "Wachtwoorden in lijst weergeven"
+msgstr "Listede Şifreleri Göster"
 
 #. Password Manager window, main menu, View submenu
 msgid "Sort Entries By"
-msgstr "Sorteer items op"
+msgstr "Girişleri Sırala"
 
 #. Password Manager window, main menu, View submenu, Sort submenu
 msgid "Unsorted"
-msgstr "Ongesorteerd"
+msgstr "Sıralanmamış"
 
 #. Password Manager window, main menu, View submenu, Sort submenu
 msgid "Ascending"
-msgstr "Oplopend"
+msgstr "Artan"
 
 #. Password Manager window, main menu, View submenu, Sort submenu
 msgid "Descending"
-msgstr "Aflopend"
+msgstr "Azalan"
 
 #. Password Manager window, main menu, View submenu
 msgid "Sort Tags By"
-msgstr "Labels sorteren op"
+msgstr "Etiketleri Şuna Göre Sırala"
 
 #. Password Manager window, main menu, View submenu, Sort Tags submenu
 msgid "Name"
-msgstr "Naam"
+msgstr "Ad"
 
 #. Password Manager window, main menu, View submenu, Sort Tags submenu
 msgid "Frequency"
-msgstr "Frequentie"
+msgstr "Frekans"
 
 #. Password Manager window, main menu, View submenu
 msgid "Change List Font..."
-msgstr "Lettertype voor lijst wijzigen..."
+msgstr "Liste Yazı Tipini Değiştir..."
 
 #. Password Manager window, main menu, View submenu
-msgid "Reset List Font"
-msgstr "Lijstlettertype resetten"
+msgid "Reset Fonts"
+msgstr "Yazı Tiplerini Sıfırla"
 
 #. Password Manager window, main menu, View submenu
 msgid "Change Password Font..."
-msgstr "Wachtwoordlettertype wijzigen..."
+msgstr "Parola Yazı Tipini Değiştir..."
 
 #. Password Manager window, Edit panel, Arrow Up button, tooltip
 msgid "Previous entry"
-msgstr "Vorige invoer"
+msgstr "Önceki kayıt"
 
 #. Password Manager window, Edit panel, Arrow Down button, tooltip
 msgid "Next entry"
-msgstr "Volgende invoer"
+msgstr "Sonraki kayıt"
 
 #. Password Manager window, Edit panel, Accept button, tooltip
 msgid "Accept changes"
-msgstr "Wijzigingen accepteren"
+msgstr "Değişiklikleri Kabul Et"
 
 #. Password Manager window, Edit panel, Undo button, tooltip
 msgid "Undo changes"
-msgstr "Wijzigingen ongedaan maken"
+msgstr "Değişiklikleri Geri Al"
 
 #. Password Manager window, toolbar, Search box, text tooltip
 msgid "Search..."
-msgstr "Zoeken..."
+msgstr "Ara..."
 
 #. Password Manager window, toolbar, Search button, context menu
 msgid "Clear search"
-msgstr "Zoekopdracht wissen"
+msgstr "Aramayı Temizle"
 
 #. Password Manager window, toolbar, Search button, tooltip
 msgid "Perform search"
-msgstr "Zoekopdracht uitvoeren"
+msgstr "Aramayı Gerçekleştir"
 
 #. Password Manager window, toolbar, Search button, context menu
 msgid "Case-sensitive"
-msgstr "Hoofdlettergevoelig"
+msgstr "Büyük-küçük harf duyarlı"
 
 #. Password Manager window, toolbar, Search button, context menu
 msgid "Fuzzy search"
-msgstr "Vage zoekopdracht (\"fuzzy\")"
+msgstr "Belirsiz arama"
 
 #. Password Manager window, toolbar, Search button, context menu
 msgid "Select fields..."
-msgstr "Selecteer velden..."
+msgstr "Alanları seçin..."
 
 #. Password Manager window, toolbar, Lock/unlock button, tooltip
 msgid "Lock/unlock database"
-msgstr "Database vergrendelen/ontgrendelen"
+msgstr "Veritabanını kilitle/kilidi aç"
 
 #. Password Manager window, Edit panel, Toggle password button, tooltip
 msgid "Left-click: Hide/show password, right-click: Generate password"
-msgstr "Linkermuisknop: wachtwoord verbergen/tonen, rechtermuisknop: wachtwoord genereren"
+msgstr "Sol tıklama: Şifreyi gizle/göster, sağ tıklama: Şifre oluştur"
 
 #. Password Manager window, Edit panel, Toggle notes button, tooltip
 msgid "Hide/show notes"
-msgstr "Notities weergeven/verbergen"
+msgstr "Notları gizle/göster"
 
 #. Password Manager window, Edit Panel, text displayed when notes are hidden
 msgid "Notes hidden - click here to display"
-msgstr "Notities verborgen - klik hier om te bekijken"
+msgstr "Notlar gizlendi - görüntülemek için buraya tıklayın"
 
 #. Password Manager window, title of password entry dialog when unlocking database
 msgid "Unlock %s"
-msgstr "%s ontgrendelen"
+msgstr "%s kilidini aç"
 
 #. Password Manager window, title of password entry dialog when opening database
 msgid "Open %s"
-msgstr "%s openen"
+msgstr "%s aç"
 
 #. Password Manager window, title of password entry dialog when creating new database
 msgid "Create new database"
-msgstr "Nieuwe database aanmaken"
+msgstr "Yeni veritabanı oluştur"
 
 #. Password Manager window, error message when opening database
 msgid ""
 "Could not find database file:\n"
 "\"%s\"."
 msgstr ""
-"Kan databasebestand niet vinden:\n"
-"\"%s\"."
+"Veritabanı dosyası bulunamadı:\n"
+"“%s”."
 
 #. Password Manager window, error message when opening database
 msgid ""
 "Error while opening database file:\n"
 "%s."
 msgstr ""
-"Fout bij het openen van het databasebestand:\n"
+"Veritabanı dosyası açılırken hata oluştu:\n"
 "%s."
 
 #. Password Manager window, warning message when opening database
 msgid "The selected file is already opened."
-msgstr "Het geselecteerde bestand is al geopend."
+msgstr "Seçilen dosya zaten açılmış."
 
 #. Password Manager window, message when currently selected entry has been changed
 msgid ""
 "The currently selected entry has been changed.\n"
 "Do you want to save the changes?"
 msgstr ""
-"Het geselecteerde item is gewijzigd.\n"
-"Wilt u de wijzigingen opslaan?"
+"Seçili giriş değiştirildi.\n"
+"Değişiklikleri kaydetmek istiyor musunuz?"
 
 #. Password Manager window, message when database has been changed
 msgid ""
 "The database has been changed.\n"
 "Do you want to save the changes?"
 msgstr ""
-"De database is gewijzigd.\n"
-"Wilt u de wijzigingen opslaan?"
+"Veritabanı değiştirildi.\n"
+"Değişiklikleri kaydetmek istiyor musunuz?"
 
 #. Password Manager window, message when trying to lock an untitled database
 msgid "An untitled database cannot be locked."
-msgstr ""
-"Een naamloze database kan niet\n"
-"worden geblokkeerd."
+msgstr "Adsız bir veritabanı kilitlenemez."
 
 #. Password Manager window, error message when trying to save backup file
 msgid ""
 "Could not save backup file\n"
 "\"%s\"."
 msgstr ""
-"Kan back-upbestand niet opslaan:\n"
-"\"%s\"."
+"Yedekleme dosyası kaydedilemedi\n"
+"“%s”."
 
 #. Password Manager window, error message
 msgid ""
 "Error while saving database file:\n"
 "%s."
 msgstr ""
-"Fout bij het opslaan van het databasebestand:\n"
+"Veritabanı dosyası kaydedilirken hata oluştu:\n"
 "%s."
 
 #. Password Manager window, message when editing an entry and trying to add new entries
@@ -2529,239 +2555,237 @@ msgid ""
 "Please finish editing the current entry\n"
 "before adding new entries."
 msgstr ""
-"Maak het bewerken van de huidige invoer\n"
-"af voordat er nieuwe worden toegevoegd\n"
-"Voeg items toe."
+"Yeni girişler eklemeden önce \n"
+"lütfen mevcut girişi düzenlemeyi tamamlayın."
 
 #. Password Manager window, message when new entries have been added
 msgid "%d entries with passwords have been added."
-msgstr "%d vermeldingen met wachtwoorden zijn toegevoegd."
+msgstr "Şifreli %d giriş eklendi."
 
 #. Password Manager window, Search result
 msgid "1 entry found."
-msgstr "1 vermelding gevonden."
+msgstr "1 giriş bulundu."
 
 #. Password Manager window, Search result
 msgid "%d entries found."
-msgstr "%d vermeldingen gevonden."
+msgstr "%d giriş bulundu."
 
 #. Password Manager window, Search result (via hot key)
 msgid "Search via hot key."
-msgstr "Zoeken via sneltoets."
+msgstr "Kısayol tuşuyla ara."
 
 #. Password Manager window, Search via hot key, no match found
 msgid ""
 "No matching keyword found for window text\n"
 "\"%s\"."
 msgstr ""
-"Geen overeenkomend trefwoord gevonden voor venstertekst\n"
-"\"%s\"."
+"Pencere metni için eşleşen anahtar kelime bulunamadı\n"
+"“%s”."
 
 #. Password Manager window, placeholder for New Entry in list view
 msgid "New Entry"
-msgstr "Nieuwe Vermelding"
+msgstr "Yeni Giriş"
 
 #. Password Manager window, message when trying to add new entry without title and password
 msgid "Please specify at least a title or password."
-msgstr ""
-"Geef minimaal een titel of wachtwoord op."
+msgstr "En az bir başlık veya şifre giriniz."
 
 #. Password Manager window, confirm deletion of entry
 msgid "Delete 1 entry?"
-msgstr "Verwijder 1 item?"
+msgstr "1 girişi silmek istiyor musunuz?"
 
 #. Password Manager window, confirm deletion of entries
 msgid "Delete %d entries?"
-msgstr "%d itemsVerwijderen?"
+msgstr "%d girişi silmek istiyor musunuz?"
 
 #. Password Manager window, Change master password, query old password
 msgid "Enter OLD master password"
-msgstr "Voer het OUDE hoofdwachtwoord in"
+msgstr "ESKİ ana şifreyi girin"
 
 #. Password Manager window, Change master password, query new password
 msgid "Enter NEW master password"
-msgstr "Voer NIEUW hoofdwachtwoord in"
+msgstr "YENİ ana şifreyi girin"
 
 #. Password Manager window, Change master password, success message
 msgid "Master password successfully changed."
-msgstr "Hoofdwachtwoord succesvol gewijzigd."
+msgstr "Ana şifre başarıyla değiştirildi."
 
 #. Password Manager window, Change master password, error message
 msgid "Old master password is invalid."
-msgstr "Oud hoofdwachtwoord is ongeldig."
+msgstr "Eski ana şifre geçersiz."
 
 #. Password Manager window, New database, default name
 msgid "Untitled"
-msgstr "Naamloos"
+msgstr "Adsız"
 
 #. Password Manager window, text added to title when creating a duplicate of an existing entry
 msgctxt "noun"
 msgid "Copy"
-msgstr "Kopiëren"
+msgstr "Kopyala"
 
 #. Password Manager window, Export database to CSV, success message
 msgid "Database successfully exported to CSV file."
-msgstr "Database succesvol geëxporteerd naar CSV-bestand."
+msgstr "Veritabanı CSV dosyasına başarıyla aktarıldı."
 
 #. Password Manager window, Export database to CSV, error message
 msgid ""
 "Error while creating CSV file:\n"
 "%s."
 msgstr ""
-"Fout bij het maken van CSV-bestand:\n"
+"CSV dosyası oluşturulurken hata oluştu:\n"
 "%s."
 
 #. Password Manager window, Open/Save dialog, filter for .pwdb files
 msgid "Password databases"
-msgstr "Wachtwoord databases"
+msgstr "Şifre veritabanları"
 
 #. Password Manager window, Open/Save dialog, filter for .csv files
 msgid "CSV files"
-msgstr "CSV-bestanden"
+msgstr "CSV dosyaları"
 
 #. Password Manager window, Key-Value field, Autotype key
 msgid "Autotype"
-msgstr "Autotype"
+msgstr "Otomatik doldurma"
 
 #. Password Manager window, Key-Value field, Format Password key
 msgid "Format password"
-msgstr "Wachtwoord formatteren"
+msgstr "Şifreyi biçimlendir"
 
 #. Password Manager window, main menu, Edit submenu
 msgid "Rearrange Entry"
-msgstr "Item opnieuw ordenen"
+msgstr "Girişi yeniden düzenle"
 
 #. Password Manager window, main menu, Edit submenu, Rearrange Entry submenu
 msgid "Move to Top"
-msgstr "Naar bovenkant verplaatsen"
+msgstr "En üste taşı"
 
 #. Password Manager window, main menu, Edit submenu, Rearrange Entry submenu
 msgid "Move up by one"
-msgstr "Ga één stap omhoog"
+msgstr "Bir yukarı taşı"
 
 #. Password Manager window, main menu, Edit submenu, Rearrange Entry submenu
 msgid "Move down by one"
-msgstr "Ga één stap omlaag"
+msgstr "Bir aşağı taşı"
 
 #. Password Manager window, main menu, Edit submenu, Rearrange Entry submenu
 msgid "Move to Bottom"
-msgstr "Naar onderkant verplaatsen"
+msgstr "En alta taşı"
 
 #. Password Manager window, Edit panel, message shown when one or more tags of the selected entry are too long
 msgid ""
 "The maximum tag length is %d characters.\n"
 "Longer tags have been shortened."
 msgstr ""
-"De maximale lengte van een tag is\n"
-"%d tekens. Langere tags zijn ingekort."
+"Maksimum etiket uzunluğu %d karakterdir.\n"
+"Daha uzun etiketler kısaltılmıştır."
 
 #. Password Manager window, main menu, File submenu, Set Recovery Password, title of password entry dialog
 msgid "Enter master password"
-msgstr "Voer het hoofdwachtwoord in"
+msgstr "Ana şifreyi girin"
 
 #. Password Manager window, main menu, File submenu, Database settings, when applying certain settings, title of password entry dialog
 msgid "Enter master password again"
-msgstr "Voer het hoofdwachtwoord opnieuw in"
+msgstr "Ana şifreyi tekrar girin"
 
 #. Password Manager window, main menu, File submenu, Database settings, when applying certain settings, message shown when master password is invalid
 msgid "Master password is invalid."
-msgstr "Hoofdwachtwoord is ongeldig."
+msgstr "Ana şifre geçersiz."
 
 #. Password Manager window, Edit panel, Key-value list button, tooltip
 msgid "Edit key-value list"
-msgstr "Bewerk sleutel-waardelijst"
+msgstr "Anahtar-değer listesini düzenle"
 
 #. Password Manager window, Edit panel, password box, generate password, message shown when profile specified by corresponding key-value pair could not be found
 msgid "Profile \"%s\" not found."
-msgstr "Profiel \"%s\" niet gevonden."
+msgstr "\"%s\" profili bulunamadı."
 
 #. Password Manager window, field name
 msgid "Password expiry"
-msgstr "Wachtwoord vervaldatum"
+msgstr "Şifre süresi"
 
 #. Password Manager window, Edit panel, checkbox
 msgid "Expires:"
-msgstr "Verloopt:"
+msgstr "Süre Sonu:"
 
 #. Password Manager window, Edit panel, Expiry button, tooltip
 msgid "Change expiry date"
-msgstr "Vervaldatum wijzigen"
+msgstr "Süre bitiş tarihini değiştir"
 
 #. Password Manager window, main menu, View submenu
 msgid "Filter"
-msgstr "Filter"
+msgstr "Filtre"
 
 #. Password Manager window, main menu, View submenu, Filter submenu
 msgid "Expired entries"
-msgstr "Verlopen vermeldingen"
+msgstr "Süresi dolmuş kayıtlar"
 
 #. Password Manager window, main menu, View submenu, Filter submenu
 msgid "Entries that will expire soon"
-msgstr "Vermeldingen die binnenkort verlopen"
+msgstr "Yakında süresi dolacak kayıtlar"
 
 #. Password Manager window, main menu, View submenu, Filter submenu
 msgid "Entries with Weak Passwords"
-msgstr "Vermeldingen met zwakke wachtwoorden"
+msgstr "Zayıf şifreye sahip kayıtlar"
 
 #. Password Manager window, Edit panel, context menu of Expiry button, menu items
 msgid "%d days"
-msgstr "%d Dagen"
+msgstr "%d gün"
 
 #. Password Manager window, when opening database, message shown if database contains expired entries
 msgid ""
 "The database contains expired entries.\n"
 "Do you want to filter these entries now?"
 msgstr ""
-"De database bevat verlopen vermeldingen.\n"
-"Wilt u deze nu filteren?"
+"Veritabanında süresi dolmuş girişler bulunmaktadır.\n"
+"Bu girişleri şimdi filtrelemek ister misiniz?"
 
 #. Password Manager window, when opening database, message shown if database contains expired entries that will expire soon
 msgid ""
 "The database contains entries that will expire soon.\n"
 "Do you want to filter these entries now?"
 msgstr ""
-"De database bevat vermeldingen die binnenkort verlopen.\n"
-"Wilt u deze nu filteren?"
+"Veritabanında yakında süresi dolacak girişler bulunmaktadır.\n"
+"Bu girişleri şimdi filtrelemek ister misiniz?"
 
 #. Password Manager window, text added to window title when database is locked
 msgid "Locked"
-msgstr "Geblokkeerd"
+msgstr "Kilitli"
 
 #. Password Manager window, main menu, File submenu
 msgid "Set Recovery Password..."
-msgstr "Herstelwachtwoord instellen..."
+msgstr "Kurtarma Şifresi Ayarla..."
 
 #. Password Manager window, main menu, File submenu
 msgid "Remove Recovery Password..."
-msgstr "Herstelwachtwoord verwijderen..."
+msgstr "Kurtarma Şifresini Kaldır..."
 
 #. Password Manager window, main menu, File submenu, Set Recovery Password, title of password entry dialog
 msgid "Enter recovery password"
-msgstr "Voer het herstelwachtwoord in"
+msgstr "Kurtarma şifresini girin"
 
 #. Password Manager window, main menu, File submenu, Set Recovery Password, message shown when procedure was successful
 msgid "Recovery password successfully set."
-msgstr "Herstelwachtwoord succesvol ingesteld."
+msgstr "Kurtarma şifresi başarıyla ayarlandı."
 
 #. Password Manager window, main menu, File submenu, Remove Recovery Password, error message
 msgid "Recovery password is invalid."
-msgstr "Herstelwachtwoord is ongeldig."
+msgstr "Kurtarma şifresi geçersiz."
 
 #. Password Manager window, main menu, File submenu, Remove Recovery Password, message shown when procedure was successful
 msgid "Recovery password successfully removed."
-msgstr "Herstelwachtwoord succesvol verwijderd."
+msgstr "Kurtarma şifresi başarıyla kaldırıldı."
 
 #. Password Manager window, main menu, File submenu, Database Properties, entry in left column
 msgid "Recovery password set"
-msgstr "Herstel wachtwoord ingesteld"
+msgstr "Kurtarma şifresi ayarlandı"
 
 #. Indicates whether option is set
 msgid "Yes"
-msgstr "Ja"
+msgstr "Evet"
 
 #. Indicates whether option is set
 msgid "No"
-msgstr "Nee"
+msgstr "Hayır"
 
 #. Password Manager window, Opening database, message shown in case of version incompatibility
 msgid ""
@@ -2770,276 +2794,275 @@ msgid ""
 "Database version: %d.%d\n"
 "Highest supported version: %d.%d"
 msgstr ""
-"Database formaat fout:\n"
+"Veritabanı formatı hatası:\n"
 "%s.\n"
-"Database versie: %d.%d\n"
-"Hoogst ondersteunde versie: %d.%d"
+"Veritabanı sürümü: %d.%d\n"
+"Desteklenen en yüksek sürüm: %d.%d"
 
 #. Password Manager window, Select Columns dialog, window title
 msgid "Select columns"
-msgstr "Kolommen selecteren"
+msgstr "Sütunları seçin"
 
 #. Password Manager window, Select Columns dialog, message shown if no column selected
 msgid "Select at least one column."
-msgstr "Selecteer minimaal één kolom."
+msgstr "En az bir sütun seçin."
 
 #. Generic string formatting error message
 msgid "Error while formatting string"
-msgstr "Fout bij het formatteren van de tekenreeks"
+msgstr "Dizgiyi biçimlendirirken hata oluştu"
 
 #. Unicode error message
 msgid "Invalid UTF-16 character encoding"
-msgstr "Ongeldige UTF-16 teken codering"
+msgstr "Geçersiz UTF-16 karakter kodlaması"
 
 #. Unicode error message
 msgid "Error while converting string to UTF-8"
-msgstr "Fout bij het converteren van reeks naar UTF-8"
+msgstr "Dizgiyi UTF-8'e dönüştürürken hata oluştu"
 
 #. Unicode error message
 msgid "Error while decoding UTF-8 string"
-msgstr "Fout bij het decoderen van UTF-8 tekenreeks"
+msgstr "UTF-8 dizgisini kod çözerken hata oluştu"
 
 #. Unicode error message
 msgid "Unicode string too long"
-msgstr "Unicode tekenreeks te lang"
+msgstr "Unicode dizgisi çok uzun"
 
 #. Unicode error message
 msgid "Invalid ANSI or UTF-8 character encoding, or Unicode string too long"
-msgstr "Ongeldige ANSI- of UTF-8-tekencodering, of Unicode tekenreeks te lang"
+msgstr "Geçersiz ANSI veya UTF-8 karakter kodlaması veya Unicode dizgisi çok uzun"
 
 #. Unicode error message
 msgid "Error while encoding Unicode string"
-msgstr "Fout bij het coderen van Unicode-tekenreeks"
+msgstr "Unicode dizgisini kodlarken hata oluştu"
 
 #. Error message
 msgid "Out of disk space"
-msgstr "Er is niet voldoende opslagruimte beschikbaar"
+msgstr "Disk alanı yetersiz"
 
 #. Error message when trying to open a file or execute a command
 msgid ""
 "Could not open file/execute operation\n"
 "\"%s\"."
 msgstr ""
-"Kon bestand/bewerking\n"
-"\"%s\"\n"
-"niet openen/uitvoeren."
+"Dosya açılamadı/işlem gerçekleştirilemedi\n"
+"\"%s\"."
 
 #. Main menu, Tools submenu, Create Trigram File, message shown when source file does not contain enough 3-letter combinations (trigrams) to create the trigram file
 msgid "Source file does not contain enough trigrams"
-msgstr "Bronbestand bevat niet genoeg trigrammen"
+msgstr "Kaynak dosyada yeterli trigram yok"
 
 #. Password Manager window, Database Settings dialog, window title
 msgid "Database settings"
-msgstr "Database instellingen"
+msgstr "Veritabanı ayarları"
 
 #. Password Manager window, Database Settings dialog, label
 msgid "Default user name for new entries:"
-msgstr "Standaard gebruikersnaam voor nieuwe vermeldingen:"
+msgstr "Yeni girişler için varsayılan kullanıcı adı:"
 
 #. Password Manager window, Database Settings dialog, label
 msgid "Generate passwords for new entries using format sequence:"
-msgstr "Genereer wachtwoorden voor nieuwe vermeldingen met behulp van een opmaakvolgorde:"
+msgstr "Yeni girişler için şifreleri şu format dizisini kullanarak oluştur:"
 
 #. Password Manager window, Database Settings dialog, Generate Password button, tooltip
 msgid "Generate test password using format sequence"
-msgstr "Genereer een testwachtwoord met behulp van de opmaakvolgorde"
+msgstr "Test şifresini format dizisini kullanarak oluştur"
 
 #. Password Manager window, Database Settings dialog, label
 msgid "Encryption algorithm:"
-msgstr "Encryptie-algoritme:"
+msgstr "Şifreleme algoritması:"
 
 #. Password Manager window, Database Settings dialog, items in list of encryption algorithms
 msgid "%s with %d-bit key"
-msgstr "%s met %d-bit sleutel"
+msgstr "%s ile %d bit anahtar"
 
 #. Password Manager window, Database Settings dialog, label
 msgid "Number of key derivation rounds:"
-msgstr "Aantal sleutelafleidingsrondes:"
+msgstr "Anahtar türetme tur sayısı:"
 
 #. Password Manager window, Database Settings dialog, Calculate KDF Rounds button, tooltip
 msgid "Calculate number of rounds for a 1 second delay"
-msgstr "Bereken het aantal ronden voor een vertraging van 1 seconde"
+msgstr "1 saniyelik gecikme için tur sayısını hesapla"
 
 #. Password Manager window, Database Settings dialog, message shown when number of KDF rounds is invalid
 msgid "Invalid number of key derivation rounds."
-msgstr "Ongeldig aantal rondes voor sleutelafleiding."
+msgstr "Anahtar türetme tur sayısı geçersiz."
 
 #. Password Manager window, Database Settings dialog, label
 msgid "By default, new entries expire after the following number of days:"
-msgstr "Standaard vervallen nieuwe vermeldingen na het volgende aantal dagen:"
+msgstr "Varsayılan olarak, yeni girdiler aşağıdaki gün sayısı geçtikten sonra sona erer:"
 
 #. Password Manager window, Database Settings dialog, label
 msgid "For new entries, save the following number of previous passwords:"
-msgstr "Voor nieuwe vermeldingen, sla het volgende aantal laatste wachtwoorden op:"
+msgstr "Yeni girdiler için, aşağıdaki önceki şifre sayısını kaydet:"
 
 #. Password Manager window, Database Settings dialog, title of progress dialog when changing number of KDF iterations
 msgid "Changing number of KDF iterations"
-msgstr "Het aantal KDF-herhalingen wijzigen"
+msgstr "KDF yineleme sayısını değiştirme"
 
 #. Password Manager window, Database Settings dialog, title of progress dialog when changing number of KDF iterations
 msgid "Computing derived key ..."
-msgstr "Berekenen van afgeleide sleutel ..."
+msgstr "Türetilen anahtar hesaplanıyor ..."
 
 #. Password Manager window, Key-Value List Editor dialog, window title
 msgid "Key-value list editor"
-msgstr "Sleutel-waardelijsten bewerken"
+msgstr "Anahtar-değer listesi düzenleyici"
 
 #. Password Manager window, Database Properties dialog, window title
 msgid "Properties"
-msgstr "Eigenschappen"
+msgstr "Özellikler"
 
 #. Password Manager window, Database Properties dialog, title of left column
 msgid "Property"
-msgstr "Eigenschap"
+msgstr "Özellik"
 
 #. Password Manager window, Database Properties dialog, entry in left column
 msgid "Location"
-msgstr "Locatie"
+msgstr "Konum"
 
 #. Password Manager window, Database Properties dialog, entry in left column
 msgid "Size"
-msgstr "Grootte"
+msgstr "Boyut"
 
 #. Password Manager window, Database Properties dialog, entry in left column
 msgid "Format version"
-msgstr "Formaat versie"
+msgstr "Biçim sürümü"
 
 #. Password Manager window, Database Properties dialog, entry in left column
 msgid "Number of entries"
-msgstr "Aantal vermeldingen"
+msgstr "Giriş sayısı"
 
 #. Password Manager window, Database Properties dialog, entry in left column
 msgid "Number of expired entries"
-msgstr "Aantal verlopen vermeldingen"
+msgstr "Süresi dolan giriş sayısı"
 
 #. Password Manager window, Database Properties dialog, entry in left column
 msgid "Number of tags"
-msgstr "Aantal labels"
+msgstr "Etiket sayısı"
 
 #. Password Manager window, Database Settings dialog, title of Compression tab
 msgid "Compression"
-msgstr "Compressie"
+msgstr "Sıkıştırma"
 
 #. Password Manager window, Database Settings dialog, Compression, checkbox
 msgid "Enable data compression (Deflate)"
-msgstr "Gebruik datacompressie (Leeglopen)"
+msgstr "Veri sıkıştırmayı etkinleştir (Deflate)"
 
 #. Password Manager window, Database Settings dialog, compression, label
 msgid "<- Low compression, fast | High compression, slow ->"
-msgstr "<- Lage compressie, snel | Hoge compressie, langzaam ->"
+msgstr "<- Düşük sıkıştırma, hızlı | Yüksek sıkıştırma, yavaş ->"
 
 #. Password Manager window, Edit panel, title of password entry dialog when password has been changed and needs to be confirmed
 msgid "Confirm password"
-msgstr "Wachtwoord bevestigen"
+msgstr "Şifreyi onayla"
 
 #. Password Manager window, Password quality bar, caption when quality estimation is disabled
 msgid "Password quality estimation is disabled"
-msgstr "Wachtwoordkwaliteit inschatting uitgeschakeld"
+msgstr "Şifre kalitesi tahmini devre dışıdır"
 
 #. Password Manager window, Password Quality button, tooltip
 msgid "Estimate password quality"
-msgstr "Schat de wachtwoordkwaliteit in"
+msgstr "Şifre kalitesini tahmin et"
 
 #. Password Manager window, field name
 msgid "Password history"
-msgstr "Wachtwoord geschiedenis"
+msgstr "Şifre geçmişi"
 
 #. Password Manager window, field name
 msgid "Password changed"
-msgstr "Wachtwoord gewijzigd"
+msgstr "Şifre değiştirildi"
 
 #. Password Manager window, Edit panel, label
 msgid "Password changed:"
-msgstr "Wachtwoord gewijzigd:"
+msgstr "Şifre değiştirildi:"
 
 #. Password Manager window, Password History dialog, checkbox
 msgid "Keep last passwords - up to:"
-msgstr "Bewaar de laatste wachtwoorden - tot:"
+msgstr "Son şifreleri sakla - en fazla:"
 
 #. Password Manager window, Password History dialog, list view, column
 msgid "Set Date/Time"
-msgstr "Datum/Tijd instellen"
+msgstr "Tarih/Saat'i ayarla"
 
 #. Password Manager window, shutdown blocker message
 msgid "Password database entry is being edited."
-msgstr "Wachtwoorddatabase invoer wordt bewerkt."
+msgstr "Şifre veritabanı girişi düzenleniyor."
 
 #. Password Manager window, shutdown blocker message
 msgid "Password database contains unsaved changes."
-msgstr "Wachtwoorddatabase bevat niet-opgeslagen wijzigingen."
+msgstr "Şifre veritabanında kaydedilmemiş değişiklikler var."
 
 #. Password Manager window, toolbar, filter info
 msgid "Filtered"
-msgstr "Gefilterd"
+msgstr "Filtrelenmiş"
 
 #. Password Manager window, toolbar, filter info, button tooltip
 msgid "Remove filter"
-msgstr "Filter verwijderen"
+msgstr "Filtreyi kaldır"
 
 #. Main window, button to build character set definition
 msgid "Build..."
-msgstr "Maken..."
+msgstr "Oluştur..."
 
 #. Main window, button to build character set definition, hint
 msgid "Build character set definition"
-msgstr "Maak een tekenset definitie"
+msgstr "Karakter kümesi tanımı oluştur"
 
 #. Character set builder, window title
 msgid "Character Set Builder"
-msgstr "Tekenset maken"
+msgstr "Karakter Kümesi Oluşturucu"
 
 #. Character set builder, group box with character sets
 msgid "Character set selection"
-msgstr "Selectie van tekenset"
+msgstr "Karakter kümesi seçimi"
 
 #. Character set builder, group box with exclude characters
 msgid "Exclude characters"
-msgstr "Tekens uitsluiten"
+msgstr "Karakterleri hariç tut"
 
 #. Character set builder, group box with tag/comment
 msgid "Tag/comment"
-msgstr "Label/opmerking"
+msgstr "Etiket/yorum"
 
 #. Character set builder, group box with resulting definition
 msgid "Resulting character set definition"
-msgstr "Resulterende karakterset definitie"
+msgstr "Sonuç karakter kümesi tanımı"
 
 #. Character set builder, button
 msgid "Apply"
-msgstr "Toepassen"
+msgstr "Uygula"
 
 #. Character set builder, check box
 msgid "Lower-case letters (a-z)"
-msgstr "Kleine letters (a-z)"
+msgstr "Küçük harfler (a-z)"
 
 #. Character set builder, check box
 msgid "Upper-case letters (A-Z)"
-msgstr "Hoofdletters (A-Z)"
+msgstr "Büyük harfler (A-Z)"
 
 #. Character set builder, check box
 msgid "Digits (0-9)"
-msgstr "Cijfers (0-9)"
+msgstr "Rakamlar (0-9)"
 
 #. Character set builder, check box
 msgid "Characters from range:"
-msgstr "Tekens uit het bereik:"
+msgstr "Aralıktaki karakterler:"
 
 #. Character set builder, check box
 msgid "Additional characters:"
-msgstr "Extra tekens:"
+msgstr "Ek karakterler:"
 
 #. Character set builder, check box
 msgid "At least"
-msgstr "Minstens"
+msgstr "En az"
 
 #. Character set builder, edit box
 msgid "From:"
-msgstr "Van:"
+msgstr "Başlangıç:"
 
 #. Character set builder, edit box
 msgid "to:"
-msgstr "tot:"
+msgstr "kime:"
 
 #. Character set builder, error message
 msgid "Invalid character range."
-msgstr "Ongeldig tekenbereik."
+msgstr "Geçersiz karakter aralığı."
