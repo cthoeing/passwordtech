@@ -30,26 +30,26 @@
 class AutoCompleteData : public IEnumString
 {
 public:
-	AutoCompleteData(const std::vector<SecureWString>& items) :
-		m_numRef(1), m_pos(0), m_items(items)
-	{
-	}
+  AutoCompleteData(const std::vector<SecureWString>& items) :
+    m_numRef(1), m_pos(0), m_items(items)
+  {
+  }
 
-	STDMETHODIMP_(ULONG) AddRef()
-	{
+  STDMETHODIMP_(ULONG) AddRef()
+  {
       return static_cast<ULONG>(InterlockedIncrement(&m_numRef));
-	};
+  }
 
-	STDMETHODIMP_(ULONG) Release()
-	{
+  STDMETHODIMP_(ULONG) Release()
+  {
       const LONG r = InterlockedDecrement(&m_numRef);
       if (r == 0)
         delete this;
       return static_cast<ULONG>(r);
-	};
+  }
 
-	STDMETHODIMP QueryInterface(REFIID riid, void** ppv)
-	{
+  STDMETHODIMP QueryInterface(REFIID riid, void** ppv)
+  {
       if (ppv == nullptr)
         return E_INVALIDARG;
 
@@ -71,10 +71,10 @@ public:
       // The auto-completion object may ask for the optional IACList
       *ppv = nullptr;
       return E_NOINTERFACE;
-	};
+  }
 
-	STDMETHODIMP Next(ULONG celt, LPOLESTR* rgelt, ULONG* pceltFetched)
-	{
+  STDMETHODIMP Next(ULONG celt, LPOLESTR* rgelt, ULONG* pceltFetched)
+  {
       if (pceltFetched != nullptr)
         *pceltFetched = 0;
 
@@ -114,10 +114,10 @@ public:
         *pceltFetched = numRet;
 
       return (numRet == celt) ? S_OK : S_FALSE;
-	};
+  }
 
-	STDMETHODIMP Skip(ULONG celt)
-	{
+  STDMETHODIMP Skip(ULONG celt)
+  {
       const size_t newPos = m_pos + celt;
       if (newPos <= m_items.size() && newPos >= celt)
       {
@@ -127,16 +127,16 @@ public:
 
       m_pos = m_items.size();
       return S_FALSE;
-	};
+  }
 
-	STDMETHODIMP Reset()
-	{
+  STDMETHODIMP Reset()
+  {
       m_pos = 0;
       return S_OK;
-	};
+  }
 
-	STDMETHODIMP Clone(IEnumString** ppenum)
-	{
+  STDMETHODIMP Clone(IEnumString** ppenum)
+  {
       if (ppenum == nullptr)
         return E_INVALIDARG;
 
@@ -144,7 +144,7 @@ public:
 
       *ppenum = p;
       return S_OK;
-	};
+  }
 
 private:
   AutoCompleteData(const AutoCompleteData& src)

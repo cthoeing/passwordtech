@@ -1,4 +1,4 @@
-﻿# German translation of Password Tech 3.5.7
+﻿# German translation of Password Tech 3.5.8
 # Released under the GNU General Public License
 #
 # !!! NOTE ON FORMAT STRINGS !!!
@@ -20,7 +20,7 @@
 #. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.7\n"
+"Project-Id-Version: Password Tech 3.5.8\n"
 "Last-Translator: Christian Thöing\n"
 "Language: de\n"
 
@@ -163,6 +163,59 @@ msgstr "Profil-Editor..."
 #. Main menu, File submenu, Exit program
 msgid "Exit"
 msgstr "Beenden"
+
+#. Main menu, File submenu
+msgid "Backup Settings..."
+msgstr "Sicherheitskopie der Einstellungen erstellen..."
+
+#. Main menu, File submenu
+msgid "Restore Settings from Backup..."
+msgstr "Einstellungen wiederherstellen..."
+
+#. Backup settings, error message
+msgid "Could not copy the following language file(s):\n%1"
+msgstr "Konnte folgende Sprachdatei(en) nicht kopieren:\n%1"
+
+#. Backup settings, title of dialog
+msgid "Select folder to store backup"
+msgstr "Ordner zum Speichern der Sicherheitskopie auswählen"
+
+#. Backup settings, message
+msgid "Backup of settings and language files\n"
+"stored in \"%1\"."
+msgstr "Sicherheitskopie der Einstellungen und\n"
+"installierten Sprachdateien gespeichert in\n"
+"\"%1\"."
+
+#. Restore backup, title of dialog
+msgid "Select folder containing backup to restore"
+msgstr "Ordner mit wiederherzustellender Sicherheitskopie auswählen"
+
+#. Restore backup, error message
+msgid "Configuration file \"%1\" not found in folder."
+msgstr "Konnte Konfigurationsdatei \"%1\" im Ordner nicht finden."
+
+#. Restore backup, message
+msgid "Backup was created with an older version (%1)\n"
+"of the program. Continue anyway?"
+msgstr "Backup wurde mit einer älteren Programmversion (%1)\n"
+"erstellt. Trotzdem fortfahren?"
+
+#. Restore backup, error message
+msgid "Could not copy configuration file to\n\"%1\"."
+msgstr "Konnte Konfigurationsdatei nicht nach\n\"%1\" kopieren."
+
+#. Restore backup, message
+msgid "Restored settings will only take effect after\n"
+"a program restart. Do you want to restart now?"
+msgstr "Wiederhergestellte Einstellungen werden erst nach\n"
+"Neustart des Programms wirksam. Jetzt neu starten?"
+
+#. Restore backup, message
+msgid "Configuration settings will not be saved until\n"
+"the next time the program is started."
+msgstr "Einstellungen werden bis zum nächsten Programmstart\n"
+"nicht gespeichert."
 
 #. Main menu, Tools submenu 
 msgid "Tools"

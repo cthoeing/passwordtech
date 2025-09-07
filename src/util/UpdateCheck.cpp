@@ -29,6 +29,7 @@
 #include "StringFileStreamW.h"
 #include "Language.h"
 #include "Util.h"
+#include "hrtimer.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #ifndef _WIN64
@@ -40,9 +41,12 @@ std::atomic<bool> TUpdateCheckThread::s_blThreadRunning(false);
 
 //---------------------------------------------------------------------------
 TUpdateCheckThread::CheckResult __fastcall TUpdateCheckThread::CheckForUpdates(
-  bool blShowError)
+  bool blShowError,
+  float fTimeoutSec)
 {
   try {
+    Stopwatch sw;
+
     const WString sAltUrl = Format("%s?fakeParam=%.8x", ARRAYOFCONST((
       PROGRAM_URL_VERSION, time(nullptr))));
 
@@ -63,6 +67,9 @@ TUpdateCheckThread::CheckResult __fastcall TUpdateCheckThread::CheckForUpdates(
 	  HRESULT hResult = URLDownloadToCacheFile(nullptr, pwszUrl, wszFileName,
         MAX_PATH, 0, NULL);
 
+    if (fTimeoutSec > 0 && sw.ElapsedSeconds() > fTimeoutSec)
+      return CheckResult::Timeout;
+
     WString sFileName(wszFileName);
 
     if (hResult != S_OK || sFileName.IsEmpty())
@@ -79,9 +86,6 @@ TUpdateCheckThread::CheckResult __fastcall TUpdateCheckThread::CheckForUpdates(
     if (pFile->ReadString(wszBuf, BUFSIZE))
       sVersion = Trim(WString(wszBuf));
 
-    //int nVer1 = -1, nVer2 = -1, nVer3 = -1;
-    //int nNumScanned = sscanf(AnsiString(sVersion).c_str(),
-    //    "%d.%d.%d", &nVer1, &nVer2, &nVer3);
     auto version = ParseVersionNumber(sVersion);
     if (version.size() == 3) {
       if (pFile->ReadString(wszBuf, BUFSIZE))

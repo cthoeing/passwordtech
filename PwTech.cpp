@@ -123,7 +123,7 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
     // load the configuration file
     WString sTryIniFileName = sIniFileName;
     try {
-      g_pIni.reset(new TMemIniFile(sIniFileName, TEncoding::UTF8));
+      g_pIni = std::make_unique<TMemIniFile>(sIniFileName, TEncoding::UTF8);
 
       if (g_cmdLineOptions.IniFileName.IsEmpty() &&
           g_pIni->ReadBool("Main", "UseAppDataPath", false) &&
@@ -136,13 +136,13 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 
         sTryIniFileName = g_sAppDataPath + PROGRAM_INIFILE;
         CopyFile(sIniFileName.c_str(), sTryIniFileName.c_str(), true);
-        g_pIni.reset(new TMemIniFile(sTryIniFileName, TEncoding::UTF8));
+        g_pIni = std::make_unique<TMemIniFile>(sTryIniFileName, TEncoding::UTF8);
       }
     }
     catch (Exception& e) {
       MsgBox(FormatW("Could not load configuration file\n\"%1\":\n%2",
         { sTryIniFileName, e.Message }), MB_ICONERROR);
-      g_pIni.reset(new TMemIniFile("~pwtech~fake~ini"));
+      g_pIni = std::make_unique<TMemIniFile>("~pwtech~fake~ini");
       g_blFakeIniFile = true;
     }
 
