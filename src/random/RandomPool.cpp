@@ -712,7 +712,7 @@ void RandomPool::Randomize(void)
   AddData(GetProcessHeap());
   AddData(GetProcessWindowStation());
   AddData(GetQueueStatus(QS_ALLEVENTS));
-  AddData(GetTickCount());
+  AddData(GetTickCount64());
 
   // these exist on NT
   FILETIME ftCreationTime;

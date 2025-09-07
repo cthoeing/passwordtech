@@ -110,8 +110,8 @@ void IARandGen::Randomize(void)
   GetSystemTimeAsFileTime(&ft);
   sha256_update(&hashCtx, reinterpret_cast<word8*>(&ft), sizeof(FILETIME));
 
-  word32 lCounter = GetTickCount();
-  sha256_update(&hashCtx, reinterpret_cast<word8*>(&lCounter), sizeof(word32));
+  word64 qCounter = GetTickCount64();
+  sha256_update(&hashCtx, reinterpret_cast<word8*>(&qCounter), sizeof(word64));
 
   LARGE_INTEGER qpc;
   if (QueryPerformanceCounter(&qpc))

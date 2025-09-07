@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Password Tech"
-#define MyAppVersion "3.5.7"
+#define MyAppVersion "3.5.8"
 #define MyAppPublisher "Christian Thöing"
 #define MyAppURL "http://pwgen-win.sourceforge.net"
 #define MyAppExeName "PwTech.exe"
@@ -54,15 +54,16 @@ Name: "useprogfolder"; Description: "{cm:DontUseAppDataPath}"; Flags: unchecked
 [Files]
 Source: "C:\Projekte\PWGen3\Release\64bit\PwTech.exe"; DestDir: "{app}"; Flags: ignoreversion; Check: Is64BitInstallMode
 Source: "C:\Projekte\PWGen3\Release\64bit\PwTech.com"; DestDir: "{app}"; DestName: "PwTech.com"; Flags: ignoreversion; Check: Is64BitInstallMode
-Source: "C:\Projekte\PWGen3\Release\32bit\PwTech.exe"; DestDir: "{app}"; Flags: ignoreversion solidbreak; Check: not Is64BitInstallMode
+Source: "C:\Projekte\PWGen3\Release\32bit\PwTech.exe"; DestDir: "{app}"; Flags: ignoreversion; Check: not Is64BitInstallMode
 Source: "C:\Projekte\PWGen3\Release\32bit\PwTech.com"; DestDir: "{app}"; Flags: ignoreversion; Check: not Is64BitInstallMode
-Source: "C:\Projekte\PWGen3\script_examples\*"; DestDir: "{app}\script_examples"; Flags: ignoreversion solidbreak
+Source: "C:\Projekte\PWGen3\script_examples\*"; DestDir: "{app}\script_examples"; Flags: ignoreversion
 Source: "C:\Projekte\PWGen3\manual\manual.pdf"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Projekte\PWGen3\manual\scripting.pdf"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Projekte\PWGen3\license.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Projekte\PWGen3\common_passwords.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Projekte\PWGen3\changes.txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Projekte\PWGen3\German.po"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Projekte\PWGen3\German.po"; DestDir: "{userappdata}\Password Tech"; Flags: ignoreversion; Tasks: not useprogfolder
+Source: "C:\Projekte\PWGen3\German.po"; DestDir: "{app}"; Flags: ignoreversion; Tasks: useprogfolder
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

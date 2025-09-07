@@ -156,9 +156,11 @@ const char* CHARSETLIST_DEFAULTENTRIES[CHARSETLIST_DEFAULTENTRIES_NUM] =
   "<phoneticx>"
 };
 
-const int FORMATLIST_DEFAULTENTRIES_NUM = 10;
+const int FORMATLIST_DEFAULTENTRIES_NUM = 12;
 const char* FORMATLIST_DEFAULTENTRIES[FORMATLIST_DEFAULTENTRIES_NUM] =
 {
+  "10qs4d",
+  "12q{sLd}",
   "{4u4l2ds}",
   "{6ALd}",
   "3[8q ]",
@@ -637,8 +639,6 @@ void __fastcall TMainForm::FormActivate(TObject *Sender)
       if (blNeedCheck) {
         MainMenu_Help_CheckForUpdates->Enabled = false;
         m_pUpdCheckThread = new TUpdateCheckThread(OnUpdCheckThreadTerminate);
-        //m_pUpdCheckThread->OnTerminate = OnUpdCheckThreadTerminate;
-        //m_blUpdCheckThreadRunning = true;
       }
     }
 
@@ -665,7 +665,8 @@ void __fastcall TMainForm::FormPaint(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::OnUpdCheckThreadTerminate(TObject* Sender)
 {
-  if (m_pUpdCheckThread->Result != TUpdateCheckThread::CheckResult::Error)
+  if (m_pUpdCheckThread->Result != TUpdateCheckThread::CheckResult::Error &&
+      m_pUpdCheckThread->Result != TUpdateCheckThread::CheckResult::Timeout)
     m_lastUpdateCheck = TDateTime::CurrentDate();
 
   MainMenu_Help_CheckForUpdates->Enabled = true;
@@ -1211,12 +1212,19 @@ void __fastcall TMainForm::LoadConfig(void)
   UpdateProfileControls();
 }
 //---------------------------------------------------------------------------
-bool __fastcall TMainForm::SaveConfig(void)
+bool __fastcall TMainForm::SaveConfig(const WString& sFileName)
 {
-  if (g_blFakeIniFile)
+  if (sFileName.IsEmpty() && g_blFakeIniFile)
     return true;
 
+  bool blSuccess = false;
+  std::unique_ptr<TMemIniFile> customIni;
+
   try {
+    if (!sFileName.IsEmpty()) {
+      customIni = std::make_unique<TMemIniFile>(sFileName);
+      g_pIni.swap(customIni);
+    }
     g_pIni->Clear();
 
     g_pIni->WriteString(CONFIG_ID, "LastVersion", PROGRAM_VERSION);
@@ -1366,14 +1374,18 @@ bool __fastcall TMainForm::SaveConfig(void)
     }
 
     g_pIni->UpdateFile();
+    blSuccess = true;
   }
   catch (Exception& e) {
     if (g_terminateAction != TerminateAction::SystemShutdown)
       MsgBox(TRLFormat("Error while writing to configuration file:\n%1.",
         { e.Message }), MB_ICONERROR);
-    return false;
   }
-  return true;
+
+  if (customIni)
+    g_pIni.swap(customIni);
+
+  return blSuccess;
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::UpdateEntropyProgress(bool blForce)
@@ -4450,6 +4462,121 @@ void __fastcall TMainForm::PasswBoxMenu_ResetFontClick(TObject *Sender)
     FontDlg->Font = PasswBox->Font;
     MPPasswGenForm->PasswBox->Font = PasswBox->Font;
     m_pDefaultPasswFont.reset();
+  }
+}
+//---------------------------------------------------------------------------
+void showFailedCopiesErrorMsg(const WString& sFailedCopies)
+{
+  MsgBox(TRLFormat("Could not copy the following language file(s):\n%1",
+    { sFailedCopies }), MB_ICONWARNING);
+}
+
+void __fastcall TMainForm::MainMenu_File_BackupSettingsClick(TObject *Sender)
+{
+  OpenFolderDlg->Title = TRL("Select folder to store backup");
+  if (!OpenFolderDlg->Execute())
+    return;
+
+  WString sRoot = OpenFolderDlg->FileName + "\\";
+  if (!SaveConfig(sRoot + PROGRAM_INIFILE))
+    return;
+
+  WString sFailedCopies;
+  for (const auto& le : g_languages) {
+    if (le.FileName.IsEmpty()) continue;
+    WString sDest = sRoot + ExtractFileName(le.FileName);
+    if (!CopyFile(le.FileName.c_str(), sDest.c_str(), false)) {
+      if (!sFailedCopies.IsEmpty()) {
+        sFailedCopies += "\n";
+      }
+      sFailedCopies += ExtractFileName(le.FileName);
+    }
+  }
+
+  if (!sFailedCopies.IsEmpty()) {
+    showFailedCopiesErrorMsg(sFailedCopies);
+  }
+
+  MsgBox(TRLFormat("Backup of settings and language files\nstored in \"%1\".",
+    { OpenFolderDlg->FileName }), MB_ICONINFORMATION);
+}
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::MainMenu_File_RestoreSettingsClick(TObject *Sender)
+{
+  OpenFolderDlg->Title = TRL("Select folder containing backup to restore");
+  if (!OpenFolderDlg->Execute())
+    return;
+
+  try {
+    WString sRoot = OpenFolderDlg->FileName + "\\";
+    WString sFileName = sRoot + PROGRAM_INIFILE;
+    if (!FileExists(sFileName)) {
+      throw Exception(TRLFormat(
+        "Configuration file \"%1\" not found in folder.", { PROGRAM_INIFILE }));
+    }
+
+    {
+      auto ini = std::make_unique<TMemIniFile>(sFileName, TEncoding::UTF8);
+      WString sIniVersion = ini->ReadString(CONFIG_ID, "LastVersion", WString());
+      if (sIniVersion.IsEmpty())
+        sIniVersion = "0";
+      if (CompareVersionNumbers(sIniVersion, PROGRAM_VERSION) < 0) {
+        if (MsgBox(TRLFormat("Backup was created with an older version (%1)\n"
+            "of the program. Continue anyway?", { sIniVersion }),
+            MB_ICONWARNING + MB_YESNO) == IDNO)
+        {
+          return;
+        }
+      }
+    }
+
+    WString sDest = g_sAppDataPath + PROGRAM_INIFILE;
+    if (!CopyFile(sFileName.c_str(), sDest.c_str(), false)) {
+      throw Exception(TRLFormat(
+        "Could not copy configuration file to\n\"%1\".", { sDest }));
+    }
+
+    TSearchRec srw;
+    WString sFailedCopies;
+    if (FindFirst(sRoot + "*", faAnyFile, srw) == 0) {
+      do {
+        WString sExt = ExtractFileExt(srw.Name);
+        if (!SameText(sExt, ".lng") && !SameText(sExt, ".po"))
+          continue;
+
+        sFileName = sRoot + ExtractFileName(srw.Name);
+        sDest = g_sAppDataPath + ExtractFileName(srw.Name);
+        if (!CopyFile(sFileName.c_str(), sDest.c_str(), false)) {
+          if (!sFailedCopies.IsEmpty()) {
+            sFailedCopies += "\n";
+          }
+          sFailedCopies += sFileName;
+        }
+      }
+      while (FindNext(srw) == 0);
+    }
+
+    if (!sFailedCopies.IsEmpty()) {
+      showFailedCopiesErrorMsg(sFailedCopies);
+    }
+  }
+  catch (Exception& e) {
+    MsgBox(e.Message, MB_ICONERROR);
+    return;
+  }
+
+  // ensure that restored ini file will not be overwritten during runtime
+  g_blFakeIniFile = true;
+
+  if (MsgBox(TRL("Restored settings will only take effect after\na program restart. "
+    "Do you want to restart now?"), MB_ICONQUESTION + MB_YESNO) == IDYES)
+  {
+    g_terminateAction = TerminateAction::RestartProgram;
+    Close();
+  }
+  else {
+    MsgBox(TRL("Configuration settings will not be saved until\n"
+     "the next time the program is started."), MB_ICONINFORMATION);
   }
 }
 //---------------------------------------------------------------------------

@@ -831,6 +831,7 @@ bool __fastcall TPasswMngForm::OpenDatabase(int nOpenFlags, WString sFileName)
       if (m_dbViewSelItemThread)
         m_dbViewSelItemThread->ApplyNow();
       ScrollToItem(m_nLockSelItemIndex);
+      DbView->SetFocus();
     }
 
     m_lockSelTags.clear();
@@ -2873,12 +2874,21 @@ void __fastcall TPasswMngForm::FormActivate(TObject *Sender)
       pKeyValGrid->Cells[0][++nRow] = kv.second.c_str();
   }
 
-  if (Tag == FORM_TAG_OPEN_DB)
+  if (Tag == FORM_TAG_OPEN_DB) {
     OpenDatabase(DB_OPEN_FLAG_EXISTING, (!g_cmdLineOptions.PasswDbFileName.IsEmpty() &&
       blStartup) ? g_cmdLineOptions.PasswDbFileName : m_sDbFileName);
-  else if (Tag == FORM_TAG_UNLOCK_DB || (m_blLocked && !m_blUnlockTried)) {
-    OpenDatabase(DB_OPEN_FLAG_EXISTING | DB_OPEN_FLAG_UNLOCK);
+  }
+  else if (m_blLocked) {
+    static word64 qLastTick = 0;
+    if (Tag == FORM_TAG_UNLOCK_DB) {
+      if (GetTickCount64() > qLastTick + 3000)
+        LockOrUnlockDatabase(false);
+    }
+    else if (!m_blUnlockTried) {
+      LockOrUnlockDatabase(false);
+    }
     m_blUnlockTried = true;
+    qLastTick = GetTickCount64();
   }
 
   Tag = 0;
@@ -2980,7 +2990,7 @@ void __fastcall TPasswMngForm::OnWindowPosChanging(TWMWindowPosChanging& msg)
         g_config.Database.LockMinimize) {
       MainMenu_File_LockClick(this);
     }
-    m_blUnlockTried = false;
+    //m_blUnlockTried = false;
   }
   TForm::Dispatch(&msg);
 }
