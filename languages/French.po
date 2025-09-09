@@ -4,7 +4,7 @@
 #. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.6\n"
+"Project-Id-Version: Password Tech 3.5.8\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: Pierrard Sylvie <sylvie@gratilog.net>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-PasswordTech-Manual: manual.pdf\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.7\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #. Message box caption
@@ -139,7 +139,8 @@ msgstr "Afficher/Cacher le mot de passe"
 
 #. Main window, password groupbox, tooltip of quality bar
 msgid "Hold left mouse button to drag & drop password"
-msgstr "Maintenez le bouton gauche de la souris pour glisser déposer le mot de passe"
+msgstr ""
+"Maintenez le bouton gauche de la souris pour glisser déposer le mot de passe"
 
 #. Main menu, File submenu
 msgid "File"
@@ -156,6 +157,74 @@ msgstr "Éditeur de profil..."
 #. Main menu, File submenu, Exit program
 msgid "Exit"
 msgstr "Quitter"
+
+#. Main menu, File submenu
+msgid "Backup Settings..."
+msgstr "Paramètres de la sauvegarde..."
+
+#. Main menu, File submenu
+msgid "Restore Settings from Backup..."
+msgstr "Restaurer les paramètres à partir d'une sauvegarde..."
+
+#. Backup settings, error message
+msgid ""
+"Could not copy the following language file(s):\n"
+"%1"
+msgstr ""
+"Impossible de copier le fichier de langue :\n"
+"%1"
+
+#. Backup settings, title of dialog
+msgid "Select folder to store backup"
+msgstr "Sélectionner le dossier de stockage de la sauvegarde"
+
+#. Backup settings, message
+msgid ""
+"Backup of settings and language files\n"
+"stored in \"%1\"."
+msgstr ""
+"Sauvegarde des paramètres et des fichiers de langues\n"
+"stockés dans \"%1\"."
+
+#. Restore backup, title of dialog
+msgid "Select folder containing backup to restore"
+msgstr "Sélectionner le dossier contenant la sauvegarde à restaurer"
+
+#. Restore backup, error message
+msgid "Configuration file \"%1\" not found in folder."
+msgstr "Fichier de configuration  \"%1\" introuvable dans le dossier."
+
+#. Restore backup, message
+msgid ""
+"Backup was created with an older version (%1)\n"
+"of the program. Continue anyway?"
+msgstr ""
+"La sauvegarde a été créée avec une ancienne version (%1)\n"
+"du programme. Continuer quand même ?"
+
+#. Restore backup, error message
+msgid ""
+"Could not copy configuration file to\n"
+"\"%1\"."
+msgstr ""
+"Impossible de copier le fichier  vers \n"
+"\"%1\"."
+
+#. Restore backup, message
+msgid ""
+"Restored settings will only take effect after\n"
+"a program restart. Do you want to restart now?"
+msgstr ""
+"Les paramètres restaurés ne prendront effet qu'après\n"
+"un redémarrage du programme. Voulez-vous redémarrer maintenant  ?"
+
+#. Restore backup, message
+msgid ""
+"Configuration settings will not be saved until\n"
+"the next time the program is started."
+msgstr ""
+"Les paramètres de configuration ne seront sauvegardés qu'au\n"
+"jusqu'au prochain démarrage du programme."
 
 #. Main menu, Tools submenu
 msgid "Tools"
@@ -309,21 +378,23 @@ msgid "Load profile named 'profilename' on start-up."
 msgstr "Chargement du profil nommé 'profilename' au démarrage."
 
 #. Command line arguments
-msgid "Generate 'number' of passwords and display on the console, then close "
+msgid ""
+"Generate 'number' of passwords and display on the console, then close "
 "application."
-msgstr "Générer 'number' mots de passe et les afficher sur la console, puis fermer ""l'application."
-
-#. Command line arguments
-msgid "Launch application on system startup (for current user)"
-msgstr "Lancer l'application au démarrage du système (pour l'utilisateur courant)"
+msgstr ""
+"Générer 'number' mots de passe et les afficher sur la console, puis fermer "
+"\"\"l'application."
 
 #. Command line arguments
 msgid "Launch application in the background."
 msgstr "Lancer l'application en arrière-plan."
 
 #. Command line arguments
-msgid "Open database named 'filename' on start-up and show password manager window."
-msgstr "Ouvrir la base de données 'filename' au démarrage et afficher la fenêtre du gestionnaire de mots de passe."
+msgid ""
+"Open database named 'filename' on start-up and show password manager window."
+msgstr ""
+"Ouvrir la base de données 'filename' au démarrage et afficher la fenêtre du "
+"gestionnaire de mots de passe."
 
 #. Main window, Clear Clipboard button tooltip
 msgid "Clear clipboard (text contents only)"
@@ -417,6 +488,10 @@ msgstr "Activer le test de mot de passe"
 msgid "Change Font..."
 msgstr "Modifier la police ..."
 
+#. Main window, Password box, context menu
+msgid "Reset Font"
+msgstr "Réinitialiser la police"
+
 #. Title of open dialog when selecting Main menu | Tools | Provide Additional Entropy | From File
 msgid "Select high-entropy file"
 msgstr "Choisissez un fichier à haute entropie"
@@ -450,33 +525,43 @@ msgid "Reset All Window Positions"
 msgstr "Réinitialiser toutes les positions des fenêtres"
 
 #. Message shown when randseed.dat could not be read
-msgid "Could not read random seed file\n"
+msgid ""
+"Could not read random seed file\n"
 "\"%s\"."
-msgstr "Impossible de lire le fichier de départ aléatoire\n"
+msgstr ""
+"Impossible de lire le fichier de départ aléatoire\n"
 "\"%s\"."
 
 #. Message shown when writing randseed.dat failed
-msgid "Could not write to random seed file\n"
+msgid ""
+"Could not write to random seed file\n"
 "\"%s\"."
-msgstr "Impossible d'écrire le fichier de départ aléatoire\n"
+msgstr ""
+"Impossible d'écrire le fichier de départ aléatoire\n"
 "\"%s\"."
 
 #. List of unknown command line parameters (when the application is run from the command line)
-msgid "Unknown command line switch(es):\n"
+msgid ""
+"Unknown command line switch(es):\n"
 "%s"
-msgstr "Commutateur(s) de ligne de commande inconnu(s) :\n"
+msgstr ""
+"Commutateur(s) de ligne de commande inconnu(s) :\n"
 "%s"
 
 #. Message shown when word list could not be loaded
-msgid "Error while loading word list file\n"
+msgid ""
+"Error while loading word list file\n"
 "\"%s\"."
-msgstr "Erreur lors du chargement du fichier de liste de mots\n"
+msgstr ""
+"Erreur lors du chargement du fichier de liste de mots\n"
 "\"%s\"."
 
 #. Message shown when passwords from common_passwords.txt could not be loaded
-msgid "Error while loading list of common passwords:\n"
+msgid ""
+"Error while loading list of common passwords:\n"
 "%s."
-msgstr "Erreur lors du chargement du fichier de liste de mots de passe:\n"
+msgstr ""
+"Erreur lors du chargement du fichier de liste de mots de passe:\n"
 "%s."
 
 #. List of errors that occurred during startup phase of the application
@@ -484,9 +569,11 @@ msgid "%s encountered %d error(s) during startup:"
 msgstr "%s a rencontré %d erreur(s) lors de l'initialisation :"
 
 #. Reminder to make a donation, shown with a certain frequency on startup
-msgid "If you like %s, please consider\n"
+msgid ""
+"If you like %s, please consider\n"
 "making a donation. Thank you!"
-msgstr "Si vous aimez %s, veuillez considérer\n"
+msgstr ""
+"Si vous aimez %s, veuillez considérer\n"
 "de faire un don. Nous vous en remercions !"
 
 #. Message shown when selected character set is invalid
@@ -494,9 +581,11 @@ msgid "Character set \"%s\" is invalid."
 msgstr "Jeu de caractères \"%s\" invalide."
 
 #. Message shown when configuration file could not be written
-msgid "Error while writing to configuration file:\n"
+msgid ""
+"Error while writing to configuration file:\n"
 "%s."
-msgstr "Erreur lors de l'écriture du fichier de configuration:\n"
+msgstr ""
+"Erreur lors de l'écriture du fichier de configuration:\n"
 "%s."
 
 #. Information about selected character set (number N of unique characters and entropy bits (=log2(N)) per character)
@@ -540,15 +629,19 @@ msgid "No text available to process."
 msgstr "Aucun texte disponible pour le traitement."
 
 #. Encrypt/Decrypt Clipboard, message shown when out of memory
-msgid "Not enough memory available to perform\n"
+msgid ""
+"Not enough memory available to perform\n"
 "the operation. Try to use a shorter text."
-msgstr "Mémoire disponible insuffisante pour effectuer\n"
+msgstr ""
+"Mémoire disponible insuffisante pour effectuer\n"
 "l'opération. Essayez d'utiliser un texte plus court."
 
 #. Decrypt Clipboard, message shown when decryption failed
-msgid "Decryption failed. This may be attributed\n"
+msgid ""
+"Decryption failed. This may be attributed\n"
 "to the following reasons:"
-msgstr "Le décryptage a échoué. Cela peut être attribué\n"
+msgstr ""
+"Le décryptage a échoué. Cela peut être attribué\n"
 "aux raisons suivantes:"
 
 #. Decrypt Clipboard, possible reason for failure
@@ -556,16 +649,20 @@ msgid "- You entered a wrong password."
 msgstr "- Vous avez entré un mauvais mot de passe."
 
 #. Decrypt Clipboard, possible reason for failure
-msgid "- The text is corrupted.\n"
+msgid ""
+"- The text is corrupted.\n"
 "- The text is not encrypted."
-msgstr "- Le texte est corrompu.\n"
+msgstr ""
+"- Le texte est corrompu.\n"
 "- Le texte n'est pas chiffré."
 
 #. Decrypt Clipboard, message shown when decompression failed
-msgid "This should not have happened:\n"
+msgid ""
+"This should not have happened:\n"
 "Decryption successful, but decompression\n"
 "failed."
-msgstr "Ceci ne devrait pas arriver :\n"
+msgstr ""
+"Ceci ne devrait pas arriver :\n"
 "Déchiffrage avec succès, mais la décompression\n"
 "a échoué."
 
@@ -574,13 +671,16 @@ msgid "Could not register the following hot keys:"
 msgstr "Impossible d'enregistrer les raccourcis clavier suivants:"
 
 #. Main window, Generate password list, message shown when specified number of passwords is invalid
-msgid "Invalid number of passwords.\n"
+msgid ""
+"Invalid number of passwords.\n"
 "Allowed range is %d-%d."
-msgstr "Nombre de mots de passe invalide.\n"
+msgstr ""
+"Nombre de mots de passe invalide.\n"
 "La plage autorisée est %d-%d."
 
 #. Main window, Generate password list to file, message shown when selected file already exists
-msgid "The selected file already exists. Do you\n"
+msgid ""
+"The selected file already exists. Do you\n"
 "want to append passwords to this file\n"
 "(existing passwords will be preserved),\n"
 "or do you want to completely overwrite it?\n"
@@ -588,7 +688,8 @@ msgid "The selected file already exists. Do you\n"
 "Yes -> append passwords,\n"
 "No -> overwrite file,\n"
 "Cancel -> cancel process."
-msgstr "Le fichier sélectionné existe déjà . Voulez-vous\n"
+msgstr ""
+"Le fichier sélectionné existe déjà . Voulez-vous\n"
 "ajouter les mots de passe à ce fichier\n"
 "(les mots de passe existants seront préservés),\n"
 "ou voulez-vous complétement l'écraser ?\n"
@@ -945,9 +1046,7 @@ msgstr "Ne peut pas télécharger la version du fichier"
 
 #. Check for updates, message shown when version file cannot be parsed due to missing information or unknown format
 msgid "Version or URL not specified in version file, or unknown file format"
-msgstr ""
-"Version ou URL non spécifiée dans le fichier de version ou format de fichier "
-"inconnu"
+msgstr "Version ou URL non spécifiée dans le fichier de version ou format de fichier inconnu"
 
 #. Check for updates, message shown when a new version is available
 msgid ""
@@ -963,7 +1062,7 @@ msgstr "(NOTE: %s)"
 
 #. Check for updates, message shown when there's no new version to download
 msgid "Your version of %s is up-to-date."
-msgstr "Votre version de%s est à jour."
+msgstr "Votre version de %s est à jour."
 
 #. Check for updates, general error message
 msgid ""
@@ -1182,7 +1281,7 @@ msgstr "Demandez avant de quitter l'application"
 #. Configuration window, General
 msgid "Launch application on system startup (for current user)"
 msgstr ""
-"Lancer l'application au démarrage du système (pour l'utilisateur actuel)"
+"Lancer l'application au démarrage du système (pour l'utilisateur courant)"
 
 #. Configuration window, General
 msgid "Load the following profile on startup:"
@@ -1338,7 +1437,7 @@ msgstr "Installer..."
 
 #. Configuration window, Language, Open dialog title
 msgid "Select language file to install"
-msgstr "Choisir la langue :"
+msgstr "Choisir la langue à installer"
 
 #. Configuration window, Language, Open dialog filter
 msgid "Language files"
@@ -2430,8 +2529,8 @@ msgid "Change List Font..."
 msgstr "Changer la police de la liste..."
 
 #. Password Manager window, main menu, View submenu
-msgid "Reset List Font"
-msgstr "Réinitialiser la police de la liste"
+msgid "Reset Fonts"
+msgstr "Réinitialiser les polices"
 
 #. Password Manager window, main menu, View submenu
 msgid "Change Password Font..."
@@ -2842,7 +2941,8 @@ msgstr "Chaîne Unicode trop longue"
 
 #. Unicode error message
 msgid "Invalid ANSI or UTF-8 character encoding, or Unicode string too long"
-msgstr "Encodage en caractère ANSI ou UTF-8 invalide ou chaîne Unicode trop longue"
+msgstr ""
+"Encodage en caractère ANSI ou UTF-8 invalide ou chaîne Unicode trop longue"
 
 #. Unicode error message
 msgid "Error while encoding Unicode string"
@@ -2904,11 +3004,14 @@ msgstr "Nombre de cycles de dérivation de clé invalide."
 
 #. Password Manager window, Database Settings dialog, label
 msgid "By default, new entries expire after the following number of days:"
-msgstr "Par défaut, les nouvelles entrées expirent après le nombre de jours suivant :"
+msgstr ""
+"Par défaut, les nouvelles entrées expirent après le nombre de jours suivant :"
 
 #. Password Manager window, Database Settings dialog, label
 msgid "For new entries, save the following number of previous passwords:"
-msgstr "Pour les nouvelles entrées, enregistrer le nombre suivant de précédents mots de passe :"
+msgstr ""
+"Pour les nouvelles entrées, enregistrer le nombre suivant de précédents mots "
+"de passe :"
 
 #. Password Manager window, Database Settings dialog, title of progress dialog when changing number of KDF iterations
 msgid "Changing number of KDF iterations"
@@ -3005,7 +3108,8 @@ msgstr ""
 
 #. Password Manager window, shutdown blocker message
 msgid "Password database contains unsaved changes."
-msgstr "La base de données de mots de passe contient des modifications non "
+msgstr ""
+"La base de données de mots de passe contient des modifications non "
 "enregistrées."
 
 #. Password Manager window, toolbar, filter info
@@ -3018,7 +3122,7 @@ msgstr "Retirer filtre"
 
 #. Main window, button to build character set definition
 msgid "Build..."
-msgstr "En construction..."
+msgstr "Définir..."
 
 #. Main window, button to build character set definition, hint
 msgid "Build character set definition"
@@ -3031,6 +3135,10 @@ msgstr "Créateur de jeux de caractères"
 #. Character set builder, group box with character sets
 msgid "Character set selection"
 msgstr "Sélection du jeu de caractères"
+
+#. Character set builder, group box with exclude characters
+msgid "Exclude characters"
+msgstr "Exclure les caractères"
 
 #. Character set builder, group box with tag/comment
 msgid "Tag/comment"
@@ -3088,9 +3196,6 @@ msgstr "Plage de caractères invalide."
 
 #~ msgid "Change main configuration of the program"
 #~ msgstr "Changer les paramètres principaux du programme"
-
-#~ msgid "Reset Counters"
-#~ msgstr "Réinitialiser les compteurs"
 
 #~ msgid ""
 #~ "All files (*.*)|*.*|Text files (*.txt)|*.txt|Trigram files (*.tgm)|*.tgm"

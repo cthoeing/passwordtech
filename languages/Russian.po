@@ -17,7 +17,7 @@
 # existing translations.
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.5\n"
+"Project-Id-Version: Password Tech 3.5.8\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: Dmitry Yerokhin <erodim@mail.ru>\n"
@@ -171,6 +171,59 @@ msgstr "Редактор профилей..."
 #. Main menu, File submenu, Exit program
 msgid "Exit"
 msgstr "Выход"
+
+#. Main menu, File submenu
+msgid "Backup Settings..."
+msgstr "Создать резервную копию параметров..."
+
+#. Main menu, File submenu
+msgid "Restore Settings from Backup..."
+msgstr "Восстановить параметры из резервной копии..."
+
+#. Backup settings, error message
+msgid "Could not copy the following language file(s):\n%1"
+msgstr "Невозможно скопировать следующие языковые файлы:\n%1"
+
+#. Backup settings, title of dialog
+msgid "Select folder to store backup"
+msgstr "Выберите папку для сохранения резервной копии"
+
+#. Backup settings, message
+msgid "Backup of settings and language files\n"
+"stored in \"%1\"."
+msgstr "Резервная копия параметров и языковые файлы\n"
+"сохранены в \n"
+"\"%1\"."
+
+#. Restore backup, title of dialog
+msgid "Select folder containing backup to restore"
+msgstr "Выберите папку с резервной копией для восстановления"
+
+#. Restore backup, error message
+msgid "Configuration file \"%1\" not found in folder."
+msgstr "В папке нет файла конфигурации \"%1\"."
+
+#. Restore backup, message
+msgid "Backup was created with an older version (%1)\n"
+"of the program. Continue anyway?"
+msgstr "Резервная копия создана в старой версии программы (%1).\n"
+"Всё равно продолжить?"
+
+#. Restore backup, error message
+msgid "Could not copy configuration file to\n\"%1\"."
+msgstr "Невозможно скопировать файл конфигурации в \n\"%1\"."
+
+#. Restore backup, message
+msgid "Restored settings will only take effect after\n"
+"a program restart. Do you want to restart now?"
+msgstr "Восстановленные параметры вступят в силу только\n"
+"при следующем запуске программы. Перезагрузить программу?"
+
+#. Restore backup, message
+msgid "Configuration settings will not be saved until\n"
+"the next time the program is started."
+msgstr "Параметры конфигурации не будут сохранены до следующего\n"
+"запуска программы."
 
 #. Main menu, Tools submenu
 msgid "Tools"
