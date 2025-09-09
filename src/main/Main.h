@@ -333,6 +333,10 @@ __published:	// IDE-managed Components
   TButton *BuildBtn;
 	TMenuItem *MainMenu_Help_CmdLineArgs;
   TMenuItem *PasswBoxMenu_ResetFont;
+  TMenuItem *MainMenu_File_BackupSettings;
+  TMenuItem *MainMenu_File_RestoreSettings;
+  TMenuItem *MainMenu_File_N3;
+  TFileOpenDialog *OpenFolderDlg;
   void __fastcall GenerateBtnClick(TObject *Sender);
   void __fastcall IncludeCharsCheckClick(TObject *Sender);
   void __fastcall CharSetInfoBtnClick(TObject *Sender);
@@ -441,6 +445,8 @@ __published:	// IDE-managed Components
   void __fastcall BuildBtnClick(TObject *Sender);
 	void __fastcall MainMenu_Help_CmdLineArgsClick(TObject *Sender);
   void __fastcall PasswBoxMenu_ResetFontClick(TObject *Sender);
+  void __fastcall MainMenu_File_BackupSettingsClick(TObject *Sender);
+  void __fastcall MainMenu_File_RestoreSettingsClick(TObject *Sender);
 
 private:	// User declarations
   RandomPool& m_randPool;
@@ -478,7 +484,7 @@ private:	// User declarations
   bool __fastcall ChangeLanguage(const WString& sLangFileName);
   void __fastcall WriteRandSeedFile(bool blShowError = true);
   void __fastcall LoadConfig(void);
-  bool __fastcall SaveConfig(void);
+  bool __fastcall SaveConfig(const WString& sFileName = "");
   int  __fastcall LoadCharSet(const WString& sInput,
     bool blShowError = false);
   int  __fastcall LoadWordListFile(const WString& sInput = "",

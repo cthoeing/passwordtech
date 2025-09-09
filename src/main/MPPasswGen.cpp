@@ -577,7 +577,7 @@ void __fastcall TMPPasswGenForm::PasswBoxMenu_CutClick(TObject *Sender)
   if (g_config.AutoClearClip) {
     SecureWString sCut = GetEditBoxSelTextBuf(PasswBox);
     SecureClipboard::GetInstance().SetData(sCut.c_str());
-    PasswBox->SetSelTextBuf(L"");
+    PasswBox->SetSelTextBuf(const_cast<wchar_t*>(L""));
   }
   else
     PasswBox->CutToClipboard();

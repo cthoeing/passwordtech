@@ -191,6 +191,7 @@ void __fastcall TStringFileStreamW::WriteString(const wchar_t* pwszSrc,
 
       if (Write(sEncBuf, nEncBytes) != nEncBytes)
         OutOfDiskSpaceError();
+      break;
     }
   case ceUtf16:
     {
