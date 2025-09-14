@@ -18,7 +18,7 @@
 #. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.7\n"
+"Project-Id-Version: Password Tech 3.5.8\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: Thomas Du <thomas_du@outlook.com>\n"
@@ -27,7 +27,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.7\n"
 
 #. Message box caption
 msgid "Info"
@@ -169,6 +169,74 @@ msgstr "配置檔編輯器..."
 msgid "Exit"
 msgstr "退出"
 
+#. Main menu, File submenu
+msgid "Backup Settings..."
+msgstr "備份設定..."
+
+#. Main menu, File submenu
+msgid "Restore Settings from Backup..."
+msgstr "從備份還原設定..."
+
+#. Backup settings, error message
+msgid ""
+"Could not copy the following language file(s):\n"
+"%1"
+msgstr ""
+"無法複製下列語言檔案：\n"
+"%1"
+
+#. Backup settings, title of dialog
+msgid "Select folder to store backup"
+msgstr "選擇要儲存備份的資料夾"
+
+#. Backup settings, message
+msgid ""
+"Backup of settings and language files\n"
+"stored in \"%1\"."
+msgstr ""
+"備份設定和語言檔案\n"
+"儲存在「%1」中。"
+
+#. Restore backup, title of dialog
+msgid "Select folder containing backup to restore"
+msgstr "選取包含要還原的備份資料夾"
+
+#. Restore backup, error message
+msgid "Configuration file \"%1\" not found in folder."
+msgstr "資料夾中找不到組態檔 “%1”。"
+
+#. Restore backup, message
+msgid ""
+"Backup was created with an older version (%1)\n"
+"of the program. Continue anyway?"
+msgstr ""
+"備份是使用舊版本 （%1） 建立的\n"
+"該計劃的。無論如何還是繼續？"
+
+#. Restore backup, error message
+msgid ""
+"Could not copy configuration file to\n"
+"\"%1\"."
+msgstr ""
+"無法將組態檔複製到\n"
+"\"%1\"."
+
+#. Restore backup, message
+msgid ""
+"Restored settings will only take effect after\n"
+"a program restart. Do you want to restart now?"
+msgstr ""
+"恢復的設定只會在之後生效\n"
+"程序重新啟動。你想現在重新啟動嗎？"
+
+#. Restore backup, message
+msgid ""
+"Configuration settings will not be saved until\n"
+"the next time the program is started."
+msgstr ""
+"配置設置將不會保存，直到\n"
+"下次啟動程式時。"
+
 #. Main menu, Tools submenu
 msgid "Tools"
 msgstr "工具"
@@ -289,7 +357,6 @@ msgid "Restore %s"
 msgstr "還原 %s"
 
 #. System tray context menu, Generate Password to clipboard
-#, fuzzy
 msgid "Generate Password"
 msgstr "生成密碼"
 
@@ -307,7 +374,7 @@ msgstr "開啟用戶手冊"
 
 #. Command line arguments
 msgid "Usage:"
-msgstr "用途："
+msgstr "用法："
 
 #. Command line arguments
 msgid "Display this help message."
@@ -427,7 +494,7 @@ msgstr "變更字體..."
 
 #. Main window, Password box, context menu
 msgid "Reset Font"
-msgstr "重置字體"
+msgstr "重設字型"
 
 #. Title of open dialog when selecting Main menu | Tools | Provide Additional Entropy | From File
 msgid "Select high-entropy file"
@@ -2397,11 +2464,11 @@ msgstr "未分類"
 
 #. Password Manager window, main menu, View submenu, Sort submenu
 msgid "Ascending"
-msgstr "升冪"
+msgstr "升序"
 
 #. Password Manager window, main menu, View submenu, Sort submenu
 msgid "Descending"
-msgstr "降冪"
+msgstr "降序"
 
 #. Password Manager window, main menu, View submenu
 msgid "Sort Tags By"
