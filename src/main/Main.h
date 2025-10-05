@@ -41,6 +41,9 @@
 #include <Vcl.ImageCollection.hpp>
 #include <Vcl.ImgList.hpp>
 #include <Vcl.VirtualImageList.hpp>
+#include <System.Net.HttpClient.hpp>
+#include <System.Net.HttpClientComponent.hpp>
+#include <System.Net.URLClient.hpp>
 #include <unordered_set>
 #include <atomic>
 #include <optional>
@@ -95,7 +98,7 @@ struct PWGenProfile {
   bool RunScript;
   WString ScriptFileName;
   WString NumPassw;
-  //bool AdvancedOptionsUsed;
+  bool IncludeHeader;
   std::optional<PasswOptions> AdvancedPasswOptions;
 };
 
@@ -337,6 +340,9 @@ __published:	// IDE-managed Components
   TMenuItem *MainMenu_File_RestoreSettings;
   TMenuItem *MainMenu_File_N3;
   TFileOpenDialog *OpenFolderDlg;
+  TNetHTTPClient *NetHTTPClient;
+  TMenuItem *GenerateMenu_N1;
+  TMenuItem *GenerateMenu_IncludeHeader;
   void __fastcall GenerateBtnClick(TObject *Sender);
   void __fastcall IncludeCharsCheckClick(TObject *Sender);
   void __fastcall CharSetInfoBtnClick(TObject *Sender);

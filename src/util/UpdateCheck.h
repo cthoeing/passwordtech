@@ -22,6 +22,7 @@
 #define UpdateCheckH
 //---------------------------------------------------------------------------
 #include <Classes.hpp>
+#include <System.Net.HttpClientComponent.hpp>
 #include "UnicodeUtil.h"
 
 class TUpdateCheckThread : public TThread
@@ -36,10 +37,13 @@ public:
     Timeout
   };
 
-  __fastcall TUpdateCheckThread(std::function<void(TObject*)> terminateFunc,
-    float fTimeoutSec = 3)
-    : TThread(false), m_fTimeoutSec(fTimeoutSec),
-      m_result(CheckResult::NotAvailable), m_terminateFunc(terminateFunc)
+  __fastcall TUpdateCheckThread(
+    TNetHTTPClient* pClient,
+    std::function<void(TObject*)> terminateFunc,
+    float fTimeout = 3)
+    : TThread(false), m_pClient(pClient),
+      m_result(CheckResult::NotAvailable), m_terminateFunc(terminateFunc),
+      m_fTimeout(fTimeout)
   {
     FreeOnTerminate = true;
     Priority = tpIdle;
@@ -50,8 +54,10 @@ public:
   __property CheckResult Result =
   { read=m_result };
 
-  static CheckResult __fastcall CheckForUpdates(bool blShowError,
-    float fTimeoutSec = 0);
+  static CheckResult __fastcall CheckForUpdates(
+    TNetHTTPClient* pClient,
+    bool blShowError,
+    float fTimeout = 0);
 
   static bool __fastcall ThreadRunning(void)
   {
@@ -59,14 +65,15 @@ public:
   }
 
 private:
-  float m_fTimeoutSec;
+  TNetHTTPClient* m_pClient;
   CheckResult m_result;
   std::function<void(TObject*)> m_terminateFunc;
+  float m_fTimeout;
   static std::atomic<bool> s_blThreadRunning;
 
   virtual void __fastcall Execute(void) override
   {
-    m_result = CheckForUpdates(false, m_fTimeoutSec);
+    m_result = CheckForUpdates(m_pClient, false, m_fTimeout);
     ReturnValue = static_cast<int>(m_result);
   }
 

@@ -27,7 +27,7 @@ object ConfigurationDlg: TConfigurationDlg
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    ActivePage = FilesSheet
+    ActivePage = GeneralSheet
     Constraints.MinWidth = 490
     HotTrack = True
     TabOrder = 0

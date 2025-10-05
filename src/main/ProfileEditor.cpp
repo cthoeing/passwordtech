@@ -83,14 +83,6 @@ void __fastcall TProfileEditDlg::SaveConfig(void)
 //---------------------------------------------------------------------------
 int __fastcall TProfileEditDlg::Execute(bool blExitAfterAdd)
 {
-  /*
-    for (int nI = 0; nI < ProfileList->Count; nI++)
-      ProfileList->Selected[nI] = false;
-
-    LoadBtn->Enabled = false;
-    DeleteBtn->Enabled = false;
-  */
-
   m_blModified = m_blAdded = false;
   m_blExitAfterAdd = blExitAfterAdd;
 

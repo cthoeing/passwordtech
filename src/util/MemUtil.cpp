@@ -32,6 +32,17 @@
   memset(pMem, 0, size);
 }
 //---------------------------------------------------------------------------
+void memcpy_checked(void* pDest,
+  size_t destSize,
+  const void* pSrc,
+  size_t srcSize)
+{
+  auto err = memcpy_s(pDest, destSize, pSrc, srcSize);
+  if (err != 0) {
+    throw std::runtime_error("memcpy error " + std::to_string(err));
+  }
+}
+//---------------------------------------------------------------------------
 void memcrypt(const word8* pSrc,
   word8* pDest,
   word32 lSize,

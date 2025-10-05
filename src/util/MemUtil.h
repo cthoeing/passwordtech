@@ -33,6 +33,16 @@
 // -> size in bytes
 [[clang::optnone]] void memzero(void* pMem, size_t size);
 
+// copy memory from pSrc to pDest, throw exception in case of error
+// -> destination buffer
+// -> available space in buffer (in number of bytes)
+// -> source buffer
+// -> number of bytes to copy
+void memcpy_checked(void* pDest,
+  size_t destSize,
+  const void* pSrc,
+  size_t srcSize);
+
 // encrypts/decrypts a memory buffer
 // -> source buffer
 // -> destination buffer

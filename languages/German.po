@@ -1,4 +1,4 @@
-﻿# German translation of Password Tech 3.5.8
+﻿# German translation of Password Tech 3.5.9
 # Released under the GNU General Public License
 #
 # !!! NOTE ON FORMAT STRINGS !!!
@@ -20,7 +20,7 @@
 #. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.8\n"
+"Project-Id-Version: Password Tech 3.5.9\n"
 "Last-Translator: Christian Thöing\n"
 "Language: de\n"
 
@@ -115,6 +115,10 @@ msgstr "In Zwischenablage generieren"
 #. Main window, button to generate multiple passwords
 msgid "Generate to File..."
 msgstr "In Datei generieren..."
+
+#. Main window, button to generate multiple passwords
+msgid "Include Header"
+msgstr "Kopfzeilen (header) hinzufügen"
 
 #. Main window, button to access advanced password options
 msgid "Advanced"

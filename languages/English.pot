@@ -15,9 +15,10 @@
 # for floating point numbers, "%s" for strings, etc.), and the original strings
 # are still provided in the old format to avoid merge conflicts when updating
 # existing translations.
+#. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.7\n"
+"Project-Id-Version: Password Tech 3.5.9\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
@@ -25,7 +26,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.7\n"
 
 #. Message box caption
 msgid "Info"
@@ -119,6 +120,10 @@ msgstr ""
 msgid "Generate to File..."
 msgstr ""
 
+#. Main window, button to generate multiple passwords
+msgid "Include Header"
+msgstr ""
+
 #. Main window, button to access advanced password options
 msgid "Advanced"
 msgstr ""
@@ -165,6 +170,62 @@ msgstr ""
 
 #. Main menu, File submenu, Exit program
 msgid "Exit"
+msgstr ""
+
+#. Main menu, File submenu
+msgid "Backup Settings..."
+msgstr ""
+
+#. Main menu, File submenu
+msgid "Restore Settings from Backup..."
+msgstr ""
+
+#. Backup settings, error message
+msgid ""
+"Could not copy the following language file(s):\n"
+"%1"
+msgstr ""
+
+#. Backup settings, title of dialog
+msgid "Select folder to store backup"
+msgstr ""
+
+#. Backup settings, message
+msgid ""
+"Backup of settings and language files\n"
+"stored in \"%1\"."
+msgstr ""
+
+#. Restore backup, title of dialog
+msgid "Select folder containing backup to restore"
+msgstr ""
+
+#. Restore backup, error message
+msgid "Configuration file \"%1\" not found in folder."
+msgstr ""
+
+#. Restore backup, message
+msgid ""
+"Backup was created with an older version (%1)\n"
+"of the program. Continue anyway?"
+msgstr ""
+
+#. Restore backup, error message
+msgid ""
+"Could not copy configuration file to\n"
+"\"%1\"."
+msgstr ""
+
+#. Restore backup, message
+msgid ""
+"Restored settings will only take effect after\n"
+"a program restart. Do you want to restart now?"
+msgstr ""
+
+#. Restore backup, message
+msgid ""
+"Configuration settings will not be saved until\n"
+"the next time the program is started."
 msgstr ""
 
 #. Main menu, Tools submenu

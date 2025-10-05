@@ -3,7 +3,21 @@
                 Copyright (c) 2002-2025 by Christian Thöing
 
 
-Version 3.5.8
+Version 3.5.9
+
+NEW FEATURES:
+
+- Option "Include Header" (context menu of "Generate" button in main window) to
+  include (or disable) information about generated passwords and entropy at the
+  beginning of password lists
+
+FIXES:
+
+- Check for updates broken, since version file could not be downloaded anymore
+
+----------
+
+Version 3.5.8 (2025-09-07)
 
 NEW FEATURES:
 
