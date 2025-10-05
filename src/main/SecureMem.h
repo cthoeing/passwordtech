@@ -56,6 +56,15 @@ word32 _tcslen(const T* pStr)
   return static_cast<word32>(pEnd - pStr);
 }
 
+template<class T>
+void _tmemcpy(T* pDest,
+  size_t destSize,
+  const T* pSrc,
+  size_t srcSize)
+{
+  memcpy_checked(pDest, destSize * sizeof(T), pSrc, srcSize * sizeof(T));
+}
+
 inline word32 roundUpNextPowerOf2(word32 v)
 {
   v--;
@@ -121,7 +130,7 @@ public:
       if (m_lSize > MAX_SIZE)
         throw SecureMemSizeError();
       m_pData = new T[m_lSize];
-      memcpy(m_pData, pData, SizeBytes());
+      _tmemcpy(m_pData, m_lSize, pData, lSize);
     }
   }
 
@@ -132,7 +141,7 @@ public:
   {
     if (m_lSize != 0) {
       m_pData = new T[m_lSize];
-      memcpy(m_pData, src.m_pData, SizeBytes());
+      _tmemcpy(m_pData, m_lSize, src.m_pData, src.m_lSize);
     }
   }
 
@@ -179,7 +188,7 @@ public:
   {
     New(lSize);
     if (lSize != 0)
-      memcpy(m_pData, pSrc, lSize * sizeof(T));
+      _tmemcpy(m_pData, m_lSize, pSrc, lSize);
   }
 
   // copies string into data array and adds terminating zero
@@ -190,7 +199,7 @@ public:
   {
     NewStr(lStrLen);
     if (lStrLen != 0)
-      memcpy(m_pData, pSrc, lStrLen * sizeof(T));
+      _tmemcpy(m_pData, m_lSize, pSrc, lStrLen);
   }
 
   // copies string into data array, including terminating zero
@@ -219,7 +228,7 @@ public:
     if (lOffset + lSrcSize > m_lSize)
       throw SecureMemError("SecureMem::Copy() overflow");
 
-    memcpy(m_pData + lOffset, pSrc, lSrcSize * sizeof(T));
+    _tmemcpy(m_pData + lOffset, m_lSize - lOffset, pSrc, lSrcSize);
   }
 
   // append content from another object
@@ -230,7 +239,7 @@ public:
 
     const word32 lOldSize = m_lSize;
     GrowBy(item.m_lSize);
-    memcpy(m_pData + lOldSize, item.m_pData, item.SizeBytes());
+    _tmemcpy(m_pData + lOldSize, m_lSize - lOldSize, item.m_pData, item.m_lSize);
   }
 
   // append content from another data array
@@ -243,7 +252,7 @@ public:
 
     const word32 lOldSize = m_lSize;
     GrowBy(lSrcSize);
-    memcpy(m_pData + lOldSize, pSrc, lSrcSize);
+    _tmemcpy(m_pData + lOldSize, m_lSize - lOldSize, pSrc, lSrcSize);
   }
 
   // sets mark/position within the array up to which the array is to be zeroized
@@ -595,8 +604,9 @@ public:
 
     SecureMem result(m_lSize + src.m_lSize);
     if (!IsEmpty())
-      memcpy(result.m_pData, m_pData, SizeBytes());
-    memcpy(result.m_pData + m_lSize, src.m_pData, src.SizeBytes());
+      _tmemcpy(result.m_pData, result.m_lSize, m_pData, m_lSize);
+    _tmemcpy(result.m_pData + m_lSize, result.m_lSize - m_lSize,
+      src.m_pData, src.m_lSize);
 
     return result;
   }
@@ -643,7 +653,7 @@ void SecureMem<T>::Resize(word32 lNewSize,
     T* pNewData = new T[lNewSize];
 
     if (blPreserve && !IsEmpty())
-      memcpy(pNewData, m_pData, std::min(m_lSize, lNewSize) * sizeof(T));
+      _tmemcpy(pNewData, lNewSize, m_pData, std::min(m_lSize, lNewSize));
 
     Clear();
 
@@ -706,7 +716,7 @@ void SecureMem<T>::StrCat(const T* pStr, word32 lLen, word32& lPos)
   if (MAX_SIZE - lPos < lLen + 1)
     throw SecureMemSizeError();
   BufferedGrow(lPos + lLen + 1);
-  memcpy(m_pData + lPos, pStr, lLen * sizeof(T));
+  _tmemcpy(m_pData + lPos, m_lSize - lPos, pStr, lLen);
   lPos += lLen;
   m_pData[lPos] = '\0';
 }

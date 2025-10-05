@@ -315,7 +315,7 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
   m_sRandSeedFileName = g_sAppDataPath + WString(PROGRAM_RANDSEEDFILE);
   if (FileExists(m_sRandSeedFileName)) {
     if (!m_randPool.ReadSeedFile(m_sRandSeedFileName))
-	  MsgBox(TRLFormat("Could not read random seed file\n\"%1\".",
+      MsgBox(TRLFormat("Could not read random seed file\n\"%1\".",
         { m_sRandSeedFileName }), MB_ICONERROR);
   }
 
@@ -638,7 +638,8 @@ void __fastcall TMainForm::FormActivate(TObject *Sender)
 
       if (blNeedCheck) {
         MainMenu_Help_CheckForUpdates->Enabled = false;
-        m_pUpdCheckThread = new TUpdateCheckThread(OnUpdCheckThreadTerminate);
+        m_pUpdCheckThread = new TUpdateCheckThread(NetHTTPClient,
+          OnUpdCheckThreadTerminate);
       }
     }
 
@@ -670,8 +671,6 @@ void __fastcall TMainForm::OnUpdCheckThreadTerminate(TObject* Sender)
     m_lastUpdateCheck = TDateTime::CurrentDate();
 
   MainMenu_Help_CheckForUpdates->Enabled = true;
-
-  //m_blUpdCheckThreadRunning = false;
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::DelayStartupError(const WString& sMsg)
@@ -892,10 +891,9 @@ void __fastcall TMainForm::LoadConfig(void)
   CharSetList->Items->CommaText = g_pIni->ReadString(CONFIG_ID,
     "CharSetListEntries", "");
 
-  int nI;
   if (CharSetList->Items->Count == 0) {
-    for (nI = 0; nI < CHARSETLIST_DEFAULTENTRIES_NUM; nI++)
-      CharSetList->Items->Add(CHARSETLIST_DEFAULTENTRIES[nI]);
+    for (int i = 0; i < CHARSETLIST_DEFAULTENTRIES_NUM; i++)
+      CharSetList->Items->Add(CHARSETLIST_DEFAULTENTRIES[i]);
   }
   else {
     while (CharSetList->Items->Count > LISTS_MAX_ENTRIES)
@@ -957,8 +955,8 @@ void __fastcall TMainForm::LoadConfig(void)
   FormatList->Items->CommaText = g_pIni->ReadString(CONFIG_ID, "FormatListEntries", "");
 
   if (FormatList->Items->Count == 0) {
-    for (nI = 0; nI < FORMATLIST_DEFAULTENTRIES_NUM; nI++)
-      FormatList->Items->Add(FORMATLIST_DEFAULTENTRIES[nI]);
+    for (int i = 0; i < FORMATLIST_DEFAULTENTRIES_NUM; i++)
+      FormatList->Items->Add(FORMATLIST_DEFAULTENTRIES[i]);
   }
   else {
     while (FormatList->Items->Count > LISTS_MAX_ENTRIES)
@@ -975,7 +973,8 @@ void __fastcall TMainForm::LoadConfig(void)
   ScriptList->ItemIndex = 0;
 
   NumPasswBox->Text = g_pIni->ReadString(CONFIG_ID, "NumPassw", "100");
-  //NumPasswBoxExit(this);
+  GenerateMenu_IncludeHeader->Checked = g_pIni->ReadBool(CONFIG_ID,
+    "PasswListIncludeHeader", true);
 
   TogglePasswBtn->Down = g_pIni->ReadBool(CONFIG_ID, "HidePassw", false);
   TogglePasswBtnClick(this);
@@ -1036,7 +1035,7 @@ void __fastcall TMainForm::LoadConfig(void)
     "SystemTrayIconShowConst", true);
 
   if ((!g_blConsole || g_cmdLineOptions.GenNumPassw == 0) &&
-	  (!Application->ShowMainForm || g_config.ShowSysTrayIconConst)) {
+      (!Application->ShowMainForm || g_config.ShowSysTrayIconConst)) {
     TrayIcon->Visible = true;
   }
 
@@ -1104,27 +1103,6 @@ void __fastcall TMainForm::LoadConfig(void)
       ActivateHotKeys(g_config.HotKeys);
   }
 
-  /*if (asHotKeys.Length() >= 5) {
-    char* p = asHotKeys.c_str();
-    do {
-      TShortCut hotKey = static_cast<TShortCut>(strtol(p, &p, 10));
-      if (*p == '\0' || hotKey == 0)
-        break;
-
-      HotKeyEntry hke;
-      hke.Action = static_cast<HotKeyAction>(strtol(++p, &p, 10));
-      if (*p == '\0' || hke.Action < hkaNone || hke.Action > hkaSearchDatabaseAutotype)
-        break;
-
-      hke.ShowMainWin = static_cast<bool>(strtol(++p, &p, 10));
-
-      if (hke.Action != hkaNone || hke.ShowMainWin)
-        g_config.HotKeys.emplace(hotKey, hke);
-    } while (*p++ != '\0' && g_config.HotKeys.size() < HOTKEYS_MAX_NUM);
-
-    ActivateHotKeys(g_config.HotKeys);
-  }*/
-
   CharacterEncoding fileEncoding = static_cast<CharacterEncoding>(
       g_pIni->ReadInteger(CONFIG_ID, "FileEncoding", ceUtf8));
   if (fileEncoding < ceAnsi || fileEncoding > ceUtf8)
@@ -1152,8 +1130,8 @@ void __fastcall TMainForm::LoadConfig(void)
   }
 
   // read the profiles and delete all profile entries afterwards
-  for (nI = 0; g_profileList.size() < PROFILES_MAX_NUM; nI++) {
-    WString sProfileId = CONFIG_PROFILE_ID + IntToStr(nI);
+  for (int i = 0; g_profileList.size() < PROFILES_MAX_NUM; i++) {
+    WString sProfileId = CONFIG_PROFILE_ID + IntToStr(i);
     if (!g_pIni->SectionExists(sProfileId))
       break;
 
@@ -1184,6 +1162,8 @@ void __fastcall TMainForm::LoadConfig(void)
     pProfile->RunScript = g_pIni->ReadBool(sProfileId, "RunScript", false);
     pProfile->ScriptFileName = g_pIni->ReadString(sProfileId, "ScriptFileName", "");
     pProfile->NumPassw = g_pIni->ReadString(sProfileId, "NumPassw", "2");
+    pProfile->IncludeHeader = g_pIni->ReadBool(sProfileId,
+      "PasswListIncludeHeader", true);
 
     sPasswOptions = g_pIni->ReadString(sProfileId, "AdvancedPasswOptions", "");
     //pProfile->AdvancedOptionsUsed = !sPasswOptions.IsEmpty();
@@ -1255,6 +1235,8 @@ bool __fastcall TMainForm::SaveConfig(const WString& sFileName)
     g_pIni->WriteBool(CONFIG_ID, "RunScript", RunScriptCheck->Checked);
     g_pIni->WriteString(CONFIG_ID, "ScriptListEntries", ScriptList->Items->CommaText);
     g_pIni->WriteString(CONFIG_ID, "NumPassw", NumPasswBox->Text);
+    g_pIni->WriteBool(CONFIG_ID, "PasswListIncludeHeader",
+      GenerateMenu_IncludeHeader->Checked);
     g_pIni->WriteBool(CONFIG_ID, "HidePassw", TogglePasswBtn->Down);
     g_pIni->WriteBool(CONFIG_ID, "HideEntropyProgress",
       MainMenu_Options_HideEntProgress->Checked);
@@ -1331,10 +1313,9 @@ bool __fastcall TMainForm::SaveConfig(const WString& sFileName)
     CharSetBuilderForm->SaveConfig();
 
     // now save the profiles
-    for (auto it = g_profileList.begin(); it != g_profileList.end(); it++) {
-      WString sProfileId = CONFIG_PROFILE_ID + IntToStr(it - g_profileList.begin());
-
-      auto pProfile = it->get();
+    int i = 0;
+    for (const auto& pProfile : g_profileList) {
+      WString sProfileId = CONFIG_PROFILE_ID + IntToStr(i++);
 
       g_pIni->WriteString(sProfileId, "ProfileName", pProfile->ProfileName);
       g_pIni->WriteBool(sProfileId, "IncludeChars", pProfile->IncludeChars);
@@ -1352,6 +1333,7 @@ bool __fastcall TMainForm::SaveConfig(const WString& sFileName)
       g_pIni->WriteBool(sProfileId, "RunScript", pProfile->RunScript);
       g_pIni->WriteString(sProfileId, "ScriptFileName", pProfile->ScriptFileName);
       g_pIni->WriteString(sProfileId, "NumPassw", pProfile->NumPassw);
+      g_pIni->WriteBool(sProfileId, "PasswListIncludeHeader", pProfile->IncludeHeader);
 
       if (pProfile->AdvancedPasswOptions) {
         g_pIni->WriteInteger(sProfileId, "AdvancedPasswOptions",
@@ -1867,14 +1849,7 @@ void __fastcall TMainForm::CreateProfile(const WString& sProfileName,
   bool blSaveAdvancedOptions,
   int nCreateIdx)
 {
-  PWGenProfile* pProfile;
-
-  if (nCreateIdx < 0) {
-    g_profileList.emplace_back(new PWGenProfile);
-    pProfile = g_profileList.back().get();
-  }
-  else
-    pProfile = g_profileList[nCreateIdx].get();
+  auto pProfile = std::make_unique<PWGenProfile>();
 
   pProfile->ProfileName = sProfileName;
   pProfile->IncludeChars = IncludeCharsCheck->Checked;
@@ -1891,12 +1866,15 @@ void __fastcall TMainForm::CreateProfile(const WString& sProfileName,
   pProfile->RunScript = RunScriptCheck->Checked;
   pProfile->ScriptFileName = ScriptList->Text;
   pProfile->NumPassw = NumPasswBox->Text;
-  //pProfile->AdvancedOptionsUsed = blSaveAdvancedOptions;
+  pProfile->IncludeHeader = GenerateMenu_IncludeHeader->Checked;
 
   if (blSaveAdvancedOptions)
     pProfile->AdvancedPasswOptions = m_passwOptions;
+
+  if (nCreateIdx < 0)
+    g_profileList.push_back(std::move(pProfile));
   else
-    pProfile->AdvancedPasswOptions.reset();
+    g_profileList[nCreateIdx].swap(pProfile);
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::LoadProfile(int nIndex)
@@ -1918,7 +1896,7 @@ void __fastcall TMainForm::LoadProfile(int nIndex)
   RunScriptCheck->Checked = pProfile->RunScript;
   ScriptList->Text = pProfile->ScriptFileName;
   NumPasswBox->Text = pProfile->NumPassw;
-  //NumPasswBoxExit(this);
+  GenerateMenu_IncludeHeader->Checked = pProfile->IncludeHeader;
 
   if (pProfile->AdvancedPasswOptions) {
     m_passwOptions = pProfile->AdvancedPasswOptions.value();
@@ -1949,7 +1927,6 @@ bool __fastcall TMainForm::LoadProfile(const WString& sName)
 void __fastcall TMainForm::DeleteProfile(int nIndex)
 {
   if (nIndex >= 0 && nIndex < static_cast<int>(g_profileList.size())) {
-    //delete g_profileList[nIndex];
     g_profileList.erase(g_profileList.begin() + nIndex);
   }
 }
@@ -2424,7 +2401,7 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
         m_pScript->SetRandomGenerator(pRandPool ? pRandPool.get() : g_pRandSrc);
       }
 
-	  const word32 lMaxPasswListBytes =
+      const word32 lMaxPasswListBytes =
 #ifdef _WIN64
         PASSWLIST_MAX_BYTES;
 #else
@@ -2435,7 +2412,9 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
       static const AnsiString asPasswListHeader =
         "%1 passwords generated.\r\nEntropy of the first "
         "password: %2 bits.\r\nMaximum entropy of the entire list: %3 bits.";
-      int nPasswListHeaderLen;
+      int nPasswListHeaderLen = 0;
+      bool blIncludeHeader = (dest == gpdGuiList || dest == gpdClipboardList) &&
+        GenerateMenu_IncludeHeader->Checked;
 
       bool blFirstGen = true;
       bool blKeepPrevPassw = false;
@@ -2697,12 +2676,15 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
               dTotalPasswSec = dTotalSecInfo = std::min<double>(
                 dPasswSec * qNumOfPassw, RandomPool::MAX_ENTROPY);
 
-            WString sHeader = TRLFormat(asPasswListHeader,
-              { IntToStr(static_cast<__int64>(qNumOfPassw)),
-                FormatFloat("0.0", dFirstPasswSec), //IntToStr(FloorEntropyBits(dFirstPasswSec)),
-                FormatFloat("0.0", dTotalSecInfo) }) //IntToStr(FloorEntropyBits(dTotalSecInfo)) })
-                + CRLF + CRLF;
-            nPasswListHeaderLen = sHeader.Length();
+            WString sHeader;
+            if (blIncludeHeader) {
+              sHeader = TRLFormat(asPasswListHeader,
+                { IntToStr(static_cast<__int64>(qNumOfPassw)),
+                  FormatFloat("0.0", dFirstPasswSec),
+                  FormatFloat("0.0", dTotalSecInfo) })
+                  + CRLF + CRLF;
+              nPasswListHeaderLen = sHeader.Length();
+            }
 
             // use 64-bit int to avoid 32-bit overflow
             word64 qEstimatedSize = nPasswListHeaderLen +
@@ -2712,8 +2694,8 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
                   "the internal memory limit.\nPlease reduce the number of passwords"));
 
             sPasswList.New(qEstimatedSize);
-            sPasswList.StrCat(sHeader.c_str(), nPasswListHeaderLen,
-              lPasswListWChars);
+            if (nPasswListHeaderLen > 0)
+              sPasswList.StrCat(sHeader.c_str(), nPasswListHeaderLen, lPasswListWChars);
             sPasswList.SetClearMark(0);
           }
           else if (dest == gpdFileList) {
@@ -2809,7 +2791,7 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
           break;
 
         case gpdConsole:
-            std::wcout << WStringToUtf8(pwszPassw).c_str() << std::endl;
+          std::wcout << WStringToUtf8(pwszPassw).c_str() << std::endl;
           break;
 
         default:
@@ -2846,12 +2828,12 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
       if ((dest == gpdGuiList || dest == gpdClipboardList) && qPasswCnt != 0) {
         int nStrOffset = 0;
 
-        if (qPasswCnt < qNumOfPassw ||
-            (blCheckEachPassw && dTotalPasswSec < RandomPool::MAX_ENTROPY)) {
+        if (blIncludeHeader && (qPasswCnt < qNumOfPassw ||
+            (blCheckEachPassw && dTotalPasswSec < RandomPool::MAX_ENTROPY))) {
           WString sNewHeader = TRLFormat(asPasswListHeader,
             { IntToStr(static_cast<__int64>(qPasswCnt.load())),
-              FormatFloat("0.0", dFirstPasswSec), //IntToStr(FloorEntropyBits(dFirstPasswSec)),
-              FormatFloat("0.0", dTotalPasswSec) }) //IntToStr(FloorEntropyBits(dTotalPasswSec)) })
+              FormatFloat("0.0", dFirstPasswSec),
+              FormatFloat("0.0", dTotalPasswSec) })
               + CRLF + CRLF;
           int nNewHeaderLen = sNewHeader.Length();
 
@@ -2863,8 +2845,6 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
 
         sPasswList[lPasswListWChars - 2] = '\0';
 
-        //SetEditBoxTextBuf(PasswListForm->PasswList, sPasswList.Data() + nStrOffset);
-        //sPasswList.Empty();
         pwszPassw = &sPasswList[nStrOffset];
       }
     }
@@ -3924,7 +3904,7 @@ void __fastcall TMainForm::MainMenu_Help_CheckForUpdatesClick(
 {
   Screen->Cursor = crHourGlass;
 
-  switch (TUpdateCheckThread::CheckForUpdates(true)) {
+  switch (TUpdateCheckThread::CheckForUpdates(NetHTTPClient, true)) {
   case TUpdateCheckThread::CheckResult::Negative:
     MsgBox(TRLFormat("Your version of %1 is up-to-date.", { PROGRAM_NAME }),
     MB_ICONINFORMATION);

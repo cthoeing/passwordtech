@@ -18,9 +18,6 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 // 02111-1307, USA.
 //---------------------------------------------------------------------------
-//#include <stdio.h>
-#include <urlmon.h>
-#include <wininet.h>
 #pragma hdrstop
 
 #include "UpdateCheck.h"
@@ -32,73 +29,51 @@
 #include "hrtimer.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
-#ifndef _WIN64
-#pragma link "urlmon.lib"
-#pragma link "wininet.lib"
-#endif
 
 std::atomic<bool> TUpdateCheckThread::s_blThreadRunning(false);
 
 //---------------------------------------------------------------------------
 TUpdateCheckThread::CheckResult __fastcall TUpdateCheckThread::CheckForUpdates(
+  TNetHTTPClient* pClient,
   bool blShowError,
-  float fTimeoutSec)
+  float fTimeout)
 {
   try {
     Stopwatch sw;
 
-    const WString sAltUrl = Format("%s?fakeParam=%.8x", ARRAYOFCONST((
-      PROGRAM_URL_VERSION, time(nullptr))));
+    auto stream = pClient->Get(PROGRAM_URL_VERSION);
 
-    //WString(PROGRAM_URL_VERSION) +
-    //  WString("?fakeParam=") + WString(IntToHex(int(time(NULL)), 8));
-
-    wchar_t wszFileName[MAX_PATH];
-    wszFileName[0] = '\0';
-
-    //const wchar_t* pwszUrl = L"http://pwgen-win.sourceforge.net/manual.pdf";
-	  const wchar_t* pwszUrl = PROGRAM_URL_VERSION;
-
-    // first try to delete a cache entry of the file before downloading it
-    // to ensure that we get the latest version from the server
-    if (!DeleteUrlCacheEntry(pwszUrl) && GetLastError() == ERROR_ACCESS_DENIED)
-      pwszUrl = sAltUrl.c_str();
-
-	  HRESULT hResult = URLDownloadToCacheFile(nullptr, pwszUrl, wszFileName,
-        MAX_PATH, 0, NULL);
-
-    if (fTimeoutSec > 0 && sw.ElapsedSeconds() > fTimeoutSec)
+    if (fTimeout > 0 && sw.ElapsedSeconds() > fTimeout) {
       return CheckResult::Timeout;
+    }
 
-    WString sFileName(wszFileName);
+    if (stream->StatusCode < 200 || stream->StatusCode > 299) {
+      throw Exception(TRL("Could not download version file") +
+        Format(" (%d %s)", ARRAYOFCONST((stream->StatusCode, stream->StatusText))));
+    }
 
-    if (hResult != S_OK || sFileName.IsEmpty())
-      throw Exception("Could not download version file");
-
-    auto pFile = std::make_unique<TStringFileStreamW>(
-      sFileName, fmOpenRead, ceAnsi, true, 1024);
-
-    const int BUFSIZE = 256;
-    wchar_t wszBuf[BUFSIZE];
-    wszBuf[0] = '\0';
+    auto strList = std::make_unique<TStringList>();
+    strList->LoadFromStream(stream->ContentStream);
 
     WString sVersion, sUrl, sNote;
-    if (pFile->ReadString(wszBuf, BUFSIZE))
-      sVersion = Trim(WString(wszBuf));
+    if (strList->Count >= 2) {
+      sVersion = strList->Strings[0];
 
-    auto version = ParseVersionNumber(sVersion);
-    if (version.size() == 3) {
-      if (pFile->ReadString(wszBuf, BUFSIZE))
-        sUrl = Trim(WString(wszBuf));
-      if (pFile->ReadString(wszBuf, BUFSIZE))
-        sNote = Trim(WString(wszBuf));
+      auto version = ParseVersionNumber(sVersion);
+      if (version.size() == 3) {
+        sUrl = strList->Strings[1];
+        if (strList->Count >= 3)
+          sNote = strList->Strings[2];
+      }
+      else {
+        sVersion = WString();
+      }
     }
-    else
-      sVersion = WString();
 
-    if (sVersion.IsEmpty() || sUrl.IsEmpty())
-      throw Exception("Version or URL not specified in version file, or unknown "
-        "file format");
+    if (sVersion.IsEmpty() || sUrl.IsEmpty()) {
+      throw Exception(TRL("Version or URL not specified in version file, or unknown "
+        "file format"));
+    }
 
     if (CompareVersionNumbers(sVersion, PROGRAM_VERSION) > 0) {
       WString sMsg = TRLFormat("A new version (%1) of %2 is available!\nDo you want "
@@ -122,7 +97,8 @@ TUpdateCheckThread::CheckResult __fastcall TUpdateCheckThread::CheckForUpdates(
           { e.Message }), MB_ICONERROR);
       });
     }
-    return CheckResult::Error;
+    return e.Message.Pos("timed out") > 0 ? CheckResult::Timeout :
+      CheckResult::Error;
   }
 
   return CheckResult::Negative;
