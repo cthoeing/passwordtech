@@ -15,9 +15,10 @@
 # for floating point numbers, "%s" for strings, etc.), and the original strings
 # are still provided in the old format to avoid merge conflicts when updating
 # existing translations.
+#. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.8\n"
+"Project-Id-Version: Password Tech 3.5.9\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: Dmitry Yerokhin <erodim@mail.ru>\n"
@@ -123,6 +124,10 @@ msgstr "Создать в буфере обмена"
 #. Main window, button to generate multiple passwords
 msgid "Generate to File..."
 msgstr "Создать в файле..."
+
+#. Main window, button to generate multiple passwords
+msgid "Include Header"
+msgstr "С заголовком"
 
 #. Main window, button to access advanced password options
 msgid "Advanced"
@@ -283,7 +288,7 @@ msgstr "Настройки"
 
 #. Main menu, Options submenu
 msgid "Configuration..."
-msgstr "Конфигурация..."
+msgstr "Параметры..."
 
 #. Configuration window, Language tab
 msgid "Language"
@@ -1208,7 +1213,7 @@ msgstr ""
 
 #. Configuration window, caption
 msgid "Configuration"
-msgstr "Конфигурация"
+msgstr "Параметры"
 
 #. Configuration window, General page
 msgid "General"

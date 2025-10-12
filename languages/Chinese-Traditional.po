@@ -18,11 +18,11 @@
 #. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.8\n"
+"Project-Id-Version: Password Tech 3.5.9\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: Thomas Du <thomas_du@outlook.com>\n"
-"Language-Team: Thomas Du <thomas_du@outlook.com>\n"
+"Language-Team: \n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -107,7 +107,7 @@ msgstr "重新載入腳本"
 
 #. Main window, label attached to input box for number of passwords
 msgid "Multiple passwords:"
-msgstr "多組的密碼："
+msgstr "多種的密碼："
 
 #. Main window, button to generate password
 msgid "Generate"
@@ -120,6 +120,10 @@ msgstr "產生成到剪貼簿"
 #. Main window, button to generate multiple passwords
 msgid "Generate to File..."
 msgstr "產生到檔案..."
+
+#. Main window, button to generate multiple passwords
+msgid "Include Header"
+msgstr "包含標題"
 
 #. Main window, button to access advanced password options
 msgid "Advanced"
@@ -259,7 +263,7 @@ msgstr "建立隨機資料檔案..."
 
 #. Main menu, Tools submenu
 msgid "Create Trigram File..."
-msgstr "建立三個字元組檔案..."
+msgstr "建立三元組檔案..."
 
 #. Main menu, Tools submenu
 msgid "MP Password Generator..."
@@ -295,7 +299,7 @@ msgstr "選項"
 
 #. Main menu, Options submenu
 msgid "Configuration..."
-msgstr "主要設置..."
+msgstr "配置..."
 
 #. Configuration window, Language tab
 msgid "Language"
@@ -358,7 +362,7 @@ msgstr "還原 %s"
 
 #. System tray context menu, Generate Password to clipboard
 msgid "Generate Password"
-msgstr "生成密碼"
+msgstr "產生密碼"
 
 #. System tray context menu, Generate Password and Show in message box
 msgid "Generate and Show Password..."
@@ -430,7 +434,7 @@ msgstr "文本檔案"
 
 #. Open/Save dialogs, filter for Trigram files (*.tgm)
 msgid "Trigram files"
-msgstr "三個字元組檔"
+msgstr "三元組檔"
 
 #. Open/Save dialogs, filter for Lua script files (*.lua)
 msgid "Lua scripts"
@@ -606,7 +610,7 @@ msgstr "無法打開 三元組 文件。"
 
 #. Message shown when selected trigram file has an invalid format
 msgid "Invalid trigram file."
-msgstr "三個字元組檔無效。"
+msgstr "三元組檔無效。"
 
 #. Main window, Generated Password groupbox, label below Password box, tooltip shown when generated or entered password matches a common password
 msgid "Matches common password!"
@@ -870,7 +874,7 @@ msgstr "字符集無效。"
 
 #. Include characters, phonetic passwords, info about trigrams
 msgid "default (English) trigrams"
-msgstr "預設（英語）三個字元組"
+msgstr "預設（英語）三元組"
 
 #. Include characters, info about character set where a particular number of characters is desired for certain subsets
 msgid "(with different frequencies)"
@@ -886,7 +890,7 @@ msgid ""
 "from the following source:\n"
 "<%s>)"
 msgstr ""
-"（語音，基於三個字元組頻率\n"
+"（語音，基於三元組頻率\n"
 "來自以下來源：\n"
 "<%s>)"
 
@@ -1212,7 +1216,7 @@ msgstr ""
 
 #. Configuration window, caption
 msgid "Configuration"
-msgstr "主要設置"
+msgstr "設定"
 
 #. Configuration window, General page
 msgid "General"
@@ -1587,11 +1591,11 @@ msgstr "密碼不相同。"
 
 #. Enter password window, caption for encryption
 msgid "Encrypt"
-msgstr "加密剪貼簿"
+msgstr "加密"
 
 #. Enter password window, caption for decryption
 msgid "Decrypt"
-msgstr "解密剪貼簿"
+msgstr "解密"
 
 #. Enter password window
 msgid "Remember password (seconds):"
@@ -1801,7 +1805,7 @@ msgstr "反向選擇"
 
 #. Create Random Data File dialog, title
 msgid "Create Random Data File"
-msgstr "建立隨機資料檔案"
+msgstr "建立隨機數據文件"
 
 #. Create Random Data File dialog, label
 msgid "File name:"
@@ -1877,7 +1881,7 @@ msgstr ""
 
 #. Profile Editor dialog, title
 msgid "Profile Editor"
-msgstr "配置檔編輯器"
+msgstr "個人資料編輯器"
 
 #. Profile Editor dialog, Load Profile button
 msgid "Load"
