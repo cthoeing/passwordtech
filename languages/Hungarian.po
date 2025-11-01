@@ -1,0 +1,3189 @@
+# Released under the GNU General Public License
+#
+# !!! NOTE ON FORMAT STRINGS !!!
+# As of version 3.5.3, Password Tech uses format specifiers of the form "%N",
+# with N being the index of the argument (starting at N=1) to be inserted into
+# the formatted string. All arguments are provided as strings by the application.
+# The new format was chosen because it provides higher flexibility and security.
+# Example:
+# Format string:    "%1 characters / %2 bits per character"
+# 1st argument:     "90"
+# 2nd argument:     "6.4"
+# Resulting string: "90 characters / 6.4 bits per character"
+# In the translated string, the arguments can be specified in any order.
+# Password Tech is still compatible with the old format ("%d" for digits, "%f"
+# for floating point numbers, "%s" for strings, etc.), and the original strings
+# are still provided in the old format to avoid merge conflicts when updating
+# existing translations.
+#. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
+msgid ""
+msgstr ""
+"Project-Id-Version: Password Tech 3.5.9\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Balázs Zoltán <zotius@gmail.com>\n"
+"Language-Team: \n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+
+#. Message box caption
+msgid "Info"
+msgstr "Információ"
+
+#. Message box caption
+msgid "Warning"
+msgstr "Figyelmeztetés"
+
+#. Message box caption
+msgid "Question"
+msgstr "Kérdés"
+
+#. Message box caption
+msgid "Error"
+msgstr "Hiba"
+
+#. Main window, label attached to password profile drop-down list
+msgid "Profile:"
+msgstr "Profil:"
+
+#. Main window, Settings groupbox
+msgid "Settings"
+msgstr "Beállítások"
+
+#. Main window, checkbox
+msgid "Include Characters (Pass*words*)"
+msgstr "Karakterek (Pass*words*)"
+
+#. Main window, Password length
+msgid "Length:"
+msgstr "Hossz:"
+
+#. Main window, user-defined character set
+msgid "Character Set:"
+msgstr "Karakterkészlet:"
+
+#. Main window, button to show currently loaded character set
+msgid "Show details"
+msgstr "Részletek megjelenítése"
+
+#. Main window, checkbox
+msgid "Include Words (Pass*phrases*)"
+msgstr "Szavak (jelszó*kifejezések*)"
+
+#. Main window, number of words from word list to generate
+msgid "Number:"
+msgstr "Szám:"
+
+#. Main window, select word list file
+msgid "Word List File:"
+msgstr "Szólista fájl:"
+
+#. Main window, button to browse for word list file
+msgid "Browse"
+msgstr "Tallóz"
+
+#. Main window, specify length of passphrase (composed of words)
+msgid "Specify length*:"
+msgstr "Adja meg a hosszt*:"
+
+#. Main window, checkbox
+msgid "Combine Words with Characters"
+msgstr "Szavak és karakterek kombinálása"
+
+#. Main window, checkbox
+msgid "Format password:"
+msgstr "Jelszó formázása:"
+
+#. Main window, checkbox, execute custom Lua script for password generation
+msgid "Run script:"
+msgstr "Szkript futtatása:"
+
+#. Main window, button to reload script file
+msgid "Reload script"
+msgstr "Szkript újratöltése"
+
+#. Main window, label attached to input box for number of passwords
+msgid "Multiple passwords:"
+msgstr "Több jelszó:"
+
+#. Main window, button to generate password
+msgid "Generate"
+msgstr "Generálás"
+
+#. Main window, button to generate multiple passwords
+msgid "Generate to Clipboard"
+msgstr "Generálás a vágólapra"
+
+#. Main window, button to generate multiple passwords
+msgid "Generate to File..."
+msgstr "Generálás fájlba..."
+
+#. Main window, button to generate multiple passwords
+msgid "Include Header"
+msgstr "Fejléc belefoglalása"
+
+#. Main window, button to access advanced password options
+msgid "Advanced"
+msgstr "Haladó"
+
+#. Main window, button to access advanced password options, tooltip
+msgid "%d option(s) active"
+msgstr "%d opció aktívak"
+
+#. Main window, button to access advanced password options, dropdown menu
+msgid "Deactivate All Options"
+msgstr "Összes opció kikapcsolása"
+
+#. Main window, button to access advanced password options, dropdown menu
+msgid "Deactivate All Starred (*) Options"
+msgstr "Az összes csillagozott (*) opció kikapcsolása"
+
+#. Main window, Generated Password groupbox
+msgid "Generated Password"
+msgstr "Generált jelszó"
+
+#. Main window, label below password box
+msgid "Click on \"Generate\""
+msgstr "Kattintson a \"Generálás\" gombra"
+
+#. Main window, button to toggle password display (either display as-is or hide behind symbols)
+msgid "Hide/show password"
+msgstr "Jelszó elrejtése/megjelenítése"
+
+#. Main window, password groupbox, tooltip of quality bar
+msgid "Hold left mouse button to drag & drop password"
+msgstr "Tartsa lenyomva a bal egérgombot a jelszó húzásához"
+
+#. Main menu, File submenu
+msgid "File"
+msgstr "Fájl"
+
+#. Main menu, File submenu, Profile for password generation
+msgid "Profile"
+msgstr "Profil"
+
+#. Main menu, File submenu, Profile submenu, Profile Editor
+msgid "Profile Editor..."
+msgstr "Profilszerkesztő..."
+
+#. Main menu, File submenu, Exit program
+msgid "Exit"
+msgstr "Kilépés"
+
+#. Main menu, File submenu
+msgid "Backup Settings..."
+msgstr "Biztonsági mentési beállítások..."
+
+#. Main menu, File submenu
+msgid "Restore Settings from Backup..."
+msgstr "Beállítások visszaállítása biztonsági mentésből..."
+
+#. Backup settings, error message
+msgid ""
+"Could not copy the following language file(s):\n"
+"%1"
+msgstr ""
+"Nem sikerült másolni a következő nyelvi fájl(oka)t:\n"
+"%1"
+
+#. Backup settings, title of dialog
+msgid "Select folder to store backup"
+msgstr "Válasszon mappát a biztonsági mentés tárolásához"
+
+#. Backup settings, message
+msgid ""
+"Backup of settings and language files\n"
+"stored in \"%1\"."
+msgstr ""
+"Beállítások és nyelvi fájlok biztonsági mentése\n"
+"\"%1\" mappában tárolva."
+
+#. Restore backup, title of dialog
+msgid "Select folder containing backup to restore"
+msgstr "Válassza ki a visszaállítandó biztonsági másolatot tartalmazó mappát"
+
+#. Restore backup, error message
+msgid "Configuration file \"%1\" not found in folder."
+msgstr "A(z) \"%1\" konfigurációs fájl nem található a mappában."
+
+#. Restore backup, message
+msgid ""
+"Backup was created with an older version (%1)\n"
+"of the program. Continue anyway?"
+msgstr ""
+"A biztonsági mentés egy régebbi verzióval készült (%1)\n"
+"a programból. Mégis folytatni?"
+
+#. Restore backup, error message
+msgid ""
+"Could not copy configuration file to\n"
+"\"%1\"."
+msgstr ""
+"Nem sikerült másolni a konfigurációs fájlt\n"
+"\"%1\"."
+
+#. Restore backup, message
+msgid ""
+"Restored settings will only take effect after\n"
+"a program restart. Do you want to restart now?"
+msgstr ""
+"A visszaállított beállítások csaka program újraindításakor\n"
+"lépnek életbe. Most szeretné újraindítani?"
+
+#. Restore backup, message
+msgid ""
+"Configuration settings will not be saved until\n"
+"the next time the program is started."
+msgstr ""
+"A konfigurációs beállítások csak a program\n"
+"következő indításakor kerülnek mentésre."
+
+#. Main menu, Tools submenu
+msgid "Tools"
+msgstr "Eszközök"
+
+#. Main window, Clear Clipboard button and menu item
+msgid "Clear Clipboard"
+msgstr "Vágólap űrítése"
+
+#. Main window, Encrypt Clipboard button and menu item
+msgid "Encrypt Clipboard..."
+msgstr "Vágólap titkosítása..."
+
+#. Main window, Decrypt Clipboard button and menu item
+msgid "Decrypt Clipboard..."
+msgstr "Vágólap visszafejtése..."
+
+#. Main menu, Tools submenu
+msgid "Create Random Data File..."
+msgstr "Véletlenszerű adatfájl létrehozása..."
+
+#. Main menu, Tools submenu
+msgid "Create Trigram File..."
+msgstr "Trigram fájl létrehozása..."
+
+#. Main menu, Tools submenu
+msgid "MP Password Generator..."
+msgstr "Mesterjelszó generátor..."
+
+#. Main menu, Tools submenu
+msgid "Deterministic Random Generator"
+msgstr "Determinisztikus véletlen generátor"
+
+#. Main menu, Tools submenu, Deterministic Random Generator submenu
+msgid "Reset"
+msgstr "Alaphelyzet"
+
+#. Main menu, Tools submenu, Deterministic Random Generator submenu
+msgid "Deactivate"
+msgstr "Deaktiválás"
+
+#. Main menu, Tools submenu
+msgid "Provide Additional Entropy"
+msgstr "További entrópia biztosítása"
+
+#. Main menu, Tools submenu, Provide Additional Entropy submenu
+msgid "As Text..."
+msgstr "Szövegként..."
+
+#. Main menu, Tools submenu, Provide Additional Entropy submenu
+msgid "From File..."
+msgstr "Fájlból..."
+
+#. Main menu, Options submenu
+msgid "Options"
+msgstr "Opciók"
+
+#. Main menu, Options submenu
+msgid "Configuration..."
+msgstr "Konfiguráció..."
+
+#. Configuration window, Language tab
+msgid "Language"
+msgstr "Nyelv"
+
+#. Main menu, Options submenu
+msgid "Always on Top"
+msgstr "Mindig legfelül"
+
+#. Main menu, Options submenu
+msgid "Hide Entropy Progress"
+msgstr "Az entrópia előrehaladásának elrejtése"
+
+#. Main menu, Options submenu
+msgid "Save Settings on Exit"
+msgstr "Beállítások mentése kilépéskor"
+
+#. Main menu, Options submenu
+msgid "Save Settings Now"
+msgstr "Beállítások mentése most"
+
+#. Main menu, Help submenu
+msgid "Help"
+msgstr "Segítség"
+
+#. Main window, Help button tooltip
+msgid "Open Manual"
+msgstr "Kézikönyv megnyitása"
+
+msgid "Command Line Arguments..."
+msgstr "Parancssori argumentumok..."
+
+#. Main menu, Help submenu
+msgid "Visit Website"
+msgstr "Weboldal megtekintése"
+
+#. Main window, Help submenu
+msgid "Get Translations..."
+msgstr "Fordítások beszerzése..."
+
+#. Main window, Help submenu
+msgid "Donate..."
+msgstr "Adományoz..."
+
+#. Main window, Help submenu
+msgid "Check for Updates"
+msgstr "Frissítések keresése"
+
+#. Main window, Help submenu
+msgid "Timer Info..."
+msgstr "Időzítő információ..."
+
+#. Main window, Help submenu
+msgid "About %s..."
+msgstr "%s programról..."
+
+#. System tray context menu, Restore application
+msgid "Restore %s"
+msgstr "%s visszaállítása"
+
+#. System tray context menu, Generate Password to clipboard
+msgid "Generate Password"
+msgstr "Jelszó generálása"
+
+#. System tray context menu, Generate Password and Show in message box
+msgid "Generate and Show Password..."
+msgstr "Jelszó generálása és megjelenítése..."
+
+#. System tray context menu, Generate Password and Autotype into other windows
+msgid "Generate and Autotype Password"
+msgstr "Jelszó generálása és automatikus beírása"
+
+#. System tray context menu
+msgid "Open user manual"
+msgstr "Használati útmutató megnyitása"
+
+#. Command line arguments
+msgid "Usage:"
+msgstr "Használat:"
+
+#. Command line arguments
+msgid "Display this help message."
+msgstr "Jelenítse meg ezt a súgóüzenetet."
+
+#. Command line arguments
+msgid "Do not write to disk unless explicitly requested."
+msgstr "Ne írjon lemezre, hacsak nem kéri."
+
+#. Command line arguments
+msgid "Load profile named 'profilename' on start-up."
+msgstr "Töltse be a \"profilename\" nevű profilt indításkor."
+
+#. Command line arguments
+msgid ""
+"Generate 'number' of passwords and display on the console, then close "
+"application."
+msgstr ""
+"Generálja a jelszavak számát, és jelenítse meg a konzolon, majd zárja be az "
+"alkalmazást."
+
+#. Command line arguments
+msgid "Launch application in the background."
+msgstr "Indítsa el az alkalmazást a háttérben."
+
+#. Command line arguments
+msgid ""
+"Open database named 'filename' on start-up and show password manager window."
+msgstr ""
+"Indítsa el a \"fájlnév\" nevű adatbázist, és jelenítse meg a jelszókezelő "
+"ablakot."
+
+#. Main window, Clear Clipboard button tooltip
+msgid "Clear clipboard (text contents only)"
+msgstr "Vágólap törlése (csak szövegtartalom)"
+
+#. Main window, Encrypt/Decrypt Clipboard button tooltip
+msgid "Clipboard text encryption (left-click) or decryption (right-click)"
+msgstr ""
+"Vágólap szövegtitkosítása (bal kattintás) vagy visszafejtés (jobb kattintás)"
+
+#. Main window, Profile Editor button tooltip
+msgid "Load, create or delete profiles"
+msgstr "Profilok betöltése, létrehozása és törlése"
+
+#. Main window, MP Password Generator button tooltip
+msgid "Generate passwords based on a master password"
+msgstr "Jelszavak generálása fő jelszó alapján"
+
+#. Main window, Configuration button tooltip
+msgid "Main configuration of the program"
+msgstr "A program fő konfigurációja"
+
+#. Open/Save dialogs, filter for All files (*.*)
+msgid "All files"
+msgstr "Minden fájl"
+
+#. Open/Save dialogs, filter for Text files (*.txt)
+msgid "Text files"
+msgstr "Szöveg fájlok"
+
+#. Open/Save dialogs, filter for Trigram files (*.tgm)
+msgid "Trigram files"
+msgstr "Trigram fájlok"
+
+#. Open/Save dialogs, filter for Lua script files (*.lua)
+msgid "Lua scripts"
+msgstr "Lua szkriptek"
+
+#. Various context menus, Undo last operation
+msgid "Undo"
+msgstr "Mégse"
+
+#. Various context menus, Cut selected text and copy to clipboard
+msgid "Cut"
+msgstr "Kivág"
+
+#. Various context menus, Copy selected text to clipboard
+msgid "Copy"
+msgstr "Másol"
+
+#. Main window, Password box, context menu
+msgid "Encrypt && Copy"
+msgstr "Titkosítás és másolás"
+
+#. Variuos context menus, paste text from clipboard
+msgid "Paste"
+msgstr "Beilleszt"
+
+#. Main window, Password box, context menu
+msgid "Perform Autotype"
+msgstr "Automatikus gépelés végrehajtása"
+
+#. Main window, Password box, context menu
+msgid "Add to Database"
+msgstr "Hozzáadás az adatbázishoz"
+
+#. Various context menus, Delete selected text
+msgid "Delete"
+msgstr "Törlés"
+
+#. Various context menus, select entire text
+msgid "Select All"
+msgstr "Jelöl mind"
+
+#. Context menus of Character set, Word list file, Format password, and Run script drop-down lists: Clear history of list entries
+msgid "Clear List"
+msgstr "Lista törlése"
+
+#. Main window, context menus of Character set, Word list file, Format password, and Run script drop-down lists: Clear currently selected entry
+msgid "Remove Entry"
+msgstr "Bejegyzés eltávolítása"
+
+#. Main window, Passowrd box, context menu, make box editable
+msgid "Editable"
+msgstr "Szerkeszthető"
+
+#. Main window, Password box, context menu, enable automatic estimation of password quality when entering text
+msgid "Enable Password Testing"
+msgstr "Jelszótesztelés engedélyezése"
+
+#. Main window, Password box, context menu
+msgid "Change Font..."
+msgstr "Betűtípus módosítása..."
+
+#. Main window, Password box, context menu
+msgid "Reset Font"
+msgstr "Betűtípus visszaállítása"
+
+#. Title of open dialog when selecting Main menu | Tools | Provide Additional Entropy | From File
+msgid "Select high-entropy file"
+msgstr "Válasszon nagy entrópiájú fájlt"
+
+#. Main window, Password Database button tooltip
+msgid "Manage passwords in encrypted databases"
+msgstr "Jelszavak kezelése titkosított adatbázisokban"
+
+#. Main window, Reload Profile button tooltip
+msgid "Reload profile"
+msgstr "Profil újratöltése"
+
+#. Main window, Add Profile button tooltip
+msgid "Add profile"
+msgstr "Profil hozzáadása"
+
+#. Main menu, Tools submenu, Deterministic Random Generator submenu
+msgid "Set up..."
+msgstr "Telepít..."
+
+#. Main menu, File submenu
+msgid "Password Manager..."
+msgstr "Jelszókezelő..."
+
+#. Main menu, Help submenu
+msgid "Enter Donor Key..."
+msgstr "Adja meg az adományozó kulcsot..."
+
+#. System tray context menu
+msgid "Reset All Window Positions"
+msgstr "Állítsa vissza az összes ablakpozíciót"
+
+#. Message shown when randseed.dat could not be read
+msgid ""
+"Could not read random seed file\n"
+"\"%s\"."
+msgstr ""
+"Nem sikerült elolvasni a véletlenszerű magfájlt\n"
+"\"%s\"."
+
+#. Message shown when writing randseed.dat failed
+msgid ""
+"Could not write to random seed file\n"
+"\"%s\"."
+msgstr ""
+"Nem lehetett véletlenszerű magfájlba írni\n"
+"\"%s\"."
+
+#. List of unknown command line parameters (when the application is run from the command line)
+msgid ""
+"Unknown command line switch(es):\n"
+"%s"
+msgstr ""
+"Ismeretlen parancssori kapcsoló(k):\n"
+"%s"
+
+#. Message shown when word list could not be loaded
+msgid ""
+"Error while loading word list file\n"
+"\"%s\"."
+msgstr ""
+"Hiba a szólistafájl betöltése közben\n"
+"\"%s\"."
+
+#. Message shown when passwords from common_passwords.txt could not be loaded
+msgid ""
+"Error while loading list of common passwords:\n"
+"%s."
+msgstr ""
+"Hiba a gyakori jelszavak listájának betöltésekor:\n"
+"%s."
+
+#. List of errors that occurred during startup phase of the application
+msgid "%s encountered %d error(s) during startup:"
+msgstr "%s észlelt %d hibát az indítás során:"
+
+#. Reminder to make a donation, shown with a certain frequency on startup
+msgid ""
+"If you like %s, please consider\n"
+"making a donation. Thank you!"
+msgstr ""
+"Ha tetszik %s, kérjük, fontolja meg\n"
+"adományozás. Köszönöm!"
+
+#. Message shown when selected character set is invalid
+msgid "Character set \"%s\" is invalid."
+msgstr "A \"%s\" karakterkészlet érvénytelen."
+
+#. Message shown when configuration file could not be written
+msgid ""
+"Error while writing to configuration file:\n"
+"%s."
+msgstr ""
+"Hiba a konfigurációs fájlba való írás során:\n"
+"%s."
+
+#. Information about selected character set (number N of unique characters and entropy bits (=log2(N)) per character)
+msgid "%d characters / %.1f bits per character"
+msgstr "%d karakter / %.1f bit karakterenként"
+
+#. Information about selected word list file (number N of unique words and entropy bits (=log2(N)) per word)
+msgid "%d words / %.1f bits per word"
+msgstr "%d szó / %.1f bit szavanként"
+
+#. Message shown when selected trigram file could not be read
+msgid "Could not open trigram file."
+msgstr "Nem sikerült megnyitni a trigram fájlt."
+
+#. Message shown when selected trigram file has an invalid format
+msgid "Invalid trigram file."
+msgstr "Érvénytelen trigram fájl."
+
+#. Main window, Generated Password groupbox, label below Password box, tooltip shown when generated or entered password matches a common password
+msgid "Matches common password!"
+msgstr "Egyezik a gyakori jelszóval!"
+
+#. Encrypt Clipboard, message shown when text has been encrypted successfully
+msgid "Text successfully encrypted."
+msgstr "A szöveg titkosítása sikerült."
+
+#. Decrypt Clipboard, message shown when text has been decrypted successfully
+msgid "Text successfully decrypted."
+msgstr "A szöveg visszafejtése sikeresen megtörtént."
+
+#. Encrypt/Decrypt Clipboard, message shown when clipboard could not be opened
+msgid "Could not open clipboard."
+msgstr "Nem sikerült megnyitni a vágólapot."
+
+#. Encrypt/Decrypt Clipboard, message shown when contained text is too long
+msgid "The text to be encrypted is too long."
+msgstr "A titkosítandó szöveg túl hosszú."
+
+#. Encrypt/Decrypt Clipboard, message shown when clipboard is empty
+msgid "No text available to process."
+msgstr "Nincs feldolgozható szöveg."
+
+#. Encrypt/Decrypt Clipboard, message shown when out of memory
+msgid ""
+"Not enough memory available to perform\n"
+"the operation. Try to use a shorter text."
+msgstr ""
+"Nincs elég memória a művelet végrehajtáshoz.\n"
+"Próbáljon meg rövidebb szöveget használni."
+
+#. Decrypt Clipboard, message shown when decryption failed
+msgid ""
+"Decryption failed. This may be attributed\n"
+"to the following reasons:"
+msgstr ""
+"A visszafejtés sikertelen volt. Ez a következő\n"
+"lehetséges okoknak tulajdonítható:"
+
+#. Decrypt Clipboard, possible reason for failure
+msgid "- You entered a wrong password."
+msgstr "- Rossz jelszót adott meg."
+
+#. Decrypt Clipboard, possible reason for failure
+msgid ""
+"- The text is corrupted.\n"
+"- The text is not encrypted."
+msgstr ""
+"- A szöveg sérült.\n"
+"- A szöveg nincs titkosítva."
+
+#. Decrypt Clipboard, message shown when decompression failed
+msgid ""
+"This should not have happened:\n"
+"Decryption successful, but decompression\n"
+"failed."
+msgstr ""
+"Ennek nem lett volna szabad megtörténnie:\n"
+"A visszafejtés sikeres, de a kibontás\n"
+"sikertelen."
+
+#. Message shown when certain hot key(s) could not be registered
+msgid "Could not register the following hot keys:"
+msgstr "Nem sikerült regisztrálni a következő gyorsbillentyűket:"
+
+#. Main window, Generate password list, message shown when specified number of passwords is invalid
+msgid ""
+"Invalid number of passwords.\n"
+"Allowed range is %d-%d."
+msgstr ""
+"Érvénytelen számú jelszó.\n"
+"A megengedett tartomány %d-%d."
+
+#. Main window, Generate password list to file, message shown when selected file already exists
+msgid ""
+"The selected file already exists. Do you\n"
+"want to append passwords to this file\n"
+"(existing passwords will be preserved),\n"
+"or do you want to completely overwrite it?\n"
+"\n"
+"Yes -> append passwords,\n"
+"No -> overwrite file,\n"
+"Cancel -> cancel process."
+msgstr ""
+"A kiválasztott fájl már létezik.\n"
+"Szeretne jelszavakat hozzáfűzni ehhez a fájlhoz\n"
+"(a meglévő jelszavak megmaradnak),\n"
+"Vagy teljesen felül akarja írni?\n"
+"\n"
+"Igen -> hozzáfűzi a jelszavakat,\n"
+"Nincs -> felülírja a fájlt,\n"
+"Mégse -> folyamat megszakítása."
+
+#. Main window, Include Passphrase, Specify Length, message shown when specified length range is invalid
+msgid "Passphrase: Invalid length range."
+msgstr "Jelszó: Érvénytelen hossztartomány."
+
+#. Message shown for a certain configuration of password settings
+msgid ""
+"If the option \"Each character must occur\n"
+"only once\" is activated, the password length\n"
+"is limited to %d unique characters."
+msgstr ""
+"Ha a \"Minden karakternek meg kell jelennie\n"
+"csak egyszer\" aktiválódik, a jelszó hossza\n"
+"%d egyedi karakterre korlátozódik."
+
+#. Message shown for a certain configuration of passphrase settings
+msgid ""
+"If the option \"Each word must occur only\n"
+"once\" is activated, the number of words\n"
+"is limited to the size of the word list (%d)."
+msgstr ""
+"Ha a \"Minden szó csak előfordulhat\"\n"
+"egyszer\" aktiválódik, a szavak száma\n"
+"a szólista (%d) méretére korlátozódik."
+
+#. Message shown when selected script file could not be loaded
+msgid ""
+"Error while loading script:\n"
+"%s."
+msgstr ""
+"Hiba a szkript betöltésekor:\n"
+"%s."
+
+#. Title of Progress window when generating a single password
+msgid "Generating password"
+msgstr "Jelszó generálása"
+
+#. Title of Progress window when generating password list
+msgid "Generating password list"
+msgstr "Jelszólista létrehozása"
+
+#. Progress info when generating password list
+msgid "%d of %d passwords generated."
+msgstr "%d jelszó a %d jelszóból generálva."
+
+#. Formatted password, Include Characters/Words selected, but format specifier "P" not found in format string
+msgid "\"P\" is not specified"
+msgstr "A \"P\" nincs megadva"
+
+#. Formatted password, format specifier "P" contained in format string, but no password available to insert
+msgid "Password not available"
+msgstr "A jelszó nem érhető el"
+
+#. Formatted password, format specifier "P" contained in format string, but password cannot be fully inserted
+msgid "Password too long"
+msgstr "Túl hosszú jelszó"
+
+#. Formatted password, format string contains unknown specifier
+msgid "%d invalid format specifier(s): %s"
+msgstr "%d érvénytelen formátumkijelölő(k): %s"
+
+#. Run script, executing Lua script
+msgid "Executing script"
+msgstr "Szkript végrehajtása"
+
+#. Run script, waiting for response
+msgid "Waiting for script ..."
+msgstr "Várakozás a forgatókönyvre ..."
+
+#. Run script, message shown when execution was cancelled
+msgid ""
+"Script thread was terminated forcibly.\n"
+"Please check script for infinite loops."
+msgstr ""
+"A szkriptszálat erőszakkal megszakították.\n"
+"Kérjük, ellenőrizze a szkriptet a végtelen ciklusokért."
+
+#. Generate password list, message shown when list size is about to exceed internal limit
+msgid ""
+"The estimated list size will probably exceed\n"
+"the internal memory limit.\n"
+"Please reduce the number of passwords"
+msgstr ""
+"A becsült listaméret valószínűleg meghaladja\n"
+"a belső memóriakorlát.\n"
+"Kérjük, csökkentse a jelszavak számát"
+
+#. Generate password list, message shown when list size has exceeded internal limit
+msgid ""
+"The memory limit of the password list has\n"
+"been reached.\n"
+"\n"
+"The number of passwords has been\n"
+"reduced to %d."
+msgstr ""
+"A jelszólista memóriakorlátja\n"
+"elérték.\n"
+"\n"
+"A jelszavak száma\n"
+"%d-re csökkentve."
+
+#. Generate password list, number of generated passwords
+msgid "%d passwords generated."
+msgstr "%d jelszó generálva."
+
+#. Generate password list, info about passwords
+msgid ""
+"%d passwords generated.\r\n"
+"Entropy of the first password: %d bits.\r\n"
+"Maximum entropy of the entire list: %d bits."
+msgstr ""
+"%d jelszó generálva.\r\n"
+"Az első jelszó entrópiája: %d bit.\r\n"
+"Teljes lista maximális entrópiája: %d bit."
+
+#. Generate password to clipboard
+msgid "Password copied to clipboard."
+msgstr "A jelszó a vágólapra másolva."
+
+#. Generate password list, copy list to UI
+msgid "Copying password list ..."
+msgstr "Jelszólista másolása ..."
+
+#. Generate password list to clipboard
+msgid "Password list copied to clipboard."
+msgstr "A vágólapra másolt jelszólista."
+
+#. Generate password list to file
+msgid ""
+"File \"%s\" successfully created.\n"
+"\n"
+"%d passwords written."
+msgstr ""
+"A \"%s\" fájl sikeresen létrejött.\n"
+"\n"
+"%d jelszó írása."
+
+#. Generate password, error message
+msgid ""
+"An error has occurred during password generation:\n"
+"%s."
+msgstr ""
+"Hiba történt a jelszó generálása során:\n"
+"%s."
+
+#. Generate password, error message
+msgid ""
+"An error has occurred while trying to send/\n"
+"process the password data:\n"
+"%s."
+msgstr ""
+"Hiba történt a küldés során/\n"
+"A jelszóadatok feldolgozása:\n"
+"%s."
+
+#. Generate password, error message, additional info when generating passwords to file
+msgid "%d passwords written to file \"%s\"."
+msgstr "%d jelszó a \"%s\" fájlba írva."
+
+#. Include characters, info about character set
+msgid "%d bits / %d characters"
+msgstr "%d bit / %d karakter"
+
+#. Include characters, error message shown when character set is invalid
+msgid "Invalid character set."
+msgstr "Érvénytelen karakterkészlet."
+
+#. Include characters, phonetic passwords, info about trigrams
+msgid "default (English) trigrams"
+msgstr "alapértelmezett (angol) trigramok"
+
+#. Include characters, info about character set where a particular number of characters is desired for certain subsets
+msgid "(with different frequencies)"
+msgstr "(különböző frekvenciákkal)"
+
+#. Data loaded from file
+msgid "File \"%s\""
+msgstr "\"%s\" fájl"
+
+#. Include characters, info about phonetic passwords
+msgid ""
+"(phonetic, based on trigram frequencies\n"
+"from the following source:\n"
+"<%s>)"
+msgstr ""
+"(fonetikus, trigramfrekvenciákon alapul\n"
+"a következő forrásból:\n"
+"<%s>)"
+
+#. Include characters, more detailed error message
+msgid ""
+"The character set you entered is invalid.\n"
+"It must contain at least 2 different characters."
+msgstr ""
+"A megadott karakterkészlet érvénytelen.\n"
+"Legalább 2 különböző karaktert kell tartalmaznia."
+
+#. Include characters, info about currently loaded character set
+msgid "Currently loaded character set:"
+msgstr "Jelenleg betöltött karakterkészlet:"
+
+#. Include words, error message shown when word list file could not be opened
+msgid "Could not open file."
+msgstr "Nem sikerült megnyitni a fájlt."
+
+#. Include words, error message shown when word list does not contain enough words
+msgid "Not enough valid words."
+msgstr "Nincs elég érvényes szó."
+
+#. Include words, title of file selection dialog
+msgid "Select word list file"
+msgstr "Szólistafájl kiválasztása"
+
+#. Include words, more detailed error message
+msgid ""
+"Error while loading the file\n"
+"\"%s\":\n"
+"%s"
+msgstr ""
+"Hiba a fájl betöltése közben\n"
+"\"%s\":\n"
+"%s"
+
+#. Include words, info about default word list
+msgid "default (English) word list"
+msgstr "alapértelmezett (angol) szólista"
+
+#. Include words, info about currently loaded word list
+msgid "Currently loaded word list:"
+msgstr "Jelenleg betöltött szólista:"
+
+#. Include words, info about currently loaded word list
+msgid "First word:"
+msgstr "Első szó:"
+
+#. Include words, info about currently loaded word list
+msgid "Random word:"
+msgstr "Véletlenszerű szó:"
+
+#. Include words, info about currently loaded word list
+msgid "Last word:"
+msgstr "Legutóbbi szó:"
+
+#. Configuration, warning message shown when version of selected language is not compatible (lower) with program version
+msgid ""
+"The version of this language (%s) is not\n"
+"compatible with this program version.\n"
+"This version of %s requires a language\n"
+"version of at least %s.\n"
+"\n"
+"Do you want to use it anyway?"
+msgstr ""
+"Ennek a nyelvnek a változata (%s) nem\n"
+"kompatibilis ezzel a programverzióval.\n"
+"A %s ezen verziójához nyelv szükséges\n"
+"legalább %s.\n"
+"\n"
+"Mégis használni akarja?"
+
+#. Configuration, warning message shown when version of selected language is not compatible (higher) with program version
+msgid ""
+"The version of this language (%s) is higher\n"
+"than the version of this program (%s).\n"
+"Therefore, version incompatibilities may occur.\n"
+"\n"
+"Do you want to use it anyway?"
+msgstr ""
+"Ennek a nyelvnek a verziója (%s) magasabb\n"
+"mint a program verziója (%s).\n"
+"Ezért verzió inkompatibilitások fordulhatnak elő.\n"
+"\n"
+"Mégis használni akarja?"
+
+#. Configuration, message shown when selecting language
+msgid ""
+"The program has to be restarted in order\n"
+"for the changes to take effect.\n"
+"\n"
+"Do you want to restart now?"
+msgstr ""
+"A programot újra kell indítani, hogy\n"
+"a módosítások életbe léptetéséhez.\n"
+"\n"
+"Most szeretné újraindítani?"
+
+#. Generate password and show it in a message box, message shown when password is too long
+msgid ""
+"Password is too long to show it in a\n"
+"message box like this.\n"
+"\n"
+"It has been copied to the clipboard."
+msgstr ""
+"A jelszó túl hosszú egy\n"
+"ilyen üzenetdobozhoz.\n"
+"\n"
+"Vágólapra másolásra került."
+
+#. Generate password and show it in a message box
+msgid ""
+"The generated password is:\n"
+"\n"
+"%s\n"
+"\n"
+"The estimated security is %d bits.\n"
+"\n"
+"Yes -> copy password to clipboard,\n"
+"No -> generate new password,\n"
+"Cancel -> cancel process."
+msgstr ""
+"A generált jelszó a következő:\n"
+"\n"
+"%s\n"
+"\n"
+"A becsült biztonság %d bit.\n"
+"\n"
+"Igen -> jelszó másolása a vágólapra,\n"
+"Nem > új jelszó generálása,\n"
+"Mégse -> folyamat megszakítása."
+
+#. Context menu of drop-down lists in main window, menu item "Clear List"
+msgid ""
+"All entries will be removed from the list.\n"
+"Are you sure?"
+msgstr ""
+"Minden bejegyzés eltávolításra kerül a listáról.\n"
+"Biztos vagy benne?"
+
+#. Main menu, Help submenu
+msgid "Total Entropy Bits: %d"
+msgstr "Összes entrópia bit: %d"
+
+#. Main menu, Help submenu, info about high-resolution timer
+msgid ""
+"High-resolution timer used:\n"
+"%s.\n"
+"\n"
+"Current value: %s."
+msgstr ""
+"Használt nagy felbontású időzítő:\n"
+"%s.\n"
+"\n"
+"Jelenlegi érték: %s."
+
+#. Check for updates, message shown when version file could not be downloaded
+msgid "Could not download version file"
+msgstr "Nem sikerült letölteni a verziófájlt"
+
+#. Check for updates, message shown when version file cannot be parsed due to missing information or unknown format
+msgid "Version or URL not specified in version file, or unknown file format"
+msgstr ""
+"A verzió vagy az URL nincs megadva a verziófájlban, vagy ismeretlen "
+"fájlformátum"
+
+#. Check for updates, message shown when a new version is available
+msgid ""
+"A new version (%s) of %s is available!\n"
+"Do you want to visit the download page now?"
+msgstr ""
+"Elérhető a %s új verziója (%s)!\n"
+"Szeretné most meglátogatni a letöltési oldalt?"
+
+#. Check for updates, additional info about new version
+msgid "(NOTE: %s)"
+msgstr "(MEGJEGYZÉS: %s)"
+
+#. Check for updates, message shown when there's no new version to download
+msgid "Your version of %s is up-to-date."
+msgstr "A %s verziója naprakész."
+
+#. Check for updates, general error message
+msgid ""
+"Error while checking for updates:\n"
+"%s."
+msgstr ""
+"Hiba a frissítések keresése közben:\n"
+"%s."
+
+#. Main window, info shown in window title when using deterministic random generator
+msgid "WARNING: Random generator is deterministic (press F7 to deactivate)!"
+msgstr ""
+"FIGYELEM: A véletlen generátor determinisztikus (nyomja meg az F7 "
+"billentyűt a kikapcsoláshoz)!"
+
+#. Message shown after clearing clipboard
+msgid "Clipboard cleared."
+msgstr "A vágólap törölve."
+
+#. Message shown after loading profile
+msgid "Profile \"%s\" activated."
+msgstr "\"%s\" profil aktiválva."
+
+#. Message shown after activating deterministic random generator
+msgid "Deterministic random generator has been ACTIVATED."
+msgstr "Determinisztikus véletlengenerátor AKTIVÁLVA lett."
+
+#. Message shown after resetting deterministic random generator
+msgid "Deterministic random generator has been RESET."
+msgstr "Determinisztikus véletlen generátor RESET."
+
+#. Message shown after deactivating deterministic random generator
+msgid "Deterministic random generator has been DEACTIVATED."
+msgstr "Determinisztikus véletlengenerátor DEAKTÍVÁLVA lett."
+
+#. Message shown on command line if profile was specified in command line parameters
+msgid "Selected profile \"%s\"."
+msgstr "Kiválasztott profil \"%s\"."
+
+#. Message shown on command line if password generation was requested
+msgid "Generating %d password(s) ..."
+msgstr "%d jelszó generálása ..."
+
+#. Message shown during startup if password generation was requested but program is not run from console
+msgid ""
+"Command line function \"gen\" is only effective\n"
+"when %s is run from the console."
+msgstr ""
+"A \"gen\" parancssori funkció csak akkor\n"
+"hatékony, ha %s a konzolról fut."
+
+#. Message shown when donor key has expired
+msgid ""
+"Your donor key has expired: The maximum\n"
+"number of updates has been reached."
+msgstr ""
+"Az adományozói kulcs lejárt: A maximális\n"
+"Elérte a frissítések számát."
+
+#. Message shown when donor key is invalid
+msgid "Donor key is invalid."
+msgstr "Az adományozói kulcs érvénytelen."
+
+#. Main menu, Help submenu, Enter Donor Key, title of input window
+msgid "Donor Key"
+msgstr "Adományozói kulcs"
+
+#. Main menu, Help submenu, Enter Donor Key, caption of input box
+msgid "Enter donor key:"
+msgstr "Támogató kulcs megadása:"
+
+#. Message shown after entering valid donor key
+msgid ""
+"Your Donor ID is: %s\n"
+"Supported number of updates: %s"
+msgstr ""
+"Az Ön adományozói azonosítója: %s\n"
+"Támogatott frissítések száma: %s"
+
+#. Donor key, unlimited number of updates ("Donor Pro")
+msgid "Unlimited"
+msgstr "Korlátlan"
+
+#. Message shown after entering valid donor key
+msgid "Thank you for your support!"
+msgstr "Köszönjük támogatását!"
+
+#. Message shown after entering valid donor key
+msgid "Copy this information to the clipboard?"
+msgstr "Másolja ezt az információt a vágólapra?"
+
+#. Message shown after entering donor key that has expired
+msgid "Donor key has expired."
+msgstr "Az adományozói kulcs lejárt."
+
+#. Main menu, Options submenu, Save Settings Now, message shown after saving settings
+msgid "Settings saved."
+msgstr "Bállításokat elmentve."
+
+#. Main window, password box, context menu, Save As File, title of save dialog
+msgid "Save password"
+msgstr "Jelszó mentése"
+
+#. Main menu, Options submenu, Clear Password Cache, only enabled if "Remember password" functionality has been activated in "Enter password" dialog
+msgid "Clear Password Cache"
+msgstr "Jelszó-gyorsítótár törlése"
+
+#. Message shown after clearing password cache
+msgid "Password cache cleared."
+msgstr "A jelszó-gyorsítótár törölve."
+
+#. Main window, Run script, browse button, title of open dialog
+msgid "Select Lua script file"
+msgstr "Válassza ki a Lua szkriptfájlt"
+
+#. Main window, exit program, title of progress window that is shown when threads besides main thread are still running
+msgid "Waiting for active threads to finish ..."
+msgstr "Várakozás az aktív szálak befejezésére ..."
+
+#. Main menu, Help submenu, Donate
+msgid ""
+"Donate at least one of the following amounts\n"
+"to receive a Donor Key:\n"
+"\n"
+"%d EUR / %d USD: Valid for current version and %d updates.\n"
+"%d EUR / %d USD: Valid for the entire lifetime of main version 3 (unlimited "
+"updates).\n"
+"\n"
+"Do you want to donate now?"
+msgstr ""
+"Adományozzon legalább egyet az alábbi összegek közül:\n"
+"adományozókulcs átvétele:\n"
+"\n"
+"%d EUR / %d USD: Az aktuális verzióra és a %d frissítésekre érvényes.\n"
+"%d EUR / %d USD: A 3. főverzió teljes élettartamára érvényes (korlátlan "
+"frissítés).\n"
+"\n"
+"Szeretnél most adományozni?"
+
+#. Main window, error message shown when access to registry failed
+msgid ""
+"Could not access registry key\n"
+"%s."
+msgstr ""
+"Nem sikerült hozzáférni a rendszerleíró kulcshoz\n"
+"%s."
+
+#. Configuration window, caption
+msgid "Configuration"
+msgstr "Konfiguráció"
+
+#. Configuration window, General page
+msgid "General"
+msgstr "Általános"
+
+#. Configuration window, Security page
+msgid "Security"
+msgstr "Biztonság"
+
+#. Configuration window, Hot Keys page
+msgid "Hot Keys"
+msgstr "Gyorsbillentyűk"
+
+#. Configuration window, Files page
+msgid "Files"
+msgstr "Fájlok"
+
+#. Configuration window, Updates page
+msgid "Updates"
+msgstr "Frissítések"
+
+#. Configuration window, Database page
+msgid "Database"
+msgstr "Adatbázis"
+
+#. Configuration window, General
+msgid "User interface style:"
+msgstr "Felhasználói felület stílusa:"
+
+#. Configuration window, General
+msgid "Application icon:"
+msgstr "Alkalmazás ikon:"
+
+#. Configuration window, General
+msgid "Change font for the GUI controls:"
+msgstr "Grafikus felület vezérlők betűtípus módosítása:"
+
+#. Configuration window, General
+msgid "Select font"
+msgstr "Betűtípus kiválasztása"
+
+#. Configuration window, General, dropdown menu of "Select font" button
+msgid "Restore Default"
+msgstr "Alapértékek visszaállítása"
+
+#. Configuration window, General
+msgid "Show system tray icon constantly"
+msgstr "A tálca ikonjának folyamatos megjelenítése"
+
+#. Configuration window, General
+msgid "Minimize program to system tray"
+msgstr "Program minimalizálása a tálcára"
+
+#. Configuration window, General
+msgid "Minimize before performing autotype"
+msgstr "Kis méret az automatikus gépelés végrehajtása előtt"
+
+#. Configuration window, General
+msgid "Autotype delay between characters (ms):"
+msgstr "Automatikus írás késleltetése a karakterek között (ms):"
+
+#. Configuration window, General
+msgid "Ask before exiting application"
+msgstr "Rákérdezés az alkalmazásból való kilépés előtt"
+
+#. Configuration window, General
+msgid "Launch application on system startup (for current user)"
+msgstr ""
+"Alkalmazás indítása a rendszer indításakor (az aktuális felhasználó számára)"
+
+#. Configuration window, General
+msgid "Load the following profile on startup:"
+msgstr "Indításkor töltse be a következő profilt:"
+
+#. Configuration window, Security
+msgid "Benchmark..."
+msgstr "Gyorsaságteszt..."
+
+#. Configuration window, Security
+msgid "Data size for benchmark test"
+msgstr "Adatméret a teljesítményteszthez"
+
+#. Configuration window, Security
+msgid "Encryption algorithm for generating random data via random pool:"
+msgstr ""
+"Titkosítási algoritmus véletlenszerű adatok véletlenszerű készleten "
+"keresztüli generálásához:"
+
+#. Configuration window, Security
+msgid "Test passwords against list of common passwords"
+msgstr "Jelszavak tesztelése a gyakori jelszavak listájával"
+
+#. Configuration window, Security
+msgid "Use advanced password strength estimation (%s)"
+msgstr "Speciális jelszóerősség-becslés használata (%s)"
+
+#. Configuration window, Security
+msgid "Clear clipboard automatically after the following time (seconds):"
+msgstr "A vágólap automatikus törlése ennyi idő (mp) után:"
+
+#. Configuration window, Security
+msgid "Clear password box automatically after the following time (seconds):"
+msgstr "A jelszómező automatikus törlése ennyi idő (másodperc) után:"
+
+#. Configuration window, Updates
+msgid "Automatic check for updates"
+msgstr "Frissítések automatikus keresése"
+
+#. Configuration window, Updates, options
+msgid "Daily"
+msgstr "Naponta"
+
+#. Configuration window, Updates, options
+msgid "Weekly"
+msgstr "Hetente"
+
+#. Configuration window, Updates, options
+msgid "Monthly"
+msgstr "Havonta"
+
+#. Configuration window, Updates, options
+msgid "Disabled"
+msgstr "Letiltva"
+
+#. Configuration window, Hot Keys, Actions group box
+msgid "Actions"
+msgstr "Akciók"
+
+#. Configuration window, Hot Keys, Actions group box
+msgid "Show/restore main window"
+msgstr "Főablak megjelenítése/visszaállítása"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "No further action"
+msgstr "Nincs további művelet"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Generate single password in main window"
+msgstr "Egyetlen jelszó generálása a főablakban"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Generate multiple passwords"
+msgstr "Több jelszó létrehozása"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Generate password and copy it to the clipboard"
+msgstr "Jelszó generálása és másolása a vágólapra"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Generate password and show it in a message box"
+msgstr "Jelszó létrehozása és megjelenítése egy üzenetmezőben"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Generate password and perform autotype"
+msgstr "Jelszó generálása és automatikus gépelés végrehajtása"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Open MP password generator"
+msgstr "Mesterjelszó generátor megnyitása"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Show password manager"
+msgstr "Jelszókezelő megjelenítése"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Show MP password generator"
+msgstr "Mesterjelszó generátor"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Search database for keyword in window title"
+msgstr "Keresés adatbázisban kulcsszóra az ablak címében"
+
+#. Configuration window, Hot Keys, Actions group box, list with available actions
+msgid "Search database for keyword and perform autotype"
+msgstr ""
+"Kulcsszó keresése az adatbázisban, és automatikus gépelés végrehajtása"
+
+#. Configuration window, Hot Keys
+msgid "Shortcut to assign:"
+msgstr "Hozzárendelhető parancsikon:"
+
+#. Configuration window, Hot Keys, button
+msgid "Add"
+msgstr "Hozzáadás"
+
+#. Configuration window, Hot Keys, button
+msgid "Remove"
+msgstr "Eltávolítás"
+
+#. Configuration window, Hot Keys, list view, column
+msgid "Shortcut"
+msgstr "Parancsikon"
+
+#. Configuration window, Hot Keys, list view, column
+msgid "Action"
+msgstr "Művelet"
+
+#. Configuration window, Hot Keys, message shown when trying to add a hot key without a corresponding action
+msgid "Please select a hot key action."
+msgstr "Válasszon ki egy gyorsbillentyű műveletet."
+
+#. Configuration window, Files
+msgid "Character encoding of text files"
+msgstr "Szöveges fájlok karakterkódolása"
+
+#. Configuration window, Files
+msgid "Newline character sequence"
+msgstr "Újsor karaktersorozat"
+
+#. Configuration window, Language
+msgid "Select language:"
+msgstr "Nyelv kiválasztása:"
+
+#. Configuration window, Language
+msgid "Install..."
+msgstr "Telepít..."
+
+#. Configuration window, Language, Open dialog title
+msgid "Select language file to install"
+msgstr "Válassza ki a telepíteni kívánt nyelvi fájlt"
+
+#. Configuration window, Language, Open dialog filter
+msgid "Language files"
+msgstr "Nyelvi fájlok"
+
+#. Configuration window, Language, Install
+msgid "Language already installed"
+msgstr "A nyelv már telepítve van"
+
+#. Configuration window, Language, Install
+msgid ""
+"Language file already exists:\n"
+"\"%1\""
+msgstr ""
+"A nyelvi fájl már létezik:\n"
+"\"%1\""
+
+#. Configuration window, Language, Install
+msgid "Language \"%1\" installed successfully."
+msgstr "A(z) \"%1\" nyelv telepítése sikeres."
+
+#. Configuration window, Language, Install
+msgid ""
+"Could not copy file \"%1\" to\n"
+"\"%2\""
+msgstr ""
+"Nem sikerült a(z) \"%1\" fájlt másolni a következőbe:\n"
+"\"%2\""
+
+#. Configuration window, Language, Install
+msgid ""
+"Could not install language:\n"
+"%1."
+msgstr ""
+"Nem sikerült telepíteni a nyelvet:\n"
+"%1."
+
+#. Configuration window, Language, Remove
+msgid ""
+"Are you sure you want to remove\n"
+"\"%1\"?"
+msgstr ""
+"Biztosan el akarja távolítani\n"
+"\"%1\"?"
+
+#. Configuration window, Language, Remove
+msgid "Language \"%1\" successfully removed."
+msgstr "A(z) \"%1\" nyelv sikeresen eltávolítva."
+
+#. Configuration window, Language, Remove
+msgid ""
+"Could not delete file\n"
+"\"%1\"."
+msgstr ""
+"Nem sikerült törölni a fájlt\n"
+"\"%1\"."
+
+#. Configuration window, Database
+msgid "Clear clipboard when closing/locking database"
+msgstr "Vágólap törlése adatbázis bezárásakor/zárolásakor"
+
+#. Configuration window, Database
+msgid "Lock database when minimizing application or database window"
+msgstr ""
+"Adatbázis zárolása az alkalmazás vagy az adatbázisablak minimalizálásakor"
+
+#. Configuration window, Database
+msgid "Lock database after the following idle time (seconds):"
+msgstr "Adatbázis zárolása a következő üresjárati idő (másodperc) után:"
+
+#. Configuration window, Database, save database automatically when database is being locked due to idle time
+msgid "Save automatically"
+msgstr "Automatikus mentés"
+
+#. Configuration window, Database
+msgid "Create backup of database before saving"
+msgstr "Mentés előtt készítsen biztonsági másolatot az adatbázisról"
+
+#. Configuration window, Database
+msgid "Number backups consecutively - up to:"
+msgstr "Biztonsági mentések száma egymás után - legfeljebb:"
+
+#. Configuration window, Database
+msgid "Open window on startup"
+msgstr "Ablak megnyitása indításkor"
+
+#. Configuration window, Database
+msgid "Open last used database on startup"
+msgstr "Utoljára használt adatbázis megnyitása indításkor"
+
+msgid "Keep list of recently opened files"
+msgstr "A legutóbb megnyitott fájlok listájának megőrzése"
+
+#. Configuration window, Database
+msgid "Warn if database contains expired entries"
+msgstr "Figyelmeztetés, ha az adatbázis lejárt bejegyzéseket tartalmaz"
+
+#. Configuration window, Database
+msgid "Warn if database contains entries that will expire soon"
+msgstr ""
+"Figyelmeztetés, ha az adatbázis hamarosan lejáró bejegyzéseket tartalmaz"
+
+#. Configuration window, Database, entries that will expire soon, define number of days before expiry date
+msgid "Number of days:"
+msgstr "Napok száma:"
+
+#. Configuration window, Database, Save database automatically after certain actions
+msgid "Save automatically:"
+msgstr "Automatikus mentés:"
+
+#. Configuration window, Database, Save automatically, options
+msgid "After adding/modifying an entry"
+msgstr "Bejegyzés hozzáadása/módosítása után"
+
+#. Configuration window, Database, Save automatically, options
+msgid "After every change"
+msgstr "Minden változtatás után"
+
+#. Configuration window, Database
+msgid "Default autotype sequence:"
+msgstr "Alapértelmezett autotípia sorrend:"
+
+#. Configuration window, Hot Keys, message shown when max. number of hot keys has been exhausted
+msgid "Maximum number of hot keys (%d) reached."
+msgstr "A gyorsbillentyűk maximális száma (%d) elérve."
+
+#. Configuration window, Hot Keys, message shown when hot key has already been assigned
+msgid "This hot key has already been assigned."
+msgstr "Ez a gyorsbillentyű már hozzá van rendelve."
+
+#. Configuration window, Security, Random pool cipher
+msgid "%s (%d-bit key, operates on %d-bit blocks)"
+msgstr "%s (%d bites kulcs, %d bites blokkokon működik)"
+
+#. Configuration window, Security, Random pool cipher, Benchmark results
+msgid "Benchmark results (data size: %d MB):"
+msgstr "Benchmark eredmények (adatméret: %d MB):"
+
+#. Enter password window, label
+msgid "Enter password:"
+msgstr "Adja meg a jelszót:"
+
+#. Enter password window, label
+msgid "Confirm password:"
+msgstr "Jelszó megerősítése:"
+
+#. Generic dialog window, button
+msgid "OK"
+msgstr "ОК"
+
+#. Generic dialog window, button
+msgid "Cancel"
+msgstr "Mégse"
+
+#. Enter password window, message shown when passwords are not identical
+msgid "Passwords are not identical."
+msgstr "A jelszavak nem azonosak."
+
+#. Enter password window, caption for encryption
+msgid "Encrypt"
+msgstr "Titkosít"
+
+#. Enter password window, caption for decryption
+msgid "Decrypt"
+msgstr "Visszafejt"
+
+#. Enter password window
+msgid "Remember password (seconds):"
+msgstr "Jelszó megjegyzése (másodperc):"
+
+#. Enter password window
+msgid "Key file for password database:"
+msgstr "Kulcsfájl a jelszó-adatbázishoz:"
+
+#. Enter password window, Key file, None selected
+msgid "(None)"
+msgstr "(Nincs)"
+
+#. Enter password window, message shown when neither password nor key file entered/selected
+msgid "Enter a password and/or select a key file."
+msgstr "Adjon meg egy jelszót és/vagy válasszon ki egy kulcsfájlt."
+
+#. Enter password window, message shown when selected key file could not be found
+msgid "The selected key file does not exist."
+msgstr "A kiválasztott kulcsfájl nem létezik."
+
+#. Enter password window, message shown when password is empty
+msgid "Password is empty."
+msgstr "A jelszó üres."
+
+#. Enter password window, Create key file, message shown when creation was successful
+msgid "Key file successfully created."
+msgstr "A kulcsfájl sikeresen létrejött."
+
+#. Enter password window, Create key file, message shown when key file could not be created
+msgid ""
+"Error while creating key file:\n"
+"%s."
+msgstr ""
+"Hiba a kulcsfájl létrehozásakor:\n"
+"%s."
+
+#. Enter password window, Open file dialog, filter for *.key files
+msgid "Key files"
+msgstr "Kulcsfájlok"
+
+#. Enter password window, Create Key File button, tooltip
+msgid "Create key file"
+msgstr "Kulcsfájl létrehozása"
+
+#. Password List window, title
+msgid "Password List"
+msgstr "Jelszavak listája"
+
+#. Password List window, context menu
+msgid "Save As File..."
+msgstr "Mentés fájlként..."
+
+#. Password List window, Save as file, Save file dialog, title
+msgid "Save password list"
+msgstr "Jelszólista mentése"
+
+#. Password List window, Save as file, error message
+msgid ""
+"Error while creating file\n"
+"\"%s\":\n"
+"%s."
+msgstr ""
+"Hiba a fájl létrehozása közben\n"
+"\"%s\":\n"
+"%s."
+
+#. Password List window, Save as file, success message
+msgid "File \"%s\" successfully created."
+msgstr "A \"%s\" fájl sikeresen létrejött."
+
+#. Advanced Password Options window, title
+msgid "Advanced Password Options"
+msgstr "Speciális jelszóbeállítások"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Exclude ambiguous characters"
+msgstr "Kétértelmű karakterek kizárása"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "First character must not be a lower-case letter"
+msgstr "Az első karakter nem lehet kisbetű"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Don't separate words by a space"
+msgstr "Ne válassza el a szavakat szóközzel"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Don't separate words and characters by a '-' character"
+msgstr "Ne válassza el a szavakat és a karaktereket \"-\" karakterrel"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Reverse default order of character/word combinations"
+msgstr "A karakter-/szókombinációk alapértelmezett sorrendjének megfordítása"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Include at least one upper-case letter (A-Z)"
+msgstr "Tartalmazzon legalább egy nagybetűt (A-Z)"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Include at least one lower-case letter (a-z)"
+msgstr "Legalább egy kisbetű (a–z) szerepeltetése"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Include at least one digit (0-9)"
+msgstr "Adjon meg legalább egy számjegyet (0–9)"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Include at least one special symbol (!\"#$%...)"
+msgstr "Tartalmazzon legalább egy különleges szimbólumot (!\" #$%...)"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Include at least one character from each subset"
+msgstr "Tartalmazzon legalább egy karaktert minden részhalmazból"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Only include characters from custom character set"
+msgstr "Csak az egyéni karakterkészlet karaktereit tartalmazza"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Exclude repeating consecutive characters (e.g. aa, 11)"
+msgstr "Ismétlődő karakterek kizárása (pl. aa, 11)"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Remove leading and trailing whitespace characters"
+msgstr "Kezdő és záró szóköz eltávolítása"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Exclude duplicate entries in password lists"
+msgstr "Ismétlődő bejegyzések kizárása a jelszólistákból"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Assign entropy value to each password in password lists"
+msgstr "Entrópiaérték hozzárendelése minden jelszóhoz a jelszólistákban"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Capitalize first letter of each word"
+msgstr "Minden szó nagybetűvel kezdődik"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Convert all words in word lists to lower-case"
+msgstr "A szólisták összes szavának konvertálása kisbetűssé"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Each character must occur only once"
+msgstr "Minden karakter csak egyszer fordulhat elő"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Each word must occur only once"
+msgstr "Minden szónak csak egyszer kell előfordulnia"
+
+#. Advanced Password Options window, label
+msgid "Redefine ambiguous characters:"
+msgstr "Kétértelmű karakterek újradefiniálása:"
+
+#. Advanced Password Options window, label
+msgid "Redefine special symbols:"
+msgstr "Speciális szimbólumok újradefiniálása:"
+
+#. Advanced Password Options window, label
+msgid "Min./Max. length of words in word lists (except default word list):"
+msgstr ""
+"Szavak min./max. hossza a szólistákban (kivéve az alapértelmezett "
+"szólistát):"
+
+#. Advanced Password Options window, label
+msgid "Redefine separators in passphrases:"
+msgstr "Elválasztók újradefiniálása a jelszavakban:"
+
+#. Advanced Password Options window, label
+msgid "Words:"
+msgstr "Szavak:"
+
+#. Advanced Password Options window, label
+msgid "Words/characters:"
+msgstr "Szavak/karakterek:"
+
+#. Advanced Password Options window, label
+msgid "Trigram file for generating phonetic (pronounceable) passwords:"
+msgstr "Trigram fájl fonetikus (kiejthető) jelszavak generálásához:"
+
+#. Advanced Password Options window, footnotes of checkbox list
+msgid "Applies to pass_words_."
+msgstr "A következőkre vonatkozik: pass_words_."
+
+#. Advanced Password Options window, footnotes of checkbox list
+msgid "Applies to pass_phrases_."
+msgstr "A következőkre vonatkozik: pass_phrases_."
+
+#. Advanced Password Options window, footnotes of checkbox list
+msgid "Applies to formatted passwords."
+msgstr "Formázott jelszavakra vonatkozik."
+
+#. Advanced Password Options window, footnotes of checkbox list
+msgid "Applies to phonetic passwords."
+msgstr "Fonetikus jelszavakra vonatkozik."
+
+#. Advanced Password Options window, footnotes of checkbox list
+msgid ""
+"Selecting one of these options might reduce the security of generated "
+"passwords."
+msgstr ""
+"Ezen lehetőségek egyikének kiválasztása csökkentheti a generált jelszavak "
+"biztonságát."
+
+#. Advanced Password Options window, checkbox list, context menu
+msgid "Deselect All"
+msgstr "Összes kijelölés megszüntetése"
+
+#. Advanced Password Options window, checkbox list, context menu
+msgid "Invert Selection"
+msgstr "Kijelölés megfordítása"
+
+#. Create Random Data File dialog, title
+msgid "Create Random Data File"
+msgstr "Véletlenszerű adatfájl létrehozása"
+
+#. Create Random Data File dialog, label
+msgid "File name:"
+msgstr "Fájlnév:"
+
+#. Create Random Data File dialog, label
+msgid "File size:"
+msgstr "Fájlméret:"
+
+#. Create Random Data File dialog, drop-down list of file size units
+msgid "Bytes"
+msgstr "Bájt"
+
+#. Create Random Data File dialog, drop-down list of file size units
+msgid "Kilobytes"
+msgstr "Kilobyte"
+
+#. Create Random Data File dialog, drop-down list of file size units
+msgid "Megabytes"
+msgstr "Megabájt"
+
+#. Create Random Data File dialog, Close button
+msgid "Close"
+msgstr "Bezár"
+
+#. Create Random Data File dialog, Create file button
+msgid "Create file"
+msgstr "Fájl létrehozása"
+
+#. Create Random Data File dialog, message shown when specified file size is invalid
+msgid "Invalid file size."
+msgstr "Érvénytelen fájlméret."
+
+#. Create Random Data File dialog, message shown when there's not enough free disk space to create the file
+msgid ""
+"Not enough free disk space available\n"
+"to create the file."
+msgstr ""
+"Nincs elég szabad lemezterület\n"
+"gombra a fájl létrehozásához."
+
+#. Create Random Data File dialog, title of progress window
+msgid "Creating random data file ..."
+msgstr "Véletlenszerű adatfájl létrehozása ..."
+
+#. Create Random Data File dialog, Progress window, progress message
+msgid "%d of %d %s written."
+msgstr "%d a %d %s-ből írva."
+
+#. Create Random Data File dialog, success message
+msgid ""
+"File \"%s\" successfully created.\n"
+"\n"
+"%d bytes written."
+msgstr ""
+"A \"%s\" fájl sikeresen létrejött.\n"
+"\n"
+"%d bájt írva."
+
+#. Create Random Data File dialog, error message
+msgid ""
+"Error while creating file\n"
+"\"%s\":\n"
+"%s.\n"
+"\n"
+"%d bytes written."
+msgstr ""
+"Hiba a fájl létrehozása közben\n"
+"\"%s\":\n"
+"%s.\n"
+"\n"
+"%d bájt írva."
+
+#. Profile Editor dialog, title
+msgid "Profile Editor"
+msgstr "Profil szerkesztő"
+
+#. Profile Editor dialog, Load Profile button
+msgid "Load"
+msgstr "Betöltés"
+
+#. Profile Editor dialog, Confirm checkbox
+msgid "Confirm"
+msgstr "Megerősít"
+
+#. Profile Editor dialog, label
+msgid "Profile name:"
+msgstr "Profil neve:"
+
+#. Profile Editor dialog, Move Up button, tooltip
+msgid "Move up"
+msgstr "Lépés felfelé"
+
+#. Profile Editor dialog, Move Down button, tooltip
+msgid "Move down"
+msgstr "Lépés lefelé"
+
+#. Profile Editor dialog, checkbox
+msgid "Save \"advanced password options\" for this profile"
+msgstr "Mentse el a \"speciális jelszóbeállításokat\" ehhez"
+
+#. Profile Editor dialog, message shown before deleting a single profile
+msgid "Delete profile \"%s\"?"
+msgstr "Törli a \"%s\" profilt?"
+
+#. Profile Editor dialog, message shown before deleting multiple profiles
+msgid "Delete %d profiles?"
+msgstr "Töröl %d profilt?"
+
+#. Profile Editor dialog, message shown when max. number of profiles has been reached
+msgid ""
+"Maximum number of profiles (%d) reached.\n"
+"Please delete or overwrite profiles."
+msgstr ""
+"Az elért profilok maximális száma (%d).\n"
+"Kérjük, törölje vagy írja felül a profilokat."
+
+#. Profile Editor dialog, message shown when a profile already exists
+msgid ""
+"A profile with the name \"%s\" already exists.\n"
+"Do you want to overwrite it?"
+msgstr ""
+"Már létezik egy \"%s\" nevű profil.\n"
+"Felül akarja írni?"
+
+#. Create Trigram File dialog, title
+msgid "Create Trigram File"
+msgstr "Trigram fájl létrehozása"
+
+#. Create Trigram File dialog, label
+msgid "Source file (e.g., dictionary, word list):"
+msgstr "Forrásfájl (pl. szótár, szólista):"
+
+#. Create Trigram File dialog, label
+msgid "Destination file (trigram file):"
+msgstr "Célfájl (trigramfájl):"
+
+#. Create Trigram File dialog, success message
+msgid ""
+"Trigram file \"%s\" successfully created.\n"
+"\n"
+"%d trigrams evaluated.\n"
+"%1.2f bits of entropy per letter."
+msgstr ""
+"A \"%s\" Trigram fájl sikeresen létrejött.\n"
+"\n"
+"%d trigramok értékelése.\n"
+"%1.2f bit entrópia betűnként."
+
+#. Create Trigram File dialog, message shown when process was cancelled
+msgid "Process was cancelled by the user"
+msgstr "A felhasználó megszakította a folyamatot"
+
+#. Main menu, Help submenu
+msgid "About %s"
+msgstr "%s programról"
+
+#. About window, info about translation
+msgid ""
+"Current language: %s\n"
+"Translator: %s"
+msgstr ""
+"Jelenlegi nyelv: %s\n"
+"Fordító: %s"
+
+#. About window, license info
+msgid ""
+"This program is distributed under the terms and conditions of the GNU "
+"General Public License (GPL)."
+msgstr ""
+"Ezt a programot a GNU General Public License (GPL) feltételei szerint "
+"terjesztik."
+
+#. About window, button
+msgid "View license"
+msgstr "Licenc megtekintése"
+
+#. About window, info about Donor ID extracted from Donor Key
+msgid "Donor ID:"
+msgstr "Adományozói azonosító:"
+
+#. Quick Help window, title
+msgid "Quick help"
+msgstr "Gyors segítség"
+
+#. Quick Help window, context menu
+msgid "Position Automatically"
+msgstr "Automatikus pozicionálás"
+
+#. Quick help for "Include characters" in main window
+msgid "You can use the following placeholders:"
+msgstr "A következő helyőrzőket használhatja:"
+
+#. Quick help for "Include characters" in main window
+msgid "without ambiguous characters"
+msgstr "kétértelmű karakterek nélkül"
+
+#. Quick help for "Include characters" in main window
+msgid "Special symbols"
+msgstr "Speciális szimbólumok"
+
+#. Quick help for "Include characters" in main window
+msgid "Brackets"
+msgstr "Zárójel"
+
+#. Quick help for "Include characters" in main window
+msgid "Punctuation marks"
+msgstr "Írásjelek"
+
+#. Quick help for "Include characters" in main window
+msgid "Higher ANSI characters"
+msgstr "Magasabb ANSI karakterek"
+
+#. Quick help for "Include characters" in main window
+msgid "Generate phonetic password (lower-case letters)"
+msgstr "Fonetikus jelszó generálása (kisbetűk)"
+
+#. Quick help for "Include characters" in main window
+msgid "Generate phonetic password (upper-case letters)"
+msgstr "Fonetikus jelszó generálása (nagybetűk)"
+
+#. Quick help for "Include characters" in main window
+msgid "Generate phonetic password (mixed-case letters)"
+msgstr "Fonetikus jelszó generálása (vegyes betűk)"
+
+#. Quick help for "Include characters" in main window
+msgid ""
+"You can use the following syntax to specify a (minimum) number N of "
+"characters\n"
+"for a character set:"
+msgstr ""
+"A következő szintaxissal megadhatja a (minimális) N karakterszámot\n"
+"karakterkészlet esetén:"
+
+#. Quick help for "Include characters" in main window
+msgid "N = Include exactly N characters. N+ = Include at least N characters."
+msgstr ""
+"N = Tartalmaz pontosan N karaktert. N+ = Tartalmaz legalább N karaktert."
+
+#. Quick help for "Include characters" in main window
+msgid ""
+"Comments may be provided in square brackets \"[...]\"\n"
+"at the beginning of the sequence."
+msgstr ""
+"A megjegyzéseket szögletes zárójelben lehet megadni: \"[...]\"\n"
+"a sorozat elején."
+
+#. Quick help for "Format password" in main window
+msgid ""
+"Format specifiers have the form \"[*][N]x\" or \"[*][M-N]x\", where the\n"
+"optional argument \"N\" specifies the number of repetitions (between 1 and\n"
+"99999), \"M-N\" specifies a random number of repetitions in the range\n"
+"from M to N, and \"x\" is the actual format specifier/placeholder. The\n"
+"optional asterisk (*) means that each character must occur only once in\n"
+"the sequence. Example: \"16u\" means \"Insert 16 random upper-case letters\n"
+"into the password\"."
+msgstr ""
+"A formátumkijelölők formájúak: \"[*][N]x\" vagy \"[*][M-N]x\", ahol a\n"
+"opcionális \"N\" argumentum az ismétlések számát adja meg (1 és 1 között\n"
+"99999), az \"M-N\" véletlenszerű ismétlődésszámot határoz meg a "
+"tartományban\n"
+"M-től N-ig, és az \"x\" a tényleges formátumkijelölő/helyőrző. A\n"
+"opcionális csillag (*) azt jelenti, hogy minden karakter csak egyszer "
+"fordulhat elő a\n"
+"a sorrendet. Példa: A \"16u\" azt jelenti, hogy \"16 véletlenszerű nagybetű "
+"beszúrása\n"
+"a jelszóba\"."
+
+#. Quick help for "Format password" in main window
+msgid "List of placeholders with optional argument \"N\":"
+msgstr "Helyőrzők listája opcionális \"N\" argumentummal:"
+
+#. Quick help for "Format password" in main window
+msgid "Custom character set"
+msgstr "Egyéni karakterkészlet"
+
+#. Quick help for "Format password" in main window
+msgid "Vowels, lower-case"
+msgstr "Magánhangzók, kisbetűk"
+
+#. Quick help for "Format password" in main window
+msgid "Vowels, mixed-case"
+msgstr "Magánhangzók, vegyes kis- és nagybetűk"
+
+#. Quick help for "Format password" in main window
+msgid "Vowels, upper-case"
+msgstr "Magánhangzók, nagybetűk"
+
+#. Quick help for "Format password" in main window
+msgid "Consonants, lower-case"
+msgstr "Mássalhangzók, kisbetűk"
+
+#. Quick help for "Format password" in main window
+msgid "Consonants, mixed-case"
+msgstr "Mássalhangzók, kis- és nagybetűk"
+
+#. Quick help for "Format password" in main window
+msgid "Consonants, upper-case"
+msgstr "Mássalhangzók, nagybetűk"
+
+#. Quick help for "Format password" in main window
+msgid ""
+"List of special format specifiers\n"
+"(possible usage of argument \"N\" is indicated by \"{N}\"):"
+msgstr ""
+"Speciális formátumkijelölők listája\n"
+"(az \"N\" argumentum lehetséges használatát \"{N}\" jelzi):"
+
+#. Quick help for "Format password" in main window
+msgid "Insert password generated via \"Include characters/words\""
+msgstr ""
+"Írja be a \"Karakterek/szavak belefoglalása\" funkcióval generált jelszót"
+
+#. Quick help for "Format password" in main window
+msgid "Words from word list, multiple words are separated by spaces"
+msgstr "Szavak a szólistából, több szót szóközök választanak el egymástól"
+
+#. Quick help for "Format password" in main window
+msgid "Words, multiple words are not separated at all"
+msgstr "A szavak, több szó egyáltalán nincs elválasztva egymástól"
+
+#. Quick help for "Format password" in main window
+msgid "Repeat input sequence in brackets N times"
+msgstr "Iismétli a zárójelben lévő beviteli sorrendet N-szer"
+
+#. Quick help for "Format password" in main window
+msgid "Randomly permute formatted sequence in brackets, keep N characters"
+msgstr ""
+"Véletlenszerűen permutálja a formázott sorozatot zárójelben, megtart N "
+"karaktert"
+
+#. Quick help for "Format password" in main window
+msgid "Treat sequence as character set and insert N characters"
+msgstr "Kezelje a sorozatot karakterkészletként, és szúrjon be N karaktert"
+
+#. Quick help for "Format password" in main window
+msgid "Additional notes:"
+msgstr "További megjegyzések:"
+
+#. Quick help for "Format password" in main window
+msgid ""
+"Text enclosed with quotation marks \"...\" is copied verbatim\n"
+"to the password."
+msgstr ""
+"Idézőjelek közé tett \"...\" szöveget\n"
+"másolja szó szerint a jelszóhoz."
+
+#. Master-Password based Password Generator window, title
+msgid "MP Password Generator"
+msgstr "Mesterjelszó generátor"
+
+#. MP Password Generator window, group box
+msgid "Master password"
+msgstr "Mester jelszó"
+
+#. MP Password Generator window, button
+msgid "Enter password..."
+msgstr "Adja meg a jelszót..."
+
+#. MP Password Generator window, button to clear master password cache
+msgid "Clear"
+msgstr "Kiürítés"
+
+#. MP Password Generator window, label for status of master password cache
+msgid "Status:"
+msgstr "Állapot:"
+
+#. MP Password Generator window, countdown for master password expiry
+msgid "Expiry countdown:"
+msgstr "Lejárati visszaszámlálás:"
+
+#. MP Password Generator window, checkbox
+msgid "Ask for password confirmation"
+msgstr "Kérje a jelszó megerősítését"
+
+#. MP Password Generator window, checkbox
+msgid "Show checksum of password:"
+msgstr "Jelszó ellenőrző összegének megjelenítése:"
+
+#. MP Password Generator window, checkbox
+msgid "Key expires after the following time (seconds):"
+msgstr "A kulcs a következő idő (másodperc) után jár le:"
+
+#. MP Password Generator window, checkbox
+msgid "Provide compatibility with \"Hashapass\""
+msgstr "Kompatibilitás biztosítása a \"Hashapass\" -szal"
+
+#. MP Password Generator window, checkbox
+msgid "Add password length to parameter"
+msgstr "Jelszó hosszának hozzáadása a paraméterhez"
+
+#. MP Password Generator window, checkbox
+msgid "Autotype sequence:"
+msgstr "Autotípia szekvencia:"
+
+#. MP Password Generator window, group box
+msgid "Password generator"
+msgstr "Jelszó generátor"
+
+#. MP Password Generator window, label
+msgid "Parameter:"
+msgstr "Paraméter:"
+
+#. MP Password Generator window, label
+msgid "%d ch. / %.1f bits per ch."
+msgstr "%d jel / %.1f bit karakterenként."
+
+#. MP Password Generator window, label
+msgid "Resulting password:"
+msgstr "Eredményül kapott jelszó:"
+
+#. MP Password Generator window, button
+msgid "Use as default random generator"
+msgstr "Használja alapértelmezett véletlengenerátorként"
+
+#. MP Password Generator window, Character set drop-down list
+msgid "Alphanumeric"
+msgstr "Alfanumerikus"
+
+#. MP Password Generator window, Character set drop-down list
+msgid "Hexadecimal"
+msgstr "Hexadecimális"
+
+#. MP Password Generator window, message when master password has expired
+msgid "Key has expired."
+msgstr "A kulcs lejárt."
+
+#. MP Password Generator window, message when master password has been cleared by the user
+msgid "Key has been cleared."
+msgstr "A kulcs törölve van."
+
+#. MP Password Generator window, message when new master password has been set
+msgid "New key generated."
+msgstr "Új kulcs generálva."
+
+#. MP Password Generator Window, label next to password quality bar
+msgid "%d bits"
+msgstr "%d bit"
+
+#. Provide Additional Entropy window, label
+msgid ""
+"Enter or paste some text into the box below, press mouse buttons, or move "
+"your mouse within the window."
+msgstr ""
+"Írjon be vagy illesszen be szöveget az alábbi mezőbe, nyomja meg az "
+"egérgombokat, vagy mozgassa az egeret az ablakon belül."
+
+#. Provide Additional Entropy window, message shown when entropy has been added
+msgid "%d bits of entropy have been added to the random pool."
+msgstr "%d entrópia bit hozzáadva a véletlenszerű készlethez."
+
+#. Password Manager window, Open database, error message
+msgid "Database not encrypted, or invalid key"
+msgstr "Adatbázis nem titkosított, vagy a kulcs érvénytelen"
+
+#. Password Manager window, Open database, error message
+msgid "File contents modified, or invalid key"
+msgstr "A fájl tartalma módosult, vagy érvénytelen kulcs"
+
+#. Password Manager window, Open database, error message
+msgid "Unknown file format"
+msgstr "Ismeretlen fájlformátum"
+
+#. Password Manager window, Open database, error message
+msgid "Invalid file format"
+msgstr "Érvénytelen fájlformátum"
+
+#. Password Manager window, field name
+msgid "Title"
+msgstr "Cím"
+
+#. Password Manager window, field name
+msgid "Title:"
+msgstr "Cím:"
+
+#. Password Manager window, field name
+msgid "User name"
+msgstr "Felhasználónév"
+
+#. Password Manager window, field name
+msgid "User name:"
+msgstr "Felhasználónév:"
+
+#. Password Manager window, field name
+msgid "Password"
+msgstr "Jelszó"
+
+#. Password Manager window, field name
+msgid "Password:"
+msgstr "Jelszó:"
+
+#. Password Manager window, field name
+msgid "URL"
+msgstr "URL"
+
+#. Password Manager window, field name
+msgid "URL:"
+msgstr "URL:"
+
+#. Password Manager window, field name
+msgid "Keyword"
+msgstr "Kulcsszó"
+
+#. Password Manager window, field name
+msgid "Keyword:"
+msgstr "Kulcsszó:"
+
+#. Password Manager window, field name
+msgid "Notes"
+msgstr "Megjegyzések"
+
+#. Password Manager window, field name
+msgid "Notes:"
+msgstr "Megjegyzések:"
+
+#. Password Manager window, field name
+msgid "Key-value list"
+msgstr "Kulcs-érték lista"
+
+#. Password Manager window, field name
+msgid "Key-value list:"
+msgstr "Kulcs-érték lista:"
+
+#. Password Manager window, field name
+msgid "Creation time"
+msgstr "Létrehozási idő"
+
+#. Password Manager window, field name
+msgid "Creation time:"
+msgstr "Létrehozási idő:"
+
+#. Password Manager window, field name
+msgid "Last modification"
+msgstr "Utolsó módosítás"
+
+#. Password Manager window, field name
+msgid "Last modification:"
+msgstr "Utolsó módosítás:"
+
+#. Password Manager window, field name
+msgid "Tags"
+msgstr "Címkék"
+
+#. Password Manager window, field name
+msgid "Tags:"
+msgstr "Címkék:"
+
+#. Password Manager window, field name
+msgid "Select and add existing tag"
+msgstr "Meglévő címke kiválasztása és hozzáadása"
+
+#. Password Manager window, Tag view, first item "All (tags)" (plural)
+msgctxt "tags"
+msgid "All"
+msgstr "Összes"
+
+#. Password Manager window, Tag view when searching
+msgid "All search results"
+msgstr "Összes keresési eredmény"
+
+#. Password Manager window, Tag view
+msgid "Untagged"
+msgstr "Címkézetlen"
+
+#. Password Manager window, Key/value field
+msgid "Key"
+msgstr "Kulcs"
+
+#. Password Manager window, Key/value field
+msgid "Value"
+msgstr "Érték"
+
+#. Password Manager window, main menu, Edit submenu
+msgid "Edit"
+msgstr "Szerkesztés"
+
+#. Password Manager window, main menu, View submenu
+msgid "View"
+msgstr "Nézet"
+
+#. Password Manager window, main menu, File submenu
+msgid "New..."
+msgstr "Új..."
+
+#. Password Manager window, main menu, File submenu
+msgid "Open..."
+msgstr "Megnyit..."
+
+#. Password Manager window, main menu, File submenu
+msgid "Open as Read-only..."
+msgstr "Megnyitás írásvédettként..."
+
+#. Password Manager window, main menu, File submenu
+msgid "Save"
+msgstr "Mentés"
+
+#. Password Manager window, main menu, File submenu
+msgid "Save As..."
+msgstr "Mentés másként..."
+
+#. Password Manager window, main menu, File submenu
+msgid "Lock"
+msgstr "Zárol"
+
+#. Password Manager window, main menu, File submenu
+msgid "Clear Recently Opened List"
+msgstr "Legutóbb megnyitott lista törlése"
+
+#. Password Manager window, main menu, File submenu
+msgid "Unlock"
+msgstr "Felold"
+
+#. Password Manager window, main menu, File submenu
+msgid "Export to"
+msgstr "Export"
+
+#. Password Manager window, main menu, File submenu, Export To submenu
+msgid "CSV File..."
+msgstr "CSV fájl..."
+
+#. Password Manager window, main menu, File submenu
+msgid "Database Settings..."
+msgstr "Adatbázis beállítások..."
+
+#. Password Manager window, main menu, File submenu
+msgid "Properties..."
+msgstr "Tulajdonságok..."
+
+#. Password Manager window, main menu, File submenu
+msgid "Change Master Password..."
+msgstr "Mesterjelszó módosítása..."
+
+#. Password Manager window, main menu, Edit submenu
+msgid "Copy User Name"
+msgstr "Felhasználónév másolása"
+
+#. Password Manager window, main menu, Edit submenu
+msgid "Copy Password"
+msgstr "Jelszó másolása"
+
+#. Password Manager window, main menu, Edit submenu
+msgid "Open URL"
+msgstr "URL megnyitása"
+
+#. Password Manager window, main menu, Edit submenu
+msgid "Run"
+msgstr "Futtatás"
+
+#. Password Manager window, main menu, Edit submenu
+msgid "Add Entry"
+msgstr "Bejegyzés hozzáadása"
+
+#. Password Manager window, main menu, Edit submenu
+msgid "Duplicate Entry"
+msgstr "Ismétlődő bejegyzés"
+
+#. Password Manager window, main menu, Edit submenu
+msgid "Delete Entry"
+msgstr "Bejegyzés törlése"
+
+#. Password Manager window, main menu, View submenu
+msgid "Show Columns"
+msgstr "Oszlopok megjelenítése"
+
+#. Password Manager window, main menu, View submenu
+msgid "Show Passwords in List"
+msgstr "Jelszavak megjelenítése a listában"
+
+#. Password Manager window, main menu, View submenu
+msgid "Sort Entries By"
+msgstr "Bejegyzések rendezése a következő szerint"
+
+#. Password Manager window, main menu, View submenu, Sort submenu
+msgid "Unsorted"
+msgstr "Rendezetlen"
+
+#. Password Manager window, main menu, View submenu, Sort submenu
+msgid "Ascending"
+msgstr "Növekvő"
+
+#. Password Manager window, main menu, View submenu, Sort submenu
+msgid "Descending"
+msgstr "Csökkenő"
+
+#. Password Manager window, main menu, View submenu
+msgid "Sort Tags By"
+msgstr "Címkék rendezése a következő szerint"
+
+#. Password Manager window, main menu, View submenu, Sort Tags submenu
+msgid "Name"
+msgstr "Név"
+
+#. Password Manager window, main menu, View submenu, Sort Tags submenu
+msgid "Frequency"
+msgstr "Gyakoriság"
+
+#. Password Manager window, main menu, View submenu
+msgid "Change List Font..."
+msgstr "Lista betűtípusának módosítása..."
+
+#. Password Manager window, main menu, View submenu
+msgid "Reset Fonts"
+msgstr "Betűtípusok visszaállítása"
+
+#. Password Manager window, main menu, View submenu
+msgid "Change Password Font..."
+msgstr "Jelszó betűtípusának módosítása..."
+
+#. Password Manager window, Edit panel, Arrow Up button, tooltip
+msgid "Previous entry"
+msgstr "Előző bejegyzés"
+
+#. Password Manager window, Edit panel, Arrow Down button, tooltip
+msgid "Next entry"
+msgstr "Következő bejegyzés"
+
+#. Password Manager window, Edit panel, Accept button, tooltip
+msgid "Accept changes"
+msgstr "Módosítások elfogadása"
+
+#. Password Manager window, Edit panel, Undo button, tooltip
+msgid "Undo changes"
+msgstr "Módosítások visszavonása"
+
+#. Password Manager window, toolbar, Search box, text tooltip
+msgid "Search..."
+msgstr "Keresés..."
+
+#. Password Manager window, toolbar, Search button, context menu
+msgid "Clear search"
+msgstr "Keresés törlése"
+
+#. Password Manager window, toolbar, Search button, tooltip
+msgid "Perform search"
+msgstr "Keresés végrehajtása"
+
+#. Password Manager window, toolbar, Search button, context menu
+msgid "Case-sensitive"
+msgstr "Kis- és nagybetű érzékeny"
+
+#. Password Manager window, toolbar, Search button, context menu
+msgid "Fuzzy search"
+msgstr "Fuzzy keresés"
+
+#. Password Manager window, toolbar, Search button, context menu
+msgid "Select fields..."
+msgstr "Mezők kiválasztása..."
+
+#. Password Manager window, toolbar, Lock/unlock button, tooltip
+msgid "Lock/unlock database"
+msgstr "Adatbázis zárolása/feloldása"
+
+#. Password Manager window, Edit panel, Toggle password button, tooltip
+msgid "Left-click: Hide/show password, right-click: Generate password"
+msgstr ""
+"Bal kattintás: Jelszó elrejtése/megjelenítése, jobb kattintás: Jelszó "
+"generálása"
+
+#. Password Manager window, Edit panel, Toggle notes button, tooltip
+msgid "Hide/show notes"
+msgstr "Jegyzetek elrejtése/megjelenítése"
+
+#. Password Manager window, Edit Panel, text displayed when notes are hidden
+msgid "Notes hidden - click here to display"
+msgstr "Rejtett jegyzetek - kattintson ide a megjelenítéshez"
+
+#. Password Manager window, title of password entry dialog when unlocking database
+msgid "Unlock %s"
+msgstr "%s feloldása"
+
+#. Password Manager window, title of password entry dialog when opening database
+msgid "Open %s"
+msgstr "%s megnyitása"
+
+#. Password Manager window, title of password entry dialog when creating new database
+msgid "Create new database"
+msgstr "Új adatbázis létrehozása"
+
+#. Password Manager window, error message when opening database
+msgid ""
+"Could not find database file:\n"
+"\"%s\"."
+msgstr ""
+"Nem található adatbázisfájl:\n"
+"\"%s\"."
+
+#. Password Manager window, error message when opening database
+msgid ""
+"Error while opening database file:\n"
+"%s."
+msgstr ""
+"Hiba az adatbázisfájl megnyitásakor:\n"
+"%s."
+
+#. Password Manager window, warning message when opening database
+msgid "The selected file is already opened."
+msgstr "A kiválasztott fájl már meg van nyitva."
+
+#. Password Manager window, message when currently selected entry has been changed
+msgid ""
+"The currently selected entry has been changed.\n"
+"Do you want to save the changes?"
+msgstr ""
+"Az aktuálisan kijelölt bejegyzés megváltozott.\n"
+"Szeretné menteni a módosításokat?"
+
+#. Password Manager window, message when database has been changed
+msgid ""
+"The database has been changed.\n"
+"Do you want to save the changes?"
+msgstr ""
+"Az adatbázis megváltozott.\n"
+"Szeretné menteni a módosításokat?"
+
+#. Password Manager window, message when trying to lock an untitled database
+msgid "An untitled database cannot be locked."
+msgstr "A névtelen adatbázis nem zárolható."
+
+#. Password Manager window, error message when trying to save backup file
+msgid ""
+"Could not save backup file\n"
+"\"%s\"."
+msgstr ""
+"Nem sikerült menteni a biztonsági mentési fájlt\n"
+"\"%s\"."
+
+#. Password Manager window, error message
+msgid ""
+"Error while saving database file:\n"
+"%s."
+msgstr ""
+"Hiba az adatbázisfájl mentésekor:\n"
+"%s."
+
+#. Password Manager window, message when editing an entry and trying to add new entries
+msgid ""
+"Please finish editing the current entry\n"
+"before adding new entries."
+msgstr ""
+"Kérjük, fejezze be az aktuális bejegyzés szerkesztését\n"
+"új bejegyzések hozzáadása előtt."
+
+#. Password Manager window, message when new entries have been added
+msgid "%d entries with passwords have been added."
+msgstr "%d jelszóval ellátott bejegyzés került hozzáadásra."
+
+#. Password Manager window, Search result
+msgid "1 entry found."
+msgstr "1 bejegyzés található."
+
+#. Password Manager window, Search result
+msgid "%d entries found."
+msgstr "%d bejegyzést találva."
+
+#. Password Manager window, Search result (via hot key)
+msgid "Search via hot key."
+msgstr "Keresés gyorsbillentyűvel."
+
+#. Password Manager window, Search via hot key, no match found
+msgid ""
+"No matching keyword found for window text\n"
+"\"%s\"."
+msgstr ""
+"Nem található egyező kulcsszó az ablak szövegéhez\n"
+"\"%s\"."
+
+#. Password Manager window, placeholder for New Entry in list view
+msgid "New Entry"
+msgstr "Új bejegyzés"
+
+#. Password Manager window, message when trying to add new entry without title and password
+msgid "Please specify at least a title or password."
+msgstr "Kérjük, adjon meg legalább egy címet vagy jelszót."
+
+#. Password Manager window, confirm deletion of entry
+msgid "Delete 1 entry?"
+msgstr "Töröl 1 bejegyzést?"
+
+#. Password Manager window, confirm deletion of entries
+msgid "Delete %d entries?"
+msgstr "Töröl %d bejegyzést?"
+
+#. Password Manager window, Change master password, query old password
+msgid "Enter OLD master password"
+msgstr "Írja be a RÉGI mesterjelszót"
+
+#. Password Manager window, Change master password, query new password
+msgid "Enter NEW master password"
+msgstr "Írja be az ÚJ mesterjelszót"
+
+#. Password Manager window, Change master password, success message
+msgid "Master password successfully changed."
+msgstr "A mester jelszó sikeresen megváltozott."
+
+#. Password Manager window, Change master password, error message
+msgid "Old master password is invalid."
+msgstr "A régi mesterjelszó érvénytelen."
+
+#. Password Manager window, New database, default name
+msgid "Untitled"
+msgstr "Cím nélküli"
+
+#. Password Manager window, text added to title when creating a duplicate of an existing entry
+msgctxt "noun"
+msgid "Copy"
+msgstr "Másol"
+
+#. Password Manager window, Export database to CSV, success message
+msgid "Database successfully exported to CSV file."
+msgstr "Az adatbázis sikeresen exportálva CSV-fájlba."
+
+#. Password Manager window, Export database to CSV, error message
+msgid ""
+"Error while creating CSV file:\n"
+"%s."
+msgstr ""
+"Hiba a CSV fájl létrehozásakor:\n"
+"%s."
+
+#. Password Manager window, Open/Save dialog, filter for .pwdb files
+msgid "Password databases"
+msgstr "Jelszó adatbázisok"
+
+#. Password Manager window, Open/Save dialog, filter for .csv files
+msgid "CSV files"
+msgstr "CSV fájlok"
+
+#. Password Manager window, Key-Value field, Autotype key
+msgid "Autotype"
+msgstr "Autotípia"
+
+#. Password Manager window, Key-Value field, Format Password key
+msgid "Format password"
+msgstr "Jelszó formázása"
+
+#. Password Manager window, main menu, Edit submenu
+msgid "Rearrange Entry"
+msgstr "Bejegyzés átrendezése"
+
+#. Password Manager window, main menu, Edit submenu, Rearrange Entry submenu
+msgid "Move to Top"
+msgstr "Ugrás a tetejére"
+
+#. Password Manager window, main menu, Edit submenu, Rearrange Entry submenu
+msgid "Move up by one"
+msgstr "Lépés eggyel feljebb"
+
+#. Password Manager window, main menu, Edit submenu, Rearrange Entry submenu
+msgid "Move down by one"
+msgstr "Lépés eggyel lejjebb"
+
+#. Password Manager window, main menu, Edit submenu, Rearrange Entry submenu
+msgid "Move to Bottom"
+msgstr "Ugrás az aljára"
+
+#. Password Manager window, Edit panel, message shown when one or more tags of the selected entry are too long
+msgid ""
+"The maximum tag length is %d characters.\n"
+"Longer tags have been shortened."
+msgstr ""
+"A címke maximális hossza %d karakter.\n"
+"A hosszabb címkék lerövidültek."
+
+#. Password Manager window, main menu, File submenu, Set Recovery Password, title of password entry dialog
+msgid "Enter master password"
+msgstr "Írja be a mesterjelszót"
+
+#. Password Manager window, main menu, File submenu, Database settings, when applying certain settings, title of password entry dialog
+msgid "Enter master password again"
+msgstr "Írja be újra a mesterjelszót"
+
+#. Password Manager window, main menu, File submenu, Database settings, when applying certain settings, message shown when master password is invalid
+msgid "Master password is invalid."
+msgstr "A mester jelszó érvénytelen."
+
+#. Password Manager window, Edit panel, Key-value list button, tooltip
+msgid "Edit key-value list"
+msgstr "Kulcs-érték lista szerkesztése"
+
+#. Password Manager window, Edit panel, password box, generate password, message shown when profile specified by corresponding key-value pair could not be found
+msgid "Profile \"%s\" not found."
+msgstr "\"%s\" profil nem található."
+
+#. Password Manager window, field name
+msgid "Password expiry"
+msgstr "Jelszó lejárata"
+
+#. Password Manager window, Edit panel, checkbox
+msgid "Expires:"
+msgstr "Lejárat:"
+
+#. Password Manager window, Edit panel, Expiry button, tooltip
+msgid "Change expiry date"
+msgstr "Lejárati dátum módosítása"
+
+#. Password Manager window, main menu, View submenu
+msgid "Filter"
+msgstr "Szűrő"
+
+#. Password Manager window, main menu, View submenu, Filter submenu
+msgid "Expired entries"
+msgstr "Lejárt bejegyzések"
+
+#. Password Manager window, main menu, View submenu, Filter submenu
+msgid "Entries that will expire soon"
+msgstr "Hamarosan lejáró bejegyzések"
+
+#. Password Manager window, main menu, View submenu, Filter submenu
+msgid "Entries with Weak Passwords"
+msgstr "Gyenge jelszavas bejegyzések"
+
+#. Password Manager window, Edit panel, context menu of Expiry button, menu items
+msgid "%d days"
+msgstr "%d nap"
+
+#. Password Manager window, when opening database, message shown if database contains expired entries
+msgid ""
+"The database contains expired entries.\n"
+"Do you want to filter these entries now?"
+msgstr ""
+"Az adatbázis lejárt bejegyzéseket tartalmaz.\n"
+"Szeretné most szűrni ezeket a bejegyzéseket?"
+
+#. Password Manager window, when opening database, message shown if database contains expired entries that will expire soon
+msgid ""
+"The database contains entries that will expire soon.\n"
+"Do you want to filter these entries now?"
+msgstr ""
+"Az adatbázis olyan bejegyzéseket tartalmaz, amelyek hamarosan lejárnak.\n"
+"Szeretné most szűrni ezeket a bejegyzéseket?"
+
+#. Password Manager window, text added to window title when database is locked
+msgid "Locked"
+msgstr "Zárolva"
+
+#. Password Manager window, main menu, File submenu
+msgid "Set Recovery Password..."
+msgstr "Állítsa be a helyreállítási jelszót..."
+
+#. Password Manager window, main menu, File submenu
+msgid "Remove Recovery Password..."
+msgstr "Távolítsa el a helyreállítási jelszót..."
+
+#. Password Manager window, main menu, File submenu, Set Recovery Password, title of password entry dialog
+msgid "Enter recovery password"
+msgstr "Adja meg a helyreállítási jelszót"
+
+#. Password Manager window, main menu, File submenu, Set Recovery Password, message shown when procedure was successful
+msgid "Recovery password successfully set."
+msgstr "A helyreállítási jelszó beállítása sikeres."
+
+#. Password Manager window, main menu, File submenu, Remove Recovery Password, error message
+msgid "Recovery password is invalid."
+msgstr "A helyreállítási jelszó érvénytelen."
+
+#. Password Manager window, main menu, File submenu, Remove Recovery Password, message shown when procedure was successful
+msgid "Recovery password successfully removed."
+msgstr "A helyreállítási jelszó sikeresen eltávolítva."
+
+#. Password Manager window, main menu, File submenu, Database Properties, entry in left column
+msgid "Recovery password set"
+msgstr "Helyreállítási jelszó beállítása"
+
+#. Indicates whether option is set
+msgid "Yes"
+msgstr "Igen"
+
+#. Indicates whether option is set
+msgid "No"
+msgstr "Nem"
+
+#. Password Manager window, Opening database, message shown in case of version incompatibility
+msgid ""
+"Database format error:\n"
+"%s.\n"
+"Database version: %d.%d\n"
+"Highest supported version: %d.%d"
+msgstr ""
+"Adatbázis-formátum hiba:\n"
+"%s.\n"
+"Adatbázis verziója: %d.%d\n"
+"Legmagasabb támogatott verzió: %d.%d"
+
+#. Password Manager window, Select Columns dialog, window title
+msgid "Select columns"
+msgstr "Oszlopok kiválasztása"
+
+#. Password Manager window, Select Columns dialog, message shown if no column selected
+msgid "Select at least one column."
+msgstr "Jelöljön ki legalább egy oszlopot."
+
+#. Generic string formatting error message
+msgid "Error while formatting string"
+msgstr "Hiba a karakterlánc formázása közben"
+
+#. Unicode error message
+msgid "Invalid UTF-16 character encoding"
+msgstr "Érvénytelen UTF-16 karakterkódolás"
+
+#. Unicode error message
+msgid "Error while converting string to UTF-8"
+msgstr "Hiba a karakterlánc UTF-8-ra konvertálásakor"
+
+#. Unicode error message
+msgid "Error while decoding UTF-8 string"
+msgstr "Hiba az UTF-8 karakterlánc dekódolása közben"
+
+#. Unicode error message
+msgid "Unicode string too long"
+msgstr "Túl hosszú Unicode-karakterlánc"
+
+#. Unicode error message
+msgid "Invalid ANSI or UTF-8 character encoding, or Unicode string too long"
+msgstr ""
+"Érvénytelen ANSI vagy UTF-8 karakterkódolás vagy túl hosszú Unicode "
+"karakterlánc"
+
+#. Unicode error message
+msgid "Error while encoding Unicode string"
+msgstr "Hiba a Unicode karakterlánc kódolása közben"
+
+#. Error message
+msgid "Out of disk space"
+msgstr "Elfogyott a lemezterület"
+
+#. Error message when trying to open a file or execute a command
+msgid ""
+"Could not open file/execute operation\n"
+"\"%s\"."
+msgstr ""
+"Nem sikerült megnyitni a fájlt/végrehajtani a műveletet\n"
+"\"%s\"."
+
+#. Main menu, Tools submenu, Create Trigram File, message shown when source file does not contain enough 3-letter combinations (trigrams) to create the trigram file
+msgid "Source file does not contain enough trigrams"
+msgstr "A forrásfájl nem tartalmaz elegendő trigramot"
+
+#. Password Manager window, Database Settings dialog, window title
+msgid "Database settings"
+msgstr "Adatbázis beállítások"
+
+#. Password Manager window, Database Settings dialog, label
+msgid "Default user name for new entries:"
+msgstr "Alapértelmezett felhasználónév az új bejegyzésekhez:"
+
+#. Password Manager window, Database Settings dialog, label
+msgid "Generate passwords for new entries using format sequence:"
+msgstr ""
+"Jelszavak generálása az új bejegyzésekhez formátumsorrend használatával:"
+
+#. Password Manager window, Database Settings dialog, Generate Password button, tooltip
+msgid "Generate test password using format sequence"
+msgstr "Tesztjelszó generálása formátumsorrend használatával"
+
+#. Password Manager window, Database Settings dialog, label
+msgid "Encryption algorithm:"
+msgstr "Titkosítási algoritmus:"
+
+#. Password Manager window, Database Settings dialog, items in list of encryption algorithms
+msgid "%s with %d-bit key"
+msgstr "%s %d bites kulccsal"
+
+#. Password Manager window, Database Settings dialog, label
+msgid "Number of key derivation rounds:"
+msgstr "Kulcslevezetési fordulók száma:"
+
+#. Password Manager window, Database Settings dialog, Calculate KDF Rounds button, tooltip
+msgid "Calculate number of rounds for a 1 second delay"
+msgstr "Számítsa ki a körök számát 1 másodperces késleltetéssel"
+
+#. Password Manager window, Database Settings dialog, message shown when number of KDF rounds is invalid
+msgid "Invalid number of key derivation rounds."
+msgstr "Érvénytelen számú kulcslevezetési kör."
+
+#. Password Manager window, Database Settings dialog, label
+msgid "By default, new entries expire after the following number of days:"
+msgstr ""
+"Alapértelmezés szerint az új bejegyzések a következő számú nap után járnak "
+"le:"
+
+#. Password Manager window, Database Settings dialog, label
+msgid "For new entries, save the following number of previous passwords:"
+msgstr "Új bejegyzések esetén mentse el a következő számú korábbi jelszót:"
+
+#. Password Manager window, Database Settings dialog, title of progress dialog when changing number of KDF iterations
+msgid "Changing number of KDF iterations"
+msgstr "A KDF-iterációk számának módosítása"
+
+#. Password Manager window, Database Settings dialog, title of progress dialog when changing number of KDF iterations
+msgid "Computing derived key ..."
+msgstr "Számítási származtatott kulcs ..."
+
+#. Password Manager window, Key-Value List Editor dialog, window title
+msgid "Key-value list editor"
+msgstr "Kulcs-érték listaszerkesztő"
+
+#. Password Manager window, Database Properties dialog, window title
+msgid "Properties"
+msgstr "Tulajdonságok"
+
+#. Password Manager window, Database Properties dialog, title of left column
+msgid "Property"
+msgstr "Jellemző"
+
+#. Password Manager window, Database Properties dialog, entry in left column
+msgid "Location"
+msgstr "Helyszín"
+
+#. Password Manager window, Database Properties dialog, entry in left column
+msgid "Size"
+msgstr "Méret"
+
+#. Password Manager window, Database Properties dialog, entry in left column
+msgid "Format version"
+msgstr "Formátum verzió"
+
+#. Password Manager window, Database Properties dialog, entry in left column
+msgid "Number of entries"
+msgstr "Bejegyzések száma"
+
+#. Password Manager window, Database Properties dialog, entry in left column
+msgid "Number of expired entries"
+msgstr "Lejárt bejegyzések száma"
+
+#. Password Manager window, Database Properties dialog, entry in left column
+msgid "Number of tags"
+msgstr "Címkék száma"
+
+#. Password Manager window, Database Settings dialog, title of Compression tab
+msgid "Compression"
+msgstr "Tömörítés"
+
+#. Password Manager window, Database Settings dialog, Compression, checkbox
+msgid "Enable data compression (Deflate)"
+msgstr "Adattömörítés engedélyezése (Deflate)"
+
+#. Password Manager window, Database Settings dialog, compression, label
+msgid "<- Low compression, fast | High compression, slow ->"
+msgstr "<- Alacsony tömörítés, gyors | Nagy tömörítés, lassú ->"
+
+#. Password Manager window, Edit panel, title of password entry dialog when password has been changed and needs to be confirmed
+msgid "Confirm password"
+msgstr "Jelszó megerősítése"
+
+#. Password Manager window, Password quality bar, caption when quality estimation is disabled
+msgid "Password quality estimation is disabled"
+msgstr "A jelszóminőség becslése le van tiltva"
+
+#. Password Manager window, Password Quality button, tooltip
+msgid "Estimate password quality"
+msgstr "Becsülje meg a jelszó minőségét"
+
+#. Password Manager window, field name
+msgid "Password history"
+msgstr "Jelszó előzmények"
+
+#. Password Manager window, field name
+msgid "Password changed"
+msgstr "Jelszó megváltoztatva"
+
+#. Password Manager window, Edit panel, label
+msgid "Password changed:"
+msgstr "Jelszó megváltoztatva:"
+
+#. Password Manager window, Password History dialog, checkbox
+msgid "Keep last passwords - up to:"
+msgstr "Tartsa meg az utolsó jelszavakat - legfeljebb:"
+
+#. Password Manager window, Password History dialog, list view, column
+msgid "Set Date/Time"
+msgstr "Dátum/idő beállítása"
+
+#. Password Manager window, shutdown blocker message
+msgid "Password database entry is being edited."
+msgstr "A jelszó-adatbázis bejegyzése szerkesztés alatt áll."
+
+#. Password Manager window, shutdown blocker message
+msgid "Password database contains unsaved changes."
+msgstr "A jelszó-adatbázis nem mentett módosításokat tartalmaz."
+
+#. Password Manager window, toolbar, filter info
+msgid "Filtered"
+msgstr "Szűrt"
+
+#. Password Manager window, toolbar, filter info, button tooltip
+msgid "Remove filter"
+msgstr "Szűrők eltávolítása"
+
+#. Main window, button to build character set definition
+msgid "Build..."
+msgstr "Épít..."
+
+#. Main window, button to build character set definition, hint
+msgid "Build character set definition"
+msgstr "Karakterkészlet definíciójának összeállítása"
+
+#. Character set builder, window title
+msgid "Character Set Builder"
+msgstr "Karakterkészlet-készítő"
+
+#. Character set builder, group box with character sets
+msgid "Character set selection"
+msgstr "Karakterkészlet kiválasztása"
+
+#. Character set builder, group box with exclude characters
+msgid "Exclude characters"
+msgstr "Karakterek kizárása"
+
+#. Character set builder, group box with tag/comment
+msgid "Tag/comment"
+msgstr "Címke/megjegyzés"
+
+#. Character set builder, group box with resulting definition
+msgid "Resulting character set definition"
+msgstr "Eredményül kapott karakterkészlet-definíció"
+
+#. Character set builder, button
+msgid "Apply"
+msgstr "Alkalmaz"
+
+#. Character set builder, check box
+msgid "Lower-case letters (a-z)"
+msgstr "Kisbetűk (a-z)"
+
+#. Character set builder, check box
+msgid "Upper-case letters (A-Z)"
+msgstr "Nagybetűk (A-Z)"
+
+#. Character set builder, check box
+msgid "Digits (0-9)"
+msgstr "Számjegyek (0-9)"
+
+#. Character set builder, check box
+msgid "Characters from range:"
+msgstr "Karakterek tartományból:"
+
+#. Character set builder, check box
+msgid "Additional characters:"
+msgstr "További karakterek:"
+
+#. Character set builder, check box
+msgid "At least"
+msgstr "%d legalább 100.000 utas szállításáért"
+
+#. Character set builder, edit box
+msgid "From:"
+msgstr "Ettől:"
+
+#. Character set builder, edit box
+msgid "to:"
+msgstr "eddig:"
+
+#. Character set builder, error message
+msgid "Invalid character range."
+msgstr "Érvénytelen karaktertartomány."
