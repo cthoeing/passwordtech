@@ -1,0 +1,2238 @@
+# Converted by Password Tech 3.5.9
+# NOTE: You have to provide the appropriate language code in the "Language" section of the following header.
+# If the language code is missing or invalid, PwTech will derive the language name from the file name.
+msgid ""
+msgstr ""
+"Project-Id-Version: Password Tech 3.5.9\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Christian Thöing\n"
+"Language-Team: \n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-PasswordTech-Manual: manual.pdf\n"
+"X-Generator: Poedit 3.3.2\n"
+
+msgid "Info"
+msgstr "Informacja"
+
+msgid "Warning"
+msgstr "Ostrzeżenie"
+
+msgid "Question"
+msgstr "Pytanie"
+
+msgid "Error"
+msgstr "Błąd"
+
+msgid "Profile:"
+msgstr "Profil:"
+
+msgid "Settings"
+msgstr "Ustawienia"
+
+msgid "Include Characters (pass*words*)"
+msgstr "Uwzględnij Znaki (pass*words*)"
+
+msgid "Length:"
+msgstr "Długość:"
+
+msgid "Character Set:"
+msgstr "Ustaw Znaki:"
+
+msgid "Show details"
+msgstr "Pokaż Szczegóły"
+
+msgid "Include Words (Pass*phrases*)"
+msgstr "Uwzględnij Słowa (Pass*phrases*)"
+
+msgid "Number:"
+msgstr "Ilość:"
+
+msgid "Word List File:"
+msgstr "Plik z Listą Słów:"
+
+msgid "Browse"
+msgstr "Przeglądaj"
+
+msgid "Specify length*:"
+msgstr "Określ długość*:"
+
+msgid "Combine Words with Characters"
+msgstr "Łączenie Słów z Znakami"
+
+msgid "Format password:"
+msgstr "Format hasła:"
+
+msgid "Run script:"
+msgstr "Uruchom skrypt:"
+
+msgid "Reload script"
+msgstr "Przeładuj skrypt"
+
+msgid "Multiple passwords:"
+msgstr "Wiele haseł:"
+
+msgid "Generate"
+msgstr "Generuj"
+
+msgid "Generate to Clipboard"
+msgstr "Generuj do Schowka"
+
+msgid "Generate to File..."
+msgstr "Generuj do Pliku..."
+
+msgid "Include Header"
+msgstr "Zawiera Nagłówek"
+
+msgid "Advanced"
+msgstr "Zaawansowane"
+
+msgid "%d option(s) active"
+msgstr "%d opcja(e) aktywna"
+
+msgid "Deactivate All Options"
+msgstr "Dezaktywuj wszystkie opcje"
+
+msgid "Deactivate All Starred (*) Options"
+msgstr "Dezaktywuj wszystkie opcje gwiazdką (*)"
+
+msgid "Generated Password"
+msgstr "Wygenerowane Hasło"
+
+msgid "Click on \"Generate\""
+msgstr "Kliknij \"Generuj\"."
+
+msgid "Hide/show password"
+msgstr "Ukryj/pokaż hasło"
+
+msgid "Hold left mouse button to drag & drop password"
+msgstr "Przytrzymaj lewy przycisk myszy do przeciągnięcia & upuść hasło"
+
+msgid "File"
+msgstr "Plik"
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Profile Editor..."
+msgstr "Profil Edytor..."
+
+msgid "Exit"
+msgstr "Wyjście"
+
+msgid "Backup Settings..."
+msgstr "Ustawienia Kopii Zapasowej..."
+
+msgid "Restore Settings from Backup..."
+msgstr "Przywracanie ustawień z kopii zapasowej..."
+
+msgid "Could not copy the following language file(s):"
+msgstr "Nie można skopiować następujących plików językowych:"
+
+msgid "Select folder to store backup"
+msgstr "Wybierz folder do przechowywania kopii zapasowej"
+
+msgid "Select folder containing backup to restore"
+msgstr "Wybierz folder zawierający kopię zapasową do przywrócenia"
+
+msgid "Configuration file \"%1\" not found in folder."
+msgstr "Plik konfiguracyjnego \"%1\" nie znaleziono w folderze."
+
+msgid "Tools"
+msgstr "Narzędzia"
+
+msgid "Clear Clipboard"
+msgstr "Wyczyść Schowek"
+
+msgid "Encrypt Clipboard..."
+msgstr "Zaszyfruj Schowek..."
+
+msgid "Decrypt Clipboard..."
+msgstr "Odszyfruj Schowek..."
+
+msgid "Create Random Data File..."
+msgstr "Utwórz Losowo Plik Danych..."
+
+msgid "Create Trigram File..."
+msgstr "Utwórz Plik Trygramu..."
+
+msgid "MP Password Generator..."
+msgstr "MP Password Generator..."
+
+msgid "Deterministic Random Generator"
+msgstr "Deterministyczny Losowy Generator"
+
+msgid "Reset"
+msgstr "Resetuj"
+
+msgid "Deactivate"
+msgstr "Dezaktywuj"
+
+msgid "Provide Additional Entropy"
+msgstr "Zapewnij Dodatkową Entropię"
+
+msgid "As Text..."
+msgstr "Jako tekst..."
+
+msgid "From File..."
+msgstr "Z pliku..."
+
+msgid "Options"
+msgstr "Opcje"
+
+msgid "Configuration..."
+msgstr "Konfiguracja..."
+
+msgid "Language"
+msgstr "Język"
+
+msgid "Always on Top"
+msgstr "Zawsze na górze"
+
+msgid "Hide Entropy Progress"
+msgstr "Ukryj Postęp Entropii"
+
+msgid "Save Settings on Exit"
+msgstr "Zapisz ustawienia przy wyjściu"
+
+msgid "Save Settings Now"
+msgstr "Zapisz teraz ustawienia"
+
+msgid "Help"
+msgstr "Pomoc"
+
+msgid "Open Manual"
+msgstr "Otwórz Instrukcję"
+
+msgid "Command Line Arguments..."
+msgstr "Argumenty wiersza poleceń..."
+
+msgid "Visit Website"
+msgstr "Odwiedź Stronę"
+
+msgid "Get Translations..."
+msgstr "Pobierz Tłumaczenia..."
+
+msgid "Donate..."
+msgstr "Darowizna..."
+
+msgid "Check for Updates"
+msgstr "Sprawdź aktualizacje"
+
+msgid "Timer Info..."
+msgstr "Informacje o timerach..."
+
+msgid "About %s..."
+msgstr "O %s..."
+
+msgid "Restore %s"
+msgstr "Przywróć %s"
+
+msgid "Generate Password"
+msgstr "Generator Hasła"
+
+msgid "Generate and Show Password..."
+msgstr "Generowanie i Wyświetlanie Haseł..."
+
+msgid "Generate and Autotype Password"
+msgstr "Generowanie i Autozapis Hasła"
+
+msgid "Open user manual"
+msgstr "Otwórz instrukcję obsługi"
+
+msgid "Clear clipboard (text contents only)"
+msgstr "Wyczyść schowek (tylko kontekst tekstowy)"
+
+msgid "Clipboard text encryption (left-click) or decryption (right-click)"
+msgstr "Szyfrowanie (kliknięcie lewym przyciskiem myszy) lub odszyfrowanie (kliknięcie prawym przyciskiem myszy) tekstu w schowku"
+
+msgid "Load, create or delete profiles"
+msgstr "Ładowanie, tworzenie i usuwanie profili"
+
+msgid "Generate passwords based on a master password"
+msgstr "Generowanie haseł na podstawie hasła głównego"
+
+msgid "Main configuration of the program"
+msgstr "Główna konfiguracja programu"
+
+msgid "Reset Counters"
+msgstr "Resetuj licznik"
+
+msgid "All files"
+msgstr "Wszystkie pliki"
+
+msgid "Text files"
+msgstr "Pliki tekstowe"
+
+msgid "Trigram files"
+msgstr "Pliki trygramu"
+
+msgid "Lua scripts"
+msgstr "Skrypty Lua"
+
+msgid "Undo"
+msgstr "Cofnij"
+
+msgid "Cut"
+msgstr "Wytnij"
+
+msgid "Copy"
+msgstr "Kopiuj"
+
+msgid "Encrypt && Copy"
+msgstr "Szyfruj && Kopiuj"
+
+msgid "Paste"
+msgstr "Wklej"
+
+msgid "Perform Autotype"
+msgstr "Wykonywanie autozapisu"
+
+msgid "Add to Database"
+msgstr "Dodaj do bazy danych"
+
+msgid "Delete"
+msgstr "Usuń"
+
+msgid "Select All"
+msgstr "Zaznacz wszystko"
+
+msgid "Clear List"
+msgstr "Wyczyść listę"
+
+msgid "Remove Entry"
+msgstr "Usuń wpis"
+
+msgid "Editable"
+msgstr "Pasek edycji"
+
+msgid "Enable Password Testing"
+msgstr "Włącz testowanie haseł"
+
+msgid "Change Font..."
+msgstr "Zmień czcionkę..."
+
+msgid "Select high-entropy file"
+msgstr "Wybierz plik o wysokiej entropii"
+
+msgid "Manage passwords in encrypted databases"
+msgstr "Menedżer haseł z zaszyfrowanymi bazami danych"
+
+msgid "Reload profile"
+msgstr "Przeładuj profil"
+
+msgid "Add profile"
+msgstr "Dodaj profil"
+
+msgid "Set up..."
+msgstr "Ustawienia..."
+
+msgid "Password Manager..."
+msgstr "Menedżer Haseł..."
+
+msgid "Enter Donor Key..."
+msgstr "Wprowadź Klucz Darczyńcy..."
+
+msgid "Reset All Window Positions"
+msgstr "Zresetuj wszystkie pozycje okna"
+
+msgid ""
+"Could not read random seed file\n"
+"\"%s\"."
+msgstr ""
+"Nie można odczytać losowego pliku źródłowego\n"
+"\"%s\"."
+
+msgid ""
+"Could not write to random seed file\n"
+"\"%s\"."
+msgstr ""
+"Nie można zapisać do losowego pliku źródłowego\n"
+"\"%s\"."
+
+msgid ""
+"Unknown command line switch(es):\n"
+"%s"
+msgstr ""
+"Nieznane przełączniki wiersza poleceń:\n"
+"%s"
+
+msgid ""
+"Error while loading word list file\n"
+"\"%s\"."
+msgstr ""
+"Błąd ładowania pliku listy słów\n"
+"\"%s\"."
+
+msgid ""
+"Error while loading list of common passwords:\n"
+"%s."
+msgstr ""
+"Błąd ładowania listy typowych haseł:\n"
+"%s."
+
+msgid "%s encountered %d error(s) during startup:"
+msgstr "Wystąpił błąd %d podczas uruchamiania %s:"
+
+msgid ""
+"If you like %s, please consider\n"
+"making a donation. Thank you!"
+msgstr ""
+"Jeśli podoba Ci się %s\n"
+"rozważ dokonanie darowizny. Dzięki!"
+
+msgid "Character set \"%s\" is invalid."
+msgstr "Zestaw znaków \"%s\" jest nieprawidłowy."
+
+msgid ""
+"Error while writing to configuration file:\n"
+"%s."
+msgstr ""
+"Błąd zapisu pliku konfiguracyjnego:\n"
+"%s."
+
+msgid "%d characters / %.1f bits per character"
+msgstr "%d znaków / %.1f bitów na znak"
+
+msgid "%d words / %.1f bits per word"
+msgstr "%d słów / %.1f bitów na słowo"
+
+msgid "Could not open trigram file."
+msgstr "Nie można otworzyć pliku trygramu."
+
+msgid "Invalid trigram file."
+msgstr "Nieprawidłowy plik trygramu."
+
+msgid "Matches common password!"
+msgstr "Dopasuj do wspólnego hasła!"
+
+msgid "Text successfully encrypted."
+msgstr "Tekst został pomyślnie zaszyfrowany."
+
+msgid "Text successfully decrypted."
+msgstr "Tekst został pomyślnie odszyfrowany."
+
+msgid "Could not open clipboard."
+msgstr "Nie można otworzyć schowka."
+
+msgid "The text to be encrypted is too long."
+msgstr "Tekst do zaszyfrowania jest zbyt długi."
+
+msgid "No text available to process."
+msgstr "Brak tekstu dostępnego do przetworzenia."
+
+msgid ""
+"Not enough memory available to perform\n"
+"the operation. Try to use a shorter text."
+msgstr ""
+"Za mało pamięci dostępnej dla wykonania\n"
+"operacji. Spróbuj użyć krótszego tekstu."
+
+msgid ""
+"Decryption failed. This may be attributed\n"
+"to the following reasons:"
+msgstr ""
+"Odszyfrowanie nie powiodło się. Możliwe\n"
+"przyczyny tego są następujące:"
+
+msgid "- You entered a wrong password."
+msgstr "- Wprowadziłeś nieprawidłowe hasło."
+
+msgid ""
+"- The text is corrupted.\n"
+"- The text is not encrypted."
+msgstr ""
+"- Tekst jest niepoprawny.\n"
+"- Tekst nie jest zaszyfrowany."
+
+msgid ""
+"This should not have happened:\n"
+"Decryption successful, but decompression\n"
+"failed."
+msgstr ""
+"To nie powinno się zdarzyć:\n"
+"Odszyfrowanie powiodło się, ale\n"
+"Dekompresja nie powiodła się."
+
+msgid "Could not register the following hot keys:"
+msgstr "Nie można zarejestrować następujących skrótów klawiszowych:"
+
+msgid ""
+"The selected file already exists. Do you\n"
+"want to append passwords to this file\n"
+"(existing passwords will be preserved),\n"
+"or do you want to completely overwrite it?\n"
+"\n"
+"Yes\t-> append passwords,\n"
+"No\t-> overwrite file,\n"
+"Cancel\t-> cancel process."
+msgstr ""
+"Wybrany plik już istnieje.\n"
+"Czy chcesz dodać hasła do pliku\n"
+"(istniejące hasła są zachowywane),\n"
+"czy chcesz całkowicie nadpisać plik?\n"
+"\n"
+"Ja\t-> Dodaj hasła,\n"
+"Nein\t-> Nadpisz plik,\n"
+"Anuluj\t-> anuluj proces."
+
+msgid "Passphrase: Invalid length range."
+msgstr "Hasło: Nieprawidłowy zakres długości."
+
+msgid ""
+"If the option \"Each character must occur\n"
+"only once\" is activated, the password length\n"
+"is limited to the size of the character set (%d)."
+msgstr ""
+"Jeśli opcja \"Każdy znak może być użyty tylko raz\"\n"
+"jest aktywowany, długość hasła\n"
+"ograniczone do rozmiaru zestawu znaków (%d)."
+
+msgid ""
+"If the option \"Each word must occur only\n"
+"once\" is activated, the number of words\n"
+"is limited to the size of the word list (%d)."
+msgstr ""
+"Jeśli opcja \"Każde słowo może być użyte tylko raz”\n"
+"jest aktywowany, jest liczbą\n"
+"słowa ograniczone do rozmiaru listy słów (%d)."
+
+msgid ""
+"Error while loading script:\n"
+"%s."
+msgstr ""
+"Błąd podczas ładowania skryptu:\n"
+"%s."
+
+msgid "Generating password list ..."
+msgstr "Wygeneruj listę haseł ..."
+
+msgid "%d of %d passwords generated."
+msgstr "%d z %d wygenerowane hasła."
+
+msgid "Generating passphrase ..."
+msgstr "Generowanie hasła ..."
+
+msgid "%d of %d passphrases generated."
+msgstr "%d z %d wygenerowane hasła."
+
+msgid "\"P\" is not specified."
+msgstr "\"P\" nie jest określone."
+
+msgid "Password not available"
+msgstr "Hasło niedostępne"
+
+msgid "Password too long."
+msgstr "Hasło zbyt długie."
+
+msgid "%d invalid format specifier(s): %s"
+msgstr "%d nieprawidłowe specyfikator(y) formatu: %s"
+
+msgid "Executing script"
+msgstr "Uruchom skrypt"
+
+msgid "Waiting for script ..."
+msgstr "Oczekiwanie na skrypt ..."
+
+msgid ""
+"Script thread was terminated forcibly.\n"
+"Please check script for infinite loops."
+msgstr ""
+"Wątek skryptu został przerwany siłą.\n"
+"Sprawdź, czy w skrypcie nie ma nieskończonych pętli."
+
+msgid ""
+"The estimated list size will probably exceed\n"
+"the internal memory limit.\n"
+"Please reduce the number of passwords"
+msgstr ""
+"Szacowany rozmiar listy prawdopodobnie przekroczy\n"
+"limit pamięci wewnętrznej.\n"
+"Proszę zmniejszyć liczbę haseł"
+
+msgid ""
+"The memory limit of the password list has\n"
+"been reached.\n"
+"\n"
+"The number of passwords has been\n"
+"reduced to %d."
+msgstr ""
+"Limit przechowywania listy haseł została\n"
+"przekroczona.\n"
+"\n"
+"Liczba haseł została zredukowana do %d."
+
+msgid "%d passwords generated."
+msgstr "%d wygenerowane hasła."
+
+msgid ""
+"%d passwords generated.\r\n"
+"Entropy of the first password: %d bits.\r\n"
+"Maximum entropy of the entire list: %d bits."
+msgstr ""
+"%d wygenerowane hasła.\r\n"
+"Entropia pierwszego hasła: %d bitów.\r\n"
+"Maksymalna entropia całej listy: %d bitów."
+
+msgid "Password copied to clipboard."
+msgstr "Hasło skopiowane do schowka."
+
+msgid "Copying password list ..."
+msgstr "Kopiowanie listy haseł ..."
+
+msgid ""
+"File \"%s\" successfully created.\n"
+"\n"
+"%d passwords written."
+msgstr ""
+"Plik \"%s\" pomyślnie wygenerowane.\n"
+"\n"
+"%d hasła zapisane."
+
+msgid ""
+"An error has occurred during password generation:\n"
+"%s."
+msgstr ""
+"Podczas generowania hasła\n"
+"wystąpił błąd:\n"
+"%s."
+
+msgid "%d passwords written to file \"%s\"."
+msgstr "%d hasła zapisane do pliku \"%s\"."
+
+msgid "%d bits / %d characters"
+msgstr "%d bitów / %d znaków"
+
+msgid "Passwords: %d"
+msgstr "Hasła: %d"
+
+msgid "Invalid character set."
+msgstr "Nieprawidłowy zestaw znaków."
+
+msgid "default (English) trigrams"
+msgstr "domyślne (angielskie) trygramy"
+
+msgid "File \"%s\""
+msgstr "Plik \"%s\""
+
+msgid ""
+"(phonetic, based on trigram frequencies\n"
+"from the following source:\n"
+"<%s>)"
+msgstr ""
+"(fonetyczny, oparty na częstotliwościach \n"
+"trygramu z następującego źródła:\n"
+"<%s>)"
+
+msgid ""
+"The character set you entered is invalid.\n"
+"It must contain at least 2 different characters."
+msgstr ""
+"Wprowadzony zestaw znaków jest nieprawidłowy.\n"
+"Musi zawierać co najmniej 2 różne znaki."
+
+msgid "Currently loaded character set:"
+msgstr "Aktualnie załadowany zestaw znaków:"
+
+msgid "Could not open file."
+msgstr "Nie można otworzyć pliku."
+
+msgid "Not enough valid words."
+msgstr "Za mało poprawnych słów."
+
+msgid "Select word list file"
+msgstr "Wybieranie pliku z listą wyrazów"
+
+msgid ""
+"Error while loading the file\n"
+"\"%s\":\n"
+"%s"
+msgstr ""
+"Błąd ładowania pliku\n"
+"\"%s\":\n"
+"%s"
+
+msgid "default (English) word list"
+msgstr "domyślna (angielska) lista słów"
+
+msgid "Currently loaded word list:"
+msgstr "Aktualnie załadowana lista słów:"
+
+msgid "First word:"
+msgstr "Pierwsze słowo:"
+
+msgid "Random word:"
+msgstr "Losowe słowo:"
+
+msgid "Last word:"
+msgstr "Ostatnie słowo:"
+
+msgid ""
+"The version of this language (%s) is not\n"
+"compatible with this program version.\n"
+"This version of %s requires a language\n"
+"version of at least %s.\n"
+"\n"
+"Do you want to use it anyway?"
+msgstr ""
+"Wersja tego języka (%s) nie jest\n"
+"kompatybilna z tą wersją programu.\n"
+"Ta wersja %s wymaga\n"
+"języka wersja co najmniej %s.\n"
+"\n"
+"Czy nadal chcesz z nich korzystać?"
+
+msgid ""
+"The version of this language (%s) is higher\n"
+"than the version of this program (%s).\n"
+"Therefore, version incompatibilities may occur.\n"
+"\n"
+"Do you want to use it anyway?"
+msgstr ""
+"Wersja tego języka (%s) jest wyższa\n"
+"niż wersja tego programu (%s).\n"
+"W związku z tym może to prowadzić do niezgodności wersji.\n"
+"\n"
+"Czy mimo to chcesz go użyć?"
+
+msgid ""
+"The language file will be loaded when you\n"
+"restart the program.\n"
+"\n"
+"Do you want to restart now?"
+msgstr ""
+"Plik językowy można załadować tylko,\n"
+"po ponownym uruchomieniu programu.\n"
+"\n"
+"Czy chcesz teraz zrestartować?"
+
+msgid ""
+"Password is too long to show it in a\n"
+"message box like this.\n"
+"\n"
+"It has been copied to the clipboard."
+msgstr ""
+"Hasło jest za długie, aby wyświetlić\n"
+"w polu tekstowym takim jak to.\n"
+"\n"
+"Został skopiowany do schowka."
+
+msgid ""
+"The generated password is:\n"
+"\n"
+"%s\n"
+"\n"
+"The estimated security is %d bits.\n"
+"\n"
+"Yes\t-> copy password to clipboard,\n"
+"No\t-> generate new password,\n"
+"Cancel\t-> cancel process."
+msgstr ""
+"Wygenerowane hasło to:\n"
+"\n"
+"%s\n"
+"\n"
+"Szacowane bezpieczeństwo to %d bitów.\n"
+"\n"
+"Tak\t-> Skopiuj hasło do schowka,\n"
+"Nie\t-> generuj nowego hasła,\n"
+"Anuluj\t-> anuluj proces."
+
+msgid ""
+"All entries will be removed from the list.\n"
+"Are you sure?"
+msgstr ""
+"Wszystkie wpisy są usuwane z listy.\n"
+"Jesteś pewny?"
+
+msgid "Total Entropy Bits: %d"
+msgstr "Ogółem bity Entropii: %d"
+
+msgid ""
+"High-resolution timer used:\n"
+"%s.\n"
+"\n"
+"Current value: %s."
+msgstr ""
+"Zastosowany timer o wysokiej rozdzielczości:\n"
+"%s\n"
+"\n"
+"Wartość chwilowa: %s."
+
+msgid "Could not download version file"
+msgstr "Nie można pobrać pliku wersji"
+
+msgid "URL not found, or unknown format of version file"
+msgstr "Nie znaleziono URL lub nieznany format pliku wersji pliku"
+
+msgid ""
+"A new version (%s) of %s is available!\n"
+"Do you want to visit the download page now?"
+msgstr ""
+"Nowa wersja (%s) z %s jest dostępna!\n"
+"Czy chcesz teraz przejść do strony pobierania?"
+
+msgid "(NOTE: %s)"
+msgstr "(UWAGA: %s)"
+
+msgid "Your version of %s is up-to-date."
+msgstr "Twoja wersja %s jest aktualna."
+
+msgid ""
+"Error while checking for updates:\n"
+"%s."
+msgstr ""
+"Sprawdzanie błędów aktualizacji:\n"
+"%s."
+
+msgid "WARNING: Random generator is deterministic (press F7 to deactivate)!"
+msgstr "OSTRZEŻENIE: Generator losowy jest deterministyczny (naciśnij F7, aby dezaktywować)"
+
+msgid "Clipboard cleared."
+msgstr "Schowek wyczyszczony."
+
+msgid "Profile \"%s\" activated."
+msgstr "Profil \"%s\" aktywowano."
+
+msgid "Deterministic random generator has been ACTIVATED."
+msgstr "Deterministyczny generator liczb losowych AKTYWOWANO."
+
+msgid "Deterministic random generator has been RESET."
+msgstr "Deterministyczny generator liczb losowych RESET."
+
+msgid "Deterministic random generator has been DEACTIVATED."
+msgstr "Deterministyczny generator liczb losowych DEZAKTYWOWANO."
+
+msgid "ERROR: Profile \"%s\" not found."
+msgstr "BŁĄD: Profilu \"%s\" nie znaleziono."
+
+msgid "Selected profile \"%s\"."
+msgstr "Wybrano \"%s\" profil."
+
+msgid "Generating %d password(s) ..."
+msgstr "Generowanie %d hasła ..."
+
+msgid ""
+"Command line function \"gen\" is only effective\n"
+"when %s is run from the console."
+msgstr ""
+"Funkcja wiersza poleceń \"gen\" jest tylko efektywny,\n"
+"gdy %s jest uruchamiany z konsoli."
+
+msgid ""
+"Your donor key has expired: The maximum\n"
+"number of updates has been reached."
+msgstr ""
+"Twój klucz darczyńcy wygasł:\n"
+"Osiągnięto maksymalną liczbę aktualizacji."
+
+msgid "Donor key is invalid."
+msgstr "Klucz darczyńcy jest nieprawidłowy."
+
+msgid "Donor Key"
+msgstr "Klucz Darczyńcy"
+
+msgid "Enter donor key:"
+msgstr "Wpisz klucz:"
+
+msgid ""
+"Your Donor ID is: %s\n"
+"Supported number of updates: %s"
+msgstr ""
+"Twój ID Darczyńcy jest: %s\n"
+"Obsługiwana liczba aktualizacji: %s"
+
+msgid "Unlimited"
+msgstr "Bez ograniczeń"
+
+msgid "Thank you for your support!"
+msgstr "Dziękuję za Twoje wsparcie!"
+
+msgid "Copy this information to the clipboard?"
+msgstr "Skopiować te informacje do schowka?"
+
+msgid "Donor key has expired."
+msgstr "Klucz darczyńcy wygasł."
+
+msgid "Settings saved."
+msgstr "Zapisane ustawienia."
+
+msgid "Save password"
+msgstr "Zapisz hasło"
+
+msgid "Clear Password Cache"
+msgstr "Wyczyść Pamięć Haseł"
+
+msgid "Password cache cleared."
+msgstr "Wyczyszczono pamięć haseł."
+
+msgid "Select Lua script file"
+msgstr "Wybierz plik skryptu Lua"
+
+msgid "Waiting for active threads to finish ..."
+msgstr "Oczekiwanie na zakończenie aktywnych wątków ..."
+
+msgid ""
+"Donate at least one of the following amounts\n"
+"to receive a Donor Key:\n"
+"\n"
+"%d EUR / %d USD:\tValid for current version and %d updates.\n"
+"%d EUR / %d USD:\tValid for the entire lifetime of version 3.\n"
+"\n"
+"Do you want to donate now?"
+msgstr ""
+"Przekaż darowiznę co najmniej jednej z następujących kwot\n"
+"Kwoty do uzyskania Klucza Darczyńcy:\n"
+"\n"
+"%d EUR / %d USD:\tObowiązuje dla bieżącej wersji i %d aktualizacji.\n"
+"%d EUR / %d USD:\tObowiązuje przez cały okres ważności Wersji 3.\n"
+"\n"
+"Czy chcesz przekazać darowiznę teraz?"
+
+msgid ""
+"Could not access registry key\n"
+"%s."
+msgstr ""
+"Odmowa dostępu do klucza rejestracyjnego:\n"
+"%s."
+
+msgid "Configuration"
+msgstr "Konfiguracja"
+
+msgid "General"
+msgstr "Ogólne"
+
+msgid "Security"
+msgstr "Bezpieczeństwo"
+
+msgid "Hot Keys"
+msgstr "Hot Keys"
+
+msgid "Files"
+msgstr "Pliki"
+
+msgid "Updates"
+msgstr "Aktualizacje"
+
+msgid "Database"
+msgstr "Baza danych"
+
+msgid "User interface style:"
+msgstr "Styl interfejsu użytkownika:"
+
+msgid "Application icon:"
+msgstr "Ikona aplikacji:"
+
+msgid "Change font for the GUI controls:"
+msgstr "Zmień czcionkę kontrolek GUI:"
+
+msgid "Select font"
+msgstr "Wybierz czcionkę"
+
+msgid "Show system tray icon constantly"
+msgstr "Stale pokazuj ikonę na pasku zadań"
+
+msgid "Minimize program to system tray"
+msgstr "Minimalizuj program do zasobnika systemowego"
+
+msgid "Minimize before performing autotype"
+msgstr "Minimalizuj przed wykonaniem autozapisu"
+
+msgid "Autotype delay between characters (ms):"
+msgstr "Opóźnienie autozapisu między znakami (ms):"
+
+msgid "Ask before exiting application"
+msgstr "Zapytaj przed wyjściem z aplikacji"
+
+msgid "Launch application on system startup (for current user)"
+msgstr "Uruchom aplikację podczas uruchamiania systemu (dla bież. użytkownika)"
+
+msgid "Load the following profile on startup:"
+msgstr "Załaduj profil podczas uruchamiania:"
+
+msgid "Encryption algorithm for generating random data via random pool:"
+msgstr "Algorytm szyfrowania do generowania losowych danych za pomocą losowej puli:"
+
+msgid "Benchmark..."
+msgstr "Benchmark..."
+
+msgid "Test passwords against list of common passwords"
+msgstr "Testowanie haseł pod kątem listy popularnych haseł"
+
+msgid "Use advanced password strength estimation (%s)"
+msgstr "Użyj zaawansowanej oceny siły hasła (%s)"
+
+msgid "Use advanced password strength estimation (zxcvbn)"
+msgstr "Użyj zaawansowanej oceny siły hasła (zxcvbn)"
+
+msgid "Clear clipboard automatically after the following time (seconds):"
+msgstr "Wyczyść schowek automatycznie po upływie następującego czasu (sekund):"
+
+msgid "Clear password box automatically after the following time (seconds):"
+msgstr "Wyczyść pole hasła automatycznie po następującym czasie (sekundach):"
+
+msgid "Automatic check for updates"
+msgstr "Automatyczne sprawdzanie aktualizacji"
+
+msgid "Daily"
+msgstr "Codziennie"
+
+msgid "Weekly"
+msgstr "Tygodniowo"
+
+msgid "Monthly"
+msgstr "Miesięcznie"
+
+msgid "Disabled"
+msgstr "Wyłączono"
+
+msgid "Actions"
+msgstr "Działania"
+
+msgid "Show/restore main window"
+msgstr "Pokaż/przywróć okno główne"
+
+msgid "No further action"
+msgstr "Brak dalszych działań"
+
+msgid "Generate single password in main window"
+msgstr "Generowanie pojedynczego hasła w oknie głównym"
+
+msgid "Generate multiple passwords"
+msgstr "Generowanie wielu haseł"
+
+msgid "Generate password and copy it to the clipboard"
+msgstr "Generuj hasło i skopiuj je do schowka"
+
+msgid "Generate password and show it in a message box"
+msgstr "Generuj hasło i pokaż je w oknie komunikatu"
+
+msgid "Generate password and perform autotype"
+msgstr "Generuj hasła i wykonywanie autozapisu"
+
+msgid "Open MP password generator"
+msgstr "Otwórz generator haseł MP"
+
+msgid "Show password manager"
+msgstr "Pokaż menedżera haseł"
+
+msgid "Show MP password generator"
+msgstr "Pokaż generator haseł MP"
+
+msgid "Search database for keyword in window title"
+msgstr "Przeszukaj bazę danych dla słowa kluczowego w tytule okna"
+
+msgid "Search database for keyword and perform autotype"
+msgstr "Przeszukaj bazę danych dla słowa kluczowego i wykonaj autozapis"
+
+msgid "Shortcut to assign:"
+msgstr "Przypisz skróty klawiaturowe:"
+
+msgid "Add"
+msgstr "Dodaj"
+
+msgid "Remove"
+msgstr "Usuń"
+
+msgid "Shortcut"
+msgstr "Skrót klawiszowy"
+
+msgid "Action"
+msgstr "Działanie"
+
+msgid "Please select a hot key action."
+msgstr "Wybierz czynność za pomocą klawisza skrótu."
+
+msgid "Character encoding of text files"
+msgstr "Kodowanie znaków w plikach tekstowych"
+
+msgid "Newline character sequence"
+msgstr "Sekwencja znaków nowej linii"
+
+msgid "Select language:"
+msgstr "Wybierz język:"
+
+msgid "Install..."
+msgstr "Instalacja..."
+
+msgid "Select language file to install"
+msgstr "Wybierz plik językowy do zainstalowania"
+
+msgid "Language files"
+msgstr "Plik językowy"
+
+msgid "Language already installed"
+msgstr "Język już zainstalowany"
+
+msgid "Language file already exists:"
+msgstr "Plik języka już istnieje:"
+
+msgid "Language \"%1\" installed successfully."
+msgstr "Język \"%1\" zainstalowany pomyślnie."
+
+msgid "Could not copy file \"%1\" to"
+msgstr "Nie można skopiować pliku \"%1\" do"
+
+msgid "Could not install language:"
+msgstr "Nie można zainstalować języka:"
+
+msgid "Are you sure you want to remove"
+msgstr "Czy na pewno chcesz usunąć"
+
+msgid "Could not delete file"
+msgstr "Nie można usunąć pliku"
+
+msgid "Clear clipboard on minimize"
+msgstr "Wyczyść schowek podczas minimalizowania"
+
+msgid "Clear clipboard on exit"
+msgstr "Wyczyść schowek przy wyjściu"
+
+msgid "Clear clipboard when closing/locking database"
+msgstr "Wyczyść schowek podczas zamykania/blokowania bazy danych"
+
+msgid "Lock database when minimizing application or database window"
+msgstr "Blokuj bazę danych podczas minimalizowania okna aplikacji lub bazy danych"
+
+msgid "Lock database after the following idle time (seconds):"
+msgstr "Blokuj bazę danych po upływie czasu bezczynności (sekundy):"
+
+msgid "Save automatically"
+msgstr "Zapisz automatycznie"
+
+msgid "Create backup of database before saving"
+msgstr "Przed zapisaniem utwórz kopię zapasową bazy danych"
+
+msgid "Number backups consecutively - up to:"
+msgstr "Liczba kolejnych kopii zapasowych - do:"
+
+msgid "Open window on startup"
+msgstr "Otwórz okno podczas uruchamiania"
+
+msgid "Open last used database on startup"
+msgstr "Otwórz ostatnio używaną bazę danych podczas uruchamiania"
+
+msgid "Keep list of recently opened files"
+msgstr "Zachowaj listę ostatnio otwieranych plików"
+
+msgid "Warn if database contains expired entries"
+msgstr "Ostrzegaj, jeśli baza danych zawiera wygasłe wpisy"
+
+msgid "Warn if database contains entries that will expire soon"
+msgstr "Ostrzegaj, jeśli baza danych zawiera wpisy, które wkrótce wygasną"
+
+msgid "Number of days:"
+msgstr "Liczba dni:"
+
+msgid "Save automatically:"
+msgstr "Zapisz automatycznie:"
+
+msgid "After adding/modifying an entry"
+msgstr "Po dodaniu/zmodyfikowaniu wpisu"
+
+msgid "After every change"
+msgstr "Po każdej zmianie"
+
+msgid "Default autotype sequence:"
+msgstr "Domyślna sekwencja autozapisów:"
+
+msgid "Maximum number of hot keys (%d) reached."
+msgstr "Osiągnięto maksymalną liczbę klawiszy szybkiego dostępu (%d)."
+
+msgid "This hot key has already been assigned."
+msgstr "Ten klawisz szybkiego dostępu został już przypisany."
+
+msgid "%s (%d-bit key, operates on %d-bit blocks)"
+msgstr "%s (%d-bitowy klucz, operuje na blokach %d-bit)"
+
+msgid "Benchmark results (data size: %d MB):"
+msgstr "Wynik testu (rozmiar danych: %d MB):"
+
+msgid "Enter password:"
+msgstr "Wprowadź hasło:"
+
+msgid "Confirm password:"
+msgstr "Potwierdź hasło:"
+
+msgid "Display password"
+msgstr "Pokaż hasło"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Cancel"
+msgstr "Anuluj"
+
+msgid "Passwords are not identical."
+msgstr "Hasła nie są identyczne."
+
+msgid "Encrypt"
+msgstr "Szyfruj"
+
+msgid "Decrypt"
+msgstr "Odszyfruj"
+
+msgid "Remember password (seconds):"
+msgstr "Zapamiętaj hasło (sekundy):"
+
+msgid "Key file for password database:"
+msgstr "Plik klucza do bazy danych haseł:"
+
+msgid "Enter a password and/or select a key file."
+msgstr "Wprowadź hasło i/lub wybierz plik klucza."
+
+msgid "The selected key file does not exist."
+msgstr "Wybrany plik klucza nie istnieje."
+
+msgid "Password is empty."
+msgstr "Hasło jest puste."
+
+msgid "Key file successfully created."
+msgstr "Plik klucza został pomyślnie utworzony."
+
+msgid ""
+"Error while creating key file:\n"
+"%s."
+msgstr ""
+"Błąd podczas tworzenia pliku klucza:\n"
+"%s."
+
+msgid "Key files"
+msgstr "Pliki klucza"
+
+msgid "Create key file"
+msgstr "Utwórz plik klucza"
+
+msgid "Password List"
+msgstr "Lista Haseł"
+
+msgid "Save As File..."
+msgstr "Zapisz jako plik..."
+
+msgid "Save password list"
+msgstr "Zapisz listę haseł"
+
+msgid ""
+"Error while creating file\n"
+"\"%s\":\n"
+"%s."
+msgstr ""
+"Błąd podczas tworzenia pliku\n"
+"\"%s\":\n"
+"%s."
+
+msgid "File \"%s\" successfully created."
+msgstr "Plik \"%s\" pomyślnie utworzony."
+
+msgid "Advanced Password Options"
+msgstr "Zaawansowane Opcje Haseł"
+
+msgid "Exclude ambiguous characters"
+msgstr "Wyklucz dwuznaczne znaki"
+
+msgid "First character must not be a lower-case letter"
+msgstr "Pierwszy znak nie może być małą literą"
+
+msgid "Don't separate words by a space"
+msgstr "Nie oddzielaj słów spacją"
+
+msgid "Don't separate words and characters by a '-' character"
+msgstr "Nie oddzielaj słów i znaków  '-' znakiem"
+
+msgid "Reverse default order of character/word combinations"
+msgstr "Odwróć domyślnie kolejności kombinacji znaków i wyrazów"
+
+msgid "Include at least one upper-case letter (A-Z)"
+msgstr "Uwzględnij co najmniej jedną wielką literę (A-Z)"
+
+msgid "Include at least one lower-case letter (a-z)"
+msgstr "Uwzględnij co najmniej jedną małą literę (a-z)"
+
+msgid "Include at least one digit (0-9)"
+msgstr "Uwzględnij co najmniej jedną cyfrę (0-9)"
+
+msgid "Include at least one special symbol (!\"#$%...)"
+msgstr "Uwzględnij co najmniej jeden specjalny symbol (!\"#$%...)"
+
+msgid "Only include characters from custom character set"
+msgstr "Uwzględnij tylko znaki z niestandardowego zestawu znaków"
+
+msgid "Exclude repeating consecutive characters (e.g. aa, 11)"
+msgstr "Wyklucz powtarzające się kolejne znaki (np. aa, 11)"
+
+msgid "Exclude duplicate entries in password lists"
+msgstr "Wyklucz zduplikowane wpisy w listach haseł"
+
+msgid "Convert all words in word lists to lower-case"
+msgstr "Konwertuj wszystkie wyrazy na listach wyrazów na małe litery"
+
+msgid "Each character must occur only once"
+msgstr "Każdy znak musi wystąpić tylko raz"
+
+msgid "Each word must occur only once"
+msgstr "Każde słowo musi wystąpić tylko raz"
+
+msgid "Redefine ambiguous characters:"
+msgstr "Przedefiniuj niejednoznaczne znaki:"
+
+msgid "Redefine special symbols:"
+msgstr "Przedefiniuj symbole specjalne:"
+
+msgid "Min./Max. length of words in word lists (except default word list):"
+msgstr "Min./Maks. długość słów w listach słów (z wyjątkiem domyślnej listy słów):"
+
+msgid "Trigram file for generating phonetic (pronounceable) passwords:"
+msgstr "Plik trygramu do generowania haseł fonetycznych (wymawianych):"
+
+msgid "Applies to pass_words_."
+msgstr "Dotyczy hasło_słowa_."
+
+msgid "Applies to pass_phrases_."
+msgstr "Dotyczy hasło_frazy_."
+
+msgid "Applies to formatted passwords."
+msgstr "Dotyczy haseł sformatowanych."
+
+msgid "Applies to phonetic passwords."
+msgstr "Dotyczy haseł fonetycznych."
+
+msgid "Selecting one of these options might reduce the security of generated passwords."
+msgstr "Wybranie jednej z tych opcji może zmniejszyć bezpieczeństwo generowanych haseł."
+
+msgid "These options also apply to formatted passwords."
+msgstr "Te opcje dotyczą również sformatowanych haseł."
+
+msgid "Deselect All"
+msgstr "Odznacz wszystko"
+
+msgid "Invert Selection"
+msgstr "Odwróć wybór"
+
+msgid "Create Random Data File"
+msgstr "Utwórz Plik z Losowymi Danymi"
+
+msgid "File name:"
+msgstr "Nazwa pliku:"
+
+msgid "File size:"
+msgstr "Rozmiar pliku:"
+
+msgid "Bytes"
+msgstr "Bytes"
+
+msgid "Kilobytes"
+msgstr "Kilobytes"
+
+msgid "Megabytes"
+msgstr "Megabytes"
+
+msgid "Close"
+msgstr "Zamknij"
+
+msgid "Create file"
+msgstr "Utwórz plik"
+
+msgid "Invalid file size."
+msgstr "Nieprawidłowy rozmiar pliku."
+
+msgid ""
+"Not enough free disk space available\n"
+"to create the file."
+msgstr ""
+"Za mało wolnego miejsca na dysku\n"
+"aby utworzyć plik."
+
+msgid "Creating random data file ..."
+msgstr "Tworzenie losowego pliku danych ..."
+
+msgid "%d of %d KB written."
+msgstr "%d z %d KB zapisany."
+
+msgid ""
+"File \"%s\" successfully created.\n"
+"\n"
+"%d bytes written."
+msgstr ""
+"Plik \"%s\" pomyślnie utworzony.\n"
+"\n"
+"%d bytes zapisane."
+
+msgid ""
+"Error while creating file\n"
+"\"%s\":\n"
+"%s.\n"
+"\n"
+"%d bytes written."
+msgstr ""
+"Błąd podczas tworzenia pliku\n"
+"\"%s\":\n"
+"%s.\n"
+"\n"
+"%d bytes zapisane."
+
+msgid "Profile Editor"
+msgstr "Profil-Edytor"
+
+msgid "Load"
+msgstr "Ładowanie"
+
+msgid "Confirm"
+msgstr "Potwierdź"
+
+msgid "Profile name:"
+msgstr "Nazwa profilu:"
+
+msgid "Move up"
+msgstr "Przesuń w górę"
+
+msgid "Move down"
+msgstr "Przesuń w dół"
+
+msgid "Save \"advanced password options\" for this profile"
+msgstr "Zapisz \"zaawansowane opcje hasła\" dla tego profilu"
+
+msgid "Delete profile \"%s\"?"
+msgstr "Profil \"%s\" usunąć?"
+
+msgid "Delete %d profiles?"
+msgstr "Usunąć %d profile?"
+
+msgid ""
+"Maximum number of profiles (%d) reached.\n"
+"Please delete or overwrite profiles."
+msgstr ""
+"Osiągnięto maksymalną liczbę profili (%d).\n"
+"Proszę usunąć lub nadpisać profile."
+
+msgid ""
+"A profile with the name \"%s\" already exists.\n"
+"Do you want to overwrite it?"
+msgstr "Profil o nazwie \"%s\" już istnieje. Czy chcesz go nadpisać?"
+
+msgid "Create Trigram File"
+msgstr "Utwórz Plik Trygramu"
+
+msgid "Source file (e.g., dictionary, word list):"
+msgstr "Plik źródłowy (np. słownik, lista słów):"
+
+msgid "Destination file (trigram file):"
+msgstr "Plik docelowy (plik trygramu):"
+
+msgid ""
+"Trigram file \"%s\" successfully created.\n"
+"\n"
+"%d trigrams evaluated.\n"
+"%1.2f bits of entropy per letter."
+msgstr ""
+"Plik trygramu \"%s\" pomyślnie utworzono.\n"
+"\n"
+"%d trygramy oceniane.\n"
+"%1.2f bitów entropii na literę."
+
+msgid "Process was cancelled by the user"
+msgstr "Proces został anulowany przez użytkownika"
+
+msgid "About %s"
+msgstr "O %s"
+
+msgid ""
+"Current language: %s\n"
+"Translator: %s"
+msgstr ""
+"Obecny język: %s\n"
+"Tłumacz: %s"
+
+msgid "This program is distributed under the terms and conditions of the GNU General Public License (GPL)."
+msgstr "Ten program jest rozpowszechniany na warunkach GNU General Public License (GPL)."
+
+msgid "View license"
+msgstr "Wyświetl licencję"
+
+msgid "Donor ID:"
+msgstr "ID Dawcy:"
+
+msgid "Quick help"
+msgstr "Szybka pomoc"
+
+msgid "Position Automatically"
+msgstr "Automatyczne pozycjonowanie"
+
+msgid "You can use the following placeholders:"
+msgstr "Można użyć następujących symboli zastępczych:"
+
+msgid "without ambiguous characters"
+msgstr "bez niejednoznacznych znaków"
+
+msgid "special symbols"
+msgstr "symbole specjalne"
+
+msgid "brackets"
+msgstr "nawiasy"
+
+msgid "punctuation marks"
+msgstr "znaki interpunkcyjne"
+
+msgid "higher ANSI characters"
+msgstr "wyższe znaki ANSI"
+
+msgid "generate phonetic password (lower-case letters)"
+msgstr "generowanie hasła fonetycznego (małe litery)"
+
+msgid "generate phonetic password (upper-case letters)"
+msgstr "generowanie hasła fonetycznego (wielkie litery)"
+
+msgid "generate phonetic password (mixed-case letters)"
+msgstr "generowanie hasła fonetycznego (litery pisane wielką literą)"
+
+msgid ""
+"Comments may be provided in square brackets \"[...]\"\n"
+"at the beginning of the sequence."
+msgstr ""
+"Komentarze mogą być zamieszczane w nawiasach kwadratowych \"[...] \"\n"
+"na początku sekwencji."
+
+msgid ""
+"Format specifiers have the form \"[*][N]x\" or \"[*][M-N]x\", where the\n"
+"optional argument \"N\" specifies the number of repetitions (between 1 and\n"
+"99999), \"M-N\" specifies a random number of repetitions in the range\n"
+"from M to N, and \"x\" is the actual format specifier/placeholder. The\n"
+"optional asterisk (*) means that each character must occur only once in\n"
+"the sequence. Example: \"16u\" means \"Insert 16 random upper-case letters\n"
+"into the password\"."
+msgstr ""
+"Specyfikatory formatu mają postać \"[*][N]x\" lub \"[*][M-N]x\", gdzie the\n"
+"argument opcjonalny \"N\" określa liczbę powtórzeń (między 1 i\n"
+"99999), \"M-N\" określa losową liczbę powtórzeń w zakresie\n"
+"z M do N, i \"x\" jest rzeczywistym specyfikatorem/symbolem zastępczym formatu. Opcjonalna \n"
+"gwiazdka (*) oznacza, że każdy znak musi wystąpić tylko raz w sekwencji.\n"
+"Przykład: \"16u\" oznacza \"Wstaw 16 losowe wielkie litery do hasła\"."
+
+msgid "List of placeholders with optional argument \"N\":"
+msgstr "Lista symboli zastępczych z opcjonalnym argumentem \"N\":"
+
+msgid "custom character set"
+msgstr "niestandardowy zestaw znaków"
+
+msgid "vowels, lower-case"
+msgstr "samogłoski, małe litery"
+
+msgid "vowels, mixed-case"
+msgstr "samogłoski, mieszane litery"
+
+msgid "vowels, upper-case"
+msgstr "samogłoski, wielkie litery"
+
+msgid "consonants, lower-case"
+msgstr "spółgłoski, małe litery"
+
+msgid "consonants, mixed-case"
+msgstr "spółgłoski mieszane litery"
+
+msgid "consonants, upper-case"
+msgstr "spółgłoski, wielkie litery"
+
+msgid ""
+"List of special format specifiers\n"
+"(possible usage of argument \"N\" is indicated by \"{N}\"):"
+msgstr ""
+"Lista specyfikatorów formatu specjalnego\n"
+"(możliwe użycie argumentu \"N\" jest wskazany przez \"{N}\"):"
+
+msgid "insert password generated via \"Include characters/words\""
+msgstr "wstaw hasło wygenerowane przez \"Uwzględnij znaki/słowa\""
+
+msgid "words from word list, multiple words are separated by spaces"
+msgstr "słowa z listy słów, wiele słów jest oddzielonych spacjami"
+
+msgid "words, multiple words are not separated at all"
+msgstr "słowa, wiele słów nie jest w ogóle rozdzielonych"
+
+msgid "repeat input sequence in brackets N times"
+msgstr "powtórz sekwencję wejściową w nawiasach N razy"
+
+msgid "randomly permute formatted sequence in brackets, keep N characters"
+msgstr "losowo permutuj sformatowaną sekwencję w nawiasach, zachowaj N znaków"
+
+msgid "treat sequence as character set and insert N characters"
+msgstr "traktuj sekwencję jako zestaw znaków i wstaw N znaków"
+
+msgid "Additional notes:"
+msgstr "Dodatkowe uwagi:"
+
+msgid ""
+"Text enclosed with quotation marks \"...\" is copied verbatim\n"
+"to the password."
+msgstr ""
+"Tekst ujęty w cudzysłów \"...\" jest kopiowany dosłownie\n"
+"do hasła."
+
+msgid "MP Password Generator"
+msgstr "MP Generator Haseł"
+
+msgid "Master password"
+msgstr "Hasło Główne"
+
+msgid "Enter password..."
+msgstr "Wprowadź hasło..."
+
+msgid "Clear"
+msgstr "Wyczyść"
+
+msgid "Status:"
+msgstr "Status:"
+
+msgid "Expiry countdown:"
+msgstr "Odliczanie wygaśnięcia:"
+
+msgid "Ask for password confirmation"
+msgstr "Pytaj o potwierdzenie hasła"
+
+msgid "Show checksum of password:"
+msgstr "Pokaż sumę kontrolną hasła:"
+
+msgid "Key expires after the following time (seconds):"
+msgstr "Klucz wygasa po następującym czasie (sek.):"
+
+msgid "Provide compatibility with \"Hashapass\""
+msgstr "Zapewnij kompatybilność z \"Hashapass\""
+
+msgid "Add password length to parameter"
+msgstr "Dodaj długość hasła do parametru"
+
+msgid "Autotype sequence:"
+msgstr "Autozapis-sekwencji:"
+
+msgid "Password generator"
+msgstr "Generator haseł"
+
+msgid "Parameter:"
+msgstr "Parameter:"
+
+msgid "%d ch. / %.1f bits per ch."
+msgstr "%d znaków / %.1f bitów na znak"
+
+msgid "Resulting password:"
+msgstr "Powstałe Hasła:"
+
+msgid "Use as default random generator"
+msgstr "Użyj jako domyślnego generatora losowego"
+
+msgid "Alphanumeric"
+msgstr "Alfanumeryczny"
+
+msgid "Hexadecimal"
+msgstr "Szesnastkowy"
+
+msgid "Key has expired."
+msgstr "Klucz wygasł."
+
+msgid "Key has been cleared."
+msgstr "Klucz został wyczyszczony."
+
+msgid "New key generated."
+msgstr "Wygenerowano nowy klucz."
+
+msgid "Enter or paste some text into the box below, press mouse buttons, or move your mouse within the window."
+msgstr "Wygenerowano nowy klucz."
+
+msgid "%d bits of entropy have been added to the random pool."
+msgstr "%d bites z entropii zostało dodane do puli losowej."
+
+msgid "Database not encrypted, or invalid key"
+msgstr "Baza danych niezaszyfrowana lub nieprawidłowy klucz"
+
+msgid "File contents modified, or invalid key"
+msgstr "Zawartość pliku zmodyfikowana lub nieprawidłowy klucz"
+
+msgid "Unknown file format"
+msgstr "Nieznany format pliku"
+
+msgid "Invalid file format"
+msgstr "Nieprawidłowy format pliku"
+
+msgid "Title"
+msgstr "Tytuł"
+
+msgid "Title:"
+msgstr "Tytuł:"
+
+msgid "User name"
+msgstr "Nazwa użytkownika"
+
+msgid "User name:"
+msgstr "Nazwa użytkownika:"
+
+msgid "Password"
+msgstr "Hasło"
+
+msgid "Password:"
+msgstr "Hasło:"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "URL:"
+msgstr "URL:"
+
+msgid "Keyword"
+msgstr "Słowo kluczowe"
+
+msgid "Keyword:"
+msgstr "Słowo kluczowe:"
+
+msgid "Notes"
+msgstr "Notatki"
+
+msgid "Notes:"
+msgstr "Notatki:"
+
+msgid "Key-value list"
+msgstr "Klucz-lista wartości"
+
+msgid "Key-value list:"
+msgstr "Klucz-lista wartości:"
+
+msgid "Creation time"
+msgstr "Czas tworzenia"
+
+msgid "Creation time:"
+msgstr "Czas tworzenia:"
+
+msgid "Last modification"
+msgstr "Ostatnia modyfikacja"
+
+msgid "Last modification:"
+msgstr "Ostatnia modyfikacja:"
+
+msgid "Tags"
+msgstr "Tagi"
+
+msgid "Tags:"
+msgstr "Tagi:"
+
+msgid "Select and add existing tag"
+msgstr "Wybierz i dodaj istniejący tag"
+
+msgctxt "tags"
+msgid "All"
+msgstr "Wszystkie"
+
+msgid "All search results"
+msgstr "Wszystkie wyniki wyszukiwania"
+
+msgid "Untagged"
+msgstr "Nieoznakowane"
+
+msgid "Key"
+msgstr "Klucz"
+
+msgid "Value"
+msgstr "Wartość"
+
+msgid "Edit"
+msgstr "Edytuj"
+
+msgid "View"
+msgstr "Widok"
+
+msgid "New..."
+msgstr "Nowy..."
+
+msgid "Open..."
+msgstr "Otwórz..."
+
+msgid "Save"
+msgstr "Zapisz"
+
+msgid "Save As..."
+msgstr "Zapisz jako..."
+
+msgid "Lock"
+msgstr "Blokuj"
+
+msgid "Unlock"
+msgstr "Odblokuj"
+
+msgid "Export to"
+msgstr "Eksportuj do"
+
+msgid "CSV File..."
+msgstr "Plik CSV..."
+
+msgid "Database Settings..."
+msgstr "Ustawienia bazy danych..."
+
+msgid "Change Master Password..."
+msgstr "Zmień hasło główne...."
+
+msgid "Copy User Name"
+msgstr "Kopiuj nazwę użytkownika"
+
+msgid "Copy Password"
+msgstr "Kopiuj hasło"
+
+msgid "Open URL"
+msgstr "Otwórz URL"
+
+msgid "Run"
+msgstr "Uruchom"
+
+msgid "Add Entry"
+msgstr "Dodaj wpis"
+
+msgid "Duplicate Entry"
+msgstr "Duplikat wpisu"
+
+msgid "Delete Entry"
+msgstr "Usuń wpis"
+
+msgid "Show Columns"
+msgstr "Pokaż kolumny"
+
+msgid "Show Passwords in List"
+msgstr "Pokaż hasła na liście"
+
+msgid "Sort Entries By"
+msgstr "Sortuj wpisy wg"
+
+msgid "Unsorted"
+msgstr "Niesortowane"
+
+msgid "Sort Order"
+msgstr "Kolejność sortowania"
+
+msgid "Ascending"
+msgstr "Rosnąco"
+
+msgid "Descending"
+msgstr "Malejąco"
+
+msgid "Sort Tags By"
+msgstr "Sortuj Tagi wg"
+
+msgid "Name"
+msgstr "Nazwa"
+
+msgid "Frequency"
+msgstr "Częstotliwość"
+
+msgid "Change List Font..."
+msgstr "Zmień czcionkę listy..."
+
+msgid "Change Password Font..."
+msgstr "Zmień czcionkę hasła..."
+
+msgid "Previous entry"
+msgstr "Poprzedni wpis"
+
+msgid "Next entry"
+msgstr "Następny wpis"
+
+msgid "Accept changes"
+msgstr "Akceptuj zmiany"
+
+msgid "Undo changes"
+msgstr "Cofnij zmiany"
+
+msgid "Search..."
+msgstr "Szukaj..."
+
+msgid "Clear search"
+msgstr "Wyczyść wyszukiwanie"
+
+msgid "Left-click: Perform search, right-click: Search options"
+msgstr "Lewe-kliknięcie: Wykonaj wyszukiwanie, prawy-klik: Opcje wyszukiwania"
+
+msgid "Case-sensitive search"
+msgstr "Wyszukiwanie z uwzględnieniem wielkości liter"
+
+msgid "Fuzzy search (approximate matching)"
+msgstr "Wyszukiwanie rozmyte (przybliżone dopasowanie)"
+
+msgid "Lock/unlock database"
+msgstr "Zablokuj/odblokuj bazę danych"
+
+msgid "Left-click: Hide/show password, right-click: Generate password"
+msgstr "Lewy-klik: Ukryj/pokaż hasło, prawy-klik: Wygeneruj hasło"
+
+msgid "Unlock %s"
+msgstr "Odblokuj %s"
+
+msgid "Open %s"
+msgstr "Otwórz %s"
+
+msgid "Create new database"
+msgstr "Utwórz nową bazę danych"
+
+msgid ""
+"Could not find database file:\n"
+"\"%s\"."
+msgstr ""
+"Nie można znaleźć pliku bazy danych:\n"
+"\"%s\"."
+
+msgid ""
+"Error while opening database file:\n"
+"%s."
+msgstr ""
+"Błąd podczas otwierania pliku bazy danych:\n"
+"%s."
+
+msgid ""
+"The currently selected entry has been changed.\n"
+"Do you want to save the changes?"
+msgstr ""
+"Aktualnie wybrana pozycja została zmieniona.\n"
+"Czy chcesz zapisać wprowadzone zmiany?"
+
+msgid ""
+"The database has been changed.\n"
+"Do you want to save the changes?"
+msgstr ""
+"Baza danych została zmieniona.\n"
+"Czy chcesz zapisać wprowadzone zmiany?"
+
+msgid "An untitled database cannot be locked."
+msgstr "Baza danych bez tytułu nie może zostać zablokowana."
+
+msgid ""
+"Could not save backup file\n"
+"\"%s\"."
+msgstr ""
+"Nie można zapisać pliku kopii zapasowej:\n"
+"\"%s\"."
+
+msgid ""
+"Error while saving database file:\n"
+"%s."
+msgstr ""
+"Błąd podczas zapisywania pliku bazy danych:\n"
+"%s."
+
+msgid ""
+"Please finish editing the current entry\n"
+"before adding new entries."
+msgstr ""
+"Proszę zakończyć edycję bieżącego wpisu\n"
+"przed dodaniem nowych wpisów."
+
+msgid "%d entries with passwords have been added."
+msgstr "%d dodano wpisy z hasłami."
+
+msgid "1 entry found."
+msgstr "1 znaleziony wpis."
+
+msgid "%d entries found."
+msgstr "%d znaleziono wpisów."
+
+msgid "Search via hot key."
+msgstr "Wyszukiwanie za pomocą skrótu."
+
+msgid ""
+"No matching keyword found for window text\n"
+"\"%s\"."
+msgstr ""
+"Nie znaleziono pasującego słowa kluczowego dla tekstu okna\n"
+"\"%s\"."
+
+msgid "New Entry"
+msgstr "Nowy Wpis"
+
+msgid "Please specify at least a title or password."
+msgstr "Podaj co najmniej tytuł lub hasło."
+
+msgid "Delete 1 entry?"
+msgstr "Usunąć 1 wpis?"
+
+msgid "Delete %d entries?"
+msgstr "Usunąć wpisy %d?"
+
+msgid "Enter OLD master password"
+msgstr "Wprowadź STARE hasło główne"
+
+msgid "Enter NEW master password"
+msgstr "Wprowadź NOWE hasło główne"
+
+msgid "Master password successfully changed."
+msgstr "Hasło główne zostało pomyślnie zmienione."
+
+msgid "Old master password is invalid."
+msgstr "Stare hasło główne jest nieprawidłowe."
+
+msgid "Untitled"
+msgstr "Bez tytułu"
+
+msgctxt "noun"
+msgid "Copy"
+msgstr "Kopiuj"
+
+msgid "Database successfully exported to CSV file."
+msgstr "Baza danych została pomyślnie wyeksportowana do pliku CSV."
+
+msgid ""
+"Error while creating CSV file:\n"
+"%s."
+msgstr ""
+"Błąd podczas tworzenia pliku CSV:\n"
+"%s."
+
+msgid "Password databases"
+msgstr "Bazy danych z hasłami"
+
+msgid "CSV files"
+msgstr "Pliki CSV"
+
+msgid "Autotype"
+msgstr "AutoZapis"
+
+msgid "Format password"
+msgstr "Formatuj hasło"
+
+msgid "Rearrange Entry"
+msgstr "Zmień zakres wpisu"
+
+msgid "Move to Top"
+msgstr "Przesuń do góry"
+
+msgid "Move up by one"
+msgstr "Przesuń o jeden w górę"
+
+msgid "Move down by one"
+msgstr "Przesuń o jeden na dół"
+
+msgid "Move to Bottom"
+msgstr "Przesuń na dół"
+
+msgid ""
+"The maximum tag length is %d characters.\n"
+"Longer tags have been shortened."
+msgstr ""
+"Maksymalna długość tagu to %d znaków.\n"
+"Dłuższe tagi zostały skrócone."
+
+msgid "Enter master password again"
+msgstr "Wprowadź ponownie hasło główne"
+
+msgid "Master password is invalid."
+msgstr "Hasło główne jest nieprawidłowe."
+
+msgid "Edit key-value list"
+msgstr "Edytuj klucz-listę wartości"
+
+msgid "Profile \"%s\" not found."
+msgstr "Profil \"%s\" nie znaleziono."
+
+msgid "Password expiry"
+msgstr "Wygaśnięcie hasła"
+
+msgid "Expires:"
+msgstr "Wygasa:"
+
+msgid "Change expiry date"
+msgstr "Zmień datę ważności"
+
+msgid "Filter expired entries"
+msgstr "Filtrowanie wygasłych wpisów"
+
+msgid "%d days"
+msgstr "%d dni"
+
+msgid ""
+"The database contains expired entries.\n"
+"Do you want to filter these entries now?"
+msgstr ""
+"Baza danych zawiera wygasłe wpisy.\n"
+"Czy chcesz teraz filtrować te wpisy?"
+
+msgid "Select columns"
+msgstr "Wybierz kolumny"
+
+msgid "Select at least one column."
+msgstr "Wybierz co najmniej jedną kolumnę."
+
+msgid "Error while formatting string"
+msgstr "Błąd podczas formatowania ciągu"
+
+msgid "Invalid UTF-16 character encoding"
+msgstr "Nieprawidłowe kodowanie znaków UTF-16"
+
+msgid "Error while converting string to UTF-8"
+msgstr "Błąd podczas konwersji ciągu na UTF-8"
+
+msgid "Error while decoding UTF-8 string"
+msgstr "Błąd podczas dekodowania ciągu UTF-8"
+
+msgid "Unicode string too long"
+msgstr "Zbyt długi ciąg znaków Unicode"
+
+msgid "Invalid ANSI or UTF-8 character encoding, or Unicode string too long"
+msgstr "Nieprawidłowe kodowanie znaków ANSI lub UTF-8 albo zbyt długi ciąg znaków Unicode"
+
+msgid "Error while encoding Unicode string"
+msgstr "Błąd podczas kodowania ciągu Unicode"
+
+msgid "Out of disk space"
+msgstr "Brak miejsca na dysku"
+
+msgid ""
+"Could not open file/execute operation\n"
+"\"%s\"."
+msgstr ""
+"Nie można otworzyć pliku/wykonaj operację\n"
+"\"%s\"."
+
+msgid "Source file does not contain enough trigrams"
+msgstr "Plik źródłowy nie zawiera wystarczającej liczby trygramów"
+
+msgid "Database settings"
+msgstr "Ustawienia bazy danych"
+
+msgid "Default user name for new entries:"
+msgstr "Domyślna nazwa użytkownika dla nowych wpisów:"
+
+msgid "Generate passwords for new entries using format sequence:"
+msgstr "Generuj hasła dla nowych wpisów przy użyciu sekwencji formatów:"
+
+msgid "Generate test password using format sequence"
+msgstr "Generowanie hasła testowego przy użyciu sekwencji formatów"
+
+msgid "Encryption algorithm:"
+msgstr "Algorytm szyfrowania:"
+
+msgid "%s with %d-bit key"
+msgstr "%s z %d-bit-klucz"
+
+msgid "Number of key derivation rounds:"
+msgstr "Liczba rund wyprowadzania klucza:"
+
+msgid "Calculate number of rounds for a 1 second delay"
+msgstr "Oblicz liczbę rund dla 1 sekundy opóźnienia"
+
+msgid "Invalid number of key derivation rounds."
+msgstr "Nieprawidłowa liczba rund wyprowadzenia klucza."
+
+msgid "By default, new entries expire after the following number of days:"
+msgstr "Domyślnie nowe wpisy wygasają po następującej liczbie dni:"
+
+msgid "Key-value list editor"
+msgstr "Klucz-edytor listy wartości"
+
+msgid "Properties"
+msgstr "Właściwości"
+
+msgid "Property"
+msgstr "Właściwość"
+
+msgid "Location"
+msgstr "Lokalizacja"
+
+msgid "Size"
+msgstr "Rozmiar"
+
+msgid "Format version"
+msgstr "Format-wersja"
+
+msgid "Number of entries"
+msgstr "Liczba wpisów"
+
+msgid "Number of expired entries"
+msgstr "Liczba wygasłych wpisów"
+
+msgid "Number of tags"
+msgstr "Liczba tagów"
+
+msgid "Compression"
+msgstr "Kompresja"
+
+msgid "Enable data compression (Deflate)"
+msgstr "Włącz kompresję danych (Obniżenie)"
+
+msgid "Confirm password"
+msgstr "Potwierdź hasło"
+
+msgid "Password quality estimation is disabled"
+msgstr "Oszacowanie jakości hasła jest wyłączone"
+
+msgid "Estimate password quality"
+msgstr "Oszacowanie jakości hasła"
+
+msgid "Password history"
+msgstr "Historia haseł"
+
+msgid "Password changed"
+msgstr "Hasło zmienione"
+
+msgid "Password changed:"
+msgstr "Hasło zmienione:"
+
+msgid "Keep last passwords - up to:"
+msgstr "Zachowaj ostatnie hasła - do:"
+
+msgid "Set Date/Time"
+msgstr "Ustaw Datę/Czas"
+
+msgid "Password database entry is being edited."
+msgstr "Edytowany jest wpis hasła do bazy danych."
+
+msgid "Password database contains unsaved changes."
+msgstr "Baza danych haseł zawiera niezapisane zmiany."
+
+msgid "Filtered"
+msgstr "Filtrowane"
+
+msgid "Remove filter"
+msgstr "Usuń filtr"
+
+msgid "Build..."
+msgstr "Tworzenie..."
+
+msgid "Build character set definition"
+msgstr "Tworzenie definicji zestawu znaków"
+
+msgid "Character Set Builder"
+msgstr "Kreator Ustawień Znaków"
+
+msgid "Character set selection"
+msgstr "Wybór ustawień znaków"
+
+msgid "Exclude characters"
+msgstr "Wyklucz znaki"
+
+msgid "Tag/comment"
+msgstr "Tag/komentarz"
+
+msgid "Resulting character set definition"
+msgstr "Wynikowa definicja ustawień znaków"
+
+msgid "Apply"
+msgstr "Zastosuj"
+
+msgid "Lower-case letters (a-z)"
+msgstr "Małe litery (a-z)"
+
+msgid "Upper-case letters (A-Z)"
+msgstr "Wielkie litery (A-Z)"
+
+msgid "Digits (0-9)"
+msgstr "Cyfry (0-9)"
+
+msgid "Characters from range:"
+msgstr "Znaki z zakresu:"
+
+msgid "Additional characters:"
+msgstr "Dodatkowe znaki:"
+
+msgid "At least"
+msgstr "Co najmniej"
+
+msgid "From:"
+msgstr "Od:"
+
+msgid "to:"
+msgstr "do:"
+
+msgid "Invalid character range"
+msgstr "Nieprawidłowy zakres znaków"
