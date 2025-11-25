@@ -109,7 +109,7 @@ msgid "Hide/show password"
 msgstr "Ukryj/pokaż hasło"
 
 msgid "Hold left mouse button to drag & drop password"
-msgstr "Przytrzymaj lewy przycisk myszy do przeciągnięcia & upuść hasło"
+msgstr "Przytrzymaj lewy przycisk myszy, aby przeciągnąć & upuścić hasło"
 
 msgid "File"
 msgstr "Plik"
@@ -760,7 +760,7 @@ msgstr ""
 "Zastosowany timer o wysokiej rozdzielczości:\n"
 "%s\n"
 "\n"
-"Wartość chwilowa: %s."
+"Wartość obecna: %s."
 
 msgid "Could not download version file"
 msgstr "Nie można pobrać pliku wersji"
