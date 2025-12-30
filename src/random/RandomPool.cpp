@@ -736,8 +736,8 @@ void RandomPool::Randomize(void)
 
   SIZE_T minWorkSetSize, maxWorkSetSize;
   if (GetProcessWorkingSetSize(GetCurrentProcess(), &minWorkSetSize,
-	  &maxWorkSetSize)) {
-	AddData(minWorkSetSize);
+      &maxWorkSetSize)) {
+    AddData(minWorkSetSize);
     AddData(maxWorkSetSize);
   }
 
@@ -778,12 +778,6 @@ void RandomPool::Randomize(void)
     AddData(GetDoubleClickTime());
     AddData(GetCaretBlinkTime());
     AddData(GetLogicalDrives());
-
-    // GetVersionEx is deprecated
-    //versionInfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-    //if (GetVersionEx(&versionInfo)) {
-    //  AddData(&versionInfo, sizeof(OSVERSIONINFO));
-    //}
 
     GetSystemInfo(&systemInfo);
     AddData(systemInfo);
@@ -843,9 +837,9 @@ bool RandomPool::WriteSeedFile(const WString& sFileName)
     GetData(buf, buf.Size());
     Flush();
 
-  if (pFile->Write(buf, static_cast<int>(buf.Size())) != buf.Size())
+    if (pFile->Write(buf, static_cast<int>(buf.Size())) != buf.Size())
       return false;
-  }
+    }
   catch (...) {
     return false;
   }

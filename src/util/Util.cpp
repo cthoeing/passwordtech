@@ -180,11 +180,8 @@ void ClearEditBoxTextBuf(TCustomEdit* pEdit,
   nTextLen = std::min(1'000'000, std::max(GetEditBoxTextLen(pEdit), nTextLen));
   if (nTextLen == 0)
     return;
-  //if (nTextLen < 0)
-  //  nTextLen = INT_MAX;
 
   try {
-    //std::vector<wchar_t> randStrBuf(nTextLen + 1);
     auto randStrBuf = std::make_unique<wchar_t[]>(nTextLen + 1);
     randStrBuf[nTextLen] = '\0';
 
@@ -615,11 +612,6 @@ int CompareFileTime(FILETIME ft1, FILETIME ft2)
     return -1;
   return 0;
 }
-//---------------------------------------------------------------------------
-/*WString EnableInt64FormatSpec(const WString& sFormatStr)
-{
-  return ReplaceStr(sFormatStr, "%d", "%llu");
-}*/
 //---------------------------------------------------------------------------
 std::vector<SecureWString> SplitStringBuf(const wchar_t* pwszSrc,
   const wchar_t* pwszSep)

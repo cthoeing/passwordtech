@@ -20,7 +20,7 @@
 #. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.9\n"
+"Project-Id-Version: Password Tech 3.5.10\n"
 "Last-Translator: Christian Thöing\n"
 "Language: de\n"
 
@@ -2781,6 +2781,22 @@ msgstr ""
 "Die Datenbank enthält Einträge, die bald verfallen.\n"
 "Möchten Sie diese jetzt filtern?"
 
+#. Password Manager window, when opening database, message shown if master password has expired
+msgid "The master password has expired!"
+msgstr "Das Master-Passwort ist verfallen!"
+
+#. Password Manager window, when opening database, message shown if master password will expire soon
+msgid "The master password will expire soon."
+msgstr "Das Master-Passwort verfällt bald."
+
+#. Password Manager window, when opening database, message shown if master password has expired or is about to expire soon
+msgid "Set a new master password via File |\nChange Master Password."
+msgstr "Setzen Sie ein neues Master-Passwort über\nDatei | Master-Passwort ändern."
+
+#. Password manager window, warning added to window title if master password has expired
+msgid "WARNING: Master password expired!"
+msgstr "WARNUNG: Master-Passwort verfallen!"
+
 #. Password Manager window, text added to window title when database is locked
 msgid "Locked"
 msgstr "Gesperrt"
@@ -2929,6 +2945,10 @@ msgstr "Standardmäßig verfallen neue Einträge nach der folgenden Anzahl an Ta
 #. Password Manager window, Database Settings dialog, label
 msgid "For new entries, save the following number of previous passwords:"
 msgstr "Für neue Einträge folgende Anzahl an letzten Passwörtern speichern:"
+
+#. Password Manager window, Database Settings dialog, label
+msgid "Master password expires:"
+msgstr "Master-Passwort verfällt:"
 
 #. Password Manager window, Database Settings dialog, title of progress dialog when changing number of KDF iterations
 msgid "Changing number of KDF iterations"

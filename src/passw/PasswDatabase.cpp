@@ -45,11 +45,13 @@ static const word8
 
 static const word32
   FH_FLAG_RECOVERY_KEY            = 1, // file header flags
+  FH_FLAG_PASSW_UTF8              = 2,
 
   FLAG_DEFAULT_USER_NAME          = 1, // database header flags
   FLAG_PASSW_FORMAT_SEQ           = 2,
   FLAG_PASSW_EXPIRY_DAYS          = 4,
   FLAG_DEFAULT_PASSW_HISTORY_SIZE = 8,
+  FLAG_MASTER_PASSW_EXPIRY        = 16,
 
   MAX_FILE_SIZE = 104857600,
   DEFAULT_BUF_SIZE = 65536;
@@ -222,7 +224,7 @@ SecureWString PasswDbEntry::GetKeyValueListAsString(wchar_t sep) const
   word32 lPos = 0;
   for (const auto& kv : m_keyValueList) {
     if (lPos != 0)
-      sDest.StrCat(&sep, 1, lPos);
+      sDest.StrCat(sep, lPos);
     sDest.StrCat(kv.first, lPos);
     sDest.StrCat(L"=", 1, lPos);
     sDest.StrCat(kv.second, lPos);
@@ -369,7 +371,8 @@ PasswDatabase::PasswDatabase()
     m_dbOpenState(DbOpenState::Closed),
     m_bCipherType(CIPHER_AES256), m_lKdfIterations(KEY_HASH_ITERATIONS),
     m_lDefaultPasswExpiryDays(0), m_lDefaultMaxPasswHistorySize(0),
-    m_blRecoveryKey(false), m_blCompressed(false),
+    m_lMasterPasswExpiryDate(0),
+    m_blRecoveryKey(false), m_blCompressed(false), m_blPasswUtf8(true),
     m_nCompressionLevel(0)
 {
 }
@@ -391,10 +394,8 @@ void PasswDatabase::Close(void)
   m_bCipherType = CIPHER_AES256;
   m_lKdfIterations = KEY_HASH_ITERATIONS;
   m_lDefaultPasswExpiryDays = 0;
+  m_lMasterPasswExpiryDate = 0;
   m_cryptBuf.Clear();
-
-  //for (auto pEntry : m_db)
-  //  delete pEntry;
 
   m_db.clear();
   m_pFile.reset();
@@ -404,6 +405,7 @@ void PasswDatabase::Close(void)
   m_dbOpenState = DbOpenState::Closed;
   m_blRecoveryKey = false;
   m_blCompressed = false;
+  m_blPasswUtf8 = true; // new databases should use UTF-8 passwords by default
   m_nCompressionLevel = 0;
 }
 //---------------------------------------------------------------------------
@@ -465,7 +467,6 @@ void PasswDatabase::CheckDbNotOpen(void)
     break;
   case DbOpenState::Open:
     throw EPasswDbError("Database already opened");
-    break;
   default:
     break; // just to please the compiler
   }
@@ -501,10 +502,12 @@ std::unique_ptr<EncryptionAlgorithm::SymmetricCipher>
 }
 //---------------------------------------------------------------------------
 void PasswDatabase::Open(const SecureMem<word8>& key,
-  const WString& sFileName)
+  const WString& sFileName,
+  bool blReadHeaderOnly)
 {
   CheckDbNotOpen();
-  CheckKeyEmpty(key);
+  if (!blReadHeaderOnly)
+    CheckKeyEmpty(key);
 
   m_dbOpenState = DbOpenState::Incomplete;
 
@@ -546,6 +549,10 @@ void PasswDatabase::Open(const SecureMem<word8>& key,
   m_bCipherType = fh.CipherType;
   m_lKdfIterations = fh.KdfIterations;
   m_blRecoveryKey = fh.Version >= 0x103 && fh.Flags & FH_FLAG_RECOVERY_KEY;
+  m_blPasswUtf8 = fh.Version >= 0x107 && fh.Flags & FH_FLAG_PASSW_UTF8;
+
+  if (blReadHeaderOnly)
+    return;
 
   word32 lFileSize = pFile->Size - fh.HeaderSize;
   m_cryptBuf.New(std::max(1024u, lFileSize));
@@ -720,6 +727,10 @@ void PasswDatabase::Open(const SecureMem<word8>& key,
       else if ((header.Flags & FLAG_DEFAULT_PASSW_HISTORY_SIZE) &&
                lFlag == FLAG_DEFAULT_PASSW_HISTORY_SIZE) {
         m_lDefaultMaxPasswHistorySize = ReadType<word8>();
+      }
+      else if ((header.Flags & FLAG_MASTER_PASSW_EXPIRY) &&
+               lFlag == FLAG_MASTER_PASSW_EXPIRY) {
+        m_lMasterPasswExpiryDate = ReadType<word32>();
       }
       else
         SkipField();
@@ -913,7 +924,7 @@ void PasswDatabase::WriteString(const SecureWString& sStr, int nIndex)
     WriteFieldBuf(nullptr, 0);
 }
 //---------------------------------------------------------------------------
-void PasswDatabase::SaveToFile(const WString& sFileName)
+void PasswDatabase::Save(const WString& sFileName)
 {
   CheckDbOpen();
 
@@ -929,6 +940,8 @@ void PasswDatabase::SaveToFile(const WString& sFileName)
   fh.Flags = 0;
   if (m_blRecoveryKey)
     fh.Flags |= FH_FLAG_RECOVERY_KEY;
+  if (m_blPasswUtf8)
+    fh.Flags |= FH_FLAG_PASSW_UTF8;
   fh.CipherType = m_bCipherType;
   fh.HashType = HASH_SHA512;
   fh.KdfType = KDF_PBKDF2_SHA256;
@@ -982,6 +995,11 @@ void PasswDatabase::SaveToFile(const WString& sFileName)
     header.NumOfVariableParam++;
   }
 
+  if (m_lMasterPasswExpiryDate != 0) {
+    header.Flags |= FLAG_MASTER_PASSW_EXPIRY;
+    header.NumOfVariableParam++;
+  }
+
   m_cryptBuf.New(DEFAULT_BUF_SIZE);
   m_lCryptBufPos = sizeof(header);
 
@@ -1010,6 +1028,12 @@ void PasswDatabase::SaveToFile(const WString& sFileName)
     WriteType(lFlag);
     word8 bVal = m_lDefaultMaxPasswHistorySize;
     WriteType(bVal);
+  }
+
+  lFlag = FLAG_MASTER_PASSW_EXPIRY;
+  if (header.Flags & lFlag) {
+    WriteType(lFlag);
+    WriteType(m_lMasterPasswExpiryDate);
   }
 
   for (int nI = 0; nI < PasswDbEntry::NUM_FIELDS; nI++) {
@@ -1475,9 +1499,10 @@ void PasswDatabase::ChangeMasterKey(const SecureMem<word8>& newKey,
       if (!(*pCancelFlag))
         memcpy(m_pDbKey, derivedKey, DB_KEY_LENGTH);
     }
-    else
+    else {
       pbkdf2_256bit(newKey, newKey.Size(), m_pDbSalt, DB_SALT_LENGTH, m_pDbKey,
         lKdfIterOverride);
+    }
   }
   if (!(pCancelFlag && *pCancelFlag)) {
     m_lKdfIterations = lKdfIterOverride;

@@ -1501,45 +1501,39 @@ void __fastcall TMainForm::CryptText(bool blEncrypt,
   const SecureWString* psText,
   TForm* pParentForm)
 {
+  AutoClearPasswDlg _clearPassw;
   int nFlags = PASSWENTER_FLAG_ENABLEPASSWCACHE;
   nFlags |= blEncrypt ? PASSWENTER_FLAG_ENCRYPT | PASSWENTER_FLAG_CONFIRMPASSW :
     PASSWENTER_FLAG_DECRYPT | PASSWENTER_FLAG_ENABLEOLDVER;
-  bool blSuccess = PasswEnterDlg->Execute(nFlags, WString(), pParentForm) == mrOk;
-
-  SecureWString sPassw;
-  if (blSuccess)
-    sPassw = PasswEnterDlg->GetPassw();
-
-  PasswEnterDlg->Clear();
-  m_randPool.Flush();
-
-  if (!blSuccess)
+  if (PasswEnterDlg->Execute(nFlags, WString(), pParentForm) != mrOk)
     return;
+
+  SecureWString sPassw = PasswEnterDlg->GetPassw();
+
+  _clearPassw.Clear();
 
   Refresh();
   Screen->Cursor = crHourGlass;
 
-  int nPasswBytes = sPassw.StrLenBytes();
   int nResult;
 
   if (blEncrypt) {
-    nResult = EncryptText(psText, sPassw.Bytes(), nPasswBytes, m_randPool);
+    nResult = EncryptText(psText, sPassw.Bytes(), sPassw.StrLenBytes(), m_randPool);
 
     // flush the pool to make sure we're back in the "add entropy" state
     m_randPool.Flush();
   }
   else {
-    int nTryVersion = PasswEnterDlg->OldVersionCheck->Checked ? 0 :
-      CRYPTTEXT_VERSION;
+    int nTryVersion = PasswEnterDlg->OldVersionCheck->Checked ? 0 : 3;
 
-    SecureAnsiString asPassw;
+    SecureAnsiString asPasswAnsi;
     if (nTryVersion == 0) {
       int nAnsiLen = WideCharToMultiByte(CP_ACP, 0, sPassw, -1, nullptr, 0,
-          nullptr, nullptr);
+        nullptr, nullptr);
 
-      asPassw.New(nAnsiLen);
+      asPasswAnsi.New(nAnsiLen);
 
-      WideCharToMultiByte(CP_ACP, 0, sPassw, -1, asPassw, nAnsiLen,
+      WideCharToMultiByte(CP_ACP, 0, sPassw, -1, asPasswAnsi, nAnsiLen,
         nullptr, nullptr);
     }
 
@@ -1548,12 +1542,12 @@ void __fastcall TMainForm::CryptText(bool blEncrypt,
       int nTryPasswBytes;
 
       if (nTryVersion < 2) {
-        pTryPassw = asPassw.Bytes();
-        nTryPasswBytes = asPassw.StrLenBytes();
+        pTryPassw = asPasswAnsi.Bytes();
+        nTryPasswBytes = asPasswAnsi.StrLenBytes();
       }
       else {
         pTryPassw = sPassw.Bytes();
-        nTryPasswBytes = nPasswBytes;
+        nTryPasswBytes = sPassw.StrLenBytes();
       }
 
       nResult = DecryptText(psText, pTryPassw, nTryPasswBytes, nTryVersion);
@@ -2936,7 +2930,6 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
 
           case gpdClipboardList:
             SecureClipboard::GetInstance().SetData(pwszPassw);
-            //CopiedSensitiveDataToClipboard();
             ProgressForm->Terminate(this);
             ShowInfoBox(TRL("Password list copied to clipboard."));
             break;
@@ -2952,8 +2945,6 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
           case gpdMsgBox:
           case gpdClipboard:
             SecureClipboard::GetInstance().SetData(pwszPassw);
-            //SetClipboardTextBuf(pwszPassw, nullptr);
-            //CopiedSensitiveDataToClipboard();
             ShowTrayInfo(TRL("Password copied to clipboard."), bfInfo);
             break;
 
@@ -3117,14 +3108,17 @@ void __fastcall TMainForm::BrowseBtnClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::ClearClipBtnClick(TObject *Sender)
 {
-  SecureClipboard::GetInstance().ClearData(true);
-  //Clipboard()->Clear();
-
   WString sMsg = TRL("Clipboard cleared.");
+  bool blSuccess = SecureClipboard::GetInstance().ClearData(true, &sMsg, 3);
+
   if (g_nAppState & APPSTATE_HIDDEN)
-    ShowTrayInfo(sMsg, bfInfo);
-  else
-    ShowInfoBox(sMsg);
+    ShowTrayInfo(sMsg, blSuccess ? bfInfo : bfError);
+  else {
+    if (blSuccess)
+      ShowInfoBox(sMsg);
+    else
+      MsgBox(sMsg, MB_ICONERROR);
+  }
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::MPPasswGenBtnClick(TObject *Sender)
@@ -3328,7 +3322,6 @@ void __fastcall TMainForm::TimerTick(TObject *Sender)
 
   if (m_nAutoClearClipCnt > 0 && --m_nAutoClearClipCnt == 0)
     SecureClipboard::GetInstance().ClearData();
-    //Clipboard()->Clear();
 
   if (m_nAutoClearPasswCnt > 0 && --m_nAutoClearPasswCnt == 0) {
     ControlTagOverrider ovr(PasswBox, 0);
@@ -3732,7 +3725,6 @@ void __fastcall TMainForm::PasswBoxMenu_CutClick(TObject *Sender)
   }
   else
     PasswBox->CutToClipboard();
-  //CopiedSensitiveDataToClipboard();
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::PasswBoxMenu_PasteClick(TObject *Sender)

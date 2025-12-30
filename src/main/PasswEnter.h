@@ -48,6 +48,20 @@ PASSWENTER_FLAG_ENABLEPASSWCACHE      = 0x0010,
 PASSWENTER_FLAG_ENABLEKEYFILE         = 0x0020,
 PASSWENTER_FLAG_ENABLEKEYFILECREATION = 0x0040;
 
+class AutoClearPasswDlg
+{
+public:
+  AutoClearPasswDlg() {};
+  ~AutoClearPasswDlg()
+  {
+    Clear();
+  }
+
+  void Clear();
+private:
+  bool m_blCleared = false;
+};
+
 class TPasswEnterDlg : public TForm
 {
 __published:
@@ -74,14 +88,13 @@ __published:
   void __fastcall FormShow(TObject *Sender);
   void __fastcall RememberPasswCheckClick(TObject *Sender);
   void __fastcall KeyExpiryTimerTimer(TObject *Sender);
-    void __fastcall BrowseBtnClick(TObject *Sender);
-    void __fastcall CreateKeyFileBtnClick(TObject *Sender);
-    void __fastcall TogglePasswBtnClick(TObject *Sender);
+  void __fastcall BrowseBtnClick(TObject *Sender);
+  void __fastcall CreateKeyFileBtnClick(TObject *Sender);
+  void __fastcall TogglePasswBtnClick(TObject *Sender);
 private:
   int m_nFlags;
   int m_nExpiryCountdown;
   SecureWString m_sEncryptedPassw;
-  //TForm* m_pParentForm;
   std::map<TForm*,std::array<int,4>> m_formDim;
 
 public:
@@ -92,7 +105,7 @@ public:
     TForm* pParentForm = nullptr,
     bool blUpdateScreenPos = true);
   SecureWString __fastcall GetPassw(int nPassw = 0);
-  SecureMem<word8> __fastcall GetPasswBinary(void);
+  SecureMem<word8> __fastcall GetPasswBinary(bool blUtf8 = false);
   WString __fastcall GetKeyFileName(void);
   void __fastcall LoadConfig(void);
   void __fastcall SaveConfig(void);

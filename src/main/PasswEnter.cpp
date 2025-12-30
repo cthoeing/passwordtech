@@ -28,6 +28,7 @@
 #include "TopMostManager.h"
 #include "MemUtil.h"
 #include "PasswDatabase.h"
+#include "RandomPool.h"
 //---------------------------------------------------------------------
 #pragma resource "*.dfm"
 TPasswEnterDlg *PasswEnterDlg;
@@ -39,6 +40,15 @@ const WString
 CONFIG_ID     = "PasswEnter";
 
 static word8 memcryptKey[16];
+
+void AutoClearPasswDlg::Clear()
+{
+  if (!m_blCleared) {
+    PasswEnterDlg->Clear();
+    RandomPool::GetInstance().Flush();
+    m_blCleared = true;
+  }
+}
 
 //---------------------------------------------------------------------
 __fastcall TPasswEnterDlg::TPasswEnterDlg(TComponent* AOwner)
@@ -241,11 +251,17 @@ SecureWString __fastcall TPasswEnterDlg::GetPassw(int nPassw)
   return sDest;
 }
 //---------------------------------------------------------------------------
-SecureMem<word8> __fastcall TPasswEnterDlg::GetPasswBinary(void)
+SecureMem<word8> __fastcall TPasswEnterDlg::GetPasswBinary(bool blUtf8)
 {
   SecureWString sPassw = GetPassw();
-  return sPassw.IsStrEmpty() ? SecureMem<word8>() :
-    SecureMem<word8>(sPassw.Bytes(), sPassw.StrLenBytes()); // *without* terminating zero!
+  if (sPassw.IsStrEmpty())
+    return SecureMem<word8>();
+  // get password data without terminating zero!
+  if (blUtf8) {
+    SecureAnsiString sUtf8 = WStringToUtf8_s(sPassw);
+    return SecureMem<word8>(sUtf8.Bytes(), sUtf8.StrLenBytes());
+  }
+  return SecureMem<word8>(sPassw.Bytes(), sPassw.StrLenBytes());
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswEnterDlg::Clear(void)

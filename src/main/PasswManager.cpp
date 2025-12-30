@@ -314,6 +314,7 @@ __fastcall TPasswMngForm::TPasswMngForm(TComponent* Owner)
   : TForm(Owner), m_pSelectedItem(nullptr), m_nSortByIdx(-1),
     m_nSortOrderFactor(1), m_nTagsSortByIdx(0), m_nTagsSortOrderFactor(1),
     m_nSearchFlags(INT_MAX), m_nPasswEntropyBits(0)
+
 {
   SetFormComponentsAnchors(this);
 
@@ -708,24 +709,27 @@ bool __fastcall TPasswMngForm::OpenDatabase(int nOpenFlags, WString sFileName)
 
   while (true) {
     try {
+      AutoClearPasswDlg _clearPassw;
+
       if (PasswEnterDlg->Execute(
             nPasswEnterFlags,
             sCaption,
             this,
             !((nOpenFlags & DB_OPEN_FLAG_UNLOCK) && !m_blUnlockTried))
-            != mrOk) {
-        PasswEnterDlg->Clear();
-        RandomPool::GetInstance().Flush();
+            != mrOk
+      ) {
         return false;
+      }
+
+      if (nOpenFlags & DB_OPEN_FLAG_EXISTING) {
+        // key not required when only reading file header
+        passwDb->Open(SecureMem<word8>(), sFileName, true);
       }
 
       // combine password and key file to obtain database key
       SecureMem<word8> key = PasswDatabase::CombineKeySources(
-        PasswEnterDlg->GetPasswBinary(), PasswEnterDlg->GetKeyFileName());
-
-      // now clear password box
-      PasswEnterDlg->Clear();
-      RandomPool::GetInstance().Flush();
+        PasswEnterDlg->GetPasswBinary(passwDb->IsPasswUtf8),
+        PasswEnterDlg->GetKeyFileName());
 
       if (nOpenFlags & DB_OPEN_FLAG_EXISTING) {
         Screen->Cursor = crHourGlass;
@@ -733,6 +737,7 @@ bool __fastcall TPasswMngForm::OpenDatabase(int nOpenFlags, WString sFileName)
       }
       else
         passwDb->New(key);
+
       break;
     }
     catch (EPasswDbInvalidKey& e) {
@@ -752,7 +757,6 @@ bool __fastcall TPasswMngForm::OpenDatabase(int nOpenFlags, WString sFileName)
       return false;
     }
     catch (EPasswDbError& e) {
-      PasswEnterDlg->Clear();
       Screen->Cursor = crDefault;
       MsgBox(e.Message + ".", MB_ICONERROR);
     }
@@ -864,6 +868,22 @@ bool __fastcall TPasswMngForm::OpenDatabase(int nOpenFlags, WString sFileName)
       MainMenu_View_Filter_ExpireSoon->Checked = true;
       ResetListView();
     }
+    if (m_passwDb->MasterPasswExpiryDate != 0) {
+      word32 lCurrDate, lExpirySoonDate;
+      getExpiryCheckDates(lCurrDate, lExpirySoonDate);
+      WString sMsg;
+      if (lCurrDate >= m_passwDb->MasterPasswExpiryDate) {
+        sMsg = TRL("The master password has expired!");
+      }
+      else if (lExpirySoonDate >= m_passwDb->MasterPasswExpiryDate) {
+        sMsg = TRL("The master password will expire soon.");
+      }
+      if (!sMsg.IsEmpty()) {
+        sMsg += "\n" + TRL("Set a new master password via File |\n"
+          "Change Master Password.");
+        MsgBox(sMsg, MB_ICONWARNING);
+      }
+    }
 
     if (DbView->Items->Count == 1) {
       DbView->Items->Item[0]->Selected = true;
@@ -967,20 +987,12 @@ bool __fastcall TPasswMngForm::CloseDatabase(bool blForce, int nLock)
 
   m_passwDb.reset();
 
-  //m_tempKeyVal.reset();
-  //m_tempPasswHistory.reset();
-
-  //m_pSelectedItem = nullptr;
-
   SetItemChanged(false);
   ToggleShutdownBlocker();
 
   m_nSearchMode = SEARCH_MODE_OFF;
-  //m_nNumSearchResults = 0;
   m_nPasswEntropyBits = 0;
 
-  //m_globalTags.clear();
-  //m_searchResultTags.clear();
   m_tags.clear();
   m_globalCaseiTags.clear();
   m_tagFilter.clear();
@@ -1009,7 +1021,7 @@ bool __fastcall TPasswMngForm::CloseDatabase(bool blForce, int nLock)
   IdleTimer->Enabled = false;
 
   if (g_config.Database.ClearClipCloseLock)
-    Clipboard()->Clear();
+    SecureClipboard::GetInstance().ClearData(true);
 
   return true;
 }
@@ -1093,7 +1105,7 @@ bool __fastcall TPasswMngForm::SaveDatabase(const WString& sFileName)
 
   WString sError;
   try {
-    m_passwDb->SaveToFile(sFileName);
+    m_passwDb->Save(sFileName);
   }
   catch (Exception& e) {
     sError = e.Message;
@@ -2088,16 +2100,13 @@ void __fastcall TPasswMngForm::AddModifyBtnClick(TObject *Sender)
   SecureWString sPassw = GetEditBoxTextBuf(PasswBox);
 
   if (!sPassw.IsStrEmpty() && m_blItemPasswChangeConfirm && TogglePasswBtn->Down) {
-    bool blOk = false;
+    AutoClearPasswDlg _clearPassw;
     if (PasswEnterDlg->Execute(0, TRL("Confirm password"), this) == mrOk) {
-      if (GetEditBoxTextBuf(PasswBox) == PasswEnterDlg->GetPassw())
-        blOk = true;
-      else
+      if (GetEditBoxTextBuf(PasswBox) != PasswEnterDlg->GetPassw()) {
         MsgBox(TRL("Passwords are not identical."), MB_ICONERROR);
+        return;
+      }
     }
-    PasswEnterDlg->Clear();
-    if (!blOk)
-      return;
   }
 
   PasswDbEntry* pEntry = reinterpret_cast<PasswDbEntry*>(m_pSelectedItem->Data);
@@ -2278,6 +2287,10 @@ void __fastcall TPasswMngForm::NextBtnClick(TObject *Sender)
 void __fastcall TPasswMngForm::MainMenu_File_SaveAsClick(TObject *Sender)
 {
   SuspendIdleTimer;
+
+  if (!m_sDbFileName.IsEmpty()) {
+    SaveDlg->FileName = ExtractFileName(m_sDbFileName);
+  }
 
   BeforeDisplayDlg();
   TopMostManager::GetInstance().NormalizeTopMosts(this);
@@ -2473,16 +2486,17 @@ void __fastcall TPasswMngForm::TogglePasswBtnClick(TObject *Sender)
 //---------------------------------------------------------------------------
 SecureMem<word8> TPasswMngForm::RequestPasswAndCheck(const WString& sRequestMsg,
   const WString& sInvalidMsg,
-  std::function<bool(const SecureMem<word8>&)> checkFunc)
+  std::function<bool(const SecureMem<word8>&)> checkFunc,
+  bool blPasswUtf8)
 {
-  SecureMem<word8> key;
-
+  AutoClearPasswDlg _clearPassw;
   while (PasswEnterDlg->Execute(PASSWENTER_FLAG_ENABLEKEYFILE,
       sRequestMsg, this) == mrOk)
   {
     try {
       auto tryKey = PasswDatabase::CombineKeySources(
-        PasswEnterDlg->GetPasswBinary(), PasswEnterDlg->GetKeyFileName());
+        PasswEnterDlg->GetPasswBinary(blPasswUtf8),
+        PasswEnterDlg->GetKeyFileName());
       PasswEnterDlg->Clear();
       Screen->Cursor = crHourGlass;
 
@@ -2491,8 +2505,7 @@ SecureMem<word8> TPasswMngForm::RequestPasswAndCheck(const WString& sRequestMsg,
       Screen->Cursor = crDefault;
 
       if (blValid) {
-        key = std::move(tryKey);
-        break;
+        return tryKey;
       }
 
       MsgBox(sInvalidMsg, MB_ICONERROR);
@@ -2504,10 +2517,7 @@ SecureMem<word8> TPasswMngForm::RequestPasswAndCheck(const WString& sRequestMsg,
     }
   }
 
-  PasswEnterDlg->Clear();
-  RandomPool::GetInstance().Flush();
-
-  return key;
+  return SecureMem<word8>();
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswMngForm::MainMenu_File_ChangeMasterPasswordClick(
@@ -2520,25 +2530,32 @@ void __fastcall TPasswMngForm::MainMenu_File_ChangeMasterPasswordClick(
     [this](const SecureMem<word8>& key) {
       return m_passwDb->CheckMasterKey(key) || (m_passwDb->HasRecoveryKey &&
         m_passwDb->CheckRecoveryKey(key));
-    });
+    },
+    m_passwDb->IsPasswUtf8);
 
   if (key.IsEmpty())
     return;
 
+  AutoClearPasswDlg _clearPassw;
   if (PasswEnterDlg->Execute(PASSWENTER_FLAG_CONFIRMPASSW |
       PASSWENTER_FLAG_ENABLEKEYFILE | PASSWENTER_FLAG_ENABLEKEYFILECREATION,
       TRL("Enter NEW master password"), this) == mrOk) {
+    // if password hasn't been encoded as UTF-8 before, encode it now,
+    // provided that there's no recovery key set for this database, since
+    // we need to ensure that both master and recovery passwords use the same
+    // encoding!
+    bool blPasswUtf8 = m_passwDb->IsPasswUtf8 || !m_passwDb->HasRecoveryKey;
     key = PasswDatabase::CombineKeySources(
-      PasswEnterDlg->GetPasswBinary(), PasswEnterDlg->GetKeyFileName());
+      PasswEnterDlg->GetPasswBinary(blPasswUtf8), PasswEnterDlg->GetKeyFileName());
     Screen->Cursor = crHourGlass;
     m_passwDb->ChangeMasterKey(key);
+    m_passwDb->IsPasswUtf8 = blPasswUtf8;
+    m_passwDb->MasterPasswExpiryDate = 0;
     Screen->Cursor = crDefault;
     SetDbChanged();
+    ChangeCaption(); // enforce since master password expiry may have changed
     MsgBox(TRL("Master password successfully changed."), MB_ICONINFORMATION);
   }
-
-  PasswEnterDlg->Clear();
-  RandomPool::GetInstance().Flush();
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswMngForm::ChangeCaption(void)
@@ -2546,15 +2563,23 @@ void __fastcall TPasswMngForm::ChangeCaption(void)
   WString sCaption;
   if (IsDbOpen() || m_blLocked) {
     if (m_blDbChanged)
-      sCaption = WString("*");
+      sCaption = "*";
     sCaption += m_sDbFileName.IsEmpty() ? TRL("Untitled") :
       ExtractFileName(m_sDbFileName);
     if (m_blDbReadOnly)
       sCaption += " (R)";
     if (m_blLocked)
-      sCaption += WString(" (") + TRL("Locked") + WString(")");
-    sCaption += WString(" - ");
-    //MainMenu_File_Save->Enabled = m_blDbChanged;
+      sCaption += " (" + TRL("Locked") + ")";
+    else {
+      if (m_passwDb->MasterPasswExpiryDate != 0) {
+        word32 lDate, lDummy;
+        getExpiryCheckDates(lDate, lDummy);
+        if (lDate >= m_passwDb->MasterPasswExpiryDate) {
+          sCaption += " - " + TRL("WARNING: Master password expired!");
+        }
+      }
+    }
+    sCaption += " - ";
   }
   Caption = sCaption + PASSW_MANAGER_NAME;
 }
@@ -2680,7 +2705,6 @@ void __fastcall TPasswMngForm::MainMenu_Edit_CopyUserNameClick(
   if (!pEntry->Strings[PasswDbEntry::USERNAME].IsStrEmpty()) {
     SecureClipboard::GetInstance().SetData(
       pEntry->Strings[PasswDbEntry::USERNAME].c_str());
-    //MainForm->CopiedSensitiveDataToClipboard();
   }
 }
 //---------------------------------------------------------------------------
@@ -2696,7 +2720,6 @@ void __fastcall TPasswMngForm::MainMenu_Edit_CopyPasswClick(
   SecureWString sPassw = m_passwDb->GetDbEntryPassw(*pEntry);
   if (!sPassw.IsStrEmpty()) {
     SecureClipboard::GetInstance().SetData(sPassw.c_str());
-    //MainForm->CopiedSensitiveDataToClipboard();
   }
 }
 //---------------------------------------------------------------------------
@@ -2764,6 +2787,7 @@ void __fastcall TPasswMngForm::MainMenu_File_DbSettingsClick(
   s.PasswFormatSeq = m_passwDb->PasswFormatSeq;
   s.DefaultExpiryDays = m_passwDb->DefaultPasswExpiryDays;
   s.DefaultMaxPasswHistorySize = m_passwDb->DefaultMaxPasswHistorySize;
+  s.MasterPasswExpiryDate = m_passwDb->MasterPasswExpiryDate;
   s.CipherType = m_passwDb->CipherType;
   s.NumKdfRounds = m_passwDb->KdfIterations;
   s.Compressed = m_passwDb->Compressed;
@@ -2775,11 +2799,15 @@ void __fastcall TPasswMngForm::MainMenu_File_DbSettingsClick(
       m_passwDb->PasswFormatSeq != s.PasswFormatSeq ||
       m_passwDb->DefaultPasswExpiryDays != s.DefaultExpiryDays ||
       m_passwDb->DefaultMaxPasswHistorySize != s.DefaultMaxPasswHistorySize ||
+      m_passwDb->MasterPasswExpiryDate != s.MasterPasswExpiryDate ||
       m_passwDb->CipherType != s.CipherType ||
       m_passwDb->KdfIterations != s.NumKdfRounds ||
       m_passwDb->Compressed != s.Compressed ||
       m_passwDb->CompressionLevel != s.CompressionLevel))
+  {
     SetDbChanged();
+    ChangeCaption(); // enforce since master password expiry may have changed
+  }
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswMngForm::ClearSearchBtnClick(TObject *Sender)
@@ -2840,8 +2868,6 @@ void __fastcall TPasswMngForm::NotifyUserAction(void)
 void __fastcall TPasswMngForm::FormClose(TObject *Sender, TCloseAction &Action)
 {
   SearchBox->Clear();
-  //if (g_config.Database.ClearClipExit)
-  //  Clipboard()->Clear();
   TopMostManager::GetInstance().OnFormClose(this);
 }
 //---------------------------------------------------------------------------
@@ -3389,7 +3415,8 @@ bool __fastcall TPasswMngForm::ApplyDbSettings(const PasswDbSettings& settings)
   if (!m_passwDb->HasRecoveryKey &&
       settings.NumKdfRounds != m_passwDb->KdfIterations) {
     auto key = RequestPasswAndCheck(TRL("Enter master password again"),
-      TRL("Master password is invalid."), m_passwDb->CheckMasterKey);
+      TRL("Master password is invalid."), m_passwDb->CheckMasterKey,
+      m_passwDb->IsPasswUtf8);
 
     if (key.IsEmpty())
       return false;
@@ -3441,6 +3468,7 @@ bool __fastcall TPasswMngForm::ApplyDbSettings(const PasswDbSettings& settings)
   m_passwDb->PasswFormatSeq = settings.PasswFormatSeq;
   m_passwDb->DefaultPasswExpiryDays = settings.DefaultExpiryDays;
   m_passwDb->DefaultMaxPasswHistorySize = settings.DefaultMaxPasswHistorySize;
+  m_passwDb->MasterPasswExpiryDate = settings.MasterPasswExpiryDate;
   if (!m_passwDb->HasRecoveryKey)
     m_passwDb->CipherType = settings.CipherType;
   m_passwDb->Compressed = settings.Compressed;
@@ -3656,17 +3684,20 @@ void __fastcall TPasswMngForm::MainMenu_File_SetRecoveryPasswordClick(TObject *S
 
   if (!m_passwDb->HasRecoveryKey) {
     auto key = RequestPasswAndCheck(TRL("Enter master password"),
-      TRL("Master password is invalid."), m_passwDb->CheckMasterKey);
+      TRL("Master password is invalid."), m_passwDb->CheckMasterKey,
+      m_passwDb->IsPasswUtf8);
 
     if (key.IsEmpty())
       return;
 
+    AutoClearPasswDlg _clearPassw;
     if (PasswEnterDlg->Execute(PASSWENTER_FLAG_CONFIRMPASSW |
         PASSWENTER_FLAG_ENABLEKEYFILE | PASSWENTER_FLAG_ENABLEKEYFILECREATION,
         TRL("Enter recovery password"), this) == mrOk) {
       try {
         auto recoveryKey = PasswDatabase::CombineKeySources(
-          PasswEnterDlg->GetPasswBinary(), PasswEnterDlg->GetKeyFileName());
+          PasswEnterDlg->GetPasswBinary(m_passwDb->IsPasswUtf8),
+          PasswEnterDlg->GetKeyFileName());
 
         Screen->Cursor = crHourGlass;
         m_passwDb->SetRecoveryKey(key, recoveryKey);
@@ -3684,7 +3715,8 @@ void __fastcall TPasswMngForm::MainMenu_File_SetRecoveryPasswordClick(TObject *S
   else {
     {
       auto recoveryKey = RequestPasswAndCheck(TRL("Enter recovery password"),
-        TRL("Recovery password is invalid."), m_passwDb->CheckRecoveryKey);
+        TRL("Recovery password is invalid."), m_passwDb->CheckRecoveryKey,
+        m_passwDb->IsPasswUtf8);
 
       if (recoveryKey.IsEmpty())
         return;
@@ -3695,10 +3727,12 @@ void __fastcall TPasswMngForm::MainMenu_File_SetRecoveryPasswordClick(TObject *S
         TRL("Enter NEW master password"), this) == mrOk) {
       try {
         auto key = PasswDatabase::CombineKeySources(
-          PasswEnterDlg->GetPasswBinary(), PasswEnterDlg->GetKeyFileName());
+          PasswEnterDlg->GetPasswBinary(true), PasswEnterDlg->GetKeyFileName());
 
         Screen->Cursor = crHourGlass;
         m_passwDb->RemoveRecoveryKey(key);
+        m_passwDb->IsPasswUtf8 = true;
+        m_passwDb->MasterPasswExpiryDate = 0;
         Screen->Cursor = crDefault;
 
         blSuccess = true;
@@ -3710,9 +3744,6 @@ void __fastcall TPasswMngForm::MainMenu_File_SetRecoveryPasswordClick(TObject *S
       }
     }
   }
-
-  PasswEnterDlg->Clear();
-  RandomPool::GetInstance().Flush();
 
   if (blSuccess) {
     SetDbChanged(true);
