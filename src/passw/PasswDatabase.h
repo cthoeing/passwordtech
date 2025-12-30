@@ -423,10 +423,12 @@ private:
   SecureWString m_sPasswFormatSeq;
   word32 m_lDefaultPasswExpiryDays;
   word32 m_lDefaultMaxPasswHistorySize;
+  word32 m_lMasterPasswExpiryDate;
   bool m_blPlaintextPassw;
   DbOpenState m_dbOpenState;
   bool m_blRecoveryKey;
   bool m_blCompressed;
+  bool m_blPasswUtf8;
   int m_nCompressionLevel;
 
   // initializes crypto engine (encryption and hash algorithms),
@@ -557,7 +559,7 @@ public:
 
   enum {
     VERSION_HIGH = 1,
-    VERSION_LOW = 5,
+    VERSION_LOW = 7,
     VERSION = (VERSION_HIGH << 8) | VERSION_LOW,
 
     KEY_HASH_ITERATIONS = 16384,
@@ -581,8 +583,11 @@ public:
   // opens existing database file
   // -> master key
   // -> name of file to be opened
+  // -> only read (unencrypted) file header for version info, flags, etc.
+  //    key is not needed and should be empty!
   void Open(const SecureMem<word8>& key,
-    const WString& sFileName);
+    const WString& sFileName,
+    bool blReadHeaderOnly = false);
 
   // closes database, wipes and free memory reserved for crypto engine
   void Close(void);
@@ -594,19 +599,13 @@ public:
   }
 
   // saves database to file
-  void SaveToFile(const WString& sFileName);
+  void Save(const WString& sFileName);
 
   // release write protection of opened database file
   void ReleaseFile(void)
   {
     m_pFile.reset();
   }
-
-  // gets list of database entries
-  /*const PasswDbList& GetDatabase(void) const
-  {
-    return m_db;
-  }*/
 
   // gets number of database entries
   word32 GetSize(void) const
@@ -749,6 +748,9 @@ public:
   __property word32 DefaultMaxPasswHistorySize =
   { read=m_lDefaultMaxPasswHistorySize, write=m_lDefaultMaxPasswHistorySize };
 
+  __property word32 MasterPasswExpiryDate =
+  { read=m_lMasterPasswExpiryDate, write=m_lMasterPasswExpiryDate };
+
   // database size
   __property word32 Size =
   { read=GetSize };
@@ -776,6 +778,9 @@ public:
   // compression level (0 if uncompressed)
   __property int CompressionLevel =
   { read=m_nCompressionLevel, write=m_nCompressionLevel };
+
+  __property bool IsPasswUtf8 =
+  { read=m_blPasswUtf8, write=m_blPasswUtf8 };
 };
 
 

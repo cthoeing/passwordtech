@@ -35,7 +35,8 @@ public:
   }
 
   void SetData(const wchar_t* pwszData);
-  void ClearData(bool blForce = false);
+  bool ClearData(bool blForce = false, UnicodeString* psErrorMsg = nullptr,
+    int nAttempts = 1, int nWaitTime = 500);
   void RegisterOnSetDataFun(std::function<void(void)> fun)
   {
     m_onSetDataFuns.push_back(fun);
@@ -45,20 +46,18 @@ public:
   { read=m_blAutoClear, write=SetAutoClear };
 
 private:
-  SecureClipboard() : m_blAutoClear(false), m_blSet(false), m_digest(32) {}
+  SecureClipboard() : m_blAutoClear(false) {}
   ~SecureClipboard() {}
 
   void SetAutoClear(bool blVal)
   {
     m_blAutoClear = blVal;
-    if (!m_blAutoClear && m_blSet) {
-      m_digest.Zeroize();
-      m_blSet = false;
+    if (!m_blAutoClear) {
+      m_digest.Clear();
     }
   }
 
   bool m_blAutoClear;
-  bool m_blSet;
   SecureMem<word8> m_digest;
   std::vector<std::function<void(void)>> m_onSetDataFuns;
 };

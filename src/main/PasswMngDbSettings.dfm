@@ -3,10 +3,10 @@
   Top = 0
   BorderIcons = [biSystemMenu, biMaximize]
   Caption = 'Database Settings'
-  ClientHeight = 434
+  ClientHeight = 517
   ClientWidth = 484
   Color = clBtnFace
-  Constraints.MinHeight = 349
+  Constraints.MinHeight = 564
   Constraints.MinWidth = 405
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -34,7 +34,7 @@
     Left = 13
     Top = 10
     Width = 458
-    Height = 367
+    Height = 446
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -49,7 +49,7 @@
       Caption = 'General'
       DesignSize = (
         450
-        335)
+        414)
       object DefUserNameLbl: TLabel
         Left = 10
         Top = 20
@@ -116,6 +116,18 @@
         Caption = 
           'For new entries, save the following number of previous passwords' +
           ':'
+      end
+      object ExpiryInfoLbl: TLabel
+        Left = 155
+        Top = 374
+        Width = 4
+        Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
+        Color = clBtnFace
+        ParentColor = False
       end
       object PasswFormatSeqBox: TEdit
         Left = 10
@@ -205,6 +217,33 @@
         Max = 3650
         TabOrder = 6
       end
+      object MasterPasswExpiryCheck: TCheckBox
+        Left = 10
+        Top = 340
+        Width = 406
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
+        Caption = 'Master password expires:'
+        TabOrder = 7
+        OnClick = MasterPasswExpiryCheckClick
+      end
+      object ExpiryDatePicker: TDateTimePicker
+        Left = 10
+        Top = 369
+        Width = 137
+        Height = 25
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
+        Date = 45998.000000000000000000
+        Time = 0.555730706015310700
+        Enabled = False
+        TabOrder = 8
+      end
     end
     object CompressionSheet: TTabSheet
       Margins.Left = 4
@@ -264,7 +303,7 @@
       ImageIndex = 1
       DesignSize = (
         450
-        335)
+        414)
       object EncryptionAlgoLbl: TLabel
         Left = 10
         Top = 20
@@ -319,7 +358,6 @@
         Style = csDropDownList
         Anchors = [akLeft, akTop, akRight]
         TabOrder = 0
-        ExplicitWidth = 417
       end
       object NumKdfRoundsBox: TEdit
         Left = 283
@@ -332,14 +370,13 @@
         Margins.Bottom = 4
         Anchors = [akTop, akRight]
         TabOrder = 1
-        ExplicitLeft = 273
       end
     end
   end
   object OKBtn: TButton
     Tag = 12
     Left = 275
-    Top = 390
+    Top = 470
     Width = 94
     Height = 31
     Margins.Left = 4
@@ -354,7 +391,7 @@
   object CancelBtn: TButton
     Tag = 12
     Left = 377
-    Top = 390
+    Top = 470
     Width = 94
     Height = 31
     Margins.Left = 4

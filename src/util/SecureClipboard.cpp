@@ -31,59 +31,92 @@ const size_t DIGEST_MAX_SRC_LEN = 1'000'000;
 
 void SecureClipboard::SetData(const wchar_t* pwszData)
 {
-  word32 lLen = wcslen(pwszData);
-  if (lLen != 0) {
-    if (m_blSet)
+  size_t len = wcslen(pwszData);
+  if (len != 0) {
+    if (!m_digest.IsEmpty())
       ClearData();
     SetClipboardTextBuf(pwszData);
     if (m_blAutoClear) {
+      m_digest.New(32);
       sha256(reinterpret_cast<const word8*>(pwszData),
-        std::min(DIGEST_MAX_SRC_LEN, lLen * sizeof(wchar_t)), m_digest, 0);
-      m_blSet = true;
+        std::min(DIGEST_MAX_SRC_LEN, len * sizeof(wchar_t)), m_digest, 0);
     }
     for (auto fun : m_onSetDataFuns)
       fun();
   }
 }
 
-void SecureClipboard::ClearData(bool blForce)
+bool SecureClipboard::ClearData(bool blForce, UnicodeString* psErrorMsg,
+  int nAttempts, int nWaitTime)
 {
-  if (!m_blSet && !blForce)
-    return;
+  if (m_digest.IsEmpty() && !blForce)
+    return true;
 
+  bool blSuccess = false;
   TClipboard* pClipboard = Clipboard();
-  try {
-    pClipboard->Open();
-    if (pClipboard->HasFormat(CF_UNICODETEXT)) {
-      HGLOBAL hText = (HGLOBAL) pClipboard->GetAsHandle(CF_UNICODETEXT);
-      if (hText != nullptr) {
-        wchar_t* pwszText = reinterpret_cast<wchar_t*>(GlobalLock(hText));
-        if (pwszText != nullptr && *pwszText != '\0') {
-          word32 lLen = wcslen(pwszText);
-          bool blClear = true;
-          if (!blForce) {
-            SecureMem<word8> checkDigest(32);
-            sha256(reinterpret_cast<const word8*>(pwszText),
-              std::min(DIGEST_MAX_SRC_LEN, lLen * sizeof(wchar_t)),
-              checkDigest, 0);
-            blClear = checkDigest == m_digest;
-          }
-          if (blClear) {
-            memzero(pwszText, lLen * sizeof(wchar_t));
-            GlobalUnlock(hText);
-            pClipboard->Clear();
-            if (m_blSet) {
-              m_digest.Zeroize();
-              m_blSet = false;
+  for (int a = 0; a < std::max(1, nAttempts); a++) {
+    if (a > 0) {
+      TThread::Sleep(std::max(1, nWaitTime));
+    }
+    try {
+      pClipboard->Open();
+      if (pClipboard->HasFormat(CF_UNICODETEXT)) {
+        HGLOBAL hText = (HGLOBAL) pClipboard->GetAsHandle(CF_UNICODETEXT);
+        if (hText != nullptr) {
+          wchar_t* pwszText = reinterpret_cast<wchar_t*>(GlobalLock(hText));
+          if (pwszText != nullptr && *pwszText != '\0') {
+            size_t len = wcslen(pwszText);
+            bool blClear = true;
+            if (!blForce) {
+              SecureMem<word8> checkDigest(32);
+              sha256(reinterpret_cast<const word8*>(pwszText),
+                std::min(DIGEST_MAX_SRC_LEN, len * sizeof(wchar_t)),
+                checkDigest, 0);
+              blClear = checkDigest == m_digest;
+            }
+            if (blClear) {
+              memzero(pwszText, len * sizeof(wchar_t));
+              GlobalUnlock(hText);
+              pClipboard->Clear();
+            }
+            else {
+              GlobalUnlock(hText);
             }
           }
-          else
-            GlobalUnlock(hText);
         }
       }
+      m_digest.Clear();
+      blSuccess = true;
     }
+    catch (const EClipboardException& e) {
+      if (psErrorMsg) {
+        *psErrorMsg = e.Message;
+      }
+      // might be an error due to invalid access, wait a bit and
+      // try again, if desired
+      continue;
+    }
+    // for exceptions unrelated to clipboard access, it doesn't make sense
+    // to try the same procedure again
+    catch (const Exception& e) {
+      if (psErrorMsg) {
+        *psErrorMsg = e.Message;
+      }
+    }
+    catch (const std::exception& e) {
+      if (psErrorMsg) {
+        *psErrorMsg = e.what();
+      }
+    }
+    catch (...) {
+      if (psErrorMsg) {
+        *psErrorMsg = "Unknown error";
+      }
+    }
+    break;
   }
-  catch (...) {}
 
   pClipboard->Close();
+
+  return blSuccess;
 }

@@ -31,7 +31,6 @@
 #include <Vcl.ComCtrls.hpp>
 #include <Vcl.Dialogs.hpp>
 #include <Vcl.ExtCtrls.hpp>
-//#include <Vcl.Grids.hpp>
 #include <Vcl.ImgList.hpp>
 #include <Vcl.Menus.hpp>
 #include <Vcl.ToolWin.hpp>
@@ -417,7 +416,8 @@ private:	// User declarations
   SecureMem<word8> __fastcall RequestPasswAndCheck(
     const WString& sRequestMsg,
     const WString& sInvalidMsg,
-    std::function<bool(const SecureMem<word8>&)> checkFunc);
+    std::function<bool(const SecureMem<word8>&)> checkFunc,
+    bool blPasswUtf8);
   void __fastcall SetRecoveryKeyDependencies(void);
   void __fastcall SetPasswQualityBarWidth(void);
   void __fastcall EstimatePasswQuality(const wchar_t* pwszPassw = nullptr);

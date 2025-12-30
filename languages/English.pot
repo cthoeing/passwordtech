@@ -18,7 +18,7 @@
 #. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.9\n"
+"Project-Id-Version: Password Tech 3.5.10\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
@@ -26,7 +26,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.8\n"
 
 #. Message box caption
 msgid "Info"
@@ -2620,6 +2620,24 @@ msgid ""
 "Do you want to filter these entries now?"
 msgstr ""
 
+#. Password Manager window, when opening database, message shown if master password has expired
+msgid "The master password has expired!"
+msgstr ""
+
+#. Password Manager window, when opening database, message shown if master password will expire soon
+msgid "The master password will expire soon."
+msgstr ""
+
+#. Password Manager window, when opening database, message shown if master password has expired or is about to expire soon
+msgid ""
+"Set a new master password via File |\n"
+"Change Master Password."
+msgstr ""
+
+#. Password manager window, warning added to window title if master password has expired
+msgid "WARNING: Master password expired!"
+msgstr ""
+
 #. Password Manager window, text added to window title when database is locked
 msgid "Locked"
 msgstr ""
@@ -2760,6 +2778,10 @@ msgstr ""
 
 #. Password Manager window, Database Settings dialog, label
 msgid "For new entries, save the following number of previous passwords:"
+msgstr ""
+
+#. Password Manager window, Database Settings dialog, label
+msgid "Master password expires:"
 msgstr ""
 
 #. Password Manager window, Database Settings dialog, title of progress dialog when changing number of KDF iterations

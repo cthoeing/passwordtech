@@ -64,6 +64,7 @@ __fastcall TPasswDbSettingsDlg::TPasswDbSettingsDlg(TComponent* Owner)
   }
 
   PasswHistorySpinBtn->Max = PasswDatabase::MAX_PASSW_HISTORY_SIZE;
+  ExpiryInfoLbl->Font->Color = clRed;
 
   if (g_pLangSupp) {
     TRLCaption(this);
@@ -72,6 +73,7 @@ __fastcall TPasswDbSettingsDlg::TPasswDbSettingsDlg(TComponent* Owner)
     TRLCaption(SecuritySheet);
     TRLCaption(DefUserNameLbl);
     TRLCaption(PasswFormatSeqLbl);
+    TRLCaption(MasterPasswExpiryCheck);
     TRLCaption(EncryptionAlgoLbl);
     TRLCaption(NumKdfRoundsLbl);
     TRLCaption(DefaultExpiryLbl);
@@ -108,6 +110,14 @@ PasswDbSettings __fastcall TPasswDbSettingsDlg::GetSettings(void)
   s.PasswFormatSeq = GetEditBoxTextBuf(PasswFormatSeqBox);
   s.DefaultExpiryDays = DefaultExpirySpinBtn->Position;
   s.DefaultMaxPasswHistorySize = PasswHistorySpinBtn->Position;
+  if (MasterPasswExpiryCheck->Checked) {
+    unsigned short wYear, wMonth, wDay;
+    ExpiryDatePicker->Date.DecodeDate(&wYear, &wMonth, &wDay);
+    s.MasterPasswExpiryDate = PasswDbEntry::EncodeExpiryDate(wYear, wMonth, wDay);
+  }
+  else {
+    s.MasterPasswExpiryDate = 0;
+  }
   s.CipherType = EncryptionAlgoList->ItemIndex;
   s.NumKdfRounds = StrToUInt(NumKdfRoundsBox->Text);
   s.Compressed = EnableCompressionCheck->Checked;
@@ -122,6 +132,22 @@ void __fastcall TPasswDbSettingsDlg::SetSettings(const PasswDbSettings& s,
   SetEditBoxTextBuf(PasswFormatSeqBox, s.PasswFormatSeq.c_str());
   DefaultExpirySpinBtn->Position = s.DefaultExpiryDays;
   PasswHistorySpinBtn->Position = s.DefaultMaxPasswHistorySize;
+  int nYear, nMonth, nDay;
+  if (PasswDbEntry::DecodeExpiryDate(s.MasterPasswExpiryDate, nYear, nMonth, nDay)) {
+    MasterPasswExpiryCheck->Checked = true;
+    TDateTime expiryDate(nYear, nMonth, nDay);
+    ExpiryDatePicker->Date = expiryDate;
+    if (TDateTime::CurrentDate() >= expiryDate) {
+      ExpiryInfoLbl->Caption = TRL("WARNING: Master password expired!");
+    }
+  }
+  else {
+    MasterPasswExpiryCheck->Checked = false;
+    ExpiryDatePicker->Date = TDateTime::CurrentDate();
+    ExpiryInfoLbl->Caption = WString();
+  }
+  MasterPasswExpiryCheckClick(this);
+
   EncryptionAlgoList->ItemIndex = s.CipherType;
   EncryptionAlgoList->Enabled = !blHasRecoveryPassw;
   NumKdfRoundsBox->Text = IntToStr(static_cast<__int64>(s.NumKdfRounds));
@@ -226,6 +252,11 @@ void __fastcall TPasswDbSettingsDlg::EnableCompressionCheckClick(TObject *Sender
   bool blChecked = EnableCompressionCheck->Checked;
   CompressionLevelBar->Enabled = blChecked;
   CompressionLevelLbl->Enabled = blChecked;
+}
+//---------------------------------------------------------------------------
+void __fastcall TPasswDbSettingsDlg::MasterPasswExpiryCheckClick(TObject *Sender)
+{
+  ExpiryDatePicker->Enabled = MasterPasswExpiryCheck->Checked;
 }
 //---------------------------------------------------------------------------
 
