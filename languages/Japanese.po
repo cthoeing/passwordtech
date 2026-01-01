@@ -4,7 +4,7 @@
 #. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.9\n"
+"Project-Id-Version: Password Tech 3.5.10\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: Midori.Ayanokouji <ayano.midori@gmail.com>\n"
@@ -1636,7 +1636,7 @@ msgstr "パスワード一覧"
 
 #. Password List window, context menu
 msgid "Save As File..."
-msgstr "名前をつけて保存..."
+msgstr "名前をつけて保存"
 
 #. Password List window, Save as file, Save file dialog, title
 msgid "Save password list"
@@ -1766,11 +1766,11 @@ msgstr "音声的な (発音可能) なパスワード生成用のトライグ�
 
 #. Advanced Password Options window, footnotes of checkbox list
 msgid "Applies to pass_words_."
-msgstr "パスワードに適用"
+msgstr "パスワードに適用_."
 
 #. Advanced Password Options window, footnotes of checkbox list
 msgid "Applies to pass_phrases_."
-msgstr "パスフレーズに適用"
+msgstr "パスフレーズに適用_."
 
 #. Advanced Password Options window, footnotes of checkbox list
 msgid "Applies to formatted passwords."
@@ -2816,6 +2816,24 @@ msgstr ""
 "データベース内に期限が近い項目があります。\n"
 "今すぐこれらを絞り込んで表示しますか？"
 
+#. Password Manager window, when opening database, message shown if master password has expired
+msgid "The master password has expired!"
+msgstr "マスターパスワードの有効期限が切れました!"
+
+#. Password Manager window, when opening database, message shown if master password will expire soon
+msgid "The master password will expire soon."
+msgstr "マスターパスワードの有効期限はもうすぐ切れます。"
+
+#. Password Manager window, when opening database, message shown if master password has expired or is about to expire soon
+msgid ""
+"Set a new master password via File |\n"
+"Change Master Password."
+msgstr "新しいマスターパスワードを設定します。"
+
+#. Password manager window, warning added to window title if master password has expired
+msgid "WARNING: Master password expired!"
+msgstr "警告：マスターパスワードの有効期限が切れました！"
+
 #. Password Manager window, text added to window title when database is locked
 msgid "Locked"
 msgstr "ロック"
@@ -2965,6 +2983,10 @@ msgstr "新規項目を期限切れにする標準の日数:"
 msgid "For new entries, save the following number of previous passwords:"
 msgstr "新しいエントリーの場合、以下の数の以前のパスワードを保存する："
 
+#. Password Manager window, Database Settings dialog, label
+msgid "Master password expires:"
+msgstr "マスターパスワードの有効期限が切れました："
+
 #. Password Manager window, Database Settings dialog, title of progress dialog when changing number of KDF iterations
 msgid "Changing number of KDF iterations"
 msgstr "KDF 反復回数の変更"
@@ -3071,7 +3093,7 @@ msgstr "フィルタを削除する"
 
 #. Main window, button to build character set definition
 msgid "Build..."
-msgstr "詳細設定"
+msgstr "詳細設定..."
 
 #. Main window, button to build character set definition, hint
 msgid "Build character set definition"
@@ -3079,7 +3101,7 @@ msgstr "文字セット定義の構築"
 
 #. Character set builder, window title
 msgid "Character Set Builder"
-msgstr "文字組合の構築:"
+msgstr "文字組合の構築"
 
 #. Character set builder, group box with character sets
 msgid "Character set selection"

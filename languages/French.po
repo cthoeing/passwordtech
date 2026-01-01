@@ -4,7 +4,7 @@
 #. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.8\n"
+"Project-Id-Version: Password Tech 3.5.10\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: Pierrard Sylvie <sylvie@gratilog.net>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-PasswordTech-Manual: manual.pdf\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.8\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #. Message box caption
@@ -108,6 +108,10 @@ msgstr "Générer vers le Presse-papiers"
 #. Main window, button to generate multiple passwords
 msgid "Generate to File..."
 msgstr "Générer dans un fichier..."
+
+#. Main window, button to generate multiple passwords
+msgid "Include Header"
+msgstr "Inclure l'entête"
 
 #. Main window, button to access advanced password options
 msgid "Advanced"
@@ -410,7 +414,7 @@ msgstr "Charger, créer ou supprimer des profils"
 
 #. Main window, MP Password Generator button tooltip
 msgid "Generate passwords based on a master password"
-msgstr "Générer des mots de passe sur la base du mot de passe maître"
+msgstr "Générer des mots de passe basés sur le mot de passe principal"
 
 #. Main window, Configuration button tooltip
 msgid "Main configuration of the program"
@@ -1046,7 +1050,9 @@ msgstr "Ne peut pas télécharger la version du fichier"
 
 #. Check for updates, message shown when version file cannot be parsed due to missing information or unknown format
 msgid "Version or URL not specified in version file, or unknown file format"
-msgstr "Version ou URL non spécifiée dans le fichier de version ou format de fichier inconnu"
+msgstr ""
+"Version ou URL non spécifiée dans le fichier de version ou format de fichier "
+"inconnu"
 
 #. Check for updates, message shown when a new version is available
 msgid ""
@@ -1925,7 +1931,7 @@ msgstr "Déplacer vers le bas"
 
 #. Profile Editor dialog, checkbox
 msgid "Save \"advanced password options\" for this profile"
-msgstr "Enregistrer \"options avancées du mot de passe\" du profil"
+msgstr "Enregistrer \"options avancées\" du profil"
 
 #. Profile Editor dialog, message shown before deleting a single profile
 msgid "Delete profile \"%s\"?"
@@ -2181,7 +2187,7 @@ msgstr "Générateur de mot de passe MP"
 
 #. MP Password Generator window, group box
 msgid "Master password"
-msgstr "Mot de passe maître"
+msgstr "Mot de passe principal"
 
 #. MP Password Generator window, button
 msgid "Enter password..."
@@ -2712,19 +2718,19 @@ msgstr "Supprimer %d entrées ?"
 
 #. Password Manager window, Change master password, query old password
 msgid "Enter OLD master password"
-msgstr "Entrez l'ANCIEN mot de passe maître"
+msgstr "Entrez l'ANCIEN mot de passe principal"
 
 #. Password Manager window, Change master password, query new password
 msgid "Enter NEW master password"
-msgstr "Entrez le NOUVEAU mot de passe maître"
+msgstr "Entrez le NOUVEAU mot de passe principal"
 
 #. Password Manager window, Change master password, success message
 msgid "Master password successfully changed."
-msgstr "Mot de passe maître modifié avec succès."
+msgstr "Mot de passe principal modifié avec succès."
 
 #. Password Manager window, Change master password, error message
 msgid "Old master password is invalid."
-msgstr "Ancien mot de passe maître est invalide."
+msgstr "L'ancien mot de passe principal est invalide."
 
 #. Password Manager window, New database, default name
 msgid "Untitled"
@@ -2797,11 +2803,11 @@ msgstr "Entrer Mot de passe"
 
 #. Password Manager window, main menu, File submenu, Database settings, when applying certain settings, title of password entry dialog
 msgid "Enter master password again"
-msgstr "Entrer à nouveau le mot de passe maître"
+msgstr "Entrer à nouveau le mot de passe principal"
 
 #. Password Manager window, main menu, File submenu, Database settings, when applying certain settings, message shown when master password is invalid
 msgid "Master password is invalid."
-msgstr "Mot de passe maître invalide."
+msgstr "Mot de passe prinicipal invalide."
 
 #. Password Manager window, Edit panel, Key-value list button, tooltip
 msgid "Edit key-value list"
@@ -2858,6 +2864,26 @@ msgid ""
 msgstr ""
 "La base de données contient des entrées qui expireront bientôt.\n"
 "Voulez-vous filtrer ces entrées maintenant ?"
+
+#. Password Manager window, when opening database, message shown if master password has expired
+msgid "The master password has expired!"
+msgstr "Le mot de passe principal a expiré !!"
+
+#. Password Manager window, when opening database, message shown if master password will expire soon
+msgid "The master password will expire soon."
+msgstr "Le mot de passe principal expirera bientôt."
+
+#. Password Manager window, when opening database, message shown if master password has expired or is about to expire soon
+msgid ""
+"Set a new master password via File |\n"
+"Change Master Password."
+msgstr ""
+"Définissez un nouveau mot de passe principal via Fichier |\n"
+"Modifier le mot de passe principal."
+
+#. Password manager window, warning added to window title if master password has expired
+msgid "WARNING: Master password expired!"
+msgstr "AVERTISSEMENT : Mot de passe principal expiré  !"
 
 #. Password Manager window, text added to window title when database is locked
 msgid "Locked"
@@ -3012,6 +3038,10 @@ msgid "For new entries, save the following number of previous passwords:"
 msgstr ""
 "Pour les nouvelles entrées, enregistrer le nombre suivant de précédents mots "
 "de passe :"
+
+#. Password Manager window, Database Settings dialog, label
+msgid "Master password expires:"
+msgstr "Le mot de passe principal expire :"
 
 #. Password Manager window, Database Settings dialog, title of progress dialog when changing number of KDF iterations
 msgid "Changing number of KDF iterations"
