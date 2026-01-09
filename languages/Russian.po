@@ -18,7 +18,7 @@
 #. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.9\n"
+"Project-Id-Version: Password Tech 3.5.10\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: Dmitry Yerokhin <erodim@mail.ru>\n"
@@ -856,7 +856,7 @@ msgstr ""
 
 #. Generate password, error message, additional info when generating passwords to file
 msgid "%d passwords written to file \"%s\"."
-msgstr "Записано %d шт. паролей в файл \"%s\"."
+msgstr "Записано паролей в файл \"%s\": %d."
 
 #. Include characters, info about character set
 msgid "%d bits / %d characters"
@@ -966,7 +966,7 @@ msgid ""
 "\n"
 "Do you want to use it anyway?"
 msgstr ""
-"Версия этого языкового файла (%s) выше, чем версия программы (%s).\n"
+"Версия этого языкового файла (%s) новее, чем программы (%s).\n"
 "Возможна несовместимость версий.\n"
 "\n"
 "Всё равно использовать?"
@@ -981,7 +981,7 @@ msgstr ""
 "Изменения вступят в силу\n"
 "при следующем запуске программы.\n"
 "\n"
-"Хотите перезапустить программу?"
+"Перезапустить программу?"
 
 #. Generate password and show it in a message box, message shown when password is too long
 msgid ""
@@ -1208,7 +1208,7 @@ msgid ""
 "Could not access registry key\n"
 "%s."
 msgstr ""
-"Нет доступа к ключу реестра\n"
+"Нет доступа к ключу в реестре\n"
 "%s."
 
 #. Configuration window, caption
@@ -1257,7 +1257,7 @@ msgstr "Выбрать шрифт"
 
 #. Configuration window, General, dropdown menu of "Select font" button
 msgid "Restore Default"
-msgstr "Вернуть стандартное"
+msgstr "Вернуть стандартный"
 
 #. Configuration window, General
 msgid "Show system tray icon constantly"
@@ -1277,7 +1277,7 @@ msgstr "Межзнаковая задержка при автонаборе (м�
 
 #. Configuration window, General
 msgid "Ask before exiting application"
-msgstr "Выдавать запрос перед выходом из программы"
+msgstr "Запрос перед выходом из программы"
 
 #. Configuration window, General
 msgid "Launch application on system startup (for current user)"
@@ -1670,7 +1670,7 @@ msgstr "Расширенные настройки паролей"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Exclude ambiguous characters"
-msgstr "Исключать неоднозначные символы"
+msgstr "Без неоднозначных символов"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "First character must not be a lower-case letter"
@@ -1730,7 +1730,7 @@ msgstr "Назначить значение энтропии каждому па
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Capitalize first letter of each word"
-msgstr "Делать заглавной первую букву каждого слова"
+msgstr "Первая Буква Каждого Слова - заглавная"
 
 #. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Convert all words in word lists to lower-case"
@@ -1936,7 +1936,7 @@ msgstr "Создать триграмм-файл"
 
 #. Create Trigram File dialog, label
 msgid "Source file (e.g., dictionary, word list):"
-msgstr "Исходный файл (например словарь, список слов):"
+msgstr "Исходный файл (например, словарь, список слов):"
 
 #. Create Trigram File dialog, label
 msgid "Destination file (trigram file):"
@@ -2432,7 +2432,7 @@ msgstr "Изменить мастер-пароль..."
 
 #. Password Manager window, main menu, Edit submenu
 msgid "Copy User Name"
-msgstr "Скопировать имя пользователя"
+msgstr "Скопировать логин"
 
 #. Password Manager window, main menu, Edit submenu
 msgid "Copy Password"
@@ -2460,11 +2460,11 @@ msgstr "Удалить запись"
 
 #. Password Manager window, main menu, View submenu
 msgid "Show Columns"
-msgstr "Показать колонки"
+msgstr "Отображаемые колонки"
 
 #. Password Manager window, main menu, View submenu
 msgid "Show Passwords in List"
-msgstr "Показать пароли в списке"
+msgstr "Показывать пароли в списке"
 
 #. Password Manager window, main menu, View submenu
 msgid "Sort Entries By"
@@ -2560,7 +2560,7 @@ msgstr "Показать/скрыть заметки"
 
 #. Password Manager window, Edit Panel, text displayed when notes are hidden
 msgid "Notes hidden - click here to display"
-msgstr "Заметки скрыты, нажмите здесь, чтобы показать"
+msgstr "Заметки скрыты; нажмите здесь, чтобы показать"
 
 #. Password Manager window, title of password entry dialog when unlocking database
 msgid "Unlock %s"
@@ -2600,7 +2600,7 @@ msgid ""
 "Do you want to save the changes?"
 msgstr ""
 "Выбранная сейчас запись была изменена.\n"
-"Хотите сохранить изменения?"
+"Сохранить изменения?"
 
 #. Password Manager window, message when database has been changed
 msgid ""
@@ -2608,7 +2608,7 @@ msgid ""
 "Do you want to save the changes?"
 msgstr ""
 "База данных была изменена.\n"
-"Хотите сохранить изменения?"
+"Сохранить изменения?"
 
 #. Password Manager window, message when trying to lock an untitled database
 msgid "An untitled database cannot be locked."
@@ -2757,7 +2757,7 @@ msgid ""
 "Longer tags have been shortened."
 msgstr ""
 "Максимум символов в теге: %d.\n"
-"Более длинные теги были сокращены."
+"Более длинные теги сокращены."
 
 #. Password Manager window, main menu, File submenu, Set Recovery Password, title of password entry dialog
 msgid "Enter master password"
@@ -2801,7 +2801,7 @@ msgstr "Истекшие записи"
 
 #. Password Manager window, main menu, View submenu, Filter submenu
 msgid "Entries that will expire soon"
-msgstr "Скоро истекающие записи"
+msgstr "Истекающие записи"
 
 #. Password Manager window, main menu, View submenu, Filter submenu
 msgid "Entries with Weak Passwords"
@@ -2826,6 +2826,26 @@ msgid ""
 msgstr ""
 "В базе данных есть записи, которые скоро истекут.\n"
 "Отфильтровать их?"
+
+#. Password Manager window, when opening database, message shown if master password has expired
+msgid "The master password has expired!"
+msgstr "Срок действия мастер-пароля истёк!"
+
+#. Password Manager window, when opening database, message shown if master password will expire soon
+msgid "The master password will expire soon."
+msgstr "Срок действия мастер-пароля скоро истекает"
+
+#. Password Manager window, when opening database, message shown if master password has expired or is about to expire soon
+msgid ""
+"Set a new master password via File |\n"
+"Change Master Password."
+msgstr ""
+"Установите новый мастер-пароль с помощью файла |\n"
+"Измените мастер-пароль."
+
+#. Password manager window, warning added to window title if master password has expired
+msgid "WARNING: Master password expired!"
+msgstr "ВНИМАНИЕ: Срок действия мастер-пароля истёк!"
 
 #. Password Manager window, text added to window title when database is locked
 msgid "Locked"
@@ -2893,7 +2913,7 @@ msgstr "Ошибка форматирования строки"
 
 #. Unicode error message
 msgid "Invalid UTF-16 character encoding"
-msgstr "Неверная кодировка символов UTF-16"
+msgstr "Неверная кодировка UTF-16"
 
 #. Unicode error message
 msgid "Error while converting string to UTF-8"
@@ -2979,6 +2999,10 @@ msgstr "Стандартно новые записи истекают спуст
 msgid "For new entries, save the following number of previous passwords:"
 msgstr "Сохраняемых предыдущих паролей для новых записей:"
 
+#. Password Manager window, Database Settings dialog, label
+msgid "Master password expires:"
+msgstr "Срок мастер-пароля истекает:"
+
 #. Password Manager window, Database Settings dialog, title of progress dialog when changing number of KDF iterations
 msgid "Changing number of KDF iterations"
 msgstr "Изменение числа итераций функции формирования ключа"
@@ -3033,7 +3057,7 @@ msgstr "Сжимать данные (Deflate)"
 
 #. Password Manager window, Database Settings dialog, compression, label
 msgid "<- Low compression, fast | High compression, slow ->"
-msgstr "<- Ниже сжатие, быстро | Выше сжатие, медленно ->"
+msgstr "<- Хуже сжатие, быстро | Лучше сжатие, медленно ->"
 
 #. Password Manager window, Edit panel, title of password entry dialog when password has been changed and needs to be confirmed
 msgid "Confirm password"
@@ -3073,7 +3097,7 @@ msgstr "Запись в базе паролей редактируется."
 
 #. Password Manager window, shutdown blocker message
 msgid "Password database contains unsaved changes."
-msgstr "База паролей содержит несохранённые изменения."
+msgstr "В базе паролей есть несохранённые изменения."
 
 #. Password Manager window, toolbar, filter info
 msgid "Filtered"
