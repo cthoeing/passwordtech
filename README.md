@@ -1,20 +1,20 @@
 # Password Tech
-Password Tech is a powerful password generator and password manager for Windows, capable of generating large amounts of cryptographically-secure passwords, pronounceable passwords, pattern-based passwords, passphrases composed of words, and scripted passwords. Passwords can be stored in encrypted databases along with user names, URLs, notes, etc. Password Tech provides lots of options to customize passwords to the users' various needs, and individual scripting with Lua gives full control over the process of password generation. Text encryption is also supported.
+Password Tech is a powerful password generator and password manager for Windows, capable of generating large amounts of cryptographically-secure passwords, pronounceable passwords, pattern-based passwords, passphrases composed of words, and scripted passwords. Passwords can be stored in encrypted databases along with user names, URLs, notes, etc. Password Tech provides a multitude of options to customize passwords to the users' various needs, and individual scripting with Lua gives full control over the process of password generation. Text encryption using AES-256 is also supported.
 
-Password Tech runs on Windows 10 and later.
+Password Tech runs on Windows 10 and later (64-bit only).
 
 ## Features
 
 - Full Unicode support
-- Cryptographically-secure (using AES, ChaCha20, SHA-256, SHA-512, BLAKE2)
+- Cryptographically-secure (using strong, industry-standard cryptographic primitives, including AES, ChaCha20, SHA-256, SHA-512, BLAKE2)
 - Password manager that handles encrypted databases
 - Databases can be protected by a regular password and/or key file
-- In addition to a regular master password, a *recovery password* can be specified
+- In addition to a regular master password, a *recovery password* can be specified, thus enabling users to encrypt a database with two different passwords
 - Passwords composed of different character sets with individual frequencies of occurrence
 - Passphrases composed of words from a word list
-- Pronounceable passwords
-- Pattern-based / formatted passwords
-- Password scripting with Lua
+- Pronounceable passwords following phonetic frequencies (trigram patterns)
+- Pattern-based / formatted passwords following user-defined rules
+- Password scripting with Lua programming language
 - Fully customizable
 - Encryption of clipboard text
 - Advanced password quality/strength estimation (using the "zxcvbn" method)
@@ -33,7 +33,7 @@ To convert existing translations from the LNG to the PO format, load the transla
 
 ## License
 
-Password Tech is distributed under the terms and conditions of the GNU General Public License v2. For more details, see the file *license.txt* that comes with every release.
+Password Tech is distributed under the terms and conditions of the GNU General Public License v2 (see *license.txt* for full license).
 
 ## Building
 
