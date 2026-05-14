@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Password Tech"
-#define MyAppVersion "3.5.9"
+#define MyAppVersion "3.6.0"
 #define MyAppPublisher "Christian Thöing"
 #define MyAppURL "http://pwgen-win.sourceforge.net"
 #define MyAppExeName "PwTech.exe"
@@ -26,14 +26,16 @@ LicenseFile=C:\Projekte\PWGen3\license.txt
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
-OutputBaseFilename=PwTech-{#MyAppVersion}-Setup
+OutputBaseFilename=PwTech-{#MyAppVersion}-setup
 Compression=lzma2
 SolidCompression=yes
 WizardStyle=modern
-ArchitecturesInstallIn64BitMode=x64
+ArchitecturesAllowed=x64compatible
+ArchitecturesInstallIn64BitMode=x64compatible
 SignTool=mssign
 SetupIconFile={#MySetupImageIcon}
 UninstallDisplayIcon={app}\{#MyAppExeName}
+AppMutex=Password Tech Password Generator by C.T.
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -54,8 +56,8 @@ Name: "useprogfolder"; Description: "{cm:DontUseAppDataPath}"; Flags: unchecked
 [Files]
 Source: "C:\Projekte\PWGen3\Release\64bit\PwTech.exe"; DestDir: "{app}"; Flags: ignoreversion; Check: Is64BitInstallMode
 Source: "C:\Projekte\PWGen3\Release\64bit\PwTech.com"; DestDir: "{app}"; DestName: "PwTech.com"; Flags: ignoreversion; Check: Is64BitInstallMode
-Source: "C:\Projekte\PWGen3\Release\32bit\PwTech.exe"; DestDir: "{app}"; Flags: ignoreversion; Check: not Is64BitInstallMode
-Source: "C:\Projekte\PWGen3\Release\32bit\PwTech.com"; DestDir: "{app}"; Flags: ignoreversion; Check: not Is64BitInstallMode
+;Source: "C:\Projekte\PWGen3\Release\32bit\PwTech.exe"; DestDir: "{app}"; Flags: ignoreversion; Check: not Is64BitInstallMode
+;Source: "C:\Projekte\PWGen3\Release\32bit\PwTech.com"; DestDir: "{app}"; Flags: ignoreversion; Check: not Is64BitInstallMode
 Source: "C:\Projekte\PWGen3\script_examples\*"; DestDir: "{app}\script_examples"; Flags: ignoreversion
 Source: "C:\Projekte\PWGen3\manual\manual.pdf"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Projekte\PWGen3\manual\scripting.pdf"; DestDir: "{app}"; Flags: ignoreversion
@@ -81,8 +83,10 @@ Filename: "https://www.paypal.com/donate/?hosted_button_id=XLLCYFJZLS5V8"; Descr
 Filename: "{app}\PwTech.ini"; Section: "Main"; Key: "UseAppDataPath"; String: "1"; Tasks: not useprogfolder
 Filename: "{app}\PwTech.ini"; Section: "Main"; Key: "Language"; String: {code:MyLang|{language}}
 
-[InstallDelete]
+[Registry]
+Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueName: "PasswordTech"; Flags: dontcreatekey uninsdeletevalue
 
+[InstallDelete]
 
 [UninstallDelete]
 Type: files; Name: "{app}\PwTech.ini"

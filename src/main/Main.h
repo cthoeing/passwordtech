@@ -1,7 +1,7 @@
 // Main.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2026 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -44,6 +44,7 @@
 #include <System.Net.HttpClient.hpp>
 #include <System.Net.HttpClientComponent.hpp>
 #include <System.Net.URLClient.hpp>
+#include "cgauges.h"
 #include <unordered_set>
 #include <atomic>
 #include <optional>
@@ -259,8 +260,6 @@ __published:	// IDE-managed Components
   TSpeedButton *WordListInfoBtn;
   TSpeedButton *CharSetHelpBtn;
   TSpeedButton *FormatPasswHelpBtn;
-  TPanel *PasswSecurityBarPanel;
-  TImage *PasswSecurityBar;
   TMenuItem *MainMenu_Help_TimerInfo;
   TMenuItem *MainMenu_File_Profile;
   TMenuItem *MainMenu_File_Profile_N1;
@@ -343,6 +342,7 @@ __published:	// IDE-managed Components
   TNetHTTPClient *NetHTTPClient;
   TMenuItem *GenerateMenu_N1;
   TMenuItem *GenerateMenu_IncludeHeader;
+  TCGauge *PasswGauge;
   void __fastcall GenerateBtnClick(TObject *Sender);
   void __fastcall IncludeCharsCheckClick(TObject *Sender);
   void __fastcall CharSetInfoBtnClick(TObject *Sender);
@@ -453,6 +453,8 @@ __published:	// IDE-managed Components
   void __fastcall PasswBoxMenu_ResetFontClick(TObject *Sender);
   void __fastcall MainMenu_File_BackupSettingsClick(TObject *Sender);
   void __fastcall MainMenu_File_RestoreSettingsClick(TObject *Sender);
+  void __fastcall PasswInfoLblMouseMove(TObject *Sender, TShiftState Shift, int X,
+          int Y);
 
 private:	// User declarations
   RandomPool& m_randPool;
@@ -466,10 +468,9 @@ private:	// User declarations
   WString m_sWLFileNameErr;
   WString m_sHelpFileName;
   WString m_sRandSeedFileName;
-  WString m_sStartupErrors;
   WString m_sCharSetHelp;
   WString m_sFormatPasswHelp;
-  int m_nNumStartupErrors;
+  std::vector<WString> m_startupErrors;
   int m_nAutoClearClipCnt;
   int m_nAutoClearPasswCnt;
   bool m_blStartup;

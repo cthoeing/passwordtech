@@ -59,8 +59,8 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
     g_blConsole = AttachConsole(ATTACH_PARENT_PROCESS);
 
     int nParamCount = ParamCount();
-    for (int nI = 1; nI <= nParamCount; nI++) {
-      WString sParam = ParamStr(nI);
+    for (int i = 1; i <= nParamCount; i++) {
+      WString sParam = ParamStr(i);
       int nParamLen = sParam.Length();
       int nPrefixLen = 1;
 
@@ -83,8 +83,8 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
           Application->ShowMainForm = false;
       }
       else if (SameText(sParam, CMDLINE_INI)) {
-        if (nI < nParamCount) {
-          WString sIniFileName = ParamStr(++nI);
+        if (i < nParamCount) {
+          WString sIniFileName = ParamStr(++i);
           if (ExtractFilePath(sIniFileName).IsEmpty())
             sIniFileName = g_sExePath + sIniFileName;
           g_cmdLineOptions.IniFileName = sIniFileName;
@@ -94,14 +94,14 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
         g_cmdLineOptions.ConfigReadOnly = true;
       }
       else if (SameText(sParam, CMDLINE_PROFILE)) {
-        if (nI < nParamCount) {
-          g_cmdLineOptions.ProfileName = ParamStr(++nI);
+        if (i < nParamCount) {
+          g_cmdLineOptions.ProfileName = ParamStr(++i);
         }
       }
       else if (SameText(sParam, CMDLINE_GENERATE)) {
         int nNum = 1;
-        if (nI < nParamCount && (nNum = StrToIntDef(ParamStr(nI+1), -1)) >= 0)
-          nI++;
+        if (i < nParamCount && (nNum = StrToIntDef(ParamStr(i+1), -1)) >= 0)
+          i++;
         g_cmdLineOptions.GenNumPassw = std::max(1, nNum);
         if (g_blConsole)
           Application->ShowMainForm = false;
@@ -110,8 +110,8 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
         Application->ShowMainForm = false;
       }
       else if (SameText(sParam, CMDLINE_OPENDB)) {
-        if (nI < nParamCount)
-          g_cmdLineOptions.PasswDbFileName = ParamStr(++nI);
+        if (i < nParamCount)
+          g_cmdLineOptions.PasswDbFileName = ParamStr(++i);
       }
       else
         g_cmdLineOptions.UnknownSwitches += "\"" + sParam + "\"; ";

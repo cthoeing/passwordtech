@@ -39,7 +39,7 @@
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    ActivePage = GeneralSheet
+    ActivePage = DescriptionSheet
     TabOrder = 0
     object GeneralSheet: TTabSheet
       Margins.Left = 4
@@ -243,6 +243,41 @@
         Time = 0.555730706015310700
         Enabled = False
         TabOrder = 8
+      end
+    end
+    object DescriptionSheet: TTabSheet
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+      Caption = 'Description'
+      ImageIndex = 3
+      DesignSize = (
+        450
+        414)
+      object DescriptionLbl: TLabel
+        Left = 10
+        Top = 20
+        Width = 171
+        Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
+        Caption = 'Database name/description:'
+      end
+      object DescriptionBox: TMemo
+        Left = 10
+        Top = 45
+        Width = 426
+        Height = 351
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
+        Anchors = [akLeft, akTop, akRight, akBottom]
+        ScrollBars = ssVertical
+        TabOrder = 0
       end
     end
     object CompressionSheet: TTabSheet

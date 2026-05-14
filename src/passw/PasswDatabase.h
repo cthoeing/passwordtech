@@ -1,7 +1,7 @@
 // PasswDatabase.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2026 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -421,6 +421,7 @@ private:
   std::unique_ptr<TFileStream> m_pFile;
   SecureWString m_sDefaultUserName;
   SecureWString m_sPasswFormatSeq;
+  SecureWString m_sDescription;
   word32 m_lDefaultPasswExpiryDays;
   word32 m_lDefaultMaxPasswHistorySize;
   word32 m_lMasterPasswExpiryDate;
@@ -435,6 +436,9 @@ private:
   // allocates RAM to protect the database master key and passwords
   // -> master key
   void Initialize(const SecureMem<word8>& key);
+
+  SecureMem<word8> DeriveCipherKey(const word8* pKey, const word8* pSalt);
+  SecureMem<word8> DeriveMacKey(const word8* pKey, const word8* pSalt);
 
   // throws exception if database is already open
   void CheckDbNotOpen(void);
@@ -559,10 +563,10 @@ public:
 
   enum {
     VERSION_HIGH = 1,
-    VERSION_LOW = 7,
+    VERSION_LOW = 8,
     VERSION = (VERSION_HIGH << 8) | VERSION_LOW,
 
-    KEY_HASH_ITERATIONS = 16384,
+    KEY_HASH_ITERATIONS = 300'000,
 
     CIPHER_AES256 = 0,
     CIPHER_CHACHA20 = 1,
@@ -573,6 +577,7 @@ public:
   };
 
   // creation/destruction
+
   PasswDatabase();
   virtual ~PasswDatabase();
 
@@ -741,6 +746,10 @@ public:
   __property SecureWString PasswFormatSeq =
   { read=m_sPasswFormatSeq, write=m_sPasswFormatSeq };
 
+  // database name/description
+  __property SecureWString Description =
+  { read=m_sDescription, write=m_sDescription };
+
   // default number of expiry days for new passwords
   __property word32 DefaultPasswExpiryDays =
   { read=m_lDefaultPasswExpiryDays, write=m_lDefaultPasswExpiryDays };
@@ -779,6 +788,7 @@ public:
   __property int CompressionLevel =
   { read=m_nCompressionLevel, write=m_nCompressionLevel };
 
+  // master and recovery password encoded as UTF-8
   __property bool IsPasswUtf8 =
   { read=m_blPasswUtf8, write=m_blPasswUtf8 };
 };

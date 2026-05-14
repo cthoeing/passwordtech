@@ -1,7 +1,7 @@
 // SecureMem.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2026 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -217,19 +217,47 @@ public:
     std::swap(m_lClearMark, other.m_lClearMark);
   }
 
-  // copy elements to data array at specified position
+  // copy elements from source array to this data array
   // -> position at which first byte is copied
   // -> pointer to source array
   // -> number of elements to copy
-  void Copy(word32 lOffset,
+  void CopyFrom(word32 lOffset,
     const T* pSrc,
-    word32 lSrcSize)
+    word32 lCount)
   {
-    if (lOffset + lSrcSize > m_lSize)
-      throw SecureMemError("SecureMem::Copy() overflow");
+    if (lOffset + lCount > m_lSize)
+      throw SecureMemError("SecureMem::CopyFrom() overflow");
 
-    _tmemcpy(m_pData + lOffset, m_lSize - lOffset, pSrc, lSrcSize);
+    _tmemcpy(m_pData + lOffset, m_lSize - lOffset, pSrc, lCount);
   }
+
+  // copy all elements from source array to this data array,
+  // number of elements corresponding to size of this array
+  void CopyFrom(const T* pSrc)
+  {
+    _tmemcpy(m_pData, m_lSize, pSrc, m_lSize);
+  }
+
+  // copy elements from this data array to destination array
+  // -> position at which first byte is copied
+  // -> pointer to destination array
+  // -> number of elements to copy
+  void CopyTo(word32 lOffset,
+    T* pDest,
+    word32 lCount) const
+  {
+     if (lOffset + lCount > m_lSize)
+       throw SecureMemError("SecureMem::CopyTo() overflow");
+
+     _tmemcpy(pDest, lCount, m_pData + lOffset, lCount);
+  }
+
+  // copies all elements to destination array
+  void CopyTo(T* pDest) const
+  {
+    _tmemcpy(pDest, m_lSize, m_pData, m_lSize);
+  }
+
 
   // append content from another object
   void Append(const SecureMem& item)

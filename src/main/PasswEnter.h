@@ -1,7 +1,7 @@
 // PasswEnter.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2026 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -36,6 +36,8 @@
 #include "SecureMem.h"
 #include "UnicodeUtil.h"
 #include <Vcl.Dialogs.hpp>
+#include <Vcl.Imaging.jpeg.hpp>
+#include "cgauges.h"
 #include <map>
 #include <array>
 
@@ -46,7 +48,9 @@ PASSWENTER_FLAG_CONFIRMPASSW          = 0x0004,
 PASSWENTER_FLAG_ENABLEOLDVER          = 0x0008,
 PASSWENTER_FLAG_ENABLEPASSWCACHE      = 0x0010,
 PASSWENTER_FLAG_ENABLEKEYFILE         = 0x0020,
-PASSWENTER_FLAG_ENABLEKEYFILECREATION = 0x0040;
+PASSWENTER_FLAG_ENABLEKEYFILECREATION = 0x0040,
+PASSWENTER_FLAG_PASSWQUALITY          = 0x0080,
+PASSWENTER_FLAG_ALLOWSKIP             = 0x0100;
 
 class AutoClearPasswDlg
 {
@@ -83,6 +87,11 @@ __published:
     TComboBox *KeyFileBox;
     TOpenDialog *OpenDlg;
     TSaveDialog *SaveDlg;
+  TCheckBox *PasswQualityCheck;
+  TBevel *Separator;
+  TLabel *PasswInfoLbl;
+  TCGauge *PasswGauge;
+  TButton *SkipBtn;
   void __fastcall OKBtnClick(TObject *Sender);
   void __fastcall FormActivate(TObject *Sender);
   void __fastcall FormShow(TObject *Sender);
@@ -91,11 +100,14 @@ __published:
   void __fastcall BrowseBtnClick(TObject *Sender);
   void __fastcall CreateKeyFileBtnClick(TObject *Sender);
   void __fastcall TogglePasswBtnClick(TObject *Sender);
+  void __fastcall PasswBoxChange(TObject *Sender);
+  void __fastcall PasswQualityCheckClick(TObject *Sender);
 private:
   int m_nFlags;
   int m_nExpiryCountdown;
   SecureWString m_sEncryptedPassw;
   std::map<TForm*,std::array<int,4>> m_formDim;
+  bool m_blEstPasswQuality;
 
 public:
   virtual __fastcall TPasswEnterDlg(TComponent* AOwner);

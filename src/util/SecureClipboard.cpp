@@ -1,7 +1,7 @@
 // SecureClipboard.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2026 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -53,6 +53,7 @@ bool SecureClipboard::ClearData(bool blForce, UnicodeString* psErrorMsg,
     return true;
 
   bool blSuccess = false;
+  WString sErrMsg;
   TClipboard* pClipboard = Clipboard();
   for (int a = 0; a < std::max(1, nAttempts); a++) {
     if (a > 0) {
@@ -61,13 +62,19 @@ bool SecureClipboard::ClearData(bool blForce, UnicodeString* psErrorMsg,
     try {
       pClipboard->Open();
       if (pClipboard->HasFormat(CF_UNICODETEXT)) {
-        HGLOBAL hText = (HGLOBAL) pClipboard->GetAsHandle(CF_UNICODETEXT);
+        HGLOBAL hText = reinterpret_cast<HGLOBAL>(
+          pClipboard->GetAsHandle(CF_UNICODETEXT));
         if (hText != nullptr) {
           wchar_t* pwszText = reinterpret_cast<wchar_t*>(GlobalLock(hText));
-          if (pwszText != nullptr && *pwszText != '\0') {
+          if (pwszText != nullptr) {
             size_t len = wcslen(pwszText);
-            bool blClear = true;
-            if (!blForce) {
+            bool blClear = false;
+            // defensive check against len==0, string should not be empty
+            // as HasFormat() returned true previously
+            if (len > 0 && blForce) {
+              blClear = true;
+            }
+            else if (len > 0) {
               SecureMem<word8> checkDigest(32);
               sha256(reinterpret_cast<const word8*>(pwszText),
                 std::min(DIGEST_MAX_SRC_LEN, len * sizeof(wchar_t)),
@@ -89,9 +96,7 @@ bool SecureClipboard::ClearData(bool blForce, UnicodeString* psErrorMsg,
       blSuccess = true;
     }
     catch (const EClipboardException& e) {
-      if (psErrorMsg) {
-        *psErrorMsg = e.Message;
-      }
+      sErrMsg = e.Message;
       // might be an error due to invalid access, wait a bit and
       // try again, if desired
       continue;
@@ -99,24 +104,22 @@ bool SecureClipboard::ClearData(bool blForce, UnicodeString* psErrorMsg,
     // for exceptions unrelated to clipboard access, it doesn't make sense
     // to try the same procedure again
     catch (const Exception& e) {
-      if (psErrorMsg) {
-        *psErrorMsg = e.Message;
-      }
+      sErrMsg = e.Message;
     }
     catch (const std::exception& e) {
-      if (psErrorMsg) {
-        *psErrorMsg = e.what();
-      }
+      sErrMsg = e.what();
     }
     catch (...) {
-      if (psErrorMsg) {
-        *psErrorMsg = "Unknown error";
-      }
+      sErrMsg = "Unknown error";
     }
     break;
   }
 
   pClipboard->Close();
+
+  if (!blSuccess && psErrorMsg != nullptr) {
+    *psErrorMsg = sErrMsg;
+  }
 
   return blSuccess;
 }

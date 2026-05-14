@@ -1,7 +1,7 @@
 // UnicodeUtil.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2026 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -27,8 +27,6 @@
 #include "Language.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
-
-//const int FORMAT_MAX_LEN = 1500;
 
 static void formatError(void)
 {
@@ -109,7 +107,6 @@ int GetNumOfUnicodeChars(const wchar_t* pwszStr)
   int nChars = 0;
 
   for (; *pwszStr != '\0'; pwszStr++, nChars++) {
-    //if (word32(*pwszStr - 0xD800) <= 0x3FF)
     if (*pwszStr >= 0xd800 && *pwszStr <= 0xdbff)
       pwszStr++;
   }

@@ -1,7 +1,7 @@
 // PasswEnter.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2026 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -29,7 +29,10 @@
 #include "MemUtil.h"
 #include "PasswDatabase.h"
 #include "RandomPool.h"
+#include "zxcvbn.h"
+#include "UnicodeUtil.h"
 //---------------------------------------------------------------------
+#pragma link "cgauges"
 #pragma resource "*.dfm"
 TPasswEnterDlg *PasswEnterDlg;
 
@@ -52,7 +55,7 @@ void AutoClearPasswDlg::Clear()
 
 //---------------------------------------------------------------------
 __fastcall TPasswEnterDlg::TPasswEnterDlg(TComponent* AOwner)
-  : TForm(AOwner), /*m_pParentForm(MainForm),*/ m_nExpiryCountdown(0)
+  : TForm(AOwner), m_nExpiryCountdown(0), m_blEstPasswQuality(false)
 {
   SetFormComponentsAnchors(this);
 
@@ -64,8 +67,11 @@ __fastcall TPasswEnterDlg::TPasswEnterDlg(TComponent* AOwner)
     TRLCaption(PasswLbl);
     TRLCaption(ConfirmPasswLbl);
     TRLCaption(RememberPasswCheck);
+    TRLCaption(PasswQualityCheck);
     TRLCaption(KeyFileLbl);
+    TRLCaption(SkipBtn);
     KeyFileBox->Items->Strings[0] = TRL(KeyFileBox->Items->Strings[0]);
+    KeyFileBox->ItemIndex = 0;
     TRLCaption(OKBtn);
     TRLCaption(CancelBtn);
     TRLHint(TogglePasswBtn);
@@ -89,20 +95,18 @@ __fastcall TPasswEnterDlg::~TPasswEnterDlg()
 void __fastcall TPasswEnterDlg::LoadConfig(void)
 {
   Width = g_pIni->ReadInteger(CONFIG_ID, "WindowWidth", Width);
-  //DisplayPasswCheck->Checked = g_pIni->ReadBool(CONFIG_ID, "DisplayPassw", false);
-  //DisplayPasswCheckClick(this);
-  //RememberPasswCheck->Checked = g_pIni->ReadBool(CONFIG_ID, "RememberPassw", false);
   RememberPasswTimeSpinBtn->Position = g_pIni->ReadInteger(CONFIG_ID,
       "RememberPasswTime", 60);
+  PasswQualityCheck->Checked = g_pIni->ReadBool(CONFIG_ID,
+    "EstimatePasswQuality", true);
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswEnterDlg::SaveConfig(void)
 {
   g_pIni->WriteInteger(CONFIG_ID, "WindowWidth", Width);
-  //g_pIni->WriteBool(CONFIG_ID, "DisplayPassw", DisplayPasswCheck->Checked);
-  //g_pIni->WriteBool(CONFIG_ID, "RememberPassw", RememberPasswCheck->Checked);
   g_pIni->WriteInteger(CONFIG_ID, "RememberPasswTime",
     RememberPasswTimeSpinBtn->Position);
+  g_pIni->WriteBool(CONFIG_ID, "EstimatePasswQuality", PasswQualityCheck->Checked);
 }
 //---------------------------------------------------------------------
 void __fastcall TPasswEnterDlg::ClearPasswCache(void)
@@ -119,10 +123,12 @@ void __fastcall TPasswEnterDlg::OKBtnClick(TObject *Sender)
 {
   WString sErrMsg;
   if (m_nFlags & PASSWENTER_FLAG_ENABLEKEYFILE) {
-    if (GetEditBoxTextLen(PasswBox) == 0 && KeyFileBox->ItemIndex == 0)
+    if (GetEditBoxTextLen(PasswBox) == 0 && KeyFileBox->ItemIndex <= 0)
       sErrMsg = TRL("Enter a password and/or select a key file.");
-    else if (KeyFileBox->ItemIndex > 0 && !FileExists(KeyFileBox->Text))
-      sErrMsg = TRL("The selected key file does not exist.");
+    else if (KeyFileBox->ItemIndex > 0 && !FileExists(KeyFileBox->Text)) {
+      sErrMsg = TRLFormat("The selected key file does not exist:\n%1",
+        { KeyFileBox->Text });
+    }
   }
   else if (GetEditBoxTextLen(PasswBox) == 0)
     sErrMsg = TRL("Password is empty.");
@@ -163,6 +169,13 @@ int __fastcall TPasswEnterDlg::Execute(int nFlags,
   TForm* pParentForm,
   bool blUpdateScreenPos)
 {
+  if (PasswBox->GetTextLen() != 0) {
+    Clear();
+#ifdef _DEBUG
+    ShowMessage("Passwords not cleared after closing!");
+#endif
+  }
+
   bool blPasswCache = nFlags & PASSWENTER_FLAG_ENABLEPASSWCACHE;
 
   if (blPasswCache && !m_sEncryptedPassw.IsEmpty()) {
@@ -171,15 +184,23 @@ int __fastcall TPasswEnterDlg::Execute(int nFlags,
     return mrOk;
   }
 
-  if (nFlags & PASSWENTER_FLAG_ENCRYPT) {
-    Caption = sTitle.IsEmpty() ? TRL("Encrypt") : sTitle;
-  }
-  else if (nFlags & PASSWENTER_FLAG_DECRYPT) {
-    Caption = sTitle.IsEmpty() ? TRL("Decrypt") : sTitle;
-  }
-  else {
+  if (!sTitle.IsEmpty()) {
     Caption = sTitle;
   }
+  else if (nFlags & PASSWENTER_FLAG_ENCRYPT) {
+    Caption = TRL("Encrypt");
+  }
+  else if (nFlags & PASSWENTER_FLAG_DECRYPT) {
+    Caption = TRL("Decrypt");
+  }
+  else {
+    Caption = TRL("Enter password");
+  }
+
+  PasswQualityCheck->Enabled = nFlags & (PASSWENTER_FLAG_PASSWQUALITY |
+    PASSWENTER_FLAG_ENCRYPT);
+  PasswGauge->Progress = 0;
+  PasswInfoLbl->Caption = WString();
 
   TogglePasswBtn->Down = true;
   TogglePasswBtnClick(this);
@@ -202,7 +223,8 @@ int __fastcall TPasswEnterDlg::Execute(int nFlags,
   BrowseBtn->Enabled = blKeyFile;
   CreateKeyFileBtn->Enabled = blKeyFile &&
     (nFlags & PASSWENTER_FLAG_ENABLEKEYFILECREATION);
-  //KeyFileBox->ItemIndex = 0;
+
+  SkipBtn->Visible = nFlags & PASSWENTER_FLAG_ALLOWSKIP;
 
   m_nFlags = nFlags;
   if (!pParentForm)
@@ -266,7 +288,9 @@ SecureMem<word8> __fastcall TPasswEnterDlg::GetPasswBinary(bool blUtf8)
 //---------------------------------------------------------------------------
 void __fastcall TPasswEnterDlg::Clear(void)
 {
+  PasswBox->Tag = 1;
   ClearEditBoxTextBuf(PasswBox, 256);
+  PasswBox->Tag = 0;
   if (m_nFlags & PASSWENTER_FLAG_CONFIRMPASSW)
     ClearEditBoxTextBuf(ConfirmPasswBox, 256);
   KeyFileBox->ItemIndex = 0;
@@ -279,8 +303,6 @@ void __fastcall TPasswEnterDlg::FormActivate(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TPasswEnterDlg::FormShow(TObject *Sender)
 {
-  //Top = m_pParentForm->Top + (m_pParentForm->Height - Height) / 2;
-  //Left = m_pParentForm->Left + (m_pParentForm->Width - Width) / 2;
   TopMostManager::GetInstance().SetForm(this);
 }
 //---------------------------------------------------------------------------
@@ -305,8 +327,8 @@ void __fastcall TPasswEnterDlg::BrowseBtnClick(TObject *Sender)
 
   if (blSuccess) {
     int nIndex = KeyFileBox->Items->IndexOf(OpenDlg->FileName);
-    KeyFileBox->ItemIndex = (nIndex < 0) ?
-      nIndex = KeyFileBox->Items->Add(OpenDlg->FileName) : nIndex;
+    KeyFileBox->ItemIndex = (nIndex > 0) ? nIndex :
+      KeyFileBox->Items->Add(OpenDlg->FileName);
   }
 }
 //---------------------------------------------------------------------------
@@ -322,8 +344,8 @@ void __fastcall TPasswEnterDlg::CreateKeyFileBtnClick(TObject *Sender)
       PasswDatabase::CreateKeyFile(sFileName);
       MsgBox(TRL("Key file successfully created."), MB_ICONINFORMATION);
       int nIndex = KeyFileBox->Items->IndexOf(sFileName);
-      KeyFileBox->ItemIndex = (nIndex < 0) ?
-        KeyFileBox->Items->Add(sFileName) : nIndex;
+      KeyFileBox->ItemIndex = (nIndex > 0) ? nIndex :
+        KeyFileBox->Items->Add(sFileName);
     }
     catch (Exception& e) {
       MsgBox(TRLFormat("Error while creating key file:\n%1.", { e.Message }),
@@ -334,7 +356,9 @@ void __fastcall TPasswEnterDlg::CreateKeyFileBtnClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TPasswEnterDlg::TogglePasswBtnClick(TObject *Sender)
 {
+  PasswBox->Tag = 1;
   PasswBox->PasswordChar = TogglePasswBtn->Down ? PASSWORD_CHAR : '\0';
+  PasswBox->Tag = 0;
   ConfirmPasswBox->PasswordChar = PasswBox->PasswordChar;
 }
 //---------------------------------------------------------------------------
@@ -352,3 +376,40 @@ void __fastcall TPasswEnterDlg::OnEndSession(void)
   }
 }
 //---------------------------------------------------------------------------
+void __fastcall TPasswEnterDlg::PasswBoxChange(TObject *Sender)
+{
+  if (!(m_nFlags & (PASSWENTER_FLAG_PASSWQUALITY | PASSWENTER_FLAG_ENCRYPT)) ||
+      PasswBox->Tag != 0 || !Visible)
+    return;
+
+  if (PasswBox->GetTextLen() == 0) {
+    PasswGauge->Progress = 0;
+    PasswInfoLbl->Caption = WString();
+    return;
+  }
+
+  WString sInfo;
+  SecureWString sPassw = GetPassw();
+  if (m_blEstPasswQuality) {
+    double dPasswEntropyBits = g_config.UseAdvancedPasswEst ?
+      ZxcvbnMatch(WStringToUtf8_s(sPassw).c_str(), nullptr, nullptr) :
+      PasswordGenerator::EstimatePasswSecurity(sPassw);
+
+    SetPasswQualityBar(PasswGauge, dPasswEntropyBits);
+
+    sInfo = IntToStr(FloorEntropyBits(dPasswEntropyBits)) + " / ";
+  }
+  sInfo += TRLFormat("%1 ch.", { IntToStr(GetNumOfUnicodeChars(sPassw)) });
+  PasswInfoLbl->Caption = sInfo;
+}
+//---------------------------------------------------------------------------
+void __fastcall TPasswEnterDlg::PasswQualityCheckClick(TObject *Sender)
+{
+  m_blEstPasswQuality = PasswQualityCheck->Enabled && PasswQualityCheck->Checked;
+  PasswGauge->Enabled = m_blEstPasswQuality;
+  if (!m_blEstPasswQuality)
+    PasswGauge->Progress = 0;
+  PasswBoxChange(this);
+}
+//---------------------------------------------------------------------------
+

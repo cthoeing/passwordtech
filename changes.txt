@@ -1,9 +1,35 @@
 ﻿                            Password Tech
                             =============
-                Copyright (c) 2002-2025 by Christian Thöing
+                Copyright (c) 2002-2026 by Christian Thöing
 
 
-Version 3.5.10
+Version 3.6.0
+
+NEW FEATURES:
+
+- Added option to estimate password quality (along with password quality bar)
+  to "Enter password" dialog
+- PassCube: Added database name/description box to password settings
+- PassCube: Password confirmation can be skipped by pressing "Skip" button in
+  "Enter password" dialog
+
+CHANGES & IMPROVEMENTS:
+
+- Redesigned password quality bar: Color (ranging from red over yellow to
+  green) and length (full length = 128 bits) indicate password strength
+- Password database format version 1.8: (a) Use Encrypt-then-MAC scheme,
+  (b) use different keys for encryption and HMAC, (c) always use salt (random
+  32-byte sequence) to derive encryption key when recovery key is set
+- Support for base32-encoded Donor Keys 
+  
+FIXES:
+
+- PassCube: Adding/modifying database entry: Changed password accepted when
+  pressing "Cancel" button in "Confirm password" dialog
+
+----------
+
+Version 3.5.10 (2025-12-30)
 
 IMPORTANT NOTE: As of version 3.5.10, Password Tech no longer supports 32-bit
 versions of Windows. Only 64-bit builds will officially be provided. If you're

@@ -1,7 +1,7 @@
 // PasswManager.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2026 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -38,6 +38,7 @@
 #include <Vcl.BaseImageCollection.hpp>
 #include <Vcl.ImageCollection.hpp>
 #include <Vcl.VirtualImageList.hpp>
+#include "cgauges.h"
 #include <map>
 #include <list>
 #include <optional>
@@ -224,7 +225,6 @@ __published:	// IDE-managed Components
     TMenuItem *SearchMenu_N1;
     TSpeedButton *PasswQualityBtn;
     TPanel *PasswSecurityBarPanel;
-    TImage *PasswSecurityBar;
     TLabel *PasswSecurityLbl;
     TSpeedButton *UrlBtn;
     TImageCollection *ImageCollection32;
@@ -242,6 +242,7 @@ __published:	// IDE-managed Components
   TMenuItem *MainMenu_File_ClearRecentFiles;
   TMenuItem *MainMenu_File_N6;
   TSpeedButton *ToggleNotesBtn;
+  TCGauge *PasswGauge;
   void __fastcall MainMenu_File_NewClick(TObject *Sender);
   void __fastcall DbViewSelectItem(TObject *Sender,
     TListItem *Item, bool Selected);
@@ -332,7 +333,6 @@ __published:	// IDE-managed Components
     void __fastcall TitleBoxKeyPress(TObject *Sender, System::WideChar &Key);
     void __fastcall PasswBoxChange(TObject *Sender);
     void __fastcall PasswQualityBtnClick(TObject *Sender);
-    void __fastcall EditPanelResize(TObject *Sender);
     void __fastcall PasswSecurityBarPanelMouseMove(TObject *Sender, TShiftState Shift,
           int X, int Y);
     void __fastcall UrlBtnClick(TObject *Sender);
@@ -363,7 +363,7 @@ private:	// User declarations
   int m_nTagsSortOrderFactor;
   int m_nSearchMode;
   int m_nLockSelItemIndex;
-  int m_nPasswEntropyBits;
+  double m_dPasswEntropyBits;
   std::vector<int> m_lockSelTags;
   bool m_blItemChanged;
   bool m_blItemPasswChangeConfirm;
@@ -419,7 +419,6 @@ private:	// User declarations
     std::function<bool(const SecureMem<word8>&)> checkFunc,
     bool blPasswUtf8);
   void __fastcall SetRecoveryKeyDependencies(void);
-  void __fastcall SetPasswQualityBarWidth(void);
   void __fastcall EstimatePasswQuality(const wchar_t* pwszPassw = nullptr);
   void __fastcall ApplyDbViewItemSelection(TListItem* pItem = nullptr);
   void __fastcall ApplyTagViewItemSelection(void);

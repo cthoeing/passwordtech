@@ -1,7 +1,7 @@
 // PasswMngDbSettings.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2026 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -69,6 +69,7 @@ __fastcall TPasswDbSettingsDlg::TPasswDbSettingsDlg(TComponent* Owner)
   if (g_pLangSupp) {
     TRLCaption(this);
     TRLCaption(GeneralSheet);
+    TRLCaption(DescriptionSheet);
     TRLCaption(CompressionSheet);
     TRLCaption(SecuritySheet);
     TRLCaption(DefUserNameLbl);
@@ -80,6 +81,7 @@ __fastcall TPasswDbSettingsDlg::TPasswDbSettingsDlg(TComponent* Owner)
     TRLCaption(PasswHistoryLbl);
     TRLCaption(EnableCompressionCheck);
     TRLCaption(CompressionLevelLbl);
+    TRLCaption(DescriptionLbl);
 
     TRLHint(PasswGenTestBtn);
     TRLHint(CalcRoundsBtn);
@@ -108,6 +110,7 @@ PasswDbSettings __fastcall TPasswDbSettingsDlg::GetSettings(void)
   PasswDbSettings s;
   s.DefaultUserName = GetEditBoxTextBuf(DefUserNameBox);
   s.PasswFormatSeq = GetEditBoxTextBuf(PasswFormatSeqBox);
+  s.Description = GetEditBoxTextBuf(DescriptionBox);
   s.DefaultExpiryDays = DefaultExpirySpinBtn->Position;
   s.DefaultMaxPasswHistorySize = PasswHistorySpinBtn->Position;
   if (MasterPasswExpiryCheck->Checked) {
@@ -130,6 +133,7 @@ void __fastcall TPasswDbSettingsDlg::SetSettings(const PasswDbSettings& s,
 {
   SetEditBoxTextBuf(DefUserNameBox, s.DefaultUserName.c_str());
   SetEditBoxTextBuf(PasswFormatSeqBox, s.PasswFormatSeq.c_str());
+  SetEditBoxTextBuf(DescriptionBox, s.Description.c_str());
   DefaultExpirySpinBtn->Position = s.DefaultExpiryDays;
   PasswHistorySpinBtn->Position = s.DefaultMaxPasswHistorySize;
   int nYear, nMonth, nDay;

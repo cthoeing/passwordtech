@@ -1,7 +1,7 @@
 // Main.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de> <c.thoeing@web.de>
+// Copyright (c) 2002-2026 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -78,6 +78,7 @@
 #endif
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
+#pragma link "cgauges"
 #pragma resource "*.dfm"
 TMainForm *MainForm;
 
@@ -244,7 +245,7 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
   : TForm(Owner),
     m_randPool(RandomPool::GetInstance()),
     m_entropyMng(EntropyManager::GetInstance()),
-    m_blStartup(true), m_nNumStartupErrors(0), m_passwGen(&m_randPool),
+    m_blStartup(true), m_passwGen(&m_randPool),
     m_nAutoClearClipCnt(0), m_nAutoClearPasswCnt(0), m_pUpdCheckThread(nullptr)
 {
 //  SetSecureMemoryManager();
@@ -450,7 +451,7 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
       }
       ));
 
-  PasswSecurityBarPanel->Width = 0;
+  PasswGauge->Progress = 0;
 
   OpenDlg->Filter = FormatW("%1 (*.*)|*.*|%2 (*.txt)|*.txt|%3 (*.tgm)|"
       "*.tgm|%4 (*.lua)|*.lua",
@@ -494,13 +495,12 @@ __fastcall TMainForm::~TMainForm()
   // uninitialize the OLE library
   OleUninitialize();
 
-  CloseHandle(g_hAppMutex);
-
-  //g_pRandPool = nullptr;
-
   // restart the program
-  if (g_terminateAction == TerminateAction::RestartProgram)
+  if (g_terminateAction == TerminateAction::RestartProgram) {
+    // Close mutex explicitly when restarting, otherwise new instance won't run
+    CloseHandle(g_hAppMutex);
     ExecuteShellOp(Application->ExeName, false);
+  }
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::FormClose(TObject *Sender, TCloseAction &Action)
@@ -599,15 +599,28 @@ void __fastcall TMainForm::FormActivate(TObject *Sender)
   if (blFirstTime) {
     blFirstTime = false;
 
+    auto styleServ = StyleServices();
+    if (!styleServ->IsSystemStyle) {
+      TColor color = StyleServices()->GetStyleColor(scWindow);
+      PasswGauge->BackColor = color;
+      PasswEnterDlg->PasswGauge->BackColor = color;
+      PasswMngForm->PasswGauge->BackColor = color;
+      MPPasswGenForm->PasswGauge->BackColor = color;
+    }
+
     Application->BringToFront();
 
     MainMenu_Options_AlwaysOnTopClick(this);
 
-    if (m_nNumStartupErrors != 0) {
+    if (!m_startupErrors.empty()) {
+      WString sErrors;
+      for (const auto& s : m_startupErrors) {
+        sErrors += "\n- " + s;
+      }
       MsgBox(TRLFormat("%1 encountered %2 error(s) during startup:",
-        { PROGRAM_NAME, IntToStr(m_nNumStartupErrors) }) +
-        m_sStartupErrors, MB_ICONWARNING);
-      m_sStartupErrors = WString();
+        { PROGRAM_NAME, IntToStr(static_cast<int>(m_startupErrors.size())) }) +
+        sErrors, MB_ICONWARNING);
+      m_startupErrors.clear();
     }
 
     if (g_donorInfo.Valid != DONOR_KEY_VALID &&
@@ -675,9 +688,7 @@ void __fastcall TMainForm::OnUpdCheckThreadTerminate(TObject* Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::DelayStartupError(const WString& sMsg)
 {
-  m_nNumStartupErrors++;
-  m_sStartupErrors += FormatW("\n\n%1) %2",
-    { IntToStr(m_nNumStartupErrors), sMsg });
+  m_startupErrors.push_back(sMsg);
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::LoadLangConfig(void)
@@ -803,7 +814,7 @@ bool __fastcall TMainForm::ChangeLanguage(const WString& sLangFileName)
     TRLHint(FormatPasswHelpBtn);
     //TRLHint(GenerateBtn3);
     TRLHint(TogglePasswBtn);
-    TRLHint(PasswSecurityBar);
+    TRLHint(PasswInfoLbl);
     TRLHint(ReloadProfileBtn);
     TRLHint(AddProfileBtn);
     TRLHint(ReloadScriptBtn);
@@ -1652,19 +1663,22 @@ void __fastcall TMainForm::ShowPasswInfo(int nPasswLen,
   bool blCommonPassw,
   bool blEstimated)
 {
-  PasswSecurityBarPanel->Width = std::max<int>(std::min(dPasswBits / 128.0, 1.0) *
-      PasswSecurityBar->Width, 4);
+  SetPasswQualityBar(PasswGauge, dPasswBits);
   WString sCaption;
+  static WString sDefaultHint;
+  if (sDefaultHint.IsEmpty()) {
+    sDefaultHint = PasswInfoLbl->Hint;
+  }
   if (blCommonPassw) {
     sCaption = "**";
     PasswInfoLbl->Hint = TRL("Matches common password!");
   }
-  else if (blEstimated) {
-    sCaption = "*";
-    PasswInfoLbl->Hint = WString(); //TRL("Estimated");
+  else {
+    if (blEstimated) {
+      sCaption = "*";
+    }
+    PasswInfoLbl->Hint = sDefaultHint;
   }
-  else
-    PasswInfoLbl->Hint = WString();
   sCaption += TRLFormat("%1 bits / %2 characters",
     { FormatFloat("0.0", dPasswBits), IntToStr(nPasswLen) });
   PasswInfoLbl->Caption = sCaption;
@@ -1727,7 +1741,7 @@ bool __fastcall TMainForm::ApplyConfig(const Configuration& config)
   g_sNewline = NewlineCharToString(config.FileNewlineChar);
 
   if (config.LaunchSystemStartup != g_config.LaunchSystemStartup) {
-    static const WString APP_VAL = "PasswordTech",
+    const WString APP_VAL = "PasswordTech",
       REG_KEY = "Software\\Microsoft\\Windows\\CurrentVersion\\Run";
     bool blSuccess = false;
     std::unique_ptr<TRegistry> pRegistry(new TRegistry());
@@ -1790,7 +1804,6 @@ bool __fastcall TMainForm::ApplyConfig(const Configuration& config)
 //---------------------------------------------------------------------------
 int __fastcall TMainForm::ActivateHotKeys(const HotKeyList& hotKeys)
 {
-  int nId = 0;
   WString sErrMsg;
 
   if (!m_hotKeys.empty())
@@ -1810,9 +1823,8 @@ int __fastcall TMainForm::ActivateHotKeys(const HotKeyList& hotKeys)
     if (ss.Contains(ssShift))
       lMod |= MOD_SHIFT;
 
-    if (RegisterHotKey(Handle, nId, lMod, wKey)) {
+    if (RegisterHotKey(Handle, static_cast<int>(m_hotKeys.size()), lMod, wKey)) {
       m_hotKeys.push_back(kv.second);
-      nId++;
     }
     else {
       if (sErrMsg.IsEmpty())
@@ -1828,13 +1840,13 @@ int __fastcall TMainForm::ActivateHotKeys(const HotKeyList& hotKeys)
       MsgBox(sErrMsg, MB_ICONERROR);
   }
 
-  return nId;
+  return static_cast<int>(m_hotKeys.size());
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::DeactivateHotKeys(void)
 {
-  for (int nI = 0; nI < static_cast<int>(m_hotKeys.size()); nI++) {
-    UnregisterHotKey(Handle, nI);
+  for (word32 i = 0; i < m_hotKeys.size(); i++) {
+    UnregisterHotKey(Handle, static_cast<int>(i));
   }
   m_hotKeys.clear();
 }
@@ -2570,7 +2582,8 @@ void __fastcall TMainForm::GeneratePassw(GeneratePasswDest dest,
         if (pScriptThread) {
           pScriptThread->CallGenerate(
             qPasswCnt + 1,
-            pwszPassw, dPasswSec);
+            pwszPassw,
+            dPasswSec);
           int nTimeouts = 0;
           while (!cancelToken) {
             TWaitResult wr = pScriptThread->ResultEvent->WaitFor(1000);
@@ -3328,7 +3341,7 @@ void __fastcall TMainForm::TimerTick(TObject *Sender)
     ClearEditBoxTextBuf(PasswBox);
     PasswInfoLbl->Caption = TRL("Click on \"Generate\"");
     PasswInfoLbl->Hint = WString();
-    PasswSecurityBarPanel->Width = 0;
+    PasswGauge->Progress = 0;
   }
 }
 //---------------------------------------------------------------------------
@@ -4045,8 +4058,9 @@ void __fastcall TMainForm::MainMenu_Tools_ProvideAddEntropy_FromFileClick(
 void __fastcall TMainForm::PasswGroupMouseMove(TObject *Sender,
   TShiftState Shift, int X, int Y)
 {
-  if (Shift.Contains(ssLeft))
+  if (Shift.Contains(ssLeft)) {
     StartEditBoxDragDrop(PasswBox);
+  }
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::SpecifyLengthCheckClick(TObject *Sender)
@@ -4203,7 +4217,7 @@ void __fastcall TMainForm::MainMenu_Tools_DetermRandGen_SetupClick(TObject *Send
 {
   SecureWString sPassw;
   bool blSuccess = PasswEnterDlg->Execute(PASSWENTER_FLAG_CONFIRMPASSW |
-      PASSWENTER_FLAG_ENABLEPASSWCACHE,
+      PASSWENTER_FLAG_ENABLEPASSWCACHE | PASSWENTER_FLAG_PASSWQUALITY,
       TRL("Master password"), this) == mrOk;
 
   if (blSuccess)
@@ -4549,6 +4563,14 @@ void __fastcall TMainForm::MainMenu_File_RestoreSettingsClick(TObject *Sender)
   else {
     MsgBox(TRL("Configuration settings will not be saved until\n"
      "the next time the program is started."), MB_ICONINFORMATION);
+  }
+}
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::PasswInfoLblMouseMove(TObject *Sender, TShiftState Shift,
+          int X, int Y)
+{
+  if (Shift.Contains(ssLeft)) {
+    StartEditBoxDragDrop(PasswBox);
   }
 }
 //---------------------------------------------------------------------------

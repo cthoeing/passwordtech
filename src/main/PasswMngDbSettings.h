@@ -1,7 +1,7 @@
 // PasswMngDbSettings.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2026 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -34,6 +34,7 @@
 struct PasswDbSettings {
   SecureWString DefaultUserName;
   SecureWString PasswFormatSeq;
+  SecureWString Description;
   word32 DefaultExpiryDays = 0;
   word32 MasterPasswExpiryDate = 0;
   word32 DefaultMaxPasswHistorySize = 0;
@@ -76,6 +77,9 @@ __published:	// IDE-managed Components
   TCheckBox *MasterPasswExpiryCheck;
   TDateTimePicker *ExpiryDatePicker;
   TLabel *ExpiryInfoLbl;
+  TTabSheet *DescriptionSheet;
+  TLabel *DescriptionLbl;
+  TMemo *DescriptionBox;
   void __fastcall FormShow(TObject *Sender);
   void __fastcall OKBtnClick(TObject *Sender);
   void __fastcall CalcRoundsBtnClick(TObject *Sender);

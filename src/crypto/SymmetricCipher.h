@@ -1,7 +1,7 @@
 // SymmetricCipher.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2026 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -61,12 +61,12 @@ public:
   // get size of initialization vector in bytes
   virtual word32 GetIVSize(void) const = 0;
 
-  // indicates whether cipher is a stream cipher (TRUE) or block cipher (FALSE)
+  // indicates whether cipher is a stream cipher (true) or block cipher (false)
   virtual bool IsStreamCipher(void) const = 0;
 
   // indicates whether data to be encrypted/decrypted has to be aligned
   // to block size
-  virtual bool AlignToBlockSize(void) const = 0;
+  virtual bool RequiresAlignment(void) const = 0;
 };
 
 class AES_CBC : public SymmetricCipher
@@ -75,6 +75,9 @@ public:
 
   AES_CBC(const word8* pKey, word32 lKeySize, Mode mode)
   {
+    if (!(lKeySize == 16 || lKeySize == 24 || lKeySize == 32)) {
+      throw std::runtime_error("Invalid AES key size");
+    }
     if (mode == Mode::ENCRYPT)
       aes_setkey_enc(&m_ctx, pKey, lKeySize*8);
     else
@@ -108,7 +111,7 @@ public:
     return false;
   }
 
-  bool AlignToBlockSize(void) const override
+  bool RequiresAlignment(void) const override
   {
     return true;
   }
@@ -139,6 +142,9 @@ public:
 
   ChaCha20(const word8* pKey, word32 lKeySize)
   {
+    if (!(lKeySize == 16 || lKeySize == 32)) {
+      throw std::runtime_error("Invalid ChaCha20 key size");
+    }
     chacha_keysetup(&m_ctx, pKey, lKeySize*8);
   }
 
@@ -167,7 +173,7 @@ public:
     return true;
   }
 
-  bool AlignToBlockSize(void) const override
+  bool RequiresAlignment(void) const override
   {
     return false;
   }
@@ -223,7 +229,7 @@ public:
     return false;
   }
 
-  bool AlignToBlockSize(void) const override
+  bool RequiresAlignment(void) const override
   {
     return true;
   }

@@ -1,7 +1,7 @@
 // CryptClip.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2026 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -32,6 +32,8 @@
 // -> salt length in bytes
 // -> where to store the derived key
 // -> number of iterations (default: 8192)
+// -> pointer to boolean flag that allows cancelling the operation in a
+//    multithreading environment (may be nullptr)
 void pbkdf2_256bit(const word8* pPassw,
   word32 lPasswLen,
   const word8* pSalt,
@@ -45,11 +47,10 @@ template<int Nbits> void incrementCounter(word8* pCounter)
   for (int i = Nbits/8-1; i >= 0 && ++pCounter[i] == 0; i--);
 }
 
-inline word32 alignToBlockSize(word32 lLen, word32 lBlockSize)
+template<typename T> T alignToBlockSize(T len, word32 blockSize)
 {
-  //return ((lLen + lBlockSize - 1) / lBlockSize) * lBlockSize;
-  word32 lRest = lLen % lBlockSize;
-  return lRest ? lLen + lBlockSize - lRest : lLen;
+  T rest = len % blockSize;
+  return rest ? len + blockSize - rest : len;
 }
 
 

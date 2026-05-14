@@ -1,7 +1,7 @@
 // PasswManager.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2026 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -52,6 +52,7 @@
 #include "TaskCancel.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
+#pragma link "cgauges"
 #pragma resource "*.dfm"
 TPasswMngForm *PasswMngForm;
 
@@ -313,7 +314,7 @@ void __fastcall TSelectItemThread::ApplyNow(void)
 __fastcall TPasswMngForm::TPasswMngForm(TComponent* Owner)
   : TForm(Owner), m_pSelectedItem(nullptr), m_nSortByIdx(-1),
     m_nSortOrderFactor(1), m_nTagsSortByIdx(0), m_nTagsSortOrderFactor(1),
-    m_nSearchFlags(INT_MAX), m_nPasswEntropyBits(0)
+    m_nSearchFlags(INT_MAX), m_dPasswEntropyBits(0)
 
 {
   SetFormComponentsAnchors(this);
@@ -419,13 +420,16 @@ __fastcall TPasswMngForm::TPasswMngForm(TComponent* Owner)
     TRLHint(EditKeyValBtn);
     TRLHint(ExpiryBtn);
     TRLHint(PasswQualityBtn);
-    TRLHint(PasswSecurityBarPanel);
+    //TRLHint(PasswSecurityBarPanel);
     TRLHint(UrlBtn);
     TRLHint(PasswHistoryBtn);
     TRLHint(ClearFilterBtn);
     TRLHint(ToggleNotesBtn);
     SearchBox->TextHint = TRL(SearchBox->TextHint);
   }
+
+  PasswSecurityBarPanel->Hint = MainForm->PasswInfoLbl->Hint;
+  PasswSecurityLbl->Hint = MainForm->PasswInfoLbl->Hint;
 
   OpenDlg->Filter = FormatW("%1 (*.pwdb)|*.pwdb|%2 (*.*)|*.*",
       { TRL("Password databases"),
@@ -991,7 +995,7 @@ bool __fastcall TPasswMngForm::CloseDatabase(bool blForce, int nLock)
   ToggleShutdownBlocker();
 
   m_nSearchMode = SEARCH_MODE_OFF;
-  m_nPasswEntropyBits = 0;
+  m_dPasswEntropyBits = 0;
 
   m_tags.clear();
   m_globalCaseiTags.clear();
@@ -1043,7 +1047,7 @@ void __fastcall TPasswMngForm::ClearEditPanel(void)
   CreationTimeInfo->Caption = WString();
   LastModificationInfo->Caption = WString();
   PasswChangeInfo->Caption = WString();
-  m_nPasswEntropyBits = 0;
+  m_dPasswEntropyBits = 0;
   if (PasswQualityBtn->Down)
     EstimatePasswQuality();
   m_tempKeyVal.reset();
@@ -1362,7 +1366,7 @@ void __fastcall TPasswMngForm::SearchDbForKeyword(bool blAutotype)
 
   PasswDbEntry* pFound = nullptr;
   WString sWinTitle;
-  int nNumFound = 0;
+  //int nNumFound = 0;
 
   HWND hWin = GetForegroundWindow();
   if (hWin != INVALID_HANDLE_VALUE) {
@@ -1378,7 +1382,7 @@ void __fastcall TPasswMngForm::SearchDbForKeyword(bool blAutotype)
           SecureWString sKeyword = pEntry->Strings[PasswDbEntry::KEYWORD];
           CharLower(sKeyword.Data());
           if (wcsstr(wszWinTitle, sKeyword) != nullptr) {
-            nNumFound++;
+            //nNumFound++;
             if (pFound == nullptr)
               pFound = pEntry.get();
 
@@ -1395,7 +1399,6 @@ void __fastcall TPasswMngForm::SearchDbForKeyword(bool blAutotype)
 
   WString sMsg;
   if (!pFound) {
-    SuspendIdleTimer;
     sMsg = TRLFormat("No matching keyword found for window text\n\"%1\".",
         { sWinTitle });
   }
@@ -1427,8 +1430,10 @@ void __fastcall TPasswMngForm::SearchDbForKeyword(bool blAutotype)
     WindowState = wsNormal;
     SetFocus();
 
-    if (!pFound)
+    if (!pFound) {
+	  SuspendIdleTimer;
       MsgBox(sMsg, MB_ICONWARNING);
+	}
   }
 }
 //---------------------------------------------------------------------------
@@ -2101,11 +2106,22 @@ void __fastcall TPasswMngForm::AddModifyBtnClick(TObject *Sender)
 
   if (!sPassw.IsStrEmpty() && m_blItemPasswChangeConfirm && TogglePasswBtn->Down) {
     AutoClearPasswDlg _clearPassw;
-    if (PasswEnterDlg->Execute(0, TRL("Confirm password"), this) == mrOk) {
-      if (GetEditBoxTextBuf(PasswBox) != PasswEnterDlg->GetPassw()) {
-        MsgBox(TRL("Passwords are not identical."), MB_ICONERROR);
+    switch (PasswEnterDlg->Execute(
+              PASSWENTER_FLAG_ALLOWSKIP,
+              TRL("Confirm password"),
+              this))
+    {
+      case mrOk:
+        if (GetEditBoxTextBuf(PasswBox) != PasswEnterDlg->GetPassw()) {
+          MsgBox(TRL("Passwords are not identical."), MB_ICONERROR);
+          return;
+        }
+        // fallthrough
+      case mrIgnore:
+      default:
+        break;
+      case mrCancel:
         return;
-      }
     }
   }
 
@@ -2538,7 +2554,8 @@ void __fastcall TPasswMngForm::MainMenu_File_ChangeMasterPasswordClick(
 
   AutoClearPasswDlg _clearPassw;
   if (PasswEnterDlg->Execute(PASSWENTER_FLAG_CONFIRMPASSW |
-      PASSWENTER_FLAG_ENABLEKEYFILE | PASSWENTER_FLAG_ENABLEKEYFILECREATION,
+      PASSWENTER_FLAG_ENABLEKEYFILE | PASSWENTER_FLAG_ENABLEKEYFILECREATION |
+      PASSWENTER_FLAG_PASSWQUALITY,
       TRL("Enter NEW master password"), this) == mrOk) {
     // if password hasn't been encoded as UTF-8 before, encode it now,
     // provided that there's no recovery key set for this database, since
@@ -2785,6 +2802,7 @@ void __fastcall TPasswMngForm::MainMenu_File_DbSettingsClick(
   PasswDbSettings s;
   s.DefaultUserName = m_passwDb->DefaultUserName;
   s.PasswFormatSeq = m_passwDb->PasswFormatSeq;
+  s.Description = m_passwDb->Description;
   s.DefaultExpiryDays = m_passwDb->DefaultPasswExpiryDays;
   s.DefaultMaxPasswHistorySize = m_passwDb->DefaultMaxPasswHistorySize;
   s.MasterPasswExpiryDate = m_passwDb->MasterPasswExpiryDate;
@@ -2797,6 +2815,7 @@ void __fastcall TPasswMngForm::MainMenu_File_DbSettingsClick(
   if (PasswDbSettingsDlg->ShowModal() == mrOk &&
       (m_passwDb->DefaultUserName != s.DefaultUserName ||
       m_passwDb->PasswFormatSeq != s.PasswFormatSeq ||
+      m_passwDb->Description != s.Description ||
       m_passwDb->DefaultPasswExpiryDays != s.DefaultExpiryDays ||
       m_passwDb->DefaultMaxPasswHistorySize != s.DefaultMaxPasswHistorySize ||
       m_passwDb->MasterPasswExpiryDate != s.MasterPasswExpiryDate ||
@@ -3466,6 +3485,7 @@ bool __fastcall TPasswMngForm::ApplyDbSettings(const PasswDbSettings& settings)
 
   m_passwDb->DefaultUserName = settings.DefaultUserName;
   m_passwDb->PasswFormatSeq = settings.PasswFormatSeq;
+  m_passwDb->Description = settings.Description;
   m_passwDb->DefaultPasswExpiryDays = settings.DefaultExpiryDays;
   m_passwDb->DefaultMaxPasswHistorySize = settings.DefaultMaxPasswHistorySize;
   m_passwDb->MasterPasswExpiryDate = settings.MasterPasswExpiryDate;
@@ -3631,8 +3651,8 @@ void __fastcall TPasswMngForm::MainMenu_File_PropertiesClick(TObject *Sender)
       if (!GetFileAttributesEx(m_sDbFileName.c_str(), GetFileExInfoStandard, &fad))
         RaiseLastOSError();
 
-	  PasswMngDbPropDlg->SetProperty(DbProperty::FileSize,
-		Format("%.0n %s", ARRAYOFCONST((static_cast<TVARREC_DOUBLE>(fad.nFileSizeLow),
+      PasswMngDbPropDlg->SetProperty(DbProperty::FileSize,
+      Format("%.0n %s", ARRAYOFCONST((static_cast<TVARREC_DOUBLE>(fad.nFileSizeLow),
         TRL("bytes")))));
 
       PasswMngDbPropDlg->SetProperty(DbProperty::CreationTime,
@@ -3641,9 +3661,34 @@ void __fastcall TPasswMngForm::MainMenu_File_PropertiesClick(TObject *Sender)
         FileTimeToString(fad.ftLastWriteTime, true));
     }
 
+    if (!m_passwDb->Description.IsStrEmpty()) {
+      const int MAX_LEN = 100;
+      WString sDesc(m_passwDb->Description.c_str());
+      int nPos = sDesc.Pos("\n");
+      if (nPos == 1) {
+        sDesc = WString();
+      }
+      else if (nPos > 1) {
+        int nLen = nPos - 1;
+        sDesc = sDesc.SubString(1, std::min(MAX_LEN, nLen)).Trim();
+        if (!sDesc.IsEmpty() && nLen > MAX_LEN) {
+          sDesc += "...";
+        }
+      }
+      else if (sDesc.Length() > MAX_LEN) {
+        sDesc = sDesc.SubString(1, MAX_LEN).Trim();
+        if (!sDesc.IsEmpty()) {
+          sDesc += "...";
+        }
+      }
+      if (!sDesc.IsEmpty()) {
+        PasswMngDbPropDlg->SetProperty(DbProperty::Description, sDesc);
+      }
+    }
+
     PasswMngDbPropDlg->SetProperty(DbProperty::FormatVersion,
-      Format("%d.%d", ARRAYOFCONST((m_passwDb->Version>>8,
-      m_passwDb->Version&0xff))));
+      Format("%d.%d (PW: %s)", ARRAYOFCONST((m_passwDb->Version>>8,
+      m_passwDb->Version&0xff, m_passwDb->IsPasswUtf8 ? "UTF-8" : "UTF-16"))));
 
     PasswMngDbPropDlg->SetProperty(DbProperty::RecoveryKeySet,
       TRL(m_passwDb->HasRecoveryKey ? "Yes" : "No"));
@@ -3692,7 +3737,8 @@ void __fastcall TPasswMngForm::MainMenu_File_SetRecoveryPasswordClick(TObject *S
 
     AutoClearPasswDlg _clearPassw;
     if (PasswEnterDlg->Execute(PASSWENTER_FLAG_CONFIRMPASSW |
-        PASSWENTER_FLAG_ENABLEKEYFILE | PASSWENTER_FLAG_ENABLEKEYFILECREATION,
+        PASSWENTER_FLAG_ENABLEKEYFILE | PASSWENTER_FLAG_ENABLEKEYFILECREATION |
+        PASSWENTER_FLAG_PASSWQUALITY,
         TRL("Enter recovery password"), this) == mrOk) {
       try {
         auto recoveryKey = PasswDatabase::CombineKeySources(
@@ -3722,8 +3768,10 @@ void __fastcall TPasswMngForm::MainMenu_File_SetRecoveryPasswordClick(TObject *S
         return;
     }
 
+    AutoClearPasswDlg _clearPassw;
     if (PasswEnterDlg->Execute(PASSWENTER_FLAG_CONFIRMPASSW |
-        PASSWENTER_FLAG_ENABLEKEYFILE | PASSWENTER_FLAG_ENABLEKEYFILECREATION,
+        PASSWENTER_FLAG_ENABLEKEYFILE | PASSWENTER_FLAG_ENABLEKEYFILECREATION |
+        PASSWENTER_FLAG_PASSWQUALITY,
         TRL("Enter NEW master password"), this) == mrOk) {
       try {
         auto key = PasswDatabase::CombineKeySources(
@@ -3780,29 +3828,26 @@ void __fastcall TPasswMngForm::TitleBoxKeyPress(TObject *Sender, System::WideCha
   }
 }
 //---------------------------------------------------------------------------
-void __fastcall TPasswMngForm::SetPasswQualityBarWidth(void)
-{
-  PasswSecurityBar->Width = PasswBox->Width - 1;
-  PasswSecurityBarPanel->Width = std::max<int>(std::min(
-    m_nPasswEntropyBits / 128.0, 1.0) * PasswSecurityBar->Width, 4);
-}
-//---------------------------------------------------------------------------
 void __fastcall TPasswMngForm::EstimatePasswQuality(const wchar_t* pwszPassw)
 {
-  m_nPasswEntropyBits = 0;
+  int nPasswChars = 0;
+  m_dPasswEntropyBits = 0;
   if (pwszPassw || PasswBox->GetTextLen() != 0) {
     SecureWString sPassw;
     if (!pwszPassw) {
       sPassw = GetEditBoxTextBuf(PasswBox);
       pwszPassw = sPassw.c_str();
     }
-    m_nPasswEntropyBits = g_config.UseAdvancedPasswEst ? FloorEntropyBits(
-      ZxcvbnMatch(WStringToUtf8(pwszPassw).c_str(), nullptr, nullptr)) :
+    nPasswChars = GetNumOfUnicodeChars(pwszPassw);
+    m_dPasswEntropyBits = g_config.UseAdvancedPasswEst ?
+      ZxcvbnMatch(WStringToUtf8_s(pwszPassw).c_str(), nullptr, nullptr) :
       PasswordGenerator::EstimatePasswSecurity(pwszPassw);
   }
 
-  PasswSecurityLbl->Caption = IntToStr(m_nPasswEntropyBits);
-  SetPasswQualityBarWidth();
+  PasswSecurityLbl->Caption = (nPasswChars > 0) ?
+    TRLFormat("%1 ch.", { IntToStr(nPasswChars) }) + " / " +
+    IntToStr(FloorEntropyBits(m_dPasswEntropyBits)) : "0";
+  SetPasswQualityBar(PasswGauge, m_dPasswEntropyBits);
 }
 //---------------------------------------------------------------------------
 void __fastcall TPasswMngForm::PasswBoxChange(TObject *Sender)
@@ -3828,27 +3873,15 @@ void __fastcall TPasswMngForm::PasswQualityBtnClick(TObject *Sender)
 {
   NotifyUserAction();
   if (PasswQualityBtn->Down) {
-    PasswSecurityBar->Visible = true;
+    PasswGauge->Visible = true;
     PasswSecurityBarPanel->ShowCaption = false;
     EstimatePasswQuality();
   }
   else {
-    PasswSecurityBar->Visible = false;
+    PasswGauge->Visible = false;
     PasswSecurityBarPanel->Width = PasswBox->Width;
     PasswSecurityBarPanel->ShowCaption = true;
     PasswSecurityLbl->Caption = WString();
-  }
-}
-//---------------------------------------------------------------------------
-void __fastcall TPasswMngForm::EditPanelResize(TObject *Sender)
-{
-  if (Visible) {
-    if (PasswQualityBtn->Down) {
-      SetPasswQualityBarWidth();
-    }
-    else {
-      PasswSecurityBarPanel->Width = PasswBox->Width;
-    }
   }
 }
 //---------------------------------------------------------------------------
@@ -4127,4 +4160,5 @@ void __fastcall TPasswMngForm::NotesBoxChange(TObject *Sender)
   }
 }
 //---------------------------------------------------------------------------
+
 
