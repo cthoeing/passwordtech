@@ -1,7 +1,7 @@
 // MPPasswGen.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2026 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -32,6 +32,7 @@
 #include <jpeg.hpp>
 #include <Menus.hpp>
 #include "SecureMem.h"
+#include "cgauges.h"
 
 const char MPPG_KEYGEN_SALTSTR[] = "PWGen MP Password Generator";
 
@@ -68,8 +69,6 @@ __published:	// IDE-managed Components
   TLabel *KeyExpiryCountdownLbl;
   TSpeedButton *TogglePasswBtn;
   TLabel *PasswInfoLbl;
-  TPanel *PasswSecurityBarPanel;
-  TImage *PasswSecurityBar;
   TCheckBox *HashapassCompatCheck;
   TLabel *CharSetInfoLbl;
   TPopupMenu *PasswBoxMenu;
@@ -88,6 +87,7 @@ __published:	// IDE-managed Components
   TLabel *AutotypeLbl;
   TEdit *AutotypeBox;
   TMenuItem *PasswBoxMenu_PerformAutotype;
+  TCGauge *PasswGauge;
   void __fastcall EnterPasswBtnClick(TObject *Sender);
   void __fastcall KeyExpiryTimerTimer(TObject *Sender);
   void __fastcall ClearKeyBtnClick(TObject *Sender);
@@ -112,13 +112,13 @@ __published:	// IDE-managed Components
   void __fastcall PasswBoxMenu_DeleteClick(TObject *Sender);
   void __fastcall PasswBoxMenu_SelectAllClick(TObject *Sender);
   void __fastcall FormShow(TObject *Sender);
-  void __fastcall PasswSecurityBarMouseMove(TObject *Sender,
-    TShiftState Shift, int X, int Y);
   void __fastcall ParameterLblMouseMove(TObject *Sender,
     TShiftState Shift, int X, int Y);
   void __fastcall PasswBoxMenu_AddToDatabaseClick(TObject *Sender);
     void __fastcall ShowPasswHashCheckClick(TObject *Sender);
   void __fastcall PasswBoxMenu_PerformAutotypeClick(TObject *Sender);
+  void __fastcall PasswInfoLblMouseMove(TObject *Sender, TShiftState Shift, int X,
+          int Y);
 private:	// User declarations
   SecureMem<word8> m_key;
   int m_nExpiryCountdown;

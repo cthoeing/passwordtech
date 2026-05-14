@@ -1,7 +1,7 @@
 // MPPasswGen.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2026 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -42,6 +42,7 @@
 #include "SecureClipboard.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
+#pragma link "cgauges"
 #pragma resource "*.dfm"
 TMPPasswGenForm *MPPasswGenForm;
 
@@ -137,7 +138,7 @@ __fastcall TMPPasswGenForm::TMPPasswGenForm(TComponent* Owner)
     TRLMenu(PasswBoxMenu);
   }
 
-  PasswSecurityBar->Hint = MainForm->PasswSecurityBar->Hint;
+  PasswInfoLbl->Hint = MainForm->PasswInfoLbl->Hint;
 
   RegisterDropWindow(PasswBox->Handle, &m_pPasswBoxDropTarget);
   RegisterDropWindow(ParameterBox->Handle, &m_pParamBoxDropTarget);
@@ -234,7 +235,7 @@ void __fastcall TMPPasswGenForm::ClearKey(bool blExpired,
   if (!blClearKeyOnly) {
     ClearEditBoxTextBuf(PasswBox, 256);
     ClearEditBoxTextBuf(ParameterBox, 256);
-    PasswSecurityBarPanel->Visible = false;
+    PasswGauge->Visible = false;
     PasswInfoLbl->Visible = false;
   }
 
@@ -278,7 +279,7 @@ void __fastcall TMPPasswGenForm::SetKeyExpiry(bool blSetup)
 void __fastcall TMPPasswGenForm::EnterPasswBtnClick(TObject *Sender)
 {
   SecureWString sPassw;
-  int nFlags = 0;
+  int nFlags = PASSWENTER_FLAG_PASSWQUALITY;
   if (ConfirmPasswCheck->Checked)
     nFlags |= PASSWENTER_FLAG_CONFIRMPASSW;
   bool blSuccess = PasswEnterDlg->Execute(nFlags, TRL("Master password"), this) == mrOk;
@@ -386,6 +387,7 @@ void __fastcall TMPPasswGenForm::GenerateBtnClick(TObject *Sender)
 
   WString sParam = ParameterBox->Text;
   int nParamLen = sParam.Length();
+  int nPasswLen;
 
   if (HashapassCompatCheck->Checked) {
     AnsiString asParam;
@@ -401,18 +403,19 @@ void __fastcall TMPPasswGenForm::GenerateBtnClick(TObject *Sender)
       reinterpret_cast<const word8*>(asParam.c_str()), asParam.Length(),
       passwBytes.Data());
 
-    SecureAnsiString asPassw(9);
-	  size_t outputLen = 9;
+    nPasswLen = 8;
+    SecureAnsiString asPassw(nPasswLen + 1);
+    size_t outputLen = asPassw.Size();
 
-	  base64_encode(reinterpret_cast<word8*>(asPassw.Data()),
-	    &outputLen, passwBytes.Data(), 6, 0);
+    base64_encode(reinterpret_cast<word8*>(asPassw.Data()),
+      &outputLen, passwBytes.Data(), 6, 0);
 
-    SecureWString sPassw(9);
-    asciiToUnicode(asPassw, sPassw, 9);
+    SecureWString sPassw(outputLen);
+    asciiToUnicode(asPassw, sPassw, outputLen);
 
     SetEditBoxTextBuf(PasswBox, sPassw);
 
-    dPasswBits = 48;
+    dPasswBits = nPasswLen * 6;
   }
   else {
     bool addLength = AddPasswLenToParamCheck->Checked;
@@ -421,7 +424,7 @@ void __fastcall TMPPasswGenForm::GenerateBtnClick(TObject *Sender)
     SecureMem<word8> paramData(lParamBytes + (addLength ? 3 : 0));
     memcpy(paramData, reinterpret_cast<word8*>(sParam.c_str()), lParamBytes);
 
-    int nPasswLen = PasswLengthSpinBtn->Position;
+    nPasswLen = PasswLengthSpinBtn->Position;
 
     if (addLength) {
       paramData[lParamBytes] = 0;
@@ -447,12 +450,15 @@ void __fastcall TMPPasswGenForm::GenerateBtnClick(TObject *Sender)
     dPasswBits = Log2(static_cast<double>(nCharSetSize)) * nPasswLen;
   }
 
-  PasswSecurityBarPanel->Visible = true;
+  PasswGauge->Visible = true;
   PasswInfoLbl->Visible = true;
-  PasswSecurityBarPanel->Width = std::max<int>((std::min(dPasswBits / 128.0, 1.0) *
-        PasswSecurityBar->Width), 4);
-  PasswInfoLbl->Caption = TRLFormat("%1 bits",
-    { FormatFloat("0.0", std::min<double>(dPasswBits, AESCtrPRNG::KEY_SIZE*8)) });
+  SetPasswQualityBar(PasswGauge, dPasswBits);
+  PasswInfoLbl->Caption = FormatFloat("0.0",
+    std::min<double>(dPasswBits, AESCtrPRNG::KEY_SIZE*8)) + " / " +
+    TRLFormat("%1 ch.", { IntToStr(nPasswLen) });
+  //TRLFormat("%1 bits / %2 characters",
+  //  { FormatFloat("0.0", std::min<double>(dPasswBits, AES8CtrPRNG::KEY_SIZE*)),
+  //    IntToStr(nPasswLen) });
 
   SetKeyExpiry();
 
@@ -623,13 +629,6 @@ void __fastcall TMPPasswGenForm::FormShow(TObject *Sender)
   TopMostManager::GetInstance().SetForm(this);
 }
 //---------------------------------------------------------------------------
-void __fastcall TMPPasswGenForm::PasswSecurityBarMouseMove(TObject *Sender,
-  TShiftState Shift, int X, int Y)
-{
-  if (Shift.Contains(ssLeft))
-    StartEditBoxDragDrop(PasswBox);
-}
-//---------------------------------------------------------------------------
 void __fastcall TMPPasswGenForm::ParameterLblMouseMove(TObject *Sender,
   TShiftState Shift, int X, int Y)
 {
@@ -675,6 +674,14 @@ void __fastcall TMPPasswGenForm::OnEndSession(void)
   if (!m_key.IsEmpty()) {
     m_key.Clear();
     memzero(memcryptKey, sizeof(memcryptKey));
+  }
+}
+//---------------------------------------------------------------------------
+void __fastcall TMPPasswGenForm::PasswInfoLblMouseMove(TObject *Sender, TShiftState Shift,
+          int X, int Y)
+{
+  if (Shift.Contains(ssLeft)) {
+    StartEditBoxDragDrop(PasswBox);
   }
 }
 //---------------------------------------------------------------------------

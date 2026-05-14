@@ -1,4 +1,4 @@
-﻿# German translation of Password Tech 3.5.9
+﻿# German translation of Password Tech 3.6.0
 # Released under the GNU General Public License
 #
 # !!! NOTE ON FORMAT STRINGS !!!
@@ -20,7 +20,7 @@
 #. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.10\n"
+"Project-Id-Version: Password Tech 3.6.0\n"
 "Last-Translator: Christian Thöing\n"
 "Language: de\n"
 
@@ -1539,6 +1539,14 @@ msgstr "Passwort eingeben:"
 msgid "Confirm password:"
 msgstr "Passwort bestätigen:"
 
+#. Enter password window, label
+msgid "Estimate quality"
+msgstr "Qualität abschätzen"
+
+#. Enter password label, button
+msgid "Skip"
+msgstr "Überspringen"
+
 #. Generic dialog window, button
 msgid "OK"
 msgstr "OK"
@@ -1564,8 +1572,8 @@ msgid "Remember password (seconds):"
 msgstr "Passwort im Speicher halten (Sekunden):"
 
 #. Enter password window
-msgid "Key file for password database:"
-msgstr "Schlüsseldatei für Passwort-Datenbank:"
+msgid "Select key file:"
+msgstr "Schlüsseldatei:"
 
 #. Enter password window, Key file, None selected
 msgid "(None)"
@@ -1576,8 +1584,8 @@ msgid "Enter a password and/or select a key file."
 msgstr "Passwort eingeben und/oder Schlüsseldatei auswählen."
 
 #. Enter password window, message shown when selected key file could not be found
-msgid "The selected key file does not exist."
-msgstr "Die ausgewählte Schlüsseldatei existiert nicht."
+msgid "The selected key file does not exist:\n%1"
+msgstr "Die ausgewählte Schlüsseldatei existiert nicht:\n%1"
 
 #. Enter password window, message shown when password is empty
 msgid "Password is empty."
@@ -2199,12 +2207,8 @@ msgid "%d bits of entropy have been added to the random pool."
 msgstr "%1 Entropie-Bits wurden dem Zufallspool hinzugefügt."
 
 #. Password Manager window, Open database, error message
-msgid "Database not encrypted, or invalid key"
-msgstr "Datenbank nicht verschlüsselt, oder ungültiger Schlüssel"
-
-#. Password Manager window, Open database, error message
-msgid "File contents modified, or invalid key"
-msgstr "Dateiinhalt wurde geändert, oder ungültiger Schlüssel"
+msgid "Master key is invalid or file contents have been modified"
+msgstr "Master-Schlüssel ist ungültig oder Datei-Inhalt wurde geändert"
 
 #. Password Manager window, Open database, error message
 msgid "Unknown file format"
@@ -2926,6 +2930,14 @@ msgstr "Verschlüsselungs-Algorithmus:"
 msgid "%s with %d-bit key"
 msgstr "%1 mit %2-Bit-Schlüssel"
 
+#. Password database, description of database
+msgid "Description"
+msgstr "Beschreibung"
+
+#. Password Manager window, Database Settings dialog, label
+msgid "Database name/description:"
+msgstr "Datenbank-Name/Beschreibung:"
+
 #. Password Manager window, Database Settings dialog, label
 msgid "Number of key derivation rounds:"
 msgstr "Rundenanzahl für Schlüsselableitung:"
@@ -3121,3 +3133,7 @@ msgstr "bis:"
 #. Character set builder, error message
 msgid "Invalid character range."
 msgstr "Ungültiger Zeichenbereich."
+
+#. Number of characters (abbreviated)
+msgid "%1 ch."
+msgstr "%1 Z."

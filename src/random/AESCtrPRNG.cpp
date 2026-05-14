@@ -1,7 +1,7 @@
 // AESCtrPRNG.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2026 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -58,7 +58,7 @@ void AESCtrPRNG::Reset(void)
 //---------------------------------------------------------------------------
 void AESCtrPRNG::FillGetBuf(void)
 {
-  for (word32 i = 0; i < GETBUF_SIZE; i += BLOCK_SIZE) {
+  for (int i = 0; i < GETBUF_SIZE; i += BLOCK_SIZE) {
     // encrypt current counter value and increment it by 1 afterwards
     aes_crypt_ecb(&m_cipherCtx, AES_ENCRYPT, m_counter, m_getBuf + i);
     incrementCounter<128>(m_counter);
@@ -67,12 +67,10 @@ void AESCtrPRNG::FillGetBuf(void)
 
   if (m_lNumOfBlocks >= MAX_BLOCKS) {
     SecureMem<word8> newKey(KEY_SIZE);
-    aes_crypt_ecb(&m_cipherCtx, AES_ENCRYPT, m_counter, newKey);
-    incrementCounter<128>(m_counter);
-    aes_crypt_ecb(&m_cipherCtx, AES_ENCRYPT, m_counter, newKey +
-      static_cast<word32>(BLOCK_SIZE));
-    incrementCounter<128>(m_counter);
-
+    for (int i = 0; i < KEY_SIZE; i += BLOCK_SIZE) {
+      aes_crypt_ecb(&m_cipherCtx, AES_ENCRYPT, m_counter, newKey + i);
+      incrementCounter<128>(m_counter);
+    }
     aes_setkey_enc(&m_cipherCtx, newKey, KEY_SIZE*8);
     m_lNumOfBlocks = 0;
   }

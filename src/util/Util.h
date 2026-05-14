@@ -1,7 +1,7 @@
 // Util.h
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2026 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -23,6 +23,7 @@
 //---------------------------------------------------------------------------
 #include <vcl.h>
 #include <tuple>
+#include "cgauges.h"
 #include "SecureMem.h"
 #include "UnicodeUtil.h"
 
@@ -151,6 +152,8 @@ std::vector<SecureWString> SplitStringBuf(const wchar_t* pwzsSrc,
 WString RemoveAccessKeysFromStr(const WString& sCaption);
 
 WString ShortenFileName(const WString& sFileName, int nMaxLen);
+
+void SetPasswQualityBar(TCGauge* pBar, double dPasswQuality);
 
 enum {
   DONOR_KEY_VALID = 0,

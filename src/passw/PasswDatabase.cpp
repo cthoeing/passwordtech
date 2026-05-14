@@ -1,7 +1,7 @@
 // PasswDatabase.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2026 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -32,18 +32,16 @@
 #include "Main.h"
 #include "StringFileStreamW.h"
 #include "Language.h"
-#include "sha256.h"
-#include "sha512.h"
+#include "hmac.h"
 #include "Util.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 
 #define TEST_DECRYPTION
 
-static const word8
-  PASSW_DB_MAGIC[4] = { 'P', 'W', 'd', 'b' };
-
 static const word32
+  HEADER_MAGIC                    = 0x62645750, // "PWdb"
+  
   FH_FLAG_RECOVERY_KEY            = 1, // file header flags
   FH_FLAG_PASSW_UTF8              = 2,
 
@@ -52,6 +50,7 @@ static const word32
   FLAG_PASSW_EXPIRY_DAYS          = 4,
   FLAG_DEFAULT_PASSW_HISTORY_SIZE = 8,
   FLAG_MASTER_PASSW_EXPIRY        = 16,
+  FLAG_DESCRIPTION                = 32,
 
   MAX_FILE_SIZE = 104857600,
   DEFAULT_BUF_SIZE = 65536;
@@ -62,7 +61,7 @@ static const char
 
 #pragma pack(1)
 struct FileHeader {
-  word8 Magic[4];
+  word32 Magic;
   word8 HeaderSize;
   word16 Version;
   word32 Flags;
@@ -73,7 +72,7 @@ struct FileHeader {
 };
 
 struct PasswDbHeader {
-  word8 Magic[4];
+  word32 Magic;
   word16 HeaderSize;
   word32 Flags;
   word8 NumOfVariableParam;
@@ -99,6 +98,12 @@ inline void CheckKeyEmpty(const SecureMem<word8>& key)
 {
   if (key.IsEmpty())
     throw EPasswDbError("Specified \"key\" parameter is empty");
+}
+
+inline void InvalidKeyError()
+{
+  throw EPasswDbInvalidKey(TRL("Master key is invalid or file contents "
+    "have been modified"));
 }
 
 //---------------------------------------------------------------------------
@@ -434,7 +439,6 @@ void PasswDatabase::Initialize(const SecureMem<word8>& key)
   RandomPool& randPool = RandomPool::GetInstance();
   randPool.GetData(memKey, SECMEM_KEY_LENGTH);
 
-  //aes_setkey_enc(m_pMemCipherCtx, memKey, SECMEM_KEY_LENGTH*8);
   chacha_keysetup(m_pMemCipherCtx, memKey, SECMEM_KEY_LENGTH*8);
 
   m_pMemSalt = pMemOffset;
@@ -449,7 +453,7 @@ void PasswDatabase::Initialize(const SecureMem<word8>& key)
   randPool.GetData(m_pDbSalt, DB_SALT_LENGTH);
 
   if (m_blRecoveryKey)
-    memcpy(m_pDbKey, key, key.Size());
+    key.CopyTo(m_pDbKey);
   else
     pbkdf2_256bit(key, key.Size(), m_pDbSalt, DB_SALT_LENGTH, m_pDbKey, m_lKdfIterations);
 
@@ -501,6 +505,29 @@ std::unique_ptr<EncryptionAlgorithm::SymmetricCipher>
   }
 }
 //---------------------------------------------------------------------------
+template<typename HMAC_T> SecureMem<word8> hkdf_extract(const word8* pKey,
+  word32 lKeyLen,
+  const word8* pSalt,
+  word32 lSaltLen)
+{
+  // compute result = HMAC(salt, key)
+  HMAC_T hmgen(pSalt, lSaltLen);
+  hmgen.Update(pKey, lKeyLen);
+  return hmgen.Finish();
+}
+//---------------------------------------------------------------------------
+SecureMem<word8> PasswDatabase::DeriveCipherKey(const word8* pKey,
+  const word8* pSalt)
+{
+  return hkdf_extract<HMAC::SHA256>(pKey, DB_KEY_LENGTH, pSalt, DB_SALT_LENGTH);
+}
+//---------------------------------------------------------------------------
+SecureMem<word8> PasswDatabase::DeriveMacKey(const word8* pKey,
+  const word8* pSalt)
+{
+  return hkdf_extract<HMAC::SHA512>(pKey, DB_KEY_LENGTH, pSalt, DB_SALT_LENGTH);
+}
+//---------------------------------------------------------------------------
 void PasswDatabase::Open(const SecureMem<word8>& key,
   const WString& sFileName,
   bool blReadHeaderOnly)
@@ -523,7 +550,7 @@ void PasswDatabase::Open(const SecureMem<word8>& key,
   FileHeader fh;
   pFile->Read(&fh, static_cast<int>(sizeof(fh)));
 
-  if (memcmp(fh.Magic, PASSW_DB_MAGIC, sizeof(PASSW_DB_MAGIC)) != 0)
+  if (fh.Magic != HEADER_MAGIC)
     throw EPasswDbInvalidFormat("Unknown file format");
 
   if (fh.HeaderSize < sizeof(fh))
@@ -531,7 +558,7 @@ void PasswDatabase::Open(const SecureMem<word8>& key,
 
   m_nLastVersion = fh.Version;
 
-  if (fh.Version < 0x100)
+  if (m_nLastVersion < 0x100)
     throw EPasswDbInvalidFormat("Invalid version number");
 
   if (fh.CipherType > CIPHER_CHACHA20)
@@ -548,8 +575,8 @@ void PasswDatabase::Open(const SecureMem<word8>& key,
 
   m_bCipherType = fh.CipherType;
   m_lKdfIterations = fh.KdfIterations;
-  m_blRecoveryKey = fh.Version >= 0x103 && fh.Flags & FH_FLAG_RECOVERY_KEY;
-  m_blPasswUtf8 = fh.Version >= 0x107 && fh.Flags & FH_FLAG_PASSW_UTF8;
+  m_blRecoveryKey = m_nLastVersion >= 0x103 && fh.Flags & FH_FLAG_RECOVERY_KEY;
+  m_blPasswUtf8 = m_nLastVersion >= 0x107 && fh.Flags & FH_FLAG_PASSW_UTF8;
 
   if (blReadHeaderOnly)
     return;
@@ -557,8 +584,13 @@ void PasswDatabase::Open(const SecureMem<word8>& key,
   word32 lFileSize = pFile->Size - fh.HeaderSize;
   m_cryptBuf.New(std::max(1024u, lFileSize));
 
+  // new authentication scheme since version 1.8:
+  // - encrypt-then-MAC
+  // - use different keys for cipher and HMAC
+  bool blNewAuth = m_nLastVersion >= 0x108;
+
   SecureMem<word8> masterKey;
-  word32 lBufPos, lCryptParamLen, lHmacLen;
+  word32 lBufPos = 0, lCryptParamLen = 0, lHmacLen = 0;
   PasswDbHeader header;
 
   for (int nKeyNum = 0; nKeyNum < 2; nKeyNum++) {
@@ -566,6 +598,7 @@ void PasswDatabase::Open(const SecureMem<word8>& key,
     pFile->Seek(fh.HeaderSize, soFromBeginning);
     pFile->Read(m_cryptBuf, static_cast<int>(lFileSize));
 
+    SecureMem<word8> salt(DB_SALT_LENGTH);
     SecureMem<word8> derivedKey(DB_KEY_LENGTH);
 
     if (m_blRecoveryKey) {
@@ -586,86 +619,97 @@ void PasswDatabase::Open(const SecureMem<word8>& key,
     else {
       pbkdf2_256bit(key, key.Size(), m_cryptBuf, DB_SALT_LENGTH, derivedKey,
         fh.KdfIterations);
-      lBufPos = DB_SALT_LENGTH;
+    }
+
+    if (blNewAuth || !m_blRecoveryKey) {
+      salt.CopyFrom(&m_cryptBuf[lBufPos]);
+      lBufPos += DB_SALT_LENGTH;
     }
 
     // do key setup
     const auto& keySrc = m_blRecoveryKey ? masterKey : derivedKey;
-    auto cipher = CreateCipher(fh.CipherType, keySrc,
+    auto cipher = CreateCipher(fh.CipherType,
+      blNewAuth ? DeriveCipherKey(keySrc, salt) : keySrc,
       EncryptionAlgorithm::Mode::DECRYPT);
 
     cipher->SetIV(&m_cryptBuf[lBufPos]);
     lBufPos += cipher->GetIVSize();
     lCryptParamLen = lBufPos;
 
-    word32 lHmacLen = fh.HashType == HASH_SHA256 ? SHA256_HMAC_LENGTH :
-      SHA512_HMAC_LENGTH;
+    // initialize HMAC
+    std::unique_ptr<HMAC::Base> hmgen;
+    SecureMem<word8> macKey = blNewAuth ? DeriveMacKey(keySrc, salt) : keySrc;
+
+    if (fh.HashType == HASH_SHA256)
+      hmgen = std::make_unique<HMAC::SHA256>(macKey, macKey.Size());
+    else
+      hmgen = std::make_unique<HMAC::SHA512>(macKey, macKey.Size());
+
+    macKey.Clear();
+
+    word32 lHmacLen = hmgen->GetLength();
     SecureMem<word8> hmac(lHmacLen);
-    if (fh.Version >= 0x101)
-      memcpy(hmac, &m_cryptBuf[lFileSize - lHmacLen], lHmacLen);
+    if (m_nLastVersion >= 0x101)
+      hmac.CopyFrom(&m_cryptBuf[lFileSize - lHmacLen]);
 
-    // decrypt first N blocks
-    //word32 lBlockLen = cipher->GetBlockSize();
-    word32 lAlignedHeaderSize =
-      alignToBlockSize(sizeof(header), cipher->GetBlockSize());
+    SecureMem<word8> checkHmac;
+    bool blCanDecrypt = true;
 
-    cipher->Decrypt(&m_cryptBuf[lBufPos], &m_cryptBuf[lBufPos], lAlignedHeaderSize);
-
-    memcpy(&header, &m_cryptBuf[lBufPos], sizeof(header));
-
-    if (memcmp(header.Magic, PASSW_DB_MAGIC, sizeof(PASSW_DB_MAGIC)) != 0) {
-      if (m_blRecoveryKey && nKeyNum == 0)
-        continue;
-      else
-        throw EPasswDbInvalidKey(TRL("Database not encrypted, or invalid key"));
+    // new authentication scheme: authenticate before decrypting
+    if (blNewAuth) {
+      hmgen->Update(&m_cryptBuf[0], lFileSize - lHmacLen);
+      checkHmac = hmgen->Finish();
+      if (checkHmac != hmac)
+        blCanDecrypt = false;
+      hmgen.reset();
     }
 
-    lBufPos += lAlignedHeaderSize;
+    if (blCanDecrypt) {
+      // decrypt first N blocks
+      word32 lAlignedHeaderSize =
+        alignToBlockSize(sizeof(header), cipher->GetBlockSize());
 
-    // decrypt rest
-    if (fh.Version >= 0x101) {
-      int nRest = lFileSize - lBufPos - lHmacLen;
-      if (nRest > 0)
-        cipher->Decrypt(&m_cryptBuf[lBufPos], &m_cryptBuf[lBufPos], nRest);
-    }
-    else {
-      if (lFileSize > lBufPos)
-        cipher->Decrypt(&m_cryptBuf[lBufPos], &m_cryptBuf[lBufPos],
-          lFileSize - lBufPos);
-      memcpy(hmac, &m_cryptBuf[lFileSize - lHmacLen], lHmacLen);
-    }
+      cipher->Decrypt(&m_cryptBuf[lBufPos], &m_cryptBuf[lBufPos], lAlignedHeaderSize);
 
-    // calculate and check HMAC
-    SecureMem<word8> checkHmac(lHmacLen);
-    checkHmac.Zeroize();
-    if (fh.HashType == HASH_SHA256) {
-      lHmacLen = SHA256_HMAC_LENGTH;
-      SecureMem<sha256_context> hashCtx(1);
-      sha256_init(hashCtx);
-      sha256_hmac_starts(hashCtx, keySrc, DB_KEY_LENGTH, 0);
-      if (lFileSize > lCryptParamLen + SHA256_HMAC_LENGTH)
-        sha256_hmac_update(hashCtx,
-          &m_cryptBuf[lCryptParamLen],
-          lFileSize - lCryptParamLen - lHmacLen);
-      sha256_hmac_finish(hashCtx, checkHmac);
-    }
-    else {
-      lHmacLen = SHA512_HMAC_LENGTH;
-      SecureMem<sha512_context> hashCtx(1);
-      sha512_init(hashCtx);
-      sha512_hmac_starts(hashCtx, keySrc, DB_KEY_LENGTH, 0);
-      if (lFileSize > lCryptParamLen + SHA512_HMAC_LENGTH)
-        sha512_hmac_update(hashCtx,
-          &m_cryptBuf[lCryptParamLen],
-          lFileSize - lCryptParamLen - lHmacLen);
-      sha512_hmac_finish(hashCtx, checkHmac);
+      memcpy(&header, &m_cryptBuf[lBufPos], sizeof(header));
+
+      if (header.Magic != HEADER_MAGIC) {
+        if (m_blRecoveryKey && nKeyNum == 0)
+          continue;
+        else
+          InvalidKeyError();
+      }
+
+      lBufPos += lAlignedHeaderSize;
+
+      // decrypt rest
+      if (m_nLastVersion >= 0x101) {
+        int nRest = lFileSize - lBufPos - lHmacLen;
+        if (nRest > 0)
+          cipher->Decrypt(&m_cryptBuf[lBufPos], &m_cryptBuf[lBufPos], nRest);
+      }
+      else {
+        if (lFileSize > lBufPos)
+          cipher->Decrypt(&m_cryptBuf[lBufPos], &m_cryptBuf[lBufPos],
+            lFileSize - lBufPos);
+        hmac.CopyFrom(&m_cryptBuf[lFileSize - lHmacLen]);
+      }
+
+      if (hmgen) {
+        int nLen = lFileSize - lCryptParamLen - lHmacLen;
+        if (nLen > 0) {
+          hmgen->Update(&m_cryptBuf[lCryptParamLen], nLen);
+        }
+        checkHmac = hmgen->Finish();
+        hmgen.reset();
+      }
     }
 
     if (checkHmac != hmac) {
       if (m_blRecoveryKey && nKeyNum == 0)
         continue;
       else
-        throw EPasswDbInvalidKey(TRL("File contents modified, or invalid key"));
+        InvalidKeyError();
     }
 
     break;
@@ -678,9 +722,9 @@ void PasswDatabase::Open(const SecureMem<word8>& key,
   Initialize(m_blRecoveryKey ? masterKey : key);
 
   if (m_blRecoveryKey)
-    memcpy(m_pDbRecoveryKeyBlock, m_cryptBuf, DB_RECOVERY_KEY_BLOCK_LENGTH);
+    m_cryptBuf.CopyTo(0, m_pDbRecoveryKeyBlock, DB_RECOVERY_KEY_BLOCK_LENGTH);
 
-  if (fh.Version >= 0x104 && header.CompressionAlgo != 0) {
+  if (m_nLastVersion >= 0x104 && header.CompressionAlgo != 0) {
     if (header.CompressionAlgo > COMPRESSION_DEFLATE)
       throw EPasswDbError("Compression algorithm not supported");
 
@@ -709,7 +753,10 @@ void PasswDatabase::Open(const SecureMem<word8>& key,
   }
 
   // read global database settings
-  if (fh.Version >= 0x102) {
+  // Format:
+  // 32-bit identifier (usually value of bit flag) -- 32-bit size of parameter
+  // -- parameter setting of variable size
+  if (m_nLastVersion >= 0x102) {
     for (int i = 0; i < header.NumOfVariableParam; i++) {
       word32 lFlag = ReadType<word32>();
       if ((header.Flags & FLAG_DEFAULT_USER_NAME) &&
@@ -722,18 +769,30 @@ void PasswDatabase::Open(const SecureMem<word8>& key,
       }
       else if ((header.Flags & FLAG_PASSW_EXPIRY_DAYS) &&
                lFlag == FLAG_PASSW_EXPIRY_DAYS) {
-        m_lDefaultPasswExpiryDays = std::min(3650u, ReadType<word32>());
+        // Older versions didn't store the size of integer fields, so that
+        // unknown parameters could not be skipped.
+        // This has been fixed in version 1.8.
+        word32 lVal = (m_nLastVersion >= 0x108) ? ReadField<word32>() :
+          ReadType<word32>();
+        m_lDefaultPasswExpiryDays = std::min(3650u, lVal);
       }
       else if ((header.Flags & FLAG_DEFAULT_PASSW_HISTORY_SIZE) &&
                lFlag == FLAG_DEFAULT_PASSW_HISTORY_SIZE) {
-        m_lDefaultMaxPasswHistorySize = ReadType<word8>();
+        m_lDefaultMaxPasswHistorySize = (m_nLastVersion >= 0x108) ?
+          ReadField<word8>() : ReadType<word8>();
       }
       else if ((header.Flags & FLAG_MASTER_PASSW_EXPIRY) &&
                lFlag == FLAG_MASTER_PASSW_EXPIRY) {
-        m_lMasterPasswExpiryDate = ReadType<word32>();
+        m_lMasterPasswExpiryDate = (m_nLastVersion >= 0x108) ?
+          ReadField<word32>() : ReadType<word32>();
       }
-      else
+      else if ((header.Flags & FLAG_DESCRIPTION) &&
+               lFlag == FLAG_DESCRIPTION) {
+        m_sDescription = ReadString();
+      }
+      else {
         SkipField();
+      }
     }
   }
   else {
@@ -758,17 +817,17 @@ void PasswDatabase::Open(const SecureMem<word8>& key,
   std::fill(fieldsUsed.begin(), fieldsUsed.end(), false);
   //memzero(fieldsUsed, sizeof(fieldsUsed));
 
-  for (int nI = 0; nI < header.NumOfFields; nI++) {
-    idxConv[nI] = -1;
+  for (int i = 0; i < header.NumOfFields; i++) {
+    idxConv[i] = -1;
     SecureAnsiString sStr = ReadAnsiString();
     if (sStr.IsEmpty())
       throw EPasswDbInvalidFormat(E_INVALID_FORMAT);
-    for (int nJ = 0; nJ < PasswDbEntry::NUM_FIELDS; nJ++) {
+    for (int j = 0; j < PasswDbEntry::NUM_FIELDS; j++) {
       if (stricmp(sStr, PasswDbEntry::GetFieldName(
-            static_cast<PasswDbEntry::FieldType>(nJ))) == 0)
+            static_cast<PasswDbEntry::FieldType>(j))) == 0)
       {
-        idxConv[nI] = nJ;
-        fieldsUsed[nJ] = true;
+        idxConv[i] = j;
+        fieldsUsed[j] = true;
         break;
       }
     }
@@ -871,14 +930,7 @@ void PasswDatabase::Write(const void* pBuf, word32 lNumOfBytes)
   const word8* pSrcBuf = reinterpret_cast<const word8*>(pBuf);
 
   m_cryptBuf.BufferedGrow(m_lCryptBufPos + lNumOfBytes);
-  //word32 lNewSize = m_lCryptBufPos + lNumOfBytes;
-  //if (lNewSize > m_cryptBuf.Size()) {
-  //  m_cryptBuf.GrowBy(alignToBlockSize(
-  //    std::max(lNumOfBytes, m_cryptBuf.Size()), DEFAULT_BUF_SIZE));
-  //}
-
-  //memcpy(&m_cryptBuf[m_lCryptBufPos], pSrcBuf, lNumOfBytes);
-  m_cryptBuf.Copy(m_lCryptBufPos, pSrcBuf, lNumOfBytes);
+  m_cryptBuf.CopyFrom(m_lCryptBufPos, pSrcBuf, lNumOfBytes);
   m_lCryptBufPos += lNumOfBytes;
 
   m_cryptBuf.GrowClearMark(m_lCryptBufPos);
@@ -934,7 +986,7 @@ void PasswDatabase::Save(const WString& sFileName)
     throw EPasswDbError("Invalid number of KDF iterations");
 
   FileHeader fh;
-  memcpy(fh.Magic, PASSW_DB_MAGIC, sizeof(PASSW_DB_MAGIC));
+  fh.Magic = HEADER_MAGIC;
   fh.HeaderSize = sizeof(FileHeader);
   fh.Version = VERSION;
   fh.Flags = 0;
@@ -947,7 +999,8 @@ void PasswDatabase::Save(const WString& sFileName)
   fh.KdfType = KDF_PBKDF2_SHA256;
   fh.KdfIterations = m_lKdfIterations;
 
-  auto cipher = CreateCipher(m_bCipherType, m_pDbKey,
+  auto cipher = CreateCipher(m_bCipherType,
+    DeriveCipherKey(m_pDbKey, m_pDbSalt),
     EncryptionAlgorithm::Mode::ENCRYPT);
 
   word32 lIVLen = cipher->GetIVSize();
@@ -956,7 +1009,7 @@ void PasswDatabase::Save(const WString& sFileName)
   cipher->SetIV(iv);
 
   PasswDbHeader header;
-  memcpy(header.Magic, PASSW_DB_MAGIC, sizeof(PASSW_DB_MAGIC));
+  header.Magic = HEADER_MAGIC;
   header.HeaderSize = sizeof(header);
   //header.Version = VERSION;
   header.Flags = 0;
@@ -1000,19 +1053,22 @@ void PasswDatabase::Save(const WString& sFileName)
     header.NumOfVariableParam++;
   }
 
+  if (!m_sDescription.IsStrEmpty()) {
+    header.Flags |= FLAG_DESCRIPTION;
+    header.NumOfVariableParam++;
+  }
+
   m_cryptBuf.New(DEFAULT_BUF_SIZE);
   m_lCryptBufPos = sizeof(header);
 
   word32 lFlag = FLAG_DEFAULT_USER_NAME;
   if (header.Flags & lFlag) {
-    //WriteString(DEFAULT_USER_NAME);
     WriteType(lFlag);
     WriteString(m_sDefaultUserName);
   }
 
   lFlag = FLAG_PASSW_FORMAT_SEQ;
   if (header.Flags & lFlag) {
-    //WriteString(PASSW_FORMAT_SEQ);
     WriteType(lFlag);
     WriteString(m_sPasswFormatSeq);
   }
@@ -1020,45 +1076,50 @@ void PasswDatabase::Save(const WString& sFileName)
   lFlag = FLAG_PASSW_EXPIRY_DAYS;
   if (header.Flags & lFlag) {
     WriteType(lFlag);
-    WriteType(m_lDefaultPasswExpiryDays);
+    WriteField(m_lDefaultPasswExpiryDays);
   }
 
   lFlag = FLAG_DEFAULT_PASSW_HISTORY_SIZE;
   if (header.Flags & lFlag) {
     WriteType(lFlag);
     word8 bVal = m_lDefaultMaxPasswHistorySize;
-    WriteType(bVal);
+    WriteField(bVal);
   }
 
   lFlag = FLAG_MASTER_PASSW_EXPIRY;
   if (header.Flags & lFlag) {
     WriteType(lFlag);
-    WriteType(m_lMasterPasswExpiryDate);
+    WriteField(m_lMasterPasswExpiryDate);
   }
 
-  for (int nI = 0; nI < PasswDbEntry::NUM_FIELDS; nI++) {
+  lFlag = FLAG_DESCRIPTION;
+  if (header.Flags & lFlag) {
+    WriteType(lFlag);
+    WriteString(m_sDescription);
+  }
+
+  for (int i = 0; i < PasswDbEntry::NUM_FIELDS; i++) {
     WriteString(PasswDbEntry::GetFieldName(
-      static_cast<PasswDbEntry::FieldType>(nI)));
+      static_cast<PasswDbEntry::FieldType>(i)));
   }
 
   const word8 bEndOfEntry = PasswDbEntry::END;
 
   for (auto& pEntry : m_db)
   {
-    for (int nI = 0; nI < PasswDbEntry::NUM_STRING_FIELDS; nI++) {
-      //SecureWString sField;
-      switch (nI) {
+    for (int i = 0; i < PasswDbEntry::NUM_STRING_FIELDS; i++) {
+      switch (i) {
       case PasswDbEntry::PASSWORD:
-        WriteString(GetDbEntryPassw(*pEntry), nI);
+        WriteString(GetDbEntryPassw(*pEntry), i);
         break;
       case PasswDbEntry::KEYVALUELIST:
-        WriteString(pEntry->GetKeyValueListAsString(), nI);
+        WriteString(pEntry->GetKeyValueListAsString(), i);
         break;
       case PasswDbEntry::TAGS:
-        WriteString(pEntry->GetTagsAsString(), nI);
+        WriteString(pEntry->GetTagsAsString(), i);
         break;
       default:
-        WriteString(pEntry->Strings[nI], nI);
+        WriteString(pEntry->Strings[i], i);
       }
     }
 
@@ -1121,7 +1182,7 @@ void PasswDatabase::Save(const WString& sFileName)
         //if (lComprBufPos + lChunkSize > comprBuf.Size())
         //  comprBuf.GrowBy(comprBuf.Size());
         //memcpy(comprBuf + lComprBufPos, workBuf, lChunkSize);
-        comprBuf.Copy(lComprBufPos, workBuf, lChunkSize);
+        comprBuf.CopyFrom(lComprBufPos, workBuf, lChunkSize);
         lComprBufPos += lChunkSize;
       }
       lToCompress = 0;
@@ -1136,7 +1197,7 @@ void PasswDatabase::Save(const WString& sFileName)
   memzero(&header, sizeof(header));
 
   word32 lAlignedSize = m_lCryptBufPos;
-  if (cipher->AlignToBlockSize()) {
+  if (cipher->RequiresAlignment()) {
     lAlignedSize = alignToBlockSize(lAlignedSize, cipher->GetBlockSize());
     if (lAlignedSize > m_lCryptBufPos) {
       m_cryptBuf.Grow(lAlignedSize);
@@ -1144,11 +1205,6 @@ void PasswDatabase::Save(const WString& sFileName)
         lAlignedSize - m_lCryptBufPos);
     }
   }
-
-  SecureMem<sha512_context> hashCtx(1);
-  sha512_init(hashCtx);
-  sha512_hmac_starts(hashCtx, m_pDbKey, DB_KEY_LENGTH, 0);
-  sha512_hmac_update(hashCtx, m_cryptBuf, lAlignedSize);
 
   cipher->Encrypt(m_cryptBuf, m_cryptBuf, lAlignedSize);
 
@@ -1163,17 +1219,26 @@ void PasswDatabase::Save(const WString& sFileName)
     // file header
     m_pFile->Write(&fh, static_cast<int>(sizeof(fh)));
 
-    // recovery key block or salt
-    if (m_blRecoveryKey)
+    auto macKey = DeriveMacKey(m_pDbKey, m_pDbSalt);
+    HMAC::SHA512 hmgen(macKey, macKey.Size());
+    macKey.Clear();
+
+    // recovery key block and salt
+    if (m_blRecoveryKey) {
       m_pFile->Write(m_pDbRecoveryKeyBlock, DB_RECOVERY_KEY_BLOCK_LENGTH);
-    else
-      m_pFile->Write(m_pDbSalt, DB_SALT_LENGTH);
+      hmgen.Update(m_pDbRecoveryKeyBlock, DB_RECOVERY_KEY_BLOCK_LENGTH);
+    }
+
+    m_pFile->Write(m_pDbSalt, DB_SALT_LENGTH);
+    hmgen.Update(m_pDbSalt, DB_SALT_LENGTH);
 
     // initialization vector
     m_pFile->Write(iv, static_cast<int>(lIVLen));
+    hmgen.Update(iv, lIVLen);
 
     // encrypted database contents
     m_pFile->Write(m_cryptBuf, static_cast<int>(lAlignedSize));
+    hmgen.Update(m_cryptBuf, lAlignedSize);
 
   #if defined(_DEBUG) && defined(TEST_DECRYPTION)
     {
@@ -1182,13 +1247,12 @@ void PasswDatabase::Save(const WString& sFileName)
       checkCipher->SetIV(iv);
       SecureMem<word8> block(checkCipher->GetBlockSize());
       checkCipher->Decrypt(m_cryptBuf, block, block.Size());
-      if (memcmp(block, PASSW_DB_MAGIC, sizeof(PASSW_DB_MAGIC)) != 0)
+      if (*reinterpret_cast<word32*>(&block[0]) != HEADER_MAGIC)
         throw EPasswDbError("Decryption failed!");
     }
   #endif
 
-    SecureMem<word8> hmac(SHA512_HMAC_LENGTH);
-    sha512_hmac_finish(hashCtx, hmac);
+    auto hmac = hmgen.Finish();
 
     m_pFile->Write(hmac, static_cast<int>(hmac.Size()));
   }
@@ -1452,14 +1516,14 @@ bool PasswDatabase::CheckRecoveryKey(const SecureMem<word8>& recoveryKey)
   CheckKeyEmpty(recoveryKey);
 
   SecureMem<word8> checkKey(DB_KEY_LENGTH);
-  word8* pOffset = m_pDbRecoveryKeyBlock + DB_SALT_LENGTH + DB_KEY_LENGTH;
-  pbkdf2_256bit(recoveryKey, recoveryKey.Size(), pOffset,
+  const word8* pMemKey = m_pDbRecoveryKeyBlock + DB_SALT_LENGTH + DB_KEY_LENGTH;
+  pbkdf2_256bit(recoveryKey, recoveryKey.Size(), pMemKey,
     DB_SALT_LENGTH, checkKey, m_lKdfIterations);
 
   auto cipher = CreateCipher(m_bCipherType, checkKey,
     EncryptionAlgorithm::Mode::DECRYPT);
-  cipher->SetIV(pOffset);
-  cipher->Decrypt(pOffset + DB_SALT_LENGTH, checkKey, checkKey.Size());
+  cipher->SetIV(pMemKey);
+  cipher->Decrypt(pMemKey + DB_SALT_LENGTH, checkKey, checkKey.Size());
 
   return memcmp(checkKey, m_pDbKey, DB_KEY_LENGTH) == 0;
 }
@@ -1497,7 +1561,7 @@ void PasswDatabase::ChangeMasterKey(const SecureMem<word8>& newKey,
       pbkdf2_256bit(newKey, newKey.Size(), m_pDbSalt, DB_SALT_LENGTH, derivedKey,
         lKdfIterOverride, pCancelFlag);
       if (!(*pCancelFlag))
-        memcpy(m_pDbKey, derivedKey, DB_KEY_LENGTH);
+        derivedKey.CopyTo(m_pDbKey);
     }
     else {
       pbkdf2_256bit(newKey, newKey.Size(), m_pDbSalt, DB_SALT_LENGTH, m_pDbKey,
@@ -1562,12 +1626,12 @@ void PasswDatabase::ExportToCsv(const WString& sFileName, int nColMask,
 
   WString sHeader;
   //int nNumCols = 0;
-  for (int nI = 0; nI < PasswDbEntry::NUM_FIELDS; nI++) {
-    if (nColMask & (1 << nI)) {
+  for (int i = 0; i < PasswDbEntry::NUM_FIELDS; i++) {
+    if (nColMask & (1 << i)) {
       //nNumCols++;
       if (!sHeader.IsEmpty())
         sHeader += ",";
-      sHeader += "\"" + pColNames[nI] + "\"";
+      sHeader += "\"" + pColNames[i] + "\"";
     }
   }
 
@@ -1577,10 +1641,10 @@ void PasswDatabase::ExportToCsv(const WString& sFileName, int nColMask,
 
   for (auto& pEntry : m_db)
   {
-    for (int nI = 0, nJ = 0; nI < PasswDbEntry::NUM_FIELDS; nI++) {
-      if (nColMask & (1 << nI)) {
+    for (int i = 0, j = 0; i < PasswDbEntry::NUM_FIELDS; j++) {
+      if (nColMask & (1 << i)) {
         WString sField;
-        switch (nI) {
+        switch (i) {
         case PasswDbEntry::PASSWORD:
           sField = GetDbEntryPassw(*pEntry).c_str();
           break;
@@ -1607,14 +1671,14 @@ void PasswDatabase::ExportToCsv(const WString& sFileName, int nColMask,
           }
           break;
         default:
-          if (nI < PasswDbEntry::NUM_STRING_FIELDS) {
-            sField = pEntry->Strings[nI].c_str();
-            if (nI == PasswDbEntry::NOTES)
+          if (i < PasswDbEntry::NUM_STRING_FIELDS) {
+            sField = pEntry->Strings[i].c_str();
+            if (i == PasswDbEntry::NOTES)
               sField = ReplaceStr(sField, CRLF, " ");
           }
         }
         WString sFormatted;
-        if (nJ > 0)
+        if (j > 0)
           sFormatted = ",";
         sFormatted += "\"" + ReplaceStr(sField, "\"", "\"\"") + "\"";
         //if (nJ < nNumCols - 1)
@@ -1622,7 +1686,7 @@ void PasswDatabase::ExportToCsv(const WString& sFileName, int nColMask,
         pFile->WriteString(sFormatted.c_str(), sFormatted.Length());
         eraseVclString(sField);
         eraseVclString(sFormatted);
-        nJ++;
+        j++;
       }
     }
 

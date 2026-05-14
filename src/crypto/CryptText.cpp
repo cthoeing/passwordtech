@@ -1,7 +1,7 @@
 // CryptClip.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2026 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -60,8 +60,7 @@ static void initCrypto(aes_context* pCryptCtx,
 
   if (nVersion == 0) {
     derivedKey.Zeroize();
-    //memcpy(derivedKey, pSalt, 16);
-    derivedKey.Copy(0, pSalt, 16);
+    derivedKey.CopyFrom(0, pSalt, 16);
 
     // hash the salt and the key together 8192 times
     for (int i = 0; i < 8192; i++) {
@@ -103,9 +102,6 @@ int EncryptText(const SecureWString* psText,
     // get UTF-8 text length
     word32 lTextLen = WideCharToMultiByte(CP_UTF8, 0, sText, -1, nullptr, 0, nullptr, nullptr);
 
-    // convert text length to length in BYTES
-//    lTextLen *= sizeof(wchar_t);
-
     if (lTextLen > CRYPTTEXT_MAXTEXTBYTES)
       return CRYPTTEXT_ERROR_TEXTTOOLONG;
 
@@ -130,7 +126,6 @@ int EncryptText(const SecureWString* psText,
     // get a new initialization vector (IV)
     randGen.GetData(buf, 16);
 
-    //word8* pCryptBuf = &buf[16];
     word32 lBufPos = 16;
 
     // create header and copy it to the buffer
@@ -138,8 +133,7 @@ int EncryptText(const SecureWString* psText,
     memcpy(header.Magic, CRYPTTEXT_MAGIC, sizeof(CRYPTTEXT_MAGIC));
     header.Version = static_cast<word8>(CRYPTTEXT_VERSION);
     header.TextBytes = lTextLen;
-    //memcpy(pCryptBuf, &header, HEADER_SIZE);
-    buf.Copy(lBufPos, reinterpret_cast<word8*>(&header), HEADER_SIZE);
+    buf.CopyFrom(lBufPos, reinterpret_cast<word8*>(&header), HEADER_SIZE);
     lBufPos += HEADER_SIZE;
 
     // compress the text
@@ -167,7 +161,7 @@ int EncryptText(const SecureWString* psText,
 
     // create a buffer for the IV
     word8 iv[16];
-    memcpy(iv, buf, 16);
+    buf.CopyTo(0, iv, 16);
 
     // initialize the cipher and the HMAC
     SecureMem<aes_context> cryptCtx(1);
@@ -182,8 +176,7 @@ int EncryptText(const SecureWString* psText,
     hashCtx.Clear();
 
     // copy the HMAC to the buffer
-    //memcpy(pCryptBuf + HEADER_SIZE + comprLen, hmac, HMAC_LENGTH);
-    buf.Copy(lBufPos, hmac, HMAC_LENGTH);
+    buf.CopyFrom(lBufPos, hmac, HMAC_LENGTH);
 
     // now encrypt the buffer (*with* HMAC)
     aes_crypt_cbc(cryptCtx, AES_ENCRYPT, lCryptLen, iv, &buf[16], &buf[16]);
@@ -264,7 +257,6 @@ int DecryptText(const SecureWString* psText,
     if ((bufSize & 0x0F) != 0)
       return CRYPTTEXT_ERROR_TEXTCORRUPTED;
 
-    //word8* pCryptBuf = &buf[16];
     word32 lHmacLen = (nVersion == 0) ? 16 : HMAC_LENGTH;
     word32 lCryptLen = bufSize - 16;
 
@@ -276,7 +268,7 @@ int DecryptText(const SecureWString* psText,
 
     // time to start the crypto engine...
     word8 iv[16];
-    memcpy(iv, buf, 16);
+    buf.CopyTo(0, iv, 16);
     SecureMem<aes_context> cryptCtx(1);
     SecureMem<sha256_context> hashCtx(1);
     initCrypto(cryptCtx, hashCtx, pPassw, nPasswLen, iv, false, nVersion);

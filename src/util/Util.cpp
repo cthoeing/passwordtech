@@ -1,7 +1,7 @@
 // Util.cpp
 //
 // PASSWORD TECH
-// Copyright (c) 2002-2025 by Christian Thoeing <c.thoeing@web.de>
+// Copyright (c) 2002-2026 by Christian Thoeing <c.thoeing@web.de>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -350,6 +350,7 @@ void SetFormComponentsAnchors(TForm* pForm)
         if (nTag & 4) anc << akRight;
         if (nTag & 8) anc << akBottom;
         pControl->Anchors = anc;
+        pControl->Tag = 0;
       }
     }
   }
@@ -683,6 +684,75 @@ WString ShortenFileName(const WString& sFileName, int nMaxLen)
   return sFileName;
 }
 //---------------------------------------------------------------------------
+void SetPasswQualityBar(TCGauge* pBar, double dPasswQuality)
+{
+  const int
+    THRESH_RED         = 56,
+    THRESH_YELLOW      = 70,
+    THRESH_YELLOWGREEN = 75,
+    THRESH_GREEN       = 80,
+    THRESH_DARKGREEN   = 112;
+
+  pBar->Progress = std::max<int>(4, dPasswQuality);
+  int color = 0xff; // red
+  if (dPasswQuality >= THRESH_DARKGREEN) {
+    color = 0xe000;
+  }
+  else if (dPasswQuality >= THRESH_GREEN) {
+    color = 0xf000;
+  }
+  else if (dPasswQuality >= THRESH_YELLOWGREEN) {
+    color = 0xffd0;
+  }
+  else if (dPasswQuality >= THRESH_YELLOW) {
+//    double val = dPasswQuality - THRESH_YELLOW;
+//    int norm = THRESH_GREEN - THRESH_YELLOW;
+//    int gradient = (1 - val * val / (norm * norm)) * 255;
+//    color = 0xff00 | gradient; // range between yellow and green
+    color = 0xfff0;
+  }
+  else if (dPasswQuality >= THRESH_RED) {
+    int gradient = (dPasswQuality - THRESH_RED) /
+      (THRESH_YELLOW - THRESH_RED) * 0xff;
+    color = (gradient << 8) | 0xff; // range between red and yellow
+  }
+  pBar->ForeColor = static_cast<TColor>(color);
+}
+//---------------------------------------------------------------------------
+
+static int base32_decode(const word8* src, int len, word8* dest)
+{
+  word64 v = 0;
+  int n = 0, b = 0;
+  for (int i = 0; i < len; i++) {
+    word8 c = src[i];
+    if (c >= 'A' && c <= 'Z') {
+      c -= 'A';
+    }
+    else if (c >= 'a' && c <= 'z') {
+      c -= 'a';
+    }
+    else if (c >= '2' && c <= '7') {
+      c = c - '2' + 26;
+    }
+    else {
+      return -1;
+    }
+    v = (v << 5) | c;
+    if (++b == 8 || i == len - 1) {
+      v <<= (8 - b) * 5;
+      b = (b * 5) & ~7;
+      for (int j = 0; j < b; j += 8) {
+        dest[n++] = (v >> (32 - j)) & 0xff;
+      }
+      v = 0;
+      b = 0;
+    }
+  }
+
+  return n;
+}
+
 #define MX (((z >> 5) ^ (y << 2)) + ((y >> 3) ^ (z << 4))) ^ ((sum ^ y) + (key[(p & 3) ^ e] ^ z))
 #define DELTA 0x9e3779b9
 #define SUB(s, v) \
@@ -734,7 +804,7 @@ static bool decode_96bit(word32 data[3], const word32 key[4])
 
   const word8* buf = reinterpret_cast<word8*>(data);
   for (i = 0; i < 2; i++) {
-    word8 h = sbox[(buf[0] + i)&0xff]; // avoid buffer overflow
+    word8 h = sbox[(buf[0] + i) & 0xff]; // avoid buffer overflow
     for (j = 1; j < 10; j++)
       h = sbox[buf[j] ^ h];
     if (h != buf[10 + i])
@@ -770,15 +840,22 @@ std::tuple<int, int, AnsiString> CheckDonorKey(const AnsiString& asInput)
     return { DONOR_KEY_INVALID, nType, asDonorId };
 
   AnsiString asKey = asInput.Trim();
+  int nLen = asKey.Length();
 
-  if (asKey.Length() != 16)
+  // key may be encoded as base64 (length 16) or base32 (length 20)
+  if (!(nLen == 16 || nLen == 20))
     return { DONOR_KEY_INVALID, nType, asDonorId };
 
   word8 buf[13];
   buf[12] = '\0';
   size_t destLen = 12;
 
-  base64_decode(buf, &destLen, reinterpret_cast<const word8*>(asKey.c_str()), 16);
+  if (nLen == 16) {
+    base64_decode(buf, &destLen, reinterpret_cast<const word8*>(asKey.c_str()), 16);
+  }
+  else {
+    destLen = base32_decode(reinterpret_cast<const word8*>(asKey.c_str()), 20, buf);
+  }
 
   if (destLen != 12)
     return { DONOR_KEY_INVALID, nType, asDonorId };
@@ -791,8 +868,8 @@ std::tuple<int, int, AnsiString> CheckDonorKey(const AnsiString& asInput)
   if (buf[0] != 'P' || buf[1] != '3')
     return { DONOR_KEY_INVALID, nType, asDonorId };
 
-  for (int nI = 2; nI < 10; nI++) {
-    if (buf[nI] < ' ' || buf[nI] > '~')
+  for (int i = 2; i < 10; i++) {
+    if (buf[i] < ' ' || buf[i] > '~')
       return { DONOR_KEY_INVALID, nType, asDonorId };
   }
 
