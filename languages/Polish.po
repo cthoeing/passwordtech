@@ -1,505 +1,744 @@
-# Converted by Password Tech 3.5.9
-# NOTE: You have to provide the appropriate language code in the "Language" section of the following header.
-# If the language code is missing or invalid, PwTech will derive the language name from the file name.
+# Released under the GNU General Public License
+#
+# !!! NOTE ON FORMAT STRINGS !!!
+# As of version 3.5.3, Password Tech uses format specifiers of the form "%N",
+# with N being the index of the argument (starting at N=1) to be inserted into
+# the formatted string. All arguments are provided as strings by the application.
+# The new format was chosen because it provides higher flexibility and security.
+# Example:
+# Format string:    "%1 characters / %2 bits per character"
+# 1st argument:     "90"
+# 2nd argument:     "6.4"
+# Resulting string: "90 characters / 6.4 bits per character"
+# In the translated string, the arguments can be specified in any order.
+# Password Tech is still compatible with the old format ("%d" for digits, "%f"
+# for floating point numbers, "%s" for strings, etc.), and the original strings
+# are still provided in the old format to avoid merge conflicts when updating
+# existing translations.
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.9\n"
+"Project-Id-Version: Password Tech 3.6.0\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Last-Translator: Christian Thöing\n"
+"Last-Translator: \n"
 "Language-Team: \n"
-"Language: pl\n"
+"Language: pl_PL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-PasswordTech-Manual: manual.pdf\n"
 "X-Generator: Poedit 3.3.2\n"
 
+#. Message box caption
 msgid "Info"
-msgstr "Informacja"
+msgstr "Info"
 
+#. Message box caption
 msgid "Warning"
 msgstr "Ostrzeżenie"
 
+#. Message box caption
 msgid "Question"
 msgstr "Pytanie"
 
+#. Message box caption
 msgid "Error"
 msgstr "Błąd"
 
+#. Main window, label attached to password profile drop-down list
 msgid "Profile:"
 msgstr "Profil:"
 
+#. Main window, Settings groupbox
 msgid "Settings"
 msgstr "Ustawienia"
 
-msgid "Include Characters (pass*words*)"
-msgstr "Uwzględnij Znaki (pass*words*)"
+#. Main window, checkbox
+msgid "Include Characters (Pass*words*)"
+msgstr "Uwzględnij Znaki (Pass*words*)"
 
+#. Main window, Password length
 msgid "Length:"
 msgstr "Długość:"
 
+#. Main window, user-defined character set
 msgid "Character Set:"
 msgstr "Ustaw Znaki:"
 
+#. Main window, button to show currently loaded character set
 msgid "Show details"
-msgstr "Pokaż Szczegóły"
+msgstr "Pokaż szczegóły"
 
+#. Main window, checkbox
 msgid "Include Words (Pass*phrases*)"
 msgstr "Uwzględnij Słowa (Pass*phrases*)"
 
+#. Main window, number of words from word list to generate
 msgid "Number:"
 msgstr "Ilość:"
 
+#. Main window, select word list file
 msgid "Word List File:"
 msgstr "Plik z Listą Słów:"
 
+#. Main window, button to browse for word list file
 msgid "Browse"
 msgstr "Przeglądaj"
 
+#. Main window, specify length of passphrase (composed of words)
 msgid "Specify length*:"
 msgstr "Określ długość*:"
 
+#. Main window, checkbox
 msgid "Combine Words with Characters"
 msgstr "Łączenie Słów z Znakami"
 
+#. Main window, checkbox
 msgid "Format password:"
 msgstr "Format hasła:"
 
+#. Main window, checkbox, execute custom Lua script for password generation
 msgid "Run script:"
 msgstr "Uruchom skrypt:"
 
+#. Main window, button to reload script file
 msgid "Reload script"
 msgstr "Przeładuj skrypt"
 
+#. Main window, label attached to input box for number of passwords
 msgid "Multiple passwords:"
 msgstr "Wiele haseł:"
 
+#. Main window, button to generate password
 msgid "Generate"
 msgstr "Generuj"
 
+#. Main window, button to generate multiple passwords
 msgid "Generate to Clipboard"
 msgstr "Generuj do Schowka"
 
+#. Main window, button to generate multiple passwords
 msgid "Generate to File..."
 msgstr "Generuj do Pliku..."
 
+#. Main window, button to generate multiple passwords
 msgid "Include Header"
 msgstr "Zawiera Nagłówek"
 
+#. Main window, button to access advanced password options
 msgid "Advanced"
 msgstr "Zaawansowane"
 
+#. Main window, button to access advanced password options, tooltip
 msgid "%d option(s) active"
 msgstr "%d opcja(e) aktywna"
 
+#. Main window, button to access advanced password options, dropdown menu
 msgid "Deactivate All Options"
-msgstr "Dezaktywuj wszystkie opcje"
+msgstr "Dezaktywuj Wszystkie Opcje"
 
+#. Main window, button to access advanced password options, dropdown menu
 msgid "Deactivate All Starred (*) Options"
-msgstr "Dezaktywuj wszystkie opcje gwiazdką (*)"
+msgstr "Dezaktywuj Wszystkie Opcje Gwiazdką (*)"
 
+#. Main window, Generated Password groupbox
 msgid "Generated Password"
-msgstr "Wygenerowane Hasło"
+msgstr "Generowane Hasło"
 
+#. Main window, label below password box
 msgid "Click on \"Generate\""
-msgstr "Kliknij \"Generuj\"."
+msgstr "Kliknij na \"Generuj\""
 
+#. Main window, button to toggle password display (either display as-is or hide behind symbols)
 msgid "Hide/show password"
 msgstr "Ukryj/pokaż hasło"
 
+#. Main window, password groupbox, tooltip of quality bar
 msgid "Hold left mouse button to drag & drop password"
-msgstr "Przytrzymaj lewy przycisk myszy, aby przeciągnąć & upuścić hasło"
+msgstr "Przytrzymaj lewy przycisk myszy, aby przeciągnąć &amp; upuścić hasło"
 
+#. Main menu, File submenu
 msgid "File"
 msgstr "Plik"
 
+#. Main menu, File submenu, Profile for password generation
 msgid "Profile"
 msgstr "Profil"
 
+#. Main menu, File submenu, Profile submenu, Profile Editor
 msgid "Profile Editor..."
-msgstr "Profil Edytor..."
+msgstr "Profil Edytora..."
 
+#. Main menu, File submenu, Exit program
 msgid "Exit"
 msgstr "Wyjście"
 
+#. Main menu, File submenu
 msgid "Backup Settings..."
 msgstr "Ustawienia Kopii Zapasowej..."
 
+#. Main menu, File submenu
 msgid "Restore Settings from Backup..."
 msgstr "Przywracanie ustawień z kopii zapasowej..."
 
-msgid "Could not copy the following language file(s):"
-msgstr "Nie można skopiować następujących plików językowych:"
+#. Backup settings, error message
+msgid ""
+"Could not copy the following language file(s):\n"
+"%1"
+msgstr ""
+"Nie można skopiować następujących plików językowych:\n"
+"%1"
 
+#. Backup settings, title of dialog
 msgid "Select folder to store backup"
 msgstr "Wybierz folder do przechowywania kopii zapasowej"
 
+#. Backup settings, message
+msgid ""
+"Backup of settings and language files\n"
+"stored in \"%1\"."
+msgstr ""
+"Kopia zapasowa ustawień i plików językowych\n"
+"przechowywane w „%1”."
+
+#. Restore backup, title of dialog
 msgid "Select folder containing backup to restore"
 msgstr "Wybierz folder zawierający kopię zapasową do przywrócenia"
 
+#. Restore backup, error message
 msgid "Configuration file \"%1\" not found in folder."
-msgstr "Plik konfiguracyjnego \"%1\" nie znaleziono w folderze."
+msgstr "Pliku konfiguracyjnego \"%1\" nie znaleziono w folderze."
 
+#. Restore backup, message
+msgid ""
+"Backup was created with an older version (%1)\n"
+"of the program. Continue anyway?"
+msgstr ""
+"Utworzono kopię zapasową w starszej wersji (% 1)\n"
+"programu. Kontynuować mimo to?"
+
+#. Restore backup, error message
+msgid ""
+"Could not copy configuration file to\n"
+"\"%1\"."
+msgstr ""
+"Nie można skopiować pliku konfiguracyjnego do\n"
+"„% 1”."
+
+#. Restore backup, message
+msgid ""
+"Restored settings will only take effect after\n"
+"a program restart. Do you want to restart now?"
+msgstr ""
+"Przywrócone ustawienia zaczną obowiązywać dopiero po\n"
+"restarcie programu. Czy chcesz teraz uruchomić ponownie?"
+
+#. Restore backup, message
+msgid ""
+"Configuration settings will not be saved until\n"
+"the next time the program is started."
+msgstr ""
+"Ustawienia konfiguracyjne nie zostaną zapisane do\n"
+"przy następnym uruchomieniu programu."
+
+#. Main menu, Tools submenu
 msgid "Tools"
 msgstr "Narzędzia"
 
+#. Main window, Clear Clipboard button and menu item
 msgid "Clear Clipboard"
 msgstr "Wyczyść Schowek"
 
+#. Main window, Encrypt Clipboard button and menu item
 msgid "Encrypt Clipboard..."
 msgstr "Zaszyfruj Schowek..."
 
+#. Main window, Decrypt Clipboard button and menu item
 msgid "Decrypt Clipboard..."
 msgstr "Odszyfruj Schowek..."
 
+#. Main menu, Tools submenu
 msgid "Create Random Data File..."
 msgstr "Utwórz Losowo Plik Danych..."
 
+#. Main menu, Tools submenu
 msgid "Create Trigram File..."
 msgstr "Utwórz Plik Trygramu..."
 
+#. Main menu, Tools submenu
 msgid "MP Password Generator..."
 msgstr "MP Password Generator..."
 
+#. Main menu, Tools submenu
 msgid "Deterministic Random Generator"
 msgstr "Deterministyczny Losowy Generator"
 
+#. Main menu, Tools submenu, Deterministic Random Generator submenu
 msgid "Reset"
 msgstr "Resetuj"
 
+#. Main menu, Tools submenu, Deterministic Random Generator submenu
 msgid "Deactivate"
 msgstr "Dezaktywuj"
 
+#. Main menu, Tools submenu
 msgid "Provide Additional Entropy"
 msgstr "Zapewnij Dodatkową Entropię"
 
+#. Main menu, Tools submenu, Provide Additional Entropy submenu
 msgid "As Text..."
 msgstr "Jako tekst..."
 
+#. Main menu, Tools submenu, Provide Additional Entropy submenu
 msgid "From File..."
 msgstr "Z pliku..."
 
+#. Main menu, Options submenu
 msgid "Options"
 msgstr "Opcje"
 
+#. Main menu, Options submenu
 msgid "Configuration..."
 msgstr "Konfiguracja..."
 
+#. Configuration window, Language tab
 msgid "Language"
 msgstr "Język"
 
+#. Main menu, Options submenu
 msgid "Always on Top"
 msgstr "Zawsze na górze"
 
+#. Main menu, Options submenu
 msgid "Hide Entropy Progress"
 msgstr "Ukryj Postęp Entropii"
 
+#. Main menu, Options submenu
 msgid "Save Settings on Exit"
 msgstr "Zapisz ustawienia przy wyjściu"
 
+#. Main menu, Options submenu
 msgid "Save Settings Now"
 msgstr "Zapisz teraz ustawienia"
 
+#. Main menu, Help submenu
 msgid "Help"
 msgstr "Pomoc"
 
+#. Main window, Help button tooltip
 msgid "Open Manual"
-msgstr "Otwórz Instrukcję"
+msgstr "Otwórz Podręcznik"
 
 msgid "Command Line Arguments..."
 msgstr "Argumenty wiersza poleceń..."
 
+#. Main menu, Help submenu
 msgid "Visit Website"
 msgstr "Odwiedź Stronę"
 
+#. Main window, Help submenu
 msgid "Get Translations..."
 msgstr "Pobierz Tłumaczenia..."
 
+#. Main window, Help submenu
 msgid "Donate..."
 msgstr "Darowizna..."
 
+#. Main window, Help submenu
 msgid "Check for Updates"
 msgstr "Sprawdź aktualizacje"
 
+#. Main window, Help submenu
 msgid "Timer Info..."
 msgstr "Informacje o timerach..."
 
+#. Main window, Help submenu
 msgid "About %s..."
 msgstr "O %s..."
 
+#. System tray context menu, Restore application
 msgid "Restore %s"
 msgstr "Przywróć %s"
 
+#. System tray context menu, Generate Password to clipboard
 msgid "Generate Password"
 msgstr "Generator Hasła"
 
+#. System tray context menu, Generate Password and Show in message box
 msgid "Generate and Show Password..."
 msgstr "Generowanie i Wyświetlanie Haseł..."
 
+#. System tray context menu, Generate Password and Autotype into other windows
 msgid "Generate and Autotype Password"
 msgstr "Generowanie i Autozapis Hasła"
 
+#. System tray context menu
 msgid "Open user manual"
-msgstr "Otwórz instrukcję obsługi"
+msgstr "Otwórz podręcznik użytkownika"
 
+#. Command line arguments
+msgid "Usage:"
+msgstr "Zastosowanie:"
+
+#. Command line arguments
+msgid "Display this help message."
+msgstr "Wyświetl ten komunikat pomocy."
+
+#. Command line arguments
+msgid "Do not write to disk unless explicitly requested."
+msgstr "Nie zapisuj na dysk, chyba że wyraźnie o to poprosisz."
+
+#. Command line arguments
+msgid "Load profile named 'profilename' on start-up."
+msgstr "Załaduj profil o nazwie 'nazwa profilu' podczas uruchamiania."
+
+#. Command line arguments
+msgid ""
+"Generate 'number' of passwords and display on the console, then close "
+"application."
+msgstr ""
+"Wygeneruj 'liczbę' haseł i wyświetl na konsoli, a następnie zamknij "
+"aplikację."
+
+#. Command line arguments
+msgid "Launch application in the background."
+msgstr "Uruchom aplikację w tle."
+
+#. Command line arguments
+msgid ""
+"Open database named 'filename' on start-up and show password manager window."
+msgstr ""
+"Otwórz bazę danych o nazwie 'nazwa pliku' przy uruchomieniu i pokaż okno "
+"menedżera haseł."
+
+#. Main window, Clear Clipboard button tooltip
 msgid "Clear clipboard (text contents only)"
-msgstr "Wyczyść schowek (tylko kontekst tekstowy)"
+msgstr "Wyczyść schowek (tylko zawartość tekstowa)"
 
+#. Main window, Encrypt/Decrypt Clipboard button tooltip
 msgid "Clipboard text encryption (left-click) or decryption (right-click)"
-msgstr "Szyfrowanie (kliknięcie lewym przyciskiem myszy) lub odszyfrowanie (kliknięcie prawym przyciskiem myszy) tekstu w schowku"
+msgstr ""
+"Szyfrowanie tekstu schowka (kliknięcie lewym przyciskiem myszy) lub "
+"deszyfrowanie (kliknięcie prawym przyciskiem myszy)"
 
+#. Main window, Profile Editor button tooltip
 msgid "Load, create or delete profiles"
-msgstr "Ładowanie, tworzenie i usuwanie profili"
+msgstr "Ładuj, twórz lub usuwaj profile"
 
+#. Main window, MP Password Generator button tooltip
 msgid "Generate passwords based on a master password"
-msgstr "Generowanie haseł na podstawie hasła głównego"
+msgstr "Generuj hasła w oparciu o hasło główne"
 
+#. Main window, Configuration button tooltip
 msgid "Main configuration of the program"
 msgstr "Główna konfiguracja programu"
 
-msgid "Reset Counters"
-msgstr "Resetuj licznik"
-
+#. Open/Save dialogs, filter for All files (*.*)
 msgid "All files"
 msgstr "Wszystkie pliki"
 
+#. Open/Save dialogs, filter for Text files (*.txt)
 msgid "Text files"
 msgstr "Pliki tekstowe"
 
+#. Open/Save dialogs, filter for Trigram files (*.tgm)
 msgid "Trigram files"
-msgstr "Pliki trygramu"
+msgstr "Pliki trigramu"
 
+#. Open/Save dialogs, filter for Lua script files (*.lua)
 msgid "Lua scripts"
-msgstr "Skrypty Lua"
+msgstr "Skrypty lua"
 
+#. Various context menus, Undo last operation
 msgid "Undo"
 msgstr "Cofnij"
 
+#. Various context menus, Cut selected text and copy to clipboard
 msgid "Cut"
 msgstr "Wytnij"
 
+#. Various context menus, Copy selected text to clipboard
 msgid "Copy"
 msgstr "Kopiuj"
 
+#. Main window, Password box, context menu
 msgid "Encrypt && Copy"
-msgstr "Szyfruj && Kopiuj"
+msgstr "Szyfrowanie && Kopiowanie"
 
+#. Variuos context menus, paste text from clipboard
 msgid "Paste"
 msgstr "Wklej"
 
+#. Main window, Password box, context menu
 msgid "Perform Autotype"
-msgstr "Wykonywanie autozapisu"
+msgstr "Wykonywanie Autozapisu"
 
+#. Main window, Password box, context menu
 msgid "Add to Database"
-msgstr "Dodaj do bazy danych"
+msgstr "Dodaj do Bazy Danych"
 
+#. Various context menus, Delete selected text
 msgid "Delete"
 msgstr "Usuń"
 
+#. Various context menus, select entire text
 msgid "Select All"
-msgstr "Zaznacz wszystko"
+msgstr "Wybierz wszystko"
 
+#. Context menus of Character set, Word list file, Format password, and Run script drop-down lists: Clear history of list entries
 msgid "Clear List"
-msgstr "Wyczyść listę"
+msgstr "Wyczyść Listę"
 
+#. Main window, context menus of Character set, Word list file, Format password, and Run script drop-down lists: Clear currently selected entry
 msgid "Remove Entry"
-msgstr "Usuń wpis"
+msgstr "Usuń Wpis"
 
+#. Main window, Passowrd box, context menu, make box editable
 msgid "Editable"
-msgstr "Pasek edycji"
+msgstr "Edytowalne"
 
+#. Main window, Password box, context menu, enable automatic estimation of password quality when entering text
 msgid "Enable Password Testing"
-msgstr "Włącz testowanie haseł"
+msgstr "Włącz Testowanie Hasła"
 
+#. Main window, Password box, context menu
 msgid "Change Font..."
-msgstr "Zmień czcionkę..."
+msgstr "Zmień Czcionkę..."
 
+#. Main window, Password box, context menu
+msgid "Reset Font"
+msgstr "Zresetuj Czcionkę"
+
+#. Title of open dialog when selecting Main menu | Tools | Provide Additional Entropy | From File
 msgid "Select high-entropy file"
-msgstr "Wybierz plik o wysokiej entropii"
+msgstr "Wybierz wysokiej-entropii plik"
 
+#. Main window, Password Database button tooltip
 msgid "Manage passwords in encrypted databases"
-msgstr "Menedżer haseł z zaszyfrowanymi bazami danych"
+msgstr "Zarządzanie hasłami w zaszyfrowanych bazach danych"
 
+#. Main window, Reload Profile button tooltip
 msgid "Reload profile"
 msgstr "Przeładuj profil"
 
+#. Main window, Add Profile button tooltip
 msgid "Add profile"
 msgstr "Dodaj profil"
 
+#. Main menu, Tools submenu, Deterministic Random Generator submenu
 msgid "Set up..."
 msgstr "Ustawienia..."
 
+#. Main menu, File submenu
 msgid "Password Manager..."
 msgstr "Menedżer Haseł..."
 
+#. Main menu, Help submenu
 msgid "Enter Donor Key..."
-msgstr "Wprowadź Klucz Darczyńcy..."
+msgstr "Wpisz Klucz Darczyńcy..."
 
+#. System tray context menu
 msgid "Reset All Window Positions"
-msgstr "Zresetuj wszystkie pozycje okna"
+msgstr "Zresetuj Wszystkie Pozycje Okien"
 
+#. Message shown when randseed.dat could not be read
 msgid ""
 "Could not read random seed file\n"
 "\"%s\"."
 msgstr ""
 "Nie można odczytać losowego pliku źródłowego\n"
-"\"%s\"."
+"„%s”."
 
+#. Message shown when writing randseed.dat failed
 msgid ""
 "Could not write to random seed file\n"
 "\"%s\"."
 msgstr ""
-"Nie można zapisać do losowego pliku źródłowego\n"
-"\"%s\"."
+"Nie można zapisać w losowym pliku źródłowym\n"
+"„%s”."
 
+#. List of unknown command line parameters (when the application is run from the command line)
 msgid ""
 "Unknown command line switch(es):\n"
 "%s"
 msgstr ""
-"Nieznane przełączniki wiersza poleceń:\n"
+"Nieznany przełączniki wiersza poleceń:\n"
 "%s"
 
+#. Message shown when word list could not be loaded
 msgid ""
 "Error while loading word list file\n"
 "\"%s\"."
 msgstr ""
-"Błąd ładowania pliku listy słów\n"
-"\"%s\"."
+"Błąd podczas ładowania pliku listy słów\n"
+"„%s”."
 
+#. Message shown when passwords from common_passwords.txt could not be loaded
 msgid ""
 "Error while loading list of common passwords:\n"
 "%s."
 msgstr ""
-"Błąd ładowania listy typowych haseł:\n"
+"Błąd podczas ładowania listy typowych haseł:\n"
 "%s."
 
+#. List of errors that occurred during startup phase of the application
 msgid "%s encountered %d error(s) during startup:"
-msgstr "Wystąpił błąd %d podczas uruchamiania %s:"
+msgstr "%s napotkał %d błędów podczas uruchamiania:"
 
+#. Reminder to make a donation, shown with a certain frequency on startup
 msgid ""
 "If you like %s, please consider\n"
 "making a donation. Thank you!"
 msgstr ""
-"Jeśli podoba Ci się %s\n"
-"rozważ dokonanie darowizny. Dzięki!"
+"Jeśli podoba Ci się %s, rozważ\n"
+"dokonanie darowizny. Dziękuję!"
 
+#. Message shown when selected character set is invalid
 msgid "Character set \"%s\" is invalid."
-msgstr "Zestaw znaków \"%s\" jest nieprawidłowy."
+msgstr "Zestaw znaków „%s” jest nieprawidłowy."
 
+#. Message shown when configuration file could not be written
 msgid ""
 "Error while writing to configuration file:\n"
 "%s."
 msgstr ""
-"Błąd zapisu pliku konfiguracyjnego:\n"
+"Błąd podczas zapisu do pliku konfiguracyjnego:\n"
 "%s."
 
+#. Information about selected character set (number N of unique characters and entropy bits (=log2(N)) per character)
 msgid "%d characters / %.1f bits per character"
 msgstr "%d znaków / %.1f bitów na znak"
 
+#. Information about selected word list file (number N of unique words and entropy bits (=log2(N)) per word)
 msgid "%d words / %.1f bits per word"
 msgstr "%d słów / %.1f bitów na słowo"
 
+#. Message shown when selected trigram file could not be read
 msgid "Could not open trigram file."
-msgstr "Nie można otworzyć pliku trygramu."
+msgstr "Nie można otworzyć pliku trigramu."
 
+#. Message shown when selected trigram file has an invalid format
 msgid "Invalid trigram file."
-msgstr "Nieprawidłowy plik trygramu."
+msgstr "Nieprawidłowy plik trigramu."
 
+#. Main window, Generated Password groupbox, label below Password box, tooltip shown when generated or entered password matches a common password
 msgid "Matches common password!"
-msgstr "Dopasuj do wspólnego hasła!"
+msgstr "Pasuje do wspólnego hasła!"
 
+#. Encrypt Clipboard, message shown when text has been encrypted successfully
 msgid "Text successfully encrypted."
-msgstr "Tekst został pomyślnie zaszyfrowany."
+msgstr "Tekst pomyślnie zaszyfrowany."
 
+#. Decrypt Clipboard, message shown when text has been decrypted successfully
 msgid "Text successfully decrypted."
-msgstr "Tekst został pomyślnie odszyfrowany."
+msgstr "Tekst pomyślnie odszyfrowany."
 
+#. Encrypt/Decrypt Clipboard, message shown when clipboard could not be opened
 msgid "Could not open clipboard."
 msgstr "Nie można otworzyć schowka."
 
+#. Encrypt/Decrypt Clipboard, message shown when contained text is too long
 msgid "The text to be encrypted is too long."
-msgstr "Tekst do zaszyfrowania jest zbyt długi."
+msgstr "Tekst do zaszyfrowania jest za długi."
 
+#. Encrypt/Decrypt Clipboard, message shown when clipboard is empty
 msgid "No text available to process."
-msgstr "Brak tekstu dostępnego do przetworzenia."
+msgstr "Brak tekstu do przetworzenia."
 
+#. Encrypt/Decrypt Clipboard, message shown when out of memory
 msgid ""
 "Not enough memory available to perform\n"
 "the operation. Try to use a shorter text."
 msgstr ""
-"Za mało pamięci dostępnej dla wykonania\n"
-"operacji. Spróbuj użyć krótszego tekstu."
+"Za mało pamięci do wykonania operacji.\n"
+"Spróbuj użyć krótszego tekstu."
 
+#. Decrypt Clipboard, message shown when decryption failed
 msgid ""
 "Decryption failed. This may be attributed\n"
 "to the following reasons:"
 msgstr ""
-"Odszyfrowanie nie powiodło się. Możliwe\n"
-"przyczyny tego są następujące:"
+"Odszyfrowanie nie powiodło się. Można to\n"
+"przypisać z następujących powodów:"
 
+#. Decrypt Clipboard, possible reason for failure
 msgid "- You entered a wrong password."
-msgstr "- Wprowadziłeś nieprawidłowe hasło."
+msgstr "- Wpisałeś złe hasło."
 
+#. Decrypt Clipboard, possible reason for failure
 msgid ""
 "- The text is corrupted.\n"
 "- The text is not encrypted."
 msgstr ""
-"- Tekst jest niepoprawny.\n"
+"- Tekst jest uszkodzony.\n"
 "- Tekst nie jest zaszyfrowany."
 
+#. Decrypt Clipboard, message shown when decompression failed
 msgid ""
 "This should not have happened:\n"
 "Decryption successful, but decompression\n"
 "failed."
 msgstr ""
-"To nie powinno się zdarzyć:\n"
+"To nie powinno było się zdarzyć:\n"
 "Odszyfrowanie powiodło się, ale\n"
-"Dekompresja nie powiodła się."
+"dekompresja nie powiodło się."
 
+#. Message shown when certain hot key(s) could not be registered
 msgid "Could not register the following hot keys:"
-msgstr "Nie można zarejestrować następujących skrótów klawiszowych:"
+msgstr "Nie można zarejestrować następujących klawiszy skrótu:"
 
+#. Main window, Generate password list, message shown when specified number of passwords is invalid
+msgid ""
+"Invalid number of passwords.\n"
+"Allowed range is %d-%d."
+msgstr ""
+"Nieprawidłowa liczba haseł.\n"
+"Dozwolony zakres to %d-%d."
+
+#. Main window, Generate password list to file, message shown when selected file already exists
 msgid ""
 "The selected file already exists. Do you\n"
 "want to append passwords to this file\n"
 "(existing passwords will be preserved),\n"
 "or do you want to completely overwrite it?\n"
 "\n"
-"Yes\t-> append passwords,\n"
-"No\t-> overwrite file,\n"
-"Cancel\t-> cancel process."
+"Yes -> append passwords,\n"
+"No -> overwrite file,\n"
+"Cancel -> cancel process."
 msgstr ""
-"Wybrany plik już istnieje.\n"
-"Czy chcesz dodać hasła do pliku\n"
-"(istniejące hasła są zachowywane),\n"
-"czy chcesz całkowicie nadpisać plik?\n"
+"Wybrany plik już istnieje. Czy ty\n"
+"chcesz dołączyć hasła do tego pliku\n"
+"(istniejące hasła zostaną zachowane),\n"
+"czy chcesz go całkowicie nadpisać?\n"
 "\n"
-"Ja\t-> Dodaj hasła,\n"
-"Nein\t-> Nadpisz plik,\n"
-"Anuluj\t-> anuluj proces."
+"Tak -> dołącz hasła,\n"
+"Nie -> nadpisz plik,\n"
+"Anuluj -> anuluj proces."
 
+#. Main window, Include Passphrase, Specify Length, message shown when specified length range is invalid
 msgid "Passphrase: Invalid length range."
-msgstr "Hasło: Nieprawidłowy zakres długości."
+msgstr "Hasło: nieprawidłowy zakres długości."
 
+#. Message shown for a certain configuration of password settings
 msgid ""
 "If the option \"Each character must occur\n"
 "only once\" is activated, the password length\n"
-"is limited to the size of the character set (%d)."
+"is limited to %d unique characters."
 msgstr ""
-"Jeśli opcja \"Każdy znak może być użyty tylko raz\"\n"
-"jest aktywowany, długość hasła\n"
-"ograniczone do rozmiaru zestawu znaków (%d)."
+"Jeśli opcja jest aktywowana „Każdy znak\n"
+"musi wystąpić tylko raz”, długość hasła\n"
+"jest ograniczone do %d unikalnych znaków."
 
+#. Message shown for a certain configuration of passphrase settings
 msgid ""
 "If the option \"Each word must occur only\n"
 "once\" is activated, the number of words\n"
 "is limited to the size of the word list (%d)."
 msgstr ""
-"Jeśli opcja \"Każde słowo może być użyte tylko raz”\n"
-"jest aktywowany, jest liczbą\n"
-"słowa ograniczone do rozmiaru listy słów (%d)."
+"Jeśli opcja jest aktywowana „Każde słowo \n"
+"musi wystąpić tylko raz”, liczba słów\n"
+"jest ograniczone rozmiarem listy słów (%d)."
 
+#. Message shown when selected script file could not be loaded
 msgid ""
 "Error while loading script:\n"
 "%s."
@@ -507,52 +746,61 @@ msgstr ""
 "Błąd podczas ładowania skryptu:\n"
 "%s."
 
-msgid "Generating password list ..."
-msgstr "Wygeneruj listę haseł ..."
+#. Title of Progress window when generating a single password
+msgid "Generating password"
+msgstr "Generowanie hasła"
 
+#. Title of Progress window when generating password list
+msgid "Generating password list"
+msgstr "Generowanie listy haseł"
+
+#. Progress info when generating password list
 msgid "%d of %d passwords generated."
-msgstr "%d z %d wygenerowane hasła."
+msgstr "%d z %d wygenerowano haseł."
 
-msgid "Generating passphrase ..."
-msgstr "Generowanie hasła ..."
+#. Formatted password, Include Characters/Words selected, but format specifier "P" not found in format string
+msgid "\"P\" is not specified"
+msgstr "„P” nie jest określone"
 
-msgid "%d of %d passphrases generated."
-msgstr "%d z %d wygenerowane hasła."
-
-msgid "\"P\" is not specified."
-msgstr "\"P\" nie jest określone."
-
+#. Formatted password, format specifier "P" contained in format string, but no password available to insert
 msgid "Password not available"
 msgstr "Hasło niedostępne"
 
-msgid "Password too long."
-msgstr "Hasło zbyt długie."
+#. Formatted password, format specifier "P" contained in format string, but password cannot be fully inserted
+msgid "Password too long"
+msgstr "Hasło jest długie"
 
+#. Formatted password, format string contains unknown specifier
 msgid "%d invalid format specifier(s): %s"
-msgstr "%d nieprawidłowe specyfikator(y) formatu: %s"
+msgstr "%d nieprawidłowy specyfikator(y) formatu: %s"
 
+#. Run script, executing Lua script
 msgid "Executing script"
-msgstr "Uruchom skrypt"
+msgstr "Wykonywanie skryptu"
 
+#. Run script, waiting for response
 msgid "Waiting for script ..."
-msgstr "Oczekiwanie na skrypt ..."
+msgstr "Oczekiwanie na skrypt..."
 
+#. Run script, message shown when execution was cancelled
 msgid ""
 "Script thread was terminated forcibly.\n"
 "Please check script for infinite loops."
 msgstr ""
-"Wątek skryptu został przerwany siłą.\n"
-"Sprawdź, czy w skrypcie nie ma nieskończonych pętli."
+"Wątek skryptu został przymusowo zakończony.\n"
+"Sprawdź skrypt dla nieskończonych pętli."
 
+#. Generate password list, message shown when list size is about to exceed internal limit
 msgid ""
 "The estimated list size will probably exceed\n"
 "the internal memory limit.\n"
 "Please reduce the number of passwords"
 msgstr ""
-"Szacowany rozmiar listy prawdopodobnie przekroczy\n"
-"limit pamięci wewnętrznej.\n"
-"Proszę zmniejszyć liczbę haseł"
+"Szacowany rozmiar listy prawdopodobnie \n"
+"przekroczy limit pamięci wewnętrznej.\n"
+"Prosimy o zmniejszenie liczby haseł"
 
+#. Generate password list, message shown when list size has exceeded internal limit
 msgid ""
 "The memory limit of the password list has\n"
 "been reached.\n"
@@ -560,73 +808,101 @@ msgid ""
 "The number of passwords has been\n"
 "reduced to %d."
 msgstr ""
-"Limit przechowywania listy haseł została\n"
-"przekroczona.\n"
+"Limit pamięci listy haseł\n"
+"został osiągnięty.\n"
 "\n"
-"Liczba haseł została zredukowana do %d."
+"Liczba haseł została\n"
+"zredukowane do %d."
 
+#. Generate password list, number of generated passwords
 msgid "%d passwords generated."
-msgstr "%d wygenerowane hasła."
+msgstr "Wygenerowano %d haseł."
 
+#. Generate password list, info about passwords
 msgid ""
 "%d passwords generated.\r\n"
 "Entropy of the first password: %d bits.\r\n"
 "Maximum entropy of the entire list: %d bits."
 msgstr ""
-"%d wygenerowane hasła.\r\n"
+"Wygenerowano %d haseł.\r\n"
 "Entropia pierwszego hasła: %d bitów.\r\n"
 "Maksymalna entropia całej listy: %d bitów."
 
+#. Generate password to clipboard
 msgid "Password copied to clipboard."
 msgstr "Hasło skopiowane do schowka."
 
+#. Generate password list, copy list to UI
 msgid "Copying password list ..."
 msgstr "Kopiowanie listy haseł ..."
 
+#. Generate password list to clipboard
+msgid "Password list copied to clipboard."
+msgstr "Lista haseł skopiowana do schowka."
+
+#. Generate password list to file
 msgid ""
 "File \"%s\" successfully created.\n"
 "\n"
 "%d passwords written."
 msgstr ""
-"Plik \"%s\" pomyślnie wygenerowane.\n"
+"Plik \"%s\" pomyślnie utworzony.\n"
 "\n"
-"%d hasła zapisane."
+"Zapisano %d haseł."
 
+#. Generate password, error message
 msgid ""
 "An error has occurred during password generation:\n"
 "%s."
 msgstr ""
-"Podczas generowania hasła\n"
-"wystąpił błąd:\n"
+"Wystąpił błąd podczas generowania hasła:\n"
 "%s."
 
-msgid "%d passwords written to file \"%s\"."
-msgstr "%d hasła zapisane do pliku \"%s\"."
+#. Generate password, error message
+msgid ""
+"An error has occurred while trying to send/\n"
+"process the password data:\n"
+"%s."
+msgstr ""
+"Wystąpił błąd podczas próby wysłania/\n"
+"przetwarza dane hasła:\n"
+"%s."
 
+#. Generate password, error message, additional info when generating passwords to file
+msgid "%d passwords written to file \"%s\"."
+msgstr "%d haseł zapisanych do pliku \"%s\"."
+
+#. Include characters, info about character set
 msgid "%d bits / %d characters"
 msgstr "%d bitów / %d znaków"
 
-msgid "Passwords: %d"
-msgstr "Hasła: %d"
-
+#. Include characters, error message shown when character set is invalid
 msgid "Invalid character set."
 msgstr "Nieprawidłowy zestaw znaków."
 
+#. Include characters, phonetic passwords, info about trigrams
 msgid "default (English) trigrams"
 msgstr "domyślne (angielskie) trygramy"
 
+#. Include characters, info about character set where a particular number of characters is desired for certain subsets
+msgid "(with different frequencies)"
+msgstr "(z różnymi częstotliwościami)"
+
+#. Data loaded from file
 msgid "File \"%s\""
 msgstr "Plik \"%s\""
 
+#. Include characters, info about phonetic passwords
 msgid ""
 "(phonetic, based on trigram frequencies\n"
 "from the following source:\n"
 "<%s>)"
 msgstr ""
-"(fonetyczny, oparty na częstotliwościach \n"
-"trygramu z następującego źródła:\n"
+"(fonetyczny, oparty na częstotliwości\n"
+" trygramów z następującego źródła:\n"
 "<%s>)"
 
+#. Include characters, more detailed error message
 msgid ""
 "The character set you entered is invalid.\n"
 "It must contain at least 2 different characters."
@@ -634,42 +910,53 @@ msgstr ""
 "Wprowadzony zestaw znaków jest nieprawidłowy.\n"
 "Musi zawierać co najmniej 2 różne znaki."
 
+#. Include characters, info about currently loaded character set
 msgid "Currently loaded character set:"
 msgstr "Aktualnie załadowany zestaw znaków:"
 
+#. Include words, error message shown when word list file could not be opened
 msgid "Could not open file."
 msgstr "Nie można otworzyć pliku."
 
+#. Include words, error message shown when word list does not contain enough words
 msgid "Not enough valid words."
 msgstr "Za mało poprawnych słów."
 
+#. Include words, title of file selection dialog
 msgid "Select word list file"
-msgstr "Wybieranie pliku z listą wyrazów"
+msgstr "Wybierz plik listy słów"
 
+#. Include words, more detailed error message
 msgid ""
 "Error while loading the file\n"
 "\"%s\":\n"
 "%s"
 msgstr ""
-"Błąd ładowania pliku\n"
-"\"%s\":\n"
+"Błąd podczas ładowania pliku\n"
+"„%s”:\n"
 "%s"
 
+#. Include words, info about default word list
 msgid "default (English) word list"
 msgstr "domyślna (angielska) lista słów"
 
+#. Include words, info about currently loaded word list
 msgid "Currently loaded word list:"
 msgstr "Aktualnie załadowana lista słów:"
 
+#. Include words, info about currently loaded word list
 msgid "First word:"
 msgstr "Pierwsze słowo:"
 
+#. Include words, info about currently loaded word list
 msgid "Random word:"
 msgstr "Losowe słowo:"
 
+#. Include words, info about currently loaded word list
 msgid "Last word:"
 msgstr "Ostatnie słowo:"
 
+#. Configuration, warning message shown when version of selected language is not compatible (lower) with program version
 msgid ""
 "The version of this language (%s) is not\n"
 "compatible with this program version.\n"
@@ -679,12 +966,13 @@ msgid ""
 "Do you want to use it anyway?"
 msgstr ""
 "Wersja tego języka (%s) nie jest\n"
-"kompatybilna z tą wersją programu.\n"
-"Ta wersja %s wymaga\n"
-"języka wersja co najmniej %s.\n"
+"kompatybilny z tą wersją programu.\n"
+"Ta wersja %s wymaga języka\n"
+"wersja co najmniej %s.\n"
 "\n"
-"Czy nadal chcesz z nich korzystać?"
+"Czy mimo to chcesz z niego skorzystać?"
 
+#. Configuration, warning message shown when version of selected language is not compatible (higher) with program version
 msgid ""
 "The version of this language (%s) is higher\n"
 "than the version of this program (%s).\n"
@@ -692,34 +980,37 @@ msgid ""
 "\n"
 "Do you want to use it anyway?"
 msgstr ""
-"Wersja tego języka (%s) jest wyższa\n"
+"Wersja tego języka (%s) jest nowsza\n"
 "niż wersja tego programu (%s).\n"
-"W związku z tym może to prowadzić do niezgodności wersji.\n"
+"Dlatego mogą wystąpić niezgodności wersji.\n"
 "\n"
-"Czy mimo to chcesz go użyć?"
+"Czy mimo to chcesz z niego skorzystać?"
 
+#. Configuration, message shown when selecting language
 msgid ""
-"The language file will be loaded when you\n"
-"restart the program.\n"
+"The program has to be restarted in order\n"
+"for the changes to take effect.\n"
 "\n"
 "Do you want to restart now?"
 msgstr ""
-"Plik językowy można załadować tylko,\n"
-"po ponownym uruchomieniu programu.\n"
+"Aby to zrobić, należy ponownie uruchomić program\n"
+"aby zmiany osiągnęły efekt.\n"
 "\n"
-"Czy chcesz teraz zrestartować?"
+"Czy chcesz teraz uruchomić ponownie?"
 
+#. Generate password and show it in a message box, message shown when password is too long
 msgid ""
 "Password is too long to show it in a\n"
 "message box like this.\n"
 "\n"
 "It has been copied to the clipboard."
 msgstr ""
-"Hasło jest za długie, aby wyświetlić\n"
-"w polu tekstowym takim jak to.\n"
+"Hasło jest za długie do wyświetlenia\n"
+"takiego w okno wiadomości.\n"
 "\n"
-"Został skopiowany do schowka."
+"Został skopiowane do schowka."
 
+#. Generate password and show it in a message box
 msgid ""
 "The generated password is:\n"
 "\n"
@@ -727,9 +1018,9 @@ msgid ""
 "\n"
 "The estimated security is %d bits.\n"
 "\n"
-"Yes\t-> copy password to clipboard,\n"
-"No\t-> generate new password,\n"
-"Cancel\t-> cancel process."
+"Yes -> copy password to clipboard,\n"
+"No -> generate new password,\n"
+"Cancel -> cancel process."
 msgstr ""
 "Wygenerowane hasło to:\n"
 "\n"
@@ -737,462 +1028,634 @@ msgstr ""
 "\n"
 "Szacowane bezpieczeństwo to %d bitów.\n"
 "\n"
-"Tak\t-> Skopiuj hasło do schowka,\n"
-"Nie\t-> generuj nowego hasła,\n"
-"Anuluj\t-> anuluj proces."
+"Tak -> skopiuj hasło do schowka,\n"
+"Nie -> wygeneruj nowe hasło,\n"
+"Anuluj -> anuluj proces."
 
+#. Context menu of drop-down lists in main window, menu item "Clear List"
 msgid ""
 "All entries will be removed from the list.\n"
 "Are you sure?"
 msgstr ""
-"Wszystkie wpisy są usuwane z listy.\n"
-"Jesteś pewny?"
+"Wszystkie wpisy zostaną usunięte z listy.\n"
+"Czy jesteś pewien?"
 
+#. Main menu, Help submenu
 msgid "Total Entropy Bits: %d"
-msgstr "Ogółem bity Entropii: %d"
+msgstr "Ogółem bitów entropii: %d"
 
+#. Main menu, Help submenu, info about high-resolution timer
 msgid ""
 "High-resolution timer used:\n"
 "%s.\n"
 "\n"
 "Current value: %s."
 msgstr ""
-"Zastosowany timer o wysokiej rozdzielczości:\n"
-"%s\n"
+"Używany zegar o wysokiej rozdzielczości:\n"
+"%s.\n"
 "\n"
-"Wartość obecna: %s."
+"Bieżąca wartość: %s."
 
+#. Check for updates, message shown when version file could not be downloaded
 msgid "Could not download version file"
 msgstr "Nie można pobrać pliku wersji"
 
-msgid "URL not found, or unknown format of version file"
-msgstr "Nie znaleziono URL lub nieznany format pliku wersji pliku"
+#. Check for updates, message shown when version file cannot be parsed due to missing information or unknown format
+msgid "Version or URL not specified in version file, or unknown file format"
+msgstr "Wersja lub URL nieokreślona w pliku wersji lub nieznany format pliku"
 
+#. Check for updates, message shown when a new version is available
 msgid ""
 "A new version (%s) of %s is available!\n"
 "Do you want to visit the download page now?"
 msgstr ""
-"Nowa wersja (%s) z %s jest dostępna!\n"
-"Czy chcesz teraz przejść do strony pobierania?"
+"Nowa wersja (%s) %s jest już dostępna!\n"
+"Czy chcesz teraz odwiedzić stronę pobierania?"
 
+#. Check for updates, additional info about new version
 msgid "(NOTE: %s)"
 msgstr "(UWAGA: %s)"
 
+#. Check for updates, message shown when there's no new version to download
 msgid "Your version of %s is up-to-date."
 msgstr "Twoja wersja %s jest aktualna."
 
+#. Check for updates, general error message
 msgid ""
 "Error while checking for updates:\n"
 "%s."
 msgstr ""
-"Sprawdzanie błędów aktualizacji:\n"
+"Błąd podczas sprawdzania aktualizacji:\n"
 "%s."
 
+#. Main window, info shown in window title when using deterministic random generator
 msgid "WARNING: Random generator is deterministic (press F7 to deactivate)!"
-msgstr "OSTRZEŻENIE: Generator losowy jest deterministyczny (naciśnij F7, aby dezaktywować)"
+msgstr ""
+"OSTRZEŻENIE: Generator losowy jest deterministyczny (naciśnij F7, aby "
+"wyłączyć)!"
 
+#. Message shown after clearing clipboard
 msgid "Clipboard cleared."
 msgstr "Schowek wyczyszczony."
 
+#. Message shown after loading profile
 msgid "Profile \"%s\" activated."
 msgstr "Profil \"%s\" aktywowano."
 
+#. Message shown after activating deterministic random generator
 msgid "Deterministic random generator has been ACTIVATED."
-msgstr "Deterministyczny generator liczb losowych AKTYWOWANO."
+msgstr "Deterministyczny generator losowy został AKTYWOWANY."
 
+#. Message shown after resetting deterministic random generator
 msgid "Deterministic random generator has been RESET."
-msgstr "Deterministyczny generator liczb losowych RESET."
+msgstr "Deterministyczny generator losowy został zresetowany."
 
+#. Message shown after deactivating deterministic random generator
 msgid "Deterministic random generator has been DEACTIVATED."
-msgstr "Deterministyczny generator liczb losowych DEZAKTYWOWANO."
+msgstr "Deterministyczny generator losowy został WYŁĄCZONY."
 
-msgid "ERROR: Profile \"%s\" not found."
-msgstr "BŁĄD: Profilu \"%s\" nie znaleziono."
-
+#. Message shown on command line if profile was specified in command line parameters
 msgid "Selected profile \"%s\"."
-msgstr "Wybrano \"%s\" profil."
+msgstr "Wybrany profil „%s”."
 
+#. Message shown on command line if password generation was requested
 msgid "Generating %d password(s) ..."
-msgstr "Generowanie %d hasła ..."
+msgstr "Generowanie %d haseł..."
 
+#. Message shown during startup if password generation was requested but program is not run from console
 msgid ""
 "Command line function \"gen\" is only effective\n"
 "when %s is run from the console."
 msgstr ""
-"Funkcja wiersza poleceń \"gen\" jest tylko efektywny,\n"
+"Funkcja wiersza poleceń „gen” działa tylko\n"
 "gdy %s jest uruchamiany z konsoli."
 
+#. Message shown when donor key has expired
 msgid ""
 "Your donor key has expired: The maximum\n"
 "number of updates has been reached."
 msgstr ""
-"Twój klucz darczyńcy wygasł:\n"
-"Osiągnięto maksymalną liczbę aktualizacji."
+"Twój klucz dawcy wygasł: Maksymalna\n"
+"liczba aktualizacji została osiągnięta."
 
+#. Message shown when donor key is invalid
 msgid "Donor key is invalid."
-msgstr "Klucz darczyńcy jest nieprawidłowy."
+msgstr "Klucz dawcy jest nieprawidłowy."
 
+#. Main menu, Help submenu, Enter Donor Key, title of input window
 msgid "Donor Key"
-msgstr "Klucz Darczyńcy"
+msgstr "Klucz Dawcy"
 
+#. Main menu, Help submenu, Enter Donor Key, caption of input box
 msgid "Enter donor key:"
-msgstr "Wpisz klucz:"
+msgstr "Wpisz klucz dawcy:"
 
+#. Message shown after entering valid donor key
 msgid ""
 "Your Donor ID is: %s\n"
 "Supported number of updates: %s"
 msgstr ""
-"Twój ID Darczyńcy jest: %s\n"
+"Twój ID Dawcy jest: %s\n"
 "Obsługiwana liczba aktualizacji: %s"
 
+#. Donor key, unlimited number of updates ("Donor Pro")
 msgid "Unlimited"
-msgstr "Bez ograniczeń"
+msgstr "Nieograniczone"
 
+#. Message shown after entering valid donor key
 msgid "Thank you for your support!"
-msgstr "Dziękuję za Twoje wsparcie!"
+msgstr "Dziękuję za wsparcie!"
 
+#. Message shown after entering valid donor key
 msgid "Copy this information to the clipboard?"
 msgstr "Skopiować te informacje do schowka?"
 
+#. Message shown after entering donor key that has expired
 msgid "Donor key has expired."
-msgstr "Klucz darczyńcy wygasł."
+msgstr "Klucz dawcy wygasł."
 
+#. Main menu, Options submenu, Save Settings Now, message shown after saving settings
 msgid "Settings saved."
-msgstr "Zapisane ustawienia."
+msgstr "Ustawienia zapisano."
 
+#. Main window, password box, context menu, Save As File, title of save dialog
 msgid "Save password"
 msgstr "Zapisz hasło"
 
+#. Main menu, Options submenu, Clear Password Cache, only enabled if "Remember password" functionality has been activated in "Enter password" dialog
 msgid "Clear Password Cache"
-msgstr "Wyczyść Pamięć Haseł"
+msgstr "Wyczyść Pamięć Podręczną Haseł"
 
+#. Message shown after clearing password cache
 msgid "Password cache cleared."
-msgstr "Wyczyszczono pamięć haseł."
+msgstr "Pamięć podręczna haseł wyczyszczona."
 
+#. Main window, Run script, browse button, title of open dialog
 msgid "Select Lua script file"
 msgstr "Wybierz plik skryptu Lua"
 
+#. Main window, exit program, title of progress window that is shown when threads besides main thread are still running
 msgid "Waiting for active threads to finish ..."
-msgstr "Oczekiwanie na zakończenie aktywnych wątków ..."
+msgstr "Oczekiwanie na zakończenie aktywnych wątków..."
 
+#. Main menu, Help submenu, Donate
 msgid ""
 "Donate at least one of the following amounts\n"
 "to receive a Donor Key:\n"
 "\n"
-"%d EUR / %d USD:\tValid for current version and %d updates.\n"
-"%d EUR / %d USD:\tValid for the entire lifetime of version 3.\n"
+"%d EUR / %d USD: Valid for current version and %d updates.\n"
+"%d EUR / %d USD: Valid for the entire lifetime of main version 3 (unlimited "
+"updates).\n"
 "\n"
 "Do you want to donate now?"
 msgstr ""
-"Przekaż darowiznę co najmniej jednej z następujących kwot\n"
-"Kwoty do uzyskania Klucza Darczyńcy:\n"
+"Przekaż chociaż jedną z poniższych kwot\n"
+"aby otrzymać Klucz Dawcy:\n"
 "\n"
-"%d EUR / %d USD:\tObowiązuje dla bieżącej wersji i %d aktualizacji.\n"
-"%d EUR / %d USD:\tObowiązuje przez cały okres ważności Wersji 3.\n"
+"%d EUR / %d USD: Dotyczy bieżącej wersji i %d aktualizacji.\n"
+"%d EUR / %d USD: Obowiązuje przez cały okres istnienia wersji głównej 3 "
+"(nielimitowane aktualizacje).\n"
 "\n"
-"Czy chcesz przekazać darowiznę teraz?"
+"Czy chcesz teraz przekazać darowiznę?"
 
+#. Main window, error message shown when access to registry failed
 msgid ""
 "Could not access registry key\n"
 "%s."
 msgstr ""
-"Odmowa dostępu do klucza rejestracyjnego:\n"
+"Nie można uzyskać dostępu do klucza rejestru\n"
 "%s."
 
+#. Configuration window, caption
 msgid "Configuration"
 msgstr "Konfiguracja"
 
+#. Configuration window, General page
 msgid "General"
 msgstr "Ogólne"
 
+#. Configuration window, Security page
 msgid "Security"
 msgstr "Bezpieczeństwo"
 
+#. Configuration window, Hot Keys page
 msgid "Hot Keys"
-msgstr "Hot Keys"
+msgstr "Gorące Klawisze"
 
+#. Configuration window, Files page
 msgid "Files"
 msgstr "Pliki"
 
+#. Configuration window, Updates page
 msgid "Updates"
 msgstr "Aktualizacje"
 
+#. Configuration window, Database page
 msgid "Database"
 msgstr "Baza danych"
 
+#. Configuration window, General
 msgid "User interface style:"
 msgstr "Styl interfejsu użytkownika:"
 
+#. Configuration window, General
 msgid "Application icon:"
 msgstr "Ikona aplikacji:"
 
+#. Configuration window, General
 msgid "Change font for the GUI controls:"
-msgstr "Zmień czcionkę kontrolek GUI:"
+msgstr "Zmiana czcionki dla kontroli GUI:"
 
+#. Configuration window, General
 msgid "Select font"
 msgstr "Wybierz czcionkę"
 
-msgid "Show system tray icon constantly"
-msgstr "Stale pokazuj ikonę na pasku zadań"
+#. Configuration window, General, dropdown menu of "Select font" button
+msgid "Restore Default"
+msgstr "Przywróć Domyślnie"
 
+#. Configuration window, General
+msgid "Show system tray icon constantly"
+msgstr "Stale pokazuj ikonę w zasobniku systemowym"
+
+#. Configuration window, General
 msgid "Minimize program to system tray"
 msgstr "Minimalizuj program do zasobnika systemowego"
 
+#. Configuration window, General
 msgid "Minimize before performing autotype"
 msgstr "Minimalizuj przed wykonaniem autozapisu"
 
+#. Configuration window, General
 msgid "Autotype delay between characters (ms):"
-msgstr "Opóźnienie autozapisu między znakami (ms):"
+msgstr "Autozapis opóźnienia między znakami (ms):"
 
+#. Configuration window, General
 msgid "Ask before exiting application"
-msgstr "Zapytaj przed wyjściem z aplikacji"
+msgstr "Zapytaj przed zamknięciem aplikacji"
 
+#. Configuration window, General
 msgid "Launch application on system startup (for current user)"
-msgstr "Uruchom aplikację podczas uruchamiania systemu (dla bież. użytkownika)"
+msgstr ""
+"Uruchamianie aplikacji przy starcie systemu (dla bieżącego użytkownika)"
 
+#. Configuration window, General
 msgid "Load the following profile on startup:"
-msgstr "Załaduj profil podczas uruchamiania:"
+msgstr "Załaduj następujący profil podczas uruchamiania:"
 
-msgid "Encryption algorithm for generating random data via random pool:"
-msgstr "Algorytm szyfrowania do generowania losowych danych za pomocą losowej puli:"
-
+#. Configuration window, Security
 msgid "Benchmark..."
 msgstr "Benchmark..."
 
+#. Configuration window, Security
+msgid "Data size for benchmark test"
+msgstr "Rozmiar danych do testu benchmark"
+
+#. Configuration window, Security
+msgid "Encryption algorithm for generating random data via random pool:"
+msgstr ""
+"Algorytm szyfrowania do generowania losowych danych poprzez pulę losową:"
+
+#. Configuration window, Security
 msgid "Test passwords against list of common passwords"
-msgstr "Testowanie haseł pod kątem listy popularnych haseł"
+msgstr "Testuj hasła na podstawie listy typowych haseł"
 
+#. Configuration window, Security
 msgid "Use advanced password strength estimation (%s)"
-msgstr "Użyj zaawansowanej oceny siły hasła (%s)"
+msgstr "Użyj zaawansowanego szacowania siły hasła (%s)"
 
-msgid "Use advanced password strength estimation (zxcvbn)"
-msgstr "Użyj zaawansowanej oceny siły hasła (zxcvbn)"
-
+#. Configuration window, Security
 msgid "Clear clipboard automatically after the following time (seconds):"
-msgstr "Wyczyść schowek automatycznie po upływie następującego czasu (sekund):"
+msgstr ""
+"Wyczyść schowek automatycznie po upływie następującego czasu (sekund):"
 
+#. Configuration window, Security
 msgid "Clear password box automatically after the following time (seconds):"
-msgstr "Wyczyść pole hasła automatycznie po następującym czasie (sekundach):"
+msgstr ""
+"Wyczyść pole hasła automatycznie po upływie następującego czasu (sekund):"
 
+#. Configuration window, Updates
 msgid "Automatic check for updates"
-msgstr "Automatyczne sprawdzanie aktualizacji"
+msgstr "Automatycznie sprawdzaj aktualizacje"
 
+#. Configuration window, Updates, options
 msgid "Daily"
 msgstr "Codziennie"
 
+#. Configuration window, Updates, options
 msgid "Weekly"
 msgstr "Tygodniowo"
 
+#. Configuration window, Updates, options
 msgid "Monthly"
 msgstr "Miesięcznie"
 
+#. Configuration window, Updates, options
 msgid "Disabled"
 msgstr "Wyłączono"
 
+#. Configuration window, Hot Keys, Actions group box
 msgid "Actions"
 msgstr "Działania"
 
+#. Configuration window, Hot Keys, Actions group box
 msgid "Show/restore main window"
 msgstr "Pokaż/przywróć okno główne"
 
+#. Configuration window, Hot Keys, Actions group box, list with available actions
 msgid "No further action"
 msgstr "Brak dalszych działań"
 
+#. Configuration window, Hot Keys, Actions group box, list with available actions
 msgid "Generate single password in main window"
-msgstr "Generowanie pojedynczego hasła w oknie głównym"
+msgstr "Generuj pojedyncze hasło w oknie głównym"
 
+#. Configuration window, Hot Keys, Actions group box, list with available actions
 msgid "Generate multiple passwords"
-msgstr "Generowanie wielu haseł"
+msgstr "Generuj wiele haseł"
 
+#. Configuration window, Hot Keys, Actions group box, list with available actions
 msgid "Generate password and copy it to the clipboard"
 msgstr "Generuj hasło i skopiuj je do schowka"
 
+#. Configuration window, Hot Keys, Actions group box, list with available actions
 msgid "Generate password and show it in a message box"
 msgstr "Generuj hasło i pokaż je w oknie komunikatu"
 
+#. Configuration window, Hot Keys, Actions group box, list with available actions
 msgid "Generate password and perform autotype"
-msgstr "Generuj hasła i wykonywanie autozapisu"
+msgstr "Generuj hasło i wykonaj autozapis"
 
+#. Configuration window, Hot Keys, Actions group box, list with available actions
 msgid "Open MP password generator"
 msgstr "Otwórz generator haseł MP"
 
+#. Configuration window, Hot Keys, Actions group box, list with available actions
 msgid "Show password manager"
 msgstr "Pokaż menedżera haseł"
 
+#. Configuration window, Hot Keys, Actions group box, list with available actions
 msgid "Show MP password generator"
 msgstr "Pokaż generator haseł MP"
 
+#. Configuration window, Hot Keys, Actions group box, list with available actions
 msgid "Search database for keyword in window title"
-msgstr "Przeszukaj bazę danych dla słowa kluczowego w tytule okna"
+msgstr "Wyszukaj w bazie danych słowo kluczowe w tytule okna"
 
+#. Configuration window, Hot Keys, Actions group box, list with available actions
 msgid "Search database for keyword and perform autotype"
-msgstr "Przeszukaj bazę danych dla słowa kluczowego i wykonaj autozapis"
+msgstr "Wyszukaj słowo kluczowe w bazie danych i wykonaj autozapis"
 
+#. Configuration window, Hot Keys
 msgid "Shortcut to assign:"
-msgstr "Przypisz skróty klawiaturowe:"
+msgstr "Skrót do przypisania:"
 
+#. Configuration window, Hot Keys, button
 msgid "Add"
 msgstr "Dodaj"
 
+#. Configuration window, Hot Keys, button
 msgid "Remove"
 msgstr "Usuń"
 
+#. Configuration window, Hot Keys, list view, column
 msgid "Shortcut"
-msgstr "Skrót klawiszowy"
+msgstr "Skrót"
 
+#. Configuration window, Hot Keys, list view, column
 msgid "Action"
 msgstr "Działanie"
 
+#. Configuration window, Hot Keys, message shown when trying to add a hot key without a corresponding action
 msgid "Please select a hot key action."
-msgstr "Wybierz czynność za pomocą klawisza skrótu."
+msgstr "Wybierz działanie klawisza skrótu."
 
+#. Configuration window, Files
 msgid "Character encoding of text files"
 msgstr "Kodowanie znaków w plikach tekstowych"
 
+#. Configuration window, Files
 msgid "Newline character sequence"
 msgstr "Sekwencja znaków nowej linii"
 
+#. Configuration window, Language
 msgid "Select language:"
 msgstr "Wybierz język:"
 
+#. Configuration window, Language
 msgid "Install..."
-msgstr "Instalacja..."
+msgstr "Zainstaluj..."
 
+#. Configuration window, Language, Open dialog title
 msgid "Select language file to install"
 msgstr "Wybierz plik językowy do zainstalowania"
 
+#. Configuration window, Language, Open dialog filter
 msgid "Language files"
-msgstr "Plik językowy"
+msgstr "Pliki językowy"
 
+#. Configuration window, Language, Install
 msgid "Language already installed"
 msgstr "Język już zainstalowany"
 
-msgid "Language file already exists:"
-msgstr "Plik języka już istnieje:"
+#. Configuration window, Language, Install
+msgid ""
+"Language file already exists:\n"
+"\"%1\""
+msgstr ""
+"Plik języka już istnieje:\n"
+"\"%1\""
 
+#. Configuration window, Language, Install
 msgid "Language \"%1\" installed successfully."
-msgstr "Język \"%1\" zainstalowany pomyślnie."
+msgstr "Język \"%1\" zainstalowano pomyślnie."
 
-msgid "Could not copy file \"%1\" to"
-msgstr "Nie można skopiować pliku \"%1\" do"
+#. Configuration window, Language, Install
+msgid ""
+"Could not copy file \"%1\" to\n"
+"\"%2\""
+msgstr ""
+"Nie można skopiować pliku \"%1\" do\n"
+"\"%2\""
 
-msgid "Could not install language:"
-msgstr "Nie można zainstalować języka:"
+#. Configuration window, Language, Install
+msgid ""
+"Could not install language:\n"
+"%1."
+msgstr ""
+"Nie można zainstalować języka:\n"
+"%1."
 
-msgid "Are you sure you want to remove"
-msgstr "Czy na pewno chcesz usunąć"
+#. Configuration window, Language, Remove
+msgid ""
+"Are you sure you want to remove\n"
+"\"%1\"?"
+msgstr ""
+"Czy na pewno chcesz usunąć\n"
+"\"%1\"?"
 
-msgid "Could not delete file"
-msgstr "Nie można usunąć pliku"
+#. Configuration window, Language, Remove
+msgid "Language \"%1\" successfully removed."
+msgstr "Język \"%1\" został pomyślnie usunięty."
 
-msgid "Clear clipboard on minimize"
-msgstr "Wyczyść schowek podczas minimalizowania"
+#. Configuration window, Language, Remove
+msgid ""
+"Could not delete file\n"
+"\"%1\"."
+msgstr ""
+"Nie można usunąć pliku\n"
+"\"%1\"."
 
-msgid "Clear clipboard on exit"
-msgstr "Wyczyść schowek przy wyjściu"
-
+#. Configuration window, Database
 msgid "Clear clipboard when closing/locking database"
 msgstr "Wyczyść schowek podczas zamykania/blokowania bazy danych"
 
+#. Configuration window, Database
 msgid "Lock database when minimizing application or database window"
-msgstr "Blokuj bazę danych podczas minimalizowania okna aplikacji lub bazy danych"
+msgstr ""
+"Blokowanie bazy danych podczas minimalizowania okna aplikacji lub bazy "
+"danych"
 
+#. Configuration window, Database
 msgid "Lock database after the following idle time (seconds):"
-msgstr "Blokuj bazę danych po upływie czasu bezczynności (sekundy):"
+msgstr "Zablokowanie bazy danych po czasie bezczynności (w sekundach):"
 
+#. Configuration window, Database, save database automatically when database is being locked due to idle time
 msgid "Save automatically"
 msgstr "Zapisz automatycznie"
 
+#. Configuration window, Database
 msgid "Create backup of database before saving"
-msgstr "Przed zapisaniem utwórz kopię zapasową bazy danych"
+msgstr "Utwórz kopię zapasową bazy danych przed zapisaniem"
 
+#. Configuration window, Database
 msgid "Number backups consecutively - up to:"
-msgstr "Liczba kolejnych kopii zapasowych - do:"
+msgstr "Numeruj kopie zapasowe po kolei - aż do:"
 
+#. Configuration window, Database
 msgid "Open window on startup"
 msgstr "Otwórz okno podczas uruchamiania"
 
+#. Configuration window, Database
 msgid "Open last used database on startup"
-msgstr "Otwórz ostatnio używaną bazę danych podczas uruchamiania"
+msgstr "Otwórz ostatnio używaną bazę danych przy uruchomieniu"
 
 msgid "Keep list of recently opened files"
 msgstr "Zachowaj listę ostatnio otwieranych plików"
 
+#. Configuration window, Database
 msgid "Warn if database contains expired entries"
-msgstr "Ostrzegaj, jeśli baza danych zawiera wygasłe wpisy"
+msgstr "Ostrzegaj, jeśli baza danych zawiera wpisy, które wygasły"
 
+#. Configuration window, Database
 msgid "Warn if database contains entries that will expire soon"
 msgstr "Ostrzegaj, jeśli baza danych zawiera wpisy, które wkrótce wygasną"
 
+#. Configuration window, Database, entries that will expire soon, define number of days before expiry date
 msgid "Number of days:"
 msgstr "Liczba dni:"
 
+#. Configuration window, Database, Save database automatically after certain actions
 msgid "Save automatically:"
 msgstr "Zapisz automatycznie:"
 
+#. Configuration window, Database, Save automatically, options
 msgid "After adding/modifying an entry"
-msgstr "Po dodaniu/zmodyfikowaniu wpisu"
+msgstr "Po dodaniu/modyfikacji wpisu"
 
+#. Configuration window, Database, Save automatically, options
 msgid "After every change"
 msgstr "Po każdej zmianie"
 
+#. Configuration window, Database
 msgid "Default autotype sequence:"
-msgstr "Domyślna sekwencja autozapisów:"
+msgstr "Domyślna sekwencja autozapisu:"
 
+#. Configuration window, Hot Keys, message shown when max. number of hot keys has been exhausted
 msgid "Maximum number of hot keys (%d) reached."
-msgstr "Osiągnięto maksymalną liczbę klawiszy szybkiego dostępu (%d)."
+msgstr "Osiągnięto maksymalną liczbę klawiszy skrótu (%d)."
 
+#. Configuration window, Hot Keys, message shown when hot key has already been assigned
 msgid "This hot key has already been assigned."
-msgstr "Ten klawisz szybkiego dostępu został już przypisany."
+msgstr "Ten klawisz skrótu został już przypisany."
 
+#. Configuration window, Security, Random pool cipher
 msgid "%s (%d-bit key, operates on %d-bit blocks)"
-msgstr "%s (%d-bitowy klucz, operuje na blokach %d-bit)"
+msgstr "%s (%d-bit klucz, operacja na %d-bit blokach)"
 
+#. Configuration window, Security, Random pool cipher, Benchmark results
 msgid "Benchmark results (data size: %d MB):"
-msgstr "Wynik testu (rozmiar danych: %d MB):"
+msgstr "Wyniki benchmark (rozmiar danych: %d MB):"
 
+#. Enter password window, label
 msgid "Enter password:"
-msgstr "Wprowadź hasło:"
+msgstr "Wpisz hasło:"
 
+#. Enter password window, label
 msgid "Confirm password:"
 msgstr "Potwierdź hasło:"
 
-msgid "Display password"
-msgstr "Pokaż hasło"
+#. Enter password window, label
+msgid "Estimate quality"
+msgstr "Szacunkowa jakość"
 
+#. Enter password label, button
+msgid "Skip"
+msgstr "Pomiń"
+
+#. Generic dialog window, button
 msgid "OK"
 msgstr "OK"
 
+#. Generic dialog window, button
 msgid "Cancel"
 msgstr "Anuluj"
 
+#. Enter password window, message shown when passwords are not identical
 msgid "Passwords are not identical."
 msgstr "Hasła nie są identyczne."
 
+#. Enter password window, caption for encryption
 msgid "Encrypt"
 msgstr "Szyfruj"
 
+#. Enter password window, caption for decryption
 msgid "Decrypt"
 msgstr "Odszyfruj"
 
+#. Enter password window
 msgid "Remember password (seconds):"
 msgstr "Zapamiętaj hasło (sekundy):"
 
-msgid "Key file for password database:"
-msgstr "Plik klucza do bazy danych haseł:"
+#. Enter password window
+msgid "Select key file:"
+msgstr "Wybierz plik klucza:"
 
+#. Enter password window, Key file, None selected
+msgid "(None)"
+msgstr "(Nic)"
+
+#. Enter password window, message shown when neither password nor key file entered/selected
 msgid "Enter a password and/or select a key file."
-msgstr "Wprowadź hasło i/lub wybierz plik klucza."
+msgstr "Wpisz hasło i/lub wybierz plik klucza."
 
-msgid "The selected key file does not exist."
-msgstr "Wybrany plik klucza nie istnieje."
+#. Enter password window, message shown when selected key file could not be found
+msgid ""
+"The selected key file does not exist:\n"
+"%1"
+msgstr ""
+"Wybrany plik klucza nie istnieje:\n"
+"%1"
 
+#. Enter password window, message shown when password is empty
 msgid "Password is empty."
 msgstr "Hasło jest puste."
 
+#. Enter password window, Create key file, message shown when creation was successful
 msgid "Key file successfully created."
 msgstr "Plik klucza został pomyślnie utworzony."
 
+#. Enter password window, Create key file, message shown when key file could not be created
 msgid ""
 "Error while creating key file:\n"
 "%s."
@@ -1200,157 +1663,234 @@ msgstr ""
 "Błąd podczas tworzenia pliku klucza:\n"
 "%s."
 
+#. Enter password window, Open file dialog, filter for *.key files
 msgid "Key files"
 msgstr "Pliki klucza"
 
+#. Enter password window, Create Key File button, tooltip
 msgid "Create key file"
 msgstr "Utwórz plik klucza"
 
+#. Password List window, title
 msgid "Password List"
 msgstr "Lista Haseł"
 
+#. Password List window, context menu
 msgid "Save As File..."
 msgstr "Zapisz jako plik..."
 
+#. Password List window, Save as file, Save file dialog, title
 msgid "Save password list"
 msgstr "Zapisz listę haseł"
 
+#. Password List window, Save as file, error message
 msgid ""
 "Error while creating file\n"
 "\"%s\":\n"
 "%s."
 msgstr ""
 "Błąd podczas tworzenia pliku\n"
-"\"%s\":\n"
+"„%s”:\n"
 "%s."
 
+#. Password List window, Save as file, success message
 msgid "File \"%s\" successfully created."
-msgstr "Plik \"%s\" pomyślnie utworzony."
+msgstr "Pomyślnie utworzono plik „%s”."
 
+#. Advanced Password Options window, title
 msgid "Advanced Password Options"
-msgstr "Zaawansowane Opcje Haseł"
+msgstr "Zaawansowane Opcje Hasła"
 
+#. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Exclude ambiguous characters"
-msgstr "Wyklucz dwuznaczne znaki"
+msgstr "Wyklucz niejednoznaczne znaki"
 
+#. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "First character must not be a lower-case letter"
 msgstr "Pierwszy znak nie może być małą literą"
 
+#. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Don't separate words by a space"
 msgstr "Nie oddzielaj słów spacją"
 
+#. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Don't separate words and characters by a '-' character"
-msgstr "Nie oddzielaj słów i znaków  '-' znakiem"
+msgstr "Nie oddzielaj słów i znaków znakiem '-'."
 
+#. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Reverse default order of character/word combinations"
-msgstr "Odwróć domyślnie kolejności kombinacji znaków i wyrazów"
+msgstr "Odwróć domyślną kolejność kombinacji znaków/słów"
 
+#. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Include at least one upper-case letter (A-Z)"
 msgstr "Uwzględnij co najmniej jedną wielką literę (A-Z)"
 
+#. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Include at least one lower-case letter (a-z)"
-msgstr "Uwzględnij co najmniej jedną małą literę (a-z)"
+msgstr "Uwzględnij co najmniej jedną małą literę (a-z)."
 
+#. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Include at least one digit (0-9)"
 msgstr "Uwzględnij co najmniej jedną cyfrę (0-9)"
 
+#. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Include at least one special symbol (!\"#$%...)"
-msgstr "Uwzględnij co najmniej jeden specjalny symbol (!\"#$%...)"
+msgstr "Uwzględnij co najmniej jeden symbol specjalny (!\"#$%...)"
 
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Include at least one character from each subset"
+msgstr "Uwzględnij co najmniej jeden znak z każdego podzbioru"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Only include characters from custom character set"
-msgstr "Uwzględnij tylko znaki z niestandardowego zestawu znaków"
+msgstr "Uwzględnij tylko znaki z niestandardowego zestawu"
 
+#. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Exclude repeating consecutive characters (e.g. aa, 11)"
 msgstr "Wyklucz powtarzające się kolejne znaki (np. aa, 11)"
 
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Remove leading and trailing whitespace characters"
+msgstr "Usuń początkowe i końcowe białe znaki"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Exclude duplicate entries in password lists"
 msgstr "Wyklucz zduplikowane wpisy w listach haseł"
 
-msgid "Convert all words in word lists to lower-case"
-msgstr "Konwertuj wszystkie wyrazy na listach wyrazów na małe litery"
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Assign entropy value to each password in password lists"
+msgstr "Przypisz wartość entropii do każdego hasła w listach haseł"
 
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Capitalize first letter of each word"
+msgstr "Pierwsza litera każdego słowa wielką literą"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
+msgid "Convert all words in word lists to lower-case"
+msgstr "Konwertuj wszystkie słowa w listach słów na małe litery"
+
+#. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Each character must occur only once"
 msgstr "Każdy znak musi wystąpić tylko raz"
 
+#. Advanced Password Options window, list of boolean options (checkboxes)
 msgid "Each word must occur only once"
 msgstr "Każde słowo musi wystąpić tylko raz"
 
+#. Advanced Password Options window, label
 msgid "Redefine ambiguous characters:"
-msgstr "Przedefiniuj niejednoznaczne znaki:"
+msgstr "Przedefiniowanie na nowo niejednoznaczne znaki:"
 
+#. Advanced Password Options window, label
 msgid "Redefine special symbols:"
-msgstr "Przedefiniuj symbole specjalne:"
+msgstr "Przedefiniowanie symboli specjalnych:"
 
+#. Advanced Password Options window, label
 msgid "Min./Max. length of words in word lists (except default word list):"
-msgstr "Min./Maks. długość słów w listach słów (z wyjątkiem domyślnej listy słów):"
+msgstr ""
+"Min./Maks. długość słów w listach słów (z wyjątkiem domyślnej listy słów):"
 
+#. Advanced Password Options window, label
+msgid "Redefine separators in passphrases:"
+msgstr "Przedefiniowanie separatorów w hasłach:"
+
+#. Advanced Password Options window, label
+msgid "Words:"
+msgstr "Słowa:"
+
+#. Advanced Password Options window, label
+msgid "Words/characters:"
+msgstr "Słowa/znaki:"
+
+#. Advanced Password Options window, label
 msgid "Trigram file for generating phonetic (pronounceable) passwords:"
-msgstr "Plik trygramu do generowania haseł fonetycznych (wymawianych):"
+msgstr "Plik Trigramu do generowania fonetycznych (wymawialnych) haseł:"
 
+#. Advanced Password Options window, footnotes of checkbox list
 msgid "Applies to pass_words_."
-msgstr "Dotyczy hasło_słowa_."
+msgstr "Dotyczy hasła_słów_."
 
+#. Advanced Password Options window, footnotes of checkbox list
 msgid "Applies to pass_phrases_."
-msgstr "Dotyczy hasło_frazy_."
+msgstr "Dotyczy hasła_frazy_."
 
+#. Advanced Password Options window, footnotes of checkbox list
 msgid "Applies to formatted passwords."
-msgstr "Dotyczy haseł sformatowanych."
+msgstr "Dotyczy sformatowanych haseł."
 
+#. Advanced Password Options window, footnotes of checkbox list
 msgid "Applies to phonetic passwords."
 msgstr "Dotyczy haseł fonetycznych."
 
-msgid "Selecting one of these options might reduce the security of generated passwords."
-msgstr "Wybranie jednej z tych opcji może zmniejszyć bezpieczeństwo generowanych haseł."
+#. Advanced Password Options window, footnotes of checkbox list
+msgid ""
+"Selecting one of these options might reduce the security of generated "
+"passwords."
+msgstr ""
+"Wybranie jednej z tych opcji może zmniejszyć bezpieczeństwo generowanych "
+"haseł."
 
-msgid "These options also apply to formatted passwords."
-msgstr "Te opcje dotyczą również sformatowanych haseł."
-
+#. Advanced Password Options window, checkbox list, context menu
 msgid "Deselect All"
-msgstr "Odznacz wszystko"
+msgstr "Odznacz Wszystko"
 
+#. Advanced Password Options window, checkbox list, context menu
 msgid "Invert Selection"
-msgstr "Odwróć wybór"
+msgstr "Odwróć Wybór"
 
+#. Create Random Data File dialog, title
 msgid "Create Random Data File"
-msgstr "Utwórz Plik z Losowymi Danymi"
+msgstr "Utwórz Losowy Plik Danych"
 
+#. Create Random Data File dialog, label
 msgid "File name:"
 msgstr "Nazwa pliku:"
 
+#. Create Random Data File dialog, label
 msgid "File size:"
 msgstr "Rozmiar pliku:"
 
+#. Create Random Data File dialog, drop-down list of file size units
 msgid "Bytes"
-msgstr "Bytes"
+msgstr "Bajtów"
 
+#. Create Random Data File dialog, drop-down list of file size units
 msgid "Kilobytes"
-msgstr "Kilobytes"
+msgstr "Kilobajtów"
 
+#. Create Random Data File dialog, drop-down list of file size units
 msgid "Megabytes"
-msgstr "Megabytes"
+msgstr "Megabajtów"
 
+#. Create Random Data File dialog, Close button
 msgid "Close"
 msgstr "Zamknij"
 
+#. Create Random Data File dialog, Create file button
 msgid "Create file"
 msgstr "Utwórz plik"
 
+#. Create Random Data File dialog, message shown when specified file size is invalid
 msgid "Invalid file size."
 msgstr "Nieprawidłowy rozmiar pliku."
 
+#. Create Random Data File dialog, message shown when there's not enough free disk space to create the file
 msgid ""
 "Not enough free disk space available\n"
 "to create the file."
 msgstr ""
 "Za mało wolnego miejsca na dysku\n"
-"aby utworzyć plik."
+"do utworzenia pliku."
 
+#. Create Random Data File dialog, title of progress window
 msgid "Creating random data file ..."
 msgstr "Tworzenie losowego pliku danych ..."
 
-msgid "%d of %d KB written."
-msgstr "%d z %d KB zapisany."
+#. Create Random Data File dialog, Progress window, progress message
+msgid "%d of %d %s written."
+msgstr "%d z %d %s zapisanych."
 
+#. Create Random Data File dialog, success message
 msgid ""
 "File \"%s\" successfully created.\n"
 "\n"
@@ -1358,8 +1898,9 @@ msgid ""
 msgstr ""
 "Plik \"%s\" pomyślnie utworzony.\n"
 "\n"
-"%d bytes zapisane."
+"%d bajtów zapisanych."
 
+#. Create Random Data File dialog, error message
 msgid ""
 "Error while creating file\n"
 "\"%s\":\n"
@@ -1371,129 +1912,183 @@ msgstr ""
 "\"%s\":\n"
 "%s.\n"
 "\n"
-"%d bytes zapisane."
+"%d bajtów zapisanych."
 
+#. Profile Editor dialog, title
 msgid "Profile Editor"
-msgstr "Profil-Edytor"
+msgstr "Edytor Profilu"
 
+#. Profile Editor dialog, Load Profile button
 msgid "Load"
 msgstr "Ładowanie"
 
+#. Profile Editor dialog, Confirm checkbox
 msgid "Confirm"
 msgstr "Potwierdź"
 
+#. Profile Editor dialog, label
 msgid "Profile name:"
 msgstr "Nazwa profilu:"
 
+#. Profile Editor dialog, Move Up button, tooltip
 msgid "Move up"
 msgstr "Przesuń w górę"
 
+#. Profile Editor dialog, Move Down button, tooltip
 msgid "Move down"
 msgstr "Przesuń w dół"
 
+#. Profile Editor dialog, checkbox
 msgid "Save \"advanced password options\" for this profile"
 msgstr "Zapisz \"zaawansowane opcje hasła\" dla tego profilu"
 
+#. Profile Editor dialog, message shown before deleting a single profile
 msgid "Delete profile \"%s\"?"
-msgstr "Profil \"%s\" usunąć?"
+msgstr "Usunąć profil \"%s\"?"
 
+#. Profile Editor dialog, message shown before deleting multiple profiles
 msgid "Delete %d profiles?"
 msgstr "Usunąć %d profile?"
 
+#. Profile Editor dialog, message shown when max. number of profiles has been reached
 msgid ""
 "Maximum number of profiles (%d) reached.\n"
 "Please delete or overwrite profiles."
 msgstr ""
 "Osiągnięto maksymalną liczbę profili (%d).\n"
-"Proszę usunąć lub nadpisać profile."
+"Prosimy o usunięcie lub nadpisanie profili."
 
+#. Profile Editor dialog, message shown when a profile already exists
 msgid ""
 "A profile with the name \"%s\" already exists.\n"
 "Do you want to overwrite it?"
-msgstr "Profil o nazwie \"%s\" już istnieje. Czy chcesz go nadpisać?"
+msgstr ""
+"Profil o nazwie \"%s\" już istnieje.\n"
+"Czy chcesz go nadpisać?"
 
+#. Create Trigram File dialog, title
 msgid "Create Trigram File"
-msgstr "Utwórz Plik Trygramu"
+msgstr "Utwórz Plik Trigramu"
 
+#. Create Trigram File dialog, label
 msgid "Source file (e.g., dictionary, word list):"
 msgstr "Plik źródłowy (np. słownik, lista słów):"
 
+#. Create Trigram File dialog, label
 msgid "Destination file (trigram file):"
-msgstr "Plik docelowy (plik trygramu):"
+msgstr "Plik docelowy (plik trigramu):"
 
+#. Create Trigram File dialog, success message
 msgid ""
 "Trigram file \"%s\" successfully created.\n"
 "\n"
 "%d trigrams evaluated.\n"
 "%1.2f bits of entropy per letter."
 msgstr ""
-"Plik trygramu \"%s\" pomyślnie utworzono.\n"
+"Pomyślnie utworzono plik trygramu „%s”.\n"
 "\n"
-"%d trygramy oceniane.\n"
-"%1.2f bitów entropii na literę."
+"Oceniono %d trygramów.\n"
+"%1,2f bitów entropii na literę."
 
+#. Create Trigram File dialog, message shown when process was cancelled
 msgid "Process was cancelled by the user"
 msgstr "Proces został anulowany przez użytkownika"
 
+#. Main menu, Help submenu
 msgid "About %s"
-msgstr "O %s"
+msgstr "O %"
 
+#. About window, info about translation
 msgid ""
 "Current language: %s\n"
 "Translator: %s"
 msgstr ""
-"Obecny język: %s\n"
+"Bieżący język: %s\n"
 "Tłumacz: %s"
 
-msgid "This program is distributed under the terms and conditions of the GNU General Public License (GPL)."
-msgstr "Ten program jest rozpowszechniany na warunkach GNU General Public License (GPL)."
+#. About window, license info
+msgid ""
+"This program is distributed under the terms and conditions of the GNU "
+"General Public License (GPL)."
+msgstr ""
+"Ten program jest rozpowszechniany na warunkach GNU General Public License "
+"(GPL)."
 
+#. About window, button
 msgid "View license"
-msgstr "Wyświetl licencję"
+msgstr "Zobacz licencję"
 
+#. About window, info about Donor ID extracted from Donor Key
 msgid "Donor ID:"
 msgstr "ID Dawcy:"
 
+#. Quick Help window, title
 msgid "Quick help"
 msgstr "Szybka pomoc"
 
+#. Quick Help window, context menu
 msgid "Position Automatically"
-msgstr "Automatyczne pozycjonowanie"
+msgstr "Pozycjonuj Automatycznie"
 
+#. Quick help for "Include characters" in main window
 msgid "You can use the following placeholders:"
-msgstr "Można użyć następujących symboli zastępczych:"
+msgstr "Możesz użyć następujących symboli zastępczych:"
 
+#. Quick help for "Include characters" in main window
 msgid "without ambiguous characters"
 msgstr "bez niejednoznacznych znaków"
 
-msgid "special symbols"
-msgstr "symbole specjalne"
+#. Quick help for "Include characters" in main window
+msgid "Special symbols"
+msgstr "Symbole specjalne"
 
-msgid "brackets"
-msgstr "nawiasy"
+#. Quick help for "Include characters" in main window
+msgid "Brackets"
+msgstr "Nawiasy"
 
-msgid "punctuation marks"
-msgstr "znaki interpunkcyjne"
+#. Quick help for "Include characters" in main window
+msgid "Punctuation marks"
+msgstr "Znaki interpunkcyjne"
 
-msgid "higher ANSI characters"
-msgstr "wyższe znaki ANSI"
+#. Quick help for "Include characters" in main window
+msgid "Higher ANSI characters"
+msgstr "Wyższe znaki ANSI"
 
-msgid "generate phonetic password (lower-case letters)"
-msgstr "generowanie hasła fonetycznego (małe litery)"
+#. Quick help for "Include characters" in main window
+msgid "Generate phonetic password (lower-case letters)"
+msgstr "Generuj hasło fonetyczne (małe litery)"
 
-msgid "generate phonetic password (upper-case letters)"
-msgstr "generowanie hasła fonetycznego (wielkie litery)"
+#. Quick help for "Include characters" in main window
+msgid "Generate phonetic password (upper-case letters)"
+msgstr "Generuj hasło fonetyczne (wielkie litery)"
 
-msgid "generate phonetic password (mixed-case letters)"
-msgstr "generowanie hasła fonetycznego (litery pisane wielką literą)"
+#. Quick help for "Include characters" in main window
+msgid "Generate phonetic password (mixed-case letters)"
+msgstr "Generuj hasło fonetyczne (mieszane-wielkie litery)"
 
+#. Quick help for "Include characters" in main window
+msgid ""
+"You can use the following syntax to specify a (minimum) number N of "
+"characters\n"
+"for a character set:"
+msgstr ""
+"Możesz użyć poniższej składni, aby określić (minimalną) liczbę N znaków\n"
+"dla zestawu znaków:"
+
+#. Quick help for "Include characters" in main window
+msgid "N = Include exactly N characters. N+ = Include at least N characters."
+msgstr ""
+"N = Uwzględnij dokładnie N znaków. N+ = Uwzględnij co najmniej N znaków."
+
+#. Quick help for "Include characters" in main window
 msgid ""
 "Comments may be provided in square brackets \"[...]\"\n"
 "at the beginning of the sequence."
 msgstr ""
-"Komentarze mogą być zamieszczane w nawiasach kwadratowych \"[...] \"\n"
+"Komentarze można umieszczać w nawiasach kwadratowych „[...]”\n"
 "na początku sekwencji."
 
+#. Quick help for "Format password" in main window
 msgid ""
 "Format specifiers have the form \"[*][N]x\" or \"[*][M-N]x\", where the\n"
 "optional argument \"N\" specifies the number of repetitions (between 1 and\n"
@@ -1503,377 +2098,525 @@ msgid ""
 "the sequence. Example: \"16u\" means \"Insert 16 random upper-case letters\n"
 "into the password\"."
 msgstr ""
-"Specyfikatory formatu mają postać \"[*][N]x\" lub \"[*][M-N]x\", gdzie the\n"
-"argument opcjonalny \"N\" określa liczbę powtórzeń (między 1 i\n"
-"99999), \"M-N\" określa losową liczbę powtórzeń w zakresie\n"
-"z M do N, i \"x\" jest rzeczywistym specyfikatorem/symbolem zastępczym formatu. Opcjonalna \n"
-"gwiazdka (*) oznacza, że każdy znak musi wystąpić tylko raz w sekwencji.\n"
-"Przykład: \"16u\" oznacza \"Wstaw 16 losowe wielkie litery do hasła\"."
+"Specyfikatory formatu mają postać „[*][N]x” lub „[*][M-N]x”, gdzie\n"
+"opcjonalny argument „N” określa liczbę powtórzeń (od 1 do\n"
+"99999), „M-N” określa losową liczbę powtórzeń w zakresie\n"
+"od M do N, a „x” to rzeczywisty specyfikator/symbol zastępczy formatu.\n"
+"Opcjonalna gwiazdka (*) oznacza, że każdy znak musi wystąpić tylko raz\n"
+"w sekwencji. Przykład: „16u” oznacza „Wstaw 16 losowych wielkich liter\n"
+"w hasłach”."
 
+#. Quick help for "Format password" in main window
 msgid "List of placeholders with optional argument \"N\":"
 msgstr "Lista symboli zastępczych z opcjonalnym argumentem \"N\":"
 
-msgid "custom character set"
-msgstr "niestandardowy zestaw znaków"
+#. Quick help for "Format password" in main window
+msgid "Custom character set"
+msgstr "Niestandardowy zestaw znaków"
 
-msgid "vowels, lower-case"
-msgstr "samogłoski, małe litery"
+#. Quick help for "Format password" in main window
+msgid "Vowels, lower-case"
+msgstr "Samogłoski, małe litery"
 
-msgid "vowels, mixed-case"
-msgstr "samogłoski, mieszane litery"
+#. Quick help for "Format password" in main window
+msgid "Vowels, mixed-case"
+msgstr "Samogłoski, mieszane-wielkie litery"
 
-msgid "vowels, upper-case"
-msgstr "samogłoski, wielkie litery"
+#. Quick help for "Format password" in main window
+msgid "Vowels, upper-case"
+msgstr "Samogłoski, wielkie litery"
 
-msgid "consonants, lower-case"
-msgstr "spółgłoski, małe litery"
+#. Quick help for "Format password" in main window
+msgid "Consonants, lower-case"
+msgstr "Spółgłoski, małe litery"
 
-msgid "consonants, mixed-case"
-msgstr "spółgłoski mieszane litery"
+#. Quick help for "Format password" in main window
+msgid "Consonants, mixed-case"
+msgstr "Spółgłoski, mieszane-wielkie litery"
 
-msgid "consonants, upper-case"
-msgstr "spółgłoski, wielkie litery"
+#. Quick help for "Format password" in main window
+msgid "Consonants, upper-case"
+msgstr "Spółgłoski, wielkie litery"
 
+#. Quick help for "Format password" in main window
 msgid ""
 "List of special format specifiers\n"
 "(possible usage of argument \"N\" is indicated by \"{N}\"):"
 msgstr ""
-"Lista specyfikatorów formatu specjalnego\n"
-"(możliwe użycie argumentu \"N\" jest wskazany przez \"{N}\"):"
+"Lista specjalnych specyfikatorów formatu\n"
+"(możliwe użycie argumentu \"N\" jest oznaczone wg \"{N}\"):"
 
-msgid "insert password generated via \"Include characters/words\""
-msgstr "wstaw hasło wygenerowane przez \"Uwzględnij znaki/słowa\""
+#. Quick help for "Format password" in main window
+msgid "Insert password generated via \"Include characters/words\""
+msgstr "Wstaw hasło wygenerowane przez \"Uwzględnij znaki/słowa\""
 
-msgid "words from word list, multiple words are separated by spaces"
-msgstr "słowa z listy słów, wiele słów jest oddzielonych spacjami"
+#. Quick help for "Format password" in main window
+msgid "Words from word list, multiple words are separated by spaces"
+msgstr "Słowa z listy słów, wiele słów jest oddzielonych spacjami"
 
-msgid "words, multiple words are not separated at all"
-msgstr "słowa, wiele słów nie jest w ogóle rozdzielonych"
+#. Quick help for "Format password" in main window
+msgid "Words, multiple words are not separated at all"
+msgstr "Słowa, wielokrotne słowa nie są wszystkie rozdzielane"
 
-msgid "repeat input sequence in brackets N times"
-msgstr "powtórz sekwencję wejściową w nawiasach N razy"
+#. Quick help for "Format password" in main window
+msgid "Repeat input sequence in brackets N times"
+msgstr "Powtórz sekwencję wejściową w nawiasach N razy"
 
-msgid "randomly permute formatted sequence in brackets, keep N characters"
-msgstr "losowo permutuj sformatowaną sekwencję w nawiasach, zachowaj N znaków"
+#. Quick help for "Format password" in main window
+msgid "Randomly permute formatted sequence in brackets, keep N characters"
+msgstr "Losowo zmień sformatowaną sekwencję w nawiasach, zachowaj N znaków"
 
-msgid "treat sequence as character set and insert N characters"
-msgstr "traktuj sekwencję jako zestaw znaków i wstaw N znaków"
+#. Quick help for "Format password" in main window
+msgid "Treat sequence as character set and insert N characters"
+msgstr "Traktuj sekwencję jako zestaw znaków i wstaw N znaków"
 
+#. Quick help for "Format password" in main window
 msgid "Additional notes:"
 msgstr "Dodatkowe uwagi:"
 
+#. Quick help for "Format password" in main window
 msgid ""
 "Text enclosed with quotation marks \"...\" is copied verbatim\n"
 "to the password."
 msgstr ""
-"Tekst ujęty w cudzysłów \"...\" jest kopiowany dosłownie\n"
+"Tekst ujęty w cudzysłów „…” jest kopiowany dosłownie\n"
 "do hasła."
 
+#. Master-Password based Password Generator window, title
 msgid "MP Password Generator"
-msgstr "MP Generator Haseł"
+msgstr "MP Password Generator"
 
+#. MP Password Generator window, group box
 msgid "Master password"
-msgstr "Hasło Główne"
+msgstr "Hasło główne"
 
+#. MP Password Generator window, button
 msgid "Enter password..."
-msgstr "Wprowadź hasło..."
+msgstr "Wpisz hasło..."
 
+#. MP Password Generator window, button to clear master password cache
 msgid "Clear"
 msgstr "Wyczyść"
 
+#. MP Password Generator window, label for status of master password cache
 msgid "Status:"
 msgstr "Status:"
 
+#. MP Password Generator window, countdown for master password expiry
 msgid "Expiry countdown:"
-msgstr "Odliczanie wygaśnięcia:"
+msgstr "Odliczanie ważności:"
 
+#. MP Password Generator window, checkbox
 msgid "Ask for password confirmation"
-msgstr "Pytaj o potwierdzenie hasła"
+msgstr "Proś o potwierdzenie hasła"
 
+#. MP Password Generator window, checkbox
 msgid "Show checksum of password:"
 msgstr "Pokaż sumę kontrolną hasła:"
 
+#. MP Password Generator window, checkbox
 msgid "Key expires after the following time (seconds):"
-msgstr "Klucz wygasa po następującym czasie (sek.):"
+msgstr "Klucz wygasa po upływie następującego czasu (sekundach):"
 
+#. MP Password Generator window, checkbox
 msgid "Provide compatibility with \"Hashapass\""
-msgstr "Zapewnij kompatybilność z \"Hashapass\""
+msgstr "Zapewnij kompatybilność z „Hashapass”"
 
+#. MP Password Generator window, checkbox
 msgid "Add password length to parameter"
 msgstr "Dodaj długość hasła do parametru"
 
+#. MP Password Generator window, checkbox
 msgid "Autotype sequence:"
-msgstr "Autozapis-sekwencji:"
+msgstr "Sekwencja autozapisu:"
 
+#. MP Password Generator window, group box
 msgid "Password generator"
 msgstr "Generator haseł"
 
+#. MP Password Generator window, label
 msgid "Parameter:"
-msgstr "Parameter:"
+msgstr "Parametr:"
 
+#. MP Password Generator window, label
 msgid "%d ch. / %.1f bits per ch."
-msgstr "%d znaków / %.1f bitów na znak"
+msgstr "%d znakow / %.1f bitów na znak"
 
+#. MP Password Generator window, label
 msgid "Resulting password:"
-msgstr "Powstałe Hasła:"
+msgstr "Wynikowe hasło:"
 
+#. MP Password Generator window, button
 msgid "Use as default random generator"
 msgstr "Użyj jako domyślnego generatora losowego"
 
+#. MP Password Generator window, Character set drop-down list
 msgid "Alphanumeric"
 msgstr "Alfanumeryczny"
 
+#. MP Password Generator window, Character set drop-down list
 msgid "Hexadecimal"
 msgstr "Szesnastkowy"
 
+#. MP Password Generator window, message when master password has expired
 msgid "Key has expired."
 msgstr "Klucz wygasł."
 
+#. MP Password Generator window, message when master password has been cleared by the user
 msgid "Key has been cleared."
 msgstr "Klucz został wyczyszczony."
 
+#. MP Password Generator window, message when new master password has been set
 msgid "New key generated."
 msgstr "Wygenerowano nowy klucz."
 
-msgid "Enter or paste some text into the box below, press mouse buttons, or move your mouse within the window."
-msgstr "Wygenerowano nowy klucz."
+#. MP Password Generator Window, label next to password quality bar
+msgid "%d bits"
+msgstr "%d bitów"
 
+#. Provide Additional Entropy window, label
+msgid ""
+"Enter or paste some text into the box below, press mouse buttons, or move "
+"your mouse within the window."
+msgstr ""
+"Wpisz lub wklej tekst w polu poniżej, naciśnij przyciski myszy lub przesuń "
+"mysz w obrębie okna."
+
+#. Provide Additional Entropy window, message shown when entropy has been added
 msgid "%d bits of entropy have been added to the random pool."
-msgstr "%d bites z entropii zostało dodane do puli losowej."
+msgstr "Do losowej puli dodano %d bitów entropii."
 
-msgid "Database not encrypted, or invalid key"
-msgstr "Baza danych niezaszyfrowana lub nieprawidłowy klucz"
+#. Password Manager window, Open database, error message
+msgid "Master key is invalid or file contents have been modified"
+msgstr ""
+"Klucz główny jest nieprawidłowy lub zawartość pliku została zmodyfikowana"
 
-msgid "File contents modified, or invalid key"
-msgstr "Zawartość pliku zmodyfikowana lub nieprawidłowy klucz"
-
+#. Password Manager window, Open database, error message
 msgid "Unknown file format"
 msgstr "Nieznany format pliku"
 
+#. Password Manager window, Open database, error message
 msgid "Invalid file format"
 msgstr "Nieprawidłowy format pliku"
 
+#. Password Manager window, field name
 msgid "Title"
 msgstr "Tytuł"
 
+#. Password Manager window, field name
 msgid "Title:"
 msgstr "Tytuł:"
 
+#. Password Manager window, field name
 msgid "User name"
 msgstr "Nazwa użytkownika"
 
+#. Password Manager window, field name
 msgid "User name:"
 msgstr "Nazwa użytkownika:"
 
+#. Password Manager window, field name
 msgid "Password"
 msgstr "Hasło"
 
+#. Password Manager window, field name
 msgid "Password:"
 msgstr "Hasło:"
 
+#. Password Manager window, field name
 msgid "URL"
 msgstr "URL"
 
+#. Password Manager window, field name
 msgid "URL:"
 msgstr "URL:"
 
+#. Password Manager window, field name
 msgid "Keyword"
 msgstr "Słowo kluczowe"
 
+#. Password Manager window, field name
 msgid "Keyword:"
 msgstr "Słowo kluczowe:"
 
+#. Password Manager window, field name
 msgid "Notes"
-msgstr "Notatki"
+msgstr "Uwagi"
 
+#. Password Manager window, field name
 msgid "Notes:"
-msgstr "Notatki:"
+msgstr "Uwagi:"
 
+#. Password Manager window, field name
 msgid "Key-value list"
-msgstr "Klucz-lista wartości"
+msgstr "Lista klucz-wartość"
 
+#. Password Manager window, field name
 msgid "Key-value list:"
-msgstr "Klucz-lista wartości:"
+msgstr "Lista klucz-wartość:"
 
+#. Password Manager window, field name
 msgid "Creation time"
-msgstr "Czas tworzenia"
+msgstr "Czas utworzenia"
 
+#. Password Manager window, field name
 msgid "Creation time:"
-msgstr "Czas tworzenia:"
+msgstr "Czas utworzenia:"
 
+#. Password Manager window, field name
 msgid "Last modification"
 msgstr "Ostatnia modyfikacja"
 
+#. Password Manager window, field name
 msgid "Last modification:"
 msgstr "Ostatnia modyfikacja:"
 
+#. Password Manager window, field name
 msgid "Tags"
 msgstr "Tagi"
 
+#. Password Manager window, field name
 msgid "Tags:"
 msgstr "Tagi:"
 
+#. Password Manager window, field name
 msgid "Select and add existing tag"
 msgstr "Wybierz i dodaj istniejący tag"
 
+#. Password Manager window, Tag view, first item "All (tags)" (plural)
 msgctxt "tags"
 msgid "All"
 msgstr "Wszystkie"
 
+#. Password Manager window, Tag view when searching
 msgid "All search results"
 msgstr "Wszystkie wyniki wyszukiwania"
 
+#. Password Manager window, Tag view
 msgid "Untagged"
-msgstr "Nieoznakowane"
+msgstr "Nieoznaczone"
 
+#. Password Manager window, Key/value field
 msgid "Key"
 msgstr "Klucz"
 
+#. Password Manager window, Key/value field
 msgid "Value"
 msgstr "Wartość"
 
+#. Password Manager window, main menu, Edit submenu
 msgid "Edit"
 msgstr "Edytuj"
 
+#. Password Manager window, main menu, View submenu
 msgid "View"
 msgstr "Widok"
 
+#. Password Manager window, main menu, File submenu
 msgid "New..."
 msgstr "Nowy..."
 
+#. Password Manager window, main menu, File submenu
 msgid "Open..."
 msgstr "Otwórz..."
 
+#. Password Manager window, main menu, File submenu
+msgid "Open as Read-only..."
+msgstr "Otwórz jako tylko do odczytu..."
+
+#. Password Manager window, main menu, File submenu
 msgid "Save"
 msgstr "Zapisz"
 
+#. Password Manager window, main menu, File submenu
 msgid "Save As..."
 msgstr "Zapisz jako..."
 
+#. Password Manager window, main menu, File submenu
 msgid "Lock"
 msgstr "Blokuj"
 
+#. Password Manager window, main menu, File submenu
+msgid "Clear Recently Opened List"
+msgstr "Wyczyść Listę Ostatnio Otwartych"
+
+#. Password Manager window, main menu, File submenu
 msgid "Unlock"
 msgstr "Odblokuj"
 
+#. Password Manager window, main menu, File submenu
 msgid "Export to"
 msgstr "Eksportuj do"
 
+#. Password Manager window, main menu, File submenu, Export To submenu
 msgid "CSV File..."
 msgstr "Plik CSV..."
 
+#. Password Manager window, main menu, File submenu
 msgid "Database Settings..."
 msgstr "Ustawienia bazy danych..."
 
+#. Password Manager window, main menu, File submenu
+msgid "Properties..."
+msgstr "Właściwości..."
+
+#. Password Manager window, main menu, File submenu
 msgid "Change Master Password..."
-msgstr "Zmień hasło główne...."
+msgstr "Zmień Hasło Główne..."
 
+#. Password Manager window, main menu, Edit submenu
 msgid "Copy User Name"
-msgstr "Kopiuj nazwę użytkownika"
+msgstr "Kopiuj Nazwę Użytkownika"
 
+#. Password Manager window, main menu, Edit submenu
 msgid "Copy Password"
-msgstr "Kopiuj hasło"
+msgstr "Kopiuj Hasło"
 
+#. Password Manager window, main menu, Edit submenu
 msgid "Open URL"
 msgstr "Otwórz URL"
 
+#. Password Manager window, main menu, Edit submenu
 msgid "Run"
 msgstr "Uruchom"
 
+#. Password Manager window, main menu, Edit submenu
 msgid "Add Entry"
-msgstr "Dodaj wpis"
+msgstr "Dodaj Wpis"
 
+#. Password Manager window, main menu, Edit submenu
 msgid "Duplicate Entry"
-msgstr "Duplikat wpisu"
+msgstr "Zduplikowany Wpis"
 
+#. Password Manager window, main menu, Edit submenu
 msgid "Delete Entry"
-msgstr "Usuń wpis"
+msgstr "Usuń Wpis"
 
+#. Password Manager window, main menu, View submenu
 msgid "Show Columns"
-msgstr "Pokaż kolumny"
+msgstr "Pokaż Kolumny"
 
+#. Password Manager window, main menu, View submenu
 msgid "Show Passwords in List"
-msgstr "Pokaż hasła na liście"
+msgstr "Pokaż Hasła w Liście"
 
+#. Password Manager window, main menu, View submenu
 msgid "Sort Entries By"
-msgstr "Sortuj wpisy wg"
+msgstr "Sortuj Wpisy Wg"
 
+#. Password Manager window, main menu, View submenu, Sort submenu
 msgid "Unsorted"
-msgstr "Niesortowane"
+msgstr "Nieposortowane"
 
-msgid "Sort Order"
-msgstr "Kolejność sortowania"
-
+#. Password Manager window, main menu, View submenu, Sort submenu
 msgid "Ascending"
 msgstr "Rosnąco"
 
+#. Password Manager window, main menu, View submenu, Sort submenu
 msgid "Descending"
 msgstr "Malejąco"
 
+#. Password Manager window, main menu, View submenu
 msgid "Sort Tags By"
-msgstr "Sortuj Tagi wg"
+msgstr "Sortuj Tagi Wg"
 
+#. Password Manager window, main menu, View submenu, Sort Tags submenu
 msgid "Name"
 msgstr "Nazwa"
 
+#. Password Manager window, main menu, View submenu, Sort Tags submenu
 msgid "Frequency"
 msgstr "Częstotliwość"
 
+#. Password Manager window, main menu, View submenu
 msgid "Change List Font..."
 msgstr "Zmień czcionkę listy..."
 
-msgid "Change Password Font..."
-msgstr "Zmień czcionkę hasła..."
+#. Password Manager window, main menu, View submenu
+msgid "Reset Fonts"
+msgstr "Zresetuj Czcionki"
 
+#. Password Manager window, main menu, View submenu
+msgid "Change Password Font..."
+msgstr "Zmień Czcionkę Hasła..."
+
+#. Password Manager window, Edit panel, Arrow Up button, tooltip
 msgid "Previous entry"
 msgstr "Poprzedni wpis"
 
+#. Password Manager window, Edit panel, Arrow Down button, tooltip
 msgid "Next entry"
 msgstr "Następny wpis"
 
+#. Password Manager window, Edit panel, Accept button, tooltip
 msgid "Accept changes"
 msgstr "Akceptuj zmiany"
 
+#. Password Manager window, Edit panel, Undo button, tooltip
 msgid "Undo changes"
 msgstr "Cofnij zmiany"
 
+#. Password Manager window, toolbar, Search box, text tooltip
 msgid "Search..."
 msgstr "Szukaj..."
 
+#. Password Manager window, toolbar, Search button, context menu
 msgid "Clear search"
 msgstr "Wyczyść wyszukiwanie"
 
-msgid "Left-click: Perform search, right-click: Search options"
-msgstr "Lewe-kliknięcie: Wykonaj wyszukiwanie, prawy-klik: Opcje wyszukiwania"
+#. Password Manager window, toolbar, Search button, tooltip
+msgid "Perform search"
+msgstr "Wykonaj wyszukiwanie"
 
-msgid "Case-sensitive search"
-msgstr "Wyszukiwanie z uwzględnieniem wielkości liter"
+#. Password Manager window, toolbar, Search button, context menu
+msgid "Case-sensitive"
+msgstr "Uwzględnij wielkość liter"
 
-msgid "Fuzzy search (approximate matching)"
-msgstr "Wyszukiwanie rozmyte (przybliżone dopasowanie)"
+#. Password Manager window, toolbar, Search button, context menu
+msgid "Fuzzy search"
+msgstr "Rozmyte wyszukiwanie"
 
+#. Password Manager window, toolbar, Search button, context menu
+msgid "Select fields..."
+msgstr "Wybierz pola..."
+
+#. Password Manager window, toolbar, Lock/unlock button, tooltip
 msgid "Lock/unlock database"
-msgstr "Zablokuj/odblokuj bazę danych"
+msgstr "Blokuj/odblokuj bazę danych"
 
+#. Password Manager window, Edit panel, Toggle password button, tooltip
 msgid "Left-click: Hide/show password, right-click: Generate password"
-msgstr "Lewy-klik: Ukryj/pokaż hasło, prawy-klik: Wygeneruj hasło"
+msgstr "Lewy-klik: Ukryj/pokaż hasło, prawy-klik: Generowanie hasła"
 
+#. Password Manager window, Edit panel, Toggle notes button, tooltip
+msgid "Hide/show notes"
+msgstr "Ukryj/pokaż notatki"
+
+#. Password Manager window, Edit Panel, text displayed when notes are hidden
+msgid "Notes hidden - click here to display"
+msgstr "Notatki ukryte — kliknij tutaj do wyświetlenia"
+
+#. Password Manager window, title of password entry dialog when unlocking database
 msgid "Unlock %s"
 msgstr "Odblokuj %s"
 
+#. Password Manager window, title of password entry dialog when opening database
 msgid "Open %s"
 msgstr "Otwórz %s"
 
+#. Password Manager window, title of password entry dialog when creating new database
 msgid "Create new database"
 msgstr "Utwórz nową bazę danych"
 
+#. Password Manager window, error message when opening database
 msgid ""
 "Could not find database file:\n"
 "\"%s\"."
 msgstr ""
 "Nie można znaleźć pliku bazy danych:\n"
-"\"%s\"."
+"„%s”."
 
+#. Password Manager window, error message when opening database
 msgid ""
 "Error while opening database file:\n"
 "%s."
@@ -1881,30 +2624,39 @@ msgstr ""
 "Błąd podczas otwierania pliku bazy danych:\n"
 "%s."
 
+#. Password Manager window, warning message when opening database
+msgid "The selected file is already opened."
+msgstr "Wybrany plik jest już otwarty."
+
+#. Password Manager window, message when currently selected entry has been changed
 msgid ""
 "The currently selected entry has been changed.\n"
 "Do you want to save the changes?"
 msgstr ""
-"Aktualnie wybrana pozycja została zmieniona.\n"
-"Czy chcesz zapisać wprowadzone zmiany?"
+"Aktualnie wybrany wpis został zmieniony.\n"
+"Czy chcesz zapisać zmiany?"
 
+#. Password Manager window, message when database has been changed
 msgid ""
 "The database has been changed.\n"
 "Do you want to save the changes?"
 msgstr ""
 "Baza danych została zmieniona.\n"
-"Czy chcesz zapisać wprowadzone zmiany?"
+"Czy chcesz zapisać zmiany?"
 
+#. Password Manager window, message when trying to lock an untitled database
 msgid "An untitled database cannot be locked."
-msgstr "Baza danych bez tytułu nie może zostać zablokowana."
+msgstr "Bazy danych bez tytułu nie można zablokować."
 
+#. Password Manager window, error message when trying to save backup file
 msgid ""
 "Could not save backup file\n"
 "\"%s\"."
 msgstr ""
-"Nie można zapisać pliku kopii zapasowej:\n"
-"\"%s\"."
+"Nie można zapisać pliku kopii zapasowej\n"
+"„%s”."
 
+#. Password Manager window, error message
 msgid ""
 "Error while saving database file:\n"
 "%s."
@@ -1912,25 +2664,31 @@ msgstr ""
 "Błąd podczas zapisywania pliku bazy danych:\n"
 "%s."
 
+#. Password Manager window, message when editing an entry and trying to add new entries
 msgid ""
 "Please finish editing the current entry\n"
 "before adding new entries."
 msgstr ""
-"Proszę zakończyć edycję bieżącego wpisu\n"
+"Zakończ edycję bieżącego wpisu\n"
 "przed dodaniem nowych wpisów."
 
+#. Password Manager window, message when new entries have been added
 msgid "%d entries with passwords have been added."
-msgstr "%d dodano wpisy z hasłami."
+msgstr "Dodano %d wpisów z hasłami."
 
+#. Password Manager window, Search result
 msgid "1 entry found."
-msgstr "1 znaleziony wpis."
+msgstr "Znaleziono 1 wpis."
 
+#. Password Manager window, Search result
 msgid "%d entries found."
-msgstr "%d znaleziono wpisów."
+msgstr "Znaleziono %d wpisów."
 
+#. Password Manager window, Search result (via hot key)
 msgid "Search via hot key."
-msgstr "Wyszukiwanie za pomocą skrótu."
+msgstr "Wyszukaj przez klawisz skrótu."
 
+#. Password Manager window, Search via hot key, no match found
 msgid ""
 "No matching keyword found for window text\n"
 "\"%s\"."
@@ -1938,40 +2696,52 @@ msgstr ""
 "Nie znaleziono pasującego słowa kluczowego dla tekstu okna\n"
 "\"%s\"."
 
+#. Password Manager window, placeholder for New Entry in list view
 msgid "New Entry"
 msgstr "Nowy Wpis"
 
+#. Password Manager window, message when trying to add new entry without title and password
 msgid "Please specify at least a title or password."
-msgstr "Podaj co najmniej tytuł lub hasło."
+msgstr "Podaj przynajmniej tytuł lub hasło."
 
+#. Password Manager window, confirm deletion of entry
 msgid "Delete 1 entry?"
 msgstr "Usunąć 1 wpis?"
 
+#. Password Manager window, confirm deletion of entries
 msgid "Delete %d entries?"
-msgstr "Usunąć wpisy %d?"
+msgstr "Usunąć %d wpisów?"
 
+#. Password Manager window, Change master password, query old password
 msgid "Enter OLD master password"
-msgstr "Wprowadź STARE hasło główne"
+msgstr "Wpisz STARE hasło główne"
 
+#. Password Manager window, Change master password, query new password
 msgid "Enter NEW master password"
-msgstr "Wprowadź NOWE hasło główne"
+msgstr "Wpisz NOWE hasło główne"
 
+#. Password Manager window, Change master password, success message
 msgid "Master password successfully changed."
 msgstr "Hasło główne zostało pomyślnie zmienione."
 
+#. Password Manager window, Change master password, error message
 msgid "Old master password is invalid."
 msgstr "Stare hasło główne jest nieprawidłowe."
 
+#. Password Manager window, New database, default name
 msgid "Untitled"
 msgstr "Bez tytułu"
 
+#. Password Manager window, text added to title when creating a duplicate of an existing entry
 msgctxt "noun"
 msgid "Copy"
 msgstr "Kopiuj"
 
+#. Password Manager window, Export database to CSV, success message
 msgid "Database successfully exported to CSV file."
 msgstr "Baza danych została pomyślnie wyeksportowana do pliku CSV."
 
+#. Password Manager window, Export database to CSV, error message
 msgid ""
 "Error while creating CSV file:\n"
 "%s."
@@ -1979,33 +2749,43 @@ msgstr ""
 "Błąd podczas tworzenia pliku CSV:\n"
 "%s."
 
+#. Password Manager window, Open/Save dialog, filter for .pwdb files
 msgid "Password databases"
-msgstr "Bazy danych z hasłami"
+msgstr "Bazy danych haseł"
 
+#. Password Manager window, Open/Save dialog, filter for .csv files
 msgid "CSV files"
 msgstr "Pliki CSV"
 
+#. Password Manager window, Key-Value field, Autotype key
 msgid "Autotype"
-msgstr "AutoZapis"
+msgstr "Autozapis"
 
+#. Password Manager window, Key-Value field, Format Password key
 msgid "Format password"
-msgstr "Formatuj hasło"
+msgstr "Format hasła"
 
+#. Password Manager window, main menu, Edit submenu
 msgid "Rearrange Entry"
-msgstr "Zmień zakres wpisu"
+msgstr "Zmiana Układu Wpisu"
 
+#. Password Manager window, main menu, Edit submenu, Rearrange Entry submenu
 msgid "Move to Top"
 msgstr "Przesuń do góry"
 
+#. Password Manager window, main menu, Edit submenu, Rearrange Entry submenu
 msgid "Move up by one"
 msgstr "Przesuń o jeden w górę"
 
+#. Password Manager window, main menu, Edit submenu, Rearrange Entry submenu
 msgid "Move down by one"
-msgstr "Przesuń o jeden na dół"
+msgstr "Przesuń o jeden w dół"
 
+#. Password Manager window, main menu, Edit submenu, Rearrange Entry submenu
 msgid "Move to Bottom"
-msgstr "Przesuń na dół"
+msgstr "Przesuń w dół"
 
+#. Password Manager window, Edit panel, message shown when one or more tags of the selected entry are too long
 msgid ""
 "The maximum tag length is %d characters.\n"
 "Longer tags have been shortened."
@@ -2013,226 +2793,429 @@ msgstr ""
 "Maksymalna długość tagu to %d znaków.\n"
 "Dłuższe tagi zostały skrócone."
 
-msgid "Enter master password again"
-msgstr "Wprowadź ponownie hasło główne"
+#. Password Manager window, main menu, File submenu, Set Recovery Password, title of password entry dialog
+msgid "Enter master password"
+msgstr "Wpisz hasło główne"
 
+#. Password Manager window, main menu, File submenu, Database settings, when applying certain settings, title of password entry dialog
+msgid "Enter master password again"
+msgstr "Wpisz ponownie hasło główne"
+
+#. Password Manager window, main menu, File submenu, Database settings, when applying certain settings, message shown when master password is invalid
 msgid "Master password is invalid."
 msgstr "Hasło główne jest nieprawidłowe."
 
+#. Password Manager window, Edit panel, Key-value list button, tooltip
 msgid "Edit key-value list"
 msgstr "Edytuj klucz-listę wartości"
 
+#. Password Manager window, Edit panel, password box, generate password, message shown when profile specified by corresponding key-value pair could not be found
 msgid "Profile \"%s\" not found."
-msgstr "Profil \"%s\" nie znaleziono."
+msgstr "Profilu \"%s\" nie znaleziono."
 
+#. Password Manager window, field name
 msgid "Password expiry"
 msgstr "Wygaśnięcie hasła"
 
+#. Password Manager window, Edit panel, checkbox
 msgid "Expires:"
 msgstr "Wygasa:"
 
+#. Password Manager window, Edit panel, Expiry button, tooltip
 msgid "Change expiry date"
-msgstr "Zmień datę ważności"
+msgstr "Zmiana daty wygaśnięcia"
 
-msgid "Filter expired entries"
-msgstr "Filtrowanie wygasłych wpisów"
+#. Password Manager window, main menu, View submenu
+msgid "Filter"
+msgstr "Filtr"
 
+#. Password Manager window, main menu, View submenu, Filter submenu
+msgid "Expired entries"
+msgstr "Wygasłe wpisy"
+
+#. Password Manager window, main menu, View submenu, Filter submenu
+msgid "Entries that will expire soon"
+msgstr "Wpisy, które wkrótce wygasną"
+
+#. Password Manager window, main menu, View submenu, Filter submenu
+msgid "Entries with Weak Passwords"
+msgstr "Wpisy ze słabymi hasłami"
+
+#. Password Manager window, Edit panel, context menu of Expiry button, menu items
 msgid "%d days"
 msgstr "%d dni"
 
+#. Password Manager window, when opening database, message shown if database contains expired entries
 msgid ""
 "The database contains expired entries.\n"
 "Do you want to filter these entries now?"
 msgstr ""
-"Baza danych zawiera wygasłe wpisy.\n"
+"Baza danych zawiera wpisy, które wygasły.\n"
 "Czy chcesz teraz filtrować te wpisy?"
 
+#. Password Manager window, when opening database, message shown if database contains expired entries that will expire soon
+msgid ""
+"The database contains entries that will expire soon.\n"
+"Do you want to filter these entries now?"
+msgstr ""
+"Baza danych zawiera wpisy, które wkrótce wygasną.\n"
+"Czy chcesz teraz filtrować te wpisy?"
+
+#. Password Manager window, when opening database, message shown if master password has expired
+msgid "The master password has expired!"
+msgstr "Hasło główne wygasło!"
+
+#. Password Manager window, when opening database, message shown if master password will expire soon
+msgid "The master password will expire soon."
+msgstr "Hasło główne wkrótce wygaśnie."
+
+#. Password Manager window, when opening database, message shown if master password has expired or is about to expire soon
+msgid ""
+"Set a new master password via File |\n"
+"Change Master Password."
+msgstr ""
+"Ustaw nowe hasło główne przez Plik |\n"
+"Zmień hasło główne."
+
+#. Password manager window, warning added to window title if master password has expired
+msgid "WARNING: Master password expired!"
+msgstr "OSTRZEŻENIE: Hasło główne wygasło!"
+
+#. Password Manager window, text added to window title when database is locked
+msgid "Locked"
+msgstr "Zablokowano"
+
+#. Password Manager window, main menu, File submenu
+msgid "Set Recovery Password..."
+msgstr "Ustaw Hasło Odzyskiwania..."
+
+#. Password Manager window, main menu, File submenu
+msgid "Remove Recovery Password..."
+msgstr "Usuń Hasło Odzyskiwania..."
+
+#. Password Manager window, main menu, File submenu, Set Recovery Password, title of password entry dialog
+msgid "Enter recovery password"
+msgstr "Wpisz hasło odzyskiwania"
+
+#. Password Manager window, main menu, File submenu, Set Recovery Password, message shown when procedure was successful
+msgid "Recovery password successfully set."
+msgstr "Hasło odzyskiwania zostało pomyślnie ustawione."
+
+#. Password Manager window, main menu, File submenu, Remove Recovery Password, error message
+msgid "Recovery password is invalid."
+msgstr "Hasło odzyskiwania jest nieprawidłowe."
+
+#. Password Manager window, main menu, File submenu, Remove Recovery Password, message shown when procedure was successful
+msgid "Recovery password successfully removed."
+msgstr "Hasło odzyskiwania zostało pomyślnie usunięte."
+
+#. Password Manager window, main menu, File submenu, Database Properties, entry in left column
+msgid "Recovery password set"
+msgstr "Ustawione hasło odzyskiwania"
+
+#. Indicates whether option is set
+msgid "Yes"
+msgstr "Tak"
+
+#. Indicates whether option is set
+msgid "No"
+msgstr "Nie"
+
+#. Password Manager window, Opening database, message shown in case of version incompatibility
+msgid ""
+"Database format error:\n"
+"%s.\n"
+"Database version: %d.%d\n"
+"Highest supported version: %d.%d"
+msgstr ""
+"Błąd formatu bazy danych:\n"
+"%s.\n"
+"Wersja bazy danych: %d.%d\n"
+"Najwyższa obsługiwana wersja: %d.%d"
+
+#. Password Manager window, Select Columns dialog, window title
 msgid "Select columns"
 msgstr "Wybierz kolumny"
 
+#. Password Manager window, Select Columns dialog, message shown if no column selected
 msgid "Select at least one column."
 msgstr "Wybierz co najmniej jedną kolumnę."
 
+#. Generic string formatting error message
 msgid "Error while formatting string"
 msgstr "Błąd podczas formatowania ciągu"
 
+#. Unicode error message
 msgid "Invalid UTF-16 character encoding"
 msgstr "Nieprawidłowe kodowanie znaków UTF-16"
 
+#. Unicode error message
 msgid "Error while converting string to UTF-8"
-msgstr "Błąd podczas konwersji ciągu na UTF-8"
+msgstr "Błąd podczas konwersji ciągu znaków na UTF-8"
 
+#. Unicode error message
 msgid "Error while decoding UTF-8 string"
 msgstr "Błąd podczas dekodowania ciągu UTF-8"
 
+#. Unicode error message
 msgid "Unicode string too long"
-msgstr "Zbyt długi ciąg znaków Unicode"
+msgstr "Ciąg Unicode jest długi"
 
+#. Unicode error message
 msgid "Invalid ANSI or UTF-8 character encoding, or Unicode string too long"
-msgstr "Nieprawidłowe kodowanie znaków ANSI lub UTF-8 albo zbyt długi ciąg znaków Unicode"
+msgstr ""
+"Nieprawidłowe kodowanie znaków ANSI lub UTF-8 albo zbyt długi ciąg znaków "
+"Unicode"
 
+#. Unicode error message
 msgid "Error while encoding Unicode string"
 msgstr "Błąd podczas kodowania ciągu Unicode"
 
+#. Error message
 msgid "Out of disk space"
 msgstr "Brak miejsca na dysku"
 
+#. Error message when trying to open a file or execute a command
 msgid ""
 "Could not open file/execute operation\n"
 "\"%s\"."
 msgstr ""
-"Nie można otworzyć pliku/wykonaj operację\n"
-"\"%s\"."
+"Nie można otworzyć pliku/wykonać operacji\n"
+"„%s”."
 
+#. Main menu, Tools submenu, Create Trigram File, message shown when source file does not contain enough 3-letter combinations (trigrams) to create the trigram file
 msgid "Source file does not contain enough trigrams"
 msgstr "Plik źródłowy nie zawiera wystarczającej liczby trygramów"
 
+#. Password Manager window, Database Settings dialog, window title
 msgid "Database settings"
 msgstr "Ustawienia bazy danych"
 
+#. Password Manager window, Database Settings dialog, label
 msgid "Default user name for new entries:"
 msgstr "Domyślna nazwa użytkownika dla nowych wpisów:"
 
+#. Password Manager window, Database Settings dialog, label
 msgid "Generate passwords for new entries using format sequence:"
-msgstr "Generuj hasła dla nowych wpisów przy użyciu sekwencji formatów:"
+msgstr "Generuj hasła dla nowych wpisów, korzystając z sekwencji formatów:"
 
+#. Password Manager window, Database Settings dialog, Generate Password button, tooltip
 msgid "Generate test password using format sequence"
-msgstr "Generowanie hasła testowego przy użyciu sekwencji formatów"
+msgstr "Generuj hasło testowe, korzystając z sekwencji formatów"
 
+#. Password Manager window, Database Settings dialog, label
 msgid "Encryption algorithm:"
 msgstr "Algorytm szyfrowania:"
 
+#. Password Manager window, Database Settings dialog, items in list of encryption algorithms
 msgid "%s with %d-bit key"
-msgstr "%s z %d-bit-klucz"
+msgstr "%s z %d-bit kluczem"
 
+#. Password database, description of database
+msgid "Description"
+msgstr "Opis"
+
+#. Password Manager window, Database Settings dialog, label
+msgid "Database name/description:"
+msgstr "Nazwa bazy danych/opis:"
+
+#. Password Manager window, Database Settings dialog, label
 msgid "Number of key derivation rounds:"
 msgstr "Liczba rund wyprowadzania klucza:"
 
+#. Password Manager window, Database Settings dialog, Calculate KDF Rounds button, tooltip
 msgid "Calculate number of rounds for a 1 second delay"
 msgstr "Oblicz liczbę rund dla 1 sekundy opóźnienia"
 
+#. Password Manager window, Database Settings dialog, message shown when number of KDF rounds is invalid
 msgid "Invalid number of key derivation rounds."
-msgstr "Nieprawidłowa liczba rund wyprowadzenia klucza."
+msgstr "Nieprawidłowa liczba rund wyprowadzania klucza."
 
+#. Password Manager window, Database Settings dialog, label
 msgid "By default, new entries expire after the following number of days:"
 msgstr "Domyślnie nowe wpisy wygasają po następującej liczbie dni:"
 
+#. Password Manager window, Database Settings dialog, label
+msgid "For new entries, save the following number of previous passwords:"
+msgstr ""
+"W przypadku nowych wpisów zapisz następującą liczbę poprzednich haseł:"
+
+#. Password Manager window, Database Settings dialog, label
+msgid "Master password expires:"
+msgstr "Hasło główne wygasa:"
+
+#. Password Manager window, Database Settings dialog, title of progress dialog when changing number of KDF iterations
+msgid "Changing number of KDF iterations"
+msgstr "Zmiana liczby iteracji KDF"
+
+#. Password Manager window, Database Settings dialog, title of progress dialog when changing number of KDF iterations
+msgid "Computing derived key ..."
+msgstr "Obliczanie wyprowadzonego klucza ..."
+
+#. Password Manager window, Key-Value List Editor dialog, window title
 msgid "Key-value list editor"
 msgstr "Klucz-edytor listy wartości"
 
+#. Password Manager window, Database Properties dialog, window title
 msgid "Properties"
 msgstr "Właściwości"
 
+#. Password Manager window, Database Properties dialog, title of left column
 msgid "Property"
 msgstr "Właściwość"
 
+#. Password Manager window, Database Properties dialog, entry in left column
 msgid "Location"
 msgstr "Lokalizacja"
 
+#. Password Manager window, Database Properties dialog, entry in left column
 msgid "Size"
 msgstr "Rozmiar"
 
+#. Password Manager window, Database Properties dialog, entry in left column
 msgid "Format version"
-msgstr "Format-wersja"
+msgstr "Wersja formatu"
 
+#. Password Manager window, Database Properties dialog, entry in left column
 msgid "Number of entries"
 msgstr "Liczba wpisów"
 
+#. Password Manager window, Database Properties dialog, entry in left column
 msgid "Number of expired entries"
 msgstr "Liczba wygasłych wpisów"
 
+#. Password Manager window, Database Properties dialog, entry in left column
 msgid "Number of tags"
 msgstr "Liczba tagów"
 
+#. Password Manager window, Database Settings dialog, title of Compression tab
 msgid "Compression"
 msgstr "Kompresja"
 
+#. Password Manager window, Database Settings dialog, Compression, checkbox
 msgid "Enable data compression (Deflate)"
-msgstr "Włącz kompresję danych (Obniżenie)"
+msgstr "Włącz kompresję danych (Deflate)"
 
+#. Password Manager window, Database Settings dialog, compression, label
+msgid "<- Low compression, fast | High compression, slow ->"
+msgstr "<- Niska kompresja, szybko | Wysoka kompresja, wolno ->"
+
+#. Password Manager window, Edit panel, title of password entry dialog when password has been changed and needs to be confirmed
 msgid "Confirm password"
 msgstr "Potwierdź hasło"
 
+#. Password Manager window, Password quality bar, caption when quality estimation is disabled
 msgid "Password quality estimation is disabled"
 msgstr "Oszacowanie jakości hasła jest wyłączone"
 
+#. Password Manager window, Password Quality button, tooltip
 msgid "Estimate password quality"
 msgstr "Oszacowanie jakości hasła"
 
+#. Password Manager window, field name
 msgid "Password history"
-msgstr "Historia haseł"
+msgstr "Historia hasła"
 
+#. Password Manager window, field name
 msgid "Password changed"
 msgstr "Hasło zmienione"
 
+#. Password Manager window, Edit panel, label
 msgid "Password changed:"
 msgstr "Hasło zmienione:"
 
+#. Password Manager window, Password History dialog, checkbox
 msgid "Keep last passwords - up to:"
 msgstr "Zachowaj ostatnie hasła - do:"
 
+#. Password Manager window, Password History dialog, list view, column
 msgid "Set Date/Time"
 msgstr "Ustaw Datę/Czas"
 
+#. Password Manager window, shutdown blocker message
 msgid "Password database entry is being edited."
 msgstr "Edytowany jest wpis hasła do bazy danych."
 
+#. Password Manager window, shutdown blocker message
 msgid "Password database contains unsaved changes."
 msgstr "Baza danych haseł zawiera niezapisane zmiany."
 
+#. Password Manager window, toolbar, filter info
 msgid "Filtered"
 msgstr "Filtrowane"
 
+#. Password Manager window, toolbar, filter info, button tooltip
 msgid "Remove filter"
 msgstr "Usuń filtr"
 
+#. Main window, button to build character set definition
 msgid "Build..."
 msgstr "Tworzenie..."
 
+#. Main window, button to build character set definition, hint
 msgid "Build character set definition"
 msgstr "Tworzenie definicji zestawu znaków"
 
+#. Character set builder, window title
 msgid "Character Set Builder"
-msgstr "Kreator Ustawień Znaków"
+msgstr "Kreator zestawów znaków"
 
+#. Character set builder, group box with character sets
 msgid "Character set selection"
-msgstr "Wybór ustawień znaków"
+msgstr "Wybór zestawu znaków"
 
+#. Character set builder, group box with exclude characters
 msgid "Exclude characters"
 msgstr "Wyklucz znaki"
 
+#. Character set builder, group box with tag/comment
 msgid "Tag/comment"
 msgstr "Tag/komentarz"
 
+#. Character set builder, group box with resulting definition
 msgid "Resulting character set definition"
-msgstr "Wynikowa definicja ustawień znaków"
+msgstr "Wynikowa definicja zestawu znaków"
 
+#. Character set builder, button
 msgid "Apply"
 msgstr "Zastosuj"
 
+#. Character set builder, check box
 msgid "Lower-case letters (a-z)"
 msgstr "Małe litery (a-z)"
 
+#. Character set builder, check box
 msgid "Upper-case letters (A-Z)"
 msgstr "Wielkie litery (A-Z)"
 
+#. Character set builder, check box
 msgid "Digits (0-9)"
 msgstr "Cyfry (0-9)"
 
+#. Character set builder, check box
 msgid "Characters from range:"
 msgstr "Znaki z zakresu:"
 
+#. Character set builder, check box
 msgid "Additional characters:"
 msgstr "Dodatkowe znaki:"
 
+#. Character set builder, check box
 msgid "At least"
 msgstr "Co najmniej"
 
+#. Character set builder, edit box
 msgid "From:"
 msgstr "Od:"
 
+#. Character set builder, edit box
 msgid "to:"
 msgstr "do:"
 
-msgid "Invalid character range"
-msgstr "Nieprawidłowy zakres znaków"
+#. Character set builder, error message
+msgid "Invalid character range."
+msgstr "Nieprawidłowy zakres znaków."
+
+#. Number of characters (abbreviated)
+msgid "%1 ch."
+msgstr "%1 zn."
