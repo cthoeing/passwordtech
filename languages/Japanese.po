@@ -4,7 +4,7 @@
 #. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.10\n"
+"Project-Id-Version: Password Tech 3.6.0\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: Midori.Ayanokouji <ayano.midori@gmail.com>\n"
@@ -173,7 +173,7 @@ msgid ""
 "%1"
 msgstr ""
 "言語ファイルをコピーできませんでした：\n"
-"%1."
+"%1"
 
 #. Backup settings, title of dialog
 msgid "Select folder to store backup"
@@ -374,7 +374,7 @@ msgstr "明示的に要求されない限り、ディスクに書き込ません
 
 #. Command line arguments
 msgid "Load profile named 'profilename' on start-up."
-msgstr "起動時に次のプロファイルを読み込み:"
+msgstr "起動時に次のプロファイルを読み込み"
 
 #. Command line arguments
 msgid ""
@@ -1566,6 +1566,14 @@ msgstr "パスワードを入力:"
 msgid "Confirm password:"
 msgstr "パスワードの確認:"
 
+#. Enter password window, label
+msgid "Estimate quality"
+msgstr "パスワード品質の推定"
+
+#. Enter password label, button
+msgid "Skip"
+msgstr "スキップ"
+
 #. Generic dialog window, button
 msgid "OK"
 msgstr "OK"
@@ -1591,8 +1599,8 @@ msgid "Remember password (seconds):"
 msgstr "パスワードを記憶 (秒):"
 
 #. Enter password window
-msgid "Key file for password database:"
-msgstr "パスワードのデータベース用の鍵ファイル:"
+msgid "Select key file:"
+msgstr "キーファイルを選択してください："
 
 #. Enter password window, Key file, None selected
 msgid "(None)"
@@ -1603,8 +1611,12 @@ msgid "Enter a password and/or select a key file."
 msgstr "パスワードを入力するか、鍵ファイルを選択します(同時も可能)。"
 
 #. Enter password window, message shown when selected key file could not be found
-msgid "The selected key file does not exist."
-msgstr "選択した鍵ファイルは存在しません。"
+msgid ""
+"The selected key file does not exist:\n"
+"%1"
+msgstr ""
+"選択した鍵ファイルは存在しません:\n"
+"%1"
 
 #. Enter password window, message shown when password is empty
 msgid "Password is empty."
@@ -2241,12 +2253,8 @@ msgid "%d bits of entropy have been added to the random pool."
 msgstr "ランダムプールに %d ビットの情報量が追加されました。"
 
 #. Password Manager window, Open database, error message
-msgid "Database not encrypted, or invalid key"
-msgstr "データベースの暗号化なしかキーが無効"
-
-#. Password Manager window, Open database, error message
-msgid "File contents modified, or invalid key"
-msgstr "ファイルの内容が修正されたかキーが無効"
+msgid "Master key is invalid or file contents have been modified"
+msgstr "マスターキーが無効です、またはファイルの内容が変更されています"
 
 #. Password Manager window, Open database, error message
 msgid "Unknown file format"
@@ -2963,6 +2971,14 @@ msgstr "暗号化アルゴリズム:"
 msgid "%s with %d-bit key"
 msgstr "%s で %d ビットの鍵"
 
+#. Password database, description of database
+msgid "Description"
+msgstr "説明"
+
+#. Password Manager window, Database Settings dialog, label
+msgid "Database name/description:"
+msgstr "データベース名／説明："
+
 #. Password Manager window, Database Settings dialog, label
 msgid "Number of key derivation rounds:"
 msgstr "鍵導出ラウンドの回数:"
@@ -3093,7 +3109,7 @@ msgstr "フィルタを削除する"
 
 #. Main window, button to build character set definition
 msgid "Build..."
-msgstr "詳細設定..."
+msgstr "詳細設定"
 
 #. Main window, button to build character set definition, hint
 msgid "Build character set definition"
@@ -3158,3 +3174,16 @@ msgstr "to:"
 #. Character set builder, error message
 msgid "Invalid character range."
 msgstr "無効な文字範囲です。"
+
+#. Number of characters (abbreviated)
+msgid "%1 ch."
+msgstr "%1 ch."
+
+#~ msgid "Key file for password database:"
+#~ msgstr "パスワードのデータベース用の鍵ファイル:"
+
+#~ msgid "Database not encrypted, or invalid key"
+#~ msgstr "データベースの暗号化なしかキーが無効"
+
+#~ msgid "File contents modified, or invalid key"
+#~ msgstr "ファイルの内容が修正されたかキーが無効"
