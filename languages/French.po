@@ -4,7 +4,7 @@
 #. Add header entry "X-PasswordTech-Manual: ..." to provide language-specific manual
 msgid ""
 msgstr ""
-"Project-Id-Version: Password Tech 3.5.10\n"
+"Project-Id-Version: Password Tech 3.6.0\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: Pierrard Sylvie <sylvie@gratilog.net>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-PasswordTech-Manual: manual.pdf\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #. Message box caption
@@ -1593,6 +1593,14 @@ msgstr "Mot de passe :"
 msgid "Confirm password:"
 msgstr "Confirmer le mot de passe :"
 
+#. Enter password window, label
+msgid "Estimate quality"
+msgstr "Force du mot de passe"
+
+#. Enter password label, button
+msgid "Skip"
+msgstr "Sauter"
+
 #. Generic dialog window, button
 msgid "OK"
 msgstr "OK"
@@ -1618,20 +1626,24 @@ msgid "Remember password (seconds):"
 msgstr "Mémoriser le mot de passe (secondes) :"
 
 #. Enter password window
-msgid "Key file for password database:"
-msgstr "Fichier clé pour base de données de MdP :"
+msgid "Select key file:"
+msgstr "Choisir le fichier clé :"
 
 #. Enter password window, Key file, None selected
 msgid "(None)"
-msgstr "(Aucune)"
+msgstr "(Aucun)"
 
 #. Enter password window, message shown when neither password nor key file entered/selected
 msgid "Enter a password and/or select a key file."
 msgstr "Entrez un mot de passe et/ou choisir un fichier clé."
 
 #. Enter password window, message shown when selected key file could not be found
-msgid "The selected key file does not exist."
-msgstr "Le fichier clé choisi n’existe pas."
+msgid ""
+"The selected key file does not exist:\n"
+"%1"
+msgstr ""
+"Le fichier clé choisi n’existe pas.\n"
+"%1"
 
 #. Enter password window, message shown when password is empty
 msgid "Password is empty."
@@ -1651,11 +1663,11 @@ msgstr ""
 
 #. Enter password window, Open file dialog, filter for *.key files
 msgid "Key files"
-msgstr "Fichiers clés"
+msgstr "Fichiers clé"
 
 #. Enter password window, Create Key File button, tooltip
 msgid "Create key file"
-msgstr "Créer un fichier de clés"
+msgstr "Créer un fichier clé"
 
 #. Password List window, title
 msgid "Password List"
@@ -2286,12 +2298,9 @@ msgid "%d bits of entropy have been added to the random pool."
 msgstr "%d bits d'entropie ont été ajoutés au pool aléatoire."
 
 #. Password Manager window, Open database, error message
-msgid "Database not encrypted, or invalid key"
-msgstr "Base de données non chiffrée ou clé invalide"
-
-#. Password Manager window, Open database, error message
-msgid "File contents modified, or invalid key"
-msgstr "Contenu du fichier modifié ou clé invalide"
+msgid "Master key is invalid or file contents have been modified"
+msgstr ""
+"Le mot de passe principal est invalide ou le contenu du fichier a été modifié"
 
 #. Password Manager window, Open database, error message
 msgid "Unknown file format"
@@ -3016,6 +3025,14 @@ msgstr "Algorithme de chiffrement :"
 msgid "%s with %d-bit key"
 msgstr "%s avec clé %d-bits"
 
+#. Password database, description of database
+msgid "Description"
+msgstr "Description"
+
+#. Password Manager window, Database Settings dialog, label
+msgid "Database name/description:"
+msgstr "Description/nom de la base de données :"
+
 #. Password Manager window, Database Settings dialog, label
 msgid "Number of key derivation rounds:"
 msgstr "Nombre de cycles de dérivation de clés :"
@@ -3217,6 +3234,19 @@ msgstr "à :"
 #. Character set builder, error message
 msgid "Invalid character range."
 msgstr "Plage de caractères invalide."
+
+#. Number of characters (abbreviated)
+msgid "%1 ch."
+msgstr "%1 c."
+
+#~ msgid "Key file for password database:"
+#~ msgstr "Fichier clé pour base de données de MdP :"
+
+#~ msgid "Database not encrypted, or invalid key"
+#~ msgstr "Base de données non chiffrée ou clé invalide"
+
+#~ msgid "File contents modified, or invalid key"
+#~ msgstr "Contenu du fichier modifié ou clé invalide"
 
 #~ msgid "Random Pool"
 #~ msgstr "Combinaison aléatoire"
