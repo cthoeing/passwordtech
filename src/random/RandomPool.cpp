@@ -33,11 +33,7 @@
 #include "FastPRNG.h"
 #include "aes.h"
 #include "chacha.h"
-#ifdef _WIN64
-#include "../crypto/blake2/blake2.h"
-#else
-#include "../crypto/blake2/ref/blake2.h"
-#endif
+#include "blake2.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 
@@ -61,7 +57,7 @@ GETBUF_SIZE      = 64, // size of get buffer
 TEMPBUF_SIZE     = CTR_SIZE, // size of temporary buffer
 POOL_OFFSET      = 0,
 HASHCTX_OFFSET   = POOL_OFFSET + RandomPool::POOL_SIZE,
-ADDBUF_OFFSET    = HASHCTX_OFFSET + sizeof(blake2s_state),
+ADDBUF_OFFSET    = HASHCTX_OFFSET + sizeof(blake2b_state),
 CIPHERKEY_OFFSET = ADDBUF_OFFSET + ADDBUF_SIZE,
 SECCTR_OFFSET    = CIPHERKEY_OFFSET + KEY_SIZE,
 CIPHERCTX_OFFSET = SECCTR_OFFSET + CTR_SIZE,
@@ -70,6 +66,8 @@ TEMPBUF_OFFSET   = GETBUF_OFFSET + GETBUF_SIZE,
 POOL_DATA_SIZE   = TEMPBUF_OFFSET + TEMPBUF_SIZE,
 UNUSED_SIZE_MAX  = POOLPAGE_SIZE - POOL_DATA_SIZE,
 UNUSED_SIZE_MIN  = 64;
+
+static_assert(POOL_DATA_SIZE < POOLPAGE_SIZE - UNUSED_SIZE_MIN, "Pool data size too large");
 
 const char
 ERROR_BLAKE2_INIT[]  = "BLAKE2 initialization failed",
@@ -441,15 +439,12 @@ void RandomPool::SetCipher(CipherType cipher)
 void RandomPool::UpdatePool(void)
 {
   // update the pool by hashing the pool, the add buffer and a time-stamp
-  //sha256_init(m_pHashCtx);
-  //sha256_hmac_starts(m_pHashCtx, m_pPool, POOL_SIZE, 0);
-  blake2s_state* pHashCtx = reinterpret_cast<blake2s_state*>(m_pHashCtx);
-  if (blake2s_init_key(pHashCtx, POOL_SIZE, m_pPool, POOL_SIZE) != 0)
+  blake2b_state* pHashCtx = reinterpret_cast<blake2b_state*>(m_pHashCtx);
+  if (blake2b_init_key(pHashCtx, POOL_SIZE, m_pPool, POOL_SIZE) != 0)
     throw RandomGeneratorError(ERROR_BLAKE2_INIT);
 
   if (m_lAddBufPos != 0) {
-    //sha256_hmac_update(m_pHashCtx, m_pAddBuf, m_lAddBufPos);
-    blake2s_update(pHashCtx, m_pAddBuf, m_lAddBufPos);
+    blake2b_update(pHashCtx, m_pAddBuf, m_lAddBufPos);
     ClearPoolBuf(m_pAddBuf, m_lAddBufPos);
     m_lAddBufPos = 0;
   }
@@ -457,22 +452,19 @@ void RandomPool::UpdatePool(void)
   if (m_blKeySet) {
     // the counter has accumulated some entropy, which we should incorporate
     // into the pool now
-    //sha256_hmac_update(m_pHashCtx, m_pSecCtr, CTR_SIZE);
-    blake2s_update(pHashCtx, m_pSecCtr, CTR_SIZE);
+    blake2b_update(pHashCtx, m_pSecCtr, CTR_SIZE);
   }
 
   // ALWAYS add some entropy (independent of the add buffer)
   HighResTimer(m_pTempBuf);
-  //sha256_hmac_update(m_pHashCtx, m_pTempBuf, sizeof(word64));
-  blake2s_update(pHashCtx, m_pTempBuf, sizeof(word64));
+  blake2b_update(pHashCtx, m_pTempBuf, sizeof(word64));
 
   // get new pool
-  //sha256_hmac_finish(m_pHashCtx, m_pPool);
-  if (blake2s_final(pHashCtx, m_pPool, POOL_SIZE) != 0)
+  if (blake2b_final(pHashCtx, m_pPool, POOL_SIZE) != 0)
     throw RandomGeneratorError(ERROR_BLAKE2_FINAL);
 
   // clear sensitive data
-  ClearPoolBuf(m_pHashCtx, sizeof(blake2s_state));
+  ClearPoolBuf(m_pHashCtx, sizeof(blake2b_state));
   ClearPoolBuf(m_pTempBuf, sizeof(word64));
 
   if (m_blKeySet) {
@@ -494,23 +486,19 @@ void RandomPool::SetKey(void)
   // don't use the pool directly as a key, but derive a new key from the pool
   // using a time stamp as a "key" for the hash function
   HighResTimer(m_pTempBuf);
-  //sha256_init(m_pHashCtx);
-  //sha256_hmac_starts(m_pHashCtx, m_pTempBuf, TEMPBUF_SIZE, 0); // we simply use
-  blake2s_state* pHashCtx = reinterpret_cast<blake2s_state*>(m_pHashCtx);
+  blake2b_state* pHashCtx = reinterpret_cast<blake2b_state*>(m_pHashCtx);
 
   // use the full buffer contents here (16 bytes vs. 8 bytes from the timer);
   // it doesn't cost anything, and the rest of the buffer contains some
   // useful pseudorandom data
-  if (blake2s_init_key(pHashCtx, POOL_SIZE, m_pTempBuf, TEMPBUF_SIZE) != 0)
+  if (blake2b_init_key(pHashCtx, POOL_SIZE, m_pTempBuf, TEMPBUF_SIZE) != 0)
     throw RandomGeneratorError(ERROR_BLAKE2_INIT);
 
-  //sha256_hmac_update(m_pHashCtx, m_pPool, POOL_SIZE);
-  //sha256_hmac_finish(m_pHashCtx, m_pCipherKey);
-  blake2s_update(pHashCtx, m_pPool, POOL_SIZE);
-  if (blake2s_final(pHashCtx, m_pCipherKey, POOL_SIZE) != 0)
+  blake2b_update(pHashCtx, m_pPool, POOL_SIZE);
+  if (blake2b_final(pHashCtx, m_pCipherKey, POOL_SIZE) != 0)
     throw RandomGeneratorError(ERROR_BLAKE2_FINAL);
 
-  ClearPoolBuf(m_pHashCtx, sizeof(blake2s_state));
+  ClearPoolBuf(m_pHashCtx, sizeof(blake2b_state));
   ClearPoolBuf(m_pTempBuf, TEMPBUF_SIZE);
 
   // perform the cipher's key setup

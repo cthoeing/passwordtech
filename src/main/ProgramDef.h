@@ -24,7 +24,7 @@
 
 const wchar_t
 PROGRAM_NAME[]         = L"Password Tech",
-PROGRAM_VERSION[]      = L"3.6.0",
+PROGRAM_VERSION[]      = L"3.6.1",
 PROGRAM_LANGVER_MIN[]  = L"3.6.0",
 PROGRAM_AUTHOR[]       = L"Christian Th\xF6ing",
 PROGRAM_AUTHOR_EMAIL[] = L"c.thoeing@web.de",

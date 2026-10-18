@@ -3,7 +3,22 @@
                 Copyright (c) 2002-2026 by Christian Thöing
 
 
-Version 3.6.0
+Version 3.6.1
+
+CHANGES & IMPROVEMENTS:
+
+- Random pool: Hash function BLAKE2s replaced with BLAKE2b variant for better
+  performance on 64-bit architecture
+
+FIXES:
+
+- PassCube: When editing an existing database entry with "Hide notes" enabled
+  (button down) and saving the changes, notes are overwritten with place holder
+  text displayed in the Notes box.
+
+----------
+
+Version 3.6.0 (2026-05-14)
 
 NEW FEATURES:
 

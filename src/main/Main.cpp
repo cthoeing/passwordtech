@@ -238,7 +238,7 @@ WString LimitStringLen(const WString& sStr, int nMaxLen)
 }
 
 
-extern "C" int blake2s_self_test(void);
+extern "C" int blake2b_self_test(void);
 
 //---------------------------------------------------------------------------
 __fastcall TMainForm::TMainForm(TComponent* Owner)
@@ -275,7 +275,7 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
     throw Exception("SHA-256 self test failed");
   if (sha512_self_test(0) != 0)
     throw Exception("SHA-512 self test failed");
-  if (blake2s_self_test() != 0)
+  if (blake2b_self_test() != 0)
     throw Exception("BLAKE2 self test failed");
   if (base64_self_test(0) != 0)
     throw Exception("Base64 self test failed");
