@@ -1000,7 +1000,7 @@ void PasswDatabase::Save(const WString& sFileName)
   fh.KdfIterations = m_lKdfIterations;
 
   auto cipher = CreateCipher(m_bCipherType,
-    DeriveCipherKey(m_pDbKey, m_pDbSalt),
+	DeriveCipherKey(m_pDbKey, m_pDbSalt),
     EncryptionAlgorithm::Mode::ENCRYPT);
 
   word32 lIVLen = cipher->GetIVSize();
@@ -1242,8 +1242,9 @@ void PasswDatabase::Save(const WString& sFileName)
 
   #if defined(_DEBUG) && defined(TEST_DECRYPTION)
     {
-      auto checkCipher = CreateCipher(m_bCipherType, m_pDbKey,
-        EncryptionAlgorithm::Mode::DECRYPT);
+	  auto checkCipher = CreateCipher(m_bCipherType,
+		DeriveCipherKey(m_pDbKey, m_pDbSalt),
+		EncryptionAlgorithm::Mode::DECRYPT);
       checkCipher->SetIV(iv);
       SecureMem<word8> block(checkCipher->GetBlockSize());
       checkCipher->Decrypt(m_cryptBuf, block, block.Size());
@@ -1595,7 +1596,7 @@ void PasswDatabase::SetRecoveryKey(const SecureMem<word8>& key,
     pbkdf2_256bit(keySrc, keySrc.Size(), pMemOffset, DB_SALT_LENGTH,
       derivedKey, m_lKdfIterations);
 
-    auto cipher = CreateCipher(m_bCipherType, derivedKey,
+	auto cipher = CreateCipher(m_bCipherType, derivedKey,
       EncryptionAlgorithm::Mode::ENCRYPT);
     cipher->SetIV(pMemOffset);
     cipher->Encrypt(m_pDbKey, pMemOffset + DB_SALT_LENGTH, DB_KEY_LENGTH);

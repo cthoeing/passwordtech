@@ -3,11 +3,11 @@ object PasswHistoryDlg: TPasswHistoryDlg
   Top = 0
   BorderIcons = [biSystemMenu, biMaximize]
   Caption = 'Password History'
-  ClientHeight = 239
-  ClientWidth = 386
+  ClientHeight = 262
+  ClientWidth = 450
   Color = clBtnFace
-  Constraints.MinHeight = 229
-  Constraints.MinWidth = 316
+  Constraints.MinHeight = 200
+  Constraints.MinWidth = 450
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -14
@@ -16,13 +16,13 @@ object PasswHistoryDlg: TPasswHistoryDlg
   OnShow = FormShow
   PixelsPerInch = 120
   DesignSize = (
-    386
-    239)
+    450
+    262)
   TextHeight = 17
   object EnableHistoryCheck: TCheckBox
     Left = 13
     Top = 11
-    Width = 220
+    Width = 284
     Height = 21
     Margins.Left = 4
     Margins.Top = 4
@@ -32,12 +32,11 @@ object PasswHistoryDlg: TPasswHistoryDlg
     Caption = 'Keep last passwords - up to:'
     TabOrder = 0
     OnClick = EnableHistoryCheckClick
-    ExplicitWidth = 214
+    ExplicitWidth = 220
   end
   object HistorySizeBox: TEdit
-    Tag = 6
-    Left = 298
-    Top = 9
+    Left = 305
+    Top = 11
     Width = 51
     Height = 25
     Margins.Left = 4
@@ -48,9 +47,8 @@ object PasswHistoryDlg: TPasswHistoryDlg
     Text = '1'
   end
   object HistorySizeSpinBtn: TUpDown
-    Tag = 6
-    Left = 349
-    Top = 9
+    Left = 358
+    Top = 11
     Width = 20
     Height = 25
     Margins.Left = 4
@@ -66,8 +64,8 @@ object PasswHistoryDlg: TPasswHistoryDlg
     Tag = 15
     Left = 13
     Top = 44
-    Width = 359
-    Height = 139
+    Width = 420
+    Height = 157
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -91,8 +89,8 @@ object PasswHistoryDlg: TPasswHistoryDlg
   object ClearBtn: TButton
     Tag = 9
     Left = 13
-    Top = 195
-    Width = 71
+    Top = 216
+    Width = 92
     Height = 31
     Margins.Left = 4
     Margins.Top = 4
@@ -104,9 +102,9 @@ object PasswHistoryDlg: TPasswHistoryDlg
   end
   object CopyBtn: TButton
     Tag = 9
-    Left = 88
-    Top = 195
-    Width = 71
+    Left = 113
+    Top = 216
+    Width = 92
     Height = 31
     Margins.Left = 4
     Margins.Top = 4
@@ -118,8 +116,8 @@ object PasswHistoryDlg: TPasswHistoryDlg
   end
   object OKBtn: TButton
     Tag = 12
-    Left = 180
-    Top = 195
+    Left = 241
+    Top = 216
     Width = 92
     Height = 31
     Margins.Left = 4
@@ -133,8 +131,8 @@ object PasswHistoryDlg: TPasswHistoryDlg
   end
   object CancelBtn: TButton
     Tag = 12
-    Left = 280
-    Top = 195
+    Left = 341
+    Top = 216
     Width = 92
     Height = 31
     Margins.Left = 4

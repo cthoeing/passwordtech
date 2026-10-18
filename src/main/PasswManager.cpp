@@ -1431,9 +1431,9 @@ void __fastcall TPasswMngForm::SearchDbForKeyword(bool blAutotype)
     SetFocus();
 
     if (!pFound) {
-	  SuspendIdleTimer;
+      SuspendIdleTimer;
       MsgBox(sMsg, MB_ICONWARNING);
-	}
+    }
   }
 }
 //---------------------------------------------------------------------------
@@ -1967,8 +1967,10 @@ void __fastcall TPasswMngForm::ApplyDbViewItemSelection(TListItem* pItem)
     SetEditBoxTextBuf(UrlBox, pEntry->Strings[PasswDbEntry::URL].c_str());
     SetEditBoxTextBuf(KeywordBox, pEntry->Strings[PasswDbEntry::KEYWORD].c_str());
     SetEditBoxTextBuf(KeyValueListBox, BuildTranslKeyValString(pEntry->GetKeyValueList()));
-    if (NotesBox->Tag == NOTES_TAG_HIDDEN)
+    if (NotesBox->Tag == NOTES_TAG_HIDDEN) {
+      m_tempNotes.emplace(pEntry->Strings[PasswDbEntry::NOTES]);
       NotesBox->Text = m_sNotesHiddenText;
+    }
     else
       SetEditBoxTextBuf(NotesBox, pEntry->Strings[PasswDbEntry::NOTES].c_str());
 
